@@ -1,0 +1,53 @@
+.footer{
+  width: 100%;
+  height: 126px;
+  position: relative;
+  margin-top: -126px;
+  padding: 15px 40px;
+  clear: both;
+  box-shadow: inset 0 2px 2px #d7d7d8;
+  //background: url('../Images/Layer%203.png') repeat;
+  //background-color: #21323d;
+  background: linear-gradient(to top, #21323d, #151e2b);
+  z-index: 5;
+  ul{
+    font-size: 14px;
+    float: left;
+    width: 380px;
+    list-style: none;
+    li{
+      float: left;
+      line-height: 21px;
+      margin-bottom: 3px;
+      transition: top 1s ease-out 0.5s;
+      &:hover{
+        a{
+          color: #e7e7e8;
+        }
+      }
+      a{
+        color: #d7d7d8;
+        display: block;
+        padding: 0 5px;
+        text-decoration: none;
+      }
+    }
+    li.first{
+      transition: top 1s ease-out 0.5s;
+      &:hover{
+        a{
+          color: #249fed;
+          text-decoration: underline;
+        }
+      }
+      a{color: #249fed;}
+    }
+  }
+  p{
+    float: left;
+    font-size: 11px;
+    line-height: 22px;
+    max-width: 550px;
+    color: #d7d7d8;
+  }
+}

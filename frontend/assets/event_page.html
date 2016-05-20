@@ -1,0 +1,235 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link href="/styles/index.css" rel="stylesheet">
+  <script src="/js/all.js" defer></script>
+</head>
+<body>
+<div class="wrapper">
+
+  <div include-html="include/header.html"></div>
+
+  <div include-html="include/main-menu.html"></div>
+
+  <div class="content">
+    <ul class="breadcrumbs">
+      <li><a href="#">Sport</a></li>
+      <li><a href="#">Footbool</a></li>
+      <li><a href="#">UK Premiership League</a></li>
+      <li>Manchester United vs. Chelsea</li>
+    </ul>
+    <div class="wrapper_event_page" data-ng-app="orders">
+      <h2>Manchester United vs. Chelsea</h2>
+      <div class="schedule"></div>
+      <div class="price_all">
+        <div class="current_price">
+          <div class="wrapper">
+            <h3>MANCHESTER UNITED VS. CHELSEA<!--USD/UAH 30-31/03/2016--></h3>
+            <ul class="price">
+              <li>Current price</li>
+              <li><span>26.675</span></li>
+            </ul>
+          </div>
+          <table class="high">
+            <tr>
+              <td><span>High</span></td>
+              <td><strong>0.76</strong></td>
+            </tr>
+          </table>
+          <table class="low">
+            <tr>
+              <td><span>Low</span></td>
+              <td><strong>0.29</strong></td>
+            </tr>
+          </table>
+        </div>
+        <div class="specification">
+          <h3>Specification</h3>
+          <table class="specification_table">
+            <tr>
+              <td><strong>Symbol:</strong></td>
+              <td><span>MANCHESTER UNITED VS. CHELSEA</span></td>
+            </tr>
+            <tr class="color">
+              <td><strong>Start:</strong></td>
+              <td><span>05/18/2016</span></td>
+            </tr>
+            <tr>
+              <td><strong>End:</strong></td>
+              <td><span>4:00 PM 05/18/2016</span></td>
+            </tr>
+            <tr class="color">
+              <td><strong>Strike price:</strong></td>
+              <td><span>UAH 30</span></td>
+            </tr>
+            <tr>
+              <td><strong>Trade volume:</strong></td>
+              <td><span>7/006</span></td>
+            </tr>
+            <tr class="color">
+              <td><strong>Volume today:</strong></td>
+              <td><span>12</span></td>
+            </tr>
+            <tr>
+              <td><strong>All positions:</strong></td>
+              <td><span>3.717</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="mainController" class="executed" data-ng-controller="ordersCtrl">
+        <!--<div class="executed_orders">-->
+          <!--<div class="thead">-->
+            <!--<strong>Продажа</strong>-->
+            <!--<strong>Обьем</strong>-->
+          <!--</div>-->
+          <!--<div class="tbody">-->
+            <!--<div class="tr" ng-repeat="order in orderSell">-->
+              <!--<div class="td"><span>{{order.Price}}</span></div>-->
+              <!--<div class="td"><span>{{order.Quantity}}</span></div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="executed_orders">-->
+          <!--<div class="thead">-->
+            <!--<strong>Покупка</strong>-->
+            <!--<strong>Обьем</strong>-->
+          <!--</div>-->
+          <!--<div class="tbody">-->
+            <!--<div class="tr" ng-repeat="order in orderBuy">-->
+              <!--<div class="td"><span>{{order.Price}}</span></div>-->
+              <!--<div class="td"><span>{{order.Quantity}}</span></div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="executed_orders">-->
+          <!--<div class="thead">-->
+            <!--<strong>Исполненые ордера</strong>-->
+          <!--</div>-->
+          <!--<div class="tbody">-->
+            <!--<div class="tr" ng-repeat="tick in ticks">-->
+              <!--<div class="td"><span>{{tick.Time}}</span></div>-->
+              <!--<div class="td"><span>{{tick.Price}}</span></div>-->
+              <!--<div class="td"><span>{{tick.Volume}}</span></div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <div class="executed_orders">
+          <table class="head">
+            <thead>
+              <th><span>ID</span></th>
+              <th><span>Sell</span></th>
+              <th><span>Volume</span></th>
+            </thead>
+          </table>
+          <div class="body">
+            <table>
+              <tbody>
+                <tr ng-repeat="order in orderSell">
+                  <td><span>Alt.bet</span></td>
+                  <td><span>{{order.LimitPrice}}</span></td>
+                  <td><span>{{order.Quantity}}</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="executed_orders">
+          <table class="head">
+            <thead>
+            <th><span>ID</span></th>
+            <th><span>Buy</span></th>
+            <th><span>Volume</span></th>
+          </thead>
+          </table>
+          <div class="body">
+            <table>
+              <tbody>
+                <tr ng-repeat="order in orderBuy">
+                  <td><span>Alt.bet</span></td>
+                  <td><span>{{order.LimitPrice}}</span></td>
+                  <td><span>{{order.Quantity}}</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="executed_orders">
+          <table class="head">
+            <thead>
+            <th><span>Execution of orders</span></th>
+            <th></th>
+            <th></th>
+            </thead>
+          </table>
+          <div class="body">
+            <table>
+              <tbody>
+              <tr ng-repeat="tick in ticks">
+                <td><span>{{tick.Time}}</span></td>
+                <td><span>{{tick.Price}}</span></td>
+                <td><span>{{tick.Volume}}</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="currency">
+        <table class="currency_table">
+          <tr>
+            <td><span>kurs.com.ua</span></td>
+            <td><span>0.35</span></td>
+            <td><span>26.872</span></td>
+          </tr>
+          <tr>
+            <td><span>minfin.com.ua</span></td>
+            <td><span>0.40</span></td>
+            <td><span>26.789</span></td>
+          </tr>
+        </table>
+      </div>
+      <!--<button class="buy btn">Buy</button>-->
+      <!--<button class="sell btn">Sell</button>-->
+      <div class="information">
+        <h4>General information on the courses NBU banks</h4>
+        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium, amet animi aperiam
+          aspernatur aut autem dicta dolorem ea earum eos ex fuga hic illum iste laborum modi nam necessitatibus nemo,
+          nobis nostrum perspiciatis porro possimus quaerat repellat, tenetur vitae. Delectus hic ipsa minima numquam
+          quod saepe sed voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet facere fuga ipsa
+          quidem vel velit voluptas.
+          Alias consequatur doloribus eos praesentium quasi reprehenderit voluptatum? Adipisci animi commodi distinctio
+          ducimus earum eius quasi qui veritatis vero, voluptates. Aliquam aperiam consectetur, doloremque facilis
+          libero maxime nemo odio sed. Assumenda omnis suscipit ut.</p>
+      </div>
+    </div>
+  </div>
+
+  <div include-html="include/order_slide.html"></div>
+
+</div>
+
+<div include-html="include/footer.html"></div>
+<script>
+//  $(document).ready(function () {
+//    var object = JSON.parse('{"MessageID":"b71b1dd2-a7b2-48e5-93c0-c3219a21cd11","MessageType":"WebSoketOrdersResponse","ActiveOrders":[{"Orders":[{"SPS":[{"Price":0.33000000,"Quantity":10},{"Price":0.35000000,"Quantity":10},{"Price":0.42000000,"Quantity":10},{"Price":0.54000000,"Quantity":10}],"Side":1},{"SPS":[{"Price":0.02000000,"Quantity":10},{"Price":0.07000000,"Quantity":10},{"Price":0.21000000,"Quantity":10},{"Price":0.25000000,"Quantity":10}],"Side":0}],"Symbol":{"Currency":"USD","Exchange":"THIRD","Name":"SOMETHING"}},{"Orders":[{"SPS":[{"Price":0.04000000,"Quantity":10},{"Price":0.29000000,"Quantity":10},{"Price":0.41000000,"Quantity":10}],"Side":0},{"SPS":[{"Price":0.75000000,"Quantity":10},{"Price":0.78000000,"Quantity":10}],"Side":1}],"Symbol":{"Currency":"USD","Exchange":"SECOND","Name":"EUR\/USD"}}],"Ticks":[{"Symbol":{"Currency":"USD","Exchange":"THIRD","Name":"SOMETHING"},"Ticks":[{"MessageID":"4d30701e-f2b3-4345-ac1c-693fba90c30a","MessageType":"Tick","Ask":0,"AskSize":0,"Bid":0,"BidSize":0,"Currency":"USD","Price":0.01000000,"Symbol":{"Currency":"USD","Exchange":"THIRD","Name":"SOMETHING"},"Time":"\/Date(1461780611633+0300)\/","Volume":10},{"MessageID":"05f0bb1e-30be-4922-9d0f-5e8e925dc3fa","MessageType":"Tick","Ask":0,"AskSize":0,"Bid":0,"BidSize":0,"Currency":"USD","Price":0.03000000,"Symbol":{"Currency":"USD","Exchange":"THIRD","Name":"SOMETHING"},"Time":"\/Date(1461780613097+0300)\/","Volume":10},{"MessageID":"47195d67-64c4-4b92-8ed7-f7817bf2f009","MessageType":"Tick","Ask":0,"AskSize":0,"Bid":0,"BidSize":0,"Currency":"USD","Price":0.29000000,"Symbol":{"Currency":"USD","Exchange":"THIRD","Name":"SOMETHING"},"Time":"\/Date(1461780615633+0300)\/","Volume":10}]}]}');
+//    angular.module("orders", [])
+//           .controller("ordersCtrl", function ($scope) {
+//             $scope.tasks = [
+//               { action: "Buy flowers", complete: false },
+//               { action: "Go to gym", complete: false },
+//               { action: "Buy snickers", complete: true },
+//               { action: "Buy notebook", complete: false },
+//               { action: "Call friends", complete: false },
+//               { action: "Go to cinema", complete: false },
+//               { action: "Buy Big-Mac", complete: true },
+//               { action: "Buy a book", complete: false },
+//               { action: "Call mom", complete: false }
+//             ];
+//           });
+//  });
+</script>
+</body>
+</html>
+

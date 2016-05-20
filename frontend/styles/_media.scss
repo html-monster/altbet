@@ -1,0 +1,92 @@
+@mixin retina($ret){
+  @media screen and(-webkit-min-device-pixel-ratio: $ret), (min-resolution: ($ret*96dpi)) {
+    @content;
+  }
+}
+
+
+$xsmax:480;
+$smmax:768;
+$mdmax:992;
+$lgmax:1200;
+$xsmin:481;
+$smmin:769;
+$mdmin:993;
+$lgmin:1201;
+
+
+@mixin lgmax($max){
+  @media screen and(max-width: $lgmax + px){
+    @content;
+  }
+}
+
+@mixin mdmax($max){
+  @media screen and(max-width: $mdmax + px){
+    @content;
+  }
+}
+
+@mixin smmax($max){
+  @media screen and(max-width: $smmax + px){
+    @content;
+  }
+}
+
+@mixin xsmax($max){
+  @media screen and(max-width: $xsmax + px){
+    @content;
+  }
+}
+
+@mixin md($bp){
+  @if $bp == "xs"{
+    @media (max-width: $xsmax + px){
+      @content;
+    }
+  }
+  @else if $bp == "sm"{
+    @media (max-width: $smmax + px){
+      @content;
+    }
+  }
+  @else if $bp == "md"{
+    @media (max-width: $mdmax + px){
+      @content;
+    }
+  }
+  @else if $bp == "lg"{
+    @media (max-width: $lgmax + px){
+      @content;
+    }
+  }
+  @else{
+    @media (max-width: $bp + px){
+      @content;
+    }
+  }
+}
+
+@mixin lgmin($min){
+  @media screen and(min-width: $lgmin + px){
+    @content;
+  }
+}
+
+@mixin mdmin($min){
+  @media screen and(min-width: $mdmin + px){
+    @content;
+  }
+}
+
+@mixin smmin($min){
+  @media screen and(min-width: $smmin + px){
+    @content;
+  }
+}
+
+@mixin xsmin($min){
+  @media screen and(min-width: $xsmin + px){
+    @content;
+  }
+}

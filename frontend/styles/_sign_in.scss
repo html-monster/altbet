@@ -1,0 +1,130 @@
+.sign_in_form {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(51, 54, 52, 0.5);
+  z-index: 99999;
+  .sign_in_content {
+    position: absolute;
+    top: calc(50% - 300px);
+    left: calc(50% - 300px);
+    width: 600px;
+    height: 600px;
+    background-color: #fff;
+    border-radius: 6px;
+    .head_form {
+      border-bottom: 1px solid #e5e5e5;
+      padding: 15px;
+      height: 100px;
+      background: url('../Images/logo_sign.svg') no-repeat 50%;
+      background-size: 30%;
+      position: relative;
+      .close{
+        display: block;
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: url("../Images/close.png") no-repeat;
+        cursor: pointer;
+      }
+    }
+    .content_form {
+      position: relative;
+      padding: 20px;
+      .container_login {
+        margin: 0 auto;
+        color: #333;
+        max-width: 400px;
+        width: 100%;
+        h3 {
+          font-family: "Raleway", "sans-serif";
+          font-size: 20px;
+          font-weight: 700;
+          margin-bottom: 10px;
+          margin-top: 5px;
+        }
+        button {
+          width: 49%;
+          height: 50px;
+          border-radius: 0;
+          &:hover {
+            background: linear-gradient(#0159b1, #115071);
+          }
+        }
+        .twitter {
+          margin-left: -5px;
+          background-color: #00aeef;
+        }
+        .facebook {
+          background-color: #3b5998;
+        }
+        label{
+          font-size: 15px;
+          color: #000;
+          font-weight: bold;
+        }
+        input{
+          width: 98%;
+          height: 34px;
+          padding: 6px 12px;
+          font-size: 14px;
+          line-height: 1.42857143;
+          color: #555;
+          background-color: #fff;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+        .remember_forgot{
+          margin: 15px 0;
+          padding-right: 15px;
+          input[id='remember_checkbox'] {
+            width: 13px;
+            height: 13px;
+          }
+          span{
+            font-weight: normal;
+          }
+          a.fogot_password{
+            float: right;
+            color: #2f4c93;
+            font-weight: bold;
+            font-size: 13px;
+            &:hover{
+              text-decoration: underline;
+            }
+          }
+        }
+        input[id='submit_sign'],
+        input[id='submit_sign_insteaded']{
+          width: 49%;
+          height: 50px;
+          border-radius: 0;
+          cursor: pointer;
+          font-family: "Raleway", "sans-serif";
+
+
+        }
+        input[id='submit_sign_insteaded']{
+          margin-left: -5px;
+          &:hover{
+            background-color: #ebebeb;
+            border-color: #adadad;
+          }
+        }
+        input[id='submit_sign']{
+          background: linear-gradient(#249fed, #116b95);
+          color:#fff;
+          font-weight: bold;
+          &:hover{
+            background: linear-gradient(#38839e, #115f95);
+          }
+        }
+      }
+    }
+  }
+}

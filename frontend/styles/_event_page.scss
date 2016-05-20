@@ -1,0 +1,205 @@
+.wrapper_event_page {
+  background-color: #f8f8f8;
+  margin: 0 30px;
+  h2 {
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #707070;
+    margin-bottom: 15px;
+  }
+  h3{
+    font-size: 16px;
+    color: #707070;
+    text-align: left;
+    margin: 15px 0;
+    padding: 0 15px;
+  }
+  .schedule {
+    float: left;
+    width: 65%;
+    height: 540px;
+    margin-bottom: 15px;
+    background: url('../Images/graf.jpg') no-repeat;
+    background-size: cover;
+  }
+  .price_all {
+    display: inline-block;
+    width: 33%;
+    vertical-align: top;
+    margin-left: 2%;
+
+    .current_price {
+      .wrapper {
+        text-align: center;
+        border: 2px solid #d7d7d8;
+        border-radius: 5px;
+        .price {
+          margin: 0 15px 15px;
+          border: 2px solid #d7d7d8;
+          background-color: #fff;
+          li {
+            text-align: left;
+            font-size: 14px;
+            list-style-type: none;
+            border-bottom: 2px solid #d7d7d8;
+            padding: 5px 15px 5px 15px;
+            color: #919191;
+            span {
+              font-size: 14px;
+              font-weight: bold;
+              color: #919191;
+            }
+          }
+          li:last-child {
+            border: none;
+          }
+        }
+      }
+      .low,
+      .high {
+        width: 100%;
+        tr {
+          margin-top: 20px;
+          border: 2px solid #d7d7d8;
+          border-radius: 5px;
+          display: block;
+          td {
+            padding: 5px 15px 5px 15px;
+            &:first-of-type{
+              width: 50%;
+            }
+            span {
+              color: #919191;
+            }
+            strong {
+              font-size: 18px;
+              color: #919191;
+            }
+          }
+          td:last-child {
+            border-left: 2px solid #d7d7d8;
+          }
+        }
+      }
+
+    }
+    .specification {
+      margin-top: 20px;
+      border: 2px solid #d7d7d8;
+      border-radius: 5px;
+      .specification_table {
+        width: 100%;
+        tr {
+          td {
+            padding: 0 10px;
+            strong {
+              font-size: 12px;
+              color: #919191;
+              font-weight: normal;
+            }
+            span {
+              font-size: 11px;
+              text-transform: uppercase;
+              color: #919191;
+            }
+          }
+        }
+        .color {
+          background-color: #e1e1e1;
+        }
+      }
+    }
+  }
+  .executed {
+    display: flex;
+    margin: 15px 0;
+    border: 2px solid #d7d7d8;
+    border-radius: 5px;
+    clear: both;
+    .executed_orders{
+      display: flex;
+      max-width: 33%;
+      flex-grow: 1;
+      flex-direction: column;
+      padding-left: 10px;
+      border-left: 2px solid #d7d7d8;
+      &:first-child{  border-left: none;  }
+      &:nth-child(1),&:nth-child(2){
+        th{
+          padding: 0 4px;
+          &:nth-of-type(1){  width: 50%;  }
+          &:nth-of-type(2),
+          &:nth-of-type(3){  width: 25%;  }
+        }
+        td{
+          padding: 0 4px;
+          &:nth-of-type(1){  width: 50%;  }
+          &:nth-of-type(2),
+          &:nth-of-type(3){  width: 25%;  }
+        }
+      }
+      &:nth-child(3){
+        th, td{  padding: 0 4px;  }
+      }
+      .body{  max-height: 210px;  @include scroll;  }
+      table{  width: 100%;  }
+      th{
+        text-align: left;
+        span{
+          display: inline-block;
+          padding: 5px 0;
+        }
+      }
+      tr:last-of-type td{  padding-bottom: 5px;  }
+      td{
+        font-size: 14px;
+        color: #707070;
+      }
+    }
+  }
+  .currency {
+    width: 66.5%;
+    margin-bottom: 20px;
+    border: 2px solid #d7d7d8;
+    border-radius: 5px;
+    .currency_table {
+      width: 100%;
+      tr {
+        border-bottom: 2px solid #d7d7d8;
+        border-collapse: collapse;
+        &:last-of-type{
+          border-bottom: none;
+        }
+        td {
+          span {
+            padding: 5px 15px;
+            font-size: 14px;
+          }
+
+        }
+      }
+    }
+  }
+  .buy,
+  .sell {
+    width: 120px;
+    padding: 0 10px;
+  }
+  .sell{
+    background-color: #ff4444;
+  }
+  .buy{
+    background-color: #2dc7ca;
+  }
+  .information {
+    h4 {
+      margin-top: 30px;
+    }
+    p {
+      margin-top: 20px;
+
+    }
+  }
+
+}
+

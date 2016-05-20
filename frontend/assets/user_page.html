@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <link href="/styles/index.css" rel="stylesheet">
+  <meta charset="utf-8">
+</head>
+<body class="about_body">
+<div class="wrapper">
+
+  <div include-html="include/header.html"></div>
+
+  <div include-html="include/main-menu.html"></div>
+
+  <div class="wrapper_about wrapper_user_page">
+    <nav class="menu_about">
+      <ul>
+        <li><a href="#">Funds</a></li>
+        <li><a href="#">Setting</a></li>
+        <li><a href="#">Sign Out</a></li>
+      </ul>
+    </nav>
+    <div class="about_info">
+      <h2>Funds </h2>
+      <div class="funds_tab">
+        <div class="wrapper_user">
+          <div class="tabs">
+            <span class="tab">Account Balance</span>
+            <span class="tab">Deposit Funds</span>
+            <span class="tab">Withdraw Funds</span>
+            <span class="tab">Transaction History</span>
+          </div>
+          <div class="tab_content">
+            <div class="tab_item">
+              <div class="user_content balance">
+                <h2>Account Balance</h2>
+                <div class="table_responsive">
+                  <table class="user_table">
+                    <tr>
+                      <td>Available Funds:</td>
+                      <td><span>$10.25</span></td>
+                    </tr>
+                    <tr>
+                      <td>Invested Amount:</td>
+                      <td><span>$0.00</span></td>
+                    </tr>
+                    <tr>
+                      <td>Unrealized Gain/Loss:</td>
+                      <td><span>$0.00</span></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="tab_item">
+              <div class="user_content deposit_funds">
+                <h3>Deposit by Credit Carde</h3>
+                <div class="table_responsive">
+                  <form class="deposit">
+                    <i>Please input your information into the form below.</i><br>
+                    <label for="amount"><strong>Amount</strong></label><Br>
+                    <input type="text" id="amount" placeholder="$ 10.00 Minimum"><br>
+
+                    <label for="ctedit"><strong>Name on Credit Card</strong></label><Br>
+                    <input type="text" id="ctedit"><br>
+
+                    <label for="ctedit2"><strong>Card Number (no spaces or dashes)</strong></label><Br>
+                    <input type="text" id="ctedit2"><br>
+                    <div class="wrapper_funds">
+                      <div class="select_funds">
+                        <strong>Expiry Date</strong><br>
+                        <select class="time" name="odds">
+                          <option value="-1">Month</option>
+                          <option value="0">01</option>
+                          <option value="1">02</option>
+                          <option value="2"> 03</option>
+                          <option value="3"> 04</option>
+                          <option value="4"> 05</option>
+                          <option value="5"> 06</option>
+                          <option value="6"> 07</option>
+                          <option value="7"> 08</option>
+                          <option value="8"> 09</option>
+                          <option value="9"> 10</option>
+                          <option value="10"> 11</option>
+                          <option value="11"> 12</option>
+                        </select>
+                      </div>
+                      <div class="select_funds funds_margin">
+                        <select class="time" name="odds" >
+                          <option value="-1">Year</option>
+                          <option value="0">2016</option>
+                          <option value="1">2017</option>
+                          <option value="2"> 2018</option>
+                          <option value="3"> 2019</option>
+                          <option value="4"> 2020</option>
+                          <option value="5"> 2021</option>
+                          <option value="6"> 2022</option>
+                          <option value="7"> 2023</option>
+                          <option value="8"> 2024</option>
+                          <option value="9"> 2025</option>
+                          <option value="10"> 2026</option>
+                          <option value="11"> 2027</option>
+                        </select><br>
+                        <span class="error-massage">Year is required</span>
+                      </div>
+                      <div class="select_funds">
+                        <label for="code"><strong>Security Code</strong></label><br>
+                        <input type="text" id="code">
+                      </div>
+                    </div>
+                    <br>
+                    <input type="submit" value="Submit" id="submit_deposit_funds">
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="tab_item">
+              <div class="user_content balance">
+                <h2>Account Balance</h2>
+                <div class="table_responsive">
+                  <table class="user_table">
+                    <tr>
+                      <td>Available Funds:</td>
+                      <td><span>$10.25</span></td>
+                    </tr>
+                    <tr>
+                      <td>Invested Amount:</td>
+                      <td><span>$0.00</span></td>
+                    </tr>
+                    <tr>
+                      <td>Unrealized Gain/Loss:</td>
+                      <td><span>$0.00</span></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="tab_item">
+              <div class="user_content balance">
+                <h2>Account Balance</h2>
+                <div class="table_responsive">
+                  <table class="user_table">
+                    <tr>
+                      <td>Available Funds:</td>
+                      <td><span>$10.25</span></td>
+                    </tr>
+                    <tr>
+                      <td>Invested Amount:</td>
+                      <td><span>$0.00</span></td>
+                    </tr>
+                    <tr>
+                      <td>Unrealized Gain/Loss:</td>
+                      <td><span>$0.00</span></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div include-html="include/footer.html"></div>
+
+<script src="/js/all.js" defer></script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <link href="/styles/index.css" rel="stylesheet">
+  <meta charset="utf-8">
+</head>
+<body>
+<div class="wrapper">
+
+  <div include-html="include/header.html"></div>
+
+  <div include-html="include/main-menu.html"></div>
+
+  <div class="content admin-panel">
+    <h1>Admin panel</h1>
+    <div class="control-panel">
+      <form>
+        <input type="text" placeholder="Exchange name" name="exchange">
+        <input type="text" placeholder="Symbol name" name="symbol">
+        <input type="submit" class="btn" value="Create">
+      </form>
+    </div>
+    <div class="event-exchange">
+      <form>
+        <div class="exchange-title">
+          <h3>Exchange name</h3>
+          <h3>Symbol name</h3>
+        </div>
+        <div class="exchange-content">
+          <a href="#" class="btn bot start" name="bot">Start Bot</a>
+          <a href="#" class="btn positive" name="positive">Close Exchange Positive</a>
+          <a href="#" class="btn negative" name="negative">Close Exchange Negative</a>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <div include-html="include/order_slide.html"></div>
+
+</div>
+
+<div include-html="include/footer.html"></div>
+
+<script src="/js/all.js" defer></script>
+
+</body>
+</html>
+

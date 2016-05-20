@@ -1,0 +1,415 @@
+.order {
+  @include span(last 2.6 of 12);
+  height: 100%;
+  border-left: 2px solid #d7d7d8;
+  background-color: #fff;
+  position: fixed;
+  right: 0;
+  top: 55px;
+  transition: 0.2s ease-out;
+  &.active {
+    right: -20.76796%;
+  }
+  label{
+    font-size: 12px;
+    color: #959595;
+  }
+  .left_order {
+    .wrapper {
+      text-align: center;
+      margin-top: 10px;
+      .tabs {
+        .tab {
+          display: inline-block;
+          width: 46.5%;
+          text-transform: uppercase;
+          font-size: 10px;
+          font-weight: bold;
+          border-radius: 5px 0 0 5px;
+          padding: 10px 5%;
+          background-color: #7e97a7;
+          border: 2px solid #fff;
+          color: #000;
+          &.active {
+            background-color: #2d414e;
+            color: #fff;
+          }
+        }
+        .tab:last-child {
+          margin-left: -3px;
+          border-radius: 0 5px 5px 0;
+        }
+      }
+      .tab_content {
+        margin-top: 5px;
+        text-align: left;
+        //max-height: 700px;
+        box-shadow: inset 0 -8px 10px -8px rgba(0, 0, 0, 0.5), inset 0 8px 10px -8px rgba(0, 0, 0, 0.5);
+        border-top: 1px solid #f1f1f1;
+        border-bottom: 1px solid #f1f1f1;
+        transition: 0.4s ease-out;
+        //&:before, &:after{
+        //  content: '';
+        //  display: block;
+        //  width: 100%;
+        //  height: 9px;
+        //  position: fixed;
+        //  background: #fff;
+        //  z-index: 6;
+        //}
+        //&:after{
+        //  top: 100px;
+        //  box-shadow: 0 5px 13px -4px rgba(0, 0, 0, 0.5);
+        //}
+        //&:before{
+        //  bottom: 100px;
+        //  box-shadow: 0 -5px 13px -2px rgba(0, 0, 0, 0.5);
+        //}
+        .tab_item {
+          display: none;
+          @include scroll;
+          overflow-y: inherit;
+          &#current-orders{
+            padding-bottom: 5px;
+            .order_content{
+              background-color: #ffffff;
+              cursor: move;
+            }
+          }
+          .ui-state-highlight{
+            height: 72px;
+            border: 1px solid #fcefa1;
+            color: #363636;
+          }
+          .order_content {
+            border-bottom: 2px solid #d7d7d8;
+            margin: 10px 5px 0;
+            padding-bottom: 10px;
+            .order-title{  overflow: auto;  @include scroll;}
+            &:last-of-type{
+              border-bottom: none;
+            }
+            h3{
+              display: inline-block;
+              font-size: 13px;
+            }
+            a.close{
+              display: block;
+              float: right;
+              height: 15px;
+              width: 15px;
+              background: url("../Images/close.png") no-repeat center;
+              margin-top: 4px;
+            }
+            strong {
+              display: inline-block;
+              padding-left: 15px;
+              font-size: 13px;
+              color: #4e4e4e;
+              &.current-order{
+                float: right;
+                margin-top: 2px;
+                margin-right: 10px;
+                color: #666666;
+                &.up span{  color: #1196d4;  }
+                &.down span{  color: red;  }
+              }
+              &.last-price{
+                &:before{
+                  content: '';
+                  display: inline-block;
+                  vertical-align: top;
+                }
+                &.up{
+                  color: #1196d4;
+                  &:before{
+                    margin-right: 2px;
+                    border: 4px solid transparent;
+                    border-bottom: 8px solid #1196d4;
+                  }
+                }
+                &.down{
+                  color: red;
+                  &:before{
+                    margin-top: 5px;
+                    margin-right: 2px;
+                    border: 4px solid transparent;
+                    border-top: 8px solid red;
+                  }
+                }
+              }
+            }
+            .sell-container form{
+              background: #fff1f1;
+            }
+            .buy-container form{
+              background: #ebf7f9;
+            }
+						//
+            //input[id='usd_uah'] {
+            //  width: 90%;
+            //  height: 31px;
+            //  border: 2px solid #d7d7d8;
+            //  border-radius: 5px;
+            //  padding-left: 10px;
+            //  color: #707070;
+            //  font-weight: bold;
+            //  margin-bottom: 10px;
+            //}
+            form {
+              margin-bottom: 10px;
+              padding: 7px 5px;
+              border-radius: 5px;
+              text-align: center;
+              label{  display: block; text-align: left;  }
+              input {
+                height: 31px;
+                //border: 1px solid #d7d7d8;
+                border-radius: 5px;
+                background-color: #fff;
+                padding-left: 10px;
+                box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.2);
+                //&[type="number"]{
+                  &::-webkit-input-placeholder{
+                    color: #ffffff;
+                  }
+                  &::-moz-placeholder{
+                    color: #ffffff;
+                  }
+                  &:-moz-placeholder{
+                    color: #ffffff;
+                  }
+                  &:-ms-input-placeholder{
+                    color: #ffffff;
+                  }
+                //}
+              }
+              select{
+                width: 100%;
+                height: 31px;
+                margin-top: 10px;
+              }
+              .dd{
+                margin-top: 10px;
+              }
+              button {
+                height: 31px;
+                font-size: 14px;
+                &.sell{  background-color: #ff4444;  }
+                &.buy{  background-color: #2dc7ca;  }
+                &.delete{
+                  background: url("../Images/ico-delete-w.png") no-repeat center #969696;
+                }
+              }
+              input[type="submit"]{
+                height: 31px;
+                padding: 0;
+                font-size: 14px;
+                color: #ffffff;
+                @include btn-shadow;
+                cursor: pointer;
+                &.sell{  background-color: #ff4444;  }
+                &.buy{  background-color: #2dc7ca;  }
+              }
+              .col-3{
+                display: inline-block;
+                width: 31%;
+                vertical-align: bottom;
+              }
+              .input{
+                width: 100%;
+                input{
+                  width: 100%;
+                  padding-right: 18px;
+                }
+              }
+              .col-3 .btn{  display: inline-block;  width: 46%;  background-size: 18px;  vertical-align: bottom;  }
+              //.change_order{  background: url("../Images/ico-success.png") no-repeat center;  }
+              .cancel{  background: url("../Images/ico-delete.png") no-repeat center;  }
+            }
+            //.change_order {
+            //  float: left;
+            //  width: 49%;
+            //  font-size: 12px;
+            //  background-color: #f37520;
+            //}
+            //.cancel_order {
+            //  width: 49%;
+            //  float: right;
+            //  font-size: 12px;
+            //  font-weight: bold;;
+            //  background-color: #591717;
+            //}
+            //.my_order{
+            //  .profit{
+            //    //width: 49%;
+            //    span{
+            //      font-size: 12px;
+            //    }
+            //    input{
+            //      width: 100%;
+            //    }
+            //  }
+            //  .responsibility{
+            //    display: inline-block;
+            //    //width: 49%;
+            //    margin: 3px 0 10px 0;
+						//
+            //    span{
+            //      font-size: 12px;
+            //    }
+            //    input{
+            //      width: 100%;
+            //    }
+						//
+            //  }
+            //}
+          }
+          .order_content:last-child {
+            border-bottom: none;
+          }
+        }
+        .tab_item:first-child {
+          display: block;
+        }
+      }
+      .order_content{
+        &.sell .current-order-title{
+          background: linear-gradient(to bottom, #ff6464, #921515);
+        }
+        &.buy .current-order-title{
+          background: linear-gradient(to bottom, #2D8A8E, #1A484A);
+        }
+
+      }
+      .my_order{
+        .form-container{
+          display: none;
+          margin-bottom: 10px;
+          padding: 5px;
+          border-radius: 0 0 5px 5px;
+          border: 2px solid #d7d7d8;
+          border-top: none;
+          box-shadow: inset 0 0 15px -5px rgba(0, 0, 0, 0.5);
+          form{
+            margin: 0;
+            text-align: center;
+            &.sell{
+              background-color: #fff1f1;
+              margin-bottom: 5px;
+            }
+            &.buy{
+              background-color: #ebf7f9;
+              margin-bottom: 0;
+            }
+            label{
+              float: left;
+              margin-top: 5px;
+            }
+          }
+          p.label{
+            padding-left: 5px;
+            font-size: 14px;
+            color: #666666;
+            text-align: left;
+          }
+        }
+        .order-title{  margin-left: 5px;  }
+        .current-order-title{
+          padding-left: 10px;
+          font-size: 14px;
+          border-radius: 5px;
+          //background: linear-gradient(to bottom, #283d4a, #21323d);
+          overflow: hidden;
+          transition: 0.2s ease-out;
+          &.active{  border-radius: 5px 5px 0 0; box-shadow: 0 3px 13px -3px rgba(0, 0, 0, 0.5);  }
+          a{
+            float: right;
+            width: 30px;
+            height: 30px;
+            background: url("../Images/ico-delete-w.png") no-repeat center;
+          }
+          span{
+            display: inline-block;
+            width: 31%;
+            padding-left: 5px;
+            line-height: 31px;
+            color: #ffffff;
+            vertical-align: middle;
+          }
+          .edit{
+            width: 31px;
+            height: 31px;
+            float: right;
+            background: url("../Images/ico-edit.png") no-repeat center;
+            background-size: 16px;
+            cursor: pointer;
+          }
+        }
+        .current-order-content{
+          padding: 5px 5px 10px;
+          text-align: center;
+          .btn{
+            width: 100%!important;
+          }
+        }
+      }
+    }
+  }
+  //.buton {
+  //  display: none;
+  //  width: 20px;
+  //  height: 40px;
+  //  position: absolute;
+  //  top: 10%;
+  //  left: -19px;
+  //  cursor: pointer;
+  //  border: 2px solid #d7d7d8;
+  //  border-right: none;
+  //  border-radius: 10px 5px 9px 10px;
+  //  background-color: #ccc;
+  //}
+}
+
+.warning{
+  display: none;
+  width: 125px;
+  position: absolute;
+  background: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  &:before{
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: -4px;
+    left: 26px;
+    background: #fff;
+    transform: rotate(45deg);
+    -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    z-index: 9;
+  }
+  &:after{
+    content: '';
+    display: block;
+    width: 20px;
+    height: 10px;
+    position: absolute;
+    top: 0;
+    left: 22px;
+    background: #fff;
+    z-index: 9;
+  }
+  p{
+    font-size: 12px;
+    color: #ff1e1e;
+    position: relative;
+    z-index: 10;
+  }
+}
+

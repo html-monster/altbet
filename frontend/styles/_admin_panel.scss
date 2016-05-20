@@ -1,0 +1,70 @@
+h1{
+	margin: 20px 0;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 25px;
+	color: #666;
+}
+.admin-panel{
+	.control-panel{
+		margin: 0 15px;
+		padding: 0 5px 15px;
+		border-bottom: 2px solid #d7d7d8;
+		form{
+			text-align: right;
+		}
+		input{
+			padding: 5px 10px;
+			border-radius: 5px;
+			&[type="text"]{
+				border: 1px solid #d7d7d8;
+			}
+			&[type="submit"]{
+				cursor: pointer;
+				background-color: #1196d4;
+				color: #ffffff;
+			}
+		}
+	}
+	.event-exchange{
+		margin: 3px 20px;
+		border: 2px solid #d7d7d8;
+		border-radius: 5px;
+		&:nth-child(3){
+			margin-top: 15px;
+		}
+		form{
+			display: flex;
+			align-items: center;
+			overflow: hidden;
+		}
+		.exchange-title{
+			width: 25%;
+			padding: 15px;
+			float: left;
+			clear: both;
+			border-radius: 5px 0 0 5px;
+			background: linear-gradient(to top, #e6e6e6, #ffffff);
+			box-shadow: 3px 0 10px -3px rgba(0, 0, 0, 0.3);
+			h3{  color: #666666;  }
+		}
+		.exchange-content{
+			width: 75%;
+			padding: 15px;
+			text-align: right;
+			overflow: hidden;
+			a{
+				display: inline-block;
+				height: 30px;
+				line-height: 30px;
+				padding: 0 6px;
+				border-radius: 5px;
+				color: #fff;
+				outline: none;
+				background-color: #bababa;
+				&.positive{  background-color: #1196d4;  }
+				&.start{  background-color: #ff4444;  float: left;  }//ff8d
+			}
+		}
+	}
+}

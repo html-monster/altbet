@@ -1,0 +1,185 @@
+.content_my_position {
+  @include span(8.1 of 12);
+  @include push (1.4 of 12);
+  margin-top: 55px;
+  .my_position {
+    margin-top: 40px;
+    .wrapper {
+      .tabs {
+        padding-bottom: 15px;
+        border-bottom: 2px solid #d7d7d8;
+        margin-bottom: 20px;
+        .tab {
+          margin-left: 15px;
+          margin-top: 10px;
+          border: 2px solid #d7d7d8;
+          border-bottom: none;
+          border-radius: 5px 5px 0 0;
+          padding: 20px 30px;
+          background-color: #ececed;
+          color: #959595;
+          cursor: pointer;
+          &.active {
+            background-color: #fff;
+            color: #959595;
+            font-weight: bold;
+          }
+        }
+        .tab:nth-child(2) {
+          margin-left: -7px;
+        }
+        .tab:nth-child(3) {
+          margin-left: 40%;
+        }
+      }
+      .tab_content {
+        .tab_item {
+          display: none;
+          .my_position_tab {
+            .wrapper {
+              .filters {
+                padding-bottom: 8px;
+                border-bottom: 2px solid #d7d7d8;
+              }
+              .tab_content {
+                margin: 0 15px;
+                .content_position {
+                  .showhide {
+                    margin-top: 0;
+                    table {
+                      width: 100%;
+                      border: 2px solid #d7d7d8;
+                      border-radius: 5px;
+                      thead {
+                        border-bottom: 2px solid #d7d7d8;
+                        tr {
+                          th {
+                            font-size: 12px;
+                            text-align: center;
+                            padding: 15px 0;
+                          }
+                          th.filter:after {
+                            content: '';
+                            display: inline-block;
+                            width: 10px;
+                            height: 10px;
+                            background: url('../Images/thead_arow.png') no-repeat;
+                            margin-right: 2px;
+                            vertical-align: middle;
+                          }
+                        }
+                      }
+                      tbody {
+                        tr {
+                          border-bottom: 2px solid #d7d7d8;
+                          td {
+                            font-size: 12px;
+                            padding: 10px 20px;
+                            text-align: center;
+                            .sell {
+                              background-color: #ffa5cd;
+                              color: #000;
+                            }
+                            .buy {
+                              background-color: #abffaf;
+                              color: #000;
+                            }
+                          }
+                        }
+                        tr:nth-child(1), tr:nth-child(3), tr:nth-child(5) {
+                          background-color: #ccc;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              .my_order_history{
+                @include push (15px);
+                border: 2px solid #d7d7d8;
+                border-radius: 5px;
+                table {
+                  width: 100%;
+                  thead {
+                    border-bottom: 2px solid #d7d7d8;
+                    tr {
+                      th {
+                        font-size: 12px;
+                        text-align: center;
+                        padding: 15px 5px;
+                        select{
+                          padding: 3px;
+                          margin-right: 3px;
+                          border: 1px solid #d7d7d8;
+                          border-radius: 3px;
+                          font-size: 11px;
+                        }
+                      }
+                    }
+                  }
+                  tbody {
+                    tr {
+                      border-bottom: 2px solid #d7d7d8;
+                      td {
+                        font-size: 12px;
+                        padding: 10px 5px;
+                        text-align: center;
+                        .sell {
+                          background-color: #ffa5cd;
+                          color: #000;
+                        }
+                        .buy {
+                          background-color: #abffaf;
+                          color: #000;
+                        }
+                      }
+                    }
+                    tr:nth-child(1), tr:nth-child(3), tr:nth-child(5) {
+                      background-color: #ccc;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .tab_item:first-child {
+          display: block;
+        }
+      }
+    }
+  }
+}
+.content_my_position {
+  .filters{
+    .checkbox {
+      opacity: 0;
+    }
+    .checkbox:checked {
+      opacity: 0;
+    }
+    .checkbox:checked + label{
+      color: red;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .checkbox:not(checked) + label{
+      cursor: pointer;
+      color: #959595;
+      text-transform: uppercase;
+      font-size: 12px;
+      margin-right: 4%;
+      margin-left: 15px;
+      padding-bottom: 10px;
+    }
+  }
+  .content_position div {
+    display: none;
+    margin-top: 50px;
+    &.active {
+      display: block !important;
+    }
+  }
+
+}
+

@@ -1,0 +1,114 @@
+.wrapper_user_page {
+  background-color: #fff;
+  height: 100%;
+  .funds_tab {
+    margin-top: 20px;
+    .tabs {
+      span.tab {
+        color: #000;
+        font-weight: 600;
+        background: #fff;
+        padding: 10px;
+        border-radius: 4px;
+        &.active {
+          color: #fff;
+          font-weight: 600;
+          background: #4f656e;
+        }
+      }
+    }
+    .tab_content {
+      margin-top: 20px;
+      .user_content {
+        h2 {
+          margin-bottom: 10px;
+        }
+        .table_responsive {
+          border-radius: 5px;
+          border: 2px solid black;
+          table.user_table {
+            width: 100%;
+            tr {
+              border-bottom: 2px solid black;
+              &:last-child {
+                border-bottom: none;
+              }
+              td {
+                padding: 5px 0 5px 15px;
+
+                span {
+                  display: inline-block;
+                  float: right;
+                  margin-right: 15px;
+                  padding: 2px 4px;
+                  background: linear-gradient(#249fed, #116b95);
+                  font-weight: bold;
+                  color: #fff;
+                  font-size: 12px;
+                  border-radius: 4px;
+                }
+              }
+            }
+          }
+
+        }
+      }
+      .deposit_funds {
+        .table_responsive {
+          border: none;
+          form.deposit {
+            i {
+              font-style: normal;
+              font-size: 11px;
+            }
+            strong {
+              font-size: 14px;
+              color: #000;
+            }
+            input {
+              border: 1px solid #ccc;
+              border-radius: 4px;
+              padding-left: 10px;
+              margin-bottom: 10px;
+              font-size: 12px;
+              height: 31px;
+            }
+            .wrapper_funds {
+              height: 80px;
+              position: relative;
+              .select_funds {
+                position: absolute;
+                width: 20%;
+                margin-right: 10px;
+                &:nth-child(2){
+                  margin-left: 200px;
+                }
+                &:nth-child(3){
+                  margin-left: 400px;
+                }
+                select {
+                  border: 1px solid #ccc;
+                  border-radius: 4px;
+                  padding: 0 10px;
+                  width: 158px;
+                  height: 31px;
+                }
+              }
+              .funds_margin{
+                margin-top: 24px;
+              }
+            }
+            input[id='submit_deposit_funds'] {
+              padding: 5px 15px;
+              background: linear-gradient(#249fed, #116b95);
+              color: #fff;
+              font-weight: bold;
+              border: 1px solid #249fed;
+
+            }
+          }
+        }
+      }
+    }
+  }
+}
