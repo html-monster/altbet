@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <link href="/styles/index.css" rel="stylesheet">
-  <script src="/js/all.js" defer></script>
+  <script type="text/javascript" src="/js/all.js" defer></script>
 </head>
 <body>
 <div class="wrapper">
@@ -79,57 +79,139 @@
         </div>
       </div>
       <div id="mainController" class="executed" data-ng-controller="ordersCtrl">
-        <!--<div class="executed_orders">-->
-          <!--<div class="thead">-->
-            <!--<strong>Продажа</strong>-->
-            <!--<strong>Обьем</strong>-->
-          <!--</div>-->
-          <!--<div class="tbody">-->
-            <!--<div class="tr" ng-repeat="order in orderSell">-->
-              <!--<div class="td"><span>{{order.Price}}</span></div>-->
-              <!--<div class="td"><span>{{order.Quantity}}</span></div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="executed_orders">-->
-          <!--<div class="thead">-->
-            <!--<strong>Покупка</strong>-->
-            <!--<strong>Обьем</strong>-->
-          <!--</div>-->
-          <!--<div class="tbody">-->
-            <!--<div class="tr" ng-repeat="order in orderBuy">-->
-              <!--<div class="td"><span>{{order.Price}}</span></div>-->
-              <!--<div class="td"><span>{{order.Quantity}}</span></div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="executed_orders">-->
-          <!--<div class="thead">-->
-            <!--<strong>Исполненые ордера</strong>-->
-          <!--</div>-->
-          <!--<div class="tbody">-->
-            <!--<div class="tr" ng-repeat="tick in ticks">-->
-              <!--<div class="td"><span>{{tick.Time}}</span></div>-->
-              <!--<div class="td"><span>{{tick.Price}}</span></div>-->
-              <!--<div class="td"><span>{{tick.Volume}}</span></div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+        <!--<div class="executed_orders">
+          <div class="thead">
+            <strong>Продажа</strong>
+            <strong>Обьем</strong>
+          </div>
+          <div class="tbody">
+            <div class="tr" ng-repeat="order in orderSell">
+              <div class="td"><span>{{order.Price}}</span></div>
+              <div class="td"><span>{{order.Quantity}}</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="executed_orders">
+          <div class="thead">
+            <strong>Покупка</strong>
+            <strong>Обьем</strong>
+          </div>
+          <div class="tbody">
+            <div class="tr" ng-repeat="order in orderBuy">
+              <div class="td"><span>{{order.Price}}</span></div>
+              <div class="td"><span>{{order.Quantity}}</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="executed_orders">
+          <div class="thead">
+            <strong>Исполненые ордера</strong>
+          </div>
+          <div class="tbody">
+            <div class="tr" ng-repeat="tick in ticks">
+              <div class="td"><span>{{tick.Time}}</span></div>
+              <div class="td"><span>{{tick.Price}}</span></div>
+              <div class="td"><span>{{tick.Volume}}</span></div>
+            </div>
+          </div>
+        </div>-->
         <div class="executed_orders">
           <table class="head">
             <thead>
-              <th><span>ID</span></th>
-              <th><span>Sell</span></th>
-              <th><span>Volume</span></th>
+              <tr>
+                <th><span>ID</span></th>
+                <th><span>Sell</span></th>
+                <th><span>Volume</span></th>
+              </tr>
             </thead>
           </table>
           <div class="body">
             <table>
               <tbody>
-                <tr ng-repeat="order in orderSell">
+                 <!-- <td><span>Alt.bet</span></td>
+                  <td><span>{{order.LimitPrice}}</span></td>
+                  <td><span>{{order.Quantity}}</span></td>-->
+                <tr>
+                  <td><span>Alt.bet</span></td>
+                  <td><span>0.55</span></td>
+                  <td class="clickable"><span>125</span></td>
+                </tr>
+                 <tr>
+                   <td><span>Alt.bet</span></td>
+                   <td><span>0.52</span></td>
+                   <td class="clickable"><span>156</span></td>
+                 </tr>
+                 <tr>
+                   <td><span>Alt.bet</span></td>
+                   <td><span>0.49</span></td>
+                   <td class="clickable"><span>118</span></td>
+                 </tr>
+                 <tr>
+                   <td><span>Alt.bet</span></td>
+                   <td><span>0.47</span></td>
+                   <td class="clickable"><span>96</span></td>
+                 </tr>
+                 <tr>
+                   <td><span>Alt.bet</span></td>
+                   <td><span>0.44</span></td>
+                   <td class="clickable"><span>235</span></td>
+                 </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="executed_orders">
+          <table class="head">
+            <thead>
+              <tr>
+                <th><span>ID</span></th>
+                <th><span>Buy</span></th>
+                <th><span>Volume</span></th>
+              </tr>
+            </thead>
+          </table>
+          <div class="body">
+            <table>
+              <tbody>
+                <!--<tr ng-repeat="order in orderBuy">
                   <td><span>Alt.bet</span></td>
                   <td><span>{{order.LimitPrice}}</span></td>
                   <td><span>{{order.Quantity}}</span></td>
+                </tr>-->
+                <tr>
+                  <td><span>Alt.bet</span></td>
+                  <td><span>0.56</span></td>
+                  <td class="clickable"><span>211</span></td>
+                </tr>
+                <tr>
+                  <td><span>Alt.bet</span></td>
+                  <td><span>0.59</span></td>
+                  <td class="clickable"><span>335</span></td>
+                </tr>
+                <tr>
+                  <td><span>Alt.bet</span></td>
+                  <td><span>0.63</span></td>
+                  <td class="clickable"><span>600</span></td>
+                </tr>
+                <tr>
+                  <td><span>Alt.bet</span></td>
+                  <td><span>0.66</span></td>
+                  <td class="clickable"><span>421</span></td>
+                </tr>
+                <tr>
+                  <td><span>Alt.bet</span></td>
+                  <td><span>0.69</span></td>
+                  <td class="clickable"><span>260</span></td>
+                </tr>
+                <tr>
+                  <td><span>Alt.bet</span></td>
+                  <td><span>0.73</span></td>
+                  <td class="clickable"><span>259</span></td>
+                </tr>
+                <tr>
+                  <td><span>Alt.bet</span></td>
+                  <td><span>0.81</span></td>
+                  <td class="clickable"><span>145</span></td>
                 </tr>
               </tbody>
             </table>
@@ -138,45 +220,96 @@
         <div class="executed_orders">
           <table class="head">
             <thead>
-            <th><span>ID</span></th>
-            <th><span>Buy</span></th>
-            <th><span>Volume</span></th>
-          </thead>
-          </table>
-          <div class="body">
-            <table>
-              <tbody>
-                <tr ng-repeat="order in orderBuy">
-                  <td><span>Alt.bet</span></td>
-                  <td><span>{{order.LimitPrice}}</span></td>
-                  <td><span>{{order.Quantity}}</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="executed_orders">
-          <table class="head">
-            <thead>
-            <th><span>Execution of orders</span></th>
-            <th></th>
-            <th></th>
+              <tr>
+                <th><span>Executed orders</span></th>
+                <th></th>
+                <th></th>
+              </tr>
             </thead>
           </table>
           <div class="body">
             <table>
-              <tbody>
-              <tr ng-repeat="tick in ticks">
+             <!-- <tr ng-repeat="tick in ticks">
                 <td><span>{{tick.Time}}</span></td>
                 <td><span>{{tick.Price}}</span></td>
                 <td><span>{{tick.Volume}}</span></td>
-              </tr>
+              </tr>-->
+              <tbody>
+                <tr>
+                  <td><span>05/25/2016 16:36:18</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr>
+                <tr>
+                  <td><span>05/25/2016 16:36:25</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr>
+                <tr>
+                  <td><span>05/25/2016 16:36:29</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr>
+                <tr>
+                  <td><span>05/25/2016 16:36:35</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr>
+                <tr>
+                  <td><span>05/25/2016 16:36:59</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr>
+                <tr>
+                  <td><span>05/25/2016 16:37:15</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr>
+                <tr>
+                  <td><span>05/25/2016 16:37:30</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr>
+                <tr>
+                  <td><span>05/25/2016 16:37:45</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr>
+                <tr>
+                  <td><span>05/25/2016 16:37:50</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr><tr>
+                  <td><span>05/25/2016 16:38:35</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr>
+                <tr>
+                  <td><span>05/25/2016 16:38:52</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr><tr>
+                  <td><span>05/25/2016 16:39:12</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr>
+                <tr>
+                  <td><span>05/25/2016 16:39:19</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr>
+                <tr>
+                  <td><span>05/25/2016 16:39:27</span></td>
+                  <td><span>0.46</span></td>
+                  <td><span>256</span></td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
       <div class="currency">
+        <strong>For comparison </strong>
         <table class="currency_table">
           <tr>
             <td><span>kurs.com.ua</span></td>

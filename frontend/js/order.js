@@ -61,30 +61,7 @@ $(document).ready(function () {
 	// order validation ==================================================================================================
 	(function formValidation() {
 		var order = $('.tab_item');
-		/*function formValidation(form){
-		 form.each(function () {
-		 // $(this).find('input[type="submit"]').prop('disabled', true);
-		 if($(this).find('input.number').length != 0){
-		 $(this).submit(function (e) {
-		 e.preventDefault();
-		 $(this).find('input.number').each(function () {
-		 // \d{1,6} - целые
-		 //[0-9]{0,6}[.]?[0-9]{1,2} - 0,01 - 99999999
-		 //[0]+([.][0-9]{1,2})? -
-		 var validationFormula = new RegExp('(' + $(this).attr('validation') + ')','i'),
-		 value = $(this).val();
-		 console.log(/\d{1,6}$/i.test('12345678'));
-		 if(!(validationFormula.test(value))){
-		 if(validationFormula.test('2.1')){
-		 console.log('Введенные данные должны быть ');
-		 }
-		 }
-		 });
-		 });
-		 }
-		 });
-		 }
-		 formValidation($('#order form'));*/
+
 		order.on('contextmenu', 'input.number', function (e) {
 			if(e.button == 2)
 					e.preventDefault();
@@ -130,12 +107,13 @@ $(document).ready(function () {
 			var code = e.charCode || e.keyCode,
 					message = $(this).next();
 			if($(this).parents('.price').length){
-				if(code	 < 46 || code	 > 57 || code	 == 47){
+				/*if(code	 < 46 || code	 > 57 || code	 == 47){
 					message.fadeIn(200);
+					return false;
 				}
 				else if($(this).val().length > 1){
 					message.fadeOut(200);
-				}
+				}*/
 				if($(this).val() == ''){
 					if(code	 != 48){
 						message.fadeIn(200);
@@ -147,6 +125,15 @@ $(document).ready(function () {
 				}
 				else if($(this).val().length == 1){
 					if(code	 != 46){
+						message.fadeIn(200);
+						return false;
+					}
+					else{
+						message.fadeOut(200);
+					}
+				}
+				else{
+					if(code	 == 46){
 						message.fadeIn(200);
 						return false;
 					}
@@ -176,7 +163,6 @@ $(document).ready(function () {
 				else{
 					message.fadeOut(200);
 				}
-				// console.log((+$(this).val()).toFixed(2));
 				var val = $(this).val().split('.');
 				if(val.length == 2){
 					if(code	 == 46)
@@ -197,80 +183,99 @@ $(document).ready(function () {
 	// new order =========================================================================================================
 	(function addOrder() {
 		$('#exchange').on('click', 'button.event', function () {
-			var html, price, volume, buySum, sellSum, title, currentID, order = [];
+			var html, price = 0, volume = 0, buySum = 0, sellSum = 0, title, currentID, inputFocus, order = [];
 			price = $(this).find('.price').text().replace(/[^0-9.]+/g, "");
-			volume = $(this).find('.volume').text();
 			title = $(this).parents('.event-content').find('.event-title').text();
 			currentID = $(this).parents('.event-content').attr('id');
 			order.push(currentID, title);
-			buySum = (price != '' && volume != '' && price != undefined && volume != undefined) ? (price * volume).toFixed(2) : "";
-			sellSum = (price != '' && volume != '' && price != undefined && volume != undefined) ? ((1 - price) * volume).toFixed(2) : "";
+			if(limit){
+				volume = $(this).find('.volume').text();
+				buySum = (!(isNaN(price)) && !(isNaN(volume))) ? (price * volume).toFixed(2) : "";
+				sellSum = (!(isNaN(price)) && !(isNaN(volume))) ? ((1 - price) * volume).toFixed(2) : "";
+			}
+			else{
+				var ii = $(this).index();
+				if($(this).parent('.sell').length){
+					sellSum = 0;
+					for(ii; ii < $(this).parent().children().length; ii++){
+						volume += +$(this).parent().find('.event').eq(ii).find('.volume').text();
+						sellSum +=  (1 - +$(this).parent().find('.event').eq(ii).find('.price').text().replace(/[^0-9.]+/g, "")) * +$(this).parent().find('.event').eq(ii).find('.volume').text();
+					}
+					sellSum = sellSum.toFixed(2);
+				}
+				else{
+					buySum = 0;
+					for(ii; ii > -1; ii--){
+						volume += +$(this).parent().find('.event').eq(ii).find('.volume').text();
+						buySum +=  +$(this).parent().find('.event').eq(ii).find('.price').text().replace(/[^0-9.]+/g, "") * +$(this).parent().find('.event').eq(ii).find('.volume').text();
+					}
+					buySum = buySum.toFixed(2);
+				}
+			}
 			if (searchValue(id, $(this).parents('.event-content').attr('id')) == -1) {
 				id.push(order);
 				if (($(this).parent().hasClass('sell'))) {
-					if(+limit){
+					if(limit){
 						html = '<div class="order_content" id="' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' + title + '</h3><a href="#" class="close"></a><strong class="last-price down">0.33</strong><strong class="current-order up">pos: <span>255</span></strong></div><div class="sell-container"><form><div class="price col-3" style="margin-left: 3px;"><label>Ваша цена</label><div class="input"><input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4" value="' + price + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Объем</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8" value="' + volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8" value="' +
 								sellSum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><select class="limit_market col-3" style="margin-left: 3px; width: 31%;" name="limit"><option value="0">Market</option><option value="1" selected>Limit</option></select><input type="submit" class="btn sell col-3" value="SELL" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form></div><div class="buy-container"></div></div>';
 					}
 					else{
-						html = '<div class="order_content" id="' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' + title + '</h3><a href="#" class="close"></a><strong class="last-price down">0.33</strong><strong class="current-order up">pos: <span>255</span></strong></div><div class="sell-container"><form><div class="price col-3" style="margin-left: 3px;"></div><div class="volume col-3" style="margin-left: 3px;"><label>Объем</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><select class="limit_market col-3" style="margin-left: 3px; width: 31%;" name="limit"><option value="0" selected>Market</option><option value="1">Limit</option></select><input type="submit" class="btn sell col-3" value="SELL" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form></div><div class="buy-container"></div></div>';
+						html = '<div class="order_content" id="' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' + title + '</h3><a href="#" class="close"></a><strong class="last-price down">0.33</strong><strong class="current-order up">pos: <span>255</span></strong></div><div class="sell-container"><form><div class="price col-3" style="margin-left: 3px;"></div><div class="volume col-3" style="margin-left: 3px;"><label>Объем</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8" value="' + volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8" value="' + sellSum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><select class="limit_market col-3" style="margin-left: 3px; width: 31%;" name="limit"><option value="0" selected>Market</option><option value="1">Limit</option></select><input type="submit" class="btn sell col-3" value="SELL" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form></div><div class="buy-container"></div></div>';
 					}
 				}
 				else {
-					if(+limit){
+					if(limit){
 						html = '<div class="order_content" id="' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' + title + '</h3><a href="#" class="close"></a><strong class="last-price up">0.33</strong><strong class="current-order down">pos: <span>255</span></strong></div><div class="sell-container"></div><div class="buy-container"><form><div class="price col-3" style="margin-left: 3px;"><label>Ваша цена</label><div class="input"><input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4" value="' + price + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Объем</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8" value="' + volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8" value="' +
 							buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><select class="limit_market col-3" style="margin-left: 3px; width: 31%;" name="limit"><option value="0">Market</option><option value="1" selected>Limit</option></select><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form></div></div>';
 					}
 					else{
-						html = '<div class="order_content" id="' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' + title + '</h3><a href="#" class="close"></a><strong class="last-price up">0.33</strong><strong class="current-order down">pos: <span>255</span></strong></div><div class="sell-container"></div><div class="buy-container"><form><div class="price col-3" style="margin-left: 3px;"></div><div class="volume col-3" style="margin-left: 3px;"><label>Объем</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><select class="limit_market col-3" style="margin-left: 3px; width: 31%;" name="limit"><option value="0" selected>Market</option><option value="1">Limit</option></select><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form></div></div>';
+						html = '<div class="order_content" id="' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' + title + '</h3><a href="#" class="close"></a><strong class="last-price up">0.33</strong><strong class="current-order down">pos: <span>255</span></strong></div><div class="sell-container"></div><div class="buy-container"><form><div class="price col-3" style="margin-left: 3px;"></div><div class="volume col-3" style="margin-left: 3px;"><label>Объем</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8" value="' + volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8" value="' + buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><select class="limit_market col-3" style="margin-left: 3px; width: 31%;" name="limit"><option value="0" selected>Market</option><option value="1">Limit</option></select><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form></div></div>';
 					}
 				}
 				$('#order').append(html);
 				numericalVerification($('.order_content input'));
 				$('.order_content').fadeIn(400);
-				if(+limit){
-					var inputFocus = $('#' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .price input');
-					inputFocus.focus();
-					inputFocus[0].selectionStart = inputFocus.val().length;
+				if(limit){
+					inputFocus = $('#' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .price input');
 				}
 				else{
-					$('#' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .volume input').focus();
+					inputFocus = $('#' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .volume input');
 				}
+				inputFocus.focus();
+				inputFocus[0].selectionStart = inputFocus.val().length;
 			}
 			else {
+				var container;
 				if (($(this).parent().hasClass('sell'))) {
-					var container = $('#' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .sell-container');
-					if(+limit){
+					container = $('#' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .sell-container');
+					if(limit){
 						html = '<form style="display: none;"><div class="price col-3" style="margin-left: 3px;"><label>Ваша цена</label><div class="input"><input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4" value="' + price + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Объем</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8" value="' + volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8" value="' + sellSum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><select class="limit_market col-3" style="margin-left: 3px; width: 31%;" name="limit"><option value="0">Market</option><option value="1" selected>Limit</option></select><input type="submit" class="btn sell col-3" value="SELL" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form>';
 					}
 					else{
-						html = '<form style="display: none;"><div class="price col-3" style="margin-left: 3px;"></div><div class="volume col-3" style="margin-left: 3px;"><label>Объем</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><select class="limit_market col-3" style="margin-left: 3px; width: 31%;" name="limit"><option value="0" selected>Market</option><option value="1">Limit</option></select><input type="submit" class="btn sell col-3" value="SELL" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form>';
+						html = '<form style="display: none;"><div class="price col-3" style="margin-left: 3px;"></div><div class="volume col-3" style="margin-left: 3px;"><label>Объем</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8" value="' + volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8" value="' + sellSum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><select class="limit_market col-3" style="margin-left: 3px; width: 31%;" name="limit"><option value="0" selected>Market</option><option value="1">Limit</option></select><input type="submit" class="btn sell col-3" value="SELL" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form>';
 					}
-					if(container.find('form').length < 1)
-						container.append(html);
 				}
 				else {
-					var container = $('#' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .buy-container');
-					if(+limit){
+					container = $('#' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .buy-container');
+					if(limit){
 						html = '<form style="display: none;"><div class="price col-3" style="margin-left: 3px;"><label>Ваша цена</label><div class="input"><input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4" value="' + price + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Объем</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8" value="' + volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8" value="' + buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><select class="limit_market col-3" style="margin-left: 3px; width: 31%;" name="limit"><option value="0">Market</option><option value="1" selected>Limit</option></select><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form>';
 					}
 					else{
-						html = '<form style="display: none;"><div class="price col-3" style="margin-left: 3px;"></div><div class="volume col-3" style="margin-left: 3px;"><label>Объем</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><select class="limit_market col-3" style="margin-left: 3px; width: 31%;" name="limit"><option value="0" selected>Market</option><option value="1">Limit</option></select><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form>';
+						html = '<form style="display: none;"><div class="price col-3" style="margin-left: 3px;"></div><div class="volume col-3" style="margin-left: 3px;"><label>Объем</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8" value="' + volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8" value="' + buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><select class="limit_market col-3" style="margin-left: 3px; width: 31%;" name="limit"><option value="0" selected>Market</option><option value="1">Limit</option></select><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form>';
 					}
-					if(container.find('form').length < 1)
-						container.append(html);
 				}
-				// container.find('.volume input').css('background', 'green');
+				// if(container.find('form').length < 1)
+					container.html(html);
 				numericalVerification($('.order_content input'));
 				$('.order_content form').fadeIn(400);
-				if(+limit){
-					var inputFocus = container.find('.price input');
-					inputFocus.focus();
-					inputFocus[0].selectionStart = inputFocus.val().length;
+				if(limit){
+					inputFocus = container.find('.price input');
 				}
 				else{
-					container.find('.volume input').focus();
+					inputFocus = container.find('.volume input');
 				}
+				inputFocus.focus();
+				inputFocus[0].selectionStart = inputFocus.val().length;
 			}
 
 			;(function tabReturn() {
@@ -284,7 +289,7 @@ $(document).ready(function () {
 			$("body select").msDropDown();
 		});
 
-		//order edit ======================================================================================================
+		//order edit =======================================================================================================
 		;(function orderEdit() {
 			var container = $('.left_order'),
 					select;

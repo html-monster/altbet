@@ -2,7 +2,6 @@
   @include span(8 of 12);
   @include push (1.4 of 12);
   margin-top: 55px;
-  margin-bottom: 25px;
   background-color: #f8f8f8;
   .breadcrumbs {
     padding: 5px 15px;
@@ -19,7 +18,7 @@
         font-size: 12px;
         font-weight: bold;
         transition: 0.4s ease-out;
-        &:hover{  color: #1196d4;  }
+        &:hover{  color: $main-color ;  }
       }
       a:after {
         content: '';
@@ -39,7 +38,7 @@
      &.active {
        //padding-bottom: 3px;
        //border-bottom: 2px solid #d7d7d8;
-       color: #1196d4;
+       color: $main-color ;
      }
     }
     .tabs {
@@ -157,7 +156,7 @@
               right: 10px;
               background: url("../Images/star.png") no-repeat;
               background-size: cover;
-              z-index: 10;
+              z-index: 2;
             }
             .event_info{
               position: absolute;
@@ -227,6 +226,7 @@
                   padding: 3px 8px;
                   border-radius: 5px;
                   text-transform: uppercase;
+                  background: #f4f4f4;
                   @include btn-shadow;
                   &.empty{  width: 60px;  }
                   //&:nth-child(2) {
@@ -268,12 +268,12 @@
                 }
                 .buy{
                   button{
-                    &:last-child{
-                      background: linear-gradient(to right, #caecf1, #adf1f1);
-                    }
-                    &:nth-last-of-type(2){
-                      background: linear-gradient(to right, #94dfe5, #2dd4d7);
-                    }
+                    //&:last-child{
+                    //  background: linear-gradient(to right, #caecf1, #adf1f1);
+                    //}
+                    //&:nth-last-of-type(2){
+                    //  background: linear-gradient(to right, #94dfe5, #2dd4d7);
+                    //}
                     &:first-child{
                       background: linear-gradient(to right, #4ad1d7, #2dc7ca);
                     }
@@ -281,12 +281,12 @@
                 }
                 .sell{
                   button{
-                    &:first-child{
-                      background: linear-gradient(to left, #ffb4b4, #ff8c8c);
-                    }
-                    &:nth-of-type(2){
-                      background: linear-gradient(to left, #ff7878, #ff6464);
-                    }
+                    //&:first-child{
+                    //  background: linear-gradient(to left, #ffb4b4, #ff8c8c);
+                    //}
+                    //&:nth-of-type(2){
+                    //  background: linear-gradient(to left, #ff7878, #ff6464);
+                    //}
                     &:last-child{
                       background: linear-gradient(to left, #ff6464, #ff4444);
                     }
