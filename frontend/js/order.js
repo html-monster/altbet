@@ -1,4 +1,3 @@
-$(document).ready(function () {
 	var id = [],
 			limit = 0;
 
@@ -278,127 +277,128 @@ $(document).ready(function () {
 				inputFocus[0].selectionStart = inputFocus.val().length;
 			}
 
-			;(function tabReturn() {
-				var tab = $(".left_order .wrapper .tab"),
-						tab_item = $(".left_order .tab_item");
-				if(!(tab.eq(0).hasClass('active'))){
-					tab.removeClass("active").eq(0).addClass("active");
-					tab_item.hide().eq(0).fadeIn(200);
-				}
-			})();
+			tabReturn();
 			$("body select").msDropDown();
 		});
+	})();
+	function tabReturn() {
+		var tab = $(".left_order .wrapper .tab"),
+				tab_item = $(".left_order .tab_item");
+		if(!(tab.eq(0).hasClass('active'))){
+			tab.removeClass("active").eq(0).addClass("active");
+			tab_item.hide().eq(0).fadeIn(200);
+		}
+	}
+	//order edit =======================================================================================================
+	;(function orderEdit() {
+		var container = $('.left_order'),
+				select;
+		container.on('change', 'select', function () {
+			var price = $(this).parents('form').find('.price');
+			if(+$(this).val()){
+				price.css({'display': 'none', 'opacity': 1}).html('<label>Ваша цена</label><div class="input"><input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4" value="0."><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div>').fadeIn(200);
+				price.find('input').focus();
+				price.find('input')[0].selectionStart = 2;
+			}
+			else{
+				price.animate({opacity: 0}, 100);
+				setTimeout(function () {
+					price.html('');
+				}, 200);
+				price.parent().find('input.number').val('');
+				price.parent().find('.volume input').focus();
+			}
+		});
+		container.on('focus', 'input.number', function () {
+			select = +$(this).parents('form').find('select').val();
+		});
+		function calculation(context) {
+			var priceInput = context.parents('form').find('.price input'),
+					volumeInput = context.parents('form').find('.volume input'),
+					sumInput = context.parents('form').find('.obligations input'),
+					price,
+					volume = volumeInput.val(),
+					sum = sumInput.val();
 
-		//order edit =======================================================================================================
-		;(function orderEdit() {
-			var container = $('.left_order'),
-					select;
-			container.on('change', 'select', function () {
-				var price = $(this).parents('form').find('.price');
-				if(+$(this).val()){
-					price.css({'display': 'none', 'opacity': 1}).html('<label>Ваша цена</label><div class="input"><input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4" value="0."><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div>').fadeIn(200);
-					price.find('input').focus();
-					price.find('input')[0].selectionStart = 2;
+			if(select){
+				if(context.parents('.sell-container').length){
+					price = 1 - priceInput.val();
 				}
 				else{
-					price.animate({opacity: 0}, 100);
-					setTimeout(function () {
-						price.html('');
-					}, 200);
-					price.parent().find('input.number').val('');
-					price.parent().find('.volume input').focus();
+					price = priceInput.val();
 				}
-			});
-			container.on('focus', 'input.number', function () {
-				select = +$(this).parents('form').find('select').val();
-			});
-			function calculation(context) {
-				var priceInput = context.parents('form').find('.price input'),
-						volumeInput = context.parents('form').find('.volume input'),
-						sumInput = context.parents('form').find('.obligations input'),
-						price,
-						volume = volumeInput.val(),
-						sum = sumInput.val();
-
-				if(select){
-					if(context.parents('.sell-container').length){
-						price = 1 - priceInput.val();
+				if(context.parents('.price').length){//(price * volume).toFixed(2)
+					if(!(isNaN(volume))){
+						sumInput.val((price * volume).toFixed(2));
 					}
 					else{
-						price = priceInput.val();
-					}
-					if(context.parents('.price').length){//(price * volume).toFixed(2)
-						if(!(isNaN(volume))){
-							sumInput.val((price * volume).toFixed(2));
-						}
-						else{
-							sumInput.val('');
-						}
-					}
-					if(context.parents('.volume').length){
-						if(!(isNaN(price))){
-							sumInput.val((price * volume).toFixed(2));
-						}
-						else{
-							sumInput.val('');
-						}
-					}
-					if(context.parents('.obligations').length){
-						if(!(isNaN(price))){
-							volumeInput.val(Math.round(sum / price));
-						}
-						else{
-							volumeInput.val('');
-						}
-					}
-				}
-				else{
-					if(context.parents('.volume').length){
 						sumInput.val('');
 					}
-					if(context.parents('.obligations').length){
+				}
+				if(context.parents('.volume').length){
+					if(!(isNaN(price))){
+						sumInput.val((price * volume).toFixed(2));
+					}
+					else{
+						sumInput.val('');
+					}
+				}
+				if(context.parents('.obligations').length){
+					if(!(isNaN(price))){
+						volumeInput.val(Math.round(sum / price));
+					}
+					else{
 						volumeInput.val('');
 					}
 				}
 			}
-			container.on('keyup', 'input.number', function () {
-				calculation($(this));
-			});
-			container.on('click', '.regulator span', function(){
-				var thisItem = $(this);
-				setTimeout(function () {
-					calculation(thisItem);
-				}, 0);
-			});
+			else{
+				if(context.parents('.volume').length){
+					sumInput.val('');
+				}
+				if(context.parents('.obligations').length){
+					volumeInput.val('');
+				}
+			}
+		}
+		container.on('keyup', 'input.number', function () {
+			calculation($(this));
+		});
+		container.on('click', '.regulator span', function(){
+			var thisItem = $(this);
+			setTimeout(function () {
+				calculation(thisItem);
+			}, 0);
+		});
 
-			$('.current-order-title .edit').click(function () {
-				var title = $(this).parents('.current-order-title'),
-						windowHeight = window.innerHeight,
-						parent = $(this).parents('#current-orders'),
-						height;
-				setTimeout(function () {
-					height = parent[0].clientHeight;
-					if(height + 1 > windowHeight - 235){
-						parent.css('overflow-y', 'auto');
-					}
-					else{
-						parent.css('overflow-y', 'inherit');
-					}
-				}, 400);
-				if(title.hasClass('active')){
-					setTimeout(function () {
-						title.removeClass('active');
-					}, 200);
+		$('.current-order-title .edit').click(function () {
+			var title = $(this).parents('.current-order-title'),
+					windowHeight = window.innerHeight,
+					parent = $(this).parents('#current-orders'),
+					height;
+			setTimeout(function () {
+				height = parent[0].clientHeight;
+				if(height + 1 > windowHeight - 235){
+					parent.css('overflow-y', 'auto');
 				}
 				else{
-					title.addClass('active');
+					parent.css('overflow-y', 'inherit');
 				}
-				$(this).parent().next().toggleClass('active').slideToggle(200);
-				$(this).parents('.order_content').toggleClass('active');
-			});
-		})();
+			}, 400);
+			if(title.hasClass('active')){
+				setTimeout(function () {
+					title.removeClass('active');
+				}, 200);
+			}
+			else{
+				title.addClass('active');
+			}
+			$(this).parent().next().toggleClass('active').slideToggle(200);
+			$(this).parents('.order_content').toggleClass('active');
+		});
+	})();
 
-		// $('#exchange').on('click', 'button.event', function () {
+	// $('#exchange').on('click', 'button.event', function () {
 		// 	var html, price, volume, title, parent, order = [];
 		// 	price = $(this).find('.price').text();
 		// 	volume = $(this).find('.volume').text();
@@ -418,7 +418,6 @@ $(document).ready(function () {
 		// 	$('#order-form').fadeIn(200);
 		// });
 
-	})();
 	(function orderDelete() {
 		var order_tab = $('#order');
 		order_tab.on('click', 'button.delete', function (e) {
@@ -426,7 +425,8 @@ $(document).ready(function () {
 			var form = $(this).parents('form'),
 					order = $(this).parents('.order_content');
 			if(order.find('form').length == 1){
-				id.splice(searchValue(id, order.attr('id').slice(0, -7)), 1);
+				if(id.length)
+					id.splice(searchValue(id, order.attr('id').slice(0, -7)), 1);
 				order.remove();
 			}
 			else{
@@ -436,7 +436,8 @@ $(document).ready(function () {
 		order_tab.on('click', 'a.close', function (e) {
 			e.preventDefault();
 			var order = $(this).parents('.order_content');
-			id.splice(searchValue(id, order.attr('id').slice(0, -7)), 1);
+			if(id.length)
+				id.splice(searchValue(id, order.attr('id').slice(0, -7)), 1);
 			order.remove();
 		});
 		// var order_tab = $('#order');
@@ -448,9 +449,9 @@ $(document).ready(function () {
 
 	// order drag and drop ===============================================================================================
 	$(function() {
-		$( "#current-orders" ).sortable({
+		var current = $( "#current-orders" );
+		current.sortable({
 			placeholder: "ui-state-highlight"
 		});
-		$( "#current-orders" ).disableSelection();
+		current.disableSelection();
 	});
-});

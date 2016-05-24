@@ -2,13 +2,14 @@
   background-color: #f8f8f8;
   margin: 0 30px;
   padding-bottom: 25px;
-  h2 {
+  h1 {
     text-transform: uppercase;
     font-size: 18px;
     color: #707070;
     margin-bottom: 15px;
+    text-align: left;
   }
-  h3{
+  h2{
     font-size: 16px;
     color: #707070;
     text-align: left;
@@ -122,10 +123,10 @@
       &:before{
         content: '';
         width: 1px;
-        height: 105%;
+        height: 120%;
         position: absolute;
         left: 0;
-        top: -5px;
+        top: -10%;
         background: linear-gradient(to top, #FFF, #A9A9A9, #FFF);
       }
       &:first-child{
@@ -137,6 +138,12 @@
       &:last-child .head:before{
         box-shadow: 5px 6px 10px -4px rgba(0, 0, 0, 0.2), 2px 6px 10px -4px rgba(0, 0, 0, 0.1);
       }
+      /*&:nth-child(2){
+        .head:before{
+          width: calc(101% + 15px);
+          left: -7px;
+        }
+      }*/
       &:nth-child(1),&:nth-child(2){
         th{
           padding: 0 4px;
@@ -239,41 +246,101 @@
   .currency {
     width: 67%;
     margin-bottom: 20px;
-    border: 2px solid #d7d7d8;
-    border-radius: 5px;
+    //border: 2px solid #d7d7d8;
+    //border-radius: 5px;
+    .title{
+      display: block;
+      padding: 5px 0;
+      padding-left: 10px;
+      position: relative;
+      &:before, &:after {
+        content: '';
+        display: block;
+        width: 50%;
+        height: 15px;
+        position: absolute;
+        bottom: 0;
+        z-index: 5;
+      }
+      &:before{
+        left: 0;
+        box-shadow: -5px 8px 10px -4px rgba(0, 0, 0, 0.1), 3px 8px 10px -4px rgba(0, 0, 0, 0.1);;
+      }
+      &:after{
+        right: 0;
+        box-shadow: 5px 8px 10px -4px rgba(0, 0, 0, 0.1), -3px 8px 10px -4px rgba(0, 0, 0, 0.1);;
+      }
+    }
+    .currency_wrap{
+      display: flex;
+      position: relative;
+      &:last-child:before{
+        content: '';
+        width: 1px;
+        height: calc(120% + 30px);
+        position: absolute;
+        left: 50%;
+        top: -30px;
+        background: linear-gradient(to top, #FFF, #A9A9A9, #FFF);
+      }
+    }
+    .table_wrap{
+      width: 50%;
+      max-height: 210px;
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        width: 3px
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #e8e8e8;
+        border-radius: 5px;
+        //-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3)
+      }
+      &::-webkit-scrollbar-thumb {
+        background: linear-gradient(to top, #e8e8e8, #2d2d2d, #e8e8e8);
+        //background-color: #303e47;
+        border-radius: 5px;
+        //-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5)
+      }
+    }
     .currency_table {
       width: 100%;
+      overflow: hidden;
       tr {
-        //border-bottom: 2px solid #d7d7d8;
         border-collapse: collapse;
-        //&:last-of-type{
-        //  border-bottom: none;
-        //}
+        &:last-of-type td{  padding-bottom: 5px;  }
         td {
-          span {
-            padding: 5px 15px;
-            font-size: 14px;
+          padding: 0 4px;
+          &:nth-of-type(1){
+            width: 50%;
+            padding-left: 10px;
           }
-
+          &:nth-of-type(2), &:nth-of-type(3){
+            width: 25%;
+          }
+            span {
+              font-size: 14px;
+              color: #707070;
+          }
         }
       }
     }
   }
-  .buy,
-  .sell {
-    width: 120px;
-    padding: 0 10px;
-  }
-  .sell{
-    background-color: #ff4444;
-  }
-  .buy{
-    background-color: #2dc7ca;
-  }
-  .information {
-    h4 {  margin-top: 30px;  }
-    p {  margin-top: 20px;  }
-  }
+  //.buy,
+  //.sell {
+  //  width: 120px;
+  //  padding: 0 10px;
+  //}
+  //.sell{
+  //  background-color: #ff4444;
+  //}
+  //.buy{
+  //  background-color: #2dc7ca;
+  //}
+  //.information {
+  //  h4 {  margin-top: 30px;  }
+  //  p {  margin-top: 20px;  }
+  //}
 
 }
 

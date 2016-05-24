@@ -91,15 +91,15 @@
             }
             h3{
               display: inline-block;
+              max-width: 130px;
               font-size: 13px;
             }
             a.close{
-              display: block;
               float: right;
+              margin-top: 2px;
               height: 15px;
               width: 15px;
               background: url("../Images/close.png") no-repeat center;
-              margin-top: 4px;
             }
             strong {
               display: inline-block;
@@ -108,13 +108,13 @@
               color: #4e4e4e;
               &.current-order{
                 float: right;
-                margin-top: 2px;
                 margin-right: 10px;
                 color: #666666;
                 &.up span{  color: #1196d4;  }
                 &.down span{  color: red;  }
               }
               &.last-price{
+                vertical-align: top;
                 &:before{
                   content: '';
                   display: inline-block;

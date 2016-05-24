@@ -69,6 +69,14 @@ header {
         @include md(1390) {
           padding-right: 3px;
         }
+        .select {
+          #change_odds_msdd{
+            min-width: 87px !important;
+          }
+          #change_language_msdd{
+            min-width: 78px !important;
+          }
+        }
         //select{
         //  height: 30px;
         //  padding: 5px;
