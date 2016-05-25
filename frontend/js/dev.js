@@ -61,7 +61,7 @@ $(document).ready(function () {
 		$(this).text(randomInteger(1, 999999999))
 	});
 	$('#current-orders .current-order span').each(function () {
-			$(this).text(randomInteger(1, 999999));
+			$(this).text(randomInteger(1, 9999));
 	});
 	$('#current-orders .last-price').each(function () {
 			$(this).text(randomInteger(0.01, 0.99));

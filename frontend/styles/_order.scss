@@ -19,8 +19,9 @@
       text-align: center;
       margin-top: 10px;
       .tabs {
+        display: flex;
+        justify-content: center;
         .tab {
-          display: inline-block;
           width: 46.5%;
           text-transform: uppercase;
           font-size: 10px;
@@ -28,16 +29,24 @@
           border-radius: 5px 0 0 5px;
           padding: 10px 5%;
           background-color: #7e97a7;
-          border: 2px solid #fff;
           color: #000;
           &.active {
             background-color: #2d414e;
             color: #fff;
           }
-        }
-        .tab:last-child {
-          margin-left: -3px;
-          border-radius: 0 5px 5px 0;
+          &:first-child{
+            &.active{
+              border-right: 1px solid #445b69;
+            }
+            border-right: 1px solid #5f7786;
+          }
+          &:last-child {
+            &.active{
+              border-left: 1px solid #445b69;
+            }
+            border-left: 1px solid #5f7786;
+            border-radius: 0 5px 5px 0;
+          }
         }
       }
       .tab_content {
@@ -48,29 +57,35 @@
         border-top: 1px solid #f1f1f1;
         border-bottom: 1px solid #f1f1f1;
         transition: 0.4s ease-out;
-        //&:before, &:after{
-        //  content: '';
-        //  display: block;
-        //  width: 100%;
-        //  height: 9px;
-        //  position: fixed;
-        //  background: #fff;
-        //  z-index: 6;
-        //}
-        //&:after{
-        //  top: 100px;
-        //  box-shadow: 0 5px 13px -4px rgba(0, 0, 0, 0.5);
-        //}
-        //&:before{
-        //  bottom: 100px;
-        //  box-shadow: 0 -5px 13px -2px rgba(0, 0, 0, 0.5);
-        //}
+        position: relative;
+        &.max:before{
+          display: block;
+        }
+        &:before, &:after{
+          content: '';
+          display: block;
+          width: 100%;
+          height: 9px;
+          position: fixed;
+          background: #fff;
+          z-index: 6;
+        }
+        &:after{
+          top: 105px;
+          box-shadow: 0 6px 13px -3px rgba(0, 0, 0, 0.5);
+        }
+        &:before{
+          display: none;
+          bottom: 120px;
+          box-shadow: 0 -7px 13px -2px rgba(0, 0, 0, 0.5);
+        }
         .tab_item {
           display: none;
           @include scroll;
           overflow-y: inherit;
           &#current-orders{
             padding-bottom: 5px;
+            overflow-y: auto;
             .order_content{
               background-color: #ffffff;
               cursor: move;
@@ -351,7 +366,7 @@
               background-color: #ebf7f9;
               margin-bottom: 0;
             }
-            label{
+            label:not(.col-3){
               float: left;
               margin-top: 5px;
             }

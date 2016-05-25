@@ -16,7 +16,8 @@
 				windowWidth = window.innerWidth,
 				orderSidebarWidth = windowHeight - 235,
 				orderContent = $('#order'),
-				currentOrders = $('#current-orders');
+				currentOrders = $('#current-orders'),
+				tab_content = $('.tab_content');
 
 		// tabs($('.left_order'));
 		$(".left_order .wrapper .tab").click(function () {
@@ -25,10 +26,12 @@
 			if($(this).index() == 1){
 				var height = currentOrders[0].clientHeight;
 				if(height + 1 > windowHeight - 235){
-					currentOrders.css('overflow-y', 'auto');
+					// currentOrders.css('overflow-y', 'auto');
+					tab_content.addClass('max');
 				}
 				else{
-					currentOrders.css('overflow-y', 'inherit');
+					// currentOrders.css('overflow-y', 'inherit');
+					tab_content.removeClass('max');
 				}
 			}
 		}).eq(0).addClass("active");
@@ -50,9 +53,11 @@
 		orderContent.bind('DOMSubtreeModified', function(event) {
 			if(orderContent[0].clientHeight + 3  > (orderSidebarWidth)){
 				orderContent.css('overflow-y', 'auto');
+				tab_content.addClass('max');
 			}
 			else{
 				orderContent.css('overflow-y', 'inherit');
+				tab_content.removeClass('max');
 			}
 		});
 	})();
@@ -372,18 +377,22 @@
 			}, 0);
 		});
 
-		$('.current-order-title .edit').click(function () {
+		$('.current-order-title .edit').click(function (e) {
 			var title = $(this).parents('.current-order-title'),
+					tab_content = $('.tab_content'),
 					windowHeight = window.innerHeight,
 					parent = $(this).parents('#current-orders'),
 					height;
+			e.stopPropagation();
 			setTimeout(function () {
 				height = parent[0].clientHeight;
 				if(height + 1 > windowHeight - 235){
-					parent.css('overflow-y', 'auto');
+					// parent.css('overflow-y', 'auto');
+					tab_content.addClass('max');
 				}
 				else{
-					parent.css('overflow-y', 'inherit');
+					tab_content.removeClass('max');
+					// parent.css('overflow-y', 'auto');
 				}
 			}, 400);
 			if(title.hasClass('active')){
