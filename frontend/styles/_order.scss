@@ -184,13 +184,62 @@
                   }
                 //}
               }
-              select{
+              /*select{
                 width: 100%;
                 height: 31px;
                 margin-top: 10px;
-              }
-              .dd{
+              }*/
+              /*.dd{
                 margin-top: 10px;
+              }*/
+              label.col-3{
+                height: 31px;
+                padding-left: 40px;
+                margin-top: 10px;
+                font-size: 16px;
+                //text-transform: uppercase;
+                //font-weight: bold;
+                color: #707070;
+                cursor: pointer;
+                position: relative;
+                line-height: 31px;
+                span{
+                  &:before, &:after{
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    transition: 0.2s ease-out;
+                  }
+                  &:before{
+                    width: 30px;
+                    height: 15px;
+                    left: 2px;
+                    top: calc(50% - 8px);
+                    border-radius: 10px;
+                    box-shadow: inset 0 0 6px -1px rgba(0, 0, 0, 0.5);
+                    background: #ffffff;
+                  }
+                  &:after{
+                    width: 13px;
+                    height: 13px;
+                    left: 3px;
+                    top: calc(50% - 7px);
+                    box-shadow: 0 0 6px -1px rgba(0, 0, 0, 0.5);
+                    border-radius: 50%;
+                    background: #ffffff;
+                  }
+                }
+                input{
+                  display: none;
+                  &:checked + span{
+                    &:before{
+                      background: $main-color;
+                    }
+                    &:after{
+                      left: 18px;
+                    }
+                  }
+                }
               }
               button {
                 height: 31px;
