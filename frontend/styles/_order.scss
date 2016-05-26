@@ -47,15 +47,74 @@
             border-left: 1px solid #5f7786;
             border-radius: 0 5px 5px 0;
           }
+          label{
+            float: right;
+            //margin-top: -2px;
+            span{
+              display: flex;
+              width: 15px;
+              height: 15px;
+              cursor: pointer;
+              border-radius: 50%;
+              background: #707070;
+              border: 1px solid #474747;
+              box-shadow: inset 0 5px 5px rgba(0, 0, 0, 0.5);
+              &:after{
+                content: '';
+                display: block;
+                width: 9px;
+                height: 9px;
+                margin: auto;
+                border-radius: 50%;
+                background: rgba(255, 168, 35, 0);
+                box-shadow: 0 0 0 rgba(255, 168, 35, 0);
+                transition: 0.2s ease-out;
+              }
+             /* &:before, &:after{
+                content: '';
+                display: block;
+                position: absolute;
+                transition: 0.2s ease-out;
+              }
+              &:before{
+                width: 30px;
+                height: 15px;
+                left: 2px;
+                top: calc(50% - 8px);
+                border-radius: 10px;
+                box-shadow: inset 0 0 6px -1px rgba(0, 0, 0, 0.5);
+                background: #ffffff;
+              }
+              &:after{
+                width: 13px;
+                height: 13px;
+                left: 3px;
+                top: calc(50% - 7px);
+                box-shadow: 0 0 6px -1px rgba(0, 0, 0, 0.5);
+                border-radius: 50%;
+                background: #ffffff;
+              }*/
+            }
+            input{
+              display: none;
+              &:checked + span{
+                &:after{  background: rgba(255, 168, 35, 0.7); box-shadow: 0 0 10px #FFA823;  }
+                //background: $main-color;
+                //box-shadow: inset 0 5px 5px rgba(0, 0, 0, 0.5), inset 0 0 15px 0 rgba(17, 150, 212, 0.5);
+                /*&:before{  background: $main-color;  }
+                &:after{  left: 18px;  }*/
+              }
+            }
+          }
         }
       }
       .tab_content {
         margin-top: 5px;
         text-align: left;
         //max-height: 700px;
-        box-shadow: inset 0 -8px 10px -8px rgba(0, 0, 0, 0.5), inset 0 8px 10px -8px rgba(0, 0, 0, 0.5);
-        border-top: 1px solid #f1f1f1;
-        border-bottom: 1px solid #f1f1f1;
+        box-shadow: inset 0 -8px 20px -8px rgba(0, 0, 0, 0.3);
+        //border-top: 1px solid #f1f1f1;
+        //border-bottom: 1px solid #f1f1f1;
         transition: 0.4s ease-out;
         position: relative;
         &.max:before{
@@ -71,7 +130,7 @@
           z-index: 6;
         }
         &:after{
-          top: 105px;
+          top: 101px;
           box-shadow: 0 6px 13px -3px rgba(0, 0, 0, 0.5);
         }
         &:before{
@@ -89,6 +148,7 @@
             .order_content{
               background-color: #ffffff;
               cursor: move;
+              &:last-child{  background-color: transparent;  }
             }
           }
           .ui-state-highlight{
@@ -111,19 +171,20 @@
             }
             a.close{
               float: right;
-              margin-top: 2px;
+              margin-top: 4px;
               height: 15px;
               width: 15px;
               background: url("../Images/close.png") no-repeat center;
             }
             strong {
               display: inline-block;
+              margin-top: 3px;
               padding-left: 15px;
               font-size: 13px;
               color: #4e4e4e;
               &.current-order{
                 float: right;
-                margin-right: 10px;
+                margin-right: 8px;
                 color: #666666;
                 &.up span{  color: #1196d4;  }
                 &.down span{  color: red;  }
@@ -352,7 +413,7 @@
           margin-bottom: 10px;
           padding: 5px;
           border-radius: 0 0 5px 5px;
-          border: 2px solid #d7d7d8;
+          //border: 2px solid #d7d7d8;
           border-top: none;
           box-shadow: inset 0 0 15px -5px rgba(0, 0, 0, 0.5);
           form{

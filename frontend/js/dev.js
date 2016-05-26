@@ -58,7 +58,7 @@ $(document).ready(function () {
 			$(this).text(randomInteger(0.01, 0.99));
 	});
 	$('#current-orders span.volume').each(function () {
-		$(this).text(randomInteger(1, 999999999))
+		$(this).text(randomInteger(1, 999))
 	});
 	$('#current-orders .current-order span').each(function () {
 			$(this).text(randomInteger(1, 9999));
