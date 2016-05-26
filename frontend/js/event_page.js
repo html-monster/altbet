@@ -13,7 +13,7 @@
 
 (function tableAddOrder() {
 	$('.executed_orders.order_create').on('click', 'td.clickable', function () {
-		var html, price = 0, priceMarket = 0, volume = '', buySum = '', sellSum = '', title, inputFocus, order = $('#order');
+		var html, price = 0, priceMarket = 0, volume = '', buySum = '', sellSum = '', title, inputFocus, order = $('#order .default_orders');
 
 		title = $('.wrapper_event_page h1').text();
 		priceMarket = '0.' + $(this).parents('.body').find('tr').eq(0).find('td.price span').text().replace(/[^0-9.]+/g, "");
@@ -72,6 +72,5 @@
 		inputFocus[0].selectionStart = inputFocus.val().length;
 
 		tabReturn();
-		$("body select").msDropDown();
 	});
 })();

@@ -6,7 +6,7 @@
     if(input.attr('class') == 'number'){
       $('.order').on('keypress', input, function (e) {
         e = e || event;
-        var code = e.charCode || e.keyCode;
+        var code = e.which ||e.charCode || e.keyCode;
         // if(!(/[0-9\.]+/i.test(String.fromCharCode(code)))){
         //   console.log(String.fromCharCode(code));
         //   return false;

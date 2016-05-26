@@ -106,9 +106,26 @@
 			$(this).next('.warning').fadeOut(200);
 		});
 
+		order.on('keydown', 'input.number', function (e) {
+			e = e || window.e;
+			var code = e.which ||e.charCode || e.keyCode;
+			if($(this).parents('.price').length){
+				if($(this).val().length == 2 && code == 8 || code >= 37 && code <= 40){
+					return false;
+				}
+			}
+		});
+
+		order.on('mouseup', 'input.number', function () {
+			if($(this).parents('.price').length){
+				if($(this).val().length >= 2){
+					$(this)[0].selectionStart = $(this).val().length;
+				}
+			}
+		});
 		order.on('keypress', 'input.number', function (e) {
 			e = e || window.e;
-			var code = e.charCode || e.keyCode,
+			var code = e.which ||e.charCode || e.keyCode,
 					message = $(this).next();
 			if($(this).parents('.price').length){
 				/*if(code	 < 46 || code	 > 57 || code	 == 47){
@@ -136,8 +153,13 @@
 						message.fadeOut(200);
 					}
 				}
+				// else if($(this).val().length == 2){
+				// 	if(code	 == 8){
+				// 		return false;
+				// 	}
+				// }
 				else{
-					if(code	 == 46){
+					if(code	 == 46 ){
 						message.fadeIn(200);
 						return false;
 					}
@@ -155,7 +177,7 @@
 					message.fadeOut(200);
 				}
 				if($(this).val() == ''){
-					if(code	 == 48){
+					if(code	 == 13){
 						return false;
 					}
 				}
@@ -240,7 +262,7 @@
 						html = '<div class="order_content" id="' + id[searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' + title + '</h3><a href="#" class="close"></a><strong class="last-price up">0.33</strong><strong class="current-order down">pos: <span>255</span></strong></div><div class="sell-container"></div><div class="buy-container"><form><div class="price col-3" style="margin-left: 3px;"><label>Market price:</label><div class="input"><input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="8" value="' + volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div><div class="order_type col-3" style="margin-left: 3px;"><div class="obligations"><label>Sum:</label><div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="8" value="' + buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></div></div><label class="col-3" style="margin-left: 3px;"><input type="checkbox" name="limit"><span>Limit</span></label><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button></form></div></div>';
 					}
 				}
-				$('#order').append(html);
+				$('#order .default_orders').append(html);
 				numericalVerification($('.order_content input'));
 				$('.order_content').fadeIn(400);
 				if(limit){
