@@ -146,9 +146,9 @@
             padding-bottom: 5px;
             overflow-y: auto;
             .order_content{
-              background-color: #ffffff;
+              //background-color: #ffffff;
               cursor: move;
-              &:last-child{  background-color: transparent;  }
+              &:last-child{  margin-bottom: 15px;  }
             }
           }
           .ui-state-highlight{
@@ -399,15 +399,21 @@
         }
       }
       .order_content{
-        &.sell .current-order-title{
-          background: linear-gradient(to bottom, #ff6464, #921515);
+        &.sell .my_order{
+          .order-title, .current-order-title{
+            background-color: #fff1f1;
+            //background: linear-gradient(to bottom, #ff6464, #921515);
+          }
         }
-        &.buy .current-order-title{
-          background: linear-gradient(to bottom, #2D8A8E, #1A484A);
+        &.buy .my_order{
+          .order-title, .current-order-title{
+            background-color: #ebf7f9;
+            //background: linear-gradient(to bottom, #2D8A8E, #1A484A);
+          }
         }
-
       }
       .my_order{
+        border-radius: 5px;
         .form-container{
           display: none;
           margin-bottom: 10px;
@@ -439,32 +445,43 @@
             text-align: left;
           }
         }
-        .order-title{  margin-left: 5px;  }
+        .order-title{
+          padding-left: 5px; border-radius: 5px 5px 0 0; }
         .current-order-title{
-          padding-left: 10px;
+          //padding-left: 10px;
           font-size: 14px;
-          border-radius: 5px;
+          border-radius: 0 0 5px 5px;
           //background: linear-gradient(to bottom, #283d4a, #21323d);
           overflow: hidden;
           transition: 0.2s ease-out;
-          &.active{  border-radius: 5px 5px 0 0; box-shadow: 0 3px 13px -3px rgba(0, 0, 0, 0.5);  }
+          &.active{  border-radius: 0; box-shadow: 0 5px 13px -8px rgba(0, 0, 0, 0.5);  }
           a{
             float: right;
             width: 30px;
             height: 30px;
-            background: url("../Images/ico-delete-w.png") no-repeat center;
+            background: url("../Images/ico-delete.png") no-repeat center;
           }
-          span{
+          strong.title{
             display: inline-block;
             width: 31%;
             padding-left: 5px;
             line-height: 31px;
-            color: #ffffff;
             vertical-align: middle;
+            &:last-of-type{
+              width: 40%;
+            }
           }
+          /*span{
+            display: inline-block;
+            width: 31%;
+            padding-left: 5px;
+            line-height: 31px;
+            //color: #ffffff;
+            vertical-align: middle;
+          }*/
           .edit{
-            width: 31px;
-            height: 31px;
+            width: 30px;
+            height: 30px;
             float: right;
             background: url("../Images/ico-edit.png") no-repeat center;
             background-size: 16px;
@@ -474,9 +491,7 @@
         .current-order-content{
           padding: 5px 5px 10px;
           text-align: center;
-          .btn{
-            width: 100%!important;
-          }
+          .btn{  width: 100%!important;  }
         }
       }
     }

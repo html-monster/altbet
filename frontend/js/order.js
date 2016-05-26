@@ -302,31 +302,33 @@
 	;(function orderEdit() {
 		var container = $('.left_order'),
 				checkbox,
-				priceMarket;
+				priceMarket = '';
 		container.on('change', 'label.col-3 input', function () {
-			checkbox = $(this).parents('form').find('input[type="checkbox"]').prop('checked');
 			var price = $(this).parents('form').find('.price'),
 					id,
 					items;
-			if($('.wrapper_event_page').length){
-				if($(this).parents('.sell-container').length){
-					items = $('.executed_orders.sell .body tr');
-					priceMarket = '0.' + items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+			checkbox = $(this).parents('form').find('input[type="checkbox"]').prop('checked');
+			if($(this).parents('#order').length){
+				if($('.wrapper_event_page').length){
+					if($(this).parents('.sell-container').length){
+						items = $('.executed_orders.sell .body tr');
+						priceMarket = '0.' + items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+					}
+					else{
+						items = $('.executed_orders.buy .body tr');
+						priceMarket = '0.' + items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+					}
 				}
 				else{
-					items = $('.executed_orders.buy .body tr');
-					priceMarket = '0.' + items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
-				}
-			}
-			else{
-				id  = $(this).parents('.order_content').attr('id').slice(0, -7);
-				if($(this).parents('.sell-container').length){
-					items = $('.event-content#' + id + ' .sell').children();
-					priceMarket = items.eq(items.length - 1).find('.price').text().replace(/[^0-9.]+/g, "");
-				}
-				else{
-					items = $('.event-content#' + id + ' .buy').children();
-					priceMarket = items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+					id  = $(this).parents('.order_content').attr('id').slice(0, -7);
+					if($(this).parents('.sell-container').length){
+						items = $('.event-content#' + id + ' .sell').children();
+						priceMarket = items.eq(items.length - 1).find('.price').text().replace(/[^0-9.]+/g, "");
+					}
+					else{
+						items = $('.event-content#' + id + ' .buy').children();
+						priceMarket = items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+					}
 				}
 			}
 			if(checkbox){

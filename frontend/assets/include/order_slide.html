@@ -2,7 +2,7 @@
   <div class="left_order">
     <div class="wrapper">
       <div class="tabs">
-        <span class="tab">New orders <label><input type="checkbox"><span></span></label></span>
+        <span class="tab">New orders <label title="Active trader"><input type="checkbox"><span></span></label></span>
         <span class="tab">Current orders</span>
       </div>
       <div class="tab_content order-content">
@@ -12,7 +12,7 @@
             <strong class="last-price down">0.33</strong>
             <div class="sell-container" id="order-container">
               <form>
-                <div class="price col-3"><label>Ваша цена</label><br>
+                <div class="price col-3"><label>Your price:</label><br>
                   <div class="input">
                     <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
                     <div class="warning" style="display: none;">
@@ -21,7 +21,7 @@
                     <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                   </div>
                 </div>
-                <div class="volume col-3"><label>Объем</label><br>
+                <div class="volume col-3"><label>Quantity:</label><br>
                   <div class="input">
                     <input type="text" class="number" placeholder="123" validation="\d{1,6}" maxlength="7">
                     <div class="warning" style="display: none;">
@@ -31,7 +31,7 @@
                   </div>
                 </div>
                 <div class="order_type col-3">
-                  <div class="obligations"><label>Сумма:</label><br>
+                  <div class="obligations"><label>Sum:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
                       <div class="warning" style="display: none;">
@@ -50,18 +50,18 @@
                 <button class="btn delete col-3"></button>
               </form>
               <form>
-                <div class="price col-3"><label>Ваша цена</label><br>
+                <div class="price col-3"><label>Your price:</label><br>
                   <div class="input"><input type="text" class="number" placeholder="0.33" pattern="[0]+([.][0-9]{1,2})?">
                     <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                   </div>
                 </div>
-                <div class="volume col-3"><label>Объем</label><br>
+                <div class="volume col-3"><label>Quantity:</label><br>
                   <div class="input"><input type="text" class="number" placeholder="123" pattern="\d{1,6}">
                     <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                   </div>
                 </div>
                 <div class="order_type col-3">
-                  <div class="obligations"><label>Сумма:</label><br>
+                  <div class="obligations"><label>Sum:</label><br>
                     <div class="input"><input type="text" class="number" placeholder="40.59" pattern="[0-9]{0,6}[.]?[0-9]{1,2}">
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -88,8 +88,8 @@
                 <strong class="current-order up">pos: <span>255</span></strong>
               </div>
               <div class="current-order-title">
-                <span class="price">0.33</span>
-                <span class="volume">232132125</span>
+                <strong class="title">Price: <span class="price">0.33</span></strong>
+                <strong class="title">Quantity: <span class="volume">232132125</span></strong>
                 <a href="#" class="delete"></a>
                 <span  class="edit"></span>
                 <!--<input type="submit" class="btn cancel" value="">-->
@@ -99,7 +99,7 @@
                 <p class="label">Изменить на:</p>
                 <form class="sell">
                   <div class="price col-3">
-                    <label>Ваша цена</label><br>
+                    <label>Your price:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
@@ -107,7 +107,7 @@
                     </div>
                   </div>
                   <div class="volume col-3">
-                    <label>Объем</label><br>
+                    <label>Quantity:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
@@ -116,7 +116,7 @@
                   </div>
                   <div class="order_type col-3">
                     <div class="obligations">
-                      <label>Сумма:</label><br>
+                      <label>Sum:</label><br>
                       <div class="input">
                         <input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
@@ -133,7 +133,7 @@
                 </form>
                 <form class="buy">
                   <div class="price col-3">
-                    <label>Ваша цена</label><br>
+                    <label>Your price:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
@@ -141,7 +141,7 @@
                     </div>
                   </div>
                   <div class="volume col-3">
-                    <label>Объем</label><br>
+                    <label>Quantity:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
@@ -150,7 +150,7 @@
                   </div>
                   <div class="order_type col-3">
                     <div class="obligations">
-                      <label>Сумма:</label><br>
+                      <label>Sum:</label><br>
                       <div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                         <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
@@ -175,8 +175,8 @@
                 <strong class="current-order down">pos: <span>255</span></strong>
               </div>
               <div class="current-order-title">
-                <span class="price">0.33</span>
-                <span class="volume">232132125</span>
+                <strong class="title">Price: <span class="price">0.33</span></strong>
+                <strong class="title">Quantity: <span class="volume">232132125</span></strong>
                 <a href="#" class="delete"></a>
                 <span  class="edit"></span>
                 <!--<input type="submit" class="btn cancel" value="">-->
@@ -186,7 +186,7 @@
                 <p class="label">Изменить на:</p>
                 <form class="sell">
                   <div class="price col-3">
-                    <label>Ваша цена</label><br>
+                    <label>Your price:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
@@ -194,7 +194,7 @@
                     </div>
                   </div>
                   <div class="volume col-3">
-                    <label>Объем</label><br>
+                    <label>Quantity:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
@@ -203,7 +203,7 @@
                   </div>
                   <div class="order_type col-3">
                     <div class="obligations">
-                      <label>Сумма:</label><br>
+                      <label>Sum:</label><br>
                       <div class="input">
                         <input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
@@ -220,7 +220,7 @@
                 </form>
                 <form class="buy">
                   <div class="price col-3">
-                    <label>Ваша цена</label><br>
+                    <label>Your price:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
@@ -228,7 +228,7 @@
                     </div>
                   </div>
                   <div class="volume col-3">
-                    <label>Объем</label><br>
+                    <label>Quantity:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
@@ -237,7 +237,7 @@
                   </div>
                   <div class="order_type col-3">
                     <div class="obligations">
-                      <label>Сумма:</label><br>
+                      <label>Sum:</label><br>
                       <div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                         <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
@@ -262,8 +262,8 @@
                 <strong class="current-order up">pos: <span>255</span></strong>
               </div>
               <div class="current-order-title">
-                <span class="price">0.33</span>
-                <span class="volume">232132125</span>
+                <strong class="title">Price: <span class="price">0.33</span></strong>
+                <strong class="title">Quantity: <span class="volume">232132125</span></strong>
                 <a href="#" class="delete"></a>
                 <span  class="edit"></span>
                 <!--<input type="submit" class="btn cancel" value="">-->
@@ -273,7 +273,7 @@
                 <p class="label">Изменить на:</p>
                 <form class="sell">
                   <div class="price col-3">
-                    <label>Ваша цена</label><br>
+                    <label>Your price:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
@@ -281,7 +281,7 @@
                     </div>
                   </div>
                   <div class="volume col-3">
-                    <label>Объем</label><br>
+                    <label>Quantity:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
@@ -290,7 +290,7 @@
                   </div>
                   <div class="order_type col-3">
                     <div class="obligations">
-                      <label>Сумма:</label><br>
+                      <label>Sum:</label><br>
                       <div class="input">
                         <input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
@@ -307,7 +307,7 @@
                 </form>
                 <form class="buy">
                   <div class="price col-3">
-                    <label>Ваша цена</label><br>
+                    <label>Your price:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
@@ -315,7 +315,7 @@
                     </div>
                   </div>
                   <div class="volume col-3">
-                    <label>Объем</label><br>
+                    <label>Quantity:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
@@ -324,7 +324,7 @@
                   </div>
                   <div class="order_type col-3">
                     <div class="obligations">
-                      <label>Сумма:</label><br>
+                      <label>Sum:</label><br>
                       <div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                         <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
@@ -349,8 +349,8 @@
                 <strong class="current-order up">pos: <span>255</span></strong>
               </div>
               <div class="current-order-title">
-                <span class="price">0.33</span>
-                <span class="volume">232132125</span>
+                <strong class="title">Price: <span class="price">0.33</span></strong>
+                <strong class="title">Quantity: <span class="volume">232132125</span></strong>
                 <a href="#" class="delete"></a>
                 <span  class="edit"></span>
                 <!--<input type="submit" class="btn cancel" value="">-->
@@ -360,7 +360,7 @@
                 <p class="label">Изменить на:</p>
                 <form class="sell">
                   <div class="price col-3">
-                    <label>Ваша цена</label><br>
+                    <label>Your price:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
@@ -368,7 +368,7 @@
                     </div>
                   </div>
                   <div class="volume col-3">
-                    <label>Объем</label><br>
+                    <label>Quantity:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
@@ -377,7 +377,7 @@
                   </div>
                   <div class="order_type col-3">
                     <div class="obligations">
-                      <label>Сумма:</label><br>
+                      <label>Sum:</label><br>
                       <div class="input">
                         <input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
@@ -394,7 +394,7 @@
                 </form>
                 <form class="buy">
                   <div class="price col-3">
-                    <label>Ваша цена</label><br>
+                    <label>Your price:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
@@ -402,7 +402,7 @@
                     </div>
                   </div>
                   <div class="volume col-3">
-                    <label>Объем</label><br>
+                    <label>Quantity:</label><br>
                     <div class="input">
                       <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
@@ -411,7 +411,7 @@
                   </div>
                   <div class="order_type col-3">
                     <div class="obligations">
-                      <label>Сумма:</label><br>
+                      <label>Sum:</label><br>
                       <div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                         <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
