@@ -6,10 +6,10 @@
   position: fixed;
   right: 0;
   top: 55px;
-  transition: 0.2s ease-out;
-  &.active {
-    right: -20.76796%;
-  }
+  transition: 0.4s ease-out;
+  //&.active {
+  //  right: -20.76796%;
+  //}
   label{
     font-size: 12px;
     color: #959595;
@@ -30,33 +30,68 @@
           padding: 10px 5%;
           background-color: #7e97a7;
           color: #000;
+          position: relative;
           &.active {
             background-color: #2d414e;
             color: #fff;
+            span, .trader{  background: #2d414e;  }
+            .trader label{  color: #ffffff;  }
           }
           &:first-child{
-            &.active{
-              border-right: 1px solid #445b69;
-            }
+            padding: 0;
+            &.active{  border-right: 1px solid #445b69;  }
             border-right: 1px solid #5f7786;
+            &:hover{
+              .trader{
+                top: 30px;
+              }
+              label.checkbox{  top: 35px;  }
+            }
           }
           &:last-child {
-            &.active{
-              border-left: 1px solid #445b69;
-            }
+            &.active{  border-left: 1px solid #445b69;  }
             border-left: 1px solid #5f7786;
             border-radius: 0 5px 5px 0;
           }
-          label{
+          span{
+            display: block;
+            padding: 10px 5%;
+            background: #7e97a7;
+            border-radius: 5px 0 0 5px;
+            position: relative;
+            z-index: 18;
+          }
+          .trader{
+            display: block;
+            width: 100%;
+            height: 25px;
+            padding: 5px 0 ;
+            position: absolute;
+            top: 10px;
+            left: 0;
+            z-index: 15;
+            background: #7e97a7;
+            border-radius: 0 0 5px 5px;
+            overflow: hidden;
+            transition: 0.6s ease-out;
+            label{  padding-right: 10px; cursor: pointer; font-size: 10px; color: #000000;  }
+          }
+           label.checkbox{
             float: right;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 19;
+            transition: 0.6s ease-out;
             //margin-top: -2px;
             span{
               display: flex;
               width: 15px;
               height: 15px;
+              padding: 0;
               cursor: pointer;
               border-radius: 50%;
-              background: #707070;
+              background: #707070 !important;
               border: 1px solid #474747;
               box-shadow: inset 0 5px 5px rgba(0, 0, 0, 0.5);
               &:after{

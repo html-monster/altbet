@@ -110,8 +110,10 @@
 			e = e || window.e;
 			var code = e.which ||e.charCode || e.keyCode;
 			if($(this).parents('.price').length){
-				if($(this).val().length == 2 && code == 8 || code >= 37 && code <= 40){
-					return false;
+				if($(this)[0].selectionStart == 2){
+					if(code == 37 || code == 8){
+						return false;
+					}
 				}
 			}
 		});
