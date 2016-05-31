@@ -3,16 +3,76 @@
     <div class="wrapper">
       <div class="tabs">
         <span class="tab">
-          <span>New orders</span>
-          <label class="checkbox" title="Active trader"><input id="trader" type="checkbox"><span></span></label>
-          <span class="trader"><label for="trader">Active trader</label></span>
+          New orders
+          <label class="trader"><input type="checkbox" name="limit" checked ><span>Active trader</span></label>
         </span>
         <span class="tab">Current orders</span>
       </div>
       <div class="tab_content order-content">
         <div class="tab_item" id="order">
           <div class="default_orders"></div>
-          <div class="active_trader"></div>
+          <div class="active_trader" style="display: none;">
+            <div class="event_title">
+              <select class="event_name" name="event_name" style="width: 100%;">
+                <option value="event">Event 1</option>
+                <option value="event_reverse">Event 2</option>
+              </select>
+            </div>
+            <table class="control">
+              <tbody>
+                <tr>
+                </tr>
+                <tr>
+                  <td class="buy_mkt active"><a href="#">Buy MKT</a></td>
+                  <td class="sell_mkt active"><a href="#">Sell MKT</a></td>
+                  <td class="cancel_all active"><a href="#">Cancel All</a></td>
+                </tr>
+                <tr>
+                  <td class="reverse active"><a href="#">Reverse</a></td>
+                  <td class="close_out active"><a href="#">Close OUT</a></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><span>Quantity</span></td>
+                  <td><input type="text" class="number spreader"></td>
+                  <td class="spreader active"><a href="#">Spreader</a></td>
+                </tr>
+                <tr>
+                  <td class="button active"><a href="#">10</a></td>
+                  <td class="button active"><a href="#">20</a></td>
+                  <td><span>Spread +/-</span></td>
+                </tr>
+                <tr>
+                  <td class="button active"><a href="#">50</a></td>
+                  <td class="button active"><a href="#">100</a></td>
+                  <td><input type="text" class="number"></td>
+                </tr>
+                <tr>
+                  <td class="button active"><a href="#">200</a></td>
+                  <td class="button active"><a href="#">500</a></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="join_bid active"><a href="#">Join BID</a></td>
+                  <td class="join_ask active"><a href="#">Join ASK</a></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="limit">
+              <thead>
+                <tr>
+                  <th>My Bids</th>
+                  <th>Size</th>
+                  <th>Price</th>
+                  <th>Size</th>
+                  <th>My Offers</th>
+                  <th>P/L</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
           <!--<div class="order_content"  id="order-form" style="display: block;">
             <h3></h3>
             <strong class="last-price down">0.33</strong>
@@ -98,8 +158,6 @@
                 <strong class="title">Quantity: <span class="volume">232132125</span></strong>
                 <a href="#" class="delete"></a>
                 <span  class="edit"></span>
-                <!--<input type="submit" class="btn cancel" value="">-->
-                <!--<button class="btn cancel"></button>-->
               </div>
               <div class="form-container">
                 <p class="label">Изменить на:</p>

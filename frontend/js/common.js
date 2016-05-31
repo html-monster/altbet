@@ -248,7 +248,7 @@ $(document).ready(function () {
   });
 
 
-    //admin panel=========================================================================================================
+  //admin panel=========================================================================================================
   // $('.admin-panel').on('click', 'button.bot', function (e) {
   //   e.preventDefault();
   //   if($(this).hasClass('start')){
@@ -259,6 +259,62 @@ $(document).ready(function () {
   //   }
   //   $(this).toggleClass('start');
   // });
+
+  // footer position====================================================================================================
+  (function scrollEdit() {
+      var tempScrollTop, currentScrollTop = 0,
+          windowHeight = window.innerHeight,
+          orderSidebarHeight = windowHeight - 254,
+          wrapHeight = $('body .wrapper').height(),
+          scroll = orderSidebarHeight + 126,
+          orderContent = $('#order'),
+          currentOrders = $('#current-orders'),
+          tbody = $('.left_order table.limit tbody'),
+          tabContent = $('.left_order .tab_content');
+
+    orderContent.css('transition', '0.4s ease-out');
+    currentOrders.css('transition', '0.4s ease-out');
+    tbody.css('transition', '0.4s ease-out');
+    $(document).scroll(function () {
+      currentScrollTop = $(document).scrollTop();
+      if (tempScrollTop < currentScrollTop ){
+        scroll = orderSidebarHeight;
+        $('body > .wrapper').css('padding-bottom', 126);
+        $('footer').css({
+          'position': 'fixed',
+          'bottom': -126
+        });
+        setTimeout(function () {
+          $('footer').addClass('active');
+        }, 0);
+        orderContent.css('max-height', scroll);
+        currentOrders.css('max-height', scroll);
+        tbody.css('max-height', scroll - 210);
+        tabContent.removeClass('scroll-top');
+      }
+      else if (tempScrollTop > currentScrollTop ){
+        scroll = orderSidebarHeight + 126;
+        $('footer').removeClass('active');
+        setTimeout(function () {
+          $('body > .wrapper').css('padding-bottom', 0);
+          $('footer').css('position', 'relative');
+        }, 400);
+        orderContent.css('max-height', scroll);
+        currentOrders.css('max-height', scroll);
+        tbody.css('max-height', scroll - 210);
+        tabContent.addClass('scroll-top');
+      }
+      tempScrollTop = currentScrollTop;
+    });
+
+    if(wrapHeight > windowHeight){
+      orderContent.css('max-height', scroll);
+      currentOrders.css('max-height', scroll);
+      tbody.css('max-height', scroll - 210);
+      tabContent.addClass('scroll-top');
+    }
+
+  })();
 
 });
   /*ws.onmessage = function (evt) {

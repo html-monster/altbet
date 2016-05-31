@@ -8,16 +8,18 @@
 
 		return -1;
 	}
-	
+
 	// sidebar height and current order ==================================================================================
 	;(function orderSize() {
 		numericalVerification($('.order_content input'));
 		var windowHeight = window.innerHeight,
 				windowWidth = window.innerWidth,
-				orderSidebarWidth = windowHeight - 235,
+				orderSidebarHeight = windowHeight - 254,
 				orderContent = $('#order'),
 				currentOrders = $('#current-orders'),
-				tab_content = $('.tab_content');
+				tab_content = $('.tab_content'),
+				checkbox = $('.left_order .tab input'),
+				tbody = $('.left_order table.limit tbody');
 
 		// tabs($('.left_order'));
 		$(".left_order .wrapper .tab").click(function (e) {
@@ -38,26 +40,43 @@
 
 		$(window).resize(function () {
 			windowWidth = window.innerWidth;
-			orderSidebarWidth = windowHeight - 235;
+			orderSidebarHeight = windowHeight - 254;
 			if(windowWidth > 1200){
 				windowHeight = window.innerHeight;
-				orderContent.css('max-height', orderSidebarWidth);
-				currentOrders.css('max-height', orderSidebarWidth);
+				orderContent.css('max-height', orderSidebarHeight);
+				currentOrders.css('max-height', orderSidebarHeight);
+				tbody.css('max-height', windowHeight - 459);
 			}
 		});
 
-		if(windowWidth > 1200)
-			orderContent.css('max-height', orderSidebarWidth);
-		currentOrders.css('max-height', orderSidebarWidth);
+		if(windowWidth > 1200){
+			orderContent.css('max-height', orderSidebarHeight);
+			currentOrders.css('max-height', orderSidebarHeight);
+			tbody.css('max-height', windowHeight - 459);
+		}
 
-		orderContent.bind('DOMSubtreeModified', function(event) {
-			if(orderContent[0].clientHeight + 3  > (orderSidebarWidth)){
+		checkbox.change(function () {
+			if(checkbox.prop('checked')){
 				orderContent.css('overflow-y', 'auto');
-				tab_content.addClass('max');
 			}
 			else{
 				orderContent.css('overflow-y', 'inherit');
-				tab_content.removeClass('max');
+			}
+		});
+
+		orderContent.bind('DOMSubtreeModified', function(event) {
+			if(checkbox.prop('checked')){
+				orderContent.css('overflow-y', 'auto');
+			}
+			else{
+				if(orderContent[0].clientHeight + 3  > (orderSidebarHeight)){
+					orderContent.css('overflow-y', 'auto');
+					tab_content.addClass('max');
+				}
+				else{
+					orderContent.css('overflow-y', 'inherit');
+					tab_content.removeClass('max');
+				}
 			}
 		});
 	})();
@@ -315,7 +334,7 @@
 		});
 	})();
 	function tabReturn() {
-		var tab = $(".left_order .wrapper .tab"),
+		var tab = $(".left_order .tab_wrapper .tab"),
 				tab_item = $(".left_order .tab_item");
 		if(!(tab.eq(0).hasClass('active'))){
 			tab.removeClass("active").eq(0).addClass("active");

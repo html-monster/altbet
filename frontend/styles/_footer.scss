@@ -1,7 +1,6 @@
 .footer{
   width: 100%;
   height: 126px;
-  position: relative;
   margin-top: -126px;
   padding: 15px 40px;
   clear: both;
@@ -9,7 +8,12 @@
   //background: url('../Images/Layer%203.png') repeat;
   //background-color: #21323d;
   background: linear-gradient(to top, #21323d, #151e2b);
+  position: relative;
   z-index: 5;
+  transition: 0.4s ease-out;
+  &.active{
+    bottom: 0 !important;
+  }
   ul{
     font-size: 14px;
     float: left;
@@ -20,11 +24,7 @@
       line-height: 21px;
       margin-bottom: 3px;
       transition: top 1s ease-out 0.5s;
-      &:hover{
-        a{
-          color: #e7e7e8;
-        }
-      }
+      &:hover a{  color: #e7e7e8;  }
       a{
         color: #d7d7d8;
         display: block;
