@@ -283,59 +283,42 @@ $(document).ready(function () {
 
   // footer position====================================================================================================
   (function scrollEdit() {
-      var tempScrollTop, currentScrollTop = 0,
-          windowHeight = window.innerHeight,
-          orderSidebarHeight = windowHeight - 254,
-          wrapHeight = $('body .wrapper').height(),
-          scroll = orderSidebarHeight + 126,
+      var windowHeight = window.innerHeight,
+          orderSidebarHeight = windowHeight - ($('.left_order .tabs').height() + 45 + $('header').height()),
+          actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() +
+              $('.active_trader .control').height() + $('.active_trader .limit thead').height() + 10),
+          footer = $('footer'),
+          footerHeight = footer.height() + 30,
+          scroll = orderSidebarHeight,
           orderContent = $('#order'),
           currentOrders = $('#current-orders'),
           tbody = $('.left_order table.limit tbody'),
           tabContent = $('.left_order .tab_content');
 
-    orderContent.css('transition', '0.4s ease-out');
-    currentOrders.css('transition', '0.4s ease-out');
-    tbody.css('transition', '0.4s ease-out');
-    
-
-    $(document).scroll(function () {
-      currentScrollTop = $(document).scrollTop();
-      if (tempScrollTop < currentScrollTop ){
-        scroll = orderSidebarHeight;
-        $('body > .wrapper').css('padding-bottom', 126);
-        $('footer').css({
-          'position': 'fixed',
-          'bottom': -126
-        });
-        setTimeout(function () {
-          $('footer').addClass('active');
-        }, 0);
+    $('footer .hide_show').click(function () {
+      footer.toggleClass('active');
+      if (footer.hasClass('active') ){
+        scroll = orderSidebarHeight - footerHeight;
+        $('body > .wrapper').css('padding-bottom', footerHeight);
         orderContent.css('max-height', scroll);
         currentOrders.css('max-height', scroll);
-        tbody.css('max-height', scroll - 210);
-        tabContent.removeClass('scroll-top');
+        tbody.css('max-height', actveTraderHeight - footerHeight);
+        tabContent.removeClass('footer_active');
       }
-      else if (tempScrollTop > currentScrollTop ){
-        scroll = orderSidebarHeight + 126;
-        $('footer').removeClass('active');
-        setTimeout(function () {
-          $('body > .wrapper').css('padding-bottom', 0);
-          $('footer').css('position', 'relative');
-        }, 400);
+      else {
+        scroll = orderSidebarHeight ;
+        $('body > .wrapper').css('padding-bottom', 0);
         orderContent.css('max-height', scroll);
         currentOrders.css('max-height', scroll);
-        tbody.css('max-height', scroll - 210);
-        tabContent.addClass('scroll-top');
+        tbody.css('max-height', actveTraderHeight);
+        tabContent.addClass('footer_active');
       }
-      tempScrollTop = currentScrollTop;
     });
 
-    if(wrapHeight > windowHeight){
-      orderContent.css('max-height', scroll);
-      currentOrders.css('max-height', scroll);
-      tbody.css('max-height', scroll - 210);
-      tabContent.addClass('scroll-top');
-    }
+    orderContent.css('max-height', scroll);
+    currentOrders.css('max-height', scroll);
+    tbody.css('max-height', actveTraderHeight);
+    tabContent.addClass('footer_active');
 
   })();
 

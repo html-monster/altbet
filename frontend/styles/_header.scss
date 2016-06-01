@@ -127,13 +127,12 @@ header {
         background: #1196d4;
         margin-right: 15px;
         vertical-align: middle;
-        &.deposit{
-          background: red; //#d47e11
-        }
+        &.my_order{  padding: 0;  }
+        &.deposit{  background: red; }
         @include md(1420) {
           margin-right: 5px;
         }
-        a {  color: #fff;  }
+        a {  display: block; padding: 3px 10px 4px 10px; color: #fff;  }
         a:before {
           content: '';
           display: inline-block;

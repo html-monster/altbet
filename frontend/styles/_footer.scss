@@ -15,6 +15,17 @@
   &.active{
     bottom: 0 !important;
   }
+  .hide_show{
+    width: 85px;
+    height: 30px;
+    background: url("../Images/hide_show.png") no-repeat;
+    background-size: cover;
+    border-radius: 10px 10px 0 0;
+    position: absolute;
+    top: -18px;
+    left: 25%;
+    cursor: pointer;
+  }
   ul{
     font-size: 14px;
     float: left;

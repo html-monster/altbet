@@ -51,11 +51,11 @@ select{
   cursor: pointer;
 }
 *:focus{  outline: none;  }
-.wrapper{
+body > .wrapper{
   @include container(12);
   min-height:100%;
   box-sizing: border-box;
-  //padding-bottom: 126px;
+  transition: 0.4s ease-out;
 }
 .error-massage{
   color: red;
