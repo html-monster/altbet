@@ -8,7 +8,8 @@
   //background: url('../Images/Layer%203.png') repeat;
   //background-color: #21323d;
   background: linear-gradient(to top, #21323d, #151e2b);
-  position: relative;
+  position: fixed;
+  bottom: -125px;
   z-index: 5;
   transition: 0.4s ease-out;
   &.active{

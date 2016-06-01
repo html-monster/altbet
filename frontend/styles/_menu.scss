@@ -40,6 +40,7 @@
     }
   }
   .nav_bet {
+    @include scroll;
     ul.sub-menu_1 {
       & > li > span {
         display: inline-block;
@@ -118,7 +119,7 @@
       }
       &:first-child {
         .jump {
-          top: 7px;
+          top: calc(50% - 7px);
         }
       }
 
@@ -285,8 +286,8 @@
   width: 14px;
   opacity: .8;
   position: absolute;
-  right: 10px;
-  top: 7px;
+  right: 5px;
+  top: calc(50% - 7px);
   padding: 0;
   transform: rotate(90deg);
   &:hover{

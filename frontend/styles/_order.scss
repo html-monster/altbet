@@ -128,8 +128,15 @@
         }
         .active_trader{
           padding-top: 10px;
-          .dd.borderRadius .ddTitle{
-            border-radius: 5px 5px 0 0;
+          .event_title{
+            display: flex;
+            .event_name{
+              width: 50%;
+              height: 30px;
+              line-height: 30px;
+              text-align: center;
+              border: 1px solid #000;
+            }
           }
           table{
             width: 100%;
@@ -258,6 +265,7 @@
         .tab_item {
           display: none;
           @include scroll;
+          overflow-x: hidden;
           overflow-y: inherit;
           &#current-orders{
             padding-bottom: 5px;

@@ -121,6 +121,27 @@ $(document).ready(function () {
       e.stopPropagation();
     });
   })();
+
+  (function maxHeight() {
+    var windowHeight = window.innerHeight,
+        windowWidth = window.innerWidth,
+        orderSidebarHeight = windowHeight - 253,
+        menu = $('.nav_bet');
+
+
+    $(window).resize(function () {
+      windowWidth = window.innerWidth;
+      orderSidebarHeight = windowHeight - 253;
+      if(windowWidth > 1200){
+        windowHeight = window.innerHeight;
+        menu.css('max-height', orderSidebarHeight);
+      }
+    });
+
+    if(windowWidth > 1200){
+      menu.css('max-height', orderSidebarHeight);
+    }
+  })();
   //$(".my_position_tab .wrapper .sub_tab").click(function () {
   //  $(".my_position_tab .wrapper .sub_tab").removeClass("active");//.eq($(this).index()).addClass("active");
   //  $(this).addClass('active');
@@ -275,6 +296,8 @@ $(document).ready(function () {
     orderContent.css('transition', '0.4s ease-out');
     currentOrders.css('transition', '0.4s ease-out');
     tbody.css('transition', '0.4s ease-out');
+    
+
     $(document).scroll(function () {
       currentScrollTop = $(document).scrollTop();
       if (tempScrollTop < currentScrollTop ){

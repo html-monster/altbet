@@ -2,6 +2,7 @@ $(document).ready(function () {
 	$('.left_order .tab label').click(function (e) {
 		e.stopPropagation();
 	});
+	console.log(localStorage);
 	(function tradeOn() {
 		var checkbox = $('.left_order .tab input'),
 			  default_order = $('.left_order .default_orders'),
@@ -17,7 +18,7 @@ $(document).ready(function () {
 			buttons.attr('disabled', true);
 
 			event_container.addClass('clickable').eq(0).addClass('active');
-			$('select.event_name option').each(function () {
+			$('.active_trader .event_title .event_name').each(function () {
 				$(this).text(titles.eq(ii++).text());
 			});
 		}
@@ -56,7 +57,7 @@ $(document).ready(function () {
 
 				event_container.removeClass('active');
 				$(this).addClass('active');
-				$('select.event_name option').each(function () {
+				$('.active_trader .event_title .event_name').each(function () {
 					$(this).text(titles.eq(ii++).text());
 				});
 				select.msDropDown().data("dd").destroy();
