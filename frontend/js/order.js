@@ -2,10 +2,19 @@
 			limit = 0;
 
 	function searchValue(array, value) {
-		for (var i = 0; i < array.length; i++) {
-			if (array[i][0] === value) return i;
+		var ii;
+		if(array.length != 0){
+			if(array[0][0].length == 1){
+				for (ii = 0; ii < array.length; ii++) {
+					if (array[ii] === value) return ii;
+				}
+			}
+			else{
+				for (ii = 0; ii < array.length; ii++) {
+					if (array[ii][0] === value) return ii;
+				}
+			}
 		}
-
 		return -1;
 	}
 
@@ -58,7 +67,7 @@
 				windowHeight = window.innerHeight;
 				orderContent.css('max-height', orderSidebarHeight);
 				currentOrders.css('max-height', orderSidebarHeight);
-				tbody.css('max-height', actveTraderHeight);
+				// tbody.css('max-height', actveTraderHeight);
 			}
 		});
 

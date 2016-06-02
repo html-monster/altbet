@@ -42,7 +42,7 @@ $(document).ready(function () {
 
 	var price = 0.99, html;
 	for(var ii = 1; ii <= 99; ii++){
-		html = '<tr><td class="my_bids"></td> <td class="size_sell"></td> <td class="price">$' + (price).toFixed(2) + '</td> <td class="size_buy"></td> <td class="my_offers"></td> <td class="pl"></td></tr>';
+		html = '<tr><td class="my_bids"></td> <td class="size size_sell"></td> <td class="price">$' + (price).toFixed(2) + '</td> <td class="size size_buy"></td> <td class="my_offers"></td> <td class="pl"></td></tr>';
 		$('.left_order .active_trader .limit tbody').append(html);
 		price -= 0.01;
 	}

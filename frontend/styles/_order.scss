@@ -135,7 +135,15 @@
               height: 30px;
               line-height: 30px;
               text-align: center;
-              border: 1px solid #000;
+              border-top: 1px solid #d2d2d2;
+              border-bottom: 1px solid #d2d2d2;
+              background: #7e97a7;
+              cursor: pointer;
+              transition: 0.4s ease-out;
+              &.active{
+                background: #2d414e;
+                color: #ffffff;
+              }
             }
           }
           table{
@@ -230,6 +238,7 @@
                 top: 18px;
                 left: 0;
                 box-shadow: 0 5px 7px 0 rgba(0, 0, 0, 0.3);
+                z-index: 2;
               }
               tr{  width: calc(100% - 4px);  }
             }
@@ -260,6 +269,10 @@
                 width: 58px;
               }
               &:nth-of-type(5){  width: 68px; }
+              &.size_sell{  background-color: #fff1f1;  }
+              &.best_sell{  background-color: #ff6464;  }
+              &.size_buy{  background-color: #ebf7f9;  }
+              &.best_buy{  background-color: #4ad1d7;  }
             }
           }
         }
