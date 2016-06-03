@@ -3,7 +3,8 @@ $(document).ready(function () {
 		e.stopPropagation();
 	});
 	(function tradeOn() {
-		var checkbox = $('.left_order .tab input'),
+		var checkbox = $('.left_order .tab input.limit'),
+				autoTrade = $('.left_order .tab input.auto'),
 			  default_order = $('.left_order .default_orders'),
 				active_trader = $('.left_order .active_trader'),
 				buttons = $('#exchange .content_bet .event'),
@@ -13,6 +14,7 @@ $(document).ready(function () {
 
 		if(checkbox.prop('checked')){
 			var ii = 0;
+			autoTrade.parent().fadeIn(200);
 			default_order.fadeOut(200);
 			active_trader.fadeIn(200);
 			buttons.attr('disabled', true);
@@ -27,6 +29,7 @@ $(document).ready(function () {
 		}
 		checkbox.change(function () {
 			if($(this).prop('checked')){
+				autoTrade.parent().fadeIn(200);
 				default_order.fadeOut(200);
 				setTimeout(function () {
 					active_trader.fadeIn(200);
@@ -36,6 +39,7 @@ $(document).ready(function () {
 				tabReturn();
 			}
 			else{
+				autoTrade.parent().fadeOut(200);
 				setTimeout(function () {
 					default_order.fadeIn(200);
 				}, 200);
@@ -51,13 +55,15 @@ $(document).ready(function () {
 	})();
 
 	(function eventChange() {
-		var checkbox = $('.left_order .tab input'),
+		var checkbox = $('.left_order .tab input.limit'),
+				autoTrade = $('.left_order .tab input.auto'),
 				event_container = $('.content_bet'),
 				event_content = $('.event-content'),
 				tabs = $('.active_trader .event_title .event_name');
 
 		if(checkbox.prop('checked')){
 			tabs.eq(0).addClass('active');
+			autoTrade.parent().fadeIn(200);
 			event_container.click(function () {
 				if(checkbox.prop('checked')){
 					var titles = $(this).find('.event-title a'),
@@ -94,13 +100,16 @@ $(document).ready(function () {
 				if(checkbox.prop('checked')){
 					tabs.removeClass('active');
 					$(this).addClass('active');
+					takeData($('.content_bet.active .event-content').eq($(this).index()));
 				}
 			});
 
 			function takeData(currentItem) {
 				var ii, priceSell = [], priceBuy = [], volumeSell = [], volumeBuy = [],
 						bestSell, bestBuy, currentPrice,
-						table = $('table.limit tbody tr');
+						table = $('table.limit tbody tr'),
+						join_bid = $('.join_bid a'),
+						join_ask = $('.join_ask a');
 				currentItem = currentItem.hasClass('content_bet') ? currentItem.find('.table').children('.event-content').eq(0) : currentItem;
 
 				for(ii = 0; ii < currentItem.find('.sell').find('button.event').length; ii++){
@@ -113,6 +122,10 @@ $(document).ready(function () {
 					volumeBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.volume').text());
 				}
 				bestBuy = currentItem.find('.buy').find('button.event').eq(0).find('.price').text();
+
+				join_bid.text('Join BID ' + bestSell);
+				join_ask.text(bestBuy + ' Join ASK');
+
 				table.find('.size').removeClass('best_sell best_buy').text('');
 				table.find('.price').removeClass('best_sell best_buy');
 				table.each(function () {
@@ -137,8 +150,9 @@ $(document).ready(function () {
 
 				(function scrollTo() {
 					var indeSell = table.find('.best_sell').parent().index(),
-							indexBuy = table.find('.best_buy').parent().index();
-					$('table.limit tbody').animate({scrollTop: (indexBuy + (indeSell - indexBuy) / 2) * 19 - $('table.limit tbody').height() / 2}, 400);
+							indexBuy = table.find('.best_buy').parent().index(),
+							tbody = $('table.limit tbody');
+					tbody.animate({scrollTop: (indexBuy + (indeSell - indexBuy) / 2) * 19 - tbody.height() / 2}, 400);
 				})();
 			}
 		}

@@ -4,9 +4,16 @@
       <div class="tabs">
         <span class="tab">
           New orders
-          <label class="trader"><input type="checkbox" name="limit" checked ><span>Active trader</span></label>
+          <label class="trader"><input type="checkbox" name="limit" class="limit" checked ><span>Active trader <span class="help">
+            <span class="help_message"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, dignissimos.</p></span>
+          </span></span></label>
         </span>
-        <span class="tab">Current orders</span>
+        <span class="tab">
+          Current orders
+          <label class="auto_trade"><input type="checkbox" name="auto" class="auto" ><span>Auto trade <span class="help">
+            <span class="help_message"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, vel?</p></span>
+          </span></span></label>
+        </span>
       </div>
       <div class="tab_content order-content">
         <div class="tab_item" id="order">
@@ -18,6 +25,17 @@
             </div>
             <table class="control">
               <tbody>
+                <tr>
+                  <td class="open_contracts"><a href="#">OC <span class="quantity up">256 </span><span class="help">
+                    <span class="help_message"><p>Open contracts</p></span>
+                  </span></a></td>
+                  <td class="open_pnl"><a href="#">OPNL <span class="quantity up">$26.6 </span><span class="help">
+                    <span class="help_message"><p>Open positions on this contract</p></span>
+                  </span></a></td>
+                  <td class="total_pnl"><a href="#">TPNL <span class="quantity down">$93 </span><span class="help">
+                    <span class="help_message"><p>Open and closed positions on this contract</p></span>
+                  </span></a></td>
+                </tr>
                 <tr>
                   <td class="buy_mkt active"><a href="#">Buy MKT</a></td>
                   <td class="sell_mkt active"><a href="#">Sell MKT</a></td>
@@ -63,7 +81,6 @@
                   <th>Price</th>
                   <th>Size</th>
                   <th>My Offers</th>
-                  <th>P/L</th>
                 </tr>
               </thead>
               <tbody></tbody>

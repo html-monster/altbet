@@ -220,9 +220,9 @@ $(document).ready(function () {
   });
 
   //right sidebar*******************************************************************************************************
-  $('.buton').click(function(){
-    $('.order_slide').toggleClass('active');
-  });
+  // $('.buton').click(function(){
+  //   $('.order_slide').toggleClass('active');
+  // });
 
   //cybersport**********************************************************************************************************
   $('.stream_body .stream_title').click(function(){
@@ -320,6 +320,17 @@ $(document).ready(function () {
     tbody.css('max-height', actveTraderHeight);
     tabContent.addClass('footer_active');
 
+  })();
+
+  //Help================================================================================================================
+  ;(function showHelpMessage() {
+    var help = $('.active_trader .help');
+    help.mouseover(function () {
+      $(this).parents('.tab_item').css('overflow-y', 'inherit');
+    });
+    help.mouseleave(function () {
+      $(this).parents('.tab_item').css('overflow-y', 'auto');
+    });
   })();
 
 });

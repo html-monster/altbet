@@ -25,19 +25,19 @@
 				windowWidth = window.innerWidth,
 				substructionHeight = $('.left_order .tabs').height() + 45 + $('header').height(),
 				orderSidebarHeight = windowHeight - substructionHeight,
-				actveTraderHeight = orderSidebarHeight,
+				// actveTraderHeight = orderSidebarHeight,
 				orderContent = $('#order'),
 				currentOrders = $('#current-orders'),
 				tab_content = $('.tab_content'),
 				checkbox = $('.left_order .tab input'),
 				tbody = $('.left_order table.limit tbody');
 
-			actveTraderHeight -= ($('.active_trader .event_title').height() + $('.active_trader .control').height() + $('.active_trader .limit thead').height());
+			// actveTraderHeight -= ($('.active_trader .event_title').height() + $('.active_trader .control').height() + $('.active_trader .limit thead').height());
 		$(".left_order .wrapper .tab").click(function () {
 			var height;
 
 			$(".left_order .wrapper .tab").removeClass("active").eq($(this).index()).addClass("active");
-			$(".left_order .tab_item").hide().eq($(this).index()).fadeIn();
+			$(".left_order .tab_item").hide().eq($(this).index()).show();
 			if($(this).index() == 1){
 				height = currentOrders.height();
 				if(height + 7 > windowHeight - substructionHeight){
@@ -338,7 +338,7 @@
 					}
 				}
 				// if(container.find('form').length < 1)
-					container.html(html);
+				container.html(html);
 				numericalVerification($('.order_content input'));
 				$('.order_content form').fadeIn(400);
 				if(limit){
@@ -355,6 +355,7 @@
 			// $("body select").msDropDown();
 		});
 	})();
+
 	function tabReturn() {
 		var tab = $(".left_order .wrapper .tab"),
 				tab_item = $(".left_order .tab_item");
@@ -363,6 +364,7 @@
 			tab_item.hide().eq(0).fadeIn(0);
 		}
 	}
+
 	//order edit =======================================================================================================
 	;(function orderEdit() {
 		var container = $('.left_order'),

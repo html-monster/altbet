@@ -30,7 +30,7 @@
   color: #707070;
   cursor: pointer;
   //position: relative;
-  span{
+  &>span{
     &:before, &:after{
       content: '';
       display: block;
@@ -59,7 +59,9 @@
   input{
     display: none;
     &:checked + span{
-      &:before{  background: linear-gradient(to bottom, #0e77a4, $main-color);  }
+      &:before{
+        background: url('../Images/ico-success-b.png') no-repeat 3px 3px, linear-gradient(to bottom, #0e77a4, $main-color);
+      }
       &:after{
         left: 18px;
       }
