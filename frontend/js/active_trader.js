@@ -80,7 +80,7 @@ $(document).ready(function () {
 			order.css('overflow-y', 'hidden');
 			setTimeout(function () {
 				var orderSidebarHeight = windowHeight - ($('.left_order .tabs').height() + 45 + $('header').height()),
-						actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() +
+						actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +
 								$('.active_trader .control').height() + $('.active_trader .limit thead').height() + 10);
 
 				if(footer.hasClass('active')){
@@ -194,7 +194,7 @@ $(document).ready(function () {
 	}
 
 	(function addOrder() {
-		var quantityButton = $('.active_trader .control .button.quantity'),
+		var //quantityButton = $('.active_trader .control .button.quantity'),
 				trader = $('.active_trader'),
 				size = trader.width(),
 				html;
@@ -202,12 +202,12 @@ $(document).ready(function () {
 			size = $('.active_trader').width();
 			trader.find('#order_content').css('width', size);
 		});
-		$('.active_trader .control .button').click(function () {
-			var quantity = $(this).find('a').text();
+		$('.active_trader .control .button button').click(function () {
+			var quantity = $(this).text();
 
-			if($(this).hasClass('quantity')){
-				quantityButton.removeClass('activated');
-				$(this).toggleClass('activated');
+			if($(this).parent().hasClass('quantity')){
+			//	quantityButton.removeClass('activated');
+				$(this).parent().toggleClass('activated');
 
 				$('.active_trader .market_button').addClass('active clickable');
 				$('.active_trader input.quantity').val(quantity);
@@ -216,7 +216,7 @@ $(document).ready(function () {
 			}
 		});
 		$('.active_trader input.quantity').keyup(function () {
-			quantityButton.removeClass('activated');
+			//quantityButton.removeClass('activated');
 			if($(this).val() == ''){
 				$('.active_trader .market_button').removeClass('active clickable');
 				$('.active_trader table.limit tbody td.size').removeClass('clickable');
@@ -227,12 +227,13 @@ $(document).ready(function () {
 			}
 			recaluculateSum($(this));
 		});
-		trader.on('click', '.confim.clickable', function(){
+		trader.on('click', '.confim.clickable', function(e){
 			if(!($('.order label input.auto').prop('checked'))){
 				var position = $(this).position().top + 19,
 						price = $(this).find('.price').text().replace(/[^0-9.]+/g, "") || $(this).parent().find('.price_value .value').text().replace(/[^0-9.]+/g, ""),
 						quantity = +trader.find('input.quantity').val();
 
+				e.stopPropagation();
 				if($(this).hasClass('size'))
 						position = $(this).parent().index() * 20 + 20;
 				if($(this).hasClass('sell'))
@@ -246,6 +247,7 @@ $(document).ready(function () {
 								price + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
 								quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><div class="obligations col-3" style="margin-left: 3px;"><label>Sum:</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' + (price * quantity).toFixed(2) + '" disabled><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div></div></div><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><button class="btn delete col-3" style="margin-left: 3px;"></button><div class="col-3" style="margin-left: 3px;"></div></form></div><div class="buy-container"></div></div>';
 
+				if(trader.find('#order_content').length)
 				if(trader.find('#order_content').length)
 						trader.find('#order_content').remove();
 				if($(this).hasClass('size'))
@@ -262,7 +264,7 @@ $(document).ready(function () {
 		});
 		function recaluculateSum(item){
 			var order_content = $('.active_trader .order_content'),
-					quantity = +item.children().text() || +item.val(),
+					quantity = +item.text() || +item.val(),
 					price = +order_content.find('.price input').val();
 
 			order_content.find('.volume input').val(quantity);
@@ -277,6 +279,10 @@ $(document).ready(function () {
 				trader.find('#order_content').remove();
 		});
 
+		// trader.on('click', 'table.limit tbody', function () {
+		// 	trader.find('#order_content').remove();
+		// });
+		//
 		// trader.on('click', '#order_content', function(e){
 		// 	e.stopPropagation();
 		// });

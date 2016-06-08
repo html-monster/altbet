@@ -30,7 +30,8 @@
                     <span class="help_message"><p>Open contracts</p></span>
                   </span></a></td>
                   <td rowspan="2">
-                    <span>sdfsdf</span>
+                    <a href="#" class="close_out active">Close OUT</a>
+                    <a href="#" class="cancel_all active">Cancel All</a>
                   </td>
                 </tr>
                 <tr>
@@ -45,37 +46,29 @@
                 <tr>
                   <td class="buy_mkt market_button"><a href="#">Buy MKT</a></td>
                   <td class="sell_mkt market_button"><a href="#">Sell MKT</a></td>
-                  <td class="cancel_all active"><a href="#">Cancel All</a></td>
-                </tr>
-                <tr>
-                  <td class="reverse active"><a href="#">Reverse</a></td>
-                  <td class="close_out active"><a href="#">Close OUT</a></td>
-                  <td class="spreader active"><a href="#">Spreader</a></td>
+                  <td class="spreader"><a href="#">Spreader</a></td>
                 </tr>
                 <tr>
                   <td><span>Quantity</span></td>
-                  <td><input type="text" class="number quantity"></td>
-                  <td><span>Spread +/-</span></td>
+                  <td><div class="input"><input type="text" class="number quantity" placeholder="1"><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></td>
+                  <td><div class="input"><input type="text" class="number spreader"><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></td>
                 </tr>
                 <tr>
-                  <td class="button quantity active"><a href="#">10</a></td>
-                  <td class="button quantity active"><a href="#">20</a></td>
-                  <td><input type="text" class="number spreader"></td>
                 </tr>
                 <tr>
-                  <td class="button quantity active"><a href="#">50</a></td>
-                  <td class="button quantity active"><a href="#">100</a></td>
-                  <td class="button active"><a href="#">0.01</a></td>
+                  <td class="button quantity"><button class="btn">10</button><button class="btn">20</button></td>
+                  <td class="button quantity"><button class="btn">50</button><button class="btn">100</button></td>
+                  <td class="button"><button class="btn">0.01</button><button class="btn">0.05</button></td>
                 </tr>
                 <tr>
-                  <td class="button quantity active"><a href="#">200</a></td>
-                  <td class="button quantity active"><a href="#">500</a></td>
-                  <td class="button active"><a href="#">0.05</a></td>
+                  <td class="button quantity"><button class="btn">200</button><button class="btn">500</button></td>
+                  <td class="button quantity"><button class="btn">1000</button><button class="btn">2000</button></td>
+                  <td class="button"><button class="btn">0.10</button><button class="btn">0.20</button></td>
                 </tr>
                 <tr>
                   <td class="join_bid sell market_button confim"><a href="#">Join BID <span class="price"></span></a></td>
                   <td class="join_ask buy market_button confim"><a href="#"><span class="price"></span> Join ASK</a></td>
-                  <td class="button active"><a href="#">0.10</a></td>
+                  <td class="reverse active"><a href="#">Reverse</a></td>
                 </tr>
                 <tr></tr>
               </tbody>

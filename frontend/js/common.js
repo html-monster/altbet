@@ -55,6 +55,15 @@ $(document).ready(function () {
         return false;
       }
     }
+
+    if($(this).parents('.input').find('.spreader').length){
+      if(+input.val() > 0.49 && $(this).hasClass('plus')){
+        return false;
+      }
+      if(+input.val() < 0.02 && $(this).hasClass('minus')){
+        return false;
+      }
+    }
     if(input.attr('maxlength') != undefined){
       if(((+input.val() + flag).toFixed(0) + '').length > +input.attr('maxlength') && $(this).hasClass('plus')){
         return false;
@@ -285,7 +294,7 @@ $(document).ready(function () {
   (function scrollEdit() {
       var windowHeight = window.innerHeight,
           orderSidebarHeight = windowHeight - ($('.left_order .tabs').height() + 45 + $('header').height()),
-          actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() +
+          actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +
               $('.active_trader .control').height() + $('.active_trader .limit thead').height() + 10),
           footer = $('footer'),
           footerHeight = footer.height() + 30,
