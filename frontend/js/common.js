@@ -322,6 +322,7 @@ $(document).ready(function () {
 
   })();
 
+
   //Help================================================================================================================
   ;(function showHelpMessage() {
     var help = $('.active_trader .help');
@@ -329,10 +330,9 @@ $(document).ready(function () {
       $(this).parents('.tab_item').css('overflow-y', 'inherit');
     });
     help.mouseleave(function () {
-      $(this).parents('.tab_item').css('overflow-y', 'auto');
+      $(this).parents('.tab_item').css('overflow-y', 'hidden');
     });
   })();
-
 });
   /*ws.onmessage = function (evt) {
     //alert("message: " + evt.data);

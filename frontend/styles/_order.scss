@@ -152,7 +152,10 @@
             font-size: 12px;
             //font-size: 13px;
             //@include md(1400){  font-size: 12px;  }
-            &.control td{  width: 33%;  }
+            &.control{
+              //tr:first-of-type td{  width: 50%;  }
+              td{  width: 33%;  }
+            }
             input{  width: 100%;  padding: 0 5px; box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.3); }
             th{
               max-width: 70px;
@@ -165,7 +168,12 @@
               border: 1px solid #d2d2d2;
               border-left: none;
               border-bottom: none;
-              position: relative;
+              //position: relative;
+              span.container{
+                display: block;
+                height: 19px;
+                position: relative;
+              }
               &.open_contracts, &.open_pnl, &.total_pnl{
                 a{  font-size: 11px;  }
                 span{
@@ -175,8 +183,9 @@
                 }
                 .help{  margin-top: 2px;  }
               }
-              &.buy_mkt, &.join_bid{  background: #4ad1d7;  }
-              &.sell_mkt, &.join_ask{  background: #ff6464; }
+              &.buy_mkt, &.join_bid{  background: #ff6464;  }
+              &.sell_mkt, &.join_ask{  background: #4ad1d7; }
+              &.join_bid span, &.join_ask span{    padding: 1px;  border-radius: 5px;  background: #fff;  box-shadow: inset 0 6px 10px -2px rgba(0, 0, 0, 0.5);  }
               &.cancel_all{  background: #a3a3a3;  }
               &.close_out{
                 background: #484848;
@@ -186,40 +195,15 @@
               &.spreader{  background: #ffc11a;  }
               &.button{  background: #dcdcdc;  }
               &.active{
-                overflow: hidden;
-                &:after{
-                  content: '';
-                  display: block;
-                  width: 100%;
-                  height: 100%;
-                  background: #000000;
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  opacity: 0;
-                  transition: 0.4s ease-out;
-                }
-                /*&:before{
-                  content: '';
-                  display: block;
-                  width: 0;
-                  height: 0;
-                  background: #848484;
-                  position: absolute;
-                  top: 50%;
-                  left: 50%;
-                  z-index: 11;
-                  opacity: 0.05;
-                  transition: 0.1s ease-out;
-                  border-radius: 50%;
-                }*/
-                &:hover:after{  opacity: 0.1;  }
-                &:active:after{
-                  //width: 150%;
-                  //height: 150%;
-                  //top: -25%;
-                  //left: -25%;
-                  opacity: 0.3;
+                box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
+                transition: 0.2s ease;
+                cursor: pointer;
+                &[disabled]{  cursor: default;  }
+                &:not([disabled]):active {  box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0); }
+                &.activated{  box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);  }
+                a{  cursor: pointer;  }
+                .order_content:active{
+                  box-shadow: none;
                 }
               }
               a{
@@ -227,6 +211,7 @@
                 padding: 0 5px;
                 color: #303030;
                 position: relative;
+                cursor: default;
                 //z-index: 2;
                 //box-shadow: inset 0 -9px 15px -4px rgba(0, 0, 0, 0.5);
                 //&:active{  box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);  }
@@ -257,6 +242,7 @@
               overflow: hidden;
               overflow-y: auto;
               transition: 0.4s ease-out;
+              position: relative;
               @include scroll;
             }
             tr{
@@ -278,11 +264,73 @@
                 width: 58px;
               }
               &:nth-of-type(5){  width: 68px; }
-              &.size_sell{  background-color: #fff1f1;  }
-              &.best_sell{  background-color: #ff6464;  }
-              &.size_buy{  background-color: #ebf7f9;  }
-              &.best_buy{  background-color: #4ad1d7;  }
+              &.size span.value, &.price span.value{  position: relative;  z-index: 3;  }
+              &.size .container:not(.best_buy):not(.best_sell):after,
+              &.size .container:not(.best_buy):not(.best_sell):before{
+                content: '';
+                display: block;
+                width: 0;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: -5px;
+                transition: 0.4s ease-out;
+                opacity: 0.3;
+                z-index: 1;
+              }
+              &.size .container:not(.best_buy):not(.best_sell):before{
+                transition: 0.3s ease-out;
+                z-index: 2;
+              }
+              &.size.size_buy .container:not(.best_buy):not(.best_sell):before{
+                left: auto;
+                right: -5px;
+              }
+              &.clickable{  cursor: pointer; }
+              &.size_sell{
+                background-color: #fff1f1;
+                &.clickable{
+                  &:hover .container:before{
+                    width: calc(200% + 22px) !important;
+                    background-color: #ff6464;
+                  }
+                  .container:after{
+                    width: calc(100% + 10px) !important;
+                    background-color: #ffcbc2;
+                  }
+                }
+              }
+              &.best_sell{  background-color: #ff6464; font-weight: bold;  }
+              &.size_buy{
+                background-color: #ebf7f9;
+                &.clickable{
+                  &:hover .container:before{
+                    width: calc(200% + 21px) !important;
+                    background-color: #4ad1d7;
+                  }
+                  .container:after{
+                    width: calc(100% + 10px) !important;
+                    background-color: #b5e5ec;
+                  }
+                }
+              }
+              &.best_buy{  background-color: #4ad1d7; font-weight: bold;  }
             }
+          }
+          #order_content{
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            border-top: 1px solid #d6d6d6;
+            //border-bottom: 1px solid #d6d6d6;
+            box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.5);
+            font-weight: normal;
+            form{
+              margin-bottom: 0;
+              padding: 9px 5px;
+              border-radius: 0;
+            }
+            .btn{  margin-top: 3px;  }
           }
         }
         .tab_item {
@@ -418,7 +466,7 @@
               }*/
               label.col-3{
                 height: 31px;
-                margin-top: 10px;
+                margin-top: 3px;
                 font-size: 16px;
                 line-height: 31px;
                 //text-transform: uppercase;
@@ -454,6 +502,7 @@
                 input{
                   width: 100%;
                   padding-right: 18px;
+                  font-size: 14px;
                 }
               }
               .col-3 .btn{  display: inline-block;  width: 46%;  background-size: 18px;  vertical-align: bottom;  }

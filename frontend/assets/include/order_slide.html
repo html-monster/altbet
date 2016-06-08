@@ -23,54 +23,61 @@
               <div class="event_name"></div>
               <div class="event_name reverse"></div>
             </div>
+            <table class="info">
+              <tbody>
+                <tr>
+                  <td class="open_contracts"><a href="#">CURRENT POS <span class="quantity up">256 </span><span class="help">
+                    <span class="help_message"><p>Open contracts</p></span>
+                  </span></a></td>
+                  <td rowspan="2">
+                    <span>sdfsdf</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="open_pnl"><a href="#">OPEN POS <span class="quantity up">$26.6 </span><span class="help">
+                    <span class="help_message"><p>Open positions on this contracts</p></span>
+                  </span></a></td>
+                </tr>
+              </tbody>
+            </table>
             <table class="control">
               <tbody>
                 <tr>
-                  <td class="open_contracts"><a href="#">OC <span class="quantity up">256 </span><span class="help">
-                    <span class="help_message"><p>Open contracts</p></span>
-                  </span></a></td>
-                  <td class="open_pnl"><a href="#">OPNL <span class="quantity up">$26.6 </span><span class="help">
-                    <span class="help_message"><p>Open positions on this contract</p></span>
-                  </span></a></td>
-                  <td class="total_pnl"><a href="#">TPNL <span class="quantity down">$93 </span><span class="help">
-                    <span class="help_message"><p>Open and closed positions on this contract</p></span>
-                  </span></a></td>
-                </tr>
-                <tr>
-                  <td class="buy_mkt active"><a href="#">Buy MKT</a></td>
-                  <td class="sell_mkt active"><a href="#">Sell MKT</a></td>
+                  <td class="buy_mkt market_button"><a href="#">Buy MKT</a></td>
+                  <td class="sell_mkt market_button"><a href="#">Sell MKT</a></td>
                   <td class="cancel_all active"><a href="#">Cancel All</a></td>
                 </tr>
                 <tr>
                   <td class="reverse active"><a href="#">Reverse</a></td>
                   <td class="close_out active"><a href="#">Close OUT</a></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td><span>Quantity</span></td>
-                  <td><input type="text" class="number spreader"></td>
                   <td class="spreader active"><a href="#">Spreader</a></td>
                 </tr>
                 <tr>
-                  <td class="button active"><a href="#">10</a></td>
-                  <td class="button active"><a href="#">20</a></td>
+                  <td><span>Quantity</span></td>
+                  <td><input type="text" class="number quantity"></td>
                   <td><span>Spread +/-</span></td>
                 </tr>
                 <tr>
-                  <td class="button active"><a href="#">50</a></td>
-                  <td class="button active"><a href="#">100</a></td>
-                  <td><input type="text" class="number"></td>
+                  <td class="button quantity active"><a href="#">10</a></td>
+                  <td class="button quantity active"><a href="#">20</a></td>
+                  <td><input type="text" class="number spreader"></td>
                 </tr>
                 <tr>
-                  <td class="button active"><a href="#">200</a></td>
-                  <td class="button active"><a href="#">500</a></td>
-                  <td></td>
+                  <td class="button quantity active"><a href="#">50</a></td>
+                  <td class="button quantity active"><a href="#">100</a></td>
+                  <td class="button active"><a href="#">0.01</a></td>
                 </tr>
                 <tr>
-                  <td class="join_bid active"><a href="#">Join BID</a></td>
-                  <td class="join_ask active"><a href="#">Join ASK</a></td>
-                  <td></td>
+                  <td class="button quantity active"><a href="#">200</a></td>
+                  <td class="button quantity active"><a href="#">500</a></td>
+                  <td class="button active"><a href="#">0.05</a></td>
                 </tr>
+                <tr>
+                  <td class="join_bid sell market_button confim"><a href="#">Join BID <span class="price"></span></a></td>
+                  <td class="join_ask buy market_button confim"><a href="#"><span class="price"></span> Join ASK</a></td>
+                  <td class="button active"><a href="#">0.10</a></td>
+                </tr>
+                <tr></tr>
               </tbody>
             </table>
             <table class="limit">
@@ -107,7 +114,7 @@
                   <div class="price col-3">
                     <label>Your price:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
+                      <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -115,7 +122,7 @@
                   <div class="volume col-3">
                     <label>Quantity:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
+                      <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -124,13 +131,13 @@
                     <div class="obligations">
                       <label>Sum:</label><br>
                       <div class="input">
-                        <input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
+                        <input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                         <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                       </div>
                     </div>
                   </div>
-                  <label class="col-3" style="margin-left: 3px;">
+                  <label class="col-3">
                     <input type="checkbox" name="limit" checked>
                     <span>Limit</span>
                   </label>
@@ -141,7 +148,7 @@
                   <div class="price col-3">
                     <label>Your price:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
+                      <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -149,7 +156,7 @@
                   <div class="volume col-3">
                     <label>Quantity:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
+                      <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -157,13 +164,13 @@
                   <div class="order_type col-3">
                     <div class="obligations">
                       <label>Sum:</label><br>
-                      <div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
+                      <div class="input"><input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                         <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                       </div>
                     </div>
                   </div>
-                  <label class="col-3" style="margin-left: 3px;">
+                  <label class="col-3">
                     <input type="checkbox" name="limit" checked>
                     <span>Limit</span>
                   </label>
@@ -194,7 +201,7 @@
                   <div class="price col-3">
                     <label>Your price:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
+                      <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -202,7 +209,7 @@
                   <div class="volume col-3">
                     <label>Quantity:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
+                      <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -211,13 +218,13 @@
                     <div class="obligations">
                       <label>Sum:</label><br>
                       <div class="input">
-                        <input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
+                        <input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                         <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                       </div>
                     </div>
                   </div>
-                  <label class="col-3" style="margin-left: 3px;">
+                  <label class="col-3">
                     <input type="checkbox" name="limit" checked>
                     <span>Limit</span>
                   </label>
@@ -228,7 +235,7 @@
                   <div class="price col-3">
                     <label>Your price:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
+                      <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -236,7 +243,7 @@
                   <div class="volume col-3">
                     <label>Quantity:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
+                      <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -244,13 +251,13 @@
                   <div class="order_type col-3">
                     <div class="obligations">
                       <label>Sum:</label><br>
-                      <div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
+                      <div class="input"><input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                         <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                       </div>
                     </div>
                   </div>
-                  <label class="col-3" style="margin-left: 3px;">
+                  <label class="col-3">
                     <input type="checkbox" name="limit" checked>
                     <span>Limit</span>
                   </label>
@@ -281,7 +288,7 @@
                   <div class="price col-3">
                     <label>Your price:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
+                      <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -289,7 +296,7 @@
                   <div class="volume col-3">
                     <label>Quantity:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
+                      <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -298,13 +305,13 @@
                     <div class="obligations">
                       <label>Sum:</label><br>
                       <div class="input">
-                        <input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
+                        <input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                         <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                       </div>
                     </div>
                   </div>
-                  <label class="col-3" style="margin-left: 3px;">
+                  <label class="col-3">
                     <input type="checkbox" name="limit" checked>
                     <span>Limit</span>
                   </label>
@@ -315,7 +322,7 @@
                   <div class="price col-3">
                     <label>Your price:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
+                      <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -323,7 +330,7 @@
                   <div class="volume col-3">
                     <label>Quantity:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
+                      <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -331,13 +338,13 @@
                   <div class="order_type col-3">
                     <div class="obligations">
                       <label>Sum:</label><br>
-                      <div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
+                      <div class="input"><input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                         <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                       </div>
                     </div>
                   </div>
-                  <label class="col-3" style="margin-left: 3px;">
+                  <label class="col-3">
                     <input type="checkbox" name="limit" checked>
                     <span>Limit</span>
                   </label>
@@ -368,7 +375,7 @@
                   <div class="price col-3">
                     <label>Your price:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
+                      <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -376,7 +383,7 @@
                   <div class="volume col-3">
                     <label>Quantity:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
+                      <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -385,13 +392,13 @@
                     <div class="obligations">
                       <label>Sum:</label><br>
                       <div class="input">
-                        <input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
+                        <input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                         <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                       </div>
                     </div>
                   </div>
-                  <label class="col-3" style="margin-left: 3px;">
+                  <label class="col-3">
                     <input type="checkbox" name="limit" checked>
                     <span>Limit</span>
                   </label>
@@ -402,7 +409,7 @@
                   <div class="price col-3">
                     <label>Your price:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="0.33" validation="[0]+([.][0-9]{1,2})?" maxlength="4">
+                      <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -410,7 +417,7 @@
                   <div class="volume col-3">
                     <label>Quantity:</label><br>
                     <div class="input">
-                      <input type="text" class="number" placeholder="123" validation="[0-9]{1,6}" maxlength="7">
+                      <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                       <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                     </div>
@@ -418,13 +425,13 @@
                   <div class="order_type col-3">
                     <div class="obligations">
                       <label>Sum:</label><br>
-                      <div class="input"><input type="text" class="number" placeholder="40.59" validation="[0-9]{0,6}[.]?[0-9]{1,2}" maxlength="10">
+                      <div class="input"><input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                         <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
                       </div>
                     </div>
                   </div>
-                  <label class="col-3" style="margin-left: 3px;">
+                  <label class="col-3">
                     <input type="checkbox" name="limit" checked>
                     <span>Limit</span>
                   </label>

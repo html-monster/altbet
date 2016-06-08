@@ -207,6 +207,9 @@
               display: inline-block;
             }
             .content_title{
+              display: flex;
+              align-items: center;
+              justify-content: center;
               padding: 30px 5px 20px;
               width: 26%;
               border-radius: 5px 0 0 5px;
@@ -245,41 +248,20 @@
                   background: #f4f4f4;
                   @include btn-shadow;
                   &.empty{  width: 60px;  }
-                  //&:nth-child(2) {
-                  //  background: linear-gradient(to right, #caecf1, #adf1f1);
-                  //}
-                  //&:nth-child(3) {
-                  //  background: linear-gradient(to right, #adf1f1, #76eef1);
-                  //}
-                  //&:nth-child(4) {
-                  //  background: linear-gradient(to right, #76eef1, #35eef1);
-                  //}
-                  //&:nth-child(5) {
-                  //  background: linear-gradient(to left, #f1c99a, #f1ae62);
-                  //}
-                  //&:nth-child(6) {
-                  //  background: linear-gradient(to left, #f1ae62, #f1943c);
-                  //}
-                  //&:nth-child(7) {
-                  //  background: linear-gradient(to left, #f1943c, #f18022);
-                  //}
                   span{
                     display: block;
                     line-height: 13px;
                     color: #232323;
+                    font-weight: bold;
                     &.price{
                       padding: 3px 8px 0;
                       font-size: 13px;
-                      font-weight: bold;
                     }
                     &.volume{
                       padding-bottom: 3px;
                       font-size: 10px;
                     }
                   }
-                  //&:hover{
-                  //  background: linear-gradient(to left, #3df125, #c7f125);
-                  //}
                 }
                 .buy, .sell{
                   display: inline-block;
@@ -306,7 +288,7 @@
                     //  background: linear-gradient(to left, #ff7878, #ff6464);
                     //}
                     &:last-child{
-                      background: linear-gradient(to left, #ff6464, #ff4444);
+                      background: linear-gradient(to left, #ff8a82, #ff6464);
                     }
                   }
                 }
