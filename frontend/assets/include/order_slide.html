@@ -29,15 +29,13 @@
                   <td class="open_contracts"><a href="#">CURRENT POS <span class="quantity up">256 </span><span class="help">
                     <span class="help_message"><p>Open contracts</p></span>
                   </span></a></td>
-                  <td rowspan="2">
-                    <a href="#" class="close_out active">Close OUT</a>
-                    <a href="#" class="cancel_all active">Cancel All</a>
-                  </td>
-                </tr>
-                <tr>
                   <td class="open_pnl"><a href="#">OPEN POS <span class="quantity up">$26.6 </span><span class="help">
                     <span class="help_message"><p>Open positions on this contracts</p></span>
                   </span></a></td>
+                  <!--<td rowspan="2">
+                    <a href="#" class="close_out active">Close OUT</a>
+                    <a href="#" class="cancel_all active">Cancel All</a>
+                  </td>-->
                 </tr>
               </tbody>
             </table>
@@ -50,29 +48,40 @@
                 </tr>
                 <tr>
                   <td><span>Quantity</span></td>
-                  <td><div class="input"><input type="text" class="number quantity" placeholder="1"><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></td>
-                  <td><div class="input"><input type="text" class="number spreader"><div class="regulator"><span class="plus">+</span><span class="minus">-</span></div></div></td>
+                  <td class="volume"><div class="input"><input type="text" class="number quantity" placeholder="1"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></td>
+                  <td><div class="input"><input type="text" class="number spreader" maxlength="4"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></td>
                 </tr>
                 <tr>
                 </tr>
                 <tr>
                   <td class="button quantity"><button class="btn">10</button><button class="btn">20</button></td>
                   <td class="button quantity"><button class="btn">50</button><button class="btn">100</button></td>
-                  <td class="button"><button class="btn">0.01</button><button class="btn">0.05</button></td>
+                  <td class="button spread"><button class="btn">0.01</button><button class="btn">0.05</button></td>
                 </tr>
                 <tr>
                   <td class="button quantity"><button class="btn">200</button><button class="btn">500</button></td>
                   <td class="button quantity"><button class="btn">1000</button><button class="btn">2000</button></td>
-                  <td class="button"><button class="btn">0.10</button><button class="btn">0.20</button></td>
+                  <td class="button spread"><button class="btn">0.10</button><button class="btn">0.15</button></td>
                 </tr>
                 <tr>
                   <td class="join_bid sell market_button confim"><a href="#">Join BID <span class="price"></span></a></td>
                   <td class="join_ask buy market_button confim"><a href="#"><span class="price"></span> Join ASK</a></td>
-                  <td class="reverse active"><a href="#">Reverse</a></td>
+                  <td class="button spread"><button class="btn">0.25</button><button class="btn">0.30</button></td><!--<td class="reverse active"><a href="#">Reverse</a></td>-->
                 </tr>
                 <tr></tr>
               </tbody>
             </table>
+            <div class="active_trader_footer">
+              <table class="remote control">
+                <tbody>
+                <tr>
+                  <td class="reverse active"><a href="#">Reverse</a></td>
+                  <td class="close_out active"><a href="#">Close Out</a></td>
+                  <td class="cancel_all active"><a href="#">Cancel All</a></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
             <table class="limit">
               <thead>
                 <tr>
@@ -109,7 +118,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="volume col-3">
@@ -117,7 +126,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="order_type col-3">
@@ -126,7 +135,7 @@
                       <div class="input">
                         <input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
-                        <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                        <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                       </div>
                     </div>
                   </div>
@@ -143,7 +152,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="volume col-3">
@@ -151,7 +160,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="order_type col-3">
@@ -159,7 +168,7 @@
                       <label>Sum:</label><br>
                       <div class="input"><input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
-                        <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                        <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                       </div>
                     </div>
                   </div>
@@ -196,7 +205,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="volume col-3">
@@ -204,7 +213,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="order_type col-3">
@@ -213,7 +222,7 @@
                       <div class="input">
                         <input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
-                        <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                        <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                       </div>
                     </div>
                   </div>
@@ -230,7 +239,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="volume col-3">
@@ -238,7 +247,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="order_type col-3">
@@ -246,7 +255,7 @@
                       <label>Sum:</label><br>
                       <div class="input"><input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
-                        <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                        <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                       </div>
                     </div>
                   </div>
@@ -283,7 +292,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="volume col-3">
@@ -291,7 +300,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="order_type col-3">
@@ -300,7 +309,7 @@
                       <div class="input">
                         <input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
-                        <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                        <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                       </div>
                     </div>
                   </div>
@@ -317,7 +326,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="volume col-3">
@@ -325,7 +334,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="order_type col-3">
@@ -333,7 +342,7 @@
                       <label>Sum:</label><br>
                       <div class="input"><input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
-                        <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                        <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                       </div>
                     </div>
                   </div>
@@ -370,7 +379,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="volume col-3">
@@ -378,7 +387,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="order_type col-3">
@@ -387,7 +396,7 @@
                       <div class="input">
                         <input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
-                        <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                        <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                       </div>
                     </div>
                   </div>
@@ -404,7 +413,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="0.33" maxlength="4" value="0.">
                       <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="volume col-3">
@@ -412,7 +421,7 @@
                     <div class="input">
                       <input type="text" class="number" placeholder="123" maxlength="7">
                       <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
-                      <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                      <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                     </div>
                   </div>
                   <div class="order_type col-3">
@@ -420,7 +429,7 @@
                       <label>Sum:</label><br>
                       <div class="input"><input type="text" class="number" placeholder="40.59" maxlength="10">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
-                        <div class="regulator"><span class="plus">+</span><span class="minus">-</span></div>
+                        <div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>
                       </div>
                     </div>
                   </div>

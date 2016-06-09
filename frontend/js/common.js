@@ -37,49 +37,89 @@
 
 $(document).ready(function () {
 
-  $('.order').on('click', '.regulator span', function(){
-    var input = $(this).parents('.input').find('input.number');
-    var value = +input.val(),
+  (function oneStepValueChange() {
+    var order = $('.order'),
         flag;
 
-    (isInteger(+input.attr('placeholder'))) ? flag = 1 : flag = 0.01;
 
-    if(input.next('.warning').length)
-      input.next().fadeOut(200);
+    order.on('keydown', 'input.number', function (e) {
+      var input = $(this),
+          value = +input.val(),
+          code;
 
-    if($(this).parents('.price').length){
-      if(+input.val() > 0.98 && $(this).hasClass('plus')){
-        return false;
-      }
-      if(+input.val() < 0.02 && $(this).hasClass('minus')){
-        return false;
-      }
-    }
+      e = e || event;
+      code = e.which ||e.charCode || e.keyCode;
 
-    if($(this).parents('.input').find('.spreader').length){
-      if(+input.val() > 0.49 && $(this).hasClass('plus')){
-        return false;
-      }
-      if(+input.val() < 0.02 && $(this).hasClass('minus')){
-        return false;
-      }
-    }
-    if(input.attr('maxlength') != undefined){
-      if(((+input.val() + flag).toFixed(0) + '').length > +input.attr('maxlength') && $(this).hasClass('plus')){
-        return false;
-      }
-    }
-    if((+input.val() - flag) < 0 && $(this).hasClass('minus')){
-      return false;
-    }
+      (isInteger(+input.attr('placeholder'))) ? flag = 1 : flag = 0.01;
 
-    if($(this).hasClass('plus')){
-      input.val((flag == 1) ? value + flag: (value + flag).toFixed(2));
+      if(limitInputData($(this), input, code) === false)  return false;
+
+      if(code == 38){
+        e.preventDefault();
+        input.val((flag == 1) ? value + flag: (value + flag).toFixed(2));
+        input[0].selectionStart = input.val().length;
+      }
+      else if(code == 40){
+        e.preventDefault();
+        input.val((flag == 1) ? value - flag: (value - flag).toFixed(2));
+        input[0].selectionStart = input.val().length;
+      }
+    });
+
+    order.on('click', '.regulator span', function(){
+      var input = $(this).parents('.input').find('input.number'),
+          value = +input.val();
+
+      (isInteger(+input.attr('placeholder'))) ? flag = 1 : flag = 0.01;
+
+      if(limitInputData($(this), input) === false)  return false;
+
+      if($(this).hasClass('plus')){
+        input.val((flag == 1) ? value + flag: (value + flag).toFixed(2));
+        input.focus();
+        input[0].selectionStart = input.val().length;
+      }
+      else{
+        input.val((flag == 1) ? value - flag: (value - flag).toFixed(2));
+        input.focus();
+        input[0].selectionStart = input.val().length;
+      }
+    });
+
+    function limitInputData(current, input, code){
+      code = code || false;
+
+      if(input.next('.warning').length)
+        input.next().fadeOut(200);
+
+      if(current.parents('.price').length || current.parents('.input').find('.spreader').length){
+        if(+input.val() > 0.98 && (current.hasClass('plus') || code == 38)){
+          return false;
+        }
+        if(+input.val() < 0.02 && (current.hasClass('minus') ||  code == 40)){
+          return false;
+        }
+      }
+
+      // if(current.parents('.input').find('.spreader').length){
+      //   if(+input.val() > 0.49 && (current.hasClass('plus') || code == 38)){
+      //     return false;
+      //   }
+      //   if(+input.val() < 0.02 && (current.hasClass('minus') ||  code == 40)){
+      //     return false;
+      //   }
+      // }
+      if(input.attr('maxlength') != undefined){
+        if(((+input.val() + flag).toFixed(0) + '').length > +input.attr('maxlength') && (current.hasClass('plus') || code == 38)){
+          return false;
+        }
+      }
+      if((+input.val() - flag) < 0 && (current.hasClass('minus') || code == 40)){
+        return false;
+      }
     }
-    else{
-      input.val((flag == 1) ? value - flag: (value - flag).toFixed(2));
-    }
-  });
+  })();
+
 
   tabs($('.funds_tab'));
 
@@ -295,7 +335,7 @@ $(document).ready(function () {
       var windowHeight = window.innerHeight,
           orderSidebarHeight = windowHeight - ($('.left_order .tabs').height() + 45 + $('header').height()),
           actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +
-              $('.active_trader .control').height() + $('.active_trader .limit thead').height() + 10),
+              $('.active_trader .control').height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height() + 10),
           footer = $('footer'),
           footerHeight = footer.height() + 30,
           scroll = orderSidebarHeight,

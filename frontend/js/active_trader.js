@@ -81,7 +81,7 @@ $(document).ready(function () {
 			setTimeout(function () {
 				var orderSidebarHeight = windowHeight - ($('.left_order .tabs').height() + 45 + $('header').height()),
 						actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +
-								$('.active_trader .control').height() + $('.active_trader .limit thead').height() + 10);
+								$('.active_trader .control').height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height() + 10);
 
 				if(footer.hasClass('active')){
 					tbody.css('max-height', actveTraderHeight - footerHeight);
@@ -198,23 +198,50 @@ $(document).ready(function () {
 				trader = $('.active_trader'),
 				size = trader.width(),
 				html;
+
+		trader.find('.active_trader_footer').css('width', size);
 		$(window).resize(function () {
 			size = $('.active_trader').width();
 			trader.find('#order_content').css('width', size);
+			trader.find('.active_trader_footer').css('width', size);
 		});
+
 		$('.active_trader .control .button button').click(function () {
-			var quantity = $(this).text();
+			var quantity = $(this).text(),
+					input;
 
 			if($(this).parent().hasClass('quantity')){
+				input = $('.active_trader input.quantity');
 			//	quantityButton.removeClass('activated');
 				$(this).parent().toggleClass('activated');
 
 				$('.active_trader .market_button').addClass('active clickable');
-				$('.active_trader input.quantity').val(quantity);
+				input.focus().val(quantity);
+				input[0].selectionStart = input.val().length;
 				$('.active_trader table.limit tbody td.size').addClass('clickable');
 				recaluculateSum($(this));
 			}
+			if($(this).parent().hasClass('spread')){
+				input = $('.active_trader input.spreader');
+				var value, ii,
+						ask = $('.active_trader .best_buy').parent().index(),
+						bid = $('.active_trader .best_sell').parent().index();
+
+				input.focus().val(quantity);
+				input[0].selectionStart = input.val().length;
+				value = +input.val() * 100;
+				for(ii = bid - 1 ; ii > ask; ii--){
+					$('.active_trader table.limit tbody tr').eq(ii).find('.price_value').addClass('active');
+				}
+				for(ii = bid + 1; ii < bid + value; ii++){
+					$('.active_trader table.limit tbody tr').eq(ii).find('.price_value').addClass('active');
+				}
+				for(ii = ask - 1; ii > ask - value; ii--){
+					$('.active_trader table.limit tbody tr').eq(ii).find('.price_value').addClass('active');
+				}
+			}
 		});
+
 		$('.active_trader input.quantity').keyup(function () {
 			//quantityButton.removeClass('activated');
 			if($(this).val() == ''){
@@ -227,6 +254,17 @@ $(document).ready(function () {
 			}
 			recaluculateSum($(this));
 		});
+
+		$('.active_trader .regulator span').click(function () {
+			var input = $(this).parents('.input').find('.quantity');
+
+			if(input.length){
+				setTimeout(function () {
+					recaluculateSum(input);
+				}, 0);
+			}
+		});
+
 		trader.on('click', '.confim.clickable', function(e){
 			if(!($('.order label input.auto').prop('checked'))){
 				var position = $(this).position().top + 19,
@@ -273,6 +311,12 @@ $(document).ready(function () {
 			else
 				order_content.find('.obligations input').val((price * quantity).toFixed(2));
 		}
+
+		$('.active_trader input.spreader').mouseup(function () {
+			var value = $(this).val() || '0.';
+			$(this).val(value);
+			$(this).selectionStart = value.length;
+		});
 
 		$('.order label input.auto').change(function () {
 			if($(this).prop('checked'))
