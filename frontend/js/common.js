@@ -84,6 +84,8 @@ $(document).ready(function () {
         input.focus();
         input[0].selectionStart = input.val().length;
       }
+      
+      spreaderChangeVal($('.active_trader input.spreader'), $('.active_trader input.spreader').val());
     });
 
     function limitInputData(current, input, code){
@@ -342,7 +344,8 @@ $(document).ready(function () {
           orderContent = $('#order'),
           currentOrders = $('#current-orders'),
           tbody = $('.left_order table.limit tbody'),
-          tabContent = $('.left_order .tab_content');
+          tabContent = $('.left_order .tab_content'),
+          active_trader_footer = $('.active_trader_footer');
 
     $('footer .hide_show').click(function () {
       footer.toggleClass('active');
@@ -353,6 +356,7 @@ $(document).ready(function () {
         currentOrders.css('max-height', scroll);
         tbody.css('max-height', actveTraderHeight - footerHeight);
         tabContent.removeClass('footer_active');
+        active_trader_footer.css('bottom', 128);
       }
       else {
         scroll = orderSidebarHeight ;
@@ -361,6 +365,7 @@ $(document).ready(function () {
         currentOrders.css('max-height', scroll);
         tbody.css('max-height', actveTraderHeight);
         tabContent.addClass('footer_active');
+        active_trader_footer.css('bottom', 2);
       }
     });
 

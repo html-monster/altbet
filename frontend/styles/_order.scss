@@ -152,6 +152,7 @@
             bottom: 2px;
             z-index: 15;
             box-shadow: 0 -6px 15px -3px rgba(0, 0, 0, 0.3);
+            transition: 0.4s ease-out;
           }
           table{
             width: 100%;
@@ -163,7 +164,7 @@
                 tr:first-of-type td:last-of-type{  border-top: 1px solid #d6d6d6;  }
               }
               tr{
-                &:first-of-type td:last-of-type{  border-top: 1px solid #555;  }
+                //&:first-of-type td:last-of-type{  border-top: 1px solid #555;  }
                 &:first-of-type td:nth-of-type(2){  border-right: 1px solid #555;  }
                 &:nth-of-type(2) td:nth-of-type(2){  border-right: 1px solid #555;  }
                 &:nth-of-type(4) td:nth-of-type(2){  border-right: 1px solid #555;  }
@@ -173,10 +174,12 @@
               }
               td{
                 width: 33%;
+                &:not(.label){  text-align: center;  }
                 &.active{
                   box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
-                  transition: 0.2s ease;
                   cursor: pointer;
+                  transition: 0.2s ease;
+                  text-align: center;
                   &[disabled]{  cursor: default;  }
                   &:not([disabled]):active {  box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0); }
                   //&.activated{  box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);  }
@@ -220,9 +223,10 @@
             th{
               max-width: 70px;
               padding: 5px;
-              background-color: #8f8f8f;
+              background-color: #444343; //8f8f8f
               color: #ffffff;
               border-right: 1px solid #a4a4a4;
+              text-align: center;
             }
             td{
               border: 1px solid #d2d2d2;
@@ -253,7 +257,11 @@
               &.spreader{  background: #ffc11a;  }
               &.button{
                 background: #dcdcdc;
-                &.spread{  background: #f5e0a9;  }
+                &.spread button{
+                  background: #d8c48f;
+                  cursor: default;
+                  &.btn{  background: #f5e0a9;  cursor: pointer; }
+                }
               }
               //&[rowspan]{  width: 34%;  }
               a{
@@ -277,7 +285,7 @@
                   border-left: 1px solid #dcdcdc;
                 }
               }
-              &.cancel_all{  background: #a3a3a3;  }
+              &.cancel_all{  background: #74b8d8;  } //#a3a3a3
               &.close_out{  background: #484848;  a{color: #d6d6d6;}  }
             }
           }
@@ -306,6 +314,7 @@
               transition: 0.4s ease-out;
               position: relative;
               @include scroll;
+              text-align: center;
             }
             tr{
               display: table;
@@ -322,11 +331,16 @@
             }
             td{
               padding: 0 5px;
+              transition: 0.4s ease-out;
               &:first-of-type{
                 width: 58px;
               }
               &:nth-of-type(5){  width: 68px; }
-              &.price_value.active{  background: #f9eac3;  cursor: pointer; }
+              &.active{  cursor: pointer;  }
+              &.price_value.active:not(.best_buy):not(.best_sell){
+                background: #f9eac3;
+                &:hover{  background: #e2d2ae;  }
+              }
               &.size span.value, &.price span.value{  position: relative;  z-index: 3;  }
               &.size .container:not(.best_buy):not(.best_sell):after,
               &.size .container:not(.best_buy):not(.best_sell):before{

@@ -44,29 +44,29 @@
                 <tr>
                   <td class="buy_mkt market_button"><a href="#">Buy MKT</a></td>
                   <td class="sell_mkt market_button"><a href="#">Sell MKT</a></td>
-                  <td class="spreader"><a href="#">Spreader</a></td>
+                  <td class="spreader label"><span>Spreader</span></td>
                 </tr>
                 <tr>
-                  <td><span>Quantity</span></td>
+                  <td class="label"><span>Quantity</span></td>
                   <td class="volume"><div class="input"><input type="text" class="number quantity" placeholder="1"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></td>
-                  <td><div class="input"><input type="text" class="number spreader" maxlength="4"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></td>
+                  <td><div class="input"><input type="text" class="number spreader" maxlength="4" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></td>
                 </tr>
                 <tr>
                 </tr>
                 <tr>
                   <td class="button quantity"><button class="btn">10</button><button class="btn">20</button></td>
                   <td class="button quantity"><button class="btn">50</button><button class="btn">100</button></td>
-                  <td class="button spread"><button class="btn">0.01</button><button class="btn">0.05</button></td>
+                  <td class="button spread"><button disabled>0.01</button><button disabled>0.05</button></td>
                 </tr>
                 <tr>
                   <td class="button quantity"><button class="btn">200</button><button class="btn">500</button></td>
                   <td class="button quantity"><button class="btn">1000</button><button class="btn">2000</button></td>
-                  <td class="button spread"><button class="btn">0.10</button><button class="btn">0.15</button></td>
+                  <td class="button spread"><button disabled>0.10</button><button disabled>0.15</button></td>
                 </tr>
                 <tr>
                   <td class="join_bid sell market_button confim"><a href="#">Join BID <span class="price"></span></a></td>
                   <td class="join_ask buy market_button confim"><a href="#"><span class="price"></span> Join ASK</a></td>
-                  <td class="button spread"><button class="btn">0.25</button><button class="btn">0.30</button></td><!--<td class="reverse active"><a href="#">Reverse</a></td>-->
+                  <td class="button spread"><button disabled>0.25</button><button disabled>0.30</button></td><!--<td class="reverse active"><a href="#">Reverse</a></td>-->
                 </tr>
                 <tr></tr>
               </tbody>
@@ -76,8 +76,8 @@
                 <tbody>
                 <tr>
                   <td class="reverse active"><a href="#">Reverse</a></td>
-                  <td class="close_out active"><a href="#">Close Out</a></td>
                   <td class="cancel_all active"><a href="#">Cancel All</a></td>
+                  <td class="close_out active"><a href="#">Close Out</a></td>
                 </tr>
                 </tbody>
               </table>
