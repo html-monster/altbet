@@ -16,70 +16,77 @@
           <div class="wrapper_reg">
             <div class="tabs">
 
-              <!--<span class="tab">real</span>-->
+              <span class="tab">real</span>
               <span class="tab">Demo</span>
-              <!--<span class="tab market-make">Market maker</span>-->
+              <span class="tab market-make">Market maker</span>
             </div>
             <div class="tab_content">
-              <!--<div class="tab_item">
-                <div class="left_form_real">
+              <div class="tab_item">
+                <div class="left_form real">
                   <form action="#">
-                    <p><strong>Your Details</strong><span><img src="../Images/18only.png" alt="">Over 18 only</span></p>
-                    <span>Details</span>
-                    <input type="radio" id="male" name="sex" value="Male" checked>
-                    <label for="male">Male</label>
-                    <input type="radio" id="female" name="sex" value="Famale">
-                    <label for="female">Famale</label><br>
-                    <label for="f-name">First name</label><Br>
-                    <input type="text" name="name" id="f-name"><br>
-                    <i>Your first name as specified in your passport</i>
-                    <label for="last_name">Last name</label><Br>
-                    <input type="text" name="last_name" id="last_name"><br>
-                    <i>Your second name as specified in your passport</i>
-
-                    <label for="nick_name">Nick name</label><Br>
-                    <input type="text" id="nick_name" name="nick_name"><br>
-
-                    <span>Date of birth</span><Br>
-                    <input type="text" id="birth" placeholder="DD">
-                    <input type="text" id="birth" placeholder="MM">
-                    <input type="text" id="birth_year" placeholder="YYYY"><br>
-                    <i>You have to be at least 18 to play with us</i>
-                    <label for="country">Country</label><Br>
-                    <input type="text" id="country" placeholder="Ukraine"><br>
-                    <i>Indicate the country of your permanent residence</i>
-                    <label for="address">Address line 1</label><Br>
-                    <input type="text" id="address" placeholder="Start typing the first line of your address"><br>
-                    <i>Enter address manually</i>
+                    <h3>Your Details</h3><span class="attention">Over 18 only</span>
+                    <div class="sex">
+                      <span>Details</span>
+                      <input type="radio" id="male_sex" name="sex" value="Male" checked>
+                      <label for="male_sex">Male</label>
+                      <input type="radio" id="female_sex" name="sex" value="Female">
+                      <label for="female_sex">Famale</label><br>
+                    </div>
+                    <div class="first_name">
+                      <label for="f-name">First name</label><Br>
+                      <input type="text" name="name" id="f-name">
+                      <i>Your first name as specified in your passport</i>
+                    </div>
+                    <div class="last_name">
+                      <label for="last_name">Last name</label><Br>
+                      <input type="text" name="last_name" id="last_name">
+                      <i>Your second name as specified in your passport</i>
+                    </div>
+                    <div class="nick_name">
+                      <label for="nick">Nick name</label><Br>
+                      <input type="text" id="nick" name="nick_name"><br>
+                    </div>
+                    <div class="birthday">
+                      <span>Date of birth</span><Br>
+                      <input type="text" placeholder="DD">
+                      <input type="text" placeholder="MM">
+                      <input type="text" placeholder="YYYY"><br>
+                      <i>You have to be at least 18 to play with us</i>
+                    </div>
+                    <div class="address">
+                      <label for="country">Country</label><Br>
+                      <input type="text" id="country" placeholder="Ukraine"><br>
+                      <i>Indicate the country of your permanent residence</i>
+                      <label for="address">Address line 1</label><Br>
+                      <input type="text" id="address" placeholder="Start typing the first line of your address"><br>
+                      <i>Enter address manually</i>
+                    </div>
                     <label for="phone">Phone</label><Br>
-                    <input type="tel" id="phone" placeholder="e. g. 7123123123">
-                    <select size="1" multiple name="number">
+                    <input type="tel" id="phone">
+                    <select name="number" style="width: 78px;height: 34px; vertical-align: top;">
                       <option>Mobile</option>
                       <option>Home</option>
                     </select><br>
-                    <strong class="market_maker">Become Market Maker</strong>
+                    <!--<strong class="market_maker">Become Market Maker</strong>-->
                   </form>
                 </div>
-                <div class="right_form_real">
+                <div class="right_form real">
                   <form action="#">
                     <p><strong>Your Account</strong></p>
-                    <label for="radio">Details</label>
-                    <input type="radio" id="radio" value="Male" checked>
-                    <span class="radio">Male</span>
-                    <input type="radio" id="radio" value="Famale">
-                    <span class="radio">Famale</span><br>
                     <label for="mail">Email Address</label><Br>
-                    <input type="mail" id="mail"><br>
+                    <input type="email" id="mail"><br>
                     <i>Specify your valid email. A message with registration <br>
                       confirmation will be sent at that address.Also that address <br>
                       will be used for communication with you</i>
-                    <label for="password">Password</label><Br>
-                    <input type="password" id="password">
-                    <button class="show">Show</button>
-                    <br>
+                    <label for="password_real">Password<Br>
+                      <input type="password" id="password_real">
+                      <span class="show" title="show password"></span>
+                    </label><br>
                     <i>6 or more symbols except for [<>\"'&+]</i>
-                    <label for="conf_password">Confirm Password</label><Br>
-                    <input type="password" id="conf_password"><br>
+                    <label for="conf_password_real">Confirm Password<Br>
+                      <input type="password" id="conf_password_real">
+                      <span class="show" title="show password"></span>
+                    </label><br>
 
                     <label for="security">Security question</label><Br>
                     <input type="text" id="security" placeholder="Father's first name">
@@ -112,10 +119,10 @@
                       to activate your Account.</p>
                   </form>
                 </div>
-              </div>-->
+              </div>
               <div class="tab_item">
-                <h2>Your Acount</h2>
-                <div class="left_form2">
+                <h2>Your Account</h2>
+                <div class="left_form">
                   <form action="#">
                     <!--<button class="facebook">Sign up with Facebook</button>-->
                     <!--<button class="twitter">Sign up with Twitter</button><br>-->
@@ -158,10 +165,8 @@
                       to activate your Account.</p>
                   </form>
                 </div>
-                <div class="right_form2">
-                  <span class="ico">18+</span>
-                  <!--<img src="../Images/18only.png" alt="18">-->
-                  <span>Over 18 only</span>
+                <div class="right_form">
+                  <span class="attention">Over 18 only</span>
                   <p>Press Agree button you</p>
                   <ul>
                     <li><span>Confirm that you are at least 18 years old.</span></li>
@@ -173,24 +178,24 @@
                   </ul>
                 </div>
               </div>
-              <!--<div class="tab_item">
+              <div class="tab_item">
                 <h3>Advice for businesses</h3>
                 <p class="information">Please leave contact information and specialist Altbet will contact you at a
                   convenient time for
                   you</p>
                 <div class="left_form">
                   <form action="#">
-                    <p><strong>Details</strong></p>
+                    <strong>Details</strong>
                     <label for="subject">Subject</label><Br>
                     <input type="text" id="subject">
-                    <p><strong>The contact person:</strong></p>
+                    <strong>The contact person:</strong>
                     <label for="first_name">First Name</label><Br>
                     <input type="text" id="first_name"><br>
                     <label for="second_name">Second Name</label><Br>
                     <input type="text" id="second_name"><br>
                     <label for="position">Position</label><Br>
                     <input type="text" id="position"><br>
-                    <input type="submit" id="register" value="REGISTER">
+                    <input type="submit" id="register" class="btn" value="REGISTER">
                     <p class="register">Press Register button, I agree to the Terms
                       and Conditions. And I agree with what the
                       representative of the Saxo Bank Group may
@@ -202,30 +207,25 @@
                       and stored by a third party, namely - Wufoo</p>
                   </form>
                 </div>
-                <div class="right_form">
+                <div class="right_form market">
                   <form action="#">
                     <label for="company">Company</label><Br>
                     <input type="text" id="company"><Br>
-                    <label for="phone">Phone</label><Br>
-                    <a href="#"><img src="../Images/flag.png" alt="flag"></a>
-                    <input type="number" id="phone">
-                    <select size="1" multiple name="number">
+                    <label for="self_phone">Phone</label><Br>
+                    <!--<a href="#"><img src="../Images/flag.png" alt="flag"></a>-->
+                    <input type="tel" id="self_phone">
+                    <select size="1" name="number" style="width: 78px; height: 34px; vertical-align: top;">
                       <option>Mobile</option>
                       <option>Home</option>
                     </select><br>
-                    <p>Time to call</p>
-                    <input type="text" id="call" placeholder="HH">
-                    <input type="text" id="call" placeholder="MM">
-                    <input type="text" id="call" placeholder="SS">
-                    <select size="1" multiple name="number">
-                      <option>AM</option>
-                      <option>PM</option>
-                    </select><Br>
-                    <span>E-mail</span>
+                    <label>Time to call</label><br>
+                    <input type="text" class="time" placeholder="HH">
+                    <input type="text" class="time" placeholder="MM"><br>
+                    <span>E-mail</span><br>
                     <input type="email">
                   </form>
                 </div>
-              </div>-->
+              </div>
             </div>
           </div>
         </div>

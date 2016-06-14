@@ -84,8 +84,9 @@ $(document).ready(function () {
         input.focus();
         input[0].selectionStart = input.val().length;
       }
-      
-      spreaderChangeVal($('.active_trader input.spreader'), $('.active_trader input.spreader').val());
+
+      buttonActivetion($(this).parents('.input').find('input.quantity'));
+      spreaderChangeVal($(this).parents('.input').find('input'), $(this).parents('.input').find('input').val());
     });
 
     function limitInputData(current, input, code){

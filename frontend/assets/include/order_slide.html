@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                   <td class="label"><span>Quantity</span></td>
-                  <td class="volume"><div class="input"><input type="text" class="number quantity" placeholder="1"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></td>
+                  <td class="volume quantity"><div class="input"><input type="text" class="number quantity" placeholder="1"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></td>
                   <td><div class="input"><input type="text" class="number spreader" maxlength="4" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></td>
                 </tr>
                 <tr>
@@ -82,18 +82,21 @@
                 </tbody>
               </table>
             </div>
-            <table class="limit">
-              <thead>
-                <tr>
-                  <th>My Bids</th>
-                  <th>Size</th>
-                  <th>Price</th>
-                  <th>Size</th>
-                  <th>My Offers</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
+            <div class="table_limit">
+              <table class="limit">
+                <thead>
+                  <tr>
+                    <th>My Bids</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Size</th>
+                    <th>My Offers</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+
+            </div>
           </div>
         </div>
         <div class="tab_item" id="current-orders">

@@ -292,7 +292,7 @@
           table.limit{
             position: relative;
             thead{
-              background: #8f8f8f;
+              background: #444343;
               &:after{
                 content: '';
                 display: block;
@@ -494,6 +494,7 @@
             }
             .sell-container form{  background: #fff1f1;  }
             .buy-container form{  background: #ebf7f9;  }
+            .sell-buy-container form{  background: linear-gradient(to left, #fff1f1, #ebf7f9);  }
 						//
             //input[id='usd_uah'] {
             //  width: 90%;
@@ -540,14 +541,13 @@
                 //font-weight: bold;
                 @include checkbox;
               }
+              span.delete{  height: 31px; background: url("../Images/ico-delete-w.png") no-repeat center #969696;  border-radius: 5px; cursor: pointer; }
               button {
                 height: 31px;
                 font-size: 14px;
                 &.sell{  background-color: #ff4444;  }
                 &.buy{  background-color: #2dc7ca;  }
-                &.delete{
-                  background: url("../Images/ico-delete-w.png") no-repeat center #969696;
-                }
+                &.success{  background: url("../Images/ico-success-w.png") no-repeat center #969696;  }
               }
               input[type="submit"]{
                 height: 31px;
@@ -558,6 +558,7 @@
                 cursor: pointer;
                 &.sell{  background-color: #ff4444;  }
                 &.buy{  background-color: #2dc7ca;  }
+                &.success{  background: url("../Images/ico-success-w.png") no-repeat center $main-color;  }
               }
               .col-3{
                 display: inline-block;

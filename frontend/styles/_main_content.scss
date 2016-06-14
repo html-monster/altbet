@@ -248,14 +248,27 @@
                     margin-right: 5px;
                   }
                 }
+                .button-container{
+                  height: 35px;
+                  vertical-align: top;
+                }
                 button.event {
                   height: 32px;
                   padding: 0;
                   border-radius: 5px;
                   text-transform: uppercase;
                   background: #f4f4f4;
+                  vertical-align: middle;
                   @include btn-shadow;
-                  &.empty{  width: 60px;  }
+                  &.empty{
+                    width: 48px;
+                    span{
+                      display: block;
+                      height: 32px;
+                      line-height: 32px;
+                      padding: 0 !important;
+                    }
+                  }
                   span{
                     display: block;
                     line-height: 13px;

@@ -10,6 +10,7 @@
 }
 .registration {
   @include span(12 of 12);
+  min-height: 950px;
   padding-top: 55px;
   padding-bottom: 60px;
   background: url('../Images/Layer%203.png') repeat;
@@ -25,348 +26,370 @@
         color: #959595;
         cursor: pointer;
       }
-      .top_reg {
-        .wrapper_reg {
-          .tabs {
-            margin-top: -40px;
-            .tab {
-              display: inline-block;
-              padding: 20px 40px;
-              border: 1px solid #d7d7d8;
-              border-radius: 5px 5px 0 0;
+      .tabs {
+        margin-top: -40px;
+        .tab {
+          display: inline-block;
+          padding: 20px 40px;
+          border: 1px solid #d7d7d8;
+          border-radius: 5px 5px 0 0;
+          text-transform: uppercase;
+          font-size: 14px;
+          color: #fff;
+          background-color: #959595;
+          &.active {
+            border-bottom: 1px solid #fff;
+            background-color: #fff;
+            color: #343435;
+          }
+        }
+        .market-make{  float: right;  }
+        .tab:nth-child(2){
+          margin-left: -7px;
+          border-radius: 5px 5px 0 0;
+        }
+      }
+      .tab_content {
+        @include span(8 of 8);
+        border-radius: 0 0 5px 5px;
+        background: #ffffff;
+        .tab_item {
+          padding: 25px;
+          overflow: hidden;
+          h2, h3 {
+            margin: 20px 0;
+            font-size: 18px;
+            color: #959595;
+          }
+          .information {
+            padding-bottom: 20px;
+            //border-bottom: 2px solid #d7d7d8;
+            color: #959595;
+          }
+          input {
+            width: 274px;
+            height: 34px;
+            margin-bottom: 5px;
+            padding: 0 10px;
+            border: 1px solid #d7d7d8;
+            border-radius: 5px;
+            &[type="text"], &[type="email"], &[type="password"], &[type="tel"] {
+              box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.2);
+            }
+            &[type="radio"] {
+              width: 15px;
+              height: 15px;
+              margin-left: 20px;
+              margin-bottom: 0;
+              vertical-align: middle;
+              cursor: pointer;
+            }
+            &[type="submit"] {
+              display: block;
+              margin-top: 10px;
+              width: 274px;
+              background: $main-color;
+              color: #ffffff;
               text-transform: uppercase;
-              font-size: 14px;
-              color: #fff;
-              background-color: #959595;
-              &.active {
-                border-bottom: none;
-                background-color: #fff;
-                color: #343435;
-              }
+              font-size: 10px;
+              cursor: pointer;
             }
-            .market-make{
-              float: right;
-              margin-top: -22px;
-            }
-            .tab:nth-child(2){
-              margin-left: -7px;
-              border-radius: 5px 5px 0 0;
+            &[type="password"] {
+              padding-right: 30px;
             }
           }
-          .tab_content {
-            @include span(8 of 8);
-            border-radius: 0 5px 5px 5px;
-            background: #ffffff;
-            .tab_item {
-              h2, h3 {
-                margin: 20px 0;
-                padding-left: 30px;
-                font-size: 18px;
-                color: #959595;
+          .left_form, .right_form{
+            @include span(4 of 8);
+            //@include push(30px);
+            //padding-left: 25px;
+            span{
+              &.attention:before{
+                content: '18+';
+                display: inline-block;
+                width: 22px;
+                height: 22px;
+                margin-right: 5px;
+                font-size: 11px;
+                border-radius: 50%;
+                border: 1px solid red;
+                line-height: 21px;
+                text-align: center;
+                vertical-align: middle;
               }
-              .information {
-                padding: 0 0 20px 30px;
-                border-bottom: 2px solid #d7d7d8;
-                color: #959595;
+            }
+            input+label{  margin-top: 0 !important;  }
+            &.real{
+              label:first-of-type{  margin-top: 28px;  }
+              label span{  margin: 0;  }
+              input{ &[type="tel"]{  width: 192px;  } }
+              input+label{  margin-top: 21px !important;  }
+              .ddTitle, .divider{  height: 34px;  }
+              .ddTitleText{  padding-top: 8px;  }
+              .ddArrow{  top: 24%;  }
+              .birthday input{  width: 88px;  }
+              .attention{
+                position: absolute;
+                top: 4px;
+                left: 110px;
               }
-              .left_form,
-              .left_form2,
-              .left_form_real{
-                @include span(4 of 8);
-                //@include push(30px);
+            }
+            form {
+              position: relative;
+              p {  margin-bottom: 15px; }
+              strong {  display: block;  margin-bottom: -10px; color: #959595;  }
+              label{  display: inline-block; font-size: 13px; margin-top: 15px; }
+              span{  font-size: 13px;  color: #959595;  }
+              .select{
+                width: 274px;
+                select{  width: inherit;  }
+              }
+              .dd .ddTitleText img{  margin-top: -4px;  }
+
+              //input[id='subject'] {
+              //  margin-bottom: 20px;
+              //}
+              //input[id='first_name'],
+              //input[id='second_name'],
+              //input[id='position'] {
+              //  margin-bottom: 15px;
+              //}
+              //input[id='register'] {
+              //  background-color: #ececed;
+              //  color: #959595;
+              //}
+              //.register{
+              //  margin-top: 20px;
+              //  width: 274px;
+              //  color: #959595;
+              //  font-size: 12px;
+              //  text-align: justify;
+              //}
+              button.facebook,
+              button.twitter{
+                padding: 15px;
+                border-radius: 5px;
+                color: #fff;
+                text-transform: uppercase;
+                font-weight: bold;
+                font-size: 12px;
+                height: auto;
+                border: none;
+                margin-bottom: 30px;
+              }
+              button.twitter{
+                background-color: #61acec;
+                margin-left: 10px;
+              }
+              button.facebook{
+                background-color: #608bc7;
+              }
+              .show{  top: 26px;  }
+              //input[id='country']{
+              //  padding-left: 10px;
+              //}
+              //input[id='password']{
+              //  width: 185px;
+              //}
+              i{
+                display: block;
+                font-size: 10px;
+                font-style:normal;
+                margin-top: -2px;
+                margin-bottom: 5px;
+              }
+              p.register{
                 padding-left: 25px;
-                form {
-                  position: relative;
-                  p {
-                    margin-bottom: 15px;
-                    strong {  color: #959595;  }
-                  }
-                  label{  display: inline-block; font-size: 13px; margin-top: 15px; }
-                  span{  font-size: 13px;  color: #959595;  }
-                  .select{
-                    width: 274px;
-                    select{  width: inherit;  }
-                  }
-                  .dd .ddTitleText img{  margin-top: -4px;  }
-                  input {
-                    width: 274px;
-                    height: 34px;
-                    margin-bottom: 5px;
-                    padding: 0 10px;
-                    border: 1px solid #d7d7d8;
-                    border-radius: 5px;
-                    &[type="text"], &[type="email"], &[type="password"] {
-                      box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.2);
-                    }
-                    &[type="radio"] {
-                      width: 15px;
-                      height: 15px;
-                      margin-left: 20px;
-                      margin-bottom: 0;
-                      vertical-align: middle;
-                      cursor: pointer;
-                    }
-                    &[type="submit"] {
-                      display: block;
-                      margin-top: 10px;
-                      width: 274px;
-                      background: $main-color;
-                      color: #ffffff;
-                      text-transform: uppercase;
-                      font-size: 10px;
-                      cursor: pointer;
-                    }
-                    &[type="password"] {
-                      padding-right: 30px;
-                    }
-                  }
-
-                  //input[id='subject'] {
-                  //  margin-bottom: 20px;
-                  //}
-                  //input[id='first_name'],
-                  //input[id='second_name'],
-                  //input[id='position'] {
-                  //  margin-bottom: 15px;
-                  //}
-                  //input[id='register'] {
-                  //  background-color: #ececed;
-                  //  color: #959595;
-                  //}
-                  //.register{
-                  //  margin-top: 20px;
-                  //  width: 274px;
-                  //  color: #959595;
-                  //  font-size: 12px;
-                  //  text-align: justify;
-                  //}
-                  button.facebook,
-                  button.twitter{
-                    padding: 15px;
-                    border-radius: 5px;
-                    color: #fff;
-                    text-transform: uppercase;
-                    font-weight: bold;
-                    font-size: 12px;
-                    height: auto;
-                    border: none;
-                    margin-bottom: 30px;
-                  }
-                  button.twitter{
-                    background-color: #61acec;
-                    margin-left: 10px;
-                  }
-                  button.facebook{
-                    background-color: #608bc7;
-                  }
-                  .show{  top: 26px;  }
-                  //input[id='country']{
-                  //  padding-left: 10px;
-                  //}
-                  //input[id='password']{
-                  //  width: 185px;
-                  //}
-                  i{
-                    display: block;
-                    font-size: 10px;
-                    font-style:normal;
-                    margin-top: -2px;
-                    margin-bottom: 5px;
-                  }
-                  p.register{
-                    padding-left: 25px;
-                    margin-top: 20px;
-                    font-size: 13px;
-                    color: #636363;
-                    position: relative;
-                    &:before{
-                      content: '!';
-                      display: block;
-                      width: 16px;
-                      height: 16px;
-                      margin-right: 5px;
-                      background: #b92c28;
-                      color: #ffffff;
-                      font-size: 14px;
-                      font-family: sans-serif;
-                      line-height: 17px;
-                      text-align: center;
-                      border-radius: 50%;
-                      position: absolute;
-                      top: 3px;
-                      left: 0;
-                    }
-                  }
-                }
-              }
-              .right_form2{
-                @include span(4 of 8);
-                margin-right: 0;
-                padding-right: 25px;
-                ul{  padding-left: 20px;  }
-                p{  margin: 30px 0 20px 0;  }
-                span{
-                  color: #959595;
-                  font-size: 14px;
-                  margin-top: 15px;
-                  &.ico{
-                    display: inline-block;
-                    width: 22px;
-                    height: 22px;
-                    font-size: 11px;
-                    border-radius: 50%;
-                    border: 1px solid red;
-                    line-height: 21px;
-                    text-align: center;
-                  }
-                }
-              }
-              /*.left_form_real,
-              .right_form_real{
-                p{
-                  span{
-                    float: right;
-                    margin-right: 15px;
-                    img{
-                      margin-right: 5px;
-                    }
-                  }
-                }
-                input[id='birth']{
-                  width: 70px;
-                  text-transform: uppercase;
-                  font-size: 12px;
-                  padding-left: 10px;
-                }
-                input[id='birth_year']{
-                  width: 125px;
-                  text-transform: uppercase;
-                  font-size: 12px;
-                  padding-left: 10px;
-                }
-                input[id='phone']{
-                  width: 205px;
-                  padding-left: 10px;
-                }
-                input[id='address'],
-                input[id='country']{
-                  font-size: 12px;
-                  padding-left: 10px;
-                }
-                select{
-                  border: 1px solid #d7d7d8;
-                  padding: 4px 2px 4px 2px ;
-                  border-radius: 5px;
-                  vertical-align: top;
-
-
-                }
-                strong.market_maker{
-                  display: block;
-                  margin: 20px 0;
-
-                }
-              }*/
-              /*.right_form,
-              .right_form2,
-              .right_form_real{
-                @include span(3 of 8);
-                margin-top: 52px;
-                form {
-                  input {
-                    border: 1px solid #d7d7d8;
-                    border-radius: 5px;
-                    width: 274px;
-                    height: 30px;
-                  }
-                  input[id='company'] {
-                    margin-bottom: 60px;
-                  }
-                  input[id='phone'] {
-                    width: 145px;
-                  }
-                  p {
-                    margin-top: 15px;
-                    color: #959595;
-                  }
-                  span {
-                    display: block;
-                    margin-top: 15px;
-                    color: #959595;
-                  }
-                  a {
-                    img {
-                      height: 25px;
-                      width: 35px;
-                    }
-                  }
-                  input[id='call'] {
-                    width: 59px;
-                    padding: 5px 15px;
-                  }
-                  select {
-                    border: 1px solid #d7d7d8;
-                    border-radius: 5px;
-                    width: 85px;
-                    height: 30px;
-                    padding: 5px;
-                    vertical-align: bottom;
-                  }
-                }
-              }*/
-              /*.right_form_real{
+                margin-top: 20px;
+                font-size: 13px;
+                color: #636363;
                 position: relative;
-                input{
-                  padding-left: 10px;
-                  font-size: 12px;
-                }
-                input[id='radio'] {
-                  width: 15px;
-                  height: 15px;
-                }
-                span.radio{
-                  display: inline-block;
-                }
-                p{
-                  margin-top: 5px;
-                  font-size: 14px;
-                }
-                ul{
-                  li{
-                    span{
-                      margin-top: 0;
-                      margin-bottom: 0;
-                      font-size: 11px;
-                    }
-                  }
-                }
-                input[id='submit'] {
-                  background-color: #959595;
-                }
-
-                p.register{
-                  font-weight: bold;
-                  font-size: 12px;
-                }
-                span.circle{
-                  display: none;
+                &:before{
+                  content: '!';
+                  display: block;
                   width: 16px;
                   height: 16px;
                   margin-right: 5px;
-                  background-image: url('../Images/!.png');
+                  background: #b92c28;
+                  color: #ffffff;
+                  font-size: 14px;
+                  font-family: sans-serif;
+                  line-height: 17px;
+                  text-align: center;
+                  border-radius: 50%;
                   position: absolute;
-                  bottom: 0;
+                  top: 3px;
+                  left: 0;
                 }
-
-              }*/
-            }
-            .tab_item:nth-child(2),
-            .tab_item:nth-child(3){
-              display: none;
+              }
             }
           }
+          .right_form{
+            @include span(4 of 8);
+            margin-right: 0;
+            padding-right: 25px;
+            &.market{
+              label:first-of-type{  margin-top: 28px;  }
+              input{
+                &[type="tel"]{  width: 192px;  }
+                &.time{  width: 135px;  }
+              }
+              .ddTitle, .divider{  height: 34px;  }
+              .ddTitleText{  padding-top: 8px;  }
+              .ddArrow{  top: 24%;  }
+            }
+            p+ul{  padding-left: 20px;  }
+            p{  margin: 30px 0 20px 0;  }
+            span{
+              color: #959595;
+              font-size: 14px;
+              margin-top: 15px;
+            }
+          }
+          /*.left_form_real,
+					.right_form_real{
+						p{
+							span{
+								float: right;
+								margin-right: 15px;
+								img{
+									margin-right: 5px;
+								}
+							}
+						}
+						input[id='birth']{
+							width: 70px;
+							text-transform: uppercase;
+							font-size: 12px;
+							padding-left: 10px;
+						}
+						input[id='birth_year']{
+							width: 125px;
+							text-transform: uppercase;
+							font-size: 12px;
+							padding-left: 10px;
+						}
+						input[id='phone']{
+							width: 205px;
+							padding-left: 10px;
+						}
+						input[id='address'],
+						input[id='country']{
+							font-size: 12px;
+							padding-left: 10px;
+						}
+						select{
+							border: 1px solid #d7d7d8;
+							padding: 4px 2px 4px 2px ;
+							border-radius: 5px;
+							vertical-align: top;
+
+
+						}
+						strong.market_maker{
+							display: block;
+							margin: 20px 0;
+
+						}
+					}*/
+          /*.right_form,
+					.right_form2,
+					.right_form_real{
+						@include span(3 of 8);
+						margin-top: 52px;
+						form {
+							input {
+								border: 1px solid #d7d7d8;
+								border-radius: 5px;
+								width: 274px;
+								height: 30px;
+							}
+							input[id='company'] {
+								margin-bottom: 60px;
+							}
+							input[id='phone'] {
+								width: 145px;
+							}
+							p {
+								margin-top: 15px;
+								color: #959595;
+							}
+							span {
+								display: block;
+								margin-top: 15px;
+								color: #959595;
+							}
+							a {
+								img {
+									height: 25px;
+									width: 35px;
+								}
+							}
+							input[id='call'] {
+								width: 59px;
+								padding: 5px 15px;
+							}
+							select {
+								border: 1px solid #d7d7d8;
+								border-radius: 5px;
+								width: 85px;
+								height: 30px;
+								padding: 5px;
+								vertical-align: bottom;
+							}
+						}
+					}*/
+          /*.right_form_real{
+						position: relative;
+						input{
+							padding-left: 10px;
+							font-size: 12px;
+						}
+						input[id='radio'] {
+							width: 15px;
+							height: 15px;
+						}
+						span.radio{
+							display: inline-block;
+						}
+						p{
+							margin-top: 5px;
+							font-size: 14px;
+						}
+						ul{
+							li{
+								span{
+									margin-top: 0;
+									margin-bottom: 0;
+									font-size: 11px;
+								}
+							}
+						}
+						input[id='submit'] {
+							background-color: #959595;
+						}
+
+						p.register{
+							font-weight: bold;
+							font-size: 12px;
+						}
+						span.circle{
+							display: none;
+							width: 16px;
+							height: 16px;
+							margin-right: 5px;
+							background-image: url('../Images/!.png');
+							position: absolute;
+							bottom: 0;
+						}
+
+					}*/
+        }
+        .tab_item:nth-child(2),
+        .tab_item:nth-child(3){
+          display: none;
         }
       }
+
     }
   }
 }
