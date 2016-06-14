@@ -15,10 +15,12 @@
       color: #959595;
       font-size: 12px;
       a {
-        color: #959595;
+        margin-right: 15px;
+        color: $main-color; //959595
         font-size: 12px;
         font-weight: bold;
         transition: 0.4s ease-out;
+        position: relative;
         &:hover{  color: $main-color ;  }
       }
       a:after {
@@ -27,6 +29,8 @@
         width: 5px;
         height: 8px;
         margin: 0 5px 0 8px;
+        position: absolute;
+        top: 3px;
         background: url("../Images/ico-arrow.png") no-repeat;
         background-size: cover;
       }

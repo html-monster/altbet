@@ -1,0 +1,71 @@
+body>.wrapper{  background-color: #f8f8f8;  }
+.content.page{
+	padding: 0 5px 25px;
+	color: #6d6d6d;
+	.page_wrapper{  padding: 0 5px;  }
+	.page_content_plan{
+		margin-bottom: 10px;
+		strong{  display: block;  }
+	}
+	h2{
+		padding: 10px 0 0;
+		font-size: 18px;
+	}
+	h3{  padding: 5px 0;  }
+	a{
+		color: $main-color;
+		@include text-decoration;
+	}
+	p{  margin: 10px 0;  }
+	.payment_method{
+		 table{
+			 tr{
+				 &:nth-of-type(1) td{
+					 font-weight: bold;
+				 }
+			 }
+			 th{
+				 padding: 0 0 10px;
+				 text-align: left;
+				 &:nth-of-type(1){
+					 width: 30%;
+				 }
+				 &:nth-of-type(2){
+					 width: 35%;
+				 }
+				 &:nth-of-type(3){
+					 width: 35%;
+				 }
+			 }
+			 td{
+				 padding: 2px 5px;
+				 &:nth-of-type(1){  width: 20%;  }
+				 &:nth-of-type(2), &:nth-of-type(5){  width: 8%;  }
+				 &:nth-of-type(3), &:nth-of-type(6){  width: 10%;  }
+				 img{
+					 background: url("../Images/payment_sprite.png") no-repeat;
+					 background-size: 250px 187px;
+					 background-position: -2px -3px;
+					 &.visa_debit{
+						 background-position: -68px -2px;
+					 }
+					 &.maestro{
+						 background-position: -67px -53px;
+					 }
+					 &.master_card{
+						 background-position: -2px -52px;
+					 }
+					 &.neteller{
+						 background-position: -1px -95px;
+					 }
+					 &.skrill{
+						 background-position: -61px -95px;
+					 }
+					 &.bank_transfer{
+						 background-position: -1px -128px;
+					 }
+				 }
+			 }
+		 }
+	}
+}

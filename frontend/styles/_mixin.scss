@@ -68,3 +68,22 @@
     }
   }
 }
+
+@mixin text-decoration {
+  position: relative;
+  &:before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(to right, #ffffff, $main-color, #ffffff);
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transition: all .3s ease-out;
+  }
+  &:hover {
+    text-decoration: none;
+    &:before {  width: 100%;  left: 0;  }
+  }
+}
