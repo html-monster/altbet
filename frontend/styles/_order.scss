@@ -337,9 +337,12 @@
               }
               &:nth-of-type(5){  width: 68px; }
               &.active{  cursor: pointer;  }
-              &.price_value.active:not(.best_buy):not(.best_sell){
-                background: #f9eac3;
-                &:hover{  background: #e2d2ae;  }
+              &.price_value.active{
+                &:not(.best_buy):not(.best_sell){
+                  background: #f9eac3;
+                  //&:hover{  background: #e2d2ae;  }
+                }
+                &.hovered{  background-color: #ffc11a !important;  }
               }
               &.size span.value, &.price span.value{  position: relative;  z-index: 3;  }
               &.size .container:not(.best_buy):not(.best_sell):after,

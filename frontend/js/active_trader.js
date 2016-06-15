@@ -1,12 +1,14 @@
 
 function spreaderChangeVal(input, quantity){
+	var value, ii,
+			ask = $('.active_trader .best_buy').parent().index(),
+			bid = $('.active_trader .best_sell').parent().index(),
+			limit = $('.active_trader table.limit'),
+			tr= $('.active_trader table.limit tbody tr'),
+			bestBuy = $('.active_trader table.limit td.best_buy'),
+			bestSell = $('.active_trader table.limit td.best_sell');
+
 	if(input.hasClass('spreader') || input.parent().hasClass('spread')){
-		var value, ii,
-				ask = $('.active_trader .best_buy').parent().index(),
-				bid = $('.active_trader .best_sell').parent().index(),
-				tr= $('.active_trader table.limit tbody tr'),
-				bestBuy = $('.active_trader table.limit td.best_buy'),
-				bestSell = $('.active_trader table.limit td.best_sell');
 
 		input.focus();
 		if(quantity) input.val(quantity);
@@ -27,6 +29,26 @@ function spreaderChangeVal(input, quantity){
 			bestSell.addClass('active');
 		}
 	}
+
+	limit.on('mouseenter', 'td.price_value.active', function () {
+		ii = $(this).parent().index();
+		$('.active_trader .limit td.price_value').removeClass('hovered');
+		$(this).addClass('hovered');
+		if($(this).hasClass('ask')){
+			tr.eq(ii + value).find('.price_value').addClass('hovered');
+		}
+		if($(this).hasClass('bid')){
+			tr.eq(ii - value).find('.price_value').addClass('hovered');
+		}
+		if($(this).hasClass('mid')){
+			tr.eq(ii - value).find('.price_value').addClass('hovered');
+			tr.eq(ii + value).find('.price_value').addClass('hovered');
+		}
+	});
+	limit.on('mouseleave', 'td.price_value.active', function () {
+		$('.active_trader .limit td.price_value').removeClass('hovered');
+	});
+
 }
 
 function spreaderClean() {
@@ -34,6 +56,7 @@ function spreaderClean() {
 	$('.active_trader input.spreader').val('');
 	$('.active_trader table.limit td.best_buy').removeClass('active');
 	$('.active_trader table.limit td.best_sell').removeClass('active');
+	$('.active_trader #order_content').remove();
 }
 
 function recaluculateSum(item){
@@ -294,6 +317,7 @@ $(document).ready(function () {
 			;(function separation() {
 				current = current.find('td.price_value');
 
+				current.removeClass('ask bid mid');
 				if(current.hasClass('best_sell')){
 					className = 'bid';
 				}
@@ -383,20 +407,23 @@ $(document).ready(function () {
 				}
 				if(context.hasClass('mid')){
 					html = '<div class="order_content" id="order_content" style="display: none; width: ' +
-						size + 'px; position: absolute; top: ' + position  + 'px; left: 0;z-index: 10;"><div class="sell-buy-container"><form><div class="price sell col-3" style="margin-left: 3px;"><label>Selling price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
-						price1 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="price buy col-3" style="margin-left: 3px;"><label>Buying price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
-						price2 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-						quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><input type="submit" class="btn success col-3" value=""><span class="btn delete col-3" style="margin-left: 3px;"></span><div class="col-3"></div></form><form><div class="price sell col-3" style="margin-left: 3px;"><label>Selling price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
-						price2 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="price buy col-3" style="margin-left: 3px;"><label>Buying price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
-						price1 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-						quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><input type="submit" class="btn success col-3" value=""><span class="btn delete col-3" style="margin-left: 3px;"></span><div class="col-3"></div></div></form></div></div>';
+							size + 'px; position: absolute; top: ' + position  + 'px; left: 0;z-index: 10;"><div class="sell-buy-container"><form><div class="price sell col-3" style="margin-left: 3px;"><label>Selling price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
+							price2 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><input type="submit" class="btn success col-3" value="" style="margin-left: 3px;"><div class="price buy col-3" style="margin-left: 3px;"><label>Buying price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
+							price1 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><span class="btn delete col-3" style="margin-left: 3px;"></span></div></form><div class="sell-buy-container"><form><div class="price sell col-3" style="margin-left: 3px;"><label>Selling price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
+							price1 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><input type="submit" class="btn success col-3" value="" style="margin-left: 3px;"><div class="price buy col-3" style="margin-left: 3px;"><label>Buying price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
+							price2 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><span class="btn delete col-3" style="margin-left: 3px;"></span></div></form></div></div>';
 				}
 				else{
 					html = '<div class="order_content" id="order_content" style="display: none; width: ' +
 							size + 'px; position: absolute; top: ' + position  + 'px; left: 0;z-index: 10;"><div class="sell-buy-container"><form><div class="price sell col-3" style="margin-left: 3px;"><label>Selling price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
-							price1 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="price buy col-3" style="margin-left: 3px;"><label>Buying price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
 							price2 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><input type="submit" class="btn success col-3" value=""><span class="btn delete col-3" style="margin-left: 3px;"></span><div class="col-3"></div></div></form></div></div>';
+							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><input type="submit" class="btn success col-3" value="" style="margin-left: 3px;"><div class="price buy col-3" style="margin-left: 3px;"><label>Buying price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
+							price1 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><span class="btn delete col-3" style="margin-left: 3px;"></span></div></form></div>';
 				}
 			}
 			else
