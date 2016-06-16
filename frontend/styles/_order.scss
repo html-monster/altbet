@@ -116,7 +116,7 @@
           transition: 0.4s ease-out;
         }
         &:after{
-          top: 121px;
+          top: 122px;
           box-shadow: 0 10px 13px -3px rgba(0, 0, 0, 0.5);
         }
         &:before{
@@ -154,6 +154,7 @@
             box-shadow: 0 -6px 15px -3px rgba(0, 0, 0, 0.3);
             transition: 0.4s ease-out;
           }
+          span.close{  height: 31px; background: url("../Images/ico-delete-w.png") no-repeat center #969696;  border-radius: 5px; cursor: pointer; }
           table{
             width: 100%;
             font-size: 12px;

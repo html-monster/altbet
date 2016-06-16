@@ -35,6 +35,23 @@
     }).eq(0).addClass("active");
   }
 
+  function searchValue(array, value) {
+    var ii;
+    if(array.length != 0){
+      if(typeof array[0] == 'string'){
+        for (ii = 0; ii < array.length; ii++) {
+          if (array[ii] === value) return ii;
+        }
+      }
+      else{
+        for (ii = 0; ii < array.length; ii++) {
+          if (array[ii][0] === value) return ii;
+        }
+      }
+    }
+    return -1;
+  }
+
 $(document).ready(function () {
 
   (function oneStepValueChange() {
@@ -85,7 +102,7 @@ $(document).ready(function () {
         input[0].selectionStart = input.val().length;
       }
 
-      buttonActivetion($(this).parents('.input').find('input.quantity'));
+      buttonActivation($(this).parents('.input').find('input.quantity'));
       spreaderChangeVal($(this).parents('.input').find('input'), $(this).parents('.input').find('input').val());
     });
 

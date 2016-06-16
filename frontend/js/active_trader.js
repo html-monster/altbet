@@ -71,26 +71,37 @@ function recaluculateSum(item){
 		order_content.find('.obligations input').val((price * quantity).toFixed(2));
 }
 
-function buttonActivetion(current) {
+function buttonActivation(current) {
 	if(current.parents('.active_trader').length){
 		var	html = '<div class="regulator" style="display: none;"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>',
 				input = $('.active_trader input.quantity'),
 				quantity = current.hasClass('btn') ? current.text() : '',
-				market_button = $('.active_trader .market_button');
+				market_button = $('.active_trader .control tr:first-of-type .market_button'),
+				limit_market_button = $('.active_trader .control tr:nth-last-of-type(2) .market_button');
 
 		//quantityButton.removeClass('activated');
 		if(current.parent().hasClass('quantity') || current.hasClass('quantity')){
 			if(current.parent('.input').length && (current.val() == '' || current.val() == 0)){
 				market_button.removeClass('active clickable');
+				limit_market_button.removeClass('active clickable');
 				$('.active_trader table.limit tbody td.size').removeClass('clickable');
 				$('.active_trader .spread').find('button').removeClass('btn').attr('disabled', true);
 				$('.active_trader input.spreader').attr('disabled', true).parent().find('.regulator').fadeOut(400).remove();
 			}
 			else{
-				if(!(market_button.hasClass('active'))){
+				if(!(market_button.hasClass('active')))
 					$('.active_trader input.spreader').removeAttr('disabled').parent().append(html).find('.regulator').fadeIn(400);
-					market_button.addClass('active clickable');
-				}
+				limit_market_button.each(function () {
+					if ($(this).find('.price').text() != '') {
+						$(this).addClass('active clickable');
+						market_button.eq($(this).index()).addClass('active clickable');
+					}
+					else{
+						$(this).removeClass('active clickable');
+						market_button.eq($(this).index()).removeClass('active clickable');
+					}
+
+				});
 				$('.active_trader .spread').find('button').addClass('btn').removeAttr('disabled');
 				if(!(current.parent('.input').length || current.parent('.regulator').length)){
 					input.focus().val(quantity);
@@ -98,7 +109,6 @@ function buttonActivetion(current) {
 				}
 				$('.active_trader table.limit tbody td.size').addClass('clickable');
 			}
-
 			recaluculateSum(current);
 		}
 		if(current.hasClass('spreader')) {
@@ -210,52 +220,50 @@ $(document).ready(function () {
 
 	(function eventChange() {
 		var checkbox = $('.left_order .tab input.limit'),
-				autoTrade = $('.left_order .tab input.auto'),
 				event_container = $('.content_bet'),
 				event_content = $('.event-content'),
 				tabs = $('.active_trader .event_title .event_name');
 
 		tabs.eq(0).addClass('active');
-		autoTrade.parent().fadeIn(200);
 		event_container.click(function () {
 			if (checkbox.prop('checked')) {
-				var titles = $(this).find('.event-title a'),
-						ii = 0;
+				var titles = $(this).find('.event-title a');
 
-				event_container.removeClass('active');
-				event_content.removeClass('active');
+				tableLimitChangeData($(this), titles);
 				tabs.removeClass('active').eq(0).addClass('active');
-				$(this).addClass('active');
 				$(this).find('.event-content').eq(0).addClass('active');
-				tabs.each(function () {
-					$(this).text(titles.eq(ii++).text());
-				});
 
 				takeData($(this));
 				spreaderClean();
+				buttonActivation($('.active_trader .control input.quantity'));
 			}
 		});
 		event_content.click(function (e) {
 			if (checkbox.prop('checked')) {
-				var titles = $(this).parents('.content_bet').find('.event-title a'),
-						ii = 0;
+				var titles = $(this).parents('.content_bet').find('.event-title a');
 
 				e.stopPropagation();
-				event_container.removeClass('active');
-				event_content.removeClass('active');
-
-				$(this).addClass('active');
+				tableLimitChangeData($(this), titles);
 				$(this).parents('.content_bet').addClass('active');
-				tabs.each(function () {
-					$(this).text(titles.eq(ii++).text());
-				});
 				tabs.removeClass('active').eq($(this).index()).addClass('active');
 
 				takeData($(this));
 				spreaderClean();
+				buttonActivation($('.active_trader .control input.quantity'));
 			}
 		});
 
+		function tableLimitChangeData(current, title) {
+			var ii = 0;
+
+			event_container.removeClass('active');
+			event_content.removeClass('active');
+			current.addClass('active');
+			tabs.each(function () {
+				$(this).text(title.eq(ii++).text());
+			});
+
+		}
 		tabs.click(function () {
 			if (checkbox.prop('checked')) {
 				event_content.removeClass('active');
@@ -265,6 +273,7 @@ $(document).ready(function () {
 				spreaderClean();
 			}
 		});
+
 	})();
 	function takeData(currentItem) {
 		var ii, priceSell = [], priceBuy = [], volumeSell = [], volumeBuy = [],
@@ -288,6 +297,13 @@ $(document).ready(function () {
 			volumeBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.volume').text());
 		}
 		bestBuy = currentItem.find('.buy').find('button.event').eq(0).find('.price').text();
+
+		if(priceSell.length)
+			if(priceSell[0].search(/[0-9]+/i) == -1) bestSell = '';
+
+		if(priceBuy.length)
+			if(priceBuy[0].search(/[0-9]+/i) == -1) bestBuy = '';
+
 
 		join_bid.find('.price').text(bestSell);
 		join_ask.find('.price').text(bestBuy);
@@ -329,9 +345,13 @@ $(document).ready(function () {
 		});
 
 		(function scrollTo() {
-			var indeSell = table.find('.best_sell').parent().index(),
-					indexBuy = table.find('.best_buy').parent().index(),
+			var indexBuy = table.find('.best_buy').parent().index(),
+					indeSell = table.find('.best_sell').parent().index(),
 					tbody = $('table.limit tbody');
+			if(indexBuy == -1)
+					indexBuy = indeSell;
+			else if(indeSell == -1)
+					indeSell = indexBuy;
 			tbody.animate({scrollTop: (indexBuy + (indeSell - indexBuy) / 2) * 20 - tbody.height() / 2}, 400);
 		})();
 	}
@@ -350,11 +370,11 @@ $(document).ready(function () {
 		});
 
 		$('.active_trader .control .button button').click(function () {
-			buttonActivetion($(this));
+			buttonActivation($(this));
 		});
 
 		$('.active_trader table.control input').keyup(function () {
-			buttonActivetion($(this));
+			buttonActivation($(this));
 		});
 
 		$('.active_trader .regulator span').click(function () {
@@ -374,11 +394,14 @@ $(document).ready(function () {
 		});
 
 		trader.on('click', '.price_value.active', function(){
-			if(!($('.order label input.auto').prop('checked'))){
+			if(!($('.order label input.auto').prop('checked')))
 				addOrder($(this));
-			}
+
+			if($(this).hasClass('mid'))
+				addOrder($(this));
+
 		});
-		
+
 		function addOrder(context, event) {
 			var position = context.position().top + 19,
 					price = context.find('.price').text().replace(/[^0-9.]+/g, "") || context.parent().find('.price_value .value').text().replace(/[^0-9.]+/g, ""),
@@ -411,11 +434,11 @@ $(document).ready(function () {
 							price2 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
 							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><input type="submit" class="btn success col-3" value="" style="margin-left: 3px;"><div class="price buy col-3" style="margin-left: 3px;"><label>Buying price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
 							price1 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><span class="btn delete col-3" style="margin-left: 3px;"></span></div></form><div class="sell-buy-container"><form><div class="price sell col-3" style="margin-left: 3px;"><label>Selling price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
+							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><span class="btn close col-3" style="margin-left: 3px;"></span></div></form><div class="sell-buy-container"><form><div class="price sell col-3" style="margin-left: 3px;"><label>Selling price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
 							price1 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
 							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><input type="submit" class="btn success col-3" value="" style="margin-left: 3px;"><div class="price buy col-3" style="margin-left: 3px;"><label>Buying price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
 							price2 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><span class="btn delete col-3" style="margin-left: 3px;"></span></div></form></div></div>';
+							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><span class="btn close col-3" style="margin-left: 3px;"></span></div></form></div></div>';
 				}
 				else{
 					html = '<div class="order_content" id="order_content" style="display: none; width: ' +
