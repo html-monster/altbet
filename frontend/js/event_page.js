@@ -35,7 +35,7 @@
 			buySum = buySum.toFixed(2);
 		}
 
-		if(!(order.children().length)){
+		if(!(order.children().length > 1)){
 			if ($(this).parents('.sell').length) {
 				html = '<div class="order_content" style="display: none;"><div class="order-title"><h3>' + title + '</h3><a href="#" class="close"></a><strong class="last-price down">0.33</strong><strong class="current-order up">pos: <span>2553</span></strong></div><div class="sell-container"><form><div class="price col-3" style="margin-left: 3px;"><label>Market price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
 						priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
@@ -80,5 +80,6 @@
 		inputFocus[0].selectionStart = inputFocus.val().length;
 
 		tabReturn();
+		showInfo();
 	});
 })();

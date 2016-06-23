@@ -254,6 +254,10 @@
               &.buy_mkt, &.join_bid{  background: #ff6464;  }
               &.sell_mkt, &.join_ask{  background: #4ad1d7; }
               &.join_bid span, &.join_ask span{  padding: 0; }
+              &.market_button{
+                span, a{  color: #707070;  }
+                &.active span, &.active a{  color: #303030;  }
+              }
               &.reverse{  background: #fffe46;  }
               &.spreader{  background: #ffc11a;  }
               &.button{
@@ -261,7 +265,8 @@
                 &.spread button{
                   background: #d8c48f;
                   cursor: default;
-                  &.btn{  background: #f5e0a9;  cursor: pointer; }
+                  color: #707070;
+                  &.btn{  background: #f5e0a9;  color: #000000;  cursor: pointer; }
                 }
               }
               //&[rowspan]{  width: 34%;  }
@@ -420,6 +425,13 @@
           //overflow: inherit;
           overflow-y: inherit;
           transition: 0.4s ease-out;
+          &#order p#default_order_info{
+            padding: 10px 5px;
+            font-size: 14px;
+            color: #b1b1b1;
+            text-transform: lowercase;
+            &::first-letter{  text-transform: uppercase;  }
+          }
           &#current-orders{
             padding-bottom: 5px;
             overflow-y: auto;

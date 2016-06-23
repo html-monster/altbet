@@ -1,6 +1,16 @@
 	var id = [],
 			limit = 0;
 
+	function showInfo() {
+		if($('#order .default_orders').children().length > 1)
+			$('#default_order_info').hide();
+		else
+			$('#default_order_info').show();
+	}
+
+	$(document).ready(function () {
+		showInfo();
+	});
 	// sidebar height and current order ==================================================================================
 	;(function orderSize() {
 		numericalVerification($('.order_content input'));
@@ -349,6 +359,7 @@
 			}
 
 			tabReturn();
+			showInfo();
 			// $("body select").msDropDown();
 		});
 	})();
@@ -542,6 +553,7 @@
 			else{
 				form.remove();
 			}
+			showInfo();
 		});
 		order_tab.on('click', '.close', function (e) {
 			e.preventDefault();
@@ -549,6 +561,7 @@
 			if($(this).parents('.default_orders').length && id.length)
 				id.splice(searchValue(id, order.attr('id').slice(0, -7)), 1);
 			order.remove();
+			showInfo();
 		});
 		// var order_tab = $('#order');
 		// order_tab.on('click', '.delete', function (e) {

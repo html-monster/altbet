@@ -125,7 +125,7 @@
                   color: #1094d1;
                 }
               }
-              .event-content.active h3 a{  color: $main-color;  }
+              .event-content.active h3{  color: $main-color;  }
               &.active{
                 background-color: #e3e3e3;
                 .content_title h2{
@@ -145,11 +145,34 @@
               }
               a {
                 display: inline-block;
+                width: 20px;
+                height: 20px;
+                padding-left: 10px;
                 color: #707070;
                 font-size: 18px;
                 transition: 0.4s ease-out;
+                background: url("../Images/arrow.png") no-repeat;
+                background-size: 20px;
+                vertical-align: top;
                 @include md(1500){
                   font-size: 16px;
+                }
+                &:hover{
+                  width: 110px;
+                  background-position: 85px 0;
+                  padding-right: 20px;
+                  span{
+                    width: 100%;
+                  }
+                }
+                span{
+                  display: inline-block;
+                  width: 0;
+                  overflow: hidden;
+                  transition: 0.4s ease-out;
+                  white-space: nowrap;
+                  font-weight: normal;
+                  font-size: 14px;
                 }
               }
               strong.score{
@@ -236,7 +259,7 @@
                 margin: 0 5px;
                 padding-bottom: 31px;
                 width: 48%;
-                &:hover h3 a{  color: $main-color;  }
+                &:hover h3{  color: $main-color;  }
                 h3 {
                   display: block;
                   vertical-align: middle;

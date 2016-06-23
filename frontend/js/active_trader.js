@@ -15,6 +15,9 @@ function spreaderChangeVal(input, quantity){
 		input[0].selectionStart = input.val().length;
 		value = +input.val() * 100;
 		tr.find('.price_value').removeClass('active');
+		if(bid == -1) bid = ask;
+		if(ask == -1) ask = bid;
+		if(ask == -1 && bid == -1) value= 0;
 		if(value){
 			for(ii = bid - 1; ii > ask; ii--){
 				tr.eq(ii).find('.price_value').addClass('active');
@@ -437,7 +440,7 @@ $(document).ready(function () {
 							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><span class="btn close col-3" style="margin-left: 3px;"></span></div></form><div class="sell-buy-container"><form><div class="price sell col-3" style="margin-left: 3px;"><label>Selling price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
 							price1 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
 							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><input type="submit" class="btn success col-3" value="" style="margin-left: 3px;"><div class="price buy col-3" style="margin-left: 3px;"><label>Buying price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
-							price2 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+							(price1 - +$('.active_trader input.spreader').val()).toFixed(2) + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
 							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><span class="btn close col-3" style="margin-left: 3px;"></span></div></form></div></div>';
 				}
 				else{

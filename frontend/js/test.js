@@ -59,3 +59,108 @@ function dateParse(date){
 	if(hours)
 		return mm + '/' + dd + '/' + yyyy + ' ' + hours + ':' + minutes + ':' + seconds;
 }
+// var promise = new Promise(resolve, reject);
+//   promise.then(
+//       setTimeout(() => {
+//         console.log(123);
+//       }, 3000)
+//   );
+//   promise.then(
+//       console.log('promise')
+//   );
+
+/*let promise = new Promise((resolve, reject) => {
+
+ setTimeout(() => {
+ // переведёт промис в состояние fulfilled с результатом "result"
+ resolve("result");
+ }, 3000);
+
+ });
+
+ promise
+ .then(() => {
+ // return new Promise((resolve, reject) => {
+ //   setTimeout(() => {
+ //     // переведёт промис в состояние fulfilled с результатом "result"
+ //     resolve("ask");
+ //   }, 3000);
+ // })
+ return 'butter';
+ }
+ )
+ .then(
+ resulte => {
+ // первая функция-обработчик - запустится при вызове resolve
+ console.log("Fulfilled: " + resulte); // result - аргумент resolve
+ },
+ error => {
+ // вторая функция - запустится при вызове reject
+ console.log("Rejected: " + error); // error - аргумент reject
+ }
+ );
+
+ 'use strict';
+
+ function httpGet(url) {
+
+ return new Promise(function(resolve, reject) {
+
+ var xhr = new XMLHttpRequest();
+ xhr.open('GET', url, true);
+
+ xhr.onload = function() {
+ if (this.status == 200) {
+ resolve(this.response);
+ } else {
+ var error = new Error(this.statusText);
+ error.code = this.status;
+ reject(error);
+ }
+ };
+
+ xhr.onerror = function() {
+ reject(new Error("Network Error"));
+ };
+
+ xhr.send();
+ });
+
+ }
+
+ // сделать запрос
+ fetch('https://learn.javascript.ru/article/promise/user.json')
+ // 1. Получить данные о пользователе в JSON и передать дальше
+ .then(
+ response => {
+ console.log(response);
+ let user = JSON.parse(response);
+ return user;
+ },
+ error => {
+ console.log(error);
+ return error = 'iliakan';
+ }
+ )
+ // 2. Получить информацию с github
+ .then(user => {
+ console.log(user);
+ return httpGet(`https://api.github.com/users/${user}`);
+ })
+ .then(
+ user => {
+ return user;
+ }
+ )
+ // 3. Вывести аватар на 3 секунды (можно с анимацией)
+ .then(githubUser => {
+ console.log(githubUser);
+ githubUser = JSON.parse(githubUser.json());
+
+ let img = new Image();
+ img.src = githubUser.avatar_url;
+ img.className = "promise-avatar-example";
+ document.body.appendChild(img);
+
+ setTimeout(() => img.remove(), 3000); // (*)
+ });*/
