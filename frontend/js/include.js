@@ -13,9 +13,9 @@
 				xhttp.onreadystatechange = function() {
 					if (xhttp.readyState == 4 && xhttp.status == 200) {
 						//a.removeAttribute("include-html");
-						//a.innerHTML = xhttp.responseText;
+						// a.innerHTML = xhttp.responseText;
 						var html = xhttp.responseText;
-						//z[i].parentNode.replaceChild(a, z[i]);
+						// z[i].parentNode.replaceChild(a, z[i]);
 						$(z[i]).replaceWith(html);
 						myHTMLInclude();
 					}

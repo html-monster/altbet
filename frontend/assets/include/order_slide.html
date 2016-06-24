@@ -54,8 +54,6 @@
                   <td><div class="input"><input type="text" class="number spreader" maxlength="4" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></td>
                 </tr>
                 <tr>
-                </tr>
-                <tr>
                   <td class="button quantity"><button class="btn">10</button><button class="btn">20</button></td>
                   <td class="button quantity"><button class="btn">50</button><button class="btn">100</button></td>
                   <td class="button spread"><button disabled>0.01</button><button disabled>0.05</button></td>
@@ -70,17 +68,25 @@
                   <td class="join_ask buy market_button confim"><a href="#"><span class="price"></span> Join ASK</a></td>
                   <td class="button spread"><button disabled>0.25</button><button disabled>0.30</button></td><!--<td class="reverse active"><a href="#">Reverse</a></td>-->
                 </tr>
+                <tr class="zoom">
+                  <td>
+                    <strong class="zoom">Zoom <strong class="value"></strong></strong>
+                    <span class="button x1"><span class="value">x1</span><span class="click_animation"></span></span>
+                    <span class="button x2"><span class="value">x2</span><span class="click_animation"></span></span>
+                    <span class="button x3"><span class="value">x3</span><span class="click_animation"></span></span>
+                  </td>
+                </tr>
                 <tr></tr>
               </tbody>
             </table>
             <div class="active_trader_footer">
               <table class="remote control">
                 <tbody>
-                <tr>
-                  <td class="reverse active"><a href="#">Reverse</a></td>
-                  <td class="cancel_all active"><a href="#">Cancel All</a></td>
-                  <td class="close_out active"><a href="#">Close Out</a></td>
-                </tr>
+                  <tr>
+                    <td class="reverse active"><a href="#">Reverse</a></td>
+                    <td class="cancel_all active"><a href="#">Cancel All</a></td>
+                    <td class="close_out active"><a href="#">Close Out</a></td>
+                  </tr>
                 </tbody>
               </table>
             </div>

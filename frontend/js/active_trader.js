@@ -347,18 +347,21 @@ $(document).ready(function () {
 			})();
 		});
 
-		(function scrollTo() {
-			var indexBuy = table.find('.best_buy').parent().index(),
-					indeSell = table.find('.best_sell').parent().index(),
-					tbody = $('table.limit tbody');
-			if(indexBuy == -1)
-					indexBuy = indeSell;
-			else if(indeSell == -1)
-					indeSell = indexBuy;
-			tbody.animate({scrollTop: (indexBuy + (indeSell - indexBuy) / 2) * 20 - tbody.height() / 2}, 400);
-		})();
-	}
 
+	  scrollTo();
+	}
+	function scrollTo(elementQuantity) {
+		var table = $('table.limit tbody tr'),
+				indexBuy = table.find('.best_buy').parent().index(),
+				indeSell = table.find('.best_sell').parent().index(),
+				tbody = $('table.limit tbody');
+		elementQuantity = elementQuantity || 20;
+		if(indexBuy == -1)
+			indexBuy = indeSell;
+		else if(indeSell == -1)
+			indeSell = indexBuy;
+		tbody.animate({scrollTop: (indexBuy + (indeSell - indexBuy) / 2) * elementQuantity - tbody.height() / 2}, 400);
+	}
 	(function addOrder() {
 		var //quantityButton = $('.active_trader .control .button.quantity'),
 				trader = $('.active_trader'),
@@ -494,4 +497,136 @@ $(document).ready(function () {
 		// 	e.stopPropagation();
 		// });
 	})();
+
+	//zoom =============================================================================================================
+	;(function zoom() {
+		var zoom = 1,
+				zoomValue = $('.active_trader tr.zoom strong.value');
+
+		switch (zoom){
+			case 1:
+				zoomValue.text('x1');
+				break;
+			case 2:
+				zoomValue.text('x2');
+				break;
+			case 3:
+				zoomValue.text('x3');
+				break;
+		}
+
+		function tdWidthChange(tdWidth1, tdWidth2, tdWidth3, tdWidth4, tdWidth5) {
+			var table = $('table.limit');
+
+			table.find(' td:nth-of-type(1)').width(tdWidth1 + 10);
+			table.find(' td:nth-of-type(2)').width(tdWidth2 + 10);
+			table.find(' td:nth-of-type(3)').width(tdWidth3 + 10);
+			table.find(' td:nth-of-type(4)').width(tdWidth4 + 10);
+			table.find(' td:nth-of-type(5)').width(tdWidth5 + 10);
+
+			// в firefox отображение надо поправить
+		}
+
+		$('.control .zoom .button').click(function () {
+			var table = $('table.limit'),
+					tdWidth1 = table.find('th:nth-of-type(1)').eq(0).width(),
+					tdWidth2 = table.find('th:nth-of-type(2)').eq(0).width(),
+					tdWidth3 = table.find('th:nth-of-type(3)').eq(0).width(),
+					tdWidth4 = table.find('th:nth-of-type(4)').eq(0).width(),
+					tdWidth5 = table.find('th:nth-of-type(5)').eq(0).width();
+
+			zoomValue = $(this).find('.value').text();
+			$('.active_trader strong.zoom .value').text(zoomValue);
+			$(this).find('.click_animation').css({
+				opacity: 1,
+				left: -3,
+				top: -3,
+				width: 32,
+				height: 32
+			}).animate({
+				opacity: 0,
+				left: -8,
+				top: -7,
+				width: 42,
+				height: 41
+			}, 400);
+
+			if($(this).hasClass('x2') && zoom != 2){
+				setTimeout(function () {
+					scrollTo(10);
+				}, 0);
+				table.find('tr').addClass('visible').animate({height: 20}, 100);
+				table.find('tr:nth-child(even)').each(function () {
+					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
+						$(this).removeClass('visible');
+					}
+				});
+
+				tdWidthChange(tdWidth1, tdWidth2, tdWidth3, tdWidth4, tdWidth5);
+				table.find('tr:nth-child(even)').each(function () {
+					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
+						$(this).animate({height: 0}, 800);
+					}
+				});
+
+				zoom = 2;
+
+				setTimeout(function () {
+					table.find('tr').removeClass('x3').addClass('x2').find('td').removeAttr('style');
+				}, 900);
+			}
+			else if($(this).hasClass('x3') && zoom != 3){
+				setTimeout(function () {
+					scrollTo(6);
+				}, 0);
+
+				table.find('tr').addClass('visible').animate({height: 20}, 100);
+				table.find('tr:nth-child(3n - 1)').each(function () {
+					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
+						$(this).removeClass('visible');
+					}
+				});
+				table.find('tr:nth-child(3n)').each(function () {
+					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
+						$(this).removeClass('visible');
+					}
+				});
+
+				tdWidthChange(tdWidth1, tdWidth2, tdWidth3, tdWidth4, tdWidth5);
+
+				table.find('tr:nth-child(3n - 1)').each(function () {
+					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
+						$(this).animate({height: 0}, 800);
+					}
+				});
+
+				table.find('tr:nth-child(3n)').each(function () {
+					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
+						$(this).animate({height: 0}, 800);
+					}
+				});
+
+				zoom = 3;
+				setTimeout(function () {
+					table.find('tr').removeClass('x2').addClass('x3').find('td').removeAttr('style');
+				}, 900);
+			}
+			else if($(this).hasClass('x1') && zoom != 1){
+				zoom = 1;
+				table.find('tr:nth-child(even)').removeClass('visible');
+
+				tdWidthChange(tdWidth1, tdWidth2, tdWidth3, tdWidth4, tdWidth5);
+
+				setTimeout(function () {
+					scrollTo(20);
+				}, 0);
+				table.find('tr').animate({height: 20}, 800);
+
+				setTimeout(function () {
+					table.find('tr').removeClass('x2 x3').addClass('visible').find('td').removeAttr('style');
+				}, 900);
+			}
+		});
+	})();
+
 });

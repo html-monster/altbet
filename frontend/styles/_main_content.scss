@@ -140,30 +140,24 @@
               vertical-align: middle;
               transition: 0.4s ease-out;
               span{  position: relative;  }
-              @include md(1500){
-                font-size: 16px;
-              }
+              @include md(1500){  font-size: 16px;  }
               a {
                 display: inline-block;
                 width: 20px;
-                height: 20px;
+                height: 24px;
                 padding-left: 10px;
                 color: #707070;
                 font-size: 18px;
                 transition: 0.4s ease-out;
                 background: url("../Images/arrow.png") no-repeat;
                 background-size: 20px;
-                vertical-align: top;
-                @include md(1500){
-                  font-size: 16px;
-                }
+                vertical-align: middle;
+                @include md(1500){  font-size: 16px;  }
                 &:hover{
                   width: 110px;
                   background-position: 85px 0;
                   padding-right: 20px;
-                  span{
-                    width: 100%;
-                  }
+                  span{  width: 100%;  }
                 }
                 span{
                   display: inline-block;
@@ -173,6 +167,7 @@
                   white-space: nowrap;
                   font-weight: normal;
                   font-size: 14px;
+                  line-height: 20px;
                 }
               }
               strong.score{
