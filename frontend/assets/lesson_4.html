@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lesson 4</title>
+</head>
+<body>
+<script>
+  //Задача 1 ===========================================================================================================
+  function min(param1, param2) {
+    return (param1 > param2) ? param2 : param1;
+  }
+  console.log(min(-10, 1));
+
+  //Задача 2 ===========================================================================================================
+  function countsBs(str, simbol) {
+    var expression = new RegExp(  simbol, 'ig'  );
+    return (str.match(expression)) ? str.match(expression).length : 'not found';
+  }
+  console.log(countsBs('ВдшвоаввыаВ', 'в'));
+
+  //Задача 3 ===========================================================================================================
+  function isEven(number) {
+    if(number){
+//      number = isEven()
+    }
+  }
+</script>
+</body>
+</html>

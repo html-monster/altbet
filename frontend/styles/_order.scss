@@ -349,6 +349,17 @@
               &.close_out{  background: #484848;  a{color: #d6d6d6;}  }
             }
           }
+          .table_limit .show_spread{
+            padding: 0 5px;
+            position: absolute;
+            top: calc(50% + 90px);
+            right: -31px;
+            transform: rotate(-90deg);
+            /* background: #fff; */
+            border-radius: 3px 3px 0 0;
+            box-shadow: 0 -2px 6px 0px rgba(0, 0, 0, 0.5);
+            font-size: 14px;
+          }
           table.limit{
             position: relative;
             thead{

@@ -62,6 +62,29 @@ function spreaderClean() {
 	$('.active_trader #order_content').remove();
 }
 
+function zoomActivation() {
+	var tbody = $('.left_order table.limit tbody'),
+			visibleString = tbody.height() / tbody.find('tr').eq(0).height(),
+			spread = tbody.find('.best_sell ').parent().index() - tbody.find('.best_buy ').parent().index() - 1,
+			table = $('table.limit'),
+			tdWidth = [];
+
+	for(var ii = 0; ii < table.find('th').length; ii++){
+		tdWidth.push(table.find('th').eq(ii).width());
+	}
+	function tdWidthChange() {
+		table.find('tr').each(function () {
+			for(var ii = 0; ii < tdWidth.length; ii++){
+				$(this).find('td').eq(ii).width(tdWidth[ii] + 10)
+			}
+		});
+	}
+
+	if(visibleString - 4 < spread){
+
+	}
+}
+
 function recaluculateSum(item){
 	var order_content = $('.active_trader .order_content'),
 			quantity = +item.text() || +item.val(),
@@ -239,6 +262,7 @@ $(document).ready(function () {
 				takeData($(this));
 				spreaderClean();
 				buttonActivation($('.active_trader .control input.quantity'));
+				zoomActivation();
 			}
 		});
 		event_content.click(function (e) {
@@ -253,6 +277,7 @@ $(document).ready(function () {
 				takeData($(this));
 				spreaderClean();
 				buttonActivation($('.active_trader .control input.quantity'));
+				zoomActivation();
 			}
 		});
 
@@ -515,27 +540,28 @@ $(document).ready(function () {
 				break;
 		}
 
-		function tdWidthChange(tdWidth1, tdWidth2, tdWidth3, tdWidth4, tdWidth5) {
+		function tdWidthChange(tdWidth) {
 			var table = $('table.limit');
 
-			table.find(' td:nth-of-type(1)').width(tdWidth1 + 10);
-			table.find(' td:nth-of-type(2)').width(tdWidth2 + 10);
-			table.find(' td:nth-of-type(3)').width(tdWidth3 + 10);
-			table.find(' td:nth-of-type(4)').width(tdWidth4 + 10);
-			table.find(' td:nth-of-type(5)').width(tdWidth5 + 10);
+			table.find('tr').each(function () {
+				for(var ii = 0; ii < tdWidth.length; ii++){
+					$(this).find('td').eq(ii).width(tdWidth[ii] + 10)
+				}
+			});
 
 			// в firefox отображение надо поправить
 		}
 
 		$('.control .zoom .button').click(function () {
 			var table = $('table.limit'),
-					tdWidth1 = table.find('th:nth-of-type(1)').eq(0).width(),
-					tdWidth2 = table.find('th:nth-of-type(2)').eq(0).width(),
-					tdWidth3 = table.find('th:nth-of-type(3)').eq(0).width(),
-					tdWidth4 = table.find('th:nth-of-type(4)').eq(0).width(),
-					tdWidth5 = table.find('th:nth-of-type(5)').eq(0).width();
+					tdWidth = [];
 
 			zoomValue = $(this).find('.value').text();
+
+			for(var ii = 0; ii < table.find('th').length; ii++){
+				tdWidth.push(table.find('th').eq(ii).width());
+			}
+
 			$('.active_trader strong.zoom .value').text(zoomValue);
 			$(this).find('.click_animation').css({
 				opacity: 1,
@@ -562,7 +588,7 @@ $(document).ready(function () {
 					}
 				});
 
-				tdWidthChange(tdWidth1, tdWidth2, tdWidth3, tdWidth4, tdWidth5);
+				tdWidthChange(tdWidth);
 				table.find('tr:nth-child(even)').each(function () {
 					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
 						$(this).animate({height: 0}, 800);
@@ -592,7 +618,7 @@ $(document).ready(function () {
 					}
 				});
 
-				tdWidthChange(tdWidth1, tdWidth2, tdWidth3, tdWidth4, tdWidth5);
+				tdWidthChange(tdWidth);
 
 				table.find('tr:nth-child(3n - 1)').each(function () {
 					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
@@ -615,7 +641,7 @@ $(document).ready(function () {
 				zoom = 1;
 				table.find('tr:nth-child(even)').removeClass('visible');
 
-				tdWidthChange(tdWidth1, tdWidth2, tdWidth3, tdWidth4, tdWidth5);
+				tdWidthChange(tdWidth);
 
 				setTimeout(function () {
 					scrollTo(20);
