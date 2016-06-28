@@ -335,3 +335,14 @@ label{
   }
 }
 
+@keyframes fadeOut {
+  0% {  background-color: orange;  }
+  100% {  background-color: transparent;  }
+}
+.fadeOut span:after {  animation-name: fadeOut;  }
+.animated span:after {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}

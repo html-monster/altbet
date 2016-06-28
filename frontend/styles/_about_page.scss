@@ -9,7 +9,7 @@ body.about_body{
   @include push(1.4 of 12);
   margin-top: 55px;
   //background-color: rgba(243, 253, 255, 0.92);
-  background-color: #fff;
+  //background-color: #fff;
   height: 100%;
   border-radius:5px;
   padding: 15px;
@@ -22,8 +22,8 @@ body.about_body{
         a{
           display: block;
           padding: 10px 30px;
-          color: #000;
           font-size: 16px;
+          color: #666666;
         }
       }
     }
@@ -32,11 +32,7 @@ body.about_body{
     @include span(last  8 of 10.6);
     padding-top: 30px;
     margin-right: 10%;
-    h2{
-      font-size: 30px;
-    }
-    p{
-      padding: 10px 25px 10px 0;
-    }
+    h1, h2{  font-size: 30px;  color: #666666; }
+    p{  padding: 10px 25px 10px 0;  color: #666666;  }
   }
 }

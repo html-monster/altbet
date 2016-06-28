@@ -1,11 +1,11 @@
 h1{
 	margin: 20px 0;
-	text-align: center;
 	text-transform: uppercase;
 	font-size: 25px;
 	color: #666;
 }
 .admin-panel{
+	h1{  text-align: center;  }
 	.control-panel{
 		margin: 0 15px;
 		padding: 0 5px 15px;

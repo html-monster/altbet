@@ -10,7 +10,7 @@
   function min(param1, param2) {
     return (param1 > param2) ? param2 : param1;
   }
-  console.log(min(-10, 1));
+  console.log(min(-10, -11));
 
   //Задача 2 ===========================================================================================================
   function countsBs(str, simbol) {
@@ -21,10 +21,11 @@
 
   //Задача 3 ===========================================================================================================
   function isEven(number) {
-    if(number){
-//      number = isEven()
-    }
+    if(!number) return true;
+    if(number == 1 || number == -1) return false;
+    return number > 0 ? isEven(number - 2) : isEven(number + 2);
   }
+  console.log(isEven(-666));
 </script>
 </body>
 </html>

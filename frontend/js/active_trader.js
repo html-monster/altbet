@@ -1,5 +1,6 @@
 
 function spreaderChangeVal(input, quantity){
+	spreadVisability(null, true);
 	var value, ii,
 			ask = $('.active_trader .best_buy').parent().index(),
 			bid = $('.active_trader .best_sell').parent().index(),
@@ -60,29 +61,6 @@ function spreaderClean() {
 	$('.active_trader table.limit td.best_buy').removeClass('active');
 	$('.active_trader table.limit td.best_sell').removeClass('active');
 	$('.active_trader #order_content').remove();
-}
-
-function zoomActivation() {
-	var tbody = $('.left_order table.limit tbody'),
-			visibleString = tbody.height() / tbody.find('tr').eq(0).height(),
-			spread = tbody.find('.best_sell ').parent().index() - tbody.find('.best_buy ').parent().index() - 1,
-			table = $('table.limit'),
-			tdWidth = [];
-
-	for(var ii = 0; ii < table.find('th').length; ii++){
-		tdWidth.push(table.find('th').eq(ii).width());
-	}
-	function tdWidthChange() {
-		table.find('tr').each(function () {
-			for(var ii = 0; ii < tdWidth.length; ii++){
-				$(this).find('td').eq(ii).width(tdWidth[ii] + 10)
-			}
-		});
-	}
-
-	if(visibleString - 4 < spread){
-
-	}
 }
 
 function recaluculateSum(item){
@@ -147,6 +125,82 @@ function buttonActivation(current) {
 	}
 }
 
+function scrollTo(center) {
+	var table = $('table.limit tbody tr'),
+			indexBuy = table.find('.best_buy').parent().index(),
+			indeSell = table.find('.best_sell').parent().index(),
+			tbody = $('table.limit tbody');
+	center = center ? 0 : (indeSell - indexBuy) / 2;
+
+	if(indexBuy == -1)
+		indexBuy = indeSell;
+	else if(indeSell == -1)
+		indeSell = indexBuy;
+	tbody.animate({scrollTop: (indexBuy + center) * 20 - tbody.height() / 2}, 400);
+}
+
+//spread show/hide =============================================================================================================
+function tdWidthChange(tdWidth) {
+
+	$('table.limit').find('tr').each(function () {
+		for (var ii = 0; ii < tdWidth.length; ii++) {
+			$(this).find('td').eq(ii).width(tdWidth[ii] + 10)
+		}
+	});
+
+	// в firefox отображение надо поправить
+}
+
+function spreadVisability(isButton, visibility) {
+	var tdWidth = [],
+			table = $('table.limit'),
+			tbody = $('.left_order table.limit tbody'),
+			hide = tbody.find('.mid').parent().hasClass('hidden'),
+			spread = tbody.find('.mid').parent(),
+			hidden = tbody.find('.hidden'),
+			visibleString = tbody.height() / tbody.find('tr').eq(0).height(),
+			spreadSize = tbody.find('.best_sell ').parent().index() - tbody.find('.best_buy ').parent().index() - 1;
+	isButton = isButton || false;
+
+	for (var ii = 0; ii < table.find('th').length; ii++) {
+		tdWidth.push(table.find('th').eq(ii).width());
+	}
+
+	if(!isButton)
+		hidden.animate({height: 20}).attr('class', 'visible');
+
+	if(spreadSize > visibleString - 4 && !isButton){
+		setTimeout(function () {
+			spread.attr('class', 'hidden').animate({height: 0}, 400);
+			tdWidthChange(tdWidth);
+			scrollTo(true);
+		}, 700);
+	}
+
+	if(!hide && isButton || visibility === false) {
+		if(tbody.find('.hidden').length)
+			hidden.animate({height: 20}, 400).attr('class', 'visible');
+		if(isButton) scrollTo(true);
+		spread.attr('class', 'hidden').animate({height: 0}, 400);
+		tdWidthChange(tdWidth);
+		$('.active_trader .show_spread .visibility').text('Show');
+	}
+	else if(isButton || visibility === true){
+		hidden.animate({height: 20}, 400);
+		if(isButton) scrollTo();
+		setTimeout(function () {
+			hidden.attr('class', 'visible');
+		}, 400);
+		$('.active_trader .show_spread .visibility').text('Hide');
+	}
+
+	if(hide && !isButton)
+		$('.active_trader .show_spread .visibility').text('Show');
+	else if(!isButton)
+		$('.active_trader .show_spread .visibility').text('Hide');
+
+}
+
 $(document).ready(function () {
 
 	$('.left_order .tab label').click(function (e) {
@@ -170,6 +224,7 @@ $(document).ready(function () {
 			active_trader.fadeIn(200);
 			buttons.attr('disabled', true);
 			event_container.eq(0).find('.event-content').eq(0).addClass('active');
+			spreadVisability();
 
 			event_container.addClass('clickable').eq(0).addClass('active');
 			$('.active_trader .event_title .event_name').each(function () {
@@ -262,7 +317,7 @@ $(document).ready(function () {
 				takeData($(this));
 				spreaderClean();
 				buttonActivation($('.active_trader .control input.quantity'));
-				zoomActivation();
+				spreadVisability();
 			}
 		});
 		event_content.click(function (e) {
@@ -277,7 +332,7 @@ $(document).ready(function () {
 				takeData($(this));
 				spreaderClean();
 				buttonActivation($('.active_trader .control input.quantity'));
-				zoomActivation();
+				spreadVisability();
 			}
 		});
 
@@ -337,13 +392,20 @@ $(document).ready(function () {
 		join_ask.find('.price').text(bestBuy);
 
 		table.find('.size').removeClass('best_sell best_buy').find('.value').text('');
+		table.find('.my_size').find('.value').text('');// for development =============================================
 		table.find('.price_value').removeClass('best_sell best_buy');
 		table.each(function () {
 			var current = $(this);
 			currentPrice = $(this).find('.price_value').text();
 			if(searchValue(priceSell, currentPrice) != -1){
 				ii = searchValue(priceSell, currentPrice);
-				$(this).find('.size_sell span.value').text(volumeSell[ii]);
+				$(this).find('.size_sell').addClass('animated fadeOut').find('span.value').text(volumeSell[ii]);
+				if (randomInteger(0, 1)) $(this).find('.my_bids').addClass('animated fadeOut').find('span.value').text(randomInteger(1, +volumeSell[ii]));  // for development =============================================
+				var context = $(this);
+				setTimeout(function () {
+					context.find('.size_sell').removeClass('animated fadeOut');
+					context.find('.my_bids').removeClass('animated fadeOut'); // for development =============================================
+				}, 1000);
 				if(bestSell == currentPrice){
 					$(this).find('.size_sell').addClass('best_sell');
 					$(this).find('.price_value').addClass('best_sell');
@@ -351,7 +413,13 @@ $(document).ready(function () {
 			}
 			if(searchValue(priceBuy, currentPrice) != -1){
 				ii = searchValue(priceBuy, currentPrice);
-				$(this).find('.size_buy span.value').text(volumeBuy[ii]);
+				$(this).find('.size_buy').addClass('animated fadeOut').find('span.value').text(volumeBuy[ii]);
+				if (randomInteger(0, 1)) $(this).find('.my_offers').addClass('animated fadeOut').find('span.value').text(randomInteger(1, +volumeBuy[ii]));  // for development =============================================
+				var context = $(this);
+				setTimeout(function () {
+					context.find('.size_buy').removeClass('animated fadeOut');
+					context.find('.my_offers').removeClass('animated fadeOut'); // for development =============================================
+				}, 1000);
 				if(bestBuy == currentPrice){
 					$(this).find('.size_buy').addClass('best_buy');
 					$(this).find('.price_value').addClass('best_buy');
@@ -375,18 +443,7 @@ $(document).ready(function () {
 
 	  scrollTo();
 	}
-	function scrollTo(elementQuantity) {
-		var table = $('table.limit tbody tr'),
-				indexBuy = table.find('.best_buy').parent().index(),
-				indeSell = table.find('.best_sell').parent().index(),
-				tbody = $('table.limit tbody');
-		elementQuantity = elementQuantity || 20;
-		if(indexBuy == -1)
-			indexBuy = indeSell;
-		else if(indeSell == -1)
-			indeSell = indexBuy;
-		tbody.animate({scrollTop: (indexBuy + (indeSell - indexBuy) / 2) * elementQuantity - tbody.height() / 2}, 400);
-	}
+
 	(function addOrder() {
 		var //quantityButton = $('.active_trader .control .button.quantity'),
 				trader = $('.active_trader'),
@@ -523,136 +580,13 @@ $(document).ready(function () {
 		// });
 	})();
 
-	//zoom =============================================================================================================
-	;(function zoom() {
-		var zoom = 1,
-				zoomValue = $('.active_trader tr.zoom strong.value');
+	//spread show/hide =============================================================================================================
+	// ;(function showHideSpread() {
 
-		switch (zoom){
-			case 1:
-				zoomValue.text('x1');
-				break;
-			case 2:
-				zoomValue.text('x2');
-				break;
-			case 3:
-				zoomValue.text('x3');
-				break;
-		}
-
-		function tdWidthChange(tdWidth) {
-			var table = $('table.limit');
-
-			table.find('tr').each(function () {
-				for(var ii = 0; ii < tdWidth.length; ii++){
-					$(this).find('td').eq(ii).width(tdWidth[ii] + 10)
-				}
-			});
-
-			// в firefox отображение надо поправить
-		}
-
-		$('.control .zoom .button').click(function () {
-			var table = $('table.limit'),
-					tdWidth = [];
-
-			zoomValue = $(this).find('.value').text();
-
-			for(var ii = 0; ii < table.find('th').length; ii++){
-				tdWidth.push(table.find('th').eq(ii).width());
-			}
-
-			$('.active_trader strong.zoom .value').text(zoomValue);
-			$(this).find('.click_animation').css({
-				opacity: 1,
-				left: -3,
-				top: -3,
-				width: 32,
-				height: 32
-			}).animate({
-				opacity: 0,
-				left: -8,
-				top: -7,
-				width: 42,
-				height: 41
-			}, 400);
-
-			if($(this).hasClass('x2') && zoom != 2){
-				setTimeout(function () {
-					scrollTo(10);
-				}, 0);
-				table.find('tr').addClass('visible').animate({height: 20}, 100);
-				table.find('tr:nth-child(even)').each(function () {
-					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
-						$(this).removeClass('visible');
-					}
-				});
-
-				tdWidthChange(tdWidth);
-				table.find('tr:nth-child(even)').each(function () {
-					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
-						$(this).animate({height: 0}, 800);
-					}
-				});
-
-				zoom = 2;
-
-				setTimeout(function () {
-					table.find('tr').removeClass('x3').addClass('x2').find('td').removeAttr('style');
-				}, 900);
-			}
-			else if($(this).hasClass('x3') && zoom != 3){
-				setTimeout(function () {
-					scrollTo(6);
-				}, 0);
-
-				table.find('tr').addClass('visible').animate({height: 20}, 100);
-				table.find('tr:nth-child(3n - 1)').each(function () {
-					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
-						$(this).removeClass('visible');
-					}
-				});
-				table.find('tr:nth-child(3n)').each(function () {
-					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
-						$(this).removeClass('visible');
-					}
-				});
-
-				tdWidthChange(tdWidth);
-
-				table.find('tr:nth-child(3n - 1)').each(function () {
-					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
-						$(this).animate({height: 0}, 800);
-					}
-				});
-
-				table.find('tr:nth-child(3n)').each(function () {
-					if(!($(this).find('.best_buy').length || $(this).find('.best_sell').length)){
-						$(this).animate({height: 0}, 800);
-					}
-				});
-
-				zoom = 3;
-				setTimeout(function () {
-					table.find('tr').removeClass('x2').addClass('x3').find('td').removeAttr('style');
-				}, 900);
-			}
-			else if($(this).hasClass('x1') && zoom != 1){
-				zoom = 1;
-				table.find('tr:nth-child(even)').removeClass('visible');
-
-				tdWidthChange(tdWidth);
-
-				setTimeout(function () {
-					scrollTo(20);
-				}, 0);
-				table.find('tr').animate({height: 20}, 800);
-
-				setTimeout(function () {
-					table.find('tr').removeClass('x2 x3').addClass('visible').find('td').removeAttr('style');
-				}, 900);
-			}
+		$('.active_trader .show_spread').click(function () {
+			spreadVisability(true);
 		});
-	})();
+	// })();
 
 });
+

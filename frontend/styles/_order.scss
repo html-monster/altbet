@@ -170,61 +170,8 @@
                 &:nth-of-type(3) td:nth-of-type(2){  border-right: 1px solid #555;  }
                 &:nth-of-type(4) td:nth-of-type(2){  border-right: 1px solid #555;  }
                 &:nth-of-type(5) td:nth-of-type(2){  border-right: 1px solid #555;  }
-                &:nth-of-type(6) td:nth-of-type(2){  border-right: 1px solid #555;  }
+                //&:nth-of-type(6) td:nth-of-type(2){  border-right: 1px solid #555;  }
                 //&:nth-of-type(6) td:last-of-type{  border-bottom: 1px solid #555;  }
-                &.zoom{
-                  position: absolute;
-                  bottom: -63px;
-                  right: 0;
-                  z-index: 25;
-                  font-weight: bold;
-                  text-transform: uppercase;
-                  td{  text-align: right; border: none; }
-                  strong{
-                    float: left;
-                    margin: 5px;
-                    text-shadow: 0 0 1px #000;
-                    color: rgba(255, 255, 255, 0.2);
-                    .value{
-                      float: none;
-                      margin: 0;
-                      text-transform: lowercase;
-                    }
-                  }
-                  span.button{
-                    display: inline-flex;
-                    margin: 0 5px;
-                    width: 30px;
-                    height: 30px;
-                    background: rgba(0, 0, 0, 0.6);
-                    border-radius: 50%;
-                    border: 2px solid rgba(187, 187, 187, 0.8);
-                    vertical-align: middle;
-                    cursor: pointer;
-                    transition: 0.4s ease-out;
-                    position: relative;
-                    &:hover{  background: rgba(0, 0, 0, 0.8);  }
-                    &:last-of-type{  margin-right: 18px;  }
-                    .click_animation{
-                      display: block;
-                      width: 32px;
-                      height: 32px;
-                      position: absolute;
-                      left: -3px;
-                      top: -3px;
-                      border-radius: 50%;
-                      border: 1px solid #000;
-                      opacity: 0;
-                      transition: 0s ease-out;
-                    }
-                  }
-                  span.value{
-                    margin: auto;
-                    padding: 0;
-                    color: #ffffff;
-                    text-transform: lowercase;
-                  }
-                }
               }
               td{
                 width: 33%;
@@ -350,15 +297,18 @@
             }
           }
           .table_limit .show_spread{
+            min-width: 93px;
             padding: 0 5px;
             position: absolute;
             top: calc(50% + 90px);
             right: -31px;
             transform: rotate(-90deg);
-            /* background: #fff; */
+            background: linear-gradient(to right, #ccc, #fff, #ccc);
             border-radius: 3px 3px 0 0;
             box-shadow: 0 -2px 6px 0px rgba(0, 0, 0, 0.5);
             font-size: 14px;
+            text-align: center;
+            cursor: pointer;
           }
           table.limit{
             position: relative;
@@ -394,14 +344,10 @@
                   td:nth-of-type(1){  width: 58px;  }
                   td:nth-of-type(5){  width: 68px;  }
                 }
-                &.x2:nth-child(4n - 1){  background-color: #f4f4f4;  }
-                &.x3{
-                  background-color: #ffffff !important;
-                  &:nth-child(6n - 2){  background-color: #f4f4f4 !important;  }
-                }
-                //&:not(.visible){
-                //  td:nth-of-type(1){  width: 57px;  }
-                //  td:nth-of-type(5){  width: 67px;  }
+                //&.x2:nth-child(4n - 1){  background-color: #f4f4f4;  }
+                //&.x3{
+                //  background-color: #ffffff !important;
+                //  &:nth-child(6n - 2){  background-color: #f4f4f4 !important;  }
                 //}
               }
             }
@@ -432,6 +378,20 @@
                 &.hovered{  background-color: #ffc11a !important;  }
               }
               &.size span.value, &.price span.value{  position: relative;  z-index: 3;  }
+              &.size.animated .value{
+                position: static;
+                &:after{
+                  content: '';
+                  display: block;
+                  height: 100%;
+                  width: 100%;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  transition: 0.4s ease-out;
+                  z-index: 2;
+                }
+              }
               &.size .container:not(.best_buy):not(.best_sell):after,
               &.size .container:not(.best_buy):not(.best_sell):before{
                 content: '';
@@ -449,7 +409,8 @@
                 transition: 0.3s ease-out;
                 z-index: 2;
               }
-              &.size.size_buy .container:not(.best_buy):not(.best_sell):before{
+              &.size.size_buy .container:not(.best_buy):not(.best_sell):before,
+              &.size.size_buy .container:not(.best_buy):not(.best_sell):after{
                 left: auto;
                 right: 0;
               }
