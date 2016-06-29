@@ -301,7 +301,7 @@
             padding: 0 5px;
             position: absolute;
             top: calc(50% + 90px);
-            right: -31px;
+            right: -61px;
             transform: rotate(-90deg);
             background: linear-gradient(to right, #ccc, #fff, #ccc);
             border-radius: 3px 3px 0 0;
@@ -309,6 +309,18 @@
             font-size: 14px;
             text-align: center;
             cursor: pointer;
+            transition: 0.4s ease;
+            z-index: 10;
+            &.active{
+              right: -31px;
+              animation-name: active;
+              animation-duration: 2s;
+              animation-fill-mode: both;
+              @keyframes active {
+                0% {  color: orange;  }
+                100% {  color: black;  }
+              }
+            }
           }
           table.limit{
             position: relative;
@@ -378,7 +390,13 @@
                 &.hovered{  background-color: #ffc11a !important;  }
               }
               &.size span.value, &.price span.value{  position: relative;  z-index: 3;  }
-              &.size.animated .value{
+              &.my_bids.animated,
+              &.my_offers.animated{
+                position: relative;
+              }
+              &.size.animated .value,
+              &.my_bids.animated .value,
+              &.my_offers.animated .value {
                 position: static;
                 &:after{
                   content: '';

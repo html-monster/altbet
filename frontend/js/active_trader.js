@@ -130,12 +130,14 @@ function scrollTo(center) {
 			indexBuy = table.find('.best_buy').parent().index(),
 			indeSell = table.find('.best_sell').parent().index(),
 			tbody = $('table.limit tbody');
-	center = center ? 0 : (indeSell - indexBuy) / 2;
 
 	if(indexBuy == -1)
 		indexBuy = indeSell;
 	else if(indeSell == -1)
 		indeSell = indexBuy;
+
+	center = center ? 0 : (indeSell - indexBuy) / 2;
+
 	tbody.animate({scrollTop: (indexBuy + center) * 20 - tbody.height() / 2}, 400);
 }
 
@@ -152,52 +154,60 @@ function tdWidthChange(tdWidth) {
 }
 
 function spreadVisability(isButton, visibility) {
-	var tdWidth = [],
-			table = $('table.limit'),
-			tbody = $('.left_order table.limit tbody'),
-			hide = tbody.find('.mid').parent().hasClass('hidden'),
-			spread = tbody.find('.mid').parent(),
-			hidden = tbody.find('.hidden'),
-			visibleString = tbody.height() / tbody.find('tr').eq(0).height(),
-			spreadSize = tbody.find('.best_sell ').parent().index() - tbody.find('.best_buy ').parent().index() - 1;
-	isButton = isButton || false;
+	if($('.active_trader table.limit .best_buy').length && $('.active_trader table.limit .best_sell').length){
+		var tdWidth = [],
+				table = $('table.limit'),
+				tbody = $('.left_order table.limit tbody'),
+				hide = tbody.find('.mid').parent().hasClass('hidden'),
+				spread = tbody.find('.mid').parent(),
+				hidden = tbody.find('.hidden'),
+				visibleString = tbody.height() / tbody.find('tr').eq(0).height(),
+				spreadSize = tbody.find('.best_sell ').parent().index() - tbody.find('.best_buy ').parent().index() - 1;
+		isButton = isButton || false;
 
-	for (var ii = 0; ii < table.find('th').length; ii++) {
-		tdWidth.push(table.find('th').eq(ii).width());
-	}
+		for (var ii = 0; ii < table.find('th').length; ii++) {
+			tdWidth.push(table.find('th').eq(ii).width());
+		}
 
-	if(!isButton)
-		hidden.animate({height: 20}).attr('class', 'visible');
+		if(!isButton)
+			hidden.animate({height: 20}).attr('class', 'visible');
 
-	if(spreadSize > visibleString - 4 && !isButton){
-		setTimeout(function () {
+		if(spreadSize > visibleString - 4 && !isButton && visibility !== true){
+			$('.active_trader .show_spread .visibility').text('Hide');
+			setTimeout(function () {
+				spread.attr('class', 'hidden').animate({height: 0}, 400);
+				tdWidthChange(tdWidth);
+				scrollTo(true);
+				$('.active_trader .show_spread .visibility').text('Show');
+				$('.active_trader .show_spread').addClass('active');
+			}, 700);
+		}
+		else if(!isButton){
+			$('.active_trader .show_spread .visibility').text('Hide');
+			if(!(spreadSize > visibleString - 4)) $('.active_trader .show_spread').removeClass('active');
+		}
+
+		if(!hide && isButton || visibility === false) {
+			if(tbody.find('.hidden').length)
+				hidden.animate({height: 20}, 400).attr('class', 'visible');
+			if(isButton) scrollTo(true);
 			spread.attr('class', 'hidden').animate({height: 0}, 400);
 			tdWidthChange(tdWidth);
-			scrollTo(true);
-		}, 700);
+			$('.active_trader .show_spread .visibility').text('Show');
+		}
+		else if(isButton || visibility === true){
+			hidden.animate({height: 20}, 400);
+			 scrollTo();
+			setTimeout(function () {
+				hidden.attr('class', 'visible');
+			}, 400);
+			$('.active_trader .show_spread .visibility').text('Hide');
+		}
 	}
-
-	if(!hide && isButton || visibility === false) {
-		if(tbody.find('.hidden').length)
-			hidden.animate({height: 20}, 400).attr('class', 'visible');
-		if(isButton) scrollTo(true);
-		spread.attr('class', 'hidden').animate({height: 0}, 400);
-		tdWidthChange(tdWidth);
-		$('.active_trader .show_spread .visibility').text('Show');
+	else{
+		$('.active_trader .show_spread').removeClass('active');
+		$('.left_order table.limit tbody .hidden').animate({height: 20}).attr('class', 'visible');
 	}
-	else if(isButton || visibility === true){
-		hidden.animate({height: 20}, 400);
-		if(isButton) scrollTo();
-		setTimeout(function () {
-			hidden.attr('class', 'visible');
-		}, 400);
-		$('.active_trader .show_spread .visibility').text('Hide');
-	}
-
-	if(hide && !isButton)
-		$('.active_trader .show_spread .visibility').text('Show');
-	else if(!isButton)
-		$('.active_trader .show_spread .visibility').text('Hide');
 
 }
 
