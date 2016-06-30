@@ -10,11 +10,12 @@ function spreaderChangeVal(input, quantity){
 			bestSell = $('.active_trader table.limit td.best_sell');
 
 	if(input.hasClass('spreader') || input.parent().hasClass('spread')){
+		var orderContent = $('.order_content.spread');
 
 		input.focus();
 		if(quantity) input.val(quantity);
 		input[0].selectionStart = input.val().length;
-		value = +input.val() * 100;
+		value = +(input.val() * 100).toFixed(0);
 		tr.find('.price_value').removeClass('active');
 		if(bid == -1) bid = ask;
 		if(ask == -1) ask = bid;
@@ -32,26 +33,56 @@ function spreaderChangeVal(input, quantity){
 			bestBuy.addClass('active');
 			bestSell.addClass('active');
 		}
+
+		if(orderContent.parents('tr').find('.ask').length){
+			ask = (+orderContent.find('.price input').eq(0).val() - value / 100).toFixed(2);
+			if(ask < 0.01) ask = 0.01;
+			orderContent.find('.price input').eq(1).val(ask);
+		}
+		if(orderContent.parents('tr').find('.bid').length){
+			bid = (+orderContent.find('.price input').eq(1).val() + value / 100).toFixed(2);
+			if(bid > 0.99) ask = 0.99;
+			orderContent.find('.price input').eq(0).val(bid);
+		}
 	}
 
-	limit.on('mouseenter', 'td.price_value.active', function () {
-		ii = $(this).parent().index();
+	function spreadHighlight(context) {
+		ii = context.parents('tr').index();
 		$('.active_trader .limit td.price_value').removeClass('hovered');
-		$(this).addClass('hovered');
-		if($(this).hasClass('ask')){
+		context.parents('tr').find('.price_value').addClass('hovered');
+		if(context.hasClass('ask')){
 			tr.eq(ii + value).find('.price_value').addClass('hovered');
 		}
-		if($(this).hasClass('bid')){
+		if(context.hasClass('bid')){
 			tr.eq(ii - value).find('.price_value').addClass('hovered');
 		}
-		if($(this).hasClass('mid')){
+		if(context.hasClass('mid')){
 			tr.eq(ii - value).find('.price_value').addClass('hovered');
 			tr.eq(ii + value).find('.price_value').addClass('hovered');
 		}
+	}
+	limit.on('mouseenter', 'td.price_value.active', function () {
+		spreadHighlight($(this));
 	});
 	limit.on('mouseleave', 'td.price_value.active', function () {
 		$('.active_trader .limit td.price_value').removeClass('hovered');
 	});
+	limit.on('mouseenter', '.confim_button', function (e) {
+		e.stopPropagation();
+		spreadHighlight($(this));
+	});
+	limit.on('mouseleave', '.confim_button', function (e) {
+		e.stopPropagation();
+		$('.active_trader .limit td.price_value').removeClass('hovered');
+	});
+	// limit.on('mouseenter', '.spread_confim', function (e) {
+	// 	e.stopPropagation();
+	// 	spreadHighlight($(this));
+	// });
+	// limit.on('mouseleave', '.spread_confim', function (e) {
+	// 	e.stopPropagation();
+	// 	$('.active_trader .limit td.price_value').removeClass('hovered');
+	// });
 
 }
 
@@ -169,6 +200,8 @@ function spreadVisability(isButton, visibility) {
 			tdWidth.push(table.find('th').eq(ii).width());
 		}
 
+		$('#order_content').remove();
+
 		if(!isButton)
 			hidden.animate({height: 20}).attr('class', 'visible');
 
@@ -197,7 +230,7 @@ function spreadVisability(isButton, visibility) {
 		}
 		else if(isButton || visibility === true){
 			hidden.animate({height: 20}, 400);
-			 scrollTo();
+			scrollTo();
 			setTimeout(function () {
 				hidden.attr('class', 'visible');
 			}, 400);
@@ -492,13 +525,31 @@ $(document).ready(function () {
 		});
 
 		trader.on('click', '.price_value.active', function(){
-			if(!($('.order label input.auto').prop('checked')))
+			if(!($('.order label input.auto').prop('checked')) || $(this).hasClass('mid'))
 				addOrder($(this));
 
-			if($(this).hasClass('mid'))
-				addOrder($(this));
+			// if($(this).hasClass('mid'))
+			// 	addOrder($(this));
 
 		});
+
+		trader.on('click', '.confim_button', function (e) {
+			e.stopPropagation();
+			if(!($('.order label input.auto').prop('checked')))
+				addOrder($(this));
+		});
+		
+		$(document).click(function (e) {
+			if($(e.target).closest('.spread_confim').length || $(e.target).closest('.order_content').length ||
+					$(e.target).closest('.mid').length || $(e.target).closest('table.control').length)
+					return;
+
+			trader.find('.spread_confim').removeClass('active');
+			setTimeout(function () {
+				trader.find('.spread_confim').remove();
+			}, 400);
+		});
+
 
 		function addOrder(context, event) {
 			var position = context.position().top + 19,
@@ -508,38 +559,36 @@ $(document).ready(function () {
 			if(event)
 				event.stopPropagation();
 
-			if(context.hasClass('size') || context.hasClass('price_value'))
-				position = context.parent().index() * 20 + 20;
+			if(context.hasClass('size') || context.hasClass('price_value') || context.hasClass('confim_button')){
+				if(context.parents('tr').index() > trader.find('.best_buy ').parents('tr').index()){
+					position = (context.parents('tr').index() - trader.find('table.limit tbody tr.hidden').length) * 20 + 20;
+				}
+				else{
+					position = context.parents('tr').index() * 20 + 20;
+				}
+			}
 
-			if(context.hasClass('sell'))
+
+			if(context.hasClass('size sell'))
 				html = '<div class="order_content" id="order_content" style="display: none; width: ' +
 						size + 'px; position: absolute; top: ' + position  + 'px; left: 0;z-index: 10;"><div class="sell-container"><form><div class="price col-3" style="margin-left: 3px;"><label>Price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
 						price + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
 						quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><div class="obligations col-3" style="margin-left: 3px;"><label>Sum:</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' + ((1 - price) * quantity).toFixed(2) + '" disabled><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div></div></div><input type="submit" class="btn sell col-3" value="SELL" style="text-transform: uppercase; margin-left: 3px;"><span class="btn delete col-3" style="margin-left: 3px;"></span><div class="col-3" style="margin-left: 3px;"></div></form></div><div class="buy-container"></div></div>';
-			else if(context.hasClass('price_value')){
+			else if(context.hasClass('price_value') || context.hasClass('confim_button')){
 				var price1, price2;
 				if(context.hasClass('ask')){
-					price2 = context.find('.value').text().replace(/[^0-9.]+/g, "");
+					price2 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
 					price1 = (+price2 - +$('.active_trader input.spreader').val()).toFixed(2);
 				}
 				else{
-					price1 = context.find('.value').text().replace(/[^0-9.]+/g, "");
+					price1 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
 					price2 = (+price1 + +$('.active_trader input.spreader').val()).toFixed(2);
 				}
 				if(context.hasClass('mid')){
-					html = '<div class="order_content" id="order_content" style="display: none; width: ' +
-							size + 'px; position: absolute; top: ' + position  + 'px; left: 0;z-index: 10;"><div class="sell-buy-container"><form><div class="price sell col-3" style="margin-left: 3px;"><label>Selling price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
-							price2 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><input type="submit" class="btn success col-3" value="" style="margin-left: 3px;"><div class="price buy col-3" style="margin-left: 3px;"><label>Buying price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
-							price1 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><span class="btn close col-3" style="margin-left: 3px;"></span></div></form><div class="sell-buy-container"><form><div class="price sell col-3" style="margin-left: 3px;"><label>Selling price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
-							price1 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><input type="submit" class="btn success col-3" value="" style="margin-left: 3px;"><div class="price buy col-3" style="margin-left: 3px;"><label>Buying price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
-							(price1 - +$('.active_trader input.spreader').val()).toFixed(2) + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><span class="btn close col-3" style="margin-left: 3px;"></span></div></form></div></div>';
+					html = '<div class="spread_confim"><span class="sell ask confim_button" onmousedown="return false" onselectstart="return false">Sell</span><span class="buy bid confim_button" onmousedown="return false" onselectstart="return false">Buy</span></div>';
 				}
 				else{
-					html = '<div class="order_content" id="order_content" style="display: none; width: ' +
+					html = '<div class="order_content spread" id="order_content" style="display: none; width: ' +
 							size + 'px; position: absolute; top: ' + position  + 'px; left: 0;z-index: 10;"><div class="sell-buy-container"><form><div class="price sell col-3" style="margin-left: 3px;"><label>Selling price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
 							price2 + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
 							quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><input type="submit" class="btn success col-3" value="" style="margin-left: 3px;"><div class="price buy col-3" style="margin-left: 3px;"><label>Buying price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
@@ -553,13 +602,29 @@ $(document).ready(function () {
 						price + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
 						quantity + '" disabled><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div></div></div><div class="obligations col-3" style="margin-left: 3px;"><label>Sum:</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' + (price * quantity).toFixed(2) + '" disabled><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div></div></div><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><span class="btn delete col-3" style="margin-left: 3px;"></span><div class="col-3" style="margin-left: 3px;"></div></form></div><div class="buy-container"></div></div>';
 
-			if(trader.find('#order_content').length)
-					trader.find('#order_content').remove();
+			trader.find('#order_content').remove();
 
-			if(context.hasClass('size') || context.hasClass('price_value'))
-				context.parent().find('td.my_bids').append(html);
-			// else if(context.hasClass('price_value'))
-			// 	context.append(html);
+			if(trader.find('.spread_confim').length && !context.hasClass('confim_button')){
+				trader.find('.spread_confim').removeClass('active');
+				if(context.find('.spread_confim').length){
+					trader.find('.spread_confim').remove();
+				}
+				else{
+					var current = trader.find('.spread_confim');
+					setTimeout(function () {
+						current.remove();
+					}, 400);
+				}
+			}
+
+			if(context.hasClass('mid')){
+				context.find('.container').append(html);
+				setTimeout(function () {
+					context.find('.spread_confim').addClass('active');
+				}, 0)
+			}
+			else if(context.hasClass('size') || context.hasClass('price_value') || context.hasClass('confim_button'))
+				context.parents('tr').find('td.my_bids').append(html);
 			else
 				context.parent().next().html('<td>' + html + '</td>');
 
@@ -577,8 +642,10 @@ $(document).ready(function () {
 		});
 
 		$('.order label input.auto').change(function () {
-			if($(this).prop('checked'))
+			if($(this).prop('checked')){
 				trader.find('#order_content').remove();
+				trader.find('.spread_confim').remove();
+			}
 		});
 
 		// trader.on('click', 'table.limit tbody', function () {

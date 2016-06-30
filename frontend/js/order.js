@@ -543,6 +543,7 @@
 		var order_tab = $('#order');
 		order_tab.on('click', '.delete', function (e) {
 			e.preventDefault();
+			$('.active_trader .spread_confim').remove();
 			var form = $(this).parents('form'),
 					order = $(this).parents('.order_content');
 			if(order.find('form').length <= 1){
