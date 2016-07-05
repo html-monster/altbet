@@ -1,0 +1,42 @@
+.access_container{
+	display: flex;
+	height: 100%;
+	.access_form{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 300px;
+		margin: auto;
+		padding-bottom: 25px;
+		box-shadow: 0 0 21px -7px rgba(0, 0, 0, 0.5);
+		input.required{
+			height: 34px;
+			margin-bottom: 10px;
+			border-radius: 5px;
+			padding: 5px 10px;
+			padding-right: 27px;
+			color: #676767;
+		}
+		.btn{
+			display: block;
+			margin-top: 10px;
+			padding: 5px 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			background-color: $main-color;
+			color: #02425f;
+			line-height: 18px;
+			cursor: pointer;
+		}
+		.show{
+			top: 6px;
+			right: 7px;
+			//background-color: #f8f8f8;
+		}
+		label.shake input{
+			box-shadow: inset 0 0 15px -3px rgba(255, 0, 0, 0.5);
+		}
+		label.remember{  @include checkbox;  }
+	}
+}

@@ -331,7 +331,7 @@ $(document).ready(function () {
     $('.user-menu').slideToggle(400);
   });
   //my registration*****************************************************************************************************
-  $('.show').mousedown(function () {
+  $('label .show').mousedown(function () {
     $(this).prev().attr('type', 'text');
   }).mouseup(function () {
     $(this).prev().attr('type', 'password');

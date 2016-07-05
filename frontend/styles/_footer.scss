@@ -12,8 +12,13 @@
   bottom: -125px;
   z-index: 5;
   transition: 0.4s ease-out;
-  &.active{
-    bottom: 0 !important;
+  &.active{  bottom: 0 !important;  }
+  .footer_container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    @include span(8 of 12);
+    @include push (1.4 of 12);
   }
   .hide_show{
     width: 85px;
@@ -26,40 +31,73 @@
     left: 25%;
     cursor: pointer;
   }
-  ul{
+  ul{  list-style: none;  }
+  ul.footer_menu{
     font-size: 14px;
-    float: left;
-    width: 380px;
-    list-style: none;
+    column-count: 3;
     li{
-      float: left;
       line-height: 21px;
-      margin-bottom: 3px;
-      transition: top 1s ease-out 0.5s;
-      &:hover a{  color: #e7e7e8;  }
+      &:hover a{  color: #a2b2c2;  }
       a{
-        color: #d7d7d8;
         display: block;
         padding: 0 5px;
+        color: #636e79;
+        font-weight: bold;
         text-decoration: none;
+        transition: 0.4s ease-out;
       }
     }
-    li.first{
-      transition: top 1s ease-out 0.5s;
-      &:hover{
-        a{
-          color: #249fed;
-          text-decoration: underline;
-        }
-      }
-      a{color: #249fed;}
+    //li.first{
+    //  transition: top 1s ease-out 0.5s;
+    //  &:hover{
+    //    a{
+    //      color: #249fed;
+    //      text-decoration: underline;
+    //    }
+    //  }
+    //  a{color: #249fed;}
+    //}
+  }
+  ul.logos li {
+    float: left;
+    width: 90px;
+    img{
+      width: 100%;
     }
   }
-  //p{
-  //  float: left;
-  //  font-size: 11px;
-  //  line-height: 22px;
-  //  max-width: 550px;
-  //  color: #d7d7d8;
-  //}
+  .logo-container{
+    width: 150px;
+    margin-top: -10px;
+    img{   margin-left: 10px;  }
+  }
+  ul.footer_soc{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5px;
+    li{
+      width: 30px;
+      height: 30px;
+      float: left;
+      border-radius: 50%;
+      &.fb{
+        background: url("../Images/footer_soc_fb.png") no-repeat;
+        background-size: cover;
+      }
+      &.tw{
+        background: url("../Images/footer_soc_tw.svg") no-repeat #57585b center;
+        background-size: 70%;
+      }
+      &.ml{
+        background: url("../Images/footer_soc_ml.svg") no-repeat #57585b center;
+        background-size: 70%;
+      }
+      a{  display: block;  height: 30px;  }
+    }
+  }
+  p{
+    color: #636e79;
+    font-size: 13px;
+    text-align: center;
+    margin-top: 5px;
+  }
 }

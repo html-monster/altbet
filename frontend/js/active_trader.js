@@ -538,7 +538,7 @@ $(document).ready(function () {
 			if(!($('.order label input.auto').prop('checked')))
 				addOrder($(this));
 		});
-		
+
 		$(document).click(function (e) {
 			if($(e.target).closest('.spread_confim').length || $(e.target).closest('.order_content').length ||
 					$(e.target).closest('.mid').length || $(e.target).closest('table.control').length)
@@ -569,7 +569,7 @@ $(document).ready(function () {
 			}
 
 
-			if(context.hasClass('size sell'))
+			if(context.hasClass('size sell') || context.hasClass('join_ask'))
 				html = '<div class="order_content" id="order_content" style="display: none; width: ' +
 						size + 'px; position: absolute; top: ' + position  + 'px; left: 0;z-index: 10;"><div class="sell-container"><form><div class="price col-3" style="margin-left: 3px;"><label>Price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' +
 						price + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +

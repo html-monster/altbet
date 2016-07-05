@@ -58,9 +58,12 @@ gulp.task('assets', function() {
 
 gulp.task('js',function(){
   return combine(
-    gulp.src(['vendor/jquery/dist/jquery.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js', 'frontend/js/*.js', '!frontend/js/test.js']),
+    gulp.src(['vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js', 'frontend/js/*.js', '!frontend/js/test.js', '!frontend/js/access.js']),
     $.concat('all.js'),
     // $.uglify(),
+    gulp.dest('./public/js'),
+    gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js']),
+    $.concat('access.js'),
     gulp.dest('./public/js')
   ).on('error', $.notify.onError(function (err) {
     return {

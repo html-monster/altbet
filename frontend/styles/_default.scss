@@ -86,7 +86,7 @@ label{
   .show{
     width: 20px;
     height: 20px;
-    background: url("../Images/ico-eye.png") no-repeat #ffffff;
+    background: url("../Images/ico-eye.png") no-repeat;
     background-size: 20px;
     position: absolute;
     top: 28px;
@@ -339,8 +339,30 @@ label{
   0% {  background-color: orange;  }
   100% {  background-color: transparent;  }
 }
+@keyframes shake {
+  0%, 100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+}
+.shake {  animation-name: shake;  }
 .fadeOut span:after {  animation-name: fadeOut;  }
-.animated span:after {
+.animated{
   animation-duration: 1s;
   animation-fill-mode: both;
+  span:after {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+  }
 }
+
