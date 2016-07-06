@@ -1,7 +1,7 @@
 (function access() {
 	if(location.hostname == "altbet.html-monster.ru"){
-		var LOGIN = 'altbet',
-				PASSWORD = 'altbet1234',
+		var LOGIN = 'YWx0YmV0',
+				PASSWORD = 'YWx0YmV0MTIzNA',
 				host = location.host,
 				currentLogin, currentPass;
 
@@ -17,7 +17,7 @@
 			currentLogin = $('.access_container input[name="login"]').val();
 			currentPass = $('.access_container input[name="pass"]').val();
 
-			if(LOGIN == currentLogin && PASSWORD == currentPass){
+			if(b64DecodeUnicode(LOGIN) == currentLogin && b64DecodeUnicode(PASSWORD) == currentPass){
 				if(checkbox.prop('checked')){
 					localStorage.setItem('access', 'allowed');
 				}
@@ -35,6 +35,13 @@
 				}, 0)
 			}
 		}
+
+		function b64DecodeUnicode(str) {
+			return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
+				return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+			}).join(''));
+		}
+
 		$(document).ready(function () {
 			$('.access_container form').submit(function (event) {
 				event = event || window.event;
