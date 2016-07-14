@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>alt.bet</title>
+  <link rel="icon" href="Images/favicon2.png">
+  <link href="/styles/index.css" rel="stylesheet">
+</head>
+<body>
+<div class="tizer_wrapper">
+  <video autoplay loop class="video_bg" id="video_bg">
+    <source src="video/numbers.mp4" type="video/mp4">
+    <source src="video/numbers.webm" type="video/webm">
+  </video>
+  <div class="tizer_header">
+    <div class="elements_container">
+      <div class="logo_container">
+        <a href="#" class="logo">
+          Altbet.net
+        </a>
+      </div>
+      <div class="warning_container">
+        <span>Responsible Gaming</span>
+      </div>
+    </div>
+  </div>
+  <div class="tizer_content">
+    <h1>Trade your bets... soon</h1>
+    <span class="title">Stay tuned for more</span>
+    <form>
+      <label>
+        <input type="email" autofocus>
+        <span class="mail_logo"></span>
+      </label>
+      <input type="submit" value="Send">
+      <a class="twitter-share-button"
+         href="https://twitter.com/intent/tweet?&text=pic.twitter.com/eBrnKuXZU8%20Trade%20Your%20Bets%20&#64;AltBetExchange%20%20http://alt.bet%20Register%20for%20updates%20&#64;AltBetSupport" target="_blank"> <!--https://twitter.com/intent/tweet?text=Trade+your+bets%0Ahttp://alt.bet-->
+        <i></i><span class="label">Tweet</span></a> <!--https://twitter.com/intent/tweet?url=http://alt.bet&text=pic.twitter.com/ymCSVcIi7r%Trade%20Your%20Bets%20@AltBetExchange%20http://alt.bet%20Register%20for%20updates%20@AltBetSupporte-->
+      <!--<iframe id="tweet-button" allowtransparency="true" frameborder="0" scrolling="no"-->
+            <!--src="https://twitter.com/intent/tweet?&text=pic.twitter.com/eBrnKuXZU8%20Trade%20Your%20Bets%20&#64;AltBetExchange%20%20http://alt.bet%20Register%20for%20updates%20&#64;AltBetSupport"-->
+            <!--style="width:110px; height:20px;"></iframe>-->
+      <!--<iframe id="tweet-button2" allowtransparency="true" frameborder="0" scrolling="no"-->
+              <!--src="https://www.rent-a-bag.club/savas-milano-filippa-mini"-->
+              <!--style="width:110px; height:20px;"></iframe>-->
+    </form>
+  </div>
+  <div class="tizer_background"></div>
+  <div class="copyright"><p>Copyright © 2016 Alt.Bet Exchange B.V. All rights reserved.</p></div>
+  <!--<div id="pop-up" style="position: relative; z-index: 4">-->
+    <!--<iframe src="http://platform.twitter.com/widgets/tweet_button.html?via=marcus_christie&amp;text=Replace%20Me&amp;count=horizontal" allowtransparency="true" frameborder="0" scrolling="no" data-size="large" width="100" height="60"></iframe>-->
+  <!--</div>-->
+</div>
+<script>
+  document.getElementById('video_bg').playbackRate = 0.7;
+  document.querySelector('.tizer_content form .twitter-share-button').onclick = function (event) {
+    event.preventDefault();
+    var outerHeight = window.outerHeight / 2 - 125,
+        outerWidth = window.outerWidth / 2 - 340;
+    window.open(this.getAttribute('href'), 'a', "left=" + outerWidth + ", top=" + outerHeight + ", width=680, height=255, scrollbars=no");
+  };
+  setTimeout(function () {
+    document.querySelector('.tizer_content h1').setAttribute('class', 'animated lightSpeedIn');
+  }, 500);
+  setTimeout(function () {
+    document.querySelector('.tizer_content span.title').setAttribute('class', 'animated lightSpeedInLeft');
+  }, 1000);
+  setTimeout(function () {
+    document.querySelector('.tizer_content form label').setAttribute('class', 'animated bounceInUp');
+  }, 1200);
+  setTimeout(function () {
+    var element = document.querySelector('.tizer_content form input[type="email"]'),
+        valid = document.querySelector('.tizer_content form .validation-summary-valid'),
+        errors = document.querySelector('.tizer_content form .validation-summary-errors');
+    if(valid) valid.setAttribute('class', 'validation-summary-valid animated fadeIn');
+    if(errors) errors.setAttribute('class', ' validation-summary-errors animated fadeIn');
+    document.querySelector('.tizer_content form input[type="submit"]').setAttribute('class', ' animated fadeInRight');
+    document.querySelector('.copyright').setAttribute('class', 'copyright animated lightSpeedInLeft');
+    element.addEventListener("transitionend", element.focus(), false);
+  }, 1800);
+  setTimeout(function () {
+    document.querySelector('.tizer_header .logo').setAttribute('class', 'logo animated rubberBand');
+    document.querySelector('.tizer_content form .twitter-share-button').setAttribute('class', 'twitter-share-button animated fadeInRight');
+  }, 2100);
+</script>
+</body>
+</html>

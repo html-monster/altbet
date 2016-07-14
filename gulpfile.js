@@ -28,7 +28,7 @@ const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV == 'developm
 
 gulp.task('styles', function() {
 
-  return gulp.src('frontend/styles/index.scss')
+  return gulp.src('frontend/styles/index.scss', 'frontend/styles/tizer.scss')
       .pipe(plumber({
         errorHandler: notify.onError(err => ({
           title:   'Styles',
@@ -45,6 +45,22 @@ gulp.task('styles', function() {
       .pipe(gulp.dest('public/styles'))
       .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))));
 
+             // gulp.src('frontend/styles/tizer.scss')
+             // .pipe(plumber({
+             //   errorHandler: notify.onError(err => ({
+             //     title:   'Styles',
+             //     message: err.message
+             //   }))
+             // }))
+             // .pipe(gulpIf(isDevelopment, sourcemaps.init()))
+             // .pipe(sass())
+             // .pipe(autoprefixer({
+             //   browsers: ['last 10 versions']
+             // }))
+             // .pipe(gulpIf(isDevelopment, sourcemaps.write()))
+             // .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
+             // .pipe(gulp.dest('public/styles'));
+
 });
 
 gulp.task('assets', function() {
@@ -54,6 +70,16 @@ gulp.task('assets', function() {
         manifest: gulp.src('manifest/css.json', {allowEmpty: true})
       })))
       .pipe(gulp.dest('public'));
+});
+
+gulp.task('fonts', function() {
+  return gulp.src('frontend/fonts/**/*.*')
+      .pipe(gulp.dest('public/fonts'));
+});
+
+gulp.task('video', function() {
+  return gulp.src('frontend/video/**/*.*')
+      .pipe(gulp.dest('public/video'));
 });
 
 gulp.task('js',function(){
@@ -82,7 +108,7 @@ gulp.task('clean', function() {
   return del(['public', 'manifest']);
 });
 
-gulp.task('build', gulp.series('clean', gulp.parallel('styles:assets', 'styles', 'js'), 'assets'));
+gulp.task('build', gulp.series('clean', gulp.parallel('styles:assets', 'styles', 'js', 'fonts', 'video'), 'assets'));
 
 gulp.task('serve', function() {
   browserSync.init({
@@ -102,6 +128,8 @@ gulp.task('dev',
               gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
               gulp.watch('frontend/js/**/*.js', gulp.series('js'));
               gulp.watch('frontend/assets/**/*.html', gulp.series('assets'));
+              gulp.watch('frontend/fonts/**/*.*', gulp.series('fonts'));
+              gulp.watch('frontend/video/**/*.*', gulp.series('video'));
               gulp.watch('frontend/Images/**/*.{svg,png,jpg,gif,ico}', gulp.series('styles:assets'));
             }
         )
