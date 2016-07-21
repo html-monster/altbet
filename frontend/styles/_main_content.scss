@@ -1,8 +1,9 @@
 .content {
-  @include span(8 of 12);
-  @include push (1.4 of 12);
-  margin-top: 55px;
+  @include span(7.6 of 12);
+  @include push (1.8 of 12);
+  margin-top: 80px;
   background-color: #f8f8f8;
+  position: relative;
   .breadcrumbs {
     padding: 5px 15px;
     margin: 10px 5px;

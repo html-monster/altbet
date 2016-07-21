@@ -1,5 +1,6 @@
 .order {
   @include span(last 2.6 of 12);
+  //width: 325px;
   height: 100%;
   border-left: 2px solid #d7d7d8;
   background-color: #fff;

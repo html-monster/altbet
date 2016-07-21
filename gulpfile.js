@@ -3,6 +3,8 @@
 const path = require('path');
 const del = require('del');
 const gulp = require('gulp');
+// const ts = require('gulp-typescript');
+const babel = require('gulp-babel');
 const gulplog = require('gulplog');
 const combine = require('stream-combiner2').obj;
 const throttle = require('lodash.throttle');
@@ -28,7 +30,7 @@ const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV == 'developm
 
 gulp.task('styles', function() {
 
-  return gulp.src('frontend/styles/index.scss', 'frontend/styles/tizer.scss')
+  return gulp.src('frontend/styles/index.scss')
       .pipe(plumber({
         errorHandler: notify.onError(err => ({
           title:   'Styles',
@@ -45,22 +47,6 @@ gulp.task('styles', function() {
       .pipe(gulp.dest('public/styles'))
       .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))));
 
-             // gulp.src('frontend/styles/tizer.scss')
-             // .pipe(plumber({
-             //   errorHandler: notify.onError(err => ({
-             //     title:   'Styles',
-             //     message: err.message
-             //   }))
-             // }))
-             // .pipe(gulpIf(isDevelopment, sourcemaps.init()))
-             // .pipe(sass())
-             // .pipe(autoprefixer({
-             //   browsers: ['last 10 versions']
-             // }))
-             // .pipe(gulpIf(isDevelopment, sourcemaps.write()))
-             // .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
-             // .pipe(gulp.dest('public/styles'));
-
 });
 
 gulp.task('assets', function() {
@@ -72,23 +58,36 @@ gulp.task('assets', function() {
       .pipe(gulp.dest('public'));
 });
 
-gulp.task('fonts', function() {
-  return gulp.src('frontend/fonts/**/*.*')
-      .pipe(gulp.dest('public/fonts'));
-});
 
-gulp.task('video', function() {
-  return gulp.src('frontend/video/**/*.*')
-      .pipe(gulp.dest('public/video'));
+gulp.task('ts:process', function () {
+  return gulp.src('test/theme/.ts/**/*.ts')
+             .pipe(plumber())
+             .pipe(sourcemaps.init())
+             .pipe(ts({
+               noImplicitAny: false,
+               removeComments: true,
+               // suppressImplicitAnyIndexErrors: true,
+               module: 'umd',
+               target: 'ES5',
+               out: 'index.js'
+             }))
+             // .pipe(sourcemaps.write('.'))
+             .pipe(notify("Compiled: <%= file.relative %>!"))
+             .pipe(gulp.dest('test/theme/js'));
 });
-
 gulp.task('js',function(){
   return combine(
-    gulp.src(['vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js', 'frontend/js/*.js', '!frontend/js/test.js', '!frontend/js/access.js']),
+    gulp.src(['vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js', 'frontend/js/**/*.js', '!frontend/js/test.js', '!frontend/js/access.js'])
+    .pipe(babel({
+      presets: ['es2015']
+    })),
     $.concat('all.js'),
     // $.uglify(),
     gulp.dest('./public/js'),
-    gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js']),
+    gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js'])
+    .pipe(babel({
+      presets: ['es2015']
+    })),
     $.concat('access.js'),
     gulp.dest('./public/js')
   ).on('error', $.notify.onError(function (err) {
@@ -108,7 +107,7 @@ gulp.task('clean', function() {
   return del(['public', 'manifest']);
 });
 
-gulp.task('build', gulp.series('clean', gulp.parallel('styles:assets', 'styles', 'js', 'fonts', 'video'), 'assets'));
+gulp.task('build', gulp.series('clean', gulp.parallel('styles:assets', 'styles', 'js'), 'assets'));
 
 gulp.task('serve', function() {
   browserSync.init({
@@ -128,8 +127,6 @@ gulp.task('dev',
               gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
               gulp.watch('frontend/js/**/*.js', gulp.series('js'));
               gulp.watch('frontend/assets/**/*.html', gulp.series('assets'));
-              gulp.watch('frontend/fonts/**/*.*', gulp.series('fonts'));
-              gulp.watch('frontend/video/**/*.*', gulp.series('video'));
               gulp.watch('frontend/Images/**/*.{svg,png,jpg,gif,ico}', gulp.series('styles:assets'));
             }
         )

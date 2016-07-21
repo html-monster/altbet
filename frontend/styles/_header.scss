@@ -3,30 +3,18 @@ header {
   @include span(12 of 12);
   display: flex;
   align-items: center;
-  height: 54px;
+  height: 80px;
   border-bottom: 2px solid #d7d7d8;
   width: 100%;
   position: fixed;
+  top: 0;
   //background: url('../Images/Layer%203.png') repeat;
   //background-color: #21323d;
   background: linear-gradient(to top, #21323d, #151e2b);
   z-index: 50;
-  .logo-container {
-    //@include span(1.3 of 12);
-    display: flex;
-    align-items: center;
-    width: 150px;
-    height: 54px;
-    padding-left: 15px;
-    a {
-      display: block;
-      width: 150px;
-      height: 50px;
-    }
-  }
   .header_info {
     @include span(9.1 of 12);
-    //@include push(1.4 of 12);
+    @include push(1.4 of 12);
     text-align: right;
     .header_right {
       padding-left: 5px;
