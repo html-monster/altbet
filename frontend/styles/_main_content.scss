@@ -122,16 +122,12 @@
             &.clickable{
               &:hover{
                 background-color: #ececec;
-                .content_title h2{
-                  color: #1094d1;
-                }
+                .content_title h2{  color: #1094d1;  }
               }
               .event-content.active h3{  color: $main-color;  }
               &.active{
                 background-color: #e3e3e3;
-                .content_title h2{
-                  color: #1094d1;
-                }
+                .content_title h2{  color: #1094d1;  }
               }
             }
             h2, h3 {
@@ -317,6 +313,11 @@
                     &:first-child{
                       background: linear-gradient(to right, #4ad1d7, #2dc7ca);
                     }
+                    @include md(1450){
+                      &:nth-of-type(3){
+                        display: none;
+                      }
+                    }
                   }
                 }
                 .sell{
@@ -329,6 +330,11 @@
                     //}
                     &:last-child{
                       background: linear-gradient(to left, #ff8a82, #ff6464);
+                    }
+                    @include md(1450){
+                      &:nth-last-of-type(3){
+                        display: none;
+                      }
                     }
                   }
                 }

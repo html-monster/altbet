@@ -84,7 +84,7 @@ gulp.task('js',function(){
     $.concat('all.js'),
     // $.uglify(),
     gulp.dest('./public/js'),
-    gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js'])
+    gulp.src(['vendor/jquery/dist/jquery.js', 'frontend/js/access.js'])
     .pipe(babel({
       presets: ['es2015']
     })),

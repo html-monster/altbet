@@ -17,6 +17,7 @@ html{
   margin: 0;
   padding: 0;
   height: 100%;
+  font-family: "Open Sans", sans-serif;
 }
 html{
   &::-webkit-scrollbar {
@@ -38,7 +39,7 @@ html{
 button {
   height: 30px;
   padding: 3px 10px 4px 10px;
-  border-radius: 5px;
+  border-radius: 4px;
   color: #fff;
   outline: none;
   cursor: pointer;
@@ -340,20 +341,9 @@ label{
   100% {  background-color: transparent;  }
 }
 @keyframes shake {
-  0%, 100% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-
-  10%, 30%, 50%, 70%, 90% {
-    -webkit-transform: translate3d(-10px, 0, 0);
-    transform: translate3d(-10px, 0, 0);
-  }
-
-  20%, 40%, 60%, 80% {
-    -webkit-transform: translate3d(10px, 0, 0);
-    transform: translate3d(10px, 0, 0);
-  }
+  0%, 100% {  transform: translate3d(0, 0, 0);  }
+  10%, 30%, 50%, 70%, 90% {  transform: translate3d(-10px, 0, 0);  }
+  20%, 40%, 60%, 80% {  transform: translate3d(10px, 0, 0);  }
 }
 @keyframes rubberBand {
   0% {  transform: scale3d(1, 1, 1);  }

@@ -471,7 +471,7 @@ function dd(element, settings) {
 				settings.rowHeight = Math.ceil(firstLI.height());
 				$("#" + childid).css({visibility:'visible'});
 				if(!isList || settings.enableCheckbox===true) {
-					$("#" + childid).css({display:'none'});
+					// $("#" + childid).css({display:'none'});
 				};
 			};
 			iHeight = ((settings.rowHeight + margin) * Math.min(settings.visibleRows,totalOptions)) + 3;

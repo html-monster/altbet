@@ -53,7 +53,6 @@ class menuClass{
 			e = e || event;
 			e.stopPropagation();
 			if($(this).hasClass('active')){
-			console.log($(this));
 				$(this).find('ul').slideUp(400);
 				$(this).removeClass('active');
 				$(this).children('li').removeClass('active');
