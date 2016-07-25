@@ -1,10 +1,9 @@
 
-//body.registration_body{
-//  background: url('../Images/Layer%203.png') repeat;
-//  height: 100%;
-//  min-height: 100%;
-//  background-color: #21323d;
-//}
+
+
+
+/*
+
 .wrapper_registration{
   padding-bottom: 0;
 }
@@ -144,26 +143,6 @@
                 select{  width: inherit;  }
               }
               .dd .ddTitleText img{  margin-top: -4px;  }
-
-              //input[id='subject'] {
-              //  margin-bottom: 20px;
-              //}
-              //input[id='first_name'],
-              //input[id='second_name'],
-              //input[id='position'] {
-              //  margin-bottom: 15px;
-              //}
-              //input[id='register'] {
-              //  background-color: #ececed;
-              //  color: #959595;
-              //}
-              //.register{
-              //  margin-top: 20px;
-              //  width: 274px;
-              //  color: #959595;
-              //  font-size: 12px;
-              //  text-align: justify;
-              //}
               button.facebook,
               button.twitter{
                 padding: 15px;
@@ -183,13 +162,7 @@
               button.facebook{
                 background-color: #608bc7;
               }
-              .show{  top: 26px;  }
-              //input[id='country']{
-              //  padding-left: 10px;
-              //}
-              //input[id='password']{
-              //  width: 185px;
-              //}
+              .show_password{  top: 26px;  }
               i{
                 display: block;
                 font-size: 10px;
@@ -245,153 +218,15 @@
               margin-top: 15px;
             }
           }
-          /*.left_form_real,
-					.right_form_real{
-						p{
-							span{
-								float: right;
-								margin-right: 15px;
-								img{
-									margin-right: 5px;
-								}
-							}
-						}
-						input[id='birth']{
-							width: 70px;
-							text-transform: uppercase;
-							font-size: 12px;
-							padding-left: 10px;
-						}
-						input[id='birth_year']{
-							width: 125px;
-							text-transform: uppercase;
-							font-size: 12px;
-							padding-left: 10px;
-						}
-						input[id='phone']{
-							width: 205px;
-							padding-left: 10px;
-						}
-						input[id='address'],
-						input[id='country']{
-							font-size: 12px;
-							padding-left: 10px;
-						}
-						select{
-							border: 1px solid #d7d7d8;
-							padding: 4px 2px 4px 2px ;
-							border-radius: 5px;
-							vertical-align: top;
-
-
-						}
-						strong.market_maker{
-							display: block;
-							margin: 20px 0;
-
-						}
-					}*/
-          /*.right_form,
-					.right_form2,
-					.right_form_real{
-						@include span(3 of 8);
-						margin-top: 52px;
-						form {
-							input {
-								border: 1px solid #d7d7d8;
-								border-radius: 5px;
-								width: 274px;
-								height: 30px;
-							}
-							input[id='company'] {
-								margin-bottom: 60px;
-							}
-							input[id='phone'] {
-								width: 145px;
-							}
-							p {
-								margin-top: 15px;
-								color: #959595;
-							}
-							span {
-								display: block;
-								margin-top: 15px;
-								color: #959595;
-							}
-							a {
-								img {
-									height: 25px;
-									width: 35px;
-								}
-							}
-							input[id='call'] {
-								width: 59px;
-								padding: 5px 15px;
-							}
-							select {
-								border: 1px solid #d7d7d8;
-								border-radius: 5px;
-								width: 85px;
-								height: 30px;
-								padding: 5px;
-								vertical-align: bottom;
-							}
-						}
-					}*/
-          /*.right_form_real{
-						position: relative;
-						input{
-							padding-left: 10px;
-							font-size: 12px;
-						}
-						input[id='radio'] {
-							width: 15px;
-							height: 15px;
-						}
-						span.radio{
-							display: inline-block;
-						}
-						p{
-							margin-top: 5px;
-							font-size: 14px;
-						}
-						ul{
-							li{
-								span{
-									margin-top: 0;
-									margin-bottom: 0;
-									font-size: 11px;
-								}
-							}
-						}
-						input[id='submit'] {
-							background-color: #959595;
-						}
-
-						p.register{
-							font-weight: bold;
-							font-size: 12px;
-						}
-						span.circle{
-							display: none;
-							width: 16px;
-							height: 16px;
-							margin-right: 5px;
-							background-image: url('../Images/!.png');
-							position: absolute;
-							bottom: 0;
-						}
-
-					}*/
         }
         .tab_item:nth-child(2),
         .tab_item:nth-child(3){
           display: none;
         }
       }
-
     }
   }
 }
+*/
 
 

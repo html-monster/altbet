@@ -14,16 +14,23 @@ $(document).ready(function () {
 	new menuClass();
 	new footerClass();
 
-	tabs.tabsChange('.my_position'); // page my_position
 	tabs.tabFilter('.filters'); // page my_position
+
+	tabs.tabsChange('.my_position'); // page my_position
 	tabs.tabsChange('.funds_tab'); // page user_page
 	tabs.tabsChange('.top_reg'); // page registration
+
 	tabs.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
 
 	popUpClass.popUpOpen('.log_out .sign_in', '.sign_in_form', '#email'); // pop-up login
-	popUpClass.popUpClose('.head_form .close', '.sign_in_form'); // pop-up login
+	popUpClass.popUpOpen('.sign_in_form a.register', '.sing_up_form');
+
+	popUpClass.popUpClose('.sign_in_form a.register', '.sign_in_form');
+	popUpClass.popUpClose('.sign_in_form .close', '.sign_in_form'); // pop-up login
+
 	popUpClass.globalPopUpClose('.warning'); // all warning message
 	popUpClass.globalPopUpClose('.user-menu', 'slideUp', '.log_in'); // login user menu
+	popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.log_in'); // login user menu
 	popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in'); //pop-up login
 
 	messageClass.showHelpMessage('.active_trader .help', '.tab_item');
@@ -69,10 +76,10 @@ $(document).ready(function () {
 		$('.user-menu').slideToggle().toggleClass('active');
 	});
 
-	$('label .show').mousedown(function () { // show password
-		$(this).prev().attr('type', 'text');
+	$('.show_password').mousedown(function () { // show password
+		$(this).parents('.pass_container').find('input[type=password]').attr('type', 'text');
 	}).mouseup(function () {
-		$(this).prev().attr('type', 'password');
+		$(this).parents('.pass_container').find('input[type=text]').attr('type', 'password').focus();
 	});
 
 });

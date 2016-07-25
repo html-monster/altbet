@@ -89,7 +89,7 @@
     display: block;
     width: 0;
     height: 1px;
-    background: linear-gradient(to right, #ffffff, $main-color, #ffffff);
+    background: linear-gradient(to right, transparent, $main-color, transparent);
     position: absolute;
     bottom: -1px;
     left: 50%;

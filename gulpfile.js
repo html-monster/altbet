@@ -40,7 +40,7 @@ gulp.task('styles', function() {
       .pipe(gulpIf(isDevelopment, sourcemaps.init()))
       .pipe(sass())
       .pipe(autoprefixer({
-        browsers: ['last 10 versions']
+        browsers: ['last 4 versions']
       }))
       .pipe(gulpIf(isDevelopment, sourcemaps.write()))
       .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
@@ -59,22 +59,22 @@ gulp.task('assets', function() {
 });
 
 
-gulp.task('ts:process', function () {
-  return gulp.src('test/theme/.ts/**/*.ts')
-             .pipe(plumber())
-             .pipe(sourcemaps.init())
-             .pipe(ts({
-               noImplicitAny: false,
-               removeComments: true,
-               // suppressImplicitAnyIndexErrors: true,
-               module: 'umd',
-               target: 'ES5',
-               out: 'index.js'
-             }))
-             // .pipe(sourcemaps.write('.'))
-             .pipe(notify("Compiled: <%= file.relative %>!"))
-             .pipe(gulp.dest('test/theme/js'));
-});
+// gulp.task('ts:process', function () {
+//   return gulp.src('test/theme/.ts/**/*.ts')
+//              .pipe(plumber())
+//              .pipe(sourcemaps.init())
+//              .pipe(ts({
+//                noImplicitAny: false,
+//                removeComments: true,
+//                // suppressImplicitAnyIndexErrors: true,
+//                module: 'umd',
+//                target: 'ES5',
+//                out: 'index.js'
+//              }))
+//              // .pipe(sourcemaps.write('.'))
+//              .pipe(notify("Compiled: <%= file.relative %>!"))
+//              .pipe(gulp.dest('test/theme/js'));
+// });
 gulp.task('js',function(){
   return combine(
     gulp.src(['vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js', 'frontend/js/**/*.js', '!frontend/js/test.js', '!frontend/js/access.js'])
@@ -84,7 +84,7 @@ gulp.task('js',function(){
     $.concat('all.js'),
     // $.uglify(),
     gulp.dest('./public/js'),
-    gulp.src(['vendor/jquery/dist/jquery.js', 'frontend/js/access.js'])
+    gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js'])
     .pipe(babel({
       presets: ['es2015']
     })),
