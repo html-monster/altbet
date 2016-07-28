@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	new inputNumber('.order');
+	new inputNumber('.sing_up_form');
 
 	if(location.hostname == "altbet.html-monster.ru"){
 		let letAccess = new access('.access_container input[name="login"]', '.access_container input[name="pass"]', $('.access_container input.required').parent());
@@ -22,16 +23,20 @@ $(document).ready(function () {
 
 	tabs.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
 
-	popUpClass.popUpOpen('.log_out .sign_in', '.sign_in_form', '#email'); // pop-up login
-	popUpClass.popUpOpen('.sign_in_form a.register', '.sing_up_form');
+	popUpClass.popUpOpen('.log_out .sign_in', '.sign_in_form', '#login-email'); // pop-up login
+	popUpClass.popUpOpen('.sign_in_form a.register', '.sign_up_form', '#f_name');
+	popUpClass.popUpOpen('.sign_up_form input.submit', '.sign_up_form .confirm');
 
 	popUpClass.popUpClose('.sign_in_form a.register', '.sign_in_form');
 	popUpClass.popUpClose('.sign_in_form .close', '.sign_in_form'); // pop-up login
+	popUpClass.popUpClose('.sign_up_form .confirm .btn', '.sign_up_form', '.sign_up_form .confirm'); // pop-up login
 
 	popUpClass.globalPopUpClose('.warning'); // all warning message
 	popUpClass.globalPopUpClose('.user-menu', 'slideUp', '.log_in'); // login user menu
-	popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.log_in'); // login user menu
+	popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_in_form a.register'); // pop-up registration
 	popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in'); //pop-up login
+
+	defaultMethods.maxHeight('.sign_up_form  .tab_content ', 105 + window.innerHeight * 0.1);
 
 	messageClass.showHelpMessage('.active_trader .help', '.tab_item');
 	var activeTrader = new activeTraderClass(); //active trader activation
@@ -81,5 +86,6 @@ $(document).ready(function () {
 	}).mouseup(function () {
 		$(this).parents('.pass_container').find('input[type=text]').attr('type', 'password').focus();
 	});
+
 
 });

@@ -32,4 +32,20 @@ class defaultMethods{
 		}
 		return rand;
 	}
+
+	static maxHeight(element, fixedSubtractionHeight, ...containerSubtractionHeight){
+		var windowHeight = window.innerHeight,
+				totalSubtractionHeight = 0;
+
+		$(window).resize(function () {
+			windowHeight = window.innerHeight;
+			$(element).css('max-height', windowHeight - fixedSubtractionHeight - totalSubtractionHeight)
+		});
+
+		fixedSubtractionHeight = fixedSubtractionHeight || 0;
+		containerSubtractionHeight.forEach(function (item) {
+			totalSubtractionHeight +=  $(item).height();
+		});
+		$(element).css('max-height', windowHeight - fixedSubtractionHeight - totalSubtractionHeight)
+	}
 }

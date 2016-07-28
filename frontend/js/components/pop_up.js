@@ -1,9 +1,11 @@
 class popUpClass{
-	static popUpClose(closeButton, popUpWindow){ //.head_form .close
+	static popUpClose(closeButton, ...popUpWindow){ //.head_form .close
 		$(closeButton).click(function(e){
 			e = e || event;
 			e.preventDefault();
-			$(popUpWindow).fadeOut(200); //.sign_in_form
+			popUpWindow.forEach(function (item) {
+				$(item).fadeOut(200); //.sign_in_form
+			});
 		});
 	}
 

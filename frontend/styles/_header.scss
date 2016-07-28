@@ -89,14 +89,14 @@ header {
         @include md(1420) {
           margin-right: 5px;
         }
-        a:before {
-          content: '';
-          display: inline-block;
-          width: 12px;
-          height: 14px;
-          margin-right: 5px;
-          background: url("../Images/myposition.png") no-repeat;
-        }
+        //a:before {
+        //  content: '';
+        //  display: inline-block;
+        //  width: 12px;
+        //  height: 14px;
+        //  margin-right: 5px;
+        //  background: url("../Images/myposition.png") no-repeat;
+        //}
       }
       //.header_right {
       //  float: right;

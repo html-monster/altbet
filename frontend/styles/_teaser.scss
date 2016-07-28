@@ -66,12 +66,11 @@
 
 //убрать эти свойства
 //body, html{
-//	margin: 0;
-//	padding: 0;
-//	min-width: 320px;
-//	height: 100%;
-//	background: linear-gradient(to bottom, #3b3a44, #292830);
-//	overflow: hidden;
+	//margin: 0;
+	//padding: 0;
+	//min-width: 320px;
+	//height: 100%;
+	//background: linear-gradient(to bottom, #3b3a44, #292830);
 //}
 //убрать эти свойства
 
@@ -113,7 +112,6 @@
 		.logo_container {
 			width: 160px;
 			height: 65px;
-			padding-right: 20px;
 		}
 		.logo {
 			display: block;
@@ -121,6 +119,7 @@
 			background: url("../Images/tize_sprite.svg") no-repeat;
 			background-position: -3px -9px;
 			color: transparent;
+			@include xsmax($xsmax){  width: 90%;  float: right;  }
 		}
 
 		.warning_container {
@@ -149,6 +148,10 @@
 				margin-left: 55px;
 				vertical-align: middle;
 			}
+			@include xsmax($xsmax){
+				&:before{  left: 9px;  }
+				span{  margin-left: 20px;  }
+			}
 		}
 	}
 	.elements_container {
@@ -172,7 +175,7 @@
 			opacity: 0;
 			@include mdmax($mdmax){  font-size: 50px;  }
 			@include smmax($smmax){  font-size: 35px;  }
-			@include xsmax($xsmax){  font-size: 23px;  }
+			@include xsmax($xsmax){  font-size: 20px;  }
 		}
 		& > span{
 			display: block;
@@ -184,14 +187,13 @@
 			color: #ffffff;
 			text-align: left;
 			opacity: 0;
-			@include xsmax($xsmax){  width: 320px;  padding: 0 10px;}
+			@include xsmax($xsmax){  width: 300px;  padding: 0 10px;}
 		}
 		form{
 			max-width: 430px;
 			margin: 2% auto 0;
 			position: relative;
-			text-align: left;
-			@include xsmax($xsmax){  width: 320px;  }
+			@include xsmax($xsmax){  width: 305px;  }
 			label{  display: inline-block;  position: relative; opacity: 0;  vertical-align: top; }
 			input[type="email"]{
 				width: 240px;
@@ -204,18 +206,18 @@
 				background: #ffffff;
 				vertical-align: top;
 				@include xsmax($xsmax){
-					width: 195px;
+					width: 185px;
 				}
 			}
 			input[type="submit"]{
 				height: 42px;
 				color: #fff;
 				border: none;
-				//border-radius:0 4px 4px 0  ;
+				border-radius: 0;
 				outline: none;
 				background-image: linear-gradient(to bottom, #64c9ef, #3498da);
 				padding: 0 15px;
-				margin-left: -2px;
+				margin-left: -3px;
 				font-size: 16px;
 				cursor: pointer;
 				transition: 0.4s ease;
@@ -289,12 +291,13 @@
 		z-index: 2;
 		@include lgmax($lgmax){  bottom: 16px;  }
 	}
-	.validation-summary-valid, .validation-summary-errors, .validation-summary-errors{  padding: 5px 0; opacity: 0;  }
+	.validation-summary-valid, .validation-summary-errors{  padding: 5px 0 5px 3px; opacity: 0;  text-align: left;  }
 	.validation-summary-valid span {  color: #3190ce !important;  }
 	.validation-summary-errors span {  color: red !important;  }
 	.validation-summary-errors ul, .validation-summary-errors li {
 		list-style: none;
 		display: none;
 		padding: 0;
+		text-align: left;
 	}
 }

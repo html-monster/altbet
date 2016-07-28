@@ -4,7 +4,7 @@
     //height: 460px;
     padding: 30px;
     background-image: linear-gradient(to top, #bdc0cd, #ffffff);
-    border-radius: 6px;
+    border-radius: 4px;
     position: relative;
     .close{
       display: block;
@@ -179,9 +179,7 @@
         .remember_forgot{
           margin: 15px 0;
           input{  display: none;  }
-          input:checked + label:before{
-            background-position: -20px -140px;
-          }
+          input:checked + label:before{  background-position: -20px -140px;  }
           label{
             font-size: 12px;
             &:before{
@@ -214,7 +212,8 @@
           span{
             display: block;
             padding: 8px 0;
-            background: #c7cad5;
+            //background: #c7cad5;
+            background: #bdc0cd * 1.05;
             border-radius: 4px;
           }
         }

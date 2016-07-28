@@ -1,7 +1,7 @@
 class inputNumber{
 	constructor(parent){
 		this.parent = $(parent);
-		this.input = 'input.number';
+		this.INPUT = 'input.number';
 
 		//oneStepValueChange()==============================================================================================
 		let flag, self = this;
@@ -30,7 +30,7 @@ class inputNumber{
 			}
 		}
 		
-		this.parent.on('keydown', 'input.number', function (e) {
+		this.parent.on('keydown', this.INPUT, function (e) {
 			let input = $(this),
 					value = +input.val(),
 					code;
@@ -78,7 +78,7 @@ class inputNumber{
 		});
 
 		//numericalVerification()==========================================================================================
-		this.parent.on('keypress', this.input, function (e) {
+		this.parent.on('keypress', this.INPUT, function (e) {
 			e = e || event;
 			let code = e.which || e.charCode || e.keyCode;
 
@@ -87,7 +87,7 @@ class inputNumber{
 				return false;
 			}
 		});
-		this.parent.on('keydown', this.input, function (e) {
+		this.parent.on('keydown', this.INPUT, function (e) {
 			e = e || event;
 			let code = e.which || e.charCode || e.keyCode;
 
@@ -95,7 +95,7 @@ class inputNumber{
 				return false;
 			}
 		});
-		this.parent.on('contextmenu', this.input, function (e) {
+		this.parent.on('contextmenu', this.INPUT, function (e) {
 			if(e.button == 2)
 				e.preventDefault();
 		});
