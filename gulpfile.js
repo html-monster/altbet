@@ -28,6 +28,12 @@ const named = require('vinyl-named');
 
 const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV == 'development';
 
+gulp.task('fonts', function() {
+  return gulp.src('frontend/fonts/**/*.*', {since: gulp.lastRun('fonts')})
+             .pipe(gulp.dest('public/fonts'));
+});
+
+
 gulp.task('styles', function() {
 
   return gulp.src('frontend/styles/index.scss')
@@ -77,17 +83,17 @@ gulp.task('assets', function() {
 // });
 gulp.task('js',function(){
   return combine(
-    gulp.src(['vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js', 'frontend/js/**/*.js', '!frontend/js/test.js', '!frontend/js/access.js'])
-    .pipe(babel({
-      presets: ['es2015']
-    })),
+    gulp.src(['vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js', 'frontend/js/**/*.js', '!frontend/js/test.js', '!frontend/js/access.js']),
+    // .pipe(babel({
+    //   presets: ['es2015']
+    // })),
     $.concat('all.js'),
     // $.uglify(),
     gulp.dest('./public/js'),
-    gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js'])
-    .pipe(babel({
-      presets: ['es2015']
-    })),
+    gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js']),
+    // .pipe(babel({
+    //   presets: ['es2015']
+    // })),
     $.concat('access.js'),
     gulp.dest('./public/js')
   ).on('error', $.notify.onError(function (err) {
@@ -107,7 +113,7 @@ gulp.task('clean', function() {
   return del(['public', 'manifest']);
 });
 
-gulp.task('build', gulp.series('clean', gulp.parallel('styles:assets', 'styles', 'js'), 'assets'));
+gulp.task('build', gulp.series('clean', gulp.parallel('styles:assets', 'styles', 'js'), 'assets', 'fonts'));
 
 gulp.task('serve', function() {
   browserSync.init({
@@ -127,6 +133,7 @@ gulp.task('dev',
               gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
               gulp.watch('frontend/js/**/*.js', gulp.series('js'));
               gulp.watch('frontend/assets/**/*.html', gulp.series('assets'));
+              gulp.watch('frontend/fonts/**/*.*', gulp.series('fonts'));
               gulp.watch('frontend/Images/**/*.{svg,png,jpg,gif,ico}', gulp.series('styles:assets'));
             }
         )

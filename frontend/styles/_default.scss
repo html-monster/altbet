@@ -33,10 +33,10 @@ html{
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: "Open Sans", sans-serif;
+  font-family: "open_sans_regular", sans-serif;
   background-image: linear-gradient(to top, #bdc0cd, #ffffff);
 }
-body>.wrapper{   background: #f8f8f8; }
+body>.wrapper{   background: #dce1e6; }
 
 label{  cursor: pointer;  }
 
@@ -78,7 +78,7 @@ body > .wrapper{
   cursor: pointer;
 }
 .btn{
-  box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
   transition: 0.2s ease;
   &:active {
     box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);
@@ -321,6 +321,8 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
   }
 }
 
+.tab_item{  display: none;  }
+
 .pop_up{
   display: none;
   position: fixed;
@@ -463,7 +465,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
   padding: 0 1em;
   width: 40%;
   color: rgba(255, 255, 255, 0.4);
-  font-family: "Open Sans Semibold", sans-serif;
+  font-family: "open_sans_semibold", sans-serif;
 }
 
 .input__label-content {

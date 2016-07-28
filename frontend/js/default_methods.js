@@ -48,4 +48,11 @@ class defaultMethods{
 		});
 		$(element).css('max-height', windowHeight - fixedSubtractionHeight - totalSubtractionHeight)
 	}
+
+	static activated(element){
+		$(element).click(function (e) {
+			e.stopPropagation();
+			$(this).toggleClass('active');
+		});
+	}
 }

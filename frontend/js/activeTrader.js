@@ -3,7 +3,6 @@ class activeTraderClass{
 		$('.left_order .tab label').click(function (e) {
 			e.stopPropagation();
 		});
-
 		// trader On/Off
 		this.tradeOn = function () {
 			var checkbox = $('.left_order .tab input.limit'),
@@ -12,7 +11,7 @@ class activeTraderClass{
 					active_trader = $('.left_order .active_trader'),
 					buttons = $('#exchange .content_bet .event'),
 					event_container = $('.content_bet'),
-					titles = event_container.eq(0).find('.event-title a'),
+					titles = event_container.eq(0).find('.event-title .title'),
 					tab_content = $('.tab_content');
 
 			if(checkbox.prop('checked')){
@@ -98,340 +97,341 @@ class activeTraderClass{
 		}();
 
 		this.eventChange = function () {
-				var checkbox = $('.left_order .tab input.limit'),
-						event_container = $('.content_bet'),
-						event_content = $('.event-content'),
-						tabs = $('.active_trader .event_title .event_name');
+			var checkbox = $('.left_order .tab input.limit'),
+					event_container = $('.content_bet'),
+					event_content = $('.event-content'),
+					tabs = $('.active_trader .event_title .event_name');
 
-				tabs.eq(0).addClass('active');
-				event_container.click(function () {
-					if (checkbox.prop('checked')) {
-						var titles = $(this).find('.event-title a');
+			tabs.eq(0).addClass('active');
+			event_container.click(function () {
+				if (checkbox.prop('checked')) {
+					var titles = $(this).find('.event-title .title');
 
-						tableLimitChangeData($(this), titles);
-						tabs.removeClass('active').eq(0).addClass('active');
-						$(this).find('.event-content').eq(0).addClass('active');
+					tableLimitChangeData($(this), titles);
+					tabs.removeClass('active').eq(0).addClass('active');
+					$(this).find('.event-content').eq(0).addClass('active');
 
-						takeData($(this));
-						activeTraderClass.spreaderClean();
-						activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
-						activeTraderClass.spreadVisability();
-					}
-				});
-				event_content.click(function (e) {
-					if (checkbox.prop('checked')) {
-						var titles = $(this).parents('.content_bet').find('.event-title a');
-
-						e.stopPropagation();
-						tableLimitChangeData($(this), titles);
-						$(this).parents('.content_bet').addClass('active');
-						tabs.removeClass('active').eq($(this).index()).addClass('active');
-
-						takeData($(this));
-						activeTraderClass.spreaderClean();
-						activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
-						activeTraderClass.spreadVisability();
-					}
-				});
-
-				function tableLimitChangeData(current, title) {
-					var ii = 0;
-
-					event_container.removeClass('active');
-					event_content.removeClass('active');
-					current.addClass('active');
-					tabs.each(function () {
-						$(this).text(title.eq(ii++).text());
-					});
-
+					takeData($(this));
+					activeTraderClass.spreaderClean();
+					activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
+					activeTraderClass.spreadVisability();
 				}
-				tabs.click(function () {
-					if (checkbox.prop('checked')) {
-						event_content.removeClass('active');
-						tabs.removeClass('active');
-						$(this).addClass('active');
-						takeData($('.content_bet.active .event-content').eq($(this).index()));
-						activeTraderClass.spreaderClean();
-					}
-				});
+			});
+			event_content.click(function (e) {
+				if (checkbox.prop('checked')) {
+					var titles = $(this).parents('.content_bet').find('.event-title .title');
 
-			}();
-			function takeData(currentItem) {
-				var ii, priceSell = [], priceBuy = [], volumeSell = [], volumeBuy = [],
-						bestSell, bestBuy, currentPrice,
-						table = $('table.limit tbody tr'),
-						join_bid = $('.join_bid a'),
-						join_ask = $('.join_ask a'),
-						className = 'ask';
-
-				currentItem = currentItem.hasClass('content_bet') ? currentItem.find('.table').children('.event-content').eq(0) : currentItem;
-				if(!(currentItem.hasClass('content_bet')))
-					currentItem.addClass('active');
-
-				for(ii = 0; ii < currentItem.find('.sell').find('button.event').length; ii++){
-					priceSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.price').text());
-					volumeSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.volume').text());
-					bestSell = currentItem.find('.sell').find('button.event').eq(ii).find('.price').text();
-				}
-				for(ii = 0; ii < currentItem.find('.buy').find('button.event').length; ii++){
-					priceBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.price').text());
-					volumeBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.volume').text());
-				}
-				bestBuy = currentItem.find('.buy').find('button.event').eq(0).find('.price').text();
-
-				if(priceSell.length)
-					if(priceSell[0].search(/[0-9]+/i) == -1) bestSell = '';
-
-				if(priceBuy.length)
-					if(priceBuy[0].search(/[0-9]+/i) == -1) bestBuy = '';
-
-
-				join_bid.find('.price').text(bestSell);
-				join_ask.find('.price').text(bestBuy);
-
-				table.find('.size').removeClass('best_sell best_buy').find('.value').text('');
-				table.find('.my_size').find('.value').text('');// for development =============================================
-				table.find('.price_value').removeClass('best_sell best_buy');
-				table.each(function () {
-					var current = $(this);
-					currentPrice = $(this).find('.price_value').text();
-					if(defaultMethods.searchValue(priceSell, currentPrice) != -1){
-						ii = defaultMethods.searchValue(priceSell, currentPrice);
-						$(this).find('.size_sell').addClass('animated fadeOut').find('span.value').text(volumeSell[ii]);
-						if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_bids').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeSell[ii]));  // for development =============================================
-						var context = $(this);
-						setTimeout(function () {
-							context.find('.size_sell').removeClass('animated fadeOut');
-							context.find('.my_bids').removeClass('animated fadeOut'); // for development =============================================
-						}, 1000);
-						if(bestSell == currentPrice){
-							$(this).find('.size_sell').addClass('best_sell');
-							$(this).find('.price_value').addClass('best_sell');
-						}
-					}
-					if(defaultMethods.searchValue(priceBuy, currentPrice) != -1){
-						ii = defaultMethods.searchValue(priceBuy, currentPrice);
-						$(this).find('.size_buy').addClass('animated fadeOut').find('span.value').text(volumeBuy[ii]);
-						if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_offers').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeBuy[ii]));  // for development =============================================
-						var context = $(this);
-						setTimeout(function () {
-							context.find('.size_buy').removeClass('animated fadeOut');
-							context.find('.my_offers').removeClass('animated fadeOut'); // for development =============================================
-						}, 1000);
-						if(bestBuy == currentPrice){
-							$(this).find('.size_buy').addClass('best_buy');
-							$(this).find('.price_value').addClass('best_buy');
-						}
-					}
-
-					;(function separation() {
-						current = current.find('td.price_value');
-
-						current.removeClass('ask bid mid');
-						if(current.hasClass('best_sell')){
-							className = 'bid';
-						}
-						current.addClass(className);
-						if(current.hasClass('best_buy')){
-							className = 'mid';
-						}
-					})();
-				});
-
-
-				activeTraderClass.scrollTo();
-			}
-
-			this.addOrder = function () {
-				var //quantityButton = $('.active_trader .control .button.quantity'),
-						trader = $('.active_trader'),
-						size = trader.width(),
-						html;
-
-				trader.find('.active_trader_footer').css('width', size);
-				$(window).resize(function () {
-					size = $('.active_trader').width();
-					trader.find('#order_content').css('width', size);
-					trader.find('.active_trader_footer').css('width', size);
-				});
-
-				$('.active_trader .control .button button').click(function () {
-					activeTraderClass.buttonActivation($(this));
-				});
-
-				$('.active_trader table.control input').keyup(function () {
-					activeTraderClass.buttonActivation($(this));
-				});
-
-				$('.active_trader .regulator span').click(function () {
-					var input = $(this).parents('.input').find('.quantity');
-
-					if(input.length){
-						setTimeout(function () {
-							activeTraderClass.recaluculateSum(input);
-						}, 0);
-					}
-				});
-
-				trader.on('click', '.confim.clickable', function(e){
-					if(!($('.order label input.auto').prop('checked'))){
-						addOrder($(this), e);
-					}
-				});
-
-				trader.on('click', '.price_value.active', function(){
-					if(!($('.order label input.auto').prop('checked')) || $(this).hasClass('mid'))
-						addOrder($(this));
-
-					// if($(this).hasClass('mid'))
-					// 	addOrder($(this));
-
-				});
-
-				trader.on('click', '.confim_button', function (e) {
 					e.stopPropagation();
-					if(!($('.order label input.auto').prop('checked')))
-						addOrder($(this));
+					tableLimitChangeData($(this), titles);
+					$(this).parents('.content_bet').addClass('active');
+					tabs.removeClass('active').eq($(this).index()).addClass('active');
+					console.log($(this).index());
+
+					takeData($(this));
+					activeTraderClass.spreaderClean();
+					activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
+					activeTraderClass.spreadVisability();
+				}
+			});
+
+			function tableLimitChangeData(current, title) {
+				var ii = 0;
+
+				event_container.removeClass('active');
+				event_content.removeClass('active');
+				current.addClass('active');
+				tabs.each(function () {
+					$(this).text(title.eq(ii++).text());
 				});
 
-				$(document).click(function (e) {
-					if($(e.target).closest('.spread_confim').length || $(e.target).closest('.order_content').length ||
-							$(e.target).closest('.mid').length || $(e.target).closest('table.control').length)
-						return;
+			}
+			tabs.click(function () {
+				if (checkbox.prop('checked')) {
+					event_content.removeClass('active');
+					tabs.removeClass('active');
+					$(this).addClass('active');
+					takeData($('.content_bet.active .event-content').eq($(this).index()));
+					activeTraderClass.spreaderClean();
+				}
+			});
 
-					trader.find('.spread_confim').removeClass('active');
+		}();
+		function takeData(currentItem) {
+			var ii, priceSell = [], priceBuy = [], volumeSell = [], volumeBuy = [],
+					bestSell, bestBuy, currentPrice,
+					table = $('table.limit tbody tr'),
+					join_bid = $('.join_bid a'),
+					join_ask = $('.join_ask a'),
+					className = 'ask';
+
+			currentItem = currentItem.hasClass('content_bet') ? currentItem.find('.table').children('.event-content').eq(0) : currentItem;
+			if(!(currentItem.hasClass('content_bet')))
+				currentItem.addClass('active');
+
+			for(ii = 0; ii < currentItem.find('.sell').find('button.event').length; ii++){
+				priceSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.price').text());
+				volumeSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.volume').text());
+				bestSell = currentItem.find('.sell').find('button.event').eq(ii).find('.price').text();
+			}
+			for(ii = 0; ii < currentItem.find('.buy').find('button.event').length; ii++){
+				priceBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.price').text());
+				volumeBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.volume').text());
+			}
+			bestBuy = currentItem.find('.buy').find('button.event').eq(0).find('.price').text();
+
+			if(priceSell.length)
+				if(priceSell[0].search(/[0-9]+/i) == -1) bestSell = '';
+
+			if(priceBuy.length)
+				if(priceBuy[0].search(/[0-9]+/i) == -1) bestBuy = '';
+
+
+			join_bid.find('.price').text(bestSell);
+			join_ask.find('.price').text(bestBuy);
+
+			table.find('.size').removeClass('best_sell best_buy').find('.value').text('');
+			table.find('.my_size').find('.value').text('');// for development =============================================
+			table.find('.price_value').removeClass('best_sell best_buy');
+			table.each(function () {
+				var current = $(this);
+				currentPrice = $(this).find('.price_value').text();
+				if(defaultMethods.searchValue(priceSell, currentPrice) != -1){
+					ii = defaultMethods.searchValue(priceSell, currentPrice);
+					$(this).find('.size_sell').addClass('animated fadeOut').find('span.value').text(volumeSell[ii]);
+					if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_bids').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeSell[ii]));  // for development =============================================
+					var context = $(this);
 					setTimeout(function () {
-						trader.find('.spread_confim').remove();
-					}, 400);
-				});
-
-
-				function addOrder(context, event) {
-					var position = context.position().top + 19,
-							price = context.find('.price').text().replace(/[^0-9.]+/g, "") || context.parent().find('.price_value .value').text().replace(/[^0-9.]+/g, ""),
-							quantity = +trader.find('input.quantity').val();
-
-					if(event) event.stopPropagation();
-
-					if(context.hasClass('size') || context.hasClass('price_value') || context.hasClass('confim_button')){
-						if(context.parents('tr').index() > trader.find('.best_buy ').parents('tr').index()){
-							position = (context.parents('tr').index() - trader.find('table.limit tbody tr.hidden').length) * 20 + 20;
-						}
-						else{
-							position = context.parents('tr').index() * 20 + 20;
-						}
+						context.find('.size_sell').removeClass('animated fadeOut');
+						context.find('.my_bids').removeClass('animated fadeOut'); // for development =============================================
+					}, 1000);
+					if(bestSell == currentPrice){
+						$(this).find('.size_sell').addClass('best_sell');
+						$(this).find('.price_value').addClass('best_sell');
 					}
-
-
-					if(context.hasClass('size sell') || context.hasClass('join_ask')){
-						createOrderForm('.active_trader .template .order_content.default');
+				}
+				if(defaultMethods.searchValue(priceBuy, currentPrice) != -1){
+					ii = defaultMethods.searchValue(priceBuy, currentPrice);
+					$(this).find('.size_buy').addClass('animated fadeOut').find('span.value').text(volumeBuy[ii]);
+					if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_offers').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeBuy[ii]));  // for development =============================================
+					var context = $(this);
+					setTimeout(function () {
+						context.find('.size_buy').removeClass('animated fadeOut');
+						context.find('.my_offers').removeClass('animated fadeOut'); // for development =============================================
+					}, 1000);
+					if(bestBuy == currentPrice){
+						$(this).find('.size_buy').addClass('best_buy');
+						$(this).find('.price_value').addClass('best_buy');
 					}
-					else if(context.hasClass('price_value') || context.hasClass('confim_button')){
-						var price1, price2;
-						if(context.hasClass('ask')){
-							price2 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
-							price1 = (+price2 - +$('.active_trader input.spreader').val()).toFixed(2);
-						}
-						else{
-							price1 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
-							price2 = (+price1 + +$('.active_trader input.spreader').val()).toFixed(2);
-						}
-						if(context.hasClass('mid')){
-							html = '<div class="spread_confim"><span class="sell ask confim_button" onmousedown="return false" onselectstart="return false">Sell</span><span class="buy bid confim_button" onmousedown="return false" onselectstart="return false">Buy</span></div>';
-						}
-						else{
-							createOrderForm('.active_trader .template .order_content.spread', 'spread');
-						}
+				}
+
+				;(function separation() {
+					current = current.find('td.price_value');
+
+					current.removeClass('ask bid mid');
+					if(current.hasClass('best_sell')){
+						className = 'bid';
+					}
+					current.addClass(className);
+					if(current.hasClass('best_buy')){
+						className = 'mid';
+					}
+				})();
+			});
+
+
+			activeTraderClass.scrollTo();
+		}
+
+		this.addOrder = function () {
+			var //quantityButton = $('.active_trader .control .button.quantity'),
+					trader = $('.active_trader'),
+					size = trader.width(),
+					html;
+
+			trader.find('.active_trader_footer').css('width', size);
+			$(window).resize(function () {
+				size = $('.active_trader').width();
+				trader.find('#order_content').css('width', size);
+				trader.find('.active_trader_footer').css('width', size);
+			});
+
+			$('.active_trader .control .button button').click(function () {
+				activeTraderClass.buttonActivation($(this));
+			});
+
+			$('.active_trader table.control input').keyup(function () {
+				activeTraderClass.buttonActivation($(this));
+			});
+
+			$('.active_trader .regulator span').click(function () {
+				var input = $(this).parents('.input').find('.quantity');
+
+				if(input.length){
+					setTimeout(function () {
+						activeTraderClass.recaluculateSum(input);
+					}, 0);
+				}
+			});
+
+			trader.on('click', '.confim.clickable', function(e){
+				if(!($('.order label input.auto').prop('checked'))){
+					addOrder($(this), e);
+				}
+			});
+
+			trader.on('click', '.price_value.active', function(){
+				if(!($('.order label input.auto').prop('checked')) || $(this).hasClass('mid'))
+					addOrder($(this));
+
+				// if($(this).hasClass('mid'))
+				// 	addOrder($(this));
+
+			});
+
+			trader.on('click', '.confim_button', function (e) {
+				e.stopPropagation();
+				if(!($('.order label input.auto').prop('checked')))
+					addOrder($(this));
+			});
+
+			$(document).click(function (e) {
+				if($(e.target).closest('.spread_confim').length || $(e.target).closest('.order_content').length ||
+						$(e.target).closest('.mid').length || $(e.target).closest('table.control').length)
+					return;
+
+				trader.find('.spread_confim').removeClass('active');
+				setTimeout(function () {
+					trader.find('.spread_confim').remove();
+				}, 400);
+			});
+
+
+			function addOrder(context, event) {
+				var position = context.position().top + 19,
+						price = context.find('.price').text().replace(/[^0-9.]+/g, "") || context.parent().find('.price_value .value').text().replace(/[^0-9.]+/g, ""),
+						quantity = +trader.find('input.quantity').val();
+
+				if(event) event.stopPropagation();
+
+				if(context.hasClass('size') || context.hasClass('price_value') || context.hasClass('confim_button')){
+					if(context.parents('tr').index() > trader.find('.best_buy ').parents('tr').index()){
+						position = (context.parents('tr').index() - trader.find('table.limit tbody tr.hidden').length) * 20 + 20;
 					}
 					else{
-						createOrderForm('.active_trader .template .order_content.default', 'buy');
-					}
-
-					trader.find('#order_content').remove();
-
-					if(trader.find('.spread_confim').length && !context.hasClass('confim_button')){
-						trader.find('.spread_confim').removeClass('active');
-						if(context.find('.spread_confim').length){
-							trader.find('.spread_confim').remove();
-						}
-						else{
-							var current = trader.find('.spread_confim');
-							setTimeout(function () {
-								current.remove();
-							}, 400);
-						}
-					}
-
-					if(context.hasClass('mid')){
-						context.find('.container').append(html);
-						setTimeout(function () {
-							context.find('.spread_confim').addClass('active');
-						}, 0);
-					}
-					else if(context.hasClass('size') || context.hasClass('price_value') || context.hasClass('confim_button'))
-						context.parents('tr').find('td.my_bids').append(html);
-					else
-						context.parent().next().html('<td></td>').children().append(html);
-
-					// numericalVerification($('.order_content input'));
-					$('#order_content').slideDown(400);
-					// inputFocus = $('#order_content .volume input');
-					// inputFocus.focus();
-					// inputFocus[0].selectionStart = inputFocus.val().length;
-					function createOrderForm(element, modification) {
-						html = $(element).clone();
-						html.attr('id', 'order_content').css({
-							width: size,
-							top: position
-						});
-						if(modification == 'buy'){
-							html.find('.buy-container').html(html.find('.sell-container').html());
-							html.find('.sell-container').html('');
-							html.find('.obligations input').val((price * quantity).toFixed(2));
-						}
-						else
-							html.find('.obligations input').val(((1 - price) * quantity).toFixed(2));
-
-						if(modification == 'spread'){
-							html.find('.price.sell input').val(price2);
-							html.find('.price.buy input').val(price1);
-						}
-						else
-							html.find('.price input').val(price);
-
-						html.find('.volume input').val(quantity);
+						position = context.parents('tr').index() * 20 + 20;
 					}
 				}
 
-				$('.active_trader input.spreader').mouseup(function () {
-					var value = $(this).val() || '0.';
-					$(this).val(value);
-					$(this).selectionStart = value.length;
-				});
 
-				$('.order label input.auto').change(function () {
-					if($(this).prop('checked')){
-						trader.find('#order_content').remove();
+				if(context.hasClass('size sell') || context.hasClass('join_ask')){
+					createOrderForm('.active_trader .template .order_content.default');
+				}
+				else if(context.hasClass('price_value') || context.hasClass('confim_button')){
+					var price1, price2;
+					if(context.hasClass('ask')){
+						price2 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
+						price1 = (+price2 - +$('.active_trader input.spreader').val()).toFixed(2);
+					}
+					else{
+						price1 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
+						price2 = (+price1 + +$('.active_trader input.spreader').val()).toFixed(2);
+					}
+					if(context.hasClass('mid')){
+						html = '<div class="spread_confim"><span class="sell ask confim_button" onmousedown="return false" onselectstart="return false">Sell</span><span class="buy bid confim_button" onmousedown="return false" onselectstart="return false">Buy</span></div>';
+					}
+					else{
+						createOrderForm('.active_trader .template .order_content.spread', 'spread');
+					}
+				}
+				else{
+					createOrderForm('.active_trader .template .order_content.default', 'buy');
+				}
+
+				trader.find('#order_content').remove();
+
+				if(trader.find('.spread_confim').length && !context.hasClass('confim_button')){
+					trader.find('.spread_confim').removeClass('active');
+					if(context.find('.spread_confim').length){
 						trader.find('.spread_confim').remove();
 					}
-				});
+					else{
+						var current = trader.find('.spread_confim');
+						setTimeout(function () {
+							current.remove();
+						}, 400);
+					}
+				}
 
-				// trader.on('click', 'table.limit tbody', function () {
-				// 	trader.find('#order_content').remove();
-				// });
-				//
-				// trader.on('click', '#order_content', function(e){
-				// 	e.stopPropagation();
-				// });
-			}();
+				if(context.hasClass('mid')){
+					context.find('.container').append(html);
+					setTimeout(function () {
+						context.find('.spread_confim').addClass('active');
+					}, 0);
+				}
+				else if(context.hasClass('size') || context.hasClass('price_value') || context.hasClass('confim_button'))
+					context.parents('tr').find('td.my_bids').append(html);
+				else
+					context.parent().next().html('<td></td>').children().append(html);
 
-			//spread show/hide =============================================================================================================
-			// ;(function showHideSpread() {
+				// numericalVerification($('.order_content input'));
+				$('#order_content').slideDown(400);
+				// inputFocus = $('#order_content .volume input');
+				// inputFocus.focus();
+				// inputFocus[0].selectionStart = inputFocus.val().length;
+				function createOrderForm(element, modification) {
+					html = $(element).clone();
+					html.attr('id', 'order_content').css({
+						width: size,
+						top: position
+					});
+					if(modification == 'buy'){
+						html.find('.buy-container').html(html.find('.sell-container').html());
+						html.find('.sell-container').html('');
+						html.find('.obligations input').val((price * quantity).toFixed(2));
+					}
+					else
+						html.find('.obligations input').val(((1 - price) * quantity).toFixed(2));
 
-			$('.active_trader .show_spread').click(function () {
-				activeTraderClass.spreadVisability(true);
+					if(modification == 'spread'){
+						html.find('.price.sell input').val(price2);
+						html.find('.price.buy input').val(price1);
+					}
+					else
+						html.find('.price input').val(price);
+
+					html.find('.volume input').val(quantity);
+				}
+			}
+
+			$('.active_trader input.spreader').mouseup(function () {
+				var value = $(this).val() || '0.';
+				$(this).val(value);
+				$(this).selectionStart = value.length;
 			});
-			// })();
+
+			$('.order label input.auto').change(function () {
+				if($(this).prop('checked')){
+					trader.find('#order_content').remove();
+					trader.find('.spread_confim').remove();
+				}
+			});
+
+			// trader.on('click', 'table.limit tbody', function () {
+			// 	trader.find('#order_content').remove();
+			// });
+			//
+			// trader.on('click', '#order_content', function(e){
+			// 	e.stopPropagation();
+			// });
+		}();
+
+		//spread show/hide =============================================================================================================
+		// ;(function showHideSpread() {
+
+		$('.active_trader .show_spread').click(function () {
+			activeTraderClass.spreadVisability(true);
+		});
+		// })();
 	}
 
 	static spreaderChangeVal(input, quantity){

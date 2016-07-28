@@ -37,6 +37,7 @@ $(document).ready(function () {
 	popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in'); //pop-up login
 
 	defaultMethods.maxHeight('.sign_up_form  .tab_content ', 105 + window.innerHeight * 0.1);
+	defaultMethods.activated('.content_bet .add_favorite');
 
 	messageClass.showHelpMessage('.active_trader .help', '.tab_item');
 	var activeTrader = new activeTraderClass(); //active trader activation

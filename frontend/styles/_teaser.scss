@@ -193,6 +193,7 @@
 			max-width: 430px;
 			margin: 2% auto 0;
 			position: relative;
+			text-align: left;
 			@include xsmax($xsmax){  width: 305px;  }
 			label{  display: inline-block;  position: relative; opacity: 0;  vertical-align: top; }
 			input[type="email"]{

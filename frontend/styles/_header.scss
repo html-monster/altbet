@@ -108,6 +108,7 @@ header {
   .chat{
     width: 32px;
     height: 44px;
+    margin-right: -1px;
     border-radius: 0;
     background: url("../Images/sprite.svg") no-repeat -219px -13px, url("../Images/chat.png") no-repeat 0 7px/ contain;
   }
@@ -162,7 +163,7 @@ header {
         display: inline-block;
         width: 20px;
         height: 20px;
-        background: url("../Images/sprite.svg") no-repeat -102px -326px;
+        background: url("../Images/sprite.svg") no-repeat -102px -357px;
         position: relative;
         span.count{
           display: block;

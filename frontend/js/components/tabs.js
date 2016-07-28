@@ -17,7 +17,7 @@ class tabs{
 			item.hide().eq($(this).index()).show().find(animated_row).each(function(){
 				$(this).delay(50 * ii).css({display: 'flex', opacity: 0, marginTop: '10px'}).animate({
 					opacity: '1',
-					marginTop: '1px'
+					marginTop: '2px'
 				}, 300);
 				ii++;
 			});

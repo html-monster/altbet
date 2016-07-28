@@ -97,6 +97,71 @@
               </table>
               <div class="show_spread"><span class="visibility"></span> spread</div>
             </div>
+            <div class="template">
+              <div class="order_content default"  style="display: none; position: absolute; left: 0;z-index: 10;">
+                <div class="sell-container">
+                  <form>
+                    <div class="price col-3" style="margin-left: 3px;">
+                      <label>Price:</label>
+                      <div class="input">
+                        <input type="text" class="number" placeholder="0.33" maxlength="4" disabled>
+                        <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
+                      </div>
+                    </div>
+                    <div class="volume col-3" style="margin-left: 3px;">
+                      <label>Quantity:</label>
+                      <div class="input">
+                        <input type="text" class="number" placeholder="123" maxlength="8" disabled>
+                        <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
+                      </div>
+                    </div>
+                    <div class="obligations col-3" style="margin-left: 3px;"><label>Sum:</label>
+                      <div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" disabled>
+                        <div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div>
+                      </div>
+                    </div>
+                    <input type="submit" class="btn sell col-3" value="SELL" style="text-transform: uppercase; margin-left: 3px;">
+                    <span class="btn delete col-3" style="margin-left: 3px;"></span>
+                    <div class="col-3" style="margin-left: 3px;"></div>
+                  </form>
+                </div>
+                <div class="buy-container"></div>
+              </div>
+              <div class="order_content spread" style="display: none; position: absolute; left: 0;z-index: 10;">
+                <div class="sell-buy-container">
+                  <form>
+                    <div class="price sell col-3" style="margin-left: 3px;">
+                      <label>Selling price:</label>
+                      <div class="input">
+                        <input type="text" class="number" placeholder="0.33" maxlength="4" disabled>
+                        <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
+                      </div>
+                    </div>
+                    <div class="volume col-3" style="margin-left: 3px;">
+                      <label>Quantity:</label>
+                      <div class="input">
+                        <input type="text" class="number" placeholder="123" maxlength="8" disabled>
+                        <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
+                      </div>
+                    </div>
+                    <input type="submit" class="btn success col-3" value="" style="margin-left: 3px;">
+                    <div class="price buy col-3" style="margin-left: 3px;">
+                      <label>Buying price:</label>
+                      <div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" disabled>
+                        <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
+                      </div>
+                    </div>
+                    <div class="volume col-3" style="margin-left: 3px;">
+                      <label>Quantity:</label>
+                      <div class="input"><input type="text" class="number" placeholder="123" maxlength="8" disabled>
+                        <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
+                      </div>
+                    </div>
+                    <span class="btn delete col-3" style="margin-left: 3px;"></span>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="tab_item" id="current-orders">
