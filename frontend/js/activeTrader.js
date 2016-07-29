@@ -85,7 +85,7 @@ class activeTraderClass{
 				setTimeout(function () {
 					var orderSidebarHeight = windowHeight - ($('.left_order .tabs').height() + 45 + $('header').height()),
 							actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +
-									$('.active_trader .control').height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height() + 10);
+									$('.active_trader .control').height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height() + 1);
 
 					if(footer.hasClass('active')){
 						tbody.css('max-height', actveTraderHeight - footerHeight);
@@ -125,7 +125,6 @@ class activeTraderClass{
 					tableLimitChangeData($(this), titles);
 					$(this).parents('.content_bet').addClass('active');
 					tabs.removeClass('active').eq($(this).index()).addClass('active');
-					console.log($(this).index());
 
 					takeData($(this));
 					activeTraderClass.spreaderClean();
@@ -307,7 +306,7 @@ class activeTraderClass{
 
 
 			function addOrder(context, event) {
-				var position = context.position().top + 19,
+				var position = context.position().top + 25,
 						price = context.find('.price').text().replace(/[^0-9.]+/g, "") || context.parent().find('.price_value .value').text().replace(/[^0-9.]+/g, ""),
 						quantity = +trader.find('input.quantity').val();
 
@@ -577,7 +576,7 @@ class activeTraderClass{
 
 	static buttonActivation(current) {
 		if(current.parents('.active_trader').length){
-			var	html = '<div class="regulator" style="display: none;"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div>',
+			var	html = '<div class="regulator" style="display: none;"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>',
 					input = $('.active_trader input.quantity'),
 					quantity = current.hasClass('btn') ? current.text() : '',
 					market_button = $('.active_trader .control tr:first-of-type .market_button'),
@@ -591,6 +590,7 @@ class activeTraderClass{
 					$('.active_trader table.limit tbody td.size').removeClass('clickable');
 					$('.active_trader .spread').find('button').removeClass('btn').attr('disabled', true);
 					$('.active_trader input.spreader').attr('disabled', true).parent().find('.regulator').fadeOut(400).remove();
+					activeTraderClass.spreaderClean();
 				}
 				else{
 					if(!(market_button.hasClass('active')))

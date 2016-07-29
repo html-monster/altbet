@@ -37,6 +37,6 @@
 		label.shake input{
 			box-shadow: inset 0 0 15px -3px rgba(255, 0, 0, 0.5);
 		}
-		label.remember{  @include checkbox;  }
+		label.remember{  @include checkbox_horizontal;  }
 	}
 }

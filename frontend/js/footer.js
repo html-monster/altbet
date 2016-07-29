@@ -36,7 +36,7 @@ class footerClass{
 		});
 		setTimeout(function () {
 			actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +
-					$('.active_trader .control').height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height() + 10);
+					$('.active_trader .control').height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height() + 1);
 			tbody.css('max-height', actveTraderHeight);
 		} , 0);
 		orderContent.css('max-height', scroll);
@@ -47,7 +47,7 @@ class footerClass{
 			windowWidth = window.innerWidth,
 					orderSidebarHeight = windowHeight - ($('.left_order .tabs').height() + 45 + $('header').height()),
 					actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +
-							$('.active_trader .control').height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height() + 10);
+							$('.active_trader .control').height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height() + 1);
 			if(windowWidth > 1200){
 				windowHeight = window.innerHeight;
 				tbody.css('max-height', actveTraderHeight);

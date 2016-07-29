@@ -239,7 +239,7 @@
 		$('#exchange').on('click', 'button.event', function () {
 			var html, price = 0, volume = 0, buySum = 0, sellSum = 0, title, currentID, inputFocus, order = [];
 			price = $(this).find('.price').text().replace(/[^0-9.]+/g, "") || '0.';
-			title = $(this).parents('.event-content').find('.event-title').text();
+			title = $(this).parents('.event-content').find('.event-title .title').text();
 			currentID = $(this).parents('.event-content').attr('id');
 			order.push(currentID, title);
 
@@ -273,7 +273,7 @@
 			}
 			if (defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id')) == -1) {
 				id.push(order);
-				if (($(this).parent().hasClass('sell'))) {
+				if (($(this).parents().hasClass('sell'))) {
 
 					if(limit || $(this).hasClass('empty')){
 						html = '<div class="order_content" id="' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' +
@@ -317,7 +317,7 @@
 			}
 			else {
 				var container;
-				if (($(this).parent().hasClass('sell'))) {
+				if (($(this).parents().hasClass('sell'))) {
 					container = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .sell-container');
 					if(limit || $(this).hasClass('empty')){
 
@@ -380,7 +380,7 @@
 		var container = $('.left_order'),
 				checkboxProp,
 				priceMarket = '';
-		container.on('change', 'label.col-3 input', function () {
+		container.on('change', 'label.checkbox input', function () {
 			var price = $(this).parents('form').find('.price'),
 					id,
 					items;
@@ -409,7 +409,7 @@
 				}
 			}
 			if(checkboxProp){
-				price.html('<label style="display: none;">Your price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="0."><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator" style="display: none;"><span class="plus">+</span><span class="minus">-</span></div></div>').find('.regulator').fadeIn(200);
+				price.html('<label style="display: none;">Your price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="0."><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator" style="display: none;"><span class="plus"></span><span class="minus"></span></div></div>').find('.regulator').fadeIn(200);
 				price.find('label').fadeIn(200);
 				price.find('input').focus();
 				price.find('input')[0].selectionStart = 2;
@@ -421,8 +421,8 @@
 				setTimeout(function () {
 					price.html('<label>Market price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div>');
 				}, 200);
-				price.parent().find('input.number').val('');
-				price.parent().find('.volume input').focus();
+				price.parents('form').find('input.number').val('');
+				price.parents('form').find('.volume input').focus();
 			}
 		});
 		// container.on('focus', 'input.number', function () {
@@ -490,13 +490,12 @@
 			}, 0);
 		});
 
-		$('.current-order-title .edit').click(function (e) {
+		$('.order-title .edit').click(function () {
 			var title = $(this).parents('.current-order-title'),
 					tab_content = $('.tab_content'),
 					windowHeight = window.innerHeight,
 					parent = $(this).parents('#current-orders'),
 					height;
-			e.stopPropagation();
 			setTimeout(function () {
 				height = parent[0].clientHeight;
 				if(height + 1 > windowHeight - 235){
@@ -508,16 +507,23 @@
 					// parent.css('overflow-y', 'auto');
 				}
 			}, 300);
-			if(title.hasClass('active')){
-				setTimeout(function () {
-					title.removeClass('active');
-				}, 200);
-			}
-			else{
-				title.addClass('active');
-			}
+			// if(title.hasClass('active')){
+			// 	setTimeout(function () {
+			// 		title.removeClass('active');
+			// 	}, 200);
+			// }
+			// else{
+			// 	title.addClass('active');
+			// }
 			$(this).parent().next().toggleClass('active').slideToggle(200);
 			$(this).parents('.order_content').toggleClass('active');
+		});
+
+		$('.order-title .delete').click(function () {
+			$(this).parent().find('.confirmation').addClass('active');
+		});
+		$('.confirmation .no').click(function () {
+			$(this).parent().removeClass('active');
 		});
 	})();
 

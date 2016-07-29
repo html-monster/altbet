@@ -31,5 +31,9 @@ $(document).ready(function () {
 		$('.left_order .active_trader .limit tbody').append(html);
 		price -= 0.01;
 	}
+
+	$('.confirmation .yes').click(function () {
+		$(this).parents('.order_content').remove();
+	});
 });
 

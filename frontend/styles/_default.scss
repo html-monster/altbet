@@ -12,6 +12,7 @@
 }
 $main-color: #1196d4;
 html{
+  overflow: auto;
   &::-webkit-scrollbar {
     width: 10px
   }
@@ -28,6 +29,7 @@ html{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5)
   }
 }
+
 body,
 html{
   margin: 0;
@@ -137,19 +139,14 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
     position: absolute;
     top: 0;
     right: 0;
-    border: 1px solid #d7d7d8;
-    border-radius: 0 5px 5px 0;
-    background: #fff;
-    box-shadow: -2px 0 5px -1px rgba(0, 0, 0, 0.2);
     z-index: 5;
+    box-shadow: -4px 0 5px -4px rgba(0, 0, 0, 0.2);
     span{
       display: block;
       height: 50%;
-      line-height: 15px;
-      text-align: center;
-      color: #999999;
       user-select: none;
       cursor: pointer;
+      position: relative;
       &:active{
         background-color: #cccccc;
       }
@@ -158,6 +155,31 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
       }
       &:last-of-type{
         line-height: 12px;
+      }
+      &:first-of-type{
+        border-bottom: 1px solid #e9eaee;
+        line-height: 16px;
+        &:after{
+          border: 3px solid transparent;
+          border-bottom: 5px solid #313d62;
+          top: 2px;
+        }
+      }
+      &:last-of-type{
+        line-height: 15px;
+        &:after{
+          border: 3px solid transparent;
+          border-top: 5px solid #313d62;
+          top: 5px;
+        }
+      }
+      &:after{
+        content: '';
+        display: block;
+        width: 5px;
+        height: 5px;
+        position: absolute;
+        left: 6px;
       }
     }
   }
@@ -209,32 +231,31 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
 }
 
 .help{
-  float: right;
-  margin-left: 2px;
   width: 12px;
   height: 12px;
-  background: $main-color;
   border-radius: 50%;
-  position: relative;
+  position: absolute;
+  right: 3px;
+  top: calc(50% - 6px);
   cursor: help;
+  //transition: 0.4s ease-out;
+  opacity: 0.5;
   &:after{
-    content: 'i';
+    content: '';
     display: inline-block;
     width: 12px;
-    line-height: 12px;
-    font-size: 9px;
-    color: #ffffff;
+    height: 12px;
+    background: url("../Images/sprite.svg") no-repeat -50px -162px;
     position: absolute;
     top: 0;
     left: 0;
-    text-align: center;
-    text-transform: lowercase;
   }
   &:hover{
-    .help_message{  display: block;  }
+    opacity: 1;
+    .help_message{   visibility: visible;  opacity: 1;  }
   }
   .help_message{
-    display: none;
+    visibility: hidden;
     width: 125px;
     position: absolute;
     top: 20px;
@@ -245,6 +266,8 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
     text-align: left;
     z-index: 10;
+    opacity: 0;
+    transition: 0.4s ease-out;
     &:before{
       content: '';
       display: block;
@@ -255,7 +278,6 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
       right: 5px;
       background: #fff;
       transform: rotate(45deg);
-      -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
       box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
       z-index: 9;
     }
