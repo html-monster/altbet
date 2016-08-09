@@ -237,7 +237,7 @@
 	// new order =========================================================================================================
 	(function addOrder() {
 		$('#exchange').on('click', 'button.event', function () {
-			var html, price = 0, volume = 0, buySum = 0, sellSum = 0, title, currentID, inputFocus, order = [];
+			var html, price = 0, volume = 0, buySum = 0, sellSum = 0, title, currentID, inputFocus, order = [], self = $(this);
 			price = $(this).find('.price').text().replace(/[^0-9.]+/g, "") || '0.';
 			title = $(this).parents('.event-content').find('.event-title .title').text();
 			currentID = $(this).parents('.event-content').attr('id');
@@ -271,36 +271,72 @@
 					priceMarket = items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
 				}
 			}
+
+			function createOrderForm(orderDirection, modification, limit) {
+				html = $('.order_content.new').clone();
+				html.removeClass('new');
+				if(modification == 'full'){
+					html.attr('id', id[defaultMethods.searchValue(id, self.parents('.event-content').attr('id'))][0] + '__order').css({display: 'none'});
+					html.find('h3').text(title);
+				}
+				else
+					html = html.find('form').css({display: 'none'});
+
+				if (orderDirection == 'sell') html.find('.obligations input.number').val(sellSum);
+				else {
+					if(modification == 'full'){
+						html.find('.buy-container').html(html.find('.sell-container').html());
+						html.find('.sell-container').html('');
+					}
+					html.find('input[type=submit]').toggleClass('sell buy').val('buy');
+					html.find('.obligations input.number').val(buySum);
+				}
+
+				if(limit) html.find('.price input.number').val(price);
+				else {
+					html.find('.price input.number').attr('disabled', true).val(priceMarket);
+					html.find('.price label').text('Market price');
+					html.find('.price .regulator').remove();
+					html.find('.checkbox input').attr('checked', false);
+				}
+
+				html.find('.volume input.number').val(volume);
+
+			}
+
 			if (defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id')) == -1) {
 				id.push(order);
 				if (($(this).parents().hasClass('sell'))) {
 
 					if(limit || $(this).hasClass('empty')){
-						html = '<div class="order_content" id="' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' +
-								title + '</h3><a href="#" class="close"></a><strong class="last-price down">0.33</strong><strong class="current-order up">pos: <span>255</span></strong></div><div class="sell-container"><form><div class="price col-3" style="margin-left: 3px;"><label>Your price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + price + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-								volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="obligations col-3" style="margin-left: 3px;"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
-								sellSum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><label class="col-3" style="margin-left: 3px;"><input type="checkbox" name="limit" checked><span>Limit</span></label><input type="submit" class="btn sell col-3" value="SELL" style="text-transform: uppercase; margin-left: 3px;"><span class="btn delete col-3" style="margin-left: 3px;"></span></form></div><div class="buy-container"></div></div>';
+						createOrderForm('sell', 'full', true);
+						// html = '<div class="order_content" id="' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' +
+						// 		title + '</h3><a href="#" class="close"></a><strong class="last-price down">0.33</strong><strong class="current-order up">pos: <span>255</span></strong></div><div class="sell-container"><form><div class="container"><div class="price"><label>Your price</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + price + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="volume"><label>Quantity</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+						// 		volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div></div></div><div class="obligations"><label>Сумма:</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
+						// 		sellSum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div><div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div></div></div></div><div class="container"><label class="checkbox"><input type="checkbox" name="limit" checked><span>Limit</span></label><input type="submit" class="btn sell" value="SELL" style="text-transform: uppercase; "><span class="delete"></span></form></div><div class="buy-container"></div></div></div>';
 					}
 					else{
-						html = '<div class="order_content" id="' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' +
-								title + '</h3><a href="#" class="close"></a><strong class="last-price down">0.33</strong><strong class="current-order up">pos: <span>255</span></strong></div><div class="sell-container"><form><div class="price col-3" style="margin-left: 3px;"><label>Market price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-								volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="obligations col-3" style="margin-left: 3px;"><label>Sum:</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
-								sellSum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><label class="col-3" style="margin-left: 3px;"><input type="checkbox" name="limit"><span>Limit</span></label><input type="submit" class="btn sell col-3" value="SELL" style="text-transform: uppercase; margin-left: 3px;"><span class="btn delete col-3" style="margin-left: 3px;"></span></form></div><div class="buy-container"></div></div>';
+						createOrderForm('sell', 'full', false);
+						// html = '<div class="order_content" id="' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' +
+						// 		title + '</h3><a href="#" class="close"></a><strong class="last-price down">0.33</strong><strong class="current-order up">pos: <span>255</span></strong></div><div class="sell-container"><form><div class="container"><div class="price"><label>c</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume"><label>Quantity</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+						// 		volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div></div></div><div class="obligations"><label>Sum</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
+						// 		sellSum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div><div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div></div></div></div><div class="container"><label class="checkbox"><input type="checkbox" name="limit"><span>Limit</span></label><input type="submit" class="btn sell" value="SELL" style="text-transform: uppercase; "><span class="delete"></span></form></div><div class="buy-container"></div></div></div>';
 					}
 				}
 				else {
-
 					if(limit || $(this).hasClass('empty')){
-						html = '<div class="order_content" id="' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' +
-								title + '</h3><a href="#" class="close"></a><strong class="last-price up">0.33</strong><strong class="current-order down">pos: <span>255</span></strong></div><div class="sell-container"></div><div class="buy-container"><form><div class="price col-3" style="margin-left: 3px;"><label>Your price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + price + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-								volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="obligations col-3" style="margin-left: 3px;"><label>Sum:</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
-								buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><label class="col-3" style="margin-left: 3px;"><input type="checkbox" name="limit" checked><span>Limit</span></label><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><span class="btn delete col-3" style="margin-left: 3px;"></span></form></div></div>';
+						createOrderForm('buy', 'full', true);
+						// html = '<div class="order_content" id="' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' +
+						// 		title + '</h3><a href="#" class="close"></a><strong class="last-price up">0.33</strong><strong class="current-order down">pos: <span>255</span></strong></div><div class="sell-container"></div><div class="buy-container"><form><div class="container"><div class="price"><label>Your price</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + price + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div></div></div><div class="volume"><label>Quantity</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+						// 		volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div></div></div><div class="obligations"><label>Sum</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
+						// 		buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div></div></div></div><div class="container"><label class="checkbox"><input type="checkbox" name="limit" checked><span>Limit</span></label><input type="submit" class="btn buy" value="BUY" style="text-transform: uppercase; "><span class="delete"></span></form></div></div></div>';
 					}
 					else{
-						html = '<div class="order_content" id="' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' +
-								title + '</h3><a href="#" class="close"></a><strong class="last-price up">0.33</strong><strong class="current-order down">pos: <span>255</span></strong></div><div class="sell-container"></div><div class="buy-container"><form><div class="price col-3" style="margin-left: 3px;"><label>Market price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-								volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="obligations col-3" style="margin-left: 3px;"><label>Sum:</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
-								buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><label class="col-3" style="margin-left: 3px;"><input type="checkbox" name="limit"><span>Limit</span></label><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><span class="btn delete col-3" style="margin-left: 3px;"></span></form></div></div>';
+						createOrderForm('buy', 'full', false);
+						// html = '<div class="order_content" id="' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order" style="display: none;"><div class="order-title"><h3>' +
+						// 		title + '</h3><a href="#" class="close"></a><strong class="last-price up">0.33</strong><strong class="current-order down">pos: <span>255</span></strong></div><div class="sell-container"></div><div class="buy-container"><form><div class="container"><div class="price"><label>Market price</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume"><label>Quantity</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+						// 		volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div></div></div><div class="obligations"><label>Sum</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
+						// 		buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div></div></div></div><div class="container"><label class="checkbox"><input type="checkbox" name="limit"><span>Limit</span></label><input type="submit" class="btn buy" value="BUY" style="text-transform: uppercase; "><span class="delete"></span></form></div></div></div>';
 					}
 				}
 				$('#order .default_orders').append(html);
@@ -320,30 +356,31 @@
 				if (($(this).parents().hasClass('sell'))) {
 					container = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .sell-container');
 					if(limit || $(this).hasClass('empty')){
-
-						html = '<form style="display: none;"><div class="price col-3" style="margin-left: 3px;"><label>Your price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + price + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-								volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="obligations col-3" style="margin-left: 3px;"><label>Sum:</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
-								sellSum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><label class="col-3" style="margin-left: 3px;"><input type="checkbox" name="limit" checked><span>Limit</span></label><input type="submit" class="btn sell col-3" value="SELL" style="text-transform: uppercase; margin-left: 3px;"><span class="btn delete col-3" style="margin-left: 3px;"></span></form>';
+						createOrderForm('sell', null, true);
+						// html = '<form style="display: none;"><div class="price"><label>Your price</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + price + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="volume"><label>Quantity</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+						// 		volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="obligations"><label>Sum</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
+						// 		sellSum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><label class=><input type="checkbox" name="limit" checked><span>Limit</span></label><input type="submit" class="btn sell" value="SELL" style="text-transform: uppercase; "><span class="delete"></span></form>';
 					}
 					else{
-						html = '<form style="display: none;"><div class="price col-3" style="margin-left: 3px;"><label>Market price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-								volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="obligations col-3" style="margin-left: 3px;"><label>Sum:</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
-								sellSum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><label class="col-3" style="margin-left: 3px;"><input type="checkbox" name="limit"><span>Limit</span></label><input type="submit" class="btn sell col-3" value="SELL" style="text-transform: uppercase; margin-left: 3px;"><span class="btn delete col-3" style="margin-left: 3px;"></span></form>';
+						createOrderForm('sell', null, false);
+						// html = '<form style="display: none;"><div class="price"><label>Market price</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume"><label>Quantity</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+						// 		volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="obligations"><label>Sum</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
+						// 		sellSum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><label class=><input type="checkbox" name="limit"><span>Limit</span></label><input type="submit" class="btn sell" value="SELL" style="text-transform: uppercase; "><span class="delete"></span></form>';
 					}
 				}
 				else {
 					container = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .buy-container');
 					if(limit || $(this).hasClass('empty')){
-
-						html = '<form style="display: none;"><div class="price col-3" style="margin-left: 3px;"><label>Your price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + price + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-								volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="obligations col-3" style="margin-left: 3px;"><label>Sum:</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
-								buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><label class="col-3" style="margin-left: 3px;"><input type="checkbox" name="limit" checked><span>Limit</span></label><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><span class="btn delete col-3" style="margin-left: 3px;"></span></form>';
+						createOrderForm('buy', null, true);
+						// html = '<form style="display: none;"><div class="price"><label>Your price</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + price + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="volume"><label>Quantity</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+						// 		volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="obligations"><label>Sum</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
+						// 		buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><label class=><input type="checkbox" name="limit" checked><span>Limit</span></label><input type="submit" class="btn buy" value="BUY" style="text-transform: uppercase; "><span class="delete"></span></form>';
 					}
 					else{
-
-						html = '<form style="display: none;"><div class="price col-3" style="margin-left: 3px;"><label>Market price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume col-3" style="margin-left: 3px;"><label>Quantity:</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
-								volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="obligations col-3" style="margin-left: 3px;"><label>Sum:</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
-								buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><label class="col-3" style="margin-left: 3px;"><input type="checkbox" name="limit"><span>Limit</span></label><input type="submit" class="btn buy col-3" value="BUY" style="text-transform: uppercase; margin-left: 3px;"><span class="btn delete col-3" style="margin-left: 3px;"></span></form>';
+						createOrderForm('buy', null, false);
+						// html = '<form style="display: none;"><div class="price"><label>Market price</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div></div><div class="volume"><label>Quantity</label><div class="input"><input type="text" class="number" placeholder="123" maxlength="8" value="' +
+						// 		volume + '"><div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><div class="obligations"><label>Sum</label><div class="input"><input type="text" class="number" placeholder="40.59" maxlength="8" value="' +
+						// 		buySum + '"><div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p> </div><div class="regulator"><span class="plus" title="Press Arrow Up">+</span><span class="minus" title="Press Arrow Down">-</span></div></div></div><label class=><input type="checkbox" name="limit"><span>Limit</span></label><input type="submit" class="btn buy" value="BUY" style="text-transform: uppercase; "><span class="delete"></span></form>';
 					}
 				}
 				// if(container.find('form').length < 1)
@@ -409,7 +446,7 @@
 				}
 			}
 			if(checkboxProp){
-				price.html('<label style="display: none;">Your price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="0."><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator" style="display: none;"><span class="plus"></span><span class="minus"></span></div></div>').find('.regulator').fadeIn(200);
+				price.html('<label style="display: none;">Your price</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="0."><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator" style="display: none;"><span class="plus"></span><span class="minus"></span></div></div>').find('.regulator').fadeIn(200);
 				price.find('label').fadeIn(200);
 				price.find('input').focus();
 				price.find('input')[0].selectionStart = 2;
@@ -419,7 +456,7 @@
 				price.find('.regulator').fadeOut(200);
 				price.find('label').fadeOut(200);
 				setTimeout(function () {
-					price.html('<label>Market price:</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div>');
+					price.html('<label>Market price</label><div class="input"><input type="text" class="number" placeholder="0.33" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div>');
 				}, 200);
 				price.parents('form').find('input.number').val('');
 				price.parents('form').find('.volume input').focus();
@@ -543,7 +580,7 @@
 		// 	}
 		// 	$('#order-container').attr('class', parent +'-container');
 		// 	$('#order-form h3').text(title);
-		// 	$('#order-form input[type="submit"]').val(parent).attr('class', parent + ' col-3 btn');
+		// 	$('#order-form input[type="submit"]').val(parent).attr('class', parent + ' btn');
 		// 	$('#order-form').fadeIn(200);
 		// });
 

@@ -140,6 +140,7 @@
         transition: 0.4s ease-out;
         background: url(../Images/sprite.svg) no-repeat -84px -114px;
         &:hover{
+          //opacity: 0.5;
           animation-duration: 1s;
           animation-fill-mode: both;
           animation-name: rubberBand;

@@ -48,7 +48,7 @@ class activeTraderClass{
 						event_container.addClass('clickable');
 					} else {
 						event_container.addClass('clickable').eq(0).addClass('active');
-						titles = $('.content_bet.active .event-title a');
+						titles = $('.content_bet.active .event-title .title');
 						$('.active_trader .event_title .event_name').each(function () {
 							$(this).text(titles.eq(ii++).text());
 						});
@@ -373,18 +373,22 @@ class activeTraderClass{
 					context.parent().next().html('<td></td>').children().append(html);
 
 				// numericalVerification($('.order_content input'));
-				$('#order_content').slideDown(400);
+				$('#order_content').css('visibility', 'visible');
+				setTimeout(function () {
+					$('#order_content').addClass('active');
+				}, 0);
 				// inputFocus = $('#order_content .volume input');
 				// inputFocus.focus();
 				// inputFocus[0].selectionStart = inputFocus.val().length;
 				function createOrderForm(element, modification) {
 					html = $(element).clone();
 					html.attr('id', 'order_content').css({
-						width: size,
+						width: size - 6,
 						top: position
 					});
 					if(modification == 'buy'){
 						html.find('.buy-container').html(html.find('.sell-container').html());
+						html.find('input[type=submit]').toggleClass('sell buy').val('buy');
 						html.find('.sell-container').html('');
 						html.find('.obligations input').val((price * quantity).toFixed(2));
 					}
