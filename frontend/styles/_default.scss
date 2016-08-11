@@ -10,7 +10,7 @@
 :-ms-input-placeholder{
   color: #dbdbdb;
 }
-$main-color: #1196d4;
+//$main-color: #1196d4;
 html{
   overflow: auto;
   &::-webkit-scrollbar {
@@ -38,12 +38,12 @@ html{
   font-family: "open_sans_regular", sans-serif;
   background-image: linear-gradient(to top, #bdc0cd, #ffffff);
 }
-body>.wrapper{   background: #dce1e6; }
+body>.wrapper{   background: $main-bg; }
 
 label{  cursor: pointer;  }
 
 a.text_decoration{
-	color: $main-color;
+	color: $link-color;
 	@include text-decoration;
 	&:visited{  color: rgb(85, 26, 139);  }
 }
@@ -82,8 +82,8 @@ body > .wrapper{
 .btn{
   box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
   transition: 0.2s ease;
-  position: relative;
   @include btn-hover;
+  &:active {  box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);  }
 }
 input, select, button, a {
   &:focus {
@@ -146,32 +146,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
       user-select: none;
       cursor: pointer;
       position: relative;
-      &:active{
-        background-color: #cccccc;
-      }
-      &:first-of-type{
-        border-bottom: 1px solid #d7d7d8;
-      }
-      &:last-of-type{
-        line-height: 12px;
-      }
-      &:first-of-type{
-        border-bottom: 1px solid #e9eaee;
-        line-height: 16px;
-        &:after{
-          border: 3px solid transparent;
-          border-bottom: 5px solid #313d62;
-          top: 2px;
-        }
-      }
-      &:last-of-type{
-        line-height: 15px;
-        &:after{
-          border: 3px solid transparent;
-          border-top: 5px solid #313d62;
-          top: 5px;
-        }
-      }
+      transition: 0.4s ease-out;
       &:after{
         content: '';
         display: block;
@@ -181,6 +156,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
         left: 6px;
       }
     }
+    @include regulator;
   }
 }
 
@@ -244,7 +220,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
     display: inline-block;
     width: 12px;
     height: 12px;
-    background: url("../Images/sprite.svg") no-repeat -50px -162px;
+    background: $help_block;
     position: absolute;
     top: 0;
     left: 0;
@@ -259,7 +235,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
     position: absolute;
     top: 20px;
     right: -4px;
-    background: #fff;
+    background: $checkbox_bg;
     padding: 5px !important;
     border-radius: 5px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
@@ -275,7 +251,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
       position: absolute;
       top: -4px;
       right: 5px;
-      background: #fff;
+      background: $checkbox_bg;
       transform: rotate(45deg);
       box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
       z-index: 9;
@@ -288,12 +264,12 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
       position: absolute;
       top: 1px;
       right: 2px;
-      background: #fff;
+      background: $checkbox_bg;
       z-index: 9;
     }
     p{
       font-size: 10px !important;
-      color: #707070;
+      color: transparentize($checkbox_label_color, 0.5);
       position: relative;
       z-index: 10;
     }
@@ -304,7 +280,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
   display: none;
   width: 125px;
   position: absolute;
-  background: #fff;
+  background: $warning_message_bg;
   padding: 5px;
   border-radius: 5px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
@@ -317,7 +293,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
     position: absolute;
     top: -4px;
     left: 26px;
-    background: #fff;
+    background: $warning_message_arrow;
     transform: rotate(45deg);
     -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
@@ -331,7 +307,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
     position: absolute;
     top: 0;
     left: 22px;
-    background: #fff;
+    background: $warning_message_arrow;
     z-index: 9;
   }
   p{

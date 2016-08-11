@@ -38,7 +38,7 @@ class inputNumber{
 			e = e || event;
 			code = e.which || e.charCode || e.keyCode;
 
-			(defaultMethods.isInteger(+input.attr('placeholder'))) ? flag = 1 : flag = 0.01;
+			(defaultMethods.isInteger(+input.attr('data-validation'))) ? flag = 1 : flag = 0.01;
 
 			if (limitInputData($(this), input, flag, code) === false)  return false;
 
@@ -58,7 +58,7 @@ class inputNumber{
 			let input = $(this).parents('.input').find('input.number'),
 					value = +input.val();
 
-			(defaultMethods.isInteger(+input.attr('placeholder'))) ? flag = 1 : flag = 0.01;
+			(defaultMethods.isInteger(+input.attr('data-validation'))) ? flag = 1 : flag = 0.01;
 
 			if (limitInputData($(this), input, flag) === false)  return false;
 

@@ -383,7 +383,7 @@ class activeTraderClass{
 				function createOrderForm(element, modification) {
 					html = $(element).clone();
 					html.attr('id', 'order_content').css({
-						width: size - 6,
+						width: size - 4,
 						top: position
 					});
 					if(modification == 'buy'){

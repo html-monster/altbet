@@ -10,22 +10,22 @@
     margin-bottom: 10px;
     //border: 1px solid #dce1e6 * 0.95;
     border-radius: 6px;
-    background-color: #fff;
+    background: $breadcrumbs-bg;
     //box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.5);
     //background-image: linear-gradient(to top, #dce1e6 * 0.95, #fff);
     li {
       display: inline-block;
-      color:  rgba(0, 0, 0, 0.5);
+      color:  $breadcrumbs-color;
       font-size: 14px;
       line-height: 19px;
       a {
         margin-right: 15px;
-        color: $main-color; //959595
+        color: $link-color;
         font-size: 14px;
         font-family: 'open_sans_regular', sans-serif;
         transition: 0.4s ease-out;
         position: relative;
-        &:hover{  color: $main-color ;  }
+        &:hover{  color: $link-color * 0.7 ;  }
       }
       a:after {
         content: '';
@@ -45,14 +45,7 @@
       span.tab{
         &.active {
           //background-image: linear-gradient(to bottom, #64c9ef, #3498da);
-          background: #64c9ef;
-          box-shadow: inset 0 -30px 20px -8px #3498da;
-          color: #fff * 0.9;
-          &:before{ background-position: -326px -176px; }
-          &:nth-of-type(2):before{  background-position: -367px -176px;  }
-          &:nth-of-type(3):before{  background-position: -407px -176px;  }
-          &:nth-of-type(4):before{  background-position: -446px -176px;  }
-          &:nth-of-type(5):before{  background-position: -486px -176px;  }
+          @include main_page_tab_icon_active;
           span{
             &:after{  margin-bottom: 0;  }
             &:before{  margin-top: -30px;  }
@@ -68,8 +61,8 @@
         padding: 0 15px;
         font-size: 14px;
         font-family: "open_sans_regular", sans-serif;
-        background: #ffffff;
-        color: #363640;
+        background: $main_page_tab_bg;
+        color: $main_page_tab_color;
         border-radius: 6px;
         cursor: pointer;
         transition: 0.4s ease-out;
@@ -83,24 +76,10 @@
             display: block;
             transition: 0.4s ease-out;
           }
-          &:after{  margin-bottom: -26px;  margin-top: 6px;  color: #fff * 0.95; }
-          &:before{  margin-top: -2px; color: #363640; }
+          &:after{  margin-bottom: -26px;  margin-top: 6px;  color: $main_page_tab_color_active * 0.95; }
+          &:before{  margin-top: -2px; color: $main_page_tab_color; }
         }
-        &:before {
-          content: '';
-          display: inline-block;
-          width: 18px;
-          height: 38px;
-          margin-top: -2px;
-          margin-right: 5px;
-          background: url(../Images/sprite.svg) no-repeat -326px -147px;
-          vertical-align: middle;
-          transition: 0.4s ease-out;
-        }
-        &:nth-of-type(2):before{  background-position: -367px -147px;  }
-        &:nth-of-type(3):before{  background-position: -407px -147px;  }
-        &:nth-of-type(4):before{  background-position: -446px -147px;  }
-        &:nth-of-type(5):before{  background-position: -486px -147px;  }
+        @include main_page_tab_icon;
       }
     }
     .content_bet {
@@ -116,26 +95,30 @@
       transition: 0.4s ease-out;
       &:first-child{  margin-top: 0!important;  }
       &.clickable{
+        .waves-ripple{  display: block;;  }
+        .content_title, .table{  transition: 0.4s ease-out;  }
         &:hover{
-          background-color: #ececec;
           .content_title h2{  color: #1094d1;  }
         }
-        .event-content.active h3{  color: $main-color;  }
-        &.active{
-          background-color: #e3e3e3;
-          .content_title h2{  color: #1094d1;  }
+        .event-content.active h3{  color: $link-color;  }
+        &:active{
+          .content_title{
+            h2{  color: $link-color;  }
+          }
         }
+        &.active .content_title h2{  color: $link-color;  }
       }
+      .waves-ripple{  display: none;  }
       h2, h3 {
         display: inline-block;
-        color: #707070;
+        color: $main_page_event_title;
         text-align: left;
         font-size: 14px;
         vertical-align: middle;
         transition: 0.4s ease-out;
         //@include md(1500){  font-size: 16px;  }
       }
-      h2{  margin: 3px 0;  color: #000000;  }
+      h2{  margin: 3px 0;  }
       h3{
         margin-bottom: 5px;
         position: relative;
@@ -143,7 +126,7 @@
         a {
           display: inline-block;
           padding-right: 15px;
-          color: rgba(80, 84, 88, 0.6);
+          color: transparentize($main-color, 0.2);
           font-size: 12px;
           background: url("../Images/sprite.svg") no-repeat -3px -205px;
           vertical-align: middle;
@@ -172,7 +155,7 @@
           left: -25%;
         }
       }
-      h3 a:hover{  color: #000000 !important;  }
+      h3 a:hover{  color: $main-color-hover;  }
       //h2:before {
       //  position: absolute;
       //  left: 15px;
@@ -214,33 +197,38 @@
           display: inline-block;
           width: 22px;
           height: 22px;
+          margin-right: 5px;
           background: url("../Images/sprite.svg") no-repeat;
         }
-        &.sport:before{  background-position: -68px -306px;  }
-        &.e_sport:before{  background-position: -186px -306px;  }
-        &.finance:before{  background-position: -107px -306px;  }
-        &.society:before{  background-position: -27px -306px;  }
+        @include main_page_event_icon;
         span {
           font-size: 12px;
           display: inline-block;
           margin-right: 5px;
           vertical-align: top;
-          &.date{  color: #363640;  opacity: 0.5;  }
-          &.time{  color: #273456;  }
+          &.date{  color: $main-color;  opacity: 0.5;  }
+          &.time{  color: $main-color-darker;  }
         }
         i{
           float: right;
-          line-height: 14px;
+          line-height: 12px;
           padding: 3px 7px;
-          color: #fff;
+          color: #ffffff;
           border-radius: 4px;
           font-style: normal;
           font-weight: 700;
-          font-size: 14px;
+          font-size: 12px;
           vertical-align: top;
           &.live{  background-image: linear-gradient(to bottom, #84d65b, #4dac2e);  }
-          &.half_time{  background-image: linear-gradient(to bottom, #cccb35, #cccb35 * 0.9); }
+          &.half_time{  color: transparent; background-image: linear-gradient(to bottom, #cccb35, #cccb35 * 0.9); }
           &.end{   background-image: linear-gradient(to bottom, #646470, #34343d);  }
+          span{  display: inline-block;  margin: 0;  margin-left: -11px;  color: #ffffff;  }
+          @include md(1550){
+            &.half_time{
+              color: #ffffff;
+              span{  display: none;  }
+            }
+          }
         }
       }
       .content_title, .table{
@@ -254,7 +242,7 @@
         margin-right: 2px;
         width: 26%;
         border-radius: 6px 0 0 6px;
-        background: #ffffff;
+        @include main_page_event_bg;
         //background: linear-gradient(to top, #e6e6e6, #ffffff);
         //box-shadow: 3px 0 10px -3px rgba(0, 0, 0, 0.3);
         &.command{
@@ -275,7 +263,7 @@
         width: 76%;
         padding: 10px 0 0;
         border-radius: 0 6px 6px 0;
-        background: #ffffff;
+        @include main_page_event_bg;
         vertical-align: middle;
         position: relative;
         .event-content {
@@ -283,31 +271,19 @@
           margin: 0 5px;
           padding-bottom: 31px;
           width: 48%;
-          &:hover h3{  color: $main-color;  }
           h3 {
             display: block;
             padding-left: 2px;
-            vertical-align: middle;
-            img{
-              display: inline-block;
-              width: 20px;
-              height: 20px;
-              float: left;
-              margin-right: 5px;
-            }
           }
-          .button-container{
-            height: 35px;
-            vertical-align: top;
-          }
+          .button-container{  height: 35px;  }
           button.event {
             height: 32px;
             padding: 0;
             border-radius: 4px;
             text-transform: uppercase;
-            background: #eceef2;
+            background: $default-button-bg;
             vertical-align: middle;
-            @include btn-shadow;
+            @include main_page_event_button;
             position: relative;
             &:not([disabled]):after{
               content: '';
@@ -337,7 +313,7 @@
             span{
               display: block;
               line-height: 13px;
-              color: #232323;
+              color: $main_page_event_title;
               font-weight: 600;
               position: relative;
               z-index: 2;
@@ -348,6 +324,7 @@
               &.volume{
                 padding-bottom: 3px;
                 font-size: 10px;
+                color: transparentize($main_page_event_title, 0.4);
               }
             }
           }
@@ -402,7 +379,7 @@
         bottom: 0;
         z-index: 2;
         cursor: pointer;
-        background: url(../Images/sprite.svg) no-repeat -166px -354px;
+        background: $main_page_event_chart_button;
         &:before, &:after{
           content: '';
           display: block;
@@ -440,7 +417,7 @@
           display: block;
           width: calc(100% - 10px);
           height: 100%;
-          background: url("../Images/ajax-loader.gif") no-repeat center #fff;
+          background: url("../Images/ajax-loader.gif") no-repeat center $main_page_tab_color_active;
           position: absolute;
           top: 0;
           left: 0;

@@ -36,7 +36,7 @@ gulp.task('fonts', function() {
 
 gulp.task('styles', function() {
 
-  return gulp.src('frontend/styles/index.scss')
+  return gulp.src('frontend/styles/*.scss')
       .pipe(plumber({
         errorHandler: notify.onError(err => ({
           title:   'Styles',

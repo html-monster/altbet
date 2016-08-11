@@ -1,103 +1,128 @@
 .footer{
+  display: flex;
+  align-items: center;
   width: 100%;
   height: 126px;
   margin-top: -126px;
   padding: 15px 40px;
   clear: both;
-  box-shadow: inset 0 2px 2px #d7d7d8;
+  box-shadow: 0 -6px 20px -3px rgba(0, 0, 0, 0.5);
   //background: url('../Images/Layer%203.png') repeat;
   //background-color: #21323d;
-  background: linear-gradient(to top, #21323d, #151e2b);
+  background-image: linear-gradient(to bottom, #3b3a44, #292830);
   position: fixed;
   bottom: -125px;
-  z-index: 5;
+  z-index: 54;
+  color: #ffffff;
   transition: 0.4s ease-out;
   &.active{  bottom: 0 !important;  }
   .footer_container{
     display: flex;
-    align-items: center;
-    justify-content: space-around;
-    @include span(8 of 12);
-    @include push (1.4 of 12);
+    @include span(8.1 of 12);
+    @include push (1.5 of 12);
+  }
+  .footer_item{
+    width: 20%;
+    padding: 0 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid #292830 * 0.9;
+    &:first-child{  border-left: none;  }
+    &:last-child{  border-right: none;  }
+    @include md(1550){
+      padding: 0 10px;
+      &:nth-child(3){
+        width: 25%;
+      }
+    }
   }
   .hide_show{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 85px;
     height: 30px;
-    background: url("../Images/hide_show.png") no-repeat;
+    background: url("../Images/footer_button.png") no-repeat;
     background-size: cover;
     border-radius: 10px 10px 0 0;
     position: absolute;
-    top: -18px;
-    left: 25%;
+    top: -30px;
+    left: calc(50% - 42px);
     cursor: pointer;
+    &:after{
+      content: '';
+      display: block;
+      width: 16px;
+      height: 11px;
+      background: url("../Images/sprite.svg") no-repeat -409px -93px;
+    }
   }
   ul{  list-style: none;  }
   ul.footer_menu{
     font-size: 14px;
-    column-count: 3;
     li{
       line-height: 21px;
-      &:hover a{  color: #a2b2c2;  }
+      &:hover a{  opacity: 0.8;  }
       a{
         display: block;
         padding: 0 5px;
-        color: #636e79;
-        font-weight: bold;
+        color: #fff;
+        //font-weight: bold;
+        font-size: 12px;
         text-decoration: none;
         transition: 0.4s ease-out;
+        opacity: 0.6;
       }
-    }
-    //li.first{
-    //  transition: top 1s ease-out 0.5s;
-    //  &:hover{
-    //    a{
-    //      color: #249fed;
-    //      text-decoration: underline;
-    //    }
-    //  }
-    //  a{color: #249fed;}
-    //}
-  }
-  ul.logos li {
-    float: left;
-    width: 90px;
-    img{
-      width: 100%;
     }
   }
   .logo-container{
-    width: 150px;
-    margin-top: -10px;
-    img{   margin-left: 10px;  }
-  }
-  ul.footer_soc{
     display: flex;
-    justify-content: space-around;
+    align-items: center;
+    //width: 140px;
+    a{
+      display: block;
+      width: 150px;
+      height: 50px;
+      background: url(../Images/sprite.svg) no-repeat -11px -17px;
+    }
+  }
+  .contacts{
+    font-size: 12px;
+    .title{  display: block; opacity: 0.6;  }
+    a{
+      display: inline-block;
+      margin-bottom: 5px;
+      @include text-decoration;
+      &.support{
+        color: #3498da;
+      }
+      &.chat{
+        color: #ef4d22;
+        &:before{
+          background: linear-gradient(to Left, transparent, #ef4d22, transparent);
+        }
+      }
+    }
+  }
+  .social{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  ul.soc{
+    display: flex;
     margin-top: 5px;
     li{
       width: 30px;
       height: 30px;
-      float: left;
-      border-radius: 50%;
-      &.fb{
-        background: url("../Images/footer_soc_fb.png") no-repeat;
-        background-size: cover;
-      }
-      &.tw{
-        background: url("../Images/footer_soc_tw.svg") no-repeat #57585b center;
-        background-size: 70%;
-      }
-      &.ml{
-        background: url("../Images/footer_soc_ml.svg") no-repeat #57585b center;
-        background-size: 70%;
-      }
+      margin-right: 5px;
+      background: url("../Images/sprite.svg") no-repeat;
+      &.fb{  background-position: -337px -18px;  }
+      &.tw{  background-position: -370px -18px;  }
       a{  display: block;  height: 30px;  }
     }
   }
-  p{
-    color: #636e79;
-    font-size: 13px;
-    text-align: center;
-    margin-top: 5px;
+  .copyright{
+    font-size: 10px;
+    line-height: 2.2;
   }
 }

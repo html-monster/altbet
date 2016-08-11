@@ -2,7 +2,7 @@
   @include span(last 2.6 of 12);
   //width: 325px;
   height: 100%;
-  background-color: #fff;
+  background: $order_sidebar_bg;
   position: fixed;
   right: 0;
   top: 80px;
@@ -28,31 +28,23 @@
         .tab {
           width: 50%;
           height: 35px;
-          color: #3498da;
+          color: $order_sidebar_tab_color;
           font-size: 14px;
           line-height: 33px;
           position: relative;
-          border: 1px solid #3498da;
+          border: 1px solid $order_sidebar_tab_bord;
           border-radius: 4px 0 0 4px;
           &.active {
-            background-image: linear-gradient(to bottom, #64c9ef, #3498da);
+            background-image: $active_bg;
             border: none;
-            color: #fff;
-          }
-          &:last-child{
-            //&.active{  border-right: 1px solid #445b69;  }
-            &:after{
-              content: '';
-              display: block;
-              width: 1px;
-              height: 25px;
-              background: #273456;
-              position: absolute;
-              top: 39px;
-              left: 0;
-              opacity: 0.1;
+            color: $main_page_tab_color_active;
+            label{
+              top: 44px;
+              left: 1px;
+              &.auto_trade{  right: 1px;  }
             }
           }
+          @include order_sidebar_tab_separator;
           &:last-child {
             //&.active{  border-left: 1px solid #445b69;  }
             border-radius: 0 4px 4px 0;
@@ -62,7 +54,7 @@
             padding-right: 20px;
             @include checkbox_vertical;
             position: absolute;
-            top: 45px;
+            top: 43px;
             left: 0;
             line-height: 1.6em;
             span {
@@ -82,9 +74,7 @@
         //border-bottom: 1px solid #f1f1f1;
         transition: 0.4s ease-out;
         position: relative;
-        &.footer_active:before{
-          bottom: -9px;
-        }
+        &.footer_active:before{  bottom: -9px;  }
         .active_trader{
           overflow: hidden;
           .event_title{
@@ -96,15 +86,9 @@
               font-size: 13px;
               font-weight: 600;
               text-align: center;
-              border-top: 1px solid #dce1e6;
-              border-bottom: 1px solid #dce1e6;
               cursor: pointer;
               transition: 0.4s ease-out;
-              &.active{
-                border: none;
-                background-image: linear-gradient(to bottom, #646470, #34343d);
-                color: #ffffff;
-              }
+              @include trader_event_name;
             }
           }
           .active_trader_footer{
@@ -127,16 +111,12 @@
             &.control{
               position: relative;
               &.remote {
-                tr:first-of-type td:last-of-type{  border-top: 1px solid #d6d6d6;  }
+                tr:first-of-type td:nth-of-type(2){  border-right: 1px solid $trader_table_td;  }
                 td{  @include btn-hover;  }
               }
               tr{
                 //&:first-of-type td:last-of-type{  border-top: 1px solid #313d62;  }
-                &:first-of-type td:nth-of-type(2){  border-right: 1px solid #313d62;  }
-                &:nth-of-type(2) td:nth-of-type(2){  border-right: 1px solid #313d62;  }
-                &:nth-of-type(3) td:nth-of-type(2){  border-right: 1px solid #313d62;  }
-                &:nth-of-type(4) td:nth-of-type(2){  border-right: 1px solid #313d62;  }
-                &:nth-of-type(5) td:nth-of-type(2){  border-right: 1px solid #313d62;  }
+                @include trader_spread_separator;
                 //&:nth-of-type(6) td:nth-of-type(2){  border-right: 1px solid #313d62;  }
                 //&:nth-of-type(6) td:last-of-type{  border-bottom: 1px solid #313d62;  }
                 &:last-of-type input.number{  text-align: left;  }
@@ -157,7 +137,8 @@
                   .order_content:active{  box-shadow: none;  }
                 }
                 &.clickable{  @include btn-hover;  }
-                input{  width: 100%;  padding: 3px 5px;  text-align: center; box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.3); }
+                input{  width: 100%;  padding: 3px 5px;  text-align: center; @include trader_input;}
+                #order_content{  width: 100% !important;  }
               }
               .input{
                 input{  padding-right: 14px;  }
@@ -166,37 +147,7 @@
                   height: 100%;
                   border-radius: 0;
                   border: none;
-                  box-shadow: -4px 0 5px -3px rgba(0, 0, 0, 0.2);
-                  span{
-                    width: 12px;
-                    height: 50%;
-                    position: relative;
-                    &:first-of-type{
-                      border-bottom: 1px solid #e9eaee;
-                      line-height: 16px;
-                      &:after{
-                        border: 3px solid transparent;
-                        border-bottom: 5px solid #313d62;
-                        top: 0;
-                      }
-                    }
-                    &:last-of-type{
-                      line-height: 15px;
-                      &:after{
-                        border: 3px solid transparent;
-                        border-top: 5px solid #313d62;
-                        top: 5px;
-                      }
-                    }
-                    &:after{
-                      content: '';
-                      display: block;
-                      width: 5px;
-                      height: 5px;
-                      position: absolute;
-                      left: 3px;
-                    }
-                  }
+                  @include trader_regulator;
                 }
                 .warning{
                   left: auto;
@@ -217,26 +168,24 @@
               max-width: 70px;
               padding: 5px;
               color: #ffffff;
-              border-right: 1px solid #a4a4a4;
+              border-right: 1px solid $trader_table_th_border_color;
               text-align: center;
             }
             td{
-              border: 1px solid #e9eaee;
+              border: 1px solid $trader_table_td;
               border-left: none;
               border-bottom: none;
               //position: relative;
               &.label{
                 height: 24px;
-                background: #dce1e6;
+                @include trader_label;
               }
               span.container{
                 display: block;
                 height: 19px;
                 position: relative;
               }
-              &:last-of-type{
-                border-right: none;
-              }
+              &:last-of-type{  border-right: none;  }
               &.open_contracts, &.open_pnl{
                 a{  font-size: 11px;  }
                 span{
@@ -245,29 +194,35 @@
                   &.down{  color: red;  }
                 }
               }
-              &.buy_mkt, &.join_bid{  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
-              &.sell_mkt, &.join_ask{  background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
-              &.join_bid span, &.join_ask span{  padding: 0; }
               &.market_button{
                 &.active span, &.active a{  color: #fff;  opacity: 1; }
                 span, a{  color: #fff;  opacity: 0.8; }
               }
+              &.buy_mkt{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
+              &.sell_mkt{  background: linear-gradient(to bottom, #64c9ef, #3498da); }
+              &.join_bid{
+                background: linear-gradient(to bottom, transparentize(#f88447, 0.7), transparentize(#ef4d22, 0.7));
+                span, a{  color: $trader_join_button;  }
+                &.active span, &.active a{  color: $trader_join_button;  }
+              }
+              &.join_ask{
+                background: linear-gradient(to bottom, transparentize(#64c9ef, 0.7), transparentize(#3498da, 0.7));
+                span, a{  color: $trader_join_button;  }
+                &.active span, &.active a{  color: $trader_join_button;  }
+              }
+              &.join_bid span, &.join_ask span{  padding: 0; }
               &.reverse{   background-image: linear-gradient(to bottom, #f8b747, #ef8022);  a{color: #ffffff;} }
               &.spreader{  background-image: linear-gradient(to bottom, #f8b747, #ef8022);  color: #ffffff; }
               &.button{
-                background: #fff  ;
-                &.spread button{
-                  background: #d8c48f;
-                  cursor: default;
-                  color: #707070;
-                  &.btn{  background: #f5e0a9;  color: #000000;  cursor: pointer; }
+                &.spread button {
+                  @include trader_spread_button;
                 }
               }
               //&[rowspan]{  width: 34%;  }
               a{
                 display: block;
                 padding: 2px 5px;
-                color: #303030;
+                color: $main-color;
                 position: relative;
                 cursor: default;
                 //z-index: 2;
@@ -280,12 +235,12 @@
                 height: 24px;
                 line-height: 15px;
                 border-radius: 0;
-                color: #000;
+                color: $trader_button_color;
                 &:last-of-type{
-                  border-left: 1px solid #dcdcdc;
+                  border-left: 1px solid $trader_button_separator;
                 }
               }
-              &.cancel_all{  background: #74b8d8; a{  color: #ffffff;} } //#a3a3a3
+              &.cancel_all{  background-image: linear-gradient(to bottom, #646470, #34343d); a{  color: #ffffff;} } //#a3a3a3
               &.close_out{  background-image: linear-gradient(to bottom, #f88447, #ef4d22); a{color: #fff;}  }
             }
           }
@@ -296,7 +251,6 @@
             top: calc(50% + 90px);
             right: -61px;
             transform: rotate(-90deg);
-            background: linear-gradient(to right, #ccc, #fff, #ccc);
             border-radius: 3px 3px 0 0;
             box-shadow: 0 -2px 6px 0px rgba(0, 0, 0, 0.5);
             font-size: 14px;
@@ -304,6 +258,7 @@
             cursor: pointer;
             transition: 0.4s ease;
             z-index: 10;
+            background: $trader_show_spread;
             &.active{
               right: -31px;
               animation-name: active;
@@ -318,7 +273,7 @@
           table.limit{
             position: relative;
             thead{
-              background-image: linear-gradient(to bottom, #646470, #34343d);
+              background: $trader_table_thead_bg;
               &:after{
                 content: '';
                 display: block;
@@ -345,7 +300,7 @@
                 display: block;
                 &.visible{
                   display: table;
-                  &:nth-child(even){  background-color: #fff * 0.98;  }
+                  @include trader_table_tr;
                   td:nth-of-type(1){  width: 58px;  }
                   td:nth-of-type(5){  width: 68px;  }
                 }
@@ -378,7 +333,7 @@
               &.active{  cursor: pointer;  }
               &.price_value.active{
                 &:not(.best_buy):not(.best_sell){
-                  background: #f9eac3;
+                  background: $trader_spread_button_bg;
                   //&:hover{  background: #e2d2ae;  }
                 }
                 &.hovered{  background-color: #ffc11a !important;  }
@@ -414,7 +369,7 @@
                 top: 0;
                 left: 0;
                 transition: 0.4s ease-out;
-                opacity: 0.3;
+                opacity: 0.2;
                 z-index: 1;
               }
               &.size .container:not(.best_buy):not(.best_sell):before{
@@ -428,7 +383,7 @@
               }
               &.clickable{  cursor: pointer; }
               &.size_sell{
-                background-color: rgba(239, 77, 34, 0.08);
+                background-color: transparentize(#ef4d22, 0.92);
                 &.clickable{
                   &:hover .container:before{
                     width: calc(200% + 2px) !important;
@@ -436,14 +391,17 @@
                   }
                   .container:after{
                     width: 100% !important;
-                    //background-color: #ffcbc2;
+                    background-color: #ffcbc2;
                   }
                 }
+              }
+              &.best_sell, &.best_buy{
+                @include btn-hover;
               }
               &.best_sell{
                 color: #ffffff;  background-image: linear-gradient(to bottom, #f88447, #ef4d22); font-weight: bold;  }
               &.size_buy{
-                background-color: #ebf7f9;
+                background-color: transparentize(#64c9ef, 0.92);
                 &.clickable{
                   &:hover .container:before{
                     width: calc(200% + 1px) !important;
@@ -451,7 +409,7 @@
                   }
                   .container:after{
                     width: 100% !important;
-                    //background-color: #b5e5ec;
+                    background-color: #b5e5ec;
                   }
                 }
               }
@@ -463,9 +421,7 @@
             visibility: hidden;
             margin: 0;
             padding: 0;
-            background-color: transparent;
-            border-top: 1px solid #d6d6d6;
-            //border-bottom: 1px solid #d6d6d6;
+            background: $order_sidebar_bg;
             box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.5);
             font-weight: normal;
             transition: 0.5s ease-out;
@@ -488,10 +444,7 @@
               border-left: none;
               transition: 0.4s ease-out;
             }
-            .buy-container span.delete:hover{  background: #ebf7f9 * 0.95;  }
-            .sell-container span.delete:hover{  background: #fff1f1 * 0.95;  }
-            .buy-container span.delete:active:hover{  background: #ebf7f9 * 1.1;  }
-            .sell-container span.delete:active:hover{  background: #fff1f1 * 1.1;  }
+            @include trader_order_delete;
           }
         }
         .tab_item {
@@ -501,7 +454,7 @@
           overflow-y: inherit;
           transition: 0.4s ease-out;
           .default_orders, &#current-orders{
-            border-top: 1px solid #e9eaee;
+            border-top: 1px solid $order_sidebar_head_separator;
           }
           &#order p#default_order_info{
             padding: 10px 5px;
@@ -513,6 +466,7 @@
           .default_orders{
             .order_content .order-title{
               display: flex;
+              justify-content: space-between;
               background: linear-gradient(to bottom, #53515e, #292830);
               position: relative;
               h3, .current-order{  color: #ffffff;  }
@@ -525,7 +479,7 @@
                 right: 1px;
               }
             }
-            .order_content form .container .obligations label{  width: calc(100% - 20px);  }
+            .order_content form .container .obligations label{  width: calc(100% - 18px);  }
           }
           &#current-orders{
             padding-bottom: 5px;
@@ -534,6 +488,8 @@
               //background-color: #ffffff;
               cursor: move;
               &:last-child{  margin-bottom: 15px;  }
+              .order-title{  padding: 5px 30px 5px 15px; }
+              form input[type="submit"]{  border-left: none;  }
             }
           }
           .ui-state-highlight{
@@ -549,13 +505,13 @@
             left: 0;
             z-index: 5;
             transition: 0.4s ease-out;
-            //overflow: hidden;
             .sell, .buy{
               display: block;
               width: 0;
               height: 100%;
               color: #ffffff;
               text-align: center;
+              @include btn-hover;
               position: absolute;
               top: 0;
               padding: 0;
@@ -565,24 +521,26 @@
             .sell{
               background-image: linear-gradient(to bottom, #f88447, #ef4d22);
               right: 100%;
-              &:active{
-                background: #963a3a;
-              }
+              //@include btn-shadow;
+              //&:active{
+              //  background: #963a3a;
+              //}
             }
             .buy{
               background-image: linear-gradient(to bottom, #64c9ef, #3498da);
               left: 100%;
-              &:active{
-                background: #3aa4a9;
-              }
             }
             &.active{
-              //width: calc(300% + 2px);
-              //left: calc(-100% - 1px);
+              span.confim_button{
+                border: 1px solid $order_sidebar_order_border_color;
+              }
               .sell, .buy{
-                width: calc(100% + 1px); padding: 0 5px; }
-              //.sell{  left: 0;  }
-              //.buy{  right: 0;  }
+                width: calc(100% + 1px);
+                height: calc(100% + 2px);
+                padding: 0 5px;
+                top: -1px;
+              }
+              .buy{  width: calc(100% + 2px);  }
             }
           }
           .order_content {
@@ -590,30 +548,24 @@
             //border-top: 1px solid #e9eaee;
             //&:first-of-type{  border-top: none;  }
             &.buy .order-title{
-              background-image: linear-gradient(to bottom, rgba(100, 201, 239, 0.3), rgba(52, 152, 218, 0.3));
-              span.edit{
-                border-left: 1px solid rgba(53, 153, 218, 0.2);
-                border-bottom: 1px solid rgba(53, 153, 218, 0.2);
-              }
-              .delete{
-                border-left: 1px solid rgba(53, 153, 218, 0.2);
-              }
+              @include order_sidebar_current_order_title_buy;
             }
             &.sell .order-title{
-              background-image: linear-gradient(to bottom, rgba(248, 132, 71, 0.3), rgba(239, 77, 34, 0.3));
-              span.edit{
-                border-left: 1px solid rgba(239, 77, 33, 0.2);
-                border-bottom: 1px solid rgba(239, 77, 33, 0.2);
-              }
-              .delete{
-                border-left: 1px solid rgba(239, 77, 33, 0.2);
-              }
+              @include order_sidebar_current_order_title_sell;
             }
             .order-title{
-              padding: 5px 30px 5px 15px;
+              padding: 5px 20px 5px 15px;
               //@include scroll;
               position: relative;
               overflow: hidden;
+            }
+            .container{
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              &:nth-child(2){
+                justify-content: flex-start;
+              }
             }
             h3{
               display: inline-block;
@@ -621,6 +573,7 @@
               max-width: 140px;
               font-size: 13px;
               vertical-align: middle;
+              color: $order_sidebar_current_order_title_color;
             }
             a.close{
               float: right;
@@ -674,12 +627,11 @@
             strong {
               display: inline-block;
               padding-right: 10px;
-              font-size: 13px;
-              color: #707070;
+              font-size: 12px;
+              color: transparentize($order_sidebar_current_order_title_color, 0.5);
               line-height: 22px;
               &.current-order{
-                margin-right: 8px;
-                color: #666666;
+                color: transparentize($order_sidebar_current_order_title_color, 0.5);
                 &.up span{  color: #3498da;  }
                 &.down span{  color: #ef4d22;  }
               }
@@ -717,7 +669,7 @@
                 }
               }
               .price, .volume {
-                color: #000000;
+                color: $order_sidebar_current_order_title_color;
                 font-family: 'open_sans_bold', sans-serif;
               }
             }
@@ -742,16 +694,16 @@
             }
             .price, .volume{
               input.number[disabled]{
-                border-right: 1px solid #e9eaee;
+                border-right: 1px solid $order_sidebar_order_border_color;
               }
             }
             span.edit{
               top: 0;
-              &:after{  background: url("../Images/sprite.svg") no-repeat -191px -135px;  }
+              &:after{  background: $order_sidebar_order_edit;  }
             }
             .delete{
               top: 50%;
-              &:after{  background: url("../Images/sprite.svg") no-repeat -191px -178px;  }
+              &:after{  background: $order_sidebar_order_delete;  }
             }
             .confirmation{
               display: flex;
@@ -786,16 +738,28 @@
                 }
               }
             }
-            .sell-container form{  background: #fff1f1;  }
-            .buy-container form{  background: #ebf7f9;  }
+            .sell-container form{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));  }
+            .buy-container form{  background: linear-gradient(to bottom, transparentize(#64c9ef, 0.9), transparentize(#3498da, 0.9));  }
             .sell-buy-container form{
-              background: linear-gradient(to left, #fff1f1, #ebf7f9);
+              background: linear-gradient(to left, transparentize(#ef4d22, 0.9), transparentize(#3498da, 0.9));
+              .price, .volume{  width: 40%;  }
               input[type=submit], span.delete{
                 width: 20% !important;
                 height: 59px !important;
               }
+              input[type=submit]{  border: none;   }
               span.delete{
-                background: #fff1f1 * 0.95;
+                &:hover{  background: $trader_order_button_hover;  }
+                &:active{  background: $trader_order_button_active;  }
+              }
+              input.success{
+                box-shadow: none;
+                border-top: 1px solid $order_sidebar_order_border_color;
+                &:hover{  background: $trader_button_success no-repeat center  $trader_order_button_hover;  }
+                &:active{
+                  box-shadow: none !important;
+                  background: $trader_button_success no-repeat center $trader_order_button_active;
+                }
               }
             }
 						//
@@ -829,10 +793,12 @@
               //}
               .input{
                 width: 100%;
+                text-align: left;
                 input{
-                  width: 100%;
-                  padding-right: 18px;
+                  width: calc(100% - 18px);
+                  padding-right: 10px;
                   font-size: 14px;
+                  &[disabled]{  width: 100%;  }
                 }
               }
               .col-3 .btn{  display: inline-block;  width: 46%;  background-size: 18px;  vertical-align: bottom;  }
@@ -841,10 +807,10 @@
                 display: block;
                 width: 100%;
                 padding: 4px 0;
-                color: #000000;
+                color: $order_sidebar_order_label_color;
                 font-weight: 600;
                 text-align: center;
-                border: 1px solid #e9eaee;
+                border: 1px solid $order_sidebar_order_border_color;
                 span{
                   color: #37343b;
                   font-weight: 400;
@@ -852,13 +818,9 @@
               }
               input {
                 height: 31px;
-                background-color: #fff;
                 padding-left: 10px;
                 text-align: center;
-                &::-webkit-input-placeholder {  color: #ffffff;  }
-                &::-moz-placeholder {  color: #ffffff;  }
-                &:-moz-placeholder {  color: #ffffff;  }
-                &:-ms-input-placeholder {  color: #ffffff;  }
+                @include order_sidebar_order_input;
               }
               label.checkbox{
                 width: 27.33%;
@@ -871,21 +833,21 @@
               }
               span.delete{
                 display: flex;
-                width: 20px;
+                width: 18px;
                 height: 28px;
                 position: absolute;
                 top: 0;
                 right: 0;
                 cursor: pointer;
-                border-left: 1px solid #e9eaee;
-                border-top: 1px solid #e9eaee;
+                border: 1px solid $order_sidebar_order_border_color;
+                border-right: none;
               }
               button {
                 height: 31px;
                 font-size: 14px;
                 &.sell{  background-color: #ff4444;  }
                 &.buy{  background-color: #2dc7ca;  }
-                &.success{  background: url("../Images/ico-success-w.png") no-repeat center #969696;  }
+                //&.success{  background: url("../Images/ico-success-w.png") no-repeat center #969696;  }
               }
               input[type="submit"]{
                 width: 66.66%;
@@ -893,11 +855,13 @@
                 padding: 0;
                 font-size: 12px;
                 color: #ffffff;
-                @include btn-shadow;
+                border: 1px solid $order_sidebar_order_border_color;
+                border-bottom: none;
                 cursor: pointer;
+                transition: 0.4s ease-out;
                 &.sell{  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
                 &.buy{  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
-                &.success{  background: url("../Images/ico-success-w.png") no-repeat center $main-color;  }
+                &.success{  background: $trader_button_success no-repeat center;  }
               }
             }
           }
@@ -930,8 +894,8 @@
           form{
             margin: 0;
             text-align: center;
-            &.sell{  background-image: linear-gradient(to bottom, rgba(248, 132, 71, 0.1), rgba(239, 77, 34, 0.1));  }
-            &.buy{  background-image: linear-gradient(to bottom, rgba(100, 201, 239, 0.1), rgba(52, 152, 218, 0.1));  }
+            &.sell{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#EF4D22, 0.9));  }
+            &.buy{  background: linear-gradient(to bottom, transparentize(#64C9EF, 0.9), transparentize(#3498DA, 0.9));  }
           }
           //p.label{
           //  padding-left: 5px;
