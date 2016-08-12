@@ -10,6 +10,7 @@
   //&.active {
   //  right: -20.76796%;
   //}
+  .wave{  box-shadow: none;  }
   label{
     color: #000000;
     font-size: 12px;
@@ -585,9 +586,8 @@
               //border-radius: 50%;
               //border: 1px solid #fff;
               &:hover{
-                &:before, &:after, span:before, span:after{
-                  transform: rotate(90deg);
-                }
+                &:before, span:before{  transform: rotate(90deg);  }
+                &:after, span:after{  transform: rotate(-90deg);  }
                 //&:before{  transform: rotate(135deg);  }
                 //&:after{  transform: rotate(45deg);  }
                 //span{

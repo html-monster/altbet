@@ -125,7 +125,7 @@
     //max-height: 20%;
     padding: 30px;
     border-radius: 4px;
-    background-image: linear-gradient(to top, #bdc0cd, #ffffff);
+    background-image: $sign_in_bg;
     @include scroll;
     //@include md(1450){
     //  height: 540px;
@@ -141,15 +141,17 @@
           float: left;
         }
         h2{
-          margin-bottom: 20px;
+          margin-bottom: 10px;
           font-size: 24px;
           font-weight: normal;
-          color: #292830;
+          color: $reg_title;
         }
         .left_column{  padding-right: 20px;  margin-bottom: 20px;  }
         .right_column{  padding-left: 20px;  margin-bottom: 20px; }
       //}
       &.demo{
+        .container{  text-align: center;  }
+        .wave{  border-radius: 4px; }
         input[type=submit]{
           display: block;
           width: 295px;
@@ -160,6 +162,7 @@
         p{
           margin-bottom: 15px;
           font-size: 14px;
+          color: $reg_title;
         }
       }
     }
@@ -168,12 +171,12 @@
       color: #8b8c8b;
     }
 
-    input[type=text], input[type=password], input[type=email], input[type=tel]{
-      padding: 0.4em 0.8em;
-      border: 1px solid #fff;
-      border-radius: 4px;
-      background: #ffffff !important;
-    }
+    //input[type=text], input[type=password], input[type=email], input[type=tel]{
+    //  padding: 0.4em 0.8em;
+    //  border: 1px solid #fff;
+    //  border-radius: 4px;
+    //  background: #ffffff ;
+    //}
     input[type=submit]{
       width: 100%;
       padding: 15px 0;
@@ -194,7 +197,7 @@
       display: block;
       width: 12px;
       height: 12px;
-      background: url("../Images/sprite.svg") no-repeat -50px -162px;
+      background: $help_block;
       position: absolute;
       top: 41px;
       right: 5px;
@@ -285,22 +288,22 @@
     .input__field--yoshiko {
       width: 100%;
       padding: 0.4em 0.8em;
-      background-color: #fff;
-      border: 1px solid transparent;
       border-radius: 4px;
       transition: background-color 0.3s, border-color 0.3s;
+      @include reg_input_color;
     }
 
     .input__label--yoshiko {
       width: 100%;
       text-align: left;
       position: absolute;
-      top: -22px;
+      top: -17px;
       pointer-events: none;
       overflow: hidden;
       padding: 0 0.8em;
       transform: translate3d(0, 3em, 0);
       transition: transform 0.3s;
+      font-size: 14px;
     }
 
     .input__label-content--yoshiko {
@@ -339,12 +342,12 @@
     //}
 
     .call_time{
-      margin-top: 3px;
       margin-bottom: 38px;
       .container{
         display: flex;
         justify-content: space-between;
       }
+      label{  margin-bottom: 6px;  font-size: 14px; }
       input{  width: 44%;  }
       span{  line-height: 22px;  }
       .validation-summary-errors{  float: left;  }
@@ -357,6 +360,7 @@
         display: flex;
         justify-content: space-between;
       }
+      label{  margin-bottom: 9px;  margin-top: -6px; font-size: 14px; }
       input{  width: 26%;  }
       .validation-summary-errors{  float: right;  }
     }
@@ -364,22 +368,24 @@
     hr{
       clear: both;
       margin: 20px 0;
-      border-top: 1px solid #bdc0cd * 0.9; //9da4c1
-      border-bottom: 1px solid #fff;
+      @include reg_separator;
     }
 
     .agreement{
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      justify-content: space-around;
       width: 50%;
       height: 54px;
       float: left;
       padding-right: 20px;
       input{  display: none;  }
+      input:checked + label{  color: $checkbox_label_color;  }
       input:checked + label:before{  background-position: -20px -140px;  }
       label{
-        color: #37343b;
+        color: transparentize($checkbox_label_color, 0.4);
         font-size: 12px;
+        transition: 0.4s ease-out;
         &:before{
           content: '';
           display: inline-block;
@@ -397,6 +403,8 @@
       width: 50%;
       float: left;
       padding-left: 20px;
+      border-radius: 4px;
+      .submit{  width: 100%;  padding-left: 0; }
     }
   }
 }

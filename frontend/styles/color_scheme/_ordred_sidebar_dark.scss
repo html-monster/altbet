@@ -1,0 +1,52 @@
+//order_sidebar=========================================================================================================
+$order_sidebar_bg: linear-gradient(to bottom, #3b3a44, #292830);
+$order_sidebar_tab_bord: #fff;
+$order_sidebar_tab_color: #fff;
+$order_sidebar_head_separator: #000000;
+@mixin order_sidebar_tab_separator{
+	&:first-child{  border-right: none;  }
+	&:last-child{
+		&:after{
+			content: '';
+			display: block;
+			width: 1px;
+			height: 25px;
+			background: #000000;
+			position: absolute;
+			top: 39px;
+			left: 0;
+			opacity: 0.1;
+		}
+	}
+}
+@mixin order_sidebar_current_order_title_buy{
+	background: linear-gradient(to bottom, transparentize(#64C9EF, 0.9), transparentize(#3498DA, 0.9));
+	span.edit{
+		border-left: 1px solid #292830;
+		border-bottom: 1px solid #292830;
+	}
+	.delete{
+		border-left: 1px solid #292830;
+	}
+}
+@mixin order_sidebar_current_order_title_sell{
+	background: linear-gradient(to bottom, transparentize(#F88447, 0.9), transparentize(#EF4D22, 0.9));
+	span.edit{
+		border-left: 1px solid #292830;
+		border-bottom: 1px solid #292830;
+	}
+	.delete{
+		border-left: 1px solid #292830;
+	}
+}
+$order_sidebar_current_order_title_color: #ffffff;
+@mixin order_sidebar_order_input{
+	background: #292830;
+	color: #ffffff;
+	transition: 0.4s ease-out;
+	&:focus{  background: #3e3d45;  }
+}
+$order_sidebar_order_label_color: #ffffff;
+$order_sidebar_order_edit: url("../Images/sprite.svg") no-repeat -163px -135px;
+$order_sidebar_order_delete: url("../Images/sprite.svg") no-repeat -163px -178px;
+$order_sidebar_order_border_color: #211e25;

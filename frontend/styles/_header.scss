@@ -17,6 +17,9 @@ header {
     text-align: right;
     background: linear-gradient(to bottom, #53515e, #292830);
     .header_right {
+      display: flex;
+      align-items: center;
+      height: 40px;
       padding-left: 5px;
       border-right: 1px solid #54545a;
       span {
@@ -40,7 +43,6 @@ header {
         .select {
           &:after{  display: none;  }
           &:before{  display: none;  }
-          #change_language_msdd{  width: 68px !important;  }
           .ddTitle{  background: none;  }
           .divider{  border: none;  }
           .ddArrow{  transition: 0.2s ease-out; background: url("../Images/sprite.svg") no-repeat -228px -196px;  }
@@ -71,7 +73,7 @@ header {
       }
       a {
         display: inline-block;
-        padding: 8px 16px;
+        padding: 5px 16px;
         margin-right: 5px;
         color: #fff;
         border-radius: 4px;
@@ -80,7 +82,7 @@ header {
       }
       button {
         display: inline-block;
-        padding: 8px 16px;
+        padding: 5px 16px;
         height: auto;
         background: #1196d4;
         margin-right: 15px;
@@ -209,8 +211,8 @@ header {
       justify-content: center;
       background: url("../Images/sprite.svg") no-repeat -418px -10px;
       a {
-        width: 50px;
-        margin-left: 30px;
+        width: 65px;
+        margin-left: 35px;
         font-size: 14px;
         color: #ffffff;
       }

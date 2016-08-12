@@ -1,0 +1,83 @@
+//active_trader=========================================================================================================
+@mixin trader_event_name{
+	border-top: 1px solid #dce1e6;
+	border-bottom: 1px solid #dce1e6;
+	&.active{
+		border: none;
+		background-image: linear-gradient(to bottom, #646470, #34343d);
+		color: #ffffff;
+	}
+}
+$trader_table_thead_bg: linear-gradient(to bottom, #646470, #34343d);
+$trader_join_button: #000000;
+$trader_button_separator: #dcdcdc;
+@mixin trader_label {
+	background: #ffffff;
+	color: #000000;
+}
+$trader_table_td: #e9eaee;
+$trader_button_color: #000000;
+$trader_spread_button_bg: #f9eac3;
+$trader_button_success: url("../Images/ico-success.png");
+@mixin trader_spread_button{
+	background: $trader_spread_button_bg;
+	cursor: default;
+	color: #707070;
+	&.btn{  background: #f5e0a9;  color: #000000;  cursor: pointer; }
+}
+@mixin trader_input{
+	box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.3);
+}
+@mixin trader_regulator{
+	box-shadow: -4px 0 5px -3px rgba(0, 0, 0, 0.2);
+	span{
+		width: 12px;
+		height: 50%;
+		position: relative;
+		&:first-of-type{
+			border-bottom: 1px solid #e9eaee;
+			line-height: 16px;
+			&:after{
+				border: 3px solid transparent;
+				border-bottom: 5px solid #313d62;
+				top: 0;
+			}
+		}
+		&:last-of-type{
+			line-height: 15px;
+			&:after{
+				border: 3px solid transparent;
+				border-top: 5px solid #313d62;
+				top: 5px;
+			}
+		}
+		&:after{
+			content: '';
+			display: block;
+			width: 5px;
+			height: 5px;
+			position: absolute;
+			left: 3px;
+		}
+	}
+}
+@mixin trader_spread_separator{
+	&:first-of-type td:nth-of-type(2){  border-right: 1px solid #313d62;  }
+	&:nth-of-type(2) td:nth-of-type(2){  border-right: 1px solid #313d62;  }
+	&:nth-of-type(3) td:nth-of-type(2){  border-right: 1px solid #313d62;  }
+	&:nth-of-type(4) td:nth-of-type(2){  border-right: 1px solid #313d62;  }
+	&:nth-of-type(5) td:nth-of-type(2){  border-right: 1px solid #313d62;  }
+}
+@mixin trader_table_tr{
+	&:nth-child(even){  background: #ffffff * 0.98;  }
+}
+$trader_table_th_border_color: #a4a4a4;
+$trader_order_button_hover: #fff1f1 * 0.90;
+$trader_order_button_active: #fff1f1 * 1.1;
+@mixin trader_order_delete{
+	.buy-container span.delete:hover{  background: #ebf7f9 * 0.95;  }
+	.sell-container span.delete:hover{  background: #fff1f1 * 0.95;  }
+	.buy-container span.delete:active{  background: #ebf7f9 * 1.1;  }
+	.sell-container span.delete:active{  background: #fff1f1 * 1.1;  }
+}
+$trader_show_spread: linear-gradient(to right, #ccc, #fff, #ccc);

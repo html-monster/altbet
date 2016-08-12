@@ -1,0 +1,49 @@
+//main_page=============================================================================================================
+$main_page_tab_color: #363640;
+$main_page_tab_color_active: #ffffff;
+$main_page_tab_bg: #ffffff;
+@mixin main_page_tab_icon{
+	&:before {
+		content: '';
+		display: inline-block;
+		width: 18px;
+		height: 38px;
+		margin-top: -2px;
+		margin-right: 5px;
+		background: url(../Images/sprite.svg) no-repeat -326px -147px;
+		vertical-align: middle;
+		transition: 0.4s ease-out;
+	}
+	&:nth-of-type(2):before{  background-position: -367px -147px;  }
+	&:nth-of-type(3):before{  background-position: -407px -147px;  }
+	&:nth-of-type(4):before{  background-position: -446px -147px;  }
+	&:nth-of-type(5):before{  background-position: -486px -147px;  }
+}
+@mixin  main_page_tab_icon_active{
+	background: #64c9ef;
+	box-shadow: inset 0 -30px 20px -8px #3498da;
+	color: $main_page_tab_color;
+	&:before{ background-position: -326px -176px; }
+	&:nth-of-type(2):before{  background-position: -367px -176px;  }
+	&:nth-of-type(3):before{  background-position: -407px -176px;  }
+	&:nth-of-type(4):before{  background-position: -446px -176px;  }
+	&:nth-of-type(5):before{  background-position: -486px -176px;  }
+}
+
+$main_page_event_title: #000000;
+$main_page_event_chart_button: url(../Images/sprite.svg) no-repeat -166px -354px;
+@mixin main_page_event_bg{  background: #ffffff; .waves-ripple{  display: block;	} }
+@mixin main_page_event_icon{
+	&.sport:before{  background-position: -68px -306px;  }
+	&.e_sport:before{  background-position: -186px -306px;  }
+	&.finance:before{  background-position: -107px -306px;  }
+	&.society:before{  background-position: -27px -306px;  }
+}
+@mixin main_page_event_button{
+	box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
+	transition: 0.2s ease;
+	&[disabled]{  cursor: default;  }
+	&:not([disabled]):active {
+		box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);
+	}
+}

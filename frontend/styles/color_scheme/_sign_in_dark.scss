@@ -1,0 +1,50 @@
+$sign_in_bg: linear-gradient(to bottom, #3b3a44, #292830);
+$sign_in_title: transparentize(#ffffff, 0.3);
+$sign_in_input_border: transparentize(#ffffff, 0.4);
+$sign_in__input_color: transparentize(#ffffff, 0.4);
+$sign_in_autofill_email: #36353e;
+$sign_in_autofill_pass: #32313a;
+//$sign_in_register_button_color: #292830 * 1.05;
+@mixin sign_in_close_button{
+	.close{
+		height: 16px;
+		width: 16px;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		z-index: 53;
+		cursor: pointer;
+		&:hover{
+			&:before, span:before{  transform: rotate(90deg);  }
+			&:after, span:after{  transform: rotate(-90deg);  }
+		}
+		&:before, &:after, span:before, span:after{
+			content: '';
+			display: block;
+			width: 4px;
+			height: 16px;
+			position: absolute;
+			top: calc(50% - 8px);
+			left: calc(50% - 2px);
+			background: #fff;
+			border-radius: 2px;
+			transition: 0.4s ease-out;
+		}
+		&:before{  transform: rotate(45deg);  }
+		&:after{  transform: rotate(-45deg);  }
+		span{
+			display: block;
+			height: 100%;
+			&:before, &:after{
+				width: 2px;
+				height: 14px;
+				top: calc(50% - 7px);
+				left: calc(50% - 1px);
+				background: #292830;
+				z-index: 2;
+			}
+			&:before{  transform: rotate(45deg);  }
+			&:after{  transform: rotate(-45deg);  }
+		}
+	}
+}

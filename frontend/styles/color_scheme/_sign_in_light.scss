@@ -1,0 +1,20 @@
+$sign_in_bg: linear-gradient(to top, #bdc0cd, #ffffff);
+$sign_in_title: #292830;
+$sign_in_input_border: transparentize(#3D3C45, 0.7);
+$sign_in__input_color: #37343b;
+$sign_in_autofill_email: #ebecf0;
+$sign_in_autofill_pass: #dddee5;
+//$sign_in_register_button_color: #bdc0cd * 1.05;
+@mixin sign_in_close_button{
+	.close{
+		display: block;
+		width: 15px;
+		height: 15px;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		z-index: 53;
+		background: url(../Images/sprite.svg) no-repeat -47px -137px;
+		cursor: pointer;
+	}
+}

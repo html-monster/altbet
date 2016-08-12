@@ -1,22 +1,13 @@
 .sign_in_form {
+  .waves-ripple{  display: block;  }
   .sign_in_content {
     width: 460px;
     //height: 460px;
     padding: 30px;
-    background-image: linear-gradient(to top, #bdc0cd, #ffffff);
+    background-image: $sign_in_bg;
     border-radius: 4px;
     position: relative;
-    .close{
-      display: block;
-      width: 15px;
-      height: 15px;
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 53;
-      background: url(../Images/sprite.svg) no-repeat -47px -137px;
-      cursor: pointer;
-    }
+    @include sign_in_close_button;
     .content_form {
       position: relative;
       padding: 20px;
@@ -32,27 +23,20 @@
           font-weight: 300;
           text-transform: uppercase;
           text-align: center;
-          color: #292830;
+          color: $sign_in_title;
         }
         button {
           width: 49%;
           height: 50px;
           border-radius: 0;
-          &:hover {
-            background: linear-gradient(#0159b1, #115071);
-          }
+          &:hover {  background: linear-gradient(#0159b1, #115071);  }
         }
-        //input{
-        //  width: 98%;
-        //  height: 34px;
-        //  padding: 6px 12px;
-        //  font-size: 14px;
-        //  line-height: 1.42857143;
-        //  color: #555;
-        //  background-color: #fff;
-        //  border: 1px solid #ccc;
-        //  border-radius: 4px;
-        //}
+        input[type=email]{
+          &:-webkit-autofill{  -webkit-box-shadow: inset 0 0 0 50px $sign_in_autofill_email !important;  }
+        }
+        input[type=password]{
+          &:-webkit-autofill{  -webkit-box-shadow: inset 0 0 0 50px $sign_in_autofill_pass !important;  }
+        }
         .input_animate{
           position: relative;
           z-index: 1;
@@ -81,7 +65,7 @@
           border: none;
           border-radius: 0;
           box-shadow: none;
-          color: #37343b;
+          color: $sign_in__input_color;
           font-size: 14px;
           background: transparent;
           opacity: 0;
@@ -129,7 +113,7 @@
           left: 0;
           width: 50%;
           height: 100%;
-          border: 1px solid rgba(61, 60, 69, 0.3);
+          border: 1px solid $sign_in_input_border;
           transition: transform 0.3s;
         }
 
@@ -179,9 +163,12 @@
         .remember_forgot{
           margin: 15px 0;
           input{  display: none;  }
+          input:checked + label{  color: $checkbox_label_color;  }
           input:checked + label:before{  background-position: -20px -140px;  }
           label{
             font-size: 12px;
+            color: transparentize($checkbox_label_color, 0.4);
+            transition: 0.4s ease-out;
             &:before{
               content: '';
               display: inline-block;
@@ -196,9 +183,9 @@
             float: right;
             padding-top: 4px;
             font-size: 12px;
-            color: #000000;
+            color: $link-color;
             @include text-decoration;
-            &:before{ background: linear-gradient(to right, transparent, #000000, transparent); }
+            //&:before{ background: linear-gradient(to right, transparent, #000000, transparent); }
           }
         }
         .register{
@@ -212,13 +199,17 @@
           span{
             display: block;
             padding: 8px 0;
-            //background: #c7cad5;
-            background: #bdc0cd * 1.05;
+            //background: $sign_in_register_button_color;
+            color: #ffffff;
             border-radius: 4px;
           }
         }
-        #submit_sign{
+        i.wave{
           float: right;
+          border-radius: 4px;
+        }
+        #submit_sign{
+          //float: right;
           width: 150px;
           padding: 9px 0;
           border-radius: 4px;

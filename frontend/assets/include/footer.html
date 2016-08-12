@@ -51,7 +51,7 @@
 <div class="sign_in_form pop_up">
   <div class="pop_up_container">
     <div class="sign_in_content pop_up_content">
-      <span class="close"></span>
+      <span class="close"><span></span></span>
       <form action="#">
         <div class="content_form">
           <div class="container_login">
@@ -81,8 +81,8 @@
               <a href="#" class="forgot_password">Forgot email or password?</a>
             </div>
 
-            <a href="#" class="register"><span>Register</span></a>
-            <input type="submit" class="btn submitg" id="submit_sign" value="Sign In">
+            <a href="#" class="register wave btn"><span>Join</span></a>
+            <input type="submit" class="btn submitg wave" id="submit_sign" value="Login">
           </div>
         </div>
       </form>
@@ -128,7 +128,7 @@
                   <span class="input_animate input--yoshiko">
                     <input class="input__field input__field--yoshiko" type="text" id="l_name"/>
                     <label class="input__label input__label--yoshiko" for="l_name">
-                      <span class="input__label-content input__label-content--yoshiko" data-content="Second Name">Second Name</span>
+                      <span class="input__label-content input__label-content--yoshiko" data-content="Last Name">Last Name</span>
                     </label>
                     <span class="validation-summary-errors"></span>
                     <span class="info top">
@@ -139,7 +139,7 @@
                   <span class="input_animate input--yoshiko">
                     <input class="input__field input__field--yoshiko" type="text" id="n_name"/>
                     <label class="input__label input__label--yoshiko" for="n_name">
-                      <span class="input__label-content input__label-content--yoshiko" data-content="Nick Name">Nick Name</span>
+                      <span class="input__label-content input__label-content--yoshiko" data-content="User Name">User Name</span>
                     </label>
                     <span class="validation-summary-errors">Nick name must be at least 4 characters </span>
 				          </span>
@@ -147,9 +147,9 @@
                   <div class="birthday">
                     <label>Date of birth<span class="validation-summary-errors">Wrong date</span></label>
                     <div class="container">
-                      <input type="text" class="number" placeholder="DD" maxlength="2">
-                      <input type="text" class="number" placeholder="MM" maxlength="2">
-                      <input type="text" class="number" placeholder="YYYY" maxlength="4">
+                      <input type="text" class="number input__field--yoshiko" placeholder="DD" maxlength="2">
+                      <input type="text" class="number input__field--yoshiko" placeholder="MM" maxlength="2">
+                      <input type="text" class="number input__field--yoshiko" placeholder="YYYY" maxlength="4">
                     </div>
                   </div>
 
@@ -242,16 +242,16 @@
                     </span>
 				          </span>
 
-                  <span class="input_animate input--yoshiko">
-                    <input class="input__field input__field--yoshiko" type="text" id="currency"/>
-                    <label class="input__label input__label--yoshiko" for="currency">
-                      <span class="input__label-content input__label-content--yoshiko" data-content="Account Currency">Account Currency</span>
-                    </label>
-                    <span class="validation-summary-errors"></span>
-                     <span class="info top">
-                      <i>Your bank will exchange to your local currency if not listed</i>
-                    </span>
-				          </span>
+                  <!--<span class="input_animate input&#45;&#45;yoshiko">-->
+                    <!--<input class="input__field input__field&#45;&#45;yoshiko" type="text" id="currency"/>-->
+                    <!--<label class="input__label input__label&#45;&#45;yoshiko" for="currency">-->
+                      <!--<span class="input__label-content input__label-content&#45;&#45;yoshiko" data-content="Account Currency">Account Currency</span>-->
+                    <!--</label>-->
+                    <!--<span class="validation-summary-errors"></span>-->
+                     <!--<span class="info top">-->
+                      <!--<i>Your bank will exchange to your local currency if not listed</i>-->
+                    <!--</span>-->
+				          <!--</span>-->
 
                   <span class="input_animate input--yoshiko">
                     <input class="input__field input__field--yoshiko" type="text" id="promo"/>
@@ -262,9 +262,16 @@
 				          </span>
                 </div>
                 <hr>
-                <div class="agreement"><input type="checkbox" id="agreement"><label for="agreement">Agree to <a href="/conditions.html" class="text_decoration">terms and conditions</a> of ALT.BET</label></div>
+                <div class="agreement">
+                  <div class="checkbox_container">
+                    <input type="checkbox" id="agreement"><label for="agreement">Agree to the<a href="/conditions.html" class="text_decoration">Terms of Use</a> and <a href="#" class="text_decoration">Privacy Notice</a></label>
+                  </div>
+                  <div class="checkbox_container">
+                    <input type="checkbox" id="agreement_age"><label for="agreement_age">I confirm that I am at least 18 years of age.</label>
+                  </div>
+                </div>
                 <div class="submit">
-                  <input type="submit" class="btn submit" value="Agree and Open Acount">
+                  <input type="submit" class="btn submit wave" value="Agree and Open Acount">
                 </div>
               </form>
             </div>
@@ -336,7 +343,9 @@
 				          </span>
                 </div>
 
-                <input type="submit" value="Agree and Open Acount" id="submit" class="btn">
+                <div class="container">
+                  <input type="submit" value="Agree and Open Acount" id="submit" class="btn wave">
+                </div>
               </form>
             </div>
             <div class="tab_item m_maker">
@@ -407,17 +416,24 @@
                   <div class="call_time">
                     <label>Your business time</label>
                     <div class="container">
-                      <input type="text" class="time from" placeholder="From">
+                      <input type="text" class="time from input__field--yoshiko" placeholder="From">
                       <span>_</span>
-                      <input type="text" class="time to" placeholder="To">
+                      <input type="text" class="time to input__field--yoshiko" placeholder="To">
                     </div>
                     <span class="validation-summary-errors"></span>
                   </div>
                 </div>
                 <hr>
-                <div class="agreement"><input type="checkbox" id="agreement_maker"><label for="agreement_maker">Agree to <a href="/conditions.html" class="text_decoration">terms and conditions</a> of ALT.BET</label></div>
+                <div class="agreement">
+                  <div class="checkbox_container">
+                    <input type="checkbox" id="agreement_maker"><label for="agreement_maker">Agree to the<a href="/conditions.html" class="text_decoration">Terms of Use</a> and <a href="#" class="text_decoration">Privacy Notice</a></label>
+                  </div>
+                  <div class="checkbox_container">
+                    <input type="checkbox" id="agreement_maker_age"><label for="agreement_maker_age">I confirm that I am at least 18 years of age.</label>
+                  </div>
+                </div>
                 <div class="submit">
-                  <input type="submit" class="btn submit" value="Agree and Open Acount">
+                  <input type="submit" class="btn submit wave" value="Agree and Open Acount">
                 </div>
               </form>
             </div>

@@ -186,7 +186,7 @@
         &.active {  background-position: -97px -90px;  }
       }
       .event_info{
-        width: calc(26% - 20px);
+        width: calc(24% - 20px);
         position: absolute;
         left: 10px;
         top: 10px;
@@ -240,7 +240,7 @@
         justify-content: center;
         padding: 30px 10px 20px;
         margin-right: 2px;
-        width: 26%;
+        width: 24%;
         border-radius: 6px 0 0 6px;
         @include main_page_event_bg;
         //background: linear-gradient(to top, #e6e6e6, #ffffff);
