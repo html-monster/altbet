@@ -12,3 +12,17 @@ $reg_title: #292830;
 	border-top: 1px solid #aaadb9;
 	border-bottom: 1px solid #fff;
 }
+@mixin reg_help_message{
+	i{
+		background-image: linear-gradient(to top, #ffffff, #f2f2f2);
+		&:before{  background: #ffffff * 1.01;  }
+		&:after{  background: #ffffff;  }
+	}
+	&.bottom i {
+		&:before, &:after{  background: #f2f2f2  }
+	}
+}
+@mixin reg_contact_method{
+	&.web:after{  background-position: -361px -91px; }
+	&.phone:after{  background-position: -330px -91px; }
+}

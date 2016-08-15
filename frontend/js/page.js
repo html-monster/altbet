@@ -42,6 +42,7 @@ $(document).ready(function () {
 	messageClass.showHelpMessage('.active_trader .help', '.tab_item');
 	var activeTrader = new activeTraderClass(); //active trader activation
 
+	new themeChangeClass();
 	(function changeSelect(){
 		try {
 			$("body select").msDropDown();
@@ -50,7 +51,7 @@ $(document).ready(function () {
 		}
 	})();
 
-	$('input.input__field').focusout(function () {
+	$('.input__field').focusout(function () {
 		if($(this).val() == '') $(this).parent().removeClass('input--filled');
 		else $(this).parent().addClass('input--filled');
 	});

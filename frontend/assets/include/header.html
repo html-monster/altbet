@@ -1,9 +1,5 @@
 <header>
   <div class="header_info">
-    <div class="change-color">
-      <a href="index_dark.html" class="dark" title="dark theme"></a>
-      <a href="index.html" class="light" title="light theme"></a>
-    </div>
     <div class="header_right">
       <span class="win-lost">Won/Lost: <strong class="win">+$100</strong></span>
       <span class="invested">Invested: <strong>$100</strong></span>
@@ -24,8 +20,15 @@
       </form>
     </div>
     <div class="user">
-      <div class="log_in" style="display: none;">
+      <div class="log_in" style="display: none">
         <ul class="user-menu">
+          <li>
+            <strong>
+              Theme color
+              <span class="dark color_pick" title="dark theme"></span>
+              <span class="light color_pick" title="light theme"></span>
+            </strong>
+          </li>
           <li><a href="user_page.html">Account</a></li>
           <li><a href="user_page.html">Funds</a></li>
           <li><a href="#">Log out</a></li>
@@ -37,6 +40,11 @@
       </div>
       <div class="log_out" style="display: flex;">
         <a href="#" class="sign_in">Login/Join</a>
+        <div class="change-color">
+          <strong>Theme color</strong>
+          <span class="dark color_pick" title="dark theme"></span>
+          <span class="light color_pick" title="light theme"></span>
+        </div>
       </div>
     </div>
     <button class="chat"></button>

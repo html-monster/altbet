@@ -162,10 +162,11 @@
         }
         .remember_forgot{
           margin: 15px 0;
+          label:first-of-type{  display: block;  }
           input{  display: none;  }
-          input:checked + label{  color: $checkbox_label_color;  }
-          input:checked + label:before{  background-position: -20px -140px;  }
-          label{
+          input:checked + span{  color: $checkbox_label_color;  }
+          input:checked + span:before{  background-position: -20px -140px;  }
+          span{
             font-size: 12px;
             color: transparentize($checkbox_label_color, 0.4);
             transition: 0.4s ease-out;
@@ -173,6 +174,7 @@
               content: '';
               display: inline-block;
               margin-top: -3px;
+              margin-right: 5px;
               width: 16px;
               height: 16px;
               background: url("../Images/sprite.svg") no-repeat -20px -160px;

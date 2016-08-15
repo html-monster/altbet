@@ -205,10 +205,12 @@
       opacity: 0.5;
       cursor: help;
       transition: 0.4s ease-out;
+      @include reg_help_message;
       &.top{
         i{
           bottom: 19px;
           right: -15px;
+          color: transparentize($checkbox_label_color, 0.5);
           &:before{  bottom: 0;  right: 9px;  }
           &:after{  bottom: -5px; right: 15px;  }
         }
@@ -218,11 +220,9 @@
           top: 19px;
           right: -15px;
           z-index: 500;
+          color: transparentize($checkbox_label_color, 0.5);
           &:before{  top: 0;  right: 9px;  }
           &:after{  top: -5px; right: 15px; box-shadow: -5px -5px 10px -3px rgba(0, 0, 0, 0.5); }
-          &:before, &:after{
-            background: #f2f2f2
-          }
         }
       }
       &:hover{
@@ -230,10 +230,7 @@
         i{
           visibility: visible;
           opacity: 1;
-          &:before{
-            opacity: 1;  }
-          &:after{
-            opacity: 1;  }
+          &:before, &:after{  opacity: 1;  }
         }
       }
       i{
@@ -241,7 +238,6 @@
         width: 295px;
         padding: 5px 10px;
         position: absolute;
-        background-image: linear-gradient(to top, #ffffff, #f2f2f2);
         border-radius: 4px;
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
         opacity: 0;
@@ -254,7 +250,6 @@
           height: 10px;
           position: absolute;
           z-index: 1;
-          background: #ffffff * 1.01;
           border-radius: 4px;
         }
         &:after{
@@ -266,7 +261,6 @@
           position: absolute;
           border-radius: 0 4px 0 0;
           transform: rotate(45deg);
-          background: #ffffff ;
           box-shadow: 5px 5px 10px -3px rgba(0, 0, 0, 0.5);
           transition: 0.4s ease-out;
         }
@@ -291,6 +285,10 @@
       border-radius: 4px;
       transition: background-color 0.3s, border-color 0.3s;
       @include reg_input_color;
+    }
+    textarea.input__field--yoshiko{
+      height: 39px;
+      min-height: 39px !important;
     }
 
     .input__label--yoshiko {
@@ -320,9 +318,6 @@
       height: 100%;
       width: 100%;
       padding: 0.25em 0;
-      //text-transform: uppercase;
-      //letter-spacing: 1px;
-      //font-size: 0.85em;
     }
 
     .input__field--yoshiko:focus ~ .input__label--yoshiko,
@@ -336,21 +331,37 @@
       transform: translate3d(0, 100%, 0);
     }
 
-    //.input__field--yoshiko:focus ~ .input__field--yoshiko,
-    //.input--filled .input__field--yoshiko {
-    //  background-color: transparent;
-    //}
 
     .call_time{
-      margin-bottom: 38px;
+      padding-bottom: 10px;
       .container{
         display: flex;
-        justify-content: space-between;
+        align-items: center;
+        height: 39px;
+        label{
+          margin: 0;
+          margin-right: 30px;
+          position: relative;
+          @include radio_button;
+          &:after{
+            content: '';
+            display: block;
+            width: 17px;
+            height: 16px;
+            position: absolute;
+            top: 3px;
+            left: 0;
+            background: url("../Images/sprite.svg") no-repeat;
+          }
+          @include reg_contact_method;
+          span {  padding-left: 20px;
+            margin-left: 25px; }
+        }
       }
-      label{  margin-bottom: 6px;  font-size: 14px; }
-      input{  width: 44%;  }
-      span{  line-height: 22px;  }
-      .validation-summary-errors{  float: left;  }
+      label{
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
     }
 
     .birthday{
