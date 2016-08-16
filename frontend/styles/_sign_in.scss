@@ -2,7 +2,6 @@
   .waves-ripple{  display: block;  }
   .sign_in_content {
     width: 460px;
-    //height: 460px;
     padding: 30px;
     background-image: $sign_in_bg;
     border-radius: 4px;
@@ -91,19 +90,7 @@
           display: block;
           padding: 1.2em 0;
           width: 100%;
-          //&.password:after{
-          //  content: '';
-          //  display: inline-block;
-          //  width: 15px;
-          //  height: 10px;
-          //}
         }
-				//
-        //.show_password{
-        //  position: absolute;
-        //  top: 24px;
-        //  right: 36%;
-        //}
 
         .input__label--kuro::before,
         .input__label--kuro::after {
@@ -144,12 +131,6 @@
           transform: translate3d(10%, 0, 0);
         }
 
-        //.input__field--kuro:focus ~ .show_password,
-        //.input--filled .show_password {
-        //  top: 15px;
-        //  animation: anim-2 0.4s both;
-        //}
-
         .input__field--kuro:focus + .input__label--kuro .input__label-content--kuro,
         .input--filled .input__label-content--kuro {
           animation: anim-2 0.4s both;
@@ -187,7 +168,6 @@
             font-size: 12px;
             color: $link-color;
             @include text-decoration;
-            //&:before{ background: linear-gradient(to right, transparent, #000000, transparent); }
           }
         }
         .register{
@@ -201,7 +181,6 @@
           span{
             display: block;
             padding: 8px 0;
-            //background: $sign_in_register_button_color;
             color: #ffffff;
             border-radius: 4px;
           }
@@ -211,7 +190,6 @@
           border-radius: 4px;
         }
         #submit_sign{
-          //float: right;
           width: 150px;
           padding: 9px 0;
           border-radius: 4px;

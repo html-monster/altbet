@@ -3,16 +3,12 @@
   @include push (1.8 of 12);
   margin-top: 80px;
   padding: 15px;
-  //background-color: #dce1e6;
   position: relative;
   .breadcrumbs {
     padding: 6px 15px 8px;
     margin-bottom: 10px;
-    //border: 1px solid #dce1e6 * 0.95;
     border-radius: 6px;
     background: $breadcrumbs-bg;
-    //box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.5);
-    //background-image: linear-gradient(to top, #dce1e6 * 0.95, #fff);
     li {
       display: inline-block;
       color:  $breadcrumbs-color;
@@ -44,7 +40,6 @@
     .tabs{
       span.tab{
         &.active {
-          //background-image: linear-gradient(to bottom, #64c9ef, #3498da);
           @include main_page_tab_icon_active;
           span{
             &:after{  margin-bottom: 0;  }
@@ -89,8 +84,6 @@
       margin-top: 2px;
       position: relative;
       text-align: center;
-      //border: 1px solid #d7d7d8;
-      //background-color: #fff;
       border-radius: 6px;
       transition: 0.4s ease-out;
       &:first-child{  margin-top: 0!important;  }
@@ -116,7 +109,6 @@
         font-size: 14px;
         vertical-align: middle;
         transition: 0.4s ease-out;
-        //@include md(1500){  font-size: 16px;  }
       }
       h2{  margin: 3px 0;  }
       h3{
@@ -133,21 +125,6 @@
           position: absolute;
           right: 0;
           transition: 0.4s ease-out;
-          //@include md(1500){  font-size: 16px;  }
-          //&:hover{
-          //  width: 110px;
-          //  background-position: 85px 0;
-          //  padding-right: 20px;
-          //  span{  width: 100%;  }
-          //}
-          //span{
-          //  overflow: hidden;
-          //  transition: 0.4s ease;
-          //  white-space: nowrap;
-          //  font-weight: normal;
-          //  font-size: 14px;
-          //  line-height: 20px;
-          //}
         }
         strong.score{
           position: absolute;
@@ -156,17 +133,6 @@
         }
       }
       h3 a:hover{  color: $main-color-hover;  }
-      //h2:before {
-      //  position: absolute;
-      //  left: 15px;
-      //  top: 15px;
-      //  display: inline-block;
-      //  width: 30px;
-      //  height: 30px;
-      //  background-color: #d7d7d8;
-      //  border-radius: 2px;
-      //  margin-right: 10px;
-      //}
       a.add_favorite {
         width: 20px;
         height: 20px;
@@ -176,9 +142,7 @@
         background: url(../Images/sprite.svg) no-repeat -97px -123px;
         z-index: 2;
         transition: 0.4s ease-out;
-        //opacity: 0.6;
         &:hover {
-          //opacity: 1;
           animation-duration: 1s;
           animation-fill-mode: both;
           animation-name: rubberBand;
@@ -243,8 +207,6 @@
         width: 24%;
         border-radius: 6px 0 0 6px;
         @include main_page_event_bg;
-        //background: linear-gradient(to top, #e6e6e6, #ffffff);
-        //box-shadow: 3px 0 10px -3px rgba(0, 0, 0, 0.3);
         &.command{
           padding: 30px 10px 20px 30px;
           position: relative;
@@ -356,7 +318,6 @@
                   color: #fff;
                   opacity: 0.8;
                 }
-                //background: linear-gradient(to left, #ff8a82, #ff6464);
               }
               @include md(1450){
                 &:nth-last-of-type(3){
@@ -366,9 +327,6 @@
             }
           }
         }
-        //.second_event{
-        //  margin-left: 10px;
-        //}
       }
       span.show-schedule{
         display: block;
@@ -403,9 +361,6 @@
             top: 12px;
           }
         }
-        //&.active{
-        //  transform: rotate(180deg);
-        //}
       }
       .schedule{
         display: none;
@@ -424,34 +379,6 @@
         }
         img{  width: 100%;  }
       }
-      //a {
-      //  display: none;
-      //  font-size: 11px;
-      //  color: #919191;
-      //  text-align: center;
-      //  span:before {
-      //    content: '';
-      //    display: inline-block;
-      //    width: 15px;
-      //    height: 15px;
-      //    background: url("../Images/down-show.png") no-repeat;
-      //    margin-right: 5px;
-      //    vertical-align: top;
-      //  }
-      //  .schedule {
-      //    display: block;
-      //    width: 100%;
-      //    height: 328px;
-      //    background: url('../Images/график.png') 50% no-repeat;
-      //    background-size: cover;
-      //    transition: 0.4s ease-out;
-      //  }
-      //}
-      //a:hover {
-      //  .schedule {
-      //    display: block;
-      //  }
-      //}
     }
   }
   .tab_item:first-child {

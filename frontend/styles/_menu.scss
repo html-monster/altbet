@@ -1,6 +1,5 @@
 .main_menu {
   @include span(1.8 of 12);
-  //width: 205px;
   position: fixed;
   top: 0;
   left: 0;
@@ -18,7 +17,6 @@
     cursor: pointer;
   }
   .logo-container {
-    //@include span(1.3 of 12);
     display: flex;
     align-items: center;
     width: 150px;
@@ -33,7 +31,6 @@
     }
   }
   .nav_search {
-    //background-color: #1e1e1e;
     padding: 20px 15px 10px;
     .search {
       position: relative;
@@ -106,17 +103,6 @@
     li{
       position: relative;
       cursor: pointer;
-      //&.active:after, &.active li:after{
-      //  content: '';
-      //  width: 10px;
-      //  height: 10px;
-      //  position: absolute;
-      //  top: 15px;
-      //  right: 25px;
-      //  transition: 0.4s ease-out;
-      //  background: url("../Images/sprite.svg") no-repeat -231px -180px;
-      //}
-      //&.active:after{  transform: rotate(-90deg);  }
       span{
         display: block;
         font-size: 14px;
@@ -140,7 +126,6 @@
         transition: 0.4s ease-out;
         background: url(../Images/sprite.svg) no-repeat -84px -114px;
         &:hover{
-          //opacity: 0.5;
           animation-duration: 1s;
           animation-fill-mode: both;
           animation-name: rubberBand;
@@ -155,7 +140,6 @@
         top: 8px;
         right: 8px;
         z-index: 2;
-        //transition: 0.4s ease-out;
         background: url(../Images/sprite.svg) no-repeat -96px -196px;
         opacity: 0;
         &:hover{  background-position: -96px -226px;  }
@@ -188,7 +172,6 @@
     }
     .sub-menu_1{
       background: rgba(33, 30, 37, 0.4);//292830
-      //background: linear-gradient(to right, #2d2d35, #3c3b46);
       span{  padding: 5px 8px 5px 40px;  }
       span, a.event{
         &:after{
@@ -209,11 +192,9 @@
     }
     .sub-menu_2{
       background: rgba(33, 30, 37, 0.6);//222125
-      //background: linear-gradient(to right, #494855, #575565);
     }
     .sub-menu_3{
       background: rgba(33, 30, 37, 0.8);//201f27
-      //background: linear-gradient(to right, #545262, #757288);
       opacity: 0.8;
       li:after{
         display: none;

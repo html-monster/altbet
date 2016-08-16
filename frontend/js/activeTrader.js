@@ -197,7 +197,7 @@ class activeTraderClass{
 				if(defaultMethods.searchValue(priceSell, currentPrice) != -1){
 					ii = defaultMethods.searchValue(priceSell, currentPrice);
 					$(this).find('.size_sell').addClass('animated fadeOut').find('span.value').text(volumeSell[ii]);
-					if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_bids').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeSell[ii]));  // for development =============================================
+					// if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_bids').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeSell[ii]));  // for development =============================================
 					var context = $(this);
 					setTimeout(function () {
 						context.find('.size_sell').removeClass('animated fadeOut');
@@ -211,7 +211,7 @@ class activeTraderClass{
 				if(defaultMethods.searchValue(priceBuy, currentPrice) != -1){
 					ii = defaultMethods.searchValue(priceBuy, currentPrice);
 					$(this).find('.size_buy').addClass('animated fadeOut').find('span.value').text(volumeBuy[ii]);
-					if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_offers').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeBuy[ii]));  // for development =============================================
+					// if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_offers').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeBuy[ii]));  // for development =============================================
 					var context = $(this);
 					setTimeout(function () {
 						context.find('.size_buy').removeClass('animated fadeOut');

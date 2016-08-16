@@ -1,6 +1,4 @@
 header {
-  //@include container(100%);
-  //@include span(last 10.19 of 12);
   width: 100%;
   height: 70px;
   position: fixed;
@@ -92,20 +90,7 @@ header {
         @include md(1420) {
           margin-right: 5px;
         }
-        //a:before {
-        //  content: '';
-        //  display: inline-block;
-        //  width: 12px;
-        //  height: 14px;
-        //  margin-right: 5px;
-        //  background: url("../Images/myposition.png") no-repeat;
-        //}
       }
-      //.header_right {
-      //  float: right;
-      //  margin-right: 10px;
-      //  border-right: 1px solid #4e4d56;
-      //}
     }
   }
   .chat{
@@ -117,7 +102,6 @@ header {
     background: url("../Images/sprite.svg") no-repeat -219px -13px, url("../Images/chat.png") no-repeat 0 7px/ contain;
   }
   .user {
-    //@include span(1.6 of 12);
     height: 100%;
     padding-right: 15px;
     padding-left: 10px;

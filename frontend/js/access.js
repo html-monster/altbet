@@ -48,7 +48,6 @@ class access{
 		}
 	}
 }
-if(location.hostname == "altbet.html-monster.ru")
-		access.redirectForDineAccess('access.html');
-
+// if(location.hostname == "altbet.html-monster.ru")
+// 		access.redirectForDineAccess('access.html');
 

@@ -83,7 +83,7 @@ gulp.task('assets', function() {
 // });
 gulp.task('js',function(){
   return combine(
-    gulp.src(['vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js', 'frontend/js/**/*.js', '!frontend/js/test.js', '!frontend/js/access.js']),
+    gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js', 'frontend/js/**/*.js', '!frontend/js/test.js', '!frontend/js/access.js']),
     // .pipe(babel({
     //   presets: ['es2015']
     // })),
