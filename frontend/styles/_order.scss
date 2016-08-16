@@ -5,7 +5,7 @@
   background: $order_sidebar_bg;
   position: fixed;
   right: 0;
-  top: 80px;
+  top: 70px;
   transition: 0.4s ease-out;
   //&.active {
   //  right: -20.76796%;
@@ -245,34 +245,37 @@
               &.close_out{  background-image: linear-gradient(to bottom, #f88447, #ef4d22); a{color: #fff;}  }
             }
           }
-          .table_limit .show_spread{
-            min-width: 93px;
-            padding: 0 5px;
-            position: absolute;
-            top: calc(50% + 90px);
-            right: -61px;
-            transform: rotate(-90deg);
-            border-radius: 3px 3px 0 0;
-            box-shadow: 0 -2px 6px 0px rgba(0, 0, 0, 0.5);
-            font-size: 14px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.4s ease;
-            z-index: 10;
-            background: $trader_show_spread;
-            &.active{
-              right: -31px;
-              animation-name: active;
-              animation-duration: 2s;
-              animation-fill-mode: both;
-              @keyframes active {
-                0% {  color: orange;  }
-                100% {  color: black;  }
+          .table_limit{
+            .show_spread{
+              min-width: 93px;
+              padding: 0 5px;
+              position: absolute;
+              top: calc(50% + 110px);
+              right: -61px;
+              transform: rotate(-90deg);
+              border-radius: 3px 3px 0 0;
+              box-shadow: 0 -2px 6px 0px rgba(0, 0, 0, 0.5);
+              font-size: 14px;
+              text-align: center;
+              cursor: pointer;
+              transition: 0.4s ease;
+              z-index: 10;
+              background: $trader_show_spread;
+              &.active{
+                right: -37px;
+                animation-name: active;
+                animation-duration: 2s;
+                animation-fill-mode: both;
+                @keyframes active {
+                  0% {  color: orange;  }
+                  100% {  color: black;  }
+                }
               }
             }
           }
           table.limit{
             position: relative;
+            &:not(.webkit) tbody tr{  width: calc(100% + 14px);  }
             thead{
               background: $trader_table_thead_bg;
               &:after{
@@ -305,11 +308,6 @@
                   td:nth-of-type(1){  width: 58px;  }
                   td:nth-of-type(5){  width: 68px;  }
                 }
-                //&.x2:nth-child(4n - 1){  background-color: #f4f4f4;  }
-                //&.x3{
-                //  background-color: #ffffff !important;
-                //  &:nth-child(6n - 2){  background-color: #f4f4f4 !important;  }
-                //}
               }
             }
             tr{

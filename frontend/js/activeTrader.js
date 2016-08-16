@@ -12,7 +12,10 @@ class activeTraderClass{
 					buttons = $('#exchange .content_bet .event'),
 					event_container = $('.content_bet'),
 					titles = event_container.eq(0).find('.event-title .title'),
-					tab_content = $('.tab_content');
+					tab_content = $('.tab_content'),
+					webkit = ($.browser.webkit) ? 'webkit' : '';
+
+			$('.active_trader table.limit').addClass(webkit);
 
 			if(checkbox.prop('checked')){
 				var ii = 0;
@@ -83,9 +86,9 @@ class activeTraderClass{
 
 				order.css('overflow-y', 'hidden');
 				setTimeout(function () {
-					var orderSidebarHeight = windowHeight - ($('.left_order .tabs').height() + 45 + $('header').height()),
-							actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +
-									$('.active_trader .control').height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height() + 1);
+					var orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight() + $('header').outerHeight()),
+							actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').outerHeight() + $('.active_trader .info').outerHeight() +
+									$('.active_trader .control').outerHeight() + $('.active_trader .control.remote').outerHeight() + $('.active_trader .limit thead').outerHeight());
 
 					if(footer.hasClass('active')){
 						tbody.css('max-height', actveTraderHeight - footerHeight);
@@ -314,7 +317,10 @@ class activeTraderClass{
 
 				if(context.hasClass('size') || context.hasClass('price_value') || context.hasClass('confim_button')){
 					if(context.parents('tr').index() > trader.find('.best_buy ').parents('tr').index()){
-						position = (context.parents('tr').index() - trader.find('table.limit tbody tr.hidden').length) * 20 + 20;
+						if(context.parents('tbody')[0].scrollHeight < context.parents('tr').index() * 20 + 110)
+							position = context.parents('tbody')[0].scrollHeight - 90;
+						else
+							position = (context.parents('tr').index() - trader.find('table.limit tbody tr.hidden').length) * 20 + 20;
 					}
 					else{
 						position = context.parents('tr').index() * 20 + 20;
@@ -458,15 +464,19 @@ class activeTraderClass{
 			if(bid == -1) bid = ask;
 			if(ask == -1) ask = bid;
 			if(ask == -1 && bid == -1) value= 0;
+			function addClass() {
+				if(ii < 0) return;
+				tr.eq(ii).find('.price_value').addClass('active');
+			}
 			if(value){
 				for(ii = bid - 1; ii > ask; ii--){
-					tr.eq(ii).find('.price_value').addClass('active');
+					addClass();
 				}
 				for(ii = bid + 1; ii <= bid + value; ii++){
-					tr.eq(ii).find('.price_value').addClass('active');
+					addClass();
 				}
 				for(ii = ask - 1; ii >= ask - value; ii--){
-					tr.eq(ii).find('.price_value').addClass('active');
+					addClass();
 				}
 				bestBuy.addClass('active');
 				bestSell.addClass('active');
@@ -528,7 +538,16 @@ class activeTraderClass{
 			isButton = isButton || false;
 
 			for (var ii = 0; ii < table.find('th').length; ii++) {
-				tdWidth.push(table.find('th').eq(ii).width());
+				if($.browser.webkit){
+					if(ii == 1)
+						tdWidth.push(parseInt(table.find('th').eq(ii).css('width')) - 1 + 'px');
+					else
+						tdWidth.push(table.find('th').eq(ii).css('width'));
+				}
+				else{
+					tdWidth.push(parseInt(table.find('th').eq(ii).css('width')) + 'px');
+				}
+
 			}
 
 
@@ -642,7 +661,7 @@ class activeTraderClass{
 
 		center = center ? 0 : (indeSell - indexBuy) / 2;
 
-		tbody.animate({scrollTop: (indexBuy + center) * 20 - tbody.height() / 2}, 400);
+		tbody.animate({scrollTop: (indexBuy + center) * 20 - tbody.height() / 2 + 10}, 400);
 	}
 
 	static spreaderClean() {
@@ -671,7 +690,7 @@ class activeTraderClass{
 
 		$('table.limit').find('tr').each(function () {
 			for (var ii = 0; ii < tdWidth.length; ii++) {
-				$(this).find('td').eq(ii).width(tdWidth[ii] + 10)
+				$(this).find('td').eq(ii).css('width', tdWidth[ii]);//  + 10
 			}
 		});
 

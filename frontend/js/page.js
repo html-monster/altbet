@@ -40,7 +40,7 @@ $(document).ready(function () {
 	defaultMethods.activated('.content_bet .add_favorite');
 
 	messageClass.showHelpMessage('.active_trader .help', '.tab_item');
-	var activeTrader = new activeTraderClass(); //active trader activation
+	new activeTraderClass(); //active trader activation
 
 	new themeChangeClass();
 	(function changeSelect(){
