@@ -73,7 +73,6 @@
 		}
 
 
-		// numericalVerification($('.order_content input'));
 		$('.order_content').fadeIn(400);
 
 		inputFocus.focus();

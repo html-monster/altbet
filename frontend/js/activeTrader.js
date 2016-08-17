@@ -261,7 +261,7 @@ class activeTraderClass{
 				activeTraderClass.buttonActivation($(this));
 			});
 
-			$('.active_trader table.control input').keyup(function () {
+			trader.on('keyup', 'input.quantity', function(){
 				activeTraderClass.buttonActivation($(this));
 			});
 
@@ -378,14 +378,10 @@ class activeTraderClass{
 				else
 					context.parent().next().html('<td></td>').children().append(html);
 
-				// numericalVerification($('.order_content input'));
 				$('#order_content').css('visibility', 'visible');
 				setTimeout(function () {
 					$('#order_content').addClass('active');
 				}, 0);
-				// inputFocus = $('#order_content .volume input');
-				// inputFocus.focus();
-				// inputFocus[0].selectionStart = inputFocus.val().length;
 				function createOrderForm(element, modification) {
 					html = $(element).clone();
 					html.attr('id', 'order_content').css({
@@ -425,22 +421,13 @@ class activeTraderClass{
 				}
 			});
 
-			// trader.on('click', 'table.limit tbody', function () {
-			// 	trader.find('#order_content').remove();
-			// });
-			//
-			// trader.on('click', '#order_content', function(e){
-			// 	e.stopPropagation();
-			// });
 		}();
 
 		//spread show/hide =============================================================================================================
-		// ;(function showHideSpread() {
 
 		$('.active_trader .show_spread').click(function () {
 			activeTraderClass.spreadVisability(true);
 		});
-		// })();
 	}
 
 	static spreaderChangeVal(input, quantity){
@@ -675,10 +662,10 @@ class activeTraderClass{
 
 	static recaluculateSum(item){
 		var order_content = $('.active_trader .order_content'),
-				quantity = +item.text() || +item.val(),
+				quantity = +item.text() || +item.val() || '',
 				price = +order_content.find('.price input').val();
 
-		order_content.find('.volume input').val(quantity);
+		$('.active_trader .volume input').val(quantity);
 		if(order_content.find('.sell-container').length)
 			order_content.find('.obligations input').val(((1 - price) * quantity).toFixed(2));
 		else
@@ -693,8 +680,6 @@ class activeTraderClass{
 				$(this).find('td').eq(ii).css('width', tdWidth[ii]);//  + 10
 			}
 		});
-
-		// в firefox отображение надо поправить
 	}
 
 }

@@ -18,6 +18,7 @@ $warning_message_arrow: #ffffff;
 
 @mixin regulator{
 	background: #ffffff;
+	border-right: 1px solid #e9eaee;
 	span{
 		&:active{  background-color: #cccccc;  }
 		&:first-of-type{  border-bottom: 1px solid #d7d7d8;  }
