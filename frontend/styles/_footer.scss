@@ -28,7 +28,7 @@
     border-right: 1px solid #292830 * 0.9;
     &:first-child{  border-left: none;  }
     &:last-child{  border-right: none;  }
-    @include md(1550){
+    @include md(1700){
       padding: 0 10px;
       &:nth-child(3){
         width: 25%;
