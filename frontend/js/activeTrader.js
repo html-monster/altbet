@@ -261,7 +261,7 @@ class activeTraderClass{
 				activeTraderClass.buttonActivation($(this));
 			});
 
-			trader.on('keyup', 'input.quantity', function(){
+			trader.on('keyup', 'input.number', function(){
 				activeTraderClass.buttonActivation($(this));
 			});
 

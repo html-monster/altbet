@@ -98,7 +98,7 @@
   .nav_bet{
     font-family: "open_sans_regular", sans-serif;
     color: #d0d0d0;
-    @include scrollWhite;
+    @include scroll;
     ul{  display: none;  }
     li{
       position: relative;
@@ -151,7 +151,7 @@
         font-size: 13px;
       }
       li:after{  top: 7px;  }
-      li.active > span{  color: $main-color;  }
+      li.active > span{  color: $link-color;  }
     }
     & > li{
       min-height: 40px;
