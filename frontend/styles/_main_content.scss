@@ -85,7 +85,7 @@
       position: relative;
       text-align: center;
       border-radius: 6px;
-      transition: 0.4s ease-out;
+      //transition: 0.4s ease-out;
       &:first-child{  margin-top: 0!important;  }
       &.clickable{
         .waves-ripple{  display: block;;  }

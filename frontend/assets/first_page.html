@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Altbet</title>
+  <link href="/styles/index_light.css" rel="stylesheet">
+  <script src="/js/access.js"></script>
+</head>
+<body>
+  <div class="first_page_wrapper">
+    <header class="first_page">
+      <div class="header_info">
+        <div class="logo-container">
+          <a href="index.html " class="logo"></a>
+        </div>
+        <div class="header_right">
+          <ul class="page_menu">
+            <li><a href="#">Start</a></li>
+            <li><a href="#">Main</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Contacts</a></li>
+            <li><a href="#">More</a></li>
+          </ul>
+          <form class="header_form">
+            <div class="select">
+              <select class="language img" name="odds" id="change_language" style="width: 80px;">
+                <option value="en" data-title="English">English</option>
+                <option value="ru" data-title="Russian">Русский</option>
+              </select>
+            </div>
+          </form>
+          <div class="user">
+            <div class="log_in" style="display: none">
+              <ul class="user-menu">
+                <li>
+                  <strong>
+                    Theme color
+                    <span class="dark color_pick" title="dark theme"></span>
+                    <span class="light color_pick" title="light theme"></span>
+                  </strong>
+                </li>
+                <li><a href="user_page.html">Account</a></li>
+                <li><a href="user_page.html">Funds</a></li>
+                <li><a href="#">Log out</a></li>
+              </ul>
+              <span class="count_message">
+            <span class="count">99</span>
+          </span>
+              <span class="user-name">seller@seller.mai.ru</span>
+            </div>
+            <div class="log_out" style="display: flex;">
+              <a href="#" class="sign_in">Login/Join</a>
+            </div>
+          </div>
+        </div>
+        <button class="chat"></button>
+      </div>
+    </header>
+  </div>
+
+  <div include-html="include/footer.html"></div>
+
+  <script src="/js/all.js" defer></script>
+</body>
+</html>

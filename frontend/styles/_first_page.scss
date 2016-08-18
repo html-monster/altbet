@@ -1,0 +1,39 @@
+.first_page_wrapper{
+	min-height: 100%;
+	background: #292830;
+}
+header.first_page{
+	.header_info{
+		justify-content: space-between;
+		float: none;
+		width: 960px;
+		margin: 0 auto;
+		background: transparent;
+	}
+	.logo-container {
+		display: flex;
+		align-items: center;
+		width: 150px;
+		height: 50px;
+		padding-left: 15px;
+		a {
+			display: block;
+			width: 150px;
+			height: 50px;
+			background: url("../Images/sprite.svg") no-repeat -11px -17px;
+		}
+	}
+	.page_menu{
+		li{
+			display: inline-block;
+			a{
+				background: transparent;
+				font-size: 14px;
+				color: #ffffff;
+				opacity: 0.6;
+				transition: 0.4s ease-out;
+				&.active{  opacity: 1;  }
+			}
+		}
+	}
+}

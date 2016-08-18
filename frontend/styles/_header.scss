@@ -79,6 +79,7 @@ header {
         vertical-align: middle;
         &.my_order{  margin-left: 5px;  }
       }
+        &.deposit{   background-image: linear-gradient(to bottom, #84d65b, #4dac2e); }
       button {
         display: inline-block;
         padding: 5px 16px;
@@ -86,7 +87,6 @@ header {
         background: #1196d4;
         margin-right: 15px;
         vertical-align: middle;
-        &.deposit{   background-image: linear-gradient(to bottom, #84d65b, #4dac2e); }
         @include md(1420) {
           margin-right: 5px;
         }
