@@ -106,7 +106,6 @@
       span{
         display: block;
         font-size: 14px;
-        transition: 0.4s ease-out;
         position: relative;
         &:hover a.jump{
           animation-name: fadeInLeft;
@@ -123,7 +122,6 @@
         left: 0;
         z-index: 2;
 				opacity: 0.2;
-        transition: 0.4s ease-out;
         background: url(../Images/sprite.svg) no-repeat -84px -114px;
         &:hover{
           animation-duration: 1s;

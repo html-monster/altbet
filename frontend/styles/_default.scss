@@ -125,7 +125,6 @@ i.wave{  display: inline-block;  font-style: normal; }
       user-select: none;
       cursor: pointer;
       position: relative;
-      transition: 0.4s ease-out;
       &:after{
         content: '';
         display: block;

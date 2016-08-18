@@ -150,7 +150,6 @@
           span{
             font-size: 12px;
             color: transparentize($checkbox_label_color, 0.4);
-            transition: 0.4s ease-out;
             &:before{
               content: '';
               display: inline-block;
