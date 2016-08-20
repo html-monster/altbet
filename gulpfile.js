@@ -83,25 +83,25 @@ gulp.task('assets', function() {
 // });
 gulp.task('js',function(){
   return combine(
+    gulp.src(['frontend/js/**/*.js', '!frontend/js/test.js', '!frontend/js/access.js', '!frontend/js/theme_change.js']),
+    $.concat('all.js'),
+    babel({
+      presets: ['es2015']
+    }),
+    sourcemaps.init(),
+    // $.uglify(),
+    gulp.dest('./public/js'),
+
     gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js']),
     $.concat('vendors.js'),
     $.uglify(),
     gulp.dest('./public/js'),
 
-    gulp.src(['frontend/js/**/*.js', '!frontend/js/test.js', '!frontend/js/access.js', '!frontend/js/theme_change.js']),
-    babel({
-      presets: ['es2015']
-    }),
-    $.concat('all.js'),
-    sourcemaps.init(),
-    // $.uglify(),
-    gulp.dest('./public/js'),
-
     gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js', 'frontend/js/theme_change.js']),
+    $.concat('access.js'),
     babel({
       presets: ['es2015']
     }),
-    $.concat('access.js'),
     sourcemaps.init(),
     $.uglify(),
     gulp.dest('./public/js')

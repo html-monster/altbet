@@ -15,11 +15,13 @@ $(document).ready(function () {
 	new menuClass();
 	new footerClass();
 
-	// tabs.tabFilter('.filters'); // page my_position
-	//
-	// tabs.tabsChange('.my_position'); // page my_position
-	// tabs.tabsChange('.funds_tab'); // page user_page
-	// tabs.tabsChange('.top_reg'); // page registration
+	new userInspectionClass();
+
+	tabs.tabFilter('.filters'); // page my_position
+
+	tabs.tabsChange('.my_position'); // page my_position
+	tabs.tabsChange('.funds_tab'); // page user_page
+	tabs.tabsChange('.top_reg'); // page registration
 
 	tabs.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
 
@@ -35,12 +37,15 @@ $(document).ready(function () {
 	popUpClass.globalPopUpClose('.warning'); // all warning message
 	popUpClass.globalPopUpClose('.user-menu', 'slideUp', '.log_in'); // login user menu
 	popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_in_form a.register', '.first_page_wrapper .join'); // pop-up registration
-	popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in'); //pop-up login
+	popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in', 'header .deposit',
+			'header .my_order', '.order_screening'); //pop-up login
 
 	defaultMethods.maxHeight('.sign_up_form  .tab_content ', 105 + window.innerHeight * 0.1);
 	defaultMethods.activated('.content_bet .add_favorite');
 
 	messageClass.showHelpMessage('.active_trader .help', '.tab_item');
+
+	new orderClass();//order activation
 	new activeTraderClass(); //active trader activation
 
 	new themeChangeClass();
