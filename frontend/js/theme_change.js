@@ -37,4 +37,4 @@ class themeChangeClass {
 	}
 }
 
-themeChangeClass.setColorscheme();
+// themeChangeClass.setColorscheme();

@@ -1,4 +1,7 @@
 //active_trader=========================================================================================================
+@mixin wave{
+	.wave{  box-shadow: none;  }
+}
 @mixin trader_event_name{
 	background: #211e25;
 	color: #ffffff * 0.5;

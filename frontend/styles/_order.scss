@@ -10,7 +10,7 @@
   //&.active {
   //  right: -20.76796%;
   //}
-  .wave{  box-shadow: none;  }
+  @include wave;
   label{
     color: #000000;
     font-size: 12px;
@@ -167,7 +167,7 @@
             tr.zoom{  width: 100%;  }
             th{
               max-width: 70px;
-              padding: 5px;
+              padding: 5px 0;
               color: #ffffff;
               border-right: 1px solid $trader_table_th_border_color;
               text-align: center;

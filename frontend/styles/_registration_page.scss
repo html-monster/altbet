@@ -179,6 +179,7 @@
       color: #ffffff;
       text-align: center;
       cursor: pointer;
+      @include btn-shadow;
     }
 
     .show_password{

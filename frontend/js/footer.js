@@ -4,7 +4,7 @@ class footerClass{
 				windowWidth = window.innerWidth,
 				orderSidebarHeight = windowHeight - ($('.left_order .tabs').height() + 45 + $('header').height()),
 				actveTraderHeight,
-				footer = $('footer'),
+				footer = $('.footer'),
 				footerHeight = footer.height() + 30,
 				scroll = orderSidebarHeight,
 				orderContent = $('#order'),

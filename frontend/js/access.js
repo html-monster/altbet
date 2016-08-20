@@ -1,6 +1,6 @@
 'use strict';
 
-class access{
+class accessClass{
 
 	constructor(currentLogin, currentPass, inputArr){
 		this.LOGIN = 'YWx0YmV0';

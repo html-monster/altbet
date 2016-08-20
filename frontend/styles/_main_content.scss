@@ -115,13 +115,20 @@
         span{  position: relative;  }
         a {
           display: inline-block;
-          padding-right: 15px;
+          //padding-right: 15px;
           color: transparentize($main-color, 0.2);
           font-size: 12px;
-          background: url("../Images/sprite.svg") no-repeat -3px -205px;
           vertical-align: middle;
           position: absolute;
           right: 0;
+          &:after{
+            content: '';
+            display: inline-block;
+            width: 15px;
+            height: 14px;
+            margin-left: 4px;
+            background: url("../Images/sprite.svg") no-repeat -59px -209px;
+          }
         }
         strong.score{
           position: absolute;
