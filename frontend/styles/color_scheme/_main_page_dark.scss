@@ -30,7 +30,7 @@ $main_page_tab_bg: linear-gradient(to bottom, #53515e, #292830);;
 	&:nth-of-type(5):before{  background-position: -486px -147px;  }
 }
 
-$main_page_event_title: #ffffff;
+$main_page_event_title: transparentize(#ffffff, 0.3);
 $main_page_event_chart_button: url(../Images/sprite.svg) no-repeat -224px -354px;
 @mixin main_page_event_bg{  background: linear-gradient(to bottom, #53515e, #292830);  }
 @mixin main_page_event_icon{

@@ -118,7 +118,7 @@
   }
   input{
     display: none;
-    &:checked + span{
+    &:checked ~ span{
       &:before{
         background: url('../Images/ico-success-b.png') no-repeat 3px 3px, linear-gradient(to bottom, #0e77a4, $main-color);
       }
@@ -163,7 +163,7 @@
   }
   input{
     display: none;
-    &:checked + span{
+    &:checked ~ span{
       color: $checkbox_label_color;
       &:before{  background: linear-gradient(to bottom, #3aab4a, #3aab4a * 0.9);  }
       &:after{  top: calc(50% - 3px);  }

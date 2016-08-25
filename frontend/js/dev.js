@@ -1,15 +1,17 @@
 $(document).ready(function () {
-	var flag = 0,
-			flagRevers = 0;
+	if(location.host == 'localhost:3000'){
+		var flag = 0,
+				flagRevers = 0;
 
-	$('.event-content').each(function () {
-		if($(this).hasClass('revers')){
-			$(this).attr('id', 'event-revers' + flagRevers++);
-		}
-		else{
-			$(this).attr('id', 'event' + flag++);
-		}
-	});
+		$('.event-content').each(function () {
+			if($(this).hasClass('revers')){
+				$(this).attr('id', 'event-revers' + flagRevers++);
+			}
+			else{
+				$(this).attr('id', 'event' + flag++);
+			}
+		});
+	}
 
 
 	$('#current-orders span.price').each(function () {

@@ -24,10 +24,12 @@ class orderClass{
 					orderContent = $('#order'),
 					currentOrders = $('#current-orders'),
 					tab_content = $('.tab_content'),
-					checkbox = $('.left_order .tab input');
+					checkbox = $('.left_order .tab input[type=checkbox');
 
 			$(".left_order .wrapper .tab").click(function () {
 				var height;
+
+				if($(this).attr('data-log-out')) return false;
 
 				$(".left_order .wrapper .tab").removeClass("active").eq($(this).index()).addClass("active");
 				$(".left_order .tab_item").hide().eq($(this).index()).show();
@@ -83,16 +85,19 @@ class orderClass{
 			var order = $('.order');
 
 			order.on('submit','form', function () {
+
+				if($(this).find('[data-log-out]').attr('data-log-out')) return false;
+
 				var price = +$(this).find('.price input').val(),
 						volume = +$(this).find('.volume input').val(),
 						sum = +$(this).find('.obligations input').val(),
 						checkboxProp = $(this).find('input[type="checkbox"]').length ? $(this).find('input[type="checkbox"]').prop('checked') : 1;
 
-				if(0 >= price || price > 0.99){
-					$(this).find('.price input').next().fadeIn(200);
-					return false;
-				}
 				if(checkboxProp){
+					if(0 >= price || price > 0.99){
+						$(this).find('.price input').next().fadeIn(200);
+						return false;
+					}
 					if(0 >= volume || !(defaultMethods.isInteger(volume))){//|| +volume > 999999
 						$(this).find('.volume input').next().fadeIn(200);
 						return false;
@@ -138,13 +143,6 @@ class orderClass{
 				}
 			});
 
-			// (function (something) {
-			// 	something.on('contextmenu', 'input.number', function (e) {
-			// 		console.log(123);
-			// 		if(e.button == 2)
-			// 			e.preventDefault();
-			// 	});
-			// })(order);
 			order.on('keypress', 'input.number', function (e) {
 				e = e || window.e;
 				var code = e.which ||e.charCode || e.keyCode,
@@ -267,7 +265,10 @@ class orderClass{
 					else
 						html = html.find('form').css({display: 'none'});
 
-					if (orderDirection == 'sell') html.find('.obligations input.number').val(sellSum);
+					if (orderDirection == 'sell') {
+						html.find('.obligations input.number').val(sellSum);
+						html.find('.side').val('Sell');
+					}
 					else {
 						if(modification == 'full'){
 							html.find('.buy-container').html(html.find('.sell-container').html());
@@ -275,18 +276,29 @@ class orderClass{
 						}
 						html.find('input[type=submit]').toggleClass('sell buy').val('buy');
 						html.find('.obligations input.number').val(buySum);
+						html.find('.side').val('Buy');
 					}
 
-					if(limit) html.find('.price input.number').val(price);
+					if(limit) {
+						html.find('.price input.number').val(price);
+						html.find('.checkbox span').text('Limit');
+					}
 					else {
-						html.find('.price input.number').attr('disabled', true).val(priceMarket);
+						// html.find('.price input.number').attr('disabled', true).val(priceMarket);
+						html.find('.price input.number').attr('disabled', true);
+						html.find('.obligations input.number').val('');
 						html.find('.price label').text('Market price');
 						html.find('.price .regulator').remove();
-						html.find('.checkbox input').attr('checked', false);
+						html.find('.checkbox input[type=checkbox]').attr('checked', false);
+						html.find('.checkbox span').text('Market');
 					}
 
 					html.find('.volume input.number').val(volume);
-
+					html.find('.symbol').val(self.parents('.content_bet').find('.symbol_name').text());
+					if(self.parents('.event-content').hasClass('revers'))
+						html.find('.mirror').val('1');
+					else
+						html.find('.mirror').val('0');
 				}
 
 				if (defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id')) == -1) {
@@ -353,11 +365,11 @@ class orderClass{
 			var container = $('.left_order'),
 					checkboxProp,
 					priceMarket = '';
-			container.on('change', 'label.checkbox input', function () {
+			container.on('change', 'label.checkbox input[type=checkbox]', function () {
 				var price = $(this).parents('form').find('.price'),
 						id,
 						items;
-				checkboxProp = $(this).parents('form').find('input[type="checkbox"]').prop('checked');
+				checkboxProp = $(this).parents('form').find('input[type=checkbox]').prop('checked');
 				if ($(this).parents('#order').length) {
 					if ($('.wrapper_event_page').length) {
 						if ($(this).parents('.sell-container').length) {
@@ -449,12 +461,12 @@ class orderClass{
 			}
 
 			container.on('keyup', 'input.number', function () {
-				checkboxProp = $(this).parents('form').find('input[type="checkbox"]').length ? $(this).parents('form').find('input[type="checkbox"]').prop('checked') : 1;
+				checkboxProp = $(this).parents('form').find('input[type=checkbox]').length ? $(this).parents('form').find('input[type=checkbox]').prop('checked') : 1;
 				calculation($(this));
 			});
 			container.on('click', '.regulator span', function () {
 				var thisItem = $(this);
-				checkboxProp = $(this).parents('form').find('input[type="checkbox"]').length ? $(this).parents('form').find('input[type="checkbox"]').prop('checked') : 1;
+				checkboxProp = $(this).parents('form').find('input[type=checkbox]').length ? $(this).parents('form').find('input[type=checkbox]').prop('checked') : 1;
 
 				setTimeout(function () {
 					calculation(thisItem);
@@ -510,6 +522,19 @@ class orderClass{
 					id.splice(defaultMethods.searchValue(id, order.attr('id').slice(0, -7)), 1);
 				order.remove();
 				showInfo();
+			});
+		}();
+
+		self.checkbox = function () {
+			var order_tab = $('#order');
+
+			order_tab.on('change', '[type=checkbox]', function () {
+				var self = $(this);
+
+				if(self.prop('checked'))
+					self.parent().find('span').text('Limit');
+				else
+					self.parent().find('span').text('Market');
 			});
 		}();
 

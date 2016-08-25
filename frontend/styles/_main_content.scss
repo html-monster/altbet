@@ -1,7 +1,7 @@
 .content {
   @include span(7.6 of 12);
   @include push (1.8 of 12);
-  margin-top: 80px;
+  margin-top: 70px;
   padding: 15px;
   position: relative;
   .breadcrumbs {
@@ -93,7 +93,12 @@
           .event-content:first-child h3.event-title{  color: transparentize($link-color, 0.4);  }
           .content_title h2{  color: transparentize($link-color, 0.4);  }
         }
-        .event-content.active h3{  color: $link-color;  }
+        .event-content{
+          &:hover{
+            h3.event-title{  color: transparentize($link-color, 0.4) !important;  }
+          }
+          &.active h3{  color: $link-color;  }
+        }
         &:active{
           .content_title{
             h2{  color: $link-color;  }
@@ -227,7 +232,7 @@
         }
       }
       .table {
-        display: flex;
+        //display: flex;
         width: 76%;
         border-radius: 0 6px 6px 0;
         @include main_page_event_bg;
@@ -237,12 +242,9 @@
           color: $main_page_event_title !important;
         }
         .event-content {
-          display: inline-block;
+          float: left;
           padding: 10px 5px 31px;
           width: 50%;
-          &:hover{
-            h3.event-title{  color: transparentize($link-color, 0.4) !important;  }
-          }
           h3 {
             display: block;
             padding-left: 2px;
@@ -375,7 +377,7 @@
       .schedule{
         display: none;
         margin: 15px 10px 25px ;
-        //padding: 0 15px;
+        clear: both;
         position: relative;
         &.active:after{
           content: '';

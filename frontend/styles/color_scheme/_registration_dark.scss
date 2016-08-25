@@ -10,6 +10,13 @@ $reg_title: transparentize(#ffffff, 0.2);
 	&::-moz-placeholder{  color: #878787;  }
 	&:-moz-placeholder{  color: #878787;  }
 	&:-ms-input-placeholder{  color: #878787;  }
+	&[disabled]{
+		background: transparentize(#292830, 0.6);
+		&::-webkit-input-placeholder{  color: transparentize(#8b8c8b, 0.6);  }
+		&::-moz-placeholder{  color: transparentize(#8b8c8b, 0.6);  }
+		&:-moz-placeholder{  color: transparentize(#8b8c8b, 0.6);  }
+		&:-ms-input-placeholder{  color: transparentize(#8b8c8b, 0.6);  }
+	}
 }
 @mixin reg_separator{
 	border-top: 1px solid #17161b;

@@ -5,7 +5,7 @@
       <div class="tabs">
         <span class="tab">
           New orders
-          <label class="trader"><input type="checkbox" name="limit" class="limit" checked><span>Active trader <span class="help">
+          <label class="trader"><input type="checkbox" name="limit" class="limit"><span>Active trader <span class="help">
             <span class="help_message"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, dignissimos.</p></span>
           </span></span></label>
         </span>
@@ -35,10 +35,6 @@
                   <td class="open_pnl"><a href="#">Open pos <span class="quantity up">$26.6 </span><span class="help">
                     <span class="help_message"><p>Open positions on this contracts</p></span>
                   </span></a></td>
-                  <!--<td rowspan="2">
-                    <a href="#" class="close_out active">Close OUT</a>
-                    <a href="#" class="cancel_all active">Cancel All</a>
-                  </td>-->
                 </tr>
               </tbody>
             </table>
@@ -106,11 +102,11 @@
                   <strong class="last-price down">0.33</strong>
                   <strong class="current-order up">pos: <span>255</span></strong></div>
                   <div class="sell-container">
-                    <form>
+                    <form autocomplete="off">
                       <div class="container">
                         <div class="price"><label>Your price</label>
                           <div class="input">
-                            <input type="text" class="number" data-validation="0.33" maxlength="4">
+                            <input type="text" class="number" data-validation="0.33" maxlength="4" autocomplete="off">
                             <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                             <div class="regulator">
                               <span class="plus" title="Press Arrow Up"></span>
@@ -119,7 +115,7 @@
                           </div>
                         </div>
                         <div class="volume"><label>Quantity</label>
-                          <div class="input"><input type="text" class="number" data-validation="123" maxlength="8">
+                          <div class="input"><input type="text" class="number" data-validation="123" maxlength="8" autocomplete="off">
                             <div class="warning" style="display: none;">
                               <p>Допустимое только целые значения больше 0</p>
                             </div>
@@ -130,7 +126,7 @@
                           </div>
                         </div>
                         <div class="obligations"><label>Sum</label>
-                          <div class="input"><input type="text" class="number" data-validation="40.59" maxlength="8">
+                          <div class="input"><input type="text" class="number" data-validation="40.59" maxlength="8" autocomplete="off">
                             <div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div>
                             <div class="regulator">
                               <span class="plus" title="Press Arrow Up"></span>
@@ -139,8 +135,11 @@
                           </div>
                         </div>
                       </div>
+                      <input class="side" name="Side" type="hidden">
+                      <input class="symbol" name="Symbol" type="hidden">
+                      <input class="mirror" name="isMirror" type="hidden">
                       <div class="container">
-                        <label class="checkbox"><input type="checkbox" name="limit" checked><span>Limit</span></label>
+                        <label class="checkbox"><input type="checkbox" name="limit" checked><span>Market</span></label>
                         <input type="submit" class="btn sell" value="Sell" style="text-transform: uppercase; ">
                         <span class="delete"></span>
                       </div>
@@ -150,12 +149,12 @@
               </div>
               <div class="order_content default"  style="position: absolute; left: 0;z-index: 10;  opacity: 0; margin-top: 5px;">
                 <div class="sell-container">
-                  <form>
+                  <form autocomplete="off">
                     <div class="container">
                       <div class="price ">
                         <label>Price</label>
                         <div class="input">
-                          <input type="text" class="number" data-validation="0.33" maxlength="4" disabled>
+                          <input type="text" class="number" data-validation="0.33" maxlength="4" disabled autocomplete="off">
                           <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                         </div>
                       </div>
@@ -171,7 +170,7 @@
                         </div>
                       </div>
                       <div class="obligations "><label>Sum</label>
-                        <div class="input"><input type="text" class="number" data-validation="40.59" maxlength="8" disabled>
+                        <div class="input"><input type="text" class="number" data-validation="40.59" maxlength="8" disabled autocomplete="off">
                           <div class="warning" style="display: none;"><p>Минимально допустимое значение 0.01</p></div>
                         </div>
                       </div>
@@ -187,12 +186,12 @@
               </div>
               <div class="order_content spread" style="position: absolute; left: 0;z-index: 10;  opacity: 0; margin-top: 5px;">
                 <div class="sell-buy-container">
-                  <form>
+                  <form autocomplete="off">
                     <div class="container">
                       <div class="price sell">
                         <label>Selling price</label>
                         <div class="input">
-                          <input type="text" class="number" data-validation="0.33" maxlength="4" disabled>
+                          <input type="text" class="number" data-validation="0.33" maxlength="4" disabled autocomplete="off">
                           <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                         </div>
                       </div>
@@ -212,7 +211,7 @@
                     <div class="container">
                       <div class="price buy">
                         <label>Buying price</label>
-                        <div class="input"><input type="text" class="number" data-validation="0.33" maxlength="4" disabled>
+                        <div class="input"><input type="text" class="number" data-validation="0.33" maxlength="4" disabled autocomplete="off">
                           <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                         </div>
                       </div>
@@ -257,12 +256,12 @@
               </div>
               <div class="form-container">
                 <!--<p class="label">Изменить на:</p>-->
-                <form class="sell">
+                <form class="sell" autocomplete="off">
                   <div class="container">
                     <div class="price ">
                       <label>Your price</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0.">
+                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0." autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -270,7 +269,7 @@
                     <div class="volume ">
                       <label>Quantity</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="123" maxlength="7">
+                        <input type="text" class="number" data-validation="123" maxlength="7" autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -279,7 +278,7 @@
                       <div class="obligations">
                         <label>Sum</label>
                         <div class="input">
-                          <input type="text" class="number" data-validation="40.59" maxlength="10">
+                          <input type="text" class="number" data-validation="40.59" maxlength="10" autocomplete="off">
                           <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                           <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                         </div>
@@ -294,12 +293,12 @@
                     <input type="submit" class="btn sell " value="Sell" style="text-transform: uppercase;">
                   </div>
                 </form>
-                <form class="buy">
+                <form class="buy" autocomplete="off">
                   <div class="container">
                     <div class="price ">
                       <label>Your price</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0.">
+                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0." autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -307,7 +306,7 @@
                     <div class="volume ">
                       <label>Quantity</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="123" maxlength="7">
+                        <input type="text" class="number" data-validation="123" maxlength="7" autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -315,7 +314,7 @@
                     <div class="order_type ">
                       <div class="obligations">
                         <label>Sum</label>
-                        <div class="input"><input type="text" class="number" data-validation="40.59" maxlength="10">
+                        <div class="input"><input type="text" class="number" data-validation="40.59" maxlength="10" autocomplete="off">
                           <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                           <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                         </div>
@@ -354,12 +353,12 @@
               </div>
               <div class="form-container">
                 <!--<p class="label">Изменить на:</p>-->
-                <form class="sell">
+                <form class="sell" autocomplete="off">
                   <div class="container">
                     <div class="price ">
                       <label>Your price</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0.">
+                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0." autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -367,7 +366,7 @@
                     <div class="volume ">
                       <label>Quantity</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="123" maxlength="7">
+                        <input type="text" class="number" data-validation="123" maxlength="7" autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -376,7 +375,7 @@
                       <div class="obligations">
                         <label>Sum</label>
                         <div class="input">
-                          <input type="text" class="number" data-validation="40.59" maxlength="10">
+                          <input type="text" class="number" data-validation="40.59" maxlength="10" autocomplete="off">
                           <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                           <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                         </div>
@@ -391,12 +390,12 @@
                     <input type="submit" class="btn sell " value="Sell" style="text-transform: uppercase;">
                   </div>
                 </form>
-                <form class="buy">
+                <form class="buy" autocomplete="off">
                   <div class="container">
                     <div class="price ">
                       <label>Your price</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0.">
+                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0." autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -404,7 +403,7 @@
                     <div class="volume ">
                       <label>Quantity</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="123" maxlength="7">
+                        <input type="text" class="number" data-validation="123" maxlength="7" autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -412,7 +411,7 @@
                     <div class="order_type ">
                       <div class="obligations">
                         <label>Sum</label>
-                        <div class="input"><input type="text" class="number" data-validation="40.59" maxlength="10">
+                        <div class="input"><input type="text" class="number" data-validation="40.59" maxlength="10" autocomplete="off">
                           <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                           <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                         </div>
@@ -451,12 +450,12 @@
               </div>
               <div class="form-container">
                 <!--<p class="label">Изменить на:</p>-->
-                <form class="sell">
+                <form class="sell" autocomplete="off">
                   <div class="container">
                     <div class="price ">
                       <label>Your price</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0.">
+                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0." autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -464,7 +463,7 @@
                     <div class="volume ">
                       <label>Quantity</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="123" maxlength="7">
+                        <input type="text" class="number" data-validation="123" maxlength="7" autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -473,7 +472,7 @@
                       <div class="obligations">
                         <label>Sum</label>
                         <div class="input">
-                          <input type="text" class="number" data-validation="40.59" maxlength="10">
+                          <input type="text" class="number" data-validation="40.59" maxlength="10" autocomplete="off">
                           <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                           <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                         </div>
@@ -488,12 +487,12 @@
                     <input type="submit" class="btn sell " value="Sell" style="text-transform: uppercase;">
                   </div>
                 </form>
-                <form class="buy">
+                <form class="buy" autocomplete="off">
                   <div class="container">
                     <div class="price ">
                       <label>Your price</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0.">
+                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0." autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -501,7 +500,7 @@
                     <div class="volume ">
                       <label>Quantity</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="123" maxlength="7">
+                        <input type="text" class="number" data-validation="123" maxlength="7" autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -509,7 +508,7 @@
                     <div class="order_type ">
                       <div class="obligations">
                         <label>Sum</label>
-                        <div class="input"><input type="text" class="number" data-validation="40.59" maxlength="10">
+                        <div class="input"><input type="text" class="number" data-validation="40.59" maxlength="10" autocomplete="off">
                           <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                           <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                         </div>
@@ -548,12 +547,12 @@
               </div>
               <div class="form-container">
                 <!--<p class="label">Изменить на:</p>-->
-                <form class="sell">
+                <form class="sell" autocomplete="off">
                   <div class="container">
                     <div class="price ">
                       <label>Your price</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0.">
+                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0." autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -561,7 +560,7 @@
                     <div class="volume ">
                       <label>Quantity</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="123" maxlength="7">
+                        <input type="text" class="number" data-validation="123" maxlength="7" autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -570,7 +569,7 @@
                       <div class="obligations">
                         <label>Sum</label>
                         <div class="input">
-                          <input type="text" class="number" data-validation="40.59" maxlength="10">
+                          <input type="text" class="number" data-validation="40.59" maxlength="10" autocomplete="off">
                           <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                           <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                         </div>
@@ -585,12 +584,12 @@
                     <input type="submit" class="btn sell " value="Sell" style="text-transform: uppercase;">
                   </div>
                 </form>
-                <form class="buy">
+                <form class="buy" autocomplete="off">
                   <div class="container">
                     <div class="price ">
                       <label>Your price</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0.">
+                        <input type="text" class="number" data-validation="0.33" maxlength="4" value="0." autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -598,7 +597,7 @@
                     <div class="volume ">
                       <label>Quantity</label>
                       <div class="input">
-                        <input type="text" class="number" data-validation="123" maxlength="7">
+                        <input type="text" class="number" data-validation="123" maxlength="7" autocomplete="off">
                         <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
                         <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                       </div>
@@ -606,7 +605,7 @@
                     <div class="order_type ">
                       <div class="obligations">
                         <label>Sum</label>
-                        <div class="input"><input type="text" class="number" data-validation="40.59" maxlength="10">
+                        <div class="input"><input type="text" class="number" data-validation="40.59" maxlength="10" autocomplete="off">
                           <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
                           <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
                         </div>

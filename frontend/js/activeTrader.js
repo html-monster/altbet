@@ -56,7 +56,7 @@ class activeTraderClass{
 							$(this).text(titles.eq(ii++).text());
 						});
 					}
-					tabReturn();
+					orderClass.tabReturn();
 					setTimeout(function () {
 						if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == '')
 							takeData($('.content_bet.active '));
@@ -86,16 +86,16 @@ class activeTraderClass{
 
 				order.css('overflow-y', 'hidden');
 				setTimeout(function () {
-					var orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight() + $('header').outerHeight()),
-							actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').outerHeight() + $('.active_trader .info').outerHeight() +
-									$('.active_trader .control').outerHeight() + $('.active_trader .control.remote').outerHeight() + $('.active_trader .limit thead').outerHeight());
+					var orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight() + $('header').outerHeight() + 45),
+							actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +
+									$('.active_trader .control').height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height());
 
 					if(footer.hasClass('active')){
 						tbody.css('max-height', actveTraderHeight - footerHeight);
 					} else {
 						tbody.css('max-height', actveTraderHeight);
 					}
-				}, 200);
+				}, 300);
 			}
 		}();
 

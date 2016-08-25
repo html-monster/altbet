@@ -7,6 +7,12 @@ $reg_title: #292830;
 	&::-moz-placeholder{  color: #8b8c8b;  }
 	&:-moz-placeholder{  color: #8b8c8b;  }
 	&:-ms-input-placeholder{  color: #8b8c8b;  }
+	&[disabled]{
+		&::-webkit-input-placeholder{  color: transparentize(#878787, 0.6);  }
+		&::-moz-placeholder{  color: transparentize(#878787, 0.6);  }
+		&:-moz-placeholder{  color: transparentize(#878787, 0.6);  }
+		&:-ms-input-placeholder{  color: transparentize(#878787, 0.6);  }
+	}
 }
 @mixin reg_separator{
 	border-top: 1px solid #aaadb9;

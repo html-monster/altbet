@@ -25,102 +25,71 @@
     </ul>
     <div class="wrapper_event_page" data-ng-app="orders">
       <h1>Manchester United vs. Chelsea</h1>
-      <div class="schedule"></div>
-      <div class="price_all">
-        <div class="current_price">
-          <div class="wrapper">
-            <h2>MANCHESTER UNITED VS. CHELSEA<!--USD/UAH 30-31/03/2016--></h2>
-            <ul class="price">
-              <li>Current price</li>
-              <li><span>26.675</span></li>
-            </ul>
+      <div class="container">
+        <div class="chart_container">
+          <h2>Manchester United win?</h2>
+          <div class="chart">
+            <img src="Images/graf.jpg" alt="">
           </div>
-          <table class="high">
-            <tr>
-              <td><span>High</span></td>
-              <td><strong>0.76</strong></td>
-            </tr>
-          </table>
-          <table class="low">
-            <tr>
-              <td><span>Low</span></td>
-              <td><strong>0.29</strong></td>
-            </tr>
-          </table>
         </div>
-        <div class="specification">
-          <h2>Specification</h2>
-          <table class="specification_table">
-            <tr>
-              <td><strong>Symbol:</strong></td>
-              <td><span>MANCHESTER UNITED VS. CHELSEA</span></td>
-            </tr>
-            <tr class="color">
-              <td><strong>Start:</strong></td>
-              <td><span>05/18/2016</span></td>
-            </tr>
-            <tr>
-              <td><strong>End:</strong></td>
-              <td><span>4:00 PM 05/18/2016</span></td>
-            </tr>
-            <tr class="color">
-              <td><strong>Strike price:</strong></td>
-              <td><span>UAH 30</span></td>
-            </tr>
-            <tr>
-              <td><strong>Trade volume:</strong></td>
-              <td><span>7/006</span></td>
-            </tr>
-            <tr class="color">
-              <td><strong>Volume today:</strong></td>
-              <td><span>12</span></td>
-            </tr>
-            <tr>
-              <td><strong>All positions:</strong></td>
-              <td><span>3.717</span></td>
-            </tr>
-          </table>
+        <div class="event_info">
+          <div class="current_price">
+            <div class="wrapper">
+              <h2>Manchester United vs. Chelsea</h2>
+              <div class="current_price">
+                <span class="title">Current price:</span>
+                <span class="value">26.27</span>
+              </div>
+            </div>
+            <div class="price_scope">
+              <div class="high container">
+                <span class="title">High</span>
+                <span class="current">0.76</span>
+              </div>
+              <div class="low container">
+                <span class="title">Low</span>
+                <span class="current">0.29</span>
+              </div>
+            </div>
+          </div>
+          <div class="specification">
+            <h2>Specification</h2>
+            <table class="specification_table">
+              <tr>
+                <td><strong>Symbol:</strong></td>
+                <td><span>Manchester United</span></td>
+              </tr>
+              <tr>
+                <td><strong>Start:</strong></td>
+                <td><span>05/18/2016</span></td>
+              </tr>
+              <tr>
+                <td><strong>End:</strong></td>
+                <td><span>4:00 PM 05/18/2016</span></td>
+              </tr>
+              <tr>
+                <td><strong>Strike price:</strong></td>
+                <td><span>UAH 30</span></td>
+              </tr>
+              <tr>
+                <td><strong>Trade volume:</strong></td>
+                <td><span>7/006</span></td>
+              </tr>
+              <tr>
+                <td><strong>Volume today:</strong></td>
+                <td><span>12</span></td>
+              </tr>
+              <tr>
+                <td><strong>All positions:</strong></td>
+                <td><span>3.717</span></td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
-      <div id="mainController" class="executed" data-ng-controller="ordersCtrl">
-        <!--<div class="executed_orders">
-          <div class="thead">
-            <strong>Продажа</strong>
-            <strong>Обьем</strong>
-          </div>
-          <div class="tbody">
-            <div class="tr" ng-repeat="order in orderSell">
-              <div class="td"><span>{{order.Price}}</span></div>
-              <div class="td"><span>{{order.Quantity}}</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="executed_orders">
-          <div class="thead">
-            <strong>Покупка</strong>
-            <strong>Обьем</strong>
-          </div>
-          <div class="tbody">
-            <div class="tr" ng-repeat="order in orderBuy">
-              <div class="td"><span>{{order.Price}}</span></div>
-              <div class="td"><span>{{order.Quantity}}</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="executed_orders">
-          <div class="thead">
-            <strong>Исполненые ордера</strong>
-          </div>
-          <div class="tbody">
-            <div class="tr" ng-repeat="tick in ticks">
-              <div class="td"><span>{{tick.Time}}</span></div>
-              <div class="td"><span>{{tick.Price}}</span></div>
-              <div class="td"><span>{{tick.Volume}}</span></div>
-            </div>
-          </div>
-        </div>-->
+      <div id="mainController" class="executed">
         <div class="executed_orders sell order_create">
-          <table class="head">
+          <table>
             <thead>
               <tr>
                 <th><span>ID</span></th>
@@ -128,44 +97,37 @@
                 <th><span>Quantity</span></th>
               </tr>
             </thead>
+            <tbody>
+            <tr>
+              <td><span>Alt.bet</span></td>
+              <td class="clickable price sell"><span>&#162;55</span></td>
+              <td class="clickable volume sell"><span>125</span></td>
+            </tr>
+            <tr>
+              <td><span>Alt.bet</span></td>
+              <td class="clickable price sell"><span>&#162;52</span></td>
+              <td class="clickable volume sell"><span>156</span></td>
+            </tr>
+            <tr>
+              <td><span>Alt.bet</span></td>
+              <td class="clickable price sell"><span>&#162;49</span></td>
+              <td class="clickable volume sell"><span>118</span></td>
+            </tr>
+            <tr>
+              <td><span>Alt.bet</span></td>
+              <td class="clickable price sell"><span>&#162;47</span></td>
+              <td class="clickable volume sell"><span>96</span></td>
+            </tr>
+            <tr>
+              <td><span>Alt.bet</span></td>
+              <td class="clickable price sell"><span>&#162;44</span></td>
+              <td class="clickable volume sell"><span>235</span></td>
+            </tr>
+            </tbody>
           </table>
-          <div class="body">
-            <table>
-              <tbody>
-                 <!-- <td><span>Alt.bet</span></td>
-                  <td><span>{{order.LimitPrice}}</span></td>
-                  <td><span>{{order.Quantity}}</span></td>-->
-                <tr>
-                  <td><span>Alt.bet</span></td>
-                  <td class="clickable price"><span>&#162;55</span></td>
-                  <td class="clickable volume"><span>125</span></td>
-                </tr>
-                 <tr>
-                   <td><span>Alt.bet</span></td>
-                   <td class="clickable price"><span>&#162;52</span></td>
-                   <td class="clickable volume"><span>156</span></td>
-                 </tr>
-                 <tr>
-                   <td><span>Alt.bet</span></td>
-                   <td class="clickable price"><span>&#162;49</span></td>
-                   <td class="clickable volume"><span>118</span></td>
-                 </tr>
-                 <tr>
-                   <td><span>Alt.bet</span></td>
-                   <td class="clickable price"><span>&#162;47</span></td>
-                   <td class="clickable volume"><span>96</span></td>
-                 </tr>
-                 <tr>
-                   <td><span>Alt.bet</span></td>
-                   <td class="clickable price"><span>&#162;44</span></td>
-                   <td class="clickable volume"><span>235</span></td>
-                 </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
         <div class="executed_orders buy order_create">
-          <table class="head">
+          <table>
             <thead>
               <tr>
                 <th><span>ID</span></th>
@@ -173,56 +135,47 @@
                 <th><span>Quantity</span></th>
               </tr>
             </thead>
+            <tbody>
+              <tr>
+                <td><span>Alt.bet</span></td>
+                <td class="clickable price buy"><span>&#162;56</span></td>
+                <td class="clickable volume buy"><span>211</span></td>
+              </tr>
+              <tr>
+                <td><span>Alt.bet</span></td>
+                <td class="clickable price buy"><span>&#162;59</span></td>
+                <td class="clickable volume buy"><span>335</span></td>
+              </tr>
+              <tr>
+                <td><span>Alt.bet</span></td>
+                <td class="clickable price buy"><span>&#162;63</span></td>
+                <td class="clickable volume buy"><span>600</span></td>
+              </tr>
+              <tr>
+                <td><span>Alt.bet</span></td>
+                <td class="clickable price buy"><span>&#162;66</span></td>
+                <td class="clickable volume buy"><span>421</span></td>
+              </tr>
+              <tr>
+                <td><span>Alt.bet</span></td>
+                <td class="clickable price buy"><span>&#162;69</span></td>
+                <td class="clickable volume buy"><span>260</span></td>
+              </tr>
+              <tr>
+                <td><span>Alt.bet</span></td>
+                <td class="clickable price buy"><span>&#162;73</span></td>
+                <td class="clickable volume buy"><span>259</span></td>
+              </tr>
+              <tr>
+                <td><span>Alt.bet</span></td>
+                <td class="clickable price buy"><span>&#162;81</span></td>
+                <td class="clickable volume buy"><span>145</span></td>
+              </tr>
+            </tbody>
           </table>
-          <div class="body">
-            <table>
-              <tbody>
-                <!--<tr ng-repeat="order in orderBuy">
-                  <td><span>Alt.bet</span></td>
-                  <td><span>{{order.LimitPrice}}</span></td>
-                  <td><span>{{order.Quantity}}</span></td>
-                </tr>-->
-                <tr>
-                  <td><span>Alt.bet</span></td>
-                  <td class="clickable price"><span>&#162;56</span></td>
-                  <td class="clickable volume"><span>211</span></td>
-                </tr>
-                <tr>
-                  <td><span>Alt.bet</span></td>
-                  <td class="clickable price"><span>&#162;59</span></td>
-                  <td class="clickable volume"><span>335</span></td>
-                </tr>
-                <tr>
-                  <td><span>Alt.bet</span></td>
-                  <td class="clickable price"><span>&#162;63</span></td>
-                  <td class="clickable volume"><span>600</span></td>
-                </tr>
-                <tr>
-                  <td><span>Alt.bet</span></td>
-                  <td class="clickable price"><span>&#162;66</span></td>
-                  <td class="clickable volume"><span>421</span></td>
-                </tr>
-                <tr>
-                  <td><span>Alt.bet</span></td>
-                  <td class="clickable price"><span>&#162;69</span></td>
-                  <td class="clickable volume"><span>260</span></td>
-                </tr>
-                <tr>
-                  <td><span>Alt.bet</span></td>
-                  <td class="clickable price"><span>&#162;73</span></td>
-                  <td class="clickable volume"><span>259</span></td>
-                </tr>
-                <tr>
-                  <td><span>Alt.bet</span></td>
-                  <td class="clickable price"><span>&#162;81</span></td>
-                  <td class="clickable volume"><span>145</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
         <div class="executed_orders">
-          <table class="head">
+          <table>
             <thead>
               <tr>
                 <th><span>Executed orders</span></th>
@@ -230,123 +183,127 @@
                 <th></th>
               </tr>
             </thead>
+            <tbody>
+            <tr>
+              <td><span>05/25/2016 16:36:18</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr>
+            <tr>
+              <td><span>05/25/2016 16:36:25</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr>
+            <tr>
+              <td><span>05/25/2016 16:36:29</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr>
+            <tr>
+              <td><span>05/25/2016 16:36:35</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr>
+            <tr>
+              <td><span>05/25/2016 16:36:59</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr>
+            <tr>
+              <td><span>05/25/2016 16:37:15</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr>
+            <tr>
+              <td><span>05/25/2016 16:37:30</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr>
+            <tr>
+              <td><span>05/25/2016 16:37:45</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr>
+            <tr>
+              <td><span>05/25/2016 16:37:50</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr><tr>
+              <td><span>05/25/2016 16:38:35</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr>
+            <tr>
+              <td><span>05/25/2016 16:38:52</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr><tr>
+              <td><span>05/25/2016 16:39:12</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr>
+            <tr>
+              <td><span>05/25/2016 16:39:19</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr>
+            <tr>
+              <td><span>05/25/2016 16:39:27</span></td>
+              <td><span>&#162;46</span></td>
+              <td><span>256</span></td>
+            </tr>
+            </tbody>
           </table>
-          <div class="body">
-            <table>
-             <!-- <tr ng-repeat="tick in ticks">
-                <td><span>{{tick.Time}}</span></td>
-                <td><span>{{tick.Price}}</span></td>
-                <td><span>{{tick.Volume}}</span></td>
-              </tr>-->
-              <tbody>
-                <tr>
-                  <td><span>05/25/2016 16:36:18</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr>
-                <tr>
-                  <td><span>05/25/2016 16:36:25</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr>
-                <tr>
-                  <td><span>05/25/2016 16:36:29</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr>
-                <tr>
-                  <td><span>05/25/2016 16:36:35</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr>
-                <tr>
-                  <td><span>05/25/2016 16:36:59</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr>
-                <tr>
-                  <td><span>05/25/2016 16:37:15</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr>
-                <tr>
-                  <td><span>05/25/2016 16:37:30</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr>
-                <tr>
-                  <td><span>05/25/2016 16:37:45</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr>
-                <tr>
-                  <td><span>05/25/2016 16:37:50</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr><tr>
-                  <td><span>05/25/2016 16:38:35</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr>
-                <tr>
-                  <td><span>05/25/2016 16:38:52</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr><tr>
-                  <td><span>05/25/2016 16:39:12</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr>
-                <tr>
-                  <td><span>05/25/2016 16:39:19</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr>
-                <tr>
-                  <td><span>05/25/2016 16:39:27</span></td>
-                  <td><span>&#162;46</span></td>
-                  <td><span>256</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
-      <div class="currency">
-        <strong class="title">For comparison </strong>
-        <div class="currency_wrap">
-          <div class="table_wrap">
-            <table class="currency_table">
+      <div class="comparison">
+        <div class="table_wrap">
+          <table class="comparison_table">
+            <thead>
+            <tr>
+              <th><strong>For comparison</strong></th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td><span>Smarkets</span></td>
+              <td class="sell"><span>$0.61</span></td>
+              <td class="sell"><span>1.63</span></td>
+            </tr>
+            <tr>
+              <td><span>Betfair</span></td>
+              <td class="sell"><span>$0.59</span></td>
+              <td class="sell"><span>1.69</span></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table_wrap">
+          <table class="comparison_table">
+            <thead>
+            <tr>
+              <th><strong>For comparison</strong></th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
               <tr>
                 <td><span>Smarkets</span></td>
-                <td><span>$0.61</span></td>
-                <td><span>1.63</span></td>
+                <td class="buy"><span>$0.69</span></td>
+                <td class="buy"><span>1.45</span></td>
               </tr>
               <tr>
                 <td><span>Betfair</span></td>
-                <td><span>$0.59</span></td>
-                <td><span>1.69</span></td>
+                <td class="buy"><span>$0.63</span></td>
+                <td class="buy"><span>1.58</span></td>
               </tr>
-            </table>
-          </div>
-          <div class="table_wrap">
-            <table class="currency_table">
-              <tr>
-                <td><span>Smarkets</span></td>
-                <td><span>$0.69</span></td>
-                <td><span>1.45</span></td>
-              </tr>
-              <tr>
-                <td><span>Betfair</span></td>
-                <td><span>$0.63</span></td>
-                <td><span>1.58</span></td>
-              </tr>
-            </table>
-          </div>
+            </tbody>
+          </table>
         </div>
       </div>
-      <!--<button class="buy btn">Buy</button>-->
-      <!--<button class="sell btn">Sell</button>-->
       <div class="information">
         <h4>General information on the courses NBU banks</h4>
         <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium, amet animi aperiam
@@ -366,27 +323,11 @@
 </div>
 
 <div include-html="include/footer.html"></div>
-<script>
-//  $(document).ready(function () {
-//    var object = JSON.parse('{"MessageID":"b71b1dd2-a7b2-48e5-93c0-c3219a21cd11","MessageType":"WebSoketOrdersResponse","ActiveOrders":[{"Orders":[{"SPS":[{"Price":&#162;33000000,"Quantity":10},{"Price":0.35000000,"Quantity":10},{"Price":0.42000000,"Quantity":10},{"Price":0.54000000,"Quantity":10}],"Side":1},{"SPS":[{"Price":0.02000000,"Quantity":10},{"Price":0.07000000,"Quantity":10},{"Price":0.21000000,"Quantity":10},{"Price":0.25000000,"Quantity":10}],"Side":0}],"Symbol":{"Currency":"USD","Exchange":"THIRD","Name":"SOMETHING"}},{"Orders":[{"SPS":[{"Price":0.04000000,"Quantity":10},{"Price":0.29000000,"Quantity":10},{"Price":0.41000000,"Quantity":10}],"Side":0},{"SPS":[{"Price":0.75000000,"Quantity":10},{"Price":0.78000000,"Quantity":10}],"Side":1}],"Symbol":{"Currency":"USD","Exchange":"SECOND","Name":"EUR\/USD"}}],"Ticks":[{"Symbol":{"Currency":"USD","Exchange":"THIRD","Name":"SOMETHING"},"Ticks":[{"MessageID":"4d30701e-f2b3-4345-ac1c-693fba90c30a","MessageType":"Tick","Ask":0,"AskSize":0,"Bid":0,"BidSize":0,"Currency":"USD","Price":0.01000000,"Symbol":{"Currency":"USD","Exchange":"THIRD","Name":"SOMETHING"},"Time":"\/Date(1461780611633+0300)\/","Volume":10},{"MessageID":"05f0bb1e-30be-4922-9d0f-5e8e925dc3fa","MessageType":"Tick","Ask":0,"AskSize":0,"Bid":0,"BidSize":0,"Currency":"USD","Price":0.03000000,"Symbol":{"Currency":"USD","Exchange":"THIRD","Name":"SOMETHING"},"Time":"\/Date(1461780613097+0300)\/","Volume":10},{"MessageID":"47195d67-64c4-4b92-8ed7-f7817bf2f009","MessageType":"Tick","Ask":0,"AskSize":0,"Bid":0,"BidSize":0,"Currency":"USD","Price":0.29000000,"Symbol":{"Currency":"USD","Exchange":"THIRD","Name":"SOMETHING"},"Time":"\/Date(1461780615633+0300)\/","Volume":10}]}]}');
-//    angular.module("orders", [])
-//           .controller("ordersCtrl", function ($scope) {
-//             $scope.tasks = [
-//               { action: "Buy flowers", complete: false },
-//               { action: "Go to gym", complete: false },
-//               { action: "Buy snickers", complete: true },
-//               { action: "Buy notebook", complete: false },
-//               { action: "Call friends", complete: false },
-//               { action: "Go to cinema", complete: false },
-//               { action: "Buy Big-Mac", complete: true },
-//               { action: "Buy a book", complete: false },
-//               { action: "Call mom", complete: false }
-//             ];
-//           });
-//  });
 
-</script>
+<script src="/js/vendors.js" defer></script>
 <script src="/js/all.js"></script>
+
 </body>
+
 </html>
 

@@ -122,14 +122,10 @@
   }
   .tab_content{
     width: 760px;
-    //max-height: 20%;
     padding: 30px;
     border-radius: 4px;
     background-image: $sign_in_bg;
     @include scroll;
-    //@include md(1450){
-    //  height: 540px;
-    //}
     .tab_item{
       display: none;
       &:first-child{
@@ -280,6 +276,9 @@
       border-radius: 4px;
       transition: background-color 0.3s, border-color 0.3s;
       @include reg_input_color;
+      &[disabled]{
+        & ~ .info{  display: none;  }
+      }
     }
     textarea.input__field--yoshiko{
       height: 39px;
@@ -324,6 +323,10 @@
     .input__field--yoshiko:focus ~ .input__label--yoshiko .input__label-content--yoshiko,
     .input--filled .input__label-content--yoshiko {
       transform: translate3d(0, 100%, 0);
+    }
+
+    .input__field--yoshiko[disabled] ~ .input__label--yoshiko .input__label-content--yoshiko{
+      color: transparentize(#8b8c8b, 0.6);
     }
 
 
