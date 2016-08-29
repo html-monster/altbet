@@ -2,18 +2,8 @@ class orderClass{
 	constructor(){
 		var id = [], limit = 0, self = this;
 
-		function showInfo () {
-			if($('#order .default_orders').children().length > 1)
-				$('#default_order_info').hide();
-			else
-				$('#default_order_info').show();
-		}
+		orderClass.showInfo();
 
-		showInfo();
-
-		// $(document).ready(function () {
-		// 	showInfo();
-		// });
 		// sidebar height and current order ==================================================================================
 		self.orderSize = function () {
 			// numericalVerification($('.order_content input'));
@@ -355,7 +345,7 @@ class orderClass{
 				}
 
 				orderClass.tabReturn();
-				showInfo();
+				orderClass.showInfo();
 				// $("body select").msDropDown();
 			});
 		}();
@@ -370,31 +360,31 @@ class orderClass{
 						id,
 						items;
 				checkboxProp = $(this).parents('form').find('input[type=checkbox]').prop('checked');
-				if ($(this).parents('#order').length) {
-					if ($('.wrapper_event_page').length) {
-						if ($(this).parents('.sell-container').length) {
-							items = $('.executed_orders.sell .body tr');
-							priceMarket = '0.' + items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
-						}
-						else {
-							items = $('.executed_orders.buy .body tr');
-							priceMarket = '0.' + items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
-						}
-					}
-					else {
-						id = $(this).parents('.order_content').attr('id').slice(0, -7);
-						if ($(this).parents('.sell-container').length) {
-							items = $('.event-content#' + id + ' .sell').children();
-							priceMarket = items.eq(items.length - 1).find('.price').text().replace(/[^0-9.]+/g, "");
-						}
-						else {
-							items = $('.event-content#' + id + ' .buy').children();
-							priceMarket = items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
-						}
-					}
-				}
+				// if ($(this).parents('#order').length) {
+				// 	if ($('.wrapper_event_page').length) {
+				// 		if ($(this).parents('.sell-container').length) {
+				// 			items = $('.executed_orders.sell .body tr');
+				// 			priceMarket = '0.' + items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+				// 		}
+				// 		else {
+				// 			items = $('.executed_orders.buy .body tr');
+				// 			priceMarket = '0.' + items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+				// 		}
+				// 	}
+				// 	else {
+				// 		id = $(this).parents('.order_content').attr('id').slice(0, -7);
+				// 		if ($(this).parents('.sell-container').length) {
+				// 			items = $('.event-content#' + id + ' .sell').children();
+				// 			priceMarket = items.eq(items.length - 1).find('.price').text().replace(/[^0-9.]+/g, "");
+				// 		}
+				// 		else {
+				// 			items = $('.event-content#' + id + ' .buy').children();
+				// 			priceMarket = items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+				// 		}
+				// 	}
+				// }
 				if (checkboxProp) {
-					price.html('<label style="display: none;">Your price</label><div class="input"><input type="text" class="number" data-validation="0.33" maxlength="4" value="' + priceMarket + '"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator" style="display: none;"><span class="plus"></span><span class="minus"></span></div></div>').find('.regulator').fadeIn(200);
+					price.html('<label style="display: none;">Your price</label><div class="input"><input type="text" class="number" data-validation="0.33" maxlength="4"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator" style="display: none;"><span class="plus"></span><span class="minus"></span></div></div>').find('.regulator').fadeIn(200);
 					price.find('label').fadeIn(200);
 					price.find('input').focus();
 					price.find('input')[0].selectionStart = 4;
@@ -404,9 +394,9 @@ class orderClass{
 					price.find('.regulator').fadeOut(200);
 					price.find('label').fadeOut(200);
 					setTimeout(function () {
-						price.html('<label>Market price</label><div class="input"><input type="text" class="number" data-validation="0.33" maxlength="4" value="' + priceMarket + '" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div>');
+						price.html('<label>Market price</label><div class="input"><input type="text" class="number" data-validation="0.33" maxlength="4" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div>');
 					}, 200);
-					price.parents('form').find('input.number').val('');
+					price.parents('form').find('.obligations input.number').val('');
 					price.parents('form').find('.volume input').focus();
 				}
 			});
@@ -513,7 +503,7 @@ class orderClass{
 				else{
 					form.remove();
 				}
-				showInfo();
+				orderClass.showInfo();
 			});
 			order_tab.on('click', '.close', function (e) {
 				e.preventDefault();
@@ -521,7 +511,7 @@ class orderClass{
 				if($(this).parents('.default_orders').length && id.length)
 					id.splice(defaultMethods.searchValue(id, order.attr('id').slice(0, -7)), 1);
 				order.remove();
-				showInfo();
+				orderClass.showInfo();
 			});
 		}();
 
@@ -541,13 +531,20 @@ class orderClass{
 
 		// order drag and drop ===============================================================================================
 		$(function() {
-			var current = $( "#current-orders" );
+			var current = $( ".ui-sort" );
 			current.sortable({
 				placeholder: "ui-state-highlight"
 			});
 			current.disableSelection();
 		});
 
+	}
+
+	static showInfo () {
+		if($('#order .default_orders').children().length > 1)
+			$('#default_order_info').hide();
+		else
+			$('#default_order_info').show();
 	}
 
 	static tabReturn() {

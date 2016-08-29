@@ -1,0 +1,33 @@
+$event_page_color: transparentize(#ffffff, 0.2);
+$event_page_block_separate: #000000;
+@mixin event_page_current_price{
+	border-top: 1px solid transparentize(#ffffff, 0.9);
+}
+$event_page_high_price_bg: linear-gradient(to bottom, transparentize(#64c9ef, 0.94), transparentize(#3498da, 0.94));
+$event_page_low_price_bg: linear-gradient(to bottom, transparentize(#f88447, 0.94), transparentize(#ef4d22, 0.94));
+$event_page_tr_bg: rgba(255, 255, 255, 0.05);
+$event_page_tr_border_top: rgba(255, 255, 255, 0.1);
+@mixin event_page_tr_separate{
+	td:after{
+		content: '';
+		width: 100%;
+		height: 1px;
+		background: rgba(255, 255, 255, 0.1);
+		position: absolute;
+		left: 0;
+		bottom: -2px;
+	}
+}
+@mixin event_page_title_separate{
+	border-bottom: 1px solid transparentize(#ffffff, 0.9);
+	&:after {
+		content: '';
+		display: block;
+		width: 100%;
+		height: 1px;
+		background: #000000;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+	}
+}

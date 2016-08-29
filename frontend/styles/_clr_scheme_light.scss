@@ -5,6 +5,7 @@ $main-color-darker: #273456;
 $main-color-hover: #000000;
 $default-button-bg: #e9eaee;
 $active_bg: linear-gradient(to bottom, #64c9ef, #3498da);
+$bg_color: #fff;
 
 $checkbox_bg: #ffffff;
 $checkbox_label_color: #000000;
@@ -52,3 +53,4 @@ $breadcrumbs-color: transparentize(#000000, 0.5);
 @import "color_scheme/trader_light";
 @import "color_scheme/_sign_in_light";
 @import "color_scheme/registration_light";
+@import "color_scheme/event_page_light";

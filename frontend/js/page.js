@@ -48,6 +48,7 @@ $(document).ready(function () {
 
 	new orderClass();//order activation
 	new activeTraderClass(); //active trader activation
+	new eventPageClass(); //active order on the event page
 
 	new themeChangeClass();
 	(function changeSelect(){

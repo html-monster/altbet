@@ -1,10 +1,11 @@
 $main-bg: #211e25;
 $link-color: #3498da;
-$main-color: #98a6ad;
+$main-color: transparentize(#ffffff, 0.2);
 $main-color-darker: #dedede;
 $main-color-hover: #ffffff;
 $default-button-bg: #211e25;
 $active_bg: linear-gradient(to top, #bdc0cd, #ffffff);
+$bg_color: linear-gradient(to bottom, #53515e, #292830);
 
 $checkbox_bg: #53525d;
 $checkbox_label_color: #ffffff;
@@ -52,3 +53,4 @@ $breadcrumbs-color: transparentize(#ffffff, 0.5);
 @import "color_scheme/trader_dark";
 @import "color_scheme/sign_in_dark";
 @import "color_scheme/registration_dark";
+@import "color_scheme/event_page_dark";

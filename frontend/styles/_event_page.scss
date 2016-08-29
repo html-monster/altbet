@@ -5,27 +5,25 @@
   h1 {
     text-transform: uppercase;
     font-size: 18px;
-    color: transparentize(#121c1c, 0.3);
-    margin-bottom: 15px;
+    //color: transparentize($main-color, 0.3);
+		color: $main-color;
+		margin-bottom: 15px;
     text-align: left;
   }
 	h2{
 		padding-bottom: 15px;
 		font-size: 14px;
 		font-weight: 600;
-		color: #121c1c;
-		border-bottom: 1px solid #dce1e6;
-
+		color: $main-color;
+		border-bottom: 1px solid $event_page_block_separate;
 	}
-	.container{
-		display: flex;
-	}
+	.container{  display: flex;  }
   .chart_container {
     width: 67.66%;
     margin-bottom: 10px;
 		margin-right: 10px;
     padding: 15px;
-    background: #ffffff;
+    background: $bg_color;
     border-radius: 4px;
 		.chart{  height: 455px;  }
   }
@@ -36,12 +34,13 @@
     .current_price {
       .wrapper {
         padding: 15px;
-        background: #ffffff;
+        background: $bg_color;
         border-radius: 5px;
         overflow: hidden;
         .current_price {
-          padding-top: 15px;
-          color: #37343b;
+					padding-top: 15px;
+          color: $event_page_color;
+					@include event_page_current_price;
           .title{
             font-size: 12px;
             opacity: 0.8;
@@ -58,18 +57,19 @@
         .container{
           display: flex;
           width: 50%;
-          background: #ffffff;
           border-radius: 6px;
           overflow: hidden;
           &.high {
             margin-right: 5px;
+						background: $event_page_high_price_bg;
             .title{  background: linear-gradient(to bottom, #64c9ef, #3498da);  }
             .current{  color: #3498da;  }
           }
           &.low{
             margin-left: 5px;
+						background: $event_page_low_price_bg;
             .title{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
-            .content{  color: #ef4e22;  }
+            .current{  color: #ef4e22;  }
           }
         }
         span {
@@ -78,7 +78,7 @@
           padding: 10px;
           text-align: center;
           font-size: 14px;
-          &.title{  color: #ffffff;  }
+          &.title{  color: $main-bg;  }
         }
       }
 
@@ -87,30 +87,45 @@
       padding: 15px;
 			margin-bottom: 10px;
       border-radius: 4px;
-      background: #ffffff;
+      background: $bg_color;
+			color: $event_page_color;
       .specification_table {
         width: 100%;
         tr {
-					&:nth-child(odd){
-						background: transparentize(#dce1e6, 0.7);
-						border-top: 1px solid #dce1e6;
-						border-bottom: 1px solid #dce1e6;
+					&:nth-child(odd){  background: $event_page_tr_bg;  }
+					@include event_page_tr_separate;
+          td {
+						padding: 8px;
+						border-top: 1px solid $event_page_tr_border_top;
+						border-bottom: 1px solid $event_page_block_separate;
+						position: relative;
 					}
-          td {  padding: 8px;  }
 					strong {
 						font-size: 12px;
-						color: #37343b;
 						font-weight: normal;
 						opacity: 0.6;
 					}
-					span {
-						font-size: 12px;
-						color: #37343b;
-					}
+					span {  font-size: 12px;  }
         }
       }
     }
   }
+	.executed, .comparison{
+		thead {
+			display: block;
+			margin: 0 15px;
+			padding-bottom: 5px;
+			position: relative;
+			@include event_page_title_separate;
+		}
+		tbody {
+			display: block;
+			max-height: 210px;
+			margin: 10px 15px 0;
+			border-radius: 4px;
+			@include scroll;
+		}
+	}
   .executed {
     display: flex;
 		margin-bottom: 10px;
@@ -121,7 +136,7 @@
       flex-grow: 1;
       flex-direction: column;
       position: relative;
-			background: #ffffff;
+			background: $bg_color;
 			border-radius: 4px;
       &:nth-child(1), &:nth-child(2){
 				margin-right: 10px;
@@ -157,6 +172,10 @@
         }
       }
       &:nth-child(3){
+				tr{
+					&.sell td:nth-of-type(2), &.sell td:nth-of-type(3){  color: #ef4d22;  }
+					&.buy td:nth-of-type(2), &.buy td:nth-of-type(3){  color: #3498da;  }
+				}
         th, td{
 					width: 20%;
 					&:first-of-type{
@@ -165,24 +184,10 @@
 				}
       }
       table{  width: 100%;  }
-			thead{
-				display: block;
-				margin: 0 15px;
-				padding-bottom: 5px;
-				border-bottom: 2px solid #dce1e6;
-			}
-      tbody{
-				display: block;
-				width: calc(100% - 30px);
-				margin: 10px 15px 0;
-        max-height: 210px;
-       	transition: 0.4s ease-out;
-				overflow: hidden;
-				@include scroll;
-      }
+      tbody{  transition: 0.4s ease-out;  }
       th{
         text-align: left;
-        color: #121c1c;
+        color: $main-color;
 				font-weight: 600;
 				font-size: 14px;
         span{
@@ -198,7 +203,7 @@
       tr:last-of-type td{  padding-bottom: 5px;  }
       td{
         font-size: 14px;
-        color: #37343b;
+        color: $main-color;
 				&.sell{  color: #ef5b33;  }
 				&.buy{  color: #3498da;  }
       }
@@ -215,33 +220,21 @@
       position: relative;
     }
 		strong{
-			color: #121c1c;
+			color: $main-color;
 			font-weight: 600;
 			font-size: 14px;
 		}
     .table_wrap{
       width: 50%;
 			padding: 10px 0;
-			background: #ffffff;
+			background: $bg_color;
+			border-radius: 4px;
 			&:first-child{  margin-right: 10px;  }
     }
     .comparison_table {
       width: 100%;
       overflow: hidden;
-			thead{
-				display: block;
-				margin: 0 15px;
-				padding-bottom: 5px;
-				border-bottom: 2px solid #dce1e6;
-				th:first-child{  width: 50%;  }
-			}
-			tbody{
-				display: block;
-				max-height: 210px;
-				margin: 10px 15px 0;
-				border-radius: 4px;
-				@include scroll;
-			}
+			thead th:first-child{  width: 50%;  }
       tr {
 				display: table;
 				table-layout: fixed;
@@ -251,6 +244,7 @@
 				th{  padding: 0 5px; text-align: left;  }
         td {
           padding: 0 4px;
+					color: $event_page_color;
 					&.sell{  color: #ef5b33;  }
 					&.buy{  color: #3498da;  }
           span {  font-size: 14px;  }
@@ -258,5 +252,9 @@
       }
     }
   }
+	.information{
+		h2{  border: none;  font-size: 18px;  }
+		p{  color: $event_page_color; font-size: 12px;  line-height: 1.75;  }
+	}
 }
 

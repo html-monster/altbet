@@ -1,0 +1,9 @@
+$event_page_color: #37343b;
+$event_page_block_separate: #dce1e6;
+@mixin event_page_current_price{  }
+$event_page_high_price_bg: #ffffff;
+$event_page_low_price_bg: #ffffff;
+$event_page_tr_bg: transparentize(#dce1e6, 0.7);
+$event_page_tr_border_top: #dce1e6;
+@mixin event_page_tr_separate{  }
+@mixin event_page_title_separate{  border-bottom: 2px solid #dce1e6;  }
