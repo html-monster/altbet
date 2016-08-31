@@ -18,400 +18,132 @@
 
   <div class="content_my_position">
     <div class="my_position">
-      <div class="wrapper">
+      <ul class="breadcrumbs">
+        <li><a href="index.html">Home</a></li>
+        <li>My position</li>
+      </ul>
+      <div class="container">
         <div class="tabs">
-          <span class="tab">Открытые ордера</span>
-          <span class="tab">Мои позиции</span>
-          <span class="tab">История</span>
+          <span class="tab">Open orders</span>
+          <span class="tab">My positions</span>
+          <span class="tab">History</span>
         </div>
         <div class="tab_content">
           <div class="tab_item">
             <div class="my_position_tab">
               <div class="wrapper">
                 <div class="filters">
-                  <input type="checkbox" id="first" class="checkbox" value="cb1" checked/>
-                  <label for="first">Спорт</label>
-                  <input type="checkbox" id="second" class="checkbox" value="cb2" checked/>
-                  <label for="second"><span class="sub_tab">Финансы</span></label>
-                  <input type="checkbox" id="third" class="checkbox" value="cb3" checked/>
-                  <label for="third"><span class="sub_tab">Киберспорт</span></label>
-                  <input type="checkbox" id="fourth" class="checkbox" value="cb4" checked/>
-                  <label for="fourth"><span class="sub_tab">Политика</span></label>
+                  <input type="checkbox" id="cb1" class="checkbox" value="tab1" checked/>
+                  <label for="cb1" class="sport"><span class="sub_tab">Sport</span></label>
+                  <input type="checkbox" id="cb2" class="checkbox" value="tab2" checked/>
+                  <label for="cb2" class="finance"><span class="sub_tab">Finance</span></label>
+                  <input type="checkbox" id="cb3" class="checkbox" value="tab3" checked/>
+                  <label for="cb3" class="e_sport"><span class="sub_tab">E-sport</span></label>
+                  <input type="checkbox" id="cb4" class="checkbox" value="tab4" checked/>
+                  <label for="cb4" class="society"><span class="sub_tab">Society</span></label>
                 </div>
                 <div class="tab_content">
-                  <div class="content_position">
-                    <div id="cb1" class="cat1 showhide active">
-                      <table>
-                        <thead>
+                  <div class="open_orders table_content">
+                    <table>
+                      <thead>
                         <tr>
-                          <th class="filter">Symbol</th>
-                          <th class="filter">Time</th>
-                          <th class="filter">Volume</th>
-                          <th class="filter">Price</th>
-                          <th class="filter">Latest</th>
-                          <th class="filter">Change p.</th>
+                          <th>Symbol</th>
+                          <th>Time</th>
+                          <th>Volume</th>
+                          <th>Price</th>
+                          <th>Latest</th>
+                          <!--<th>Change p.</th>-->
                           <th>Edit</th>
                           <th>Delete</th>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
+                      </thead>
+                        <tbody class="showhide active" id="tab1">
+                        <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
                           <td>0.33</td>
-                          <td>0.02</td>
+                          <!--<td>0.02</td>-->
                           <td>
-                            <button class="buy">Edit</button>
+                            <button class="edit btn wave">Edit</button>
                           </td>
                           <td>
-                            <button class="sell">Delete</button>
+                            <button class="delete btn wave">Delete</button>
                           </td>
                         </tr>
-                        <tr>
+                        <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
                           <td>0.33</td>
-                          <td>0.02</td>
+                          <!--<td>0.02</td>-->
                           <td>
-                            <button class="buy">Edit</button>
+                            <button class="edit btn wave">Edit</button>
                           </td>
                           <td>
-                            <button class="sell">Delete</button>
+                            <button class="delete btn wave">Delete</button>
                           </td>
                         </tr>
-                        <tr>
+                        <tr class="sell">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
                           <td>0.33</td>
-                          <td>0.02</td>
+                          <!--<td>0.02</td>-->
                           <td>
-                            <button class="buy">Edit</button>
+                            <button class="edit btn wave">Edit</button>
                           </td>
                           <td>
-                            <button class="sell">Delete</button>
+                            <button class="delete btn wave">Delete</button>
                           </td>
                         </tr>
-                        <tr>
+                        <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
                           <td>0.33</td>
-                          <td>0.02</td>
+                          <!--<td>0.02</td>-->
                           <td>
-                            <button class="buy">Edit</button>
+                            <button class="edit btn wave">Edit</button>
                           </td>
                           <td>
-                            <button class="sell">Delete</button>
+                            <button class="delete btn wave">Delete</button>
                           </td>
                         </tr>
-                        <tr>
+                        <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
                           <td>0.33</td>
-                          <td>0.02</td>
+                          <!--<td>0.02</td>-->
                           <td>
-                            <button class="buy">Edit</button>
+                            <button class="edit btn wave">Edit</button>
                           </td>
                           <td>
-                            <button class="sell">Delete</button>
+                            <button class="delete btn wave">Delete</button>
                           </td>
                         </tr>
-                        <tr>
+                        <tr class="sell">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
                           <td>0.33</td>
-                          <td>0.02</td>
+                          <!--<td>0.02</td>-->
                           <td>
-                            <button class="buy">Edit</button>
+                            <button class="edit btn wave">Edit</button>
                           </td>
                           <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div id="cb2" class="cat2 showhide active" >
-                      <table>
-                        <tbody>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
+                            <button class="delete btn wave">Delete</button>
                           </td>
                         </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div id="cb3" class="cat3 showhide active" >
-                      <table>
-                        <tbody>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div id="cb4" class="cat4 showhide active" >
-                      <table>
-                        <tbody>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.33</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>
-                            <button class="buy">Edit</button>
-                          </td>
-                          <td>
-                            <button class="sell">Delete</button>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -421,414 +153,124 @@
             <div class="my_position_tab">
               <div class="wrapper">
                 <div class="filters">
-                  <input type="checkbox" id="firs" class="checkbox" value="cb5" checked />
-                  <label for="firs"><span class="sub_tab">Спорт</span></label>
-                  <input type="checkbox" id="secon" class="checkbox" value="cb6" checked/>
-                  <label for="secon"><span class="sub_tab">Финансы</span></label>
-                  <input type="checkbox" id="thir" class="checkbox" value="cb7" checked/>
-                  <label for="thir"><span class="sub_tab">Киберспорт</span></label>
-                  <input type="checkbox" id="fourt" class="checkbox" value="cb8" checked/>
-                  <label for="fourt"><span class="sub_tab">Политика</span></label>
+                  <input type="checkbox" id="cb5" class="checkbox" value="tab5" checked />
+                  <label for="cb5" class="sport"><span class="sub_tab">Sport</span></label>
+                  <input type="checkbox" id="cb6" class="checkbox" value="tab6" checked/>
+                  <label for="cb6" class="finance"><span class="sub_tab">Finance</span></label>
+                  <input type="checkbox" id="cb7" class="checkbox" value="tab7" checked/>
+                  <label for="cb7" class="e_sport"><span class="sub_tab">E-sport</span></label>
+                  <input type="checkbox" id="cb8" class="checkbox" value="tab8" checked/>
+                  <label for="cb8" class="society"><span class="sub_tab">Society</span></label>
                 </div>
                 <div class="tab_content">
-                  <div class="content_position">
-                  <div id="cb5" class="cat1 showhide active">
-                      <table>
-                        <thead>
+                  <div class="my_position_container table_content">
+                    <table>
+                      <thead>
                         <tr>
-                          <th class="filter">Symbol</th>
-                          <th class="filter">Time</th>
-                          <th class="filter">Volume</th>
-                          <th class="filter">Price</th>
-                          <th class="filter">Latest</th>
-                          <th class="filter">Change p.</th>
-                          <th class="filter">Profit/Loss</th>
-                          <th>Edit</th>
-                          <th>Delete</th>
+                          <th>Symbol</th>
+                          <th>Time</th>
+                          <th>Volume</th>
+                          <th>Price</th>
+                          <th>Latest</th>
+                          <!--<th>Change p.</th>-->
+                          <th>Profit/Loss</th>
+                          <th></th>
+                          <th></th>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
+                      </thead>
+                      <tbody class="showhide active" id="tab5">
+                        <tr class="sell">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.31</td>
                           <td>0.33</td>
-                          <td>0.02</td>
+                          <!--<td>0.02</td>-->
                           <td>4$</td>
                           <td>
-                            <button class="buy">Buy</button>
+                            <button class="buy btn wave">Buy</button>
                           </td>
                           <td>
-                            <button class="sell">Sell</button>
+                            <button class="sell btn wave">Sell</button>
                           </td>
                         </tr>
-                        <tr>
+                        <tr class="sell">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.66</td>
                           <td>0.68</td>
-                          <td>-0.03</td>
+                          <!--<td>-0.03</td>-->
                           <td>-6$</td>
                           <td>
-                            <button class="buy">Buy</button>
+                            <button class="buy btn wave">Buy</button>
                           </td>
                           <td>
-                            <button class="sell">Sell</button>
+                            <button class="sell btn wave">Sell</button>
                           </td>
                         </tr>
-                        <tr>
+                        <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>-200</td>
                           <td>0.31</td>
                           <td>0.33</td>
-                          <td>0.02</td>
+                          <!--<td>0.02</td>-->
                           <td>4$</td>
                           <td>
-                            <button class="buy">Buy</button>
+                            <button class="buy btn wave">Buy</button>
                           </td>
                           <td>
-                            <button class="sell">Sell</button>
+                            <button class="sell btn wave">Sell</button>
                           </td>
                         </tr>
-                        <tr>
+                        <tr class="sell">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>-200</td>
                           <td>0.66</td>
                           <td>0.68</td>
-                          <td>-0.03</td>
+                          <!--<td>-0.03</td>-->
                           <td>-6$</td>
                           <td>
-                            <button class="buy">Buy</button>
+                            <button class="buy btn wave">Buy</button>
                           </td>
                           <td>
-                            <button class="sell">Sell</button>
+                            <button class="sell btn wave">Sell</button>
                           </td>
                         </tr>
-                        <tr>
+                        <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.31</td>
                           <td>-0.33</td>
-                          <td>0.02</td>
+                          <!--<td>0.02</td>-->
                           <td>4$</td>
                           <td>
-                            <button class="buy">Buy</button>
+                            <button class="buy btn wave">Buy</button>
                           </td>
                           <td>
-                            <button class="sell">Sell</button>
+                            <button class="sell btn wave">Sell</button>
                           </td>
                         </tr>
-                        <tr>
+                        <tr class="sell">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>2-00</td>
                           <td>0.31</td>
                           <td>0.33</td>
-                          <td>0.02</td>
+                          <!--<td>0.02</td>-->
                           <td>4$</td>
                           <td>
-                            <button class="buy">Buy</button>
+                            <button class="buy btn wave">Buy</button>
                           </td>
                           <td>
-                            <button class="sell">Sell</button>
+                            <button class="sell btn wave">Sell</button>
                           </td>
                         </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div id="cb6" class="cat2 showhide active">
-                      <table>
-                        <tbody>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.31</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>4$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.66</td>
-                          <td>0.68</td>
-                          <td>-0.03</td>
-                          <td>-6$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>-200</td>
-                          <td>0.31</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>4$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>-200</td>
-                          <td>0.66</td>
-                          <td>0.68</td>
-                          <td>-0.03</td>
-                          <td>-6$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.31</td>
-                          <td>-0.33</td>
-                          <td>0.02</td>
-                          <td>4$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>2-00</td>
-                          <td>0.31</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>4$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div id="cb7" class="cat3 showhide active">
-                      <table>
-                        <tbody>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.31</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>4$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.66</td>
-                          <td>0.68</td>
-                          <td>-0.03</td>
-                          <td>-6$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>-200</td>
-                          <td>0.31</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>4$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>-200</td>
-                          <td>0.66</td>
-                          <td>0.68</td>
-                          <td>-0.03</td>
-                          <td>-6$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.31</td>
-                          <td>-0.33</td>
-                          <td>0.02</td>
-                          <td>4$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>2-00</td>
-                          <td>0.31</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>4$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div id="cb8" class="cat4 showhide active">
-                      <table>
-                        <tbody>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.31</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>4$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.66</td>
-                          <td>0.68</td>
-                          <td>-0.03</td>
-                          <td>-6$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>-200</td>
-                          <td>0.31</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>4$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>-200</td>
-                          <td>0.66</td>
-                          <td>0.68</td>
-                          <td>-0.03</td>
-                          <td>-6$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
-                          <td>0.31</td>
-                          <td>-0.33</td>
-                          <td>0.02</td>
-                          <td>4$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>2-00</td>
-                          <td>0.31</td>
-                          <td>0.33</td>
-                          <td>0.02</td>
-                          <td>4$</td>
-                          <td>
-                            <button class="buy">Buy</button>
-                          </td>
-                          <td>
-                            <button class="sell">Sell</button>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -837,96 +279,95 @@
           <div class="tab_item">
             <div class="my_position_tab">
               <div class="wrapper">
-                <div class="my_order_history">
+                <div class="my_order_history table_content">
                   <table>
                     <thead>
-                    <tr>
-                      <th class="filter">Name</th>
-                      <th class="filter">Time</th>
-                      <th class="filter">Type
-                        <select name="searchtype" id="searchtype">
-                          <option value="-1">All</option>
-                          <option value="0">Buy</option>
-                          <option value="1">Sell</option>
-                          <option value="2">Closed</option>
-                        </select>
-                      </th>
-                      <th class="filter">Units</th>
-                      <th class="filter">Price</th>
-                      <th class="filter">Profit/Loss</th>
-                      <th class="filter">Liquidity</th>
-                      <th class="filter">Fees</th>
-                      <th class="filter">Credit/Debit</th>
-                    </tr>
+                      <tr>
+                        <th>Name</th>
+                        <th>Time</th>
+                        <th class="selection">Type
+                          <!--<select name="searchtype" id="searchtype" style="width: 60px;">-->
+                            <!--<option value="-1">All</option>-->
+                            <!--<option value="0">Buy</option>-->
+                            <!--<option value="1">Sell</option>-->
+                            <!--<option value="2">Closed</option>-->
+                          <!--</select>-->
+                        </th>
+                        <th>Volume</th>
+                        <th>Price</th>
+                        <th>Profit/Loss</th>
+                        <!--<th>Liquidity</th>-->
+                        <!--<th>Fees</th>-->
+                        <!--<th>Credit/Debit</th>-->
+                      </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                      <td>USD/UAH25-31.06.16</td>
-                      <td>14.03.16 19.09</td>
-                      <td>Buy</td>
-                      <td>2</td>
-                      <td>$6.00</td>
-                      <td>$0.33</td>
-                      <td>Add</td>
-                      <td>($0.032)</td>
-                      <td>$0.968</td>
-                    </tr>
-                    <tr>
-                      <td>USD/UAH25-31.06.16</td>
-                      <td>14.03.16 19.09</td>
-                      <td>Sell</td>
-                      <td>1</td>
-                      <td>$2.00</td>
-                      <td>$0.33</td>
-                      <td>Reduce</td>
-                      <td>($0.032)</td>
-                      <td>$0.968</td>
-                    </tr>
-                    <tr>
-                      <td>USD/UAH25-31.06.16</td>
-                      <td>15.03.16 19.09</td>
-                      <td>Closed</td>
-                      <td>1</td>
-                      <td>$4.00</td>
-                      <td>$0.44</td>
-                      <td>Reduce</td>
-                      <td>($0.032)</td>
-                      <td>$0.968</td>
-                    </tr>
-                    <tr>
-                      <td>USD/UAH25-31.06.16</td>
-                      <td>15.03.16 19.09</td>
-                      <td>Buy</td>
-                      <td>4</td>
-                      <td>$1.00</td>
-                      <td>$0.24</td>
-                      <td>Add</td>
-                      <td>($0.076)</td>
-                      <td>$0.567</td>
-                    </tr>
-                    <tr>
-                      <td>USD/UAH25-31.06.16</td>
-                      <td>17.03.16 19.09</td>
-                      <td>Closed</td>
-                      <td>2</td>
-                      <td>$1.00</td>
-                      <td>$0.67</td>
-                      <td>Add</td>
-                      <td>($0.032)</td>
-                      <td>$0.968</td>
-                    </tr>
-                    <tr>
-                      <td>USD/UAH25-31.06.16</td>
-                      <td>17.03.16 19.09</td>
-                      <td>Sell</td>
-                      <td>1</td>
-                      <td>$1.00</td>
-                      <td>$0.32</td>
-                      <td>Reduce</td>
-                      <td>($0.123)</td>
-                      <td>$0.567</td>
-                    </tr>
-
+                      <tr class="buy">
+                        <td>USD/UAH25-31.06.16</td>
+                        <td>14.03.16 19.09</td>
+                        <td>Buy</td>
+                        <td>2</td>
+                        <td>$6.00</td>
+                        <td>$0.33</td>
+                        <!--<td>Add</td>-->
+                        <!--<td>($0.032)</td>-->
+                        <!--<td>$0.968</td>-->
+                      </tr>
+                      <tr class="sell">
+                        <td>USD/UAH25-31.06.16</td>
+                        <td>14.03.16 19.09</td>
+                        <td>Sell</td>
+                        <td>1</td>
+                        <td>$2.00</td>
+                        <td>$0.33</td>
+                        <!--<td>Reduce</td>-->
+                        <!--<td>($0.032)</td>-->
+                        <!--<td>$0.968</td>-->
+                      </tr>
+                      <tr>
+                        <td>USD/UAH25-31.06.16</td>
+                        <td>15.03.16 19.09</td>
+                        <td>Closed</td>
+                        <td>1</td>
+                        <td>$4.00</td>
+                        <td>$0.44</td>
+                        <!--<td>Reduce</td>-->
+                        <!--<td>($0.032)</td>-->
+                        <!--<td>$0.968</td>-->
+                      </tr>
+                      <tr class="buy">
+                        <td>USD/UAH25-31.06.16</td>
+                        <td>15.03.16 19.09</td>
+                        <td>Buy</td>
+                        <td>4</td>
+                        <td>$1.00</td>
+                        <td>$0.24</td>
+                        <!--<td>Add</td>-->
+                        <!--<td>($0.076)</td>-->
+                        <!--<td>$0.567</td>-->
+                      </tr>
+                      <tr>
+                        <td>USD/UAH25-31.06.16</td>
+                        <td>17.03.16 19.09</td>
+                        <td>Closed</td>
+                        <td>2</td>
+                        <td>$1.00</td>
+                        <td>$0.67</td>
+                        <!--<td>Add</td>-->
+                        <!--<td>($0.032)</td>-->
+                        <!--<td>$0.968</td>-->
+                      </tr>
+                      <tr class="sell">
+                        <td>USD/UAH25-31.06.16</td>
+                        <td>17.03.16 19.09</td>
+                        <td>Sell</td>
+                        <td>1</td>
+                        <td>$1.00</td>
+                        <td>$0.32</td>
+                        <!--<td>Reduce</td>-->
+                        <!--<td>($0.123)</td>-->
+                        <!--<td>$0.567</td>-->
+                      </tr>
                     </tbody>
                   </table>
                 </div>

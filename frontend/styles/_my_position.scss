@@ -1,185 +1,174 @@
 .content_my_position {
-  @include span(8.1 of 12);
-  @include push (1.4 of 12);
-  margin-top: 55px;
+  @include span(7.6 of 12);
+  @include push (1.8 of 12);
+  margin-top: 70px;
   .my_position {
-    margin-top: 40px;
-    .wrapper {
-      .tabs {
-        padding-bottom: 15px;
-        border-bottom: 2px solid #d7d7d8;
-        margin-bottom: 20px;
-        .tab {
-          margin-left: 15px;
-          margin-top: 10px;
-          border: 2px solid #d7d7d8;
-          border-bottom: none;
-          border-radius: 5px 5px 0 0;
-          padding: 20px 30px;
-          background-color: #ececed;
-          color: #959595;
-          cursor: pointer;
-          &.active {
-            background-color: #fff;
-            color: #959595;
-            font-weight: bold;
-          }
-        }
-        .tab:nth-child(2) {
-          margin-left: -7px;
-        }
-        .tab:nth-child(3) {
-          margin-left: 40%;
-        }
-      }
-      .tab_content {
-        .tab_item {
-          display: none;
-          .my_position_tab {
-            .wrapper {
-              .filters {
-                padding-bottom: 8px;
-                border-bottom: 2px solid #d7d7d8;
-              }
-              .tab_content {
-                margin: 0 15px;
-                .content_position {
-                  .showhide {
-                    margin-top: 0;
-                    table {
-                      width: 100%;
-                      border: 2px solid #d7d7d8;
-                      border-radius: 5px;
-                      thead {
-                        border-bottom: 2px solid #d7d7d8;
-                        tr {
-                          th {
-                            font-size: 12px;
-                            text-align: center;
-                            padding: 15px 0;
-                          }
-                          th.filter:after {
-                            content: '';
-                            display: inline-block;
-                            width: 10px;
-                            height: 10px;
-                            background: url('../Images/thead_arow.png') no-repeat;
-                            margin-right: 2px;
-                            vertical-align: middle;
-                          }
-                        }
-                      }
-                      tbody {
-                        tr {
-                          border-bottom: 2px solid #d7d7d8;
-                          td {
-                            font-size: 12px;
-                            padding: 10px 20px;
-                            text-align: center;
-                            .sell {
-                              background-color: #ffa5cd;
-                              color: #000;
-                            }
-                            .buy {
-                              background-color: #abffaf;
-                              color: #000;
-                            }
-                          }
-                        }
-                        tr:nth-child(1), tr:nth-child(3), tr:nth-child(5) {
-                          background-color: #ccc;
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-              .my_order_history{
-                @include push (15px);
-                border: 2px solid #d7d7d8;
-                border-radius: 5px;
-                table {
-                  width: 100%;
-                  thead {
-                    border-bottom: 2px solid #d7d7d8;
-                    tr {
-                      th {
-                        font-size: 12px;
-                        text-align: center;
-                        padding: 15px 5px;
-                        select{
-                          padding: 3px;
-                          margin-right: 3px;
-                          border: 1px solid #d7d7d8;
-                          border-radius: 3px;
-                          font-size: 11px;
-                        }
-                      }
-                    }
-                  }
-                  tbody {
-                    tr {
-                      border-bottom: 2px solid #d7d7d8;
-                      td {
-                        font-size: 12px;
-                        padding: 10px 5px;
-                        text-align: center;
-                        .sell {
-                          background-color: #ffa5cd;
-                          color: #000;
-                        }
-                        .buy {
-                          background-color: #abffaf;
-                          color: #000;
-                        }
-                      }
-                    }
-                    tr:nth-child(1), tr:nth-child(3), tr:nth-child(5) {
-                      background-color: #ccc;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        .tab_item:first-child {
-          display: block;
-        }
-      }
-    }
+		padding: 15px;
+    .container {
+			padding: 15px;
+			background: $my_pos_main_bg;
+			border-radius: 4px;
+		}
+		.tabs { @include my_pos_tab_container_styles; }
+		.tab {
+			display: inline-block;
+			padding: 10px 15px;
+			border-radius: 5px 5px 0 0;
+			border: 1px solid transparent;
+			color: transparentize($my_pos_color, 0.3);
+			font-size: 14px;
+			@include my_pos_tab;
+			&:nth-child(1) {  margin: 0;  }
+			&.active {
+				color: $my_pos_color;
+				@include my_pos_active_tab;
+			}
+		}
+		.tab_item {
+			display: none;
+			&:first-child {  display: block;  }
+		}
+		.my_position_tab {
+			.filters {
+				margin: 20px 0;
+				.checkbox {  display: none;  }
+				.checkbox:checked + label{
+					color: #ffffff;
+					background: #84d65b;
+					box-shadow: inset 0 -16px 20px -6px rgba(77, 172, 46, 0.8);
+					&:before{  opacity: 1;  }
+					&.sport:before {  background-position: -66px -275px;  }
+					&.finance:before {  background-position: -107px -275px;  }
+					&.e_sport:before {  background-position: -187px -275px;  }
+					&.society:before {  background-position: -26px -275px;  }
+				}
+				.checkbox:not(checked) + label{
+					padding: 7px 10px 7px 35px;
+					color: rgba(18, 28, 28, 0.5);
+					font-size: 14px;
+					background: #dce1e6;
+					border-radius: 4px;
+					cursor: pointer;
+					transition: 0.4s ease-out;
+					box-shadow: inset 0 -16px 20px -6px rgba(77, 172, 46, 0);
+					span{  transition: 0s;  }
+				}
+				label{
+					position: relative;
+					user-select: none;
+					&:before{
+						content: '';
+						display: block;
+						width: 22px;
+						height: 22px;
+						background: url(../Images/sprite.svg) no-repeat;
+						position: absolute;
+						top: calc(50% - 11px);
+						left: 10px;
+						opacity: 0.5;
+						transition: 0.4s ease-out;
+					}
+					&.sport:before{  background-position: -66px -304px;  }
+					&.e_sport:before{  background-position: -187px -304px;  }
+					&.finance:before{  background-position: -107px -304px;  }
+					&.society:before{  background-position: -26px -304px;  }
+				}
+			}
+			tbody.showhide{
+				display: none;
+				&.active{  display: table-row-group;  }
+			}
+			.table_content{
+				table {
+					margin-top: 0;
+					width: 100%;
+				}
+				thead {
+					border-bottom: 2px solid #dce1e6;
+					th {
+						width: 10%;
+						padding: 10px 12px;
+						padding-right: 0;
+						font-size: 14px;
+						color: $my_pos_color;
+						text-align: left;
+						&:nth-of-type(1){  width: 25%;  }
+						&:nth-of-type(2){  width: 16%;  }
+						&:nth-last-of-type(2){  width: 8%;  }
+						&.filter{
+							cursor: pointer;
+							&:after {
+								content: '';
+								display: inline-block;
+								width: 10px;
+								height: 12px;
+								background: url(../Images/sprite.svg) no-repeat -164px -93px;
+								margin-left: 2px;
+								vertical-align: middle;
+							}
+							&.selection:after{  margin-left: -16px;  }
+						}
+						@include md(1600){  font-size: 12px;  }
+					}
+				}
+				tbody {
+					tr {
+						border-bottom: 1px solid #dce1e6;
+						&:nth-child(even){
+							background-color: transparentize(#dce1e6, 0.7);
+						}
+						&.buy{  background: linear-gradient(to bottom, transparentize(#64c9ef, 0.9), transparentize(#3498da, 0.9));  }
+						&.sell{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));  }
+					}
+					td {
+						padding: 10px 12px;
+						padding-right: 0;
+						font-size: 12px;
+						color: $my_pos_color;
+						button{
+							padding: 5px 15px;
+							color: #ffffff;
+							transition: 0.4s ease-out;
+							@include my_pos_buttons;
+						}
+						.waves-ripple{  display: block;  }
+					}
+				}
+				.divider, .ddArrow{  display: none;  }
+				.dd .ddTitle{  background: none;  }
+				.dd .ddTitle .ddTitleText {  padding-left: 0;  }
+				.dd .ddChild {  top: 42px !important;  }
+			}
+			.open_orders {
+				thead {
+					th {
+						&:nth-of-type(1){  width: 25%;  }
+						&:nth-of-type(2){  width: 16%;  }
+						&:nth-last-of-type(2){  width: 8%;  }
+					}
+				}
+			}
+			.my_position_container{
+				thead {
+					th {
+						&:nth-of-type(1){  width: 25%;  }
+						&:nth-of-type(2){  width: 15%;  }
+						&:nth-last-of-type(3){  width: 12%;  }
+						&:nth-last-of-type(1), &:nth-last-of-type(2){  width: 8%;  min-width: 74px;  }
+					}
+				}
+				tbody td:last-of-type{  padding-right: 12px;  }
+			}
+			.my_order_history{
+				thead th{
+					padding-left: 5px;
+					&:nth-last-of-type(1){  width: 12%;  }
+					&:nth-last-of-type(2){  width: 10%;  }
+					&:nth-of-type(5){  width: 8%;  }
+				}
+				tbody td{  padding-left: 5px;  }
+			}
+		}
   }
-}
-.content_my_position {
-  .filters{
-    .checkbox {
-      opacity: 0;
-    }
-    .checkbox:checked {
-      opacity: 0;
-    }
-    .checkbox:checked + label{
-      color: red;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .checkbox:not(checked) + label{
-      cursor: pointer;
-      color: #959595;
-      text-transform: uppercase;
-      font-size: 12px;
-      margin-right: 4%;
-      margin-left: 15px;
-      padding-bottom: 10px;
-    }
-  }
-  .content_position div {
-    display: none;
-    margin-top: 50px;
-    &.active {
-      display: block !important;
-    }
-  }
-
 }
 

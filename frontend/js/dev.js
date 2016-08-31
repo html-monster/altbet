@@ -27,6 +27,26 @@ $(document).ready(function () {
 		$(this).text(defaultMethods.randomInteger(0.01, 0.99));
 	});
 
+	//my position
+	(function myPosition() {
+
+		for(var ii = 2; ii < 5; ii++){
+			var html = $('#tab1').clone(),
+					parent = $('#tab1').parents('table');
+
+			html.removeAttr('id').attr('id', 'tab' + ii);
+			parent.append(html);
+		}
+		for(ii = 6; ii < 9; ii++){
+			var html = $('#tab5').clone(),
+					parent = $('#tab5').parents('table');
+
+			html.removeAttr('id').attr('id', 'tab' + ii);
+			parent.append(html);
+		}
+	})();
+	//my position
+
 	var price = 0.99, html;
 	for(var ii = 1; ii <= 99; ii++){
 		html = '<tr class="visible"><td class="my_bids my_size"><span class="value"></span></td><td class="size sell size_sell confim"><span class="container"><span class="value"></span></span></td><td class="price_value"><span class="container"><span class="value">$' + (price).toFixed(2) + '</span></span></td><td class="size buy size_buy confim"><span class="container"><span class="value"></span></span></td><td class="my_offers my_size"><span class="value"></span></td></tr>';

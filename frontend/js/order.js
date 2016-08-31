@@ -384,17 +384,24 @@ class orderClass{
 				// 	}
 				// }
 				if (checkboxProp) {
-					price.html('<label style="display: none;">Your price</label><div class="input"><input type="text" class="number" data-validation="0.33" maxlength="4"><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div><div class="regulator" style="display: none;"><span class="plus"></span><span class="minus"></span></div></div>').find('.regulator').fadeIn(200);
+					let html = $('.order_content.new .price').clone();
+					html.find('label').hide();
+					html.find('.regulator').hide();
+					price.html(html.html()).find('.regulator').fadeIn(200);
 					price.find('label').fadeIn(200);
 					price.find('input').focus();
 					price.find('input')[0].selectionStart = 4;
 				}
 				else {
+					let html = $('.order_content.new .price').clone();
 					// price.animate({opacity: 0}, 100);
 					price.find('.regulator').fadeOut(200);
 					price.find('label').fadeOut(200);
+					html.find('label').text('Market price');
+					html.find('input.number').attr('disabled', true);
+					html.find('.regulator').remove();
 					setTimeout(function () {
-						price.html('<label>Market price</label><div class="input"><input type="text" class="number" data-validation="0.33" maxlength="4" disabled><div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div></div>');
+						price.html(html.html());
 					}, 200);
 					price.parents('form').find('.obligations input.number').val('');
 					price.parents('form').find('.volume input').focus();

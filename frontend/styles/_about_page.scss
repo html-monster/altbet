@@ -5,8 +5,8 @@ body.about_body{
   background-color: #21323d;
 }
 .wrapper_about{
-  @include span(last 10.6 of 12);
-  @include push(1.4 of 12);
+  @include span(last 10.25 of 12);
+  @include push(1.8 of 12);
   margin-top: 55px;
   //background-color: rgba(243, 253, 255, 0.92);
   //background-color: #fff;

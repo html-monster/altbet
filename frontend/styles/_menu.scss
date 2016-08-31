@@ -140,6 +140,7 @@
         z-index: 2;
         background: url(../Images/sprite.svg) no-repeat -96px -196px;
         opacity: 0;
+        transition: 0s;
         &:hover{  background-position: -96px -226px;  }
       }
       a.event{

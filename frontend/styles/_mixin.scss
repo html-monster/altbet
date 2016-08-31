@@ -32,6 +32,7 @@
 }
 @mixin btn-hover{
   position: relative;
+  overflow: hidden;
   &:after{
     content: '';
     display: block;

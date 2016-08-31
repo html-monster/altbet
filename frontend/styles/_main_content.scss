@@ -4,37 +4,6 @@
   margin-top: 70px;
   padding: 15px;
   position: relative;
-  .breadcrumbs {
-    padding: 6px 15px 8px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    background: $breadcrumbs-bg;
-    li {
-      display: inline-block;
-      color:  $breadcrumbs-color;
-      font-size: 14px;
-      line-height: 19px;
-      a {
-        margin-right: 15px;
-        color: $link-color;
-        font-size: 14px;
-        font-family: 'open_sans_regular', sans-serif;
-        position: relative;
-        &:hover{  color: $link-color * 0.7 ;  }
-      }
-      a:after {
-        content: '';
-        display: inline-block;
-        width: 5px;
-        height: 8px;
-        margin: 0 5px 0 8px;
-        position: absolute;
-        top: 7px;
-        background: url("../Images/ico-arrow.png") no-repeat;
-        background-size: cover;
-      }
-    }
-  }
   .nav_items {
     .tabs{
       span.tab{
