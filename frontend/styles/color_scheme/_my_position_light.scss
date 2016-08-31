@@ -23,9 +23,15 @@ $my_pos_color: #37343b;
 		opacity: 1;
 	}
 }
-@mixin my_pos_buttons{
-	&.sell {  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
-	&.buy {  background: linear-gradient(to bottom, #64c9ef, #3498da);  }
-	&.edit{  background: linear-gradient(to bottom, #84d65b, #4dac2e);  }
-	&.delete{  background: linear-gradient(to bottom, #f8b747, #ef8022); }
+$my_pos_thead_border: 2px solid #dce1e6;
+$my_pos_tr_border_color: #dce1e6;
+@mixin my_pos_td_and_button{
+	button{
+		padding: 5px 15px;
+		color: #ffffff;
+		//&.sell {  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
+		//&.buy {  background: linear-gradient(to bottom, #64c9ef, #3498da);  }
+		&.edit{  background: linear-gradient(to bottom, #84d65b, #4dac2e);  }
+		&.delete{  background: linear-gradient(to bottom, #f8b747, #ef8022); }
+	}
 }

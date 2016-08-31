@@ -11,6 +11,25 @@ $(document).ready(function () {
 				$(this).attr('id', 'event' + flag++);
 			}
 		});
+		//my position
+		// (function myPosition() {
+		//
+		// 	for(var ii = 2; ii < 5; ii++){
+		// 		let html = $('#tab1').clone(),
+		// 				parent = $('#tab1').parents('table');
+		//
+		// 		html.removeAttr('id').attr('id', 'tab' + ii);
+		// 		parent.append(html);
+		// 	}
+		// 	for(ii = 6; ii < 9; ii++){
+		// 		let html = $('#tab5').clone(),
+		// 				parent = $('#tab5').parents('table');
+		//
+		// 		html.removeAttr('id').attr('id', 'tab' + ii);
+		// 		parent.append(html);
+		// 	}
+		// })();
+		//my position
 	}
 
 
@@ -27,25 +46,6 @@ $(document).ready(function () {
 		$(this).text(defaultMethods.randomInteger(0.01, 0.99));
 	});
 
-	//my position
-	(function myPosition() {
-
-		for(var ii = 2; ii < 5; ii++){
-			var html = $('#tab1').clone(),
-					parent = $('#tab1').parents('table');
-
-			html.removeAttr('id').attr('id', 'tab' + ii);
-			parent.append(html);
-		}
-		for(ii = 6; ii < 9; ii++){
-			var html = $('#tab5').clone(),
-					parent = $('#tab5').parents('table');
-
-			html.removeAttr('id').attr('id', 'tab' + ii);
-			parent.append(html);
-		}
-	})();
-	//my position
 
 	var price = 0.99, html;
 	for(var ii = 1; ii <= 99; ii++){

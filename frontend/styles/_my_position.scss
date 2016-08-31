@@ -84,7 +84,7 @@
 					width: 100%;
 				}
 				thead {
-					border-bottom: 2px solid #dce1e6;
+					border-bottom: $my_pos_thead_border;
 					th {
 						width: 10%;
 						padding: 10px 12px;
@@ -113,7 +113,7 @@
 				}
 				tbody {
 					tr {
-						border-bottom: 1px solid #dce1e6;
+						border-bottom: 1px solid $my_pos_tr_border_color;
 						&:nth-child(even){
 							background-color: transparentize(#dce1e6, 0.7);
 						}
@@ -125,12 +125,7 @@
 						padding-right: 0;
 						font-size: 12px;
 						color: $my_pos_color;
-						button{
-							padding: 5px 15px;
-							color: #ffffff;
-							transition: 0.4s ease-out;
-							@include my_pos_buttons;
-						}
+						@include my_pos_td_and_button;
 						.waves-ripple{  display: block;  }
 					}
 				}

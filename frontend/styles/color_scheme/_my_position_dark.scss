@@ -29,44 +29,63 @@ $my_pos_color: transparentize(#ffffff, 0.2);
 	}
 }
 @mixin my_pos_active_tab{
-	background: transparent;
+	//background: transparent;
+	background: linear-gradient(to top, transparent, #53515e * 1.1);
 	border: solid 1px rgba(33, 30, 37, 0.5);
 	border-bottom: transparent;
 	box-shadow: none;
 	&:after{  left: 100%;  }
 }
-@mixin my_pos_buttons{
-	&:after{  display: none;  }
-	&.sell {
-		background: transparentize(#f88447, 0.6);
-		box-shadow: inset 0 -16px 20px -6px transparentize(#ef4d22, 0.7);
-		&:hover{
-			background: #f88447;
-			box-shadow: inset 0 -16px 20px -6px transparentize(#ef4d22, 0);
-		}
+$my_pos_thead_border: 1px solid #000000;
+$my_pos_tr_border_color: #000000;
+@mixin my_pos_td_and_button{
+	position: relative;
+	&:after{
+		content: '';
+		display: block;
+		width: 100%;
+		height: 1px;
+		position: absolute;
+		left: 0;
+		top: 0;
+		background: transparentize(#ffffff, 0.9);
 	}
-	&.buy {
-		background: transparentize(#64c9ef, 0.6);
-		box-shadow: inset 0 -16px 20px -6px transparentize(#3498da, 0.7);
-		&:hover{
-			background: #64c9ef;
-			box-shadow: inset 0 -16px 20px -6px transparentize(#3498da, 0);
+	button {
+		padding: 5px 15px;
+		color: #ffffff;
+		transition: 0.2s ease-out;
+		&:after{  display: none;  }
+		//&.sell {
+		//	background: transparentize(#f88447, 0.6);
+		//	box-shadow: inset 0 16px 20px -6px transparentize(#ef4d22, 0.5);
+		//	&:hover{
+		//		background: #f88447;
+		//		box-shadow: inset 0 -16px 20px -6px transparentize(#ef4d22, 0);
+		//	}
+		//}
+		//&.buy {
+		//	background: transparentize(#64c9ef, 0.6);
+		//	box-shadow: inset 0 16px 20px -6px transparentize(#3498da, 0.5);
+		//	&:hover{
+		//		background: #64c9ef;
+		//		box-shadow: inset 0 -16px 20px -6px transparentize(#3498da, 0);
+		//	}
+		//}
+		&.edit{
+			background: transparentize(#84d65b, 0.6);
+			box-shadow: inset 0 16px 20px -6px transparentize(#4dac2e, 0.5);
+			&:hover{
+				background: #84d65b;
+				box-shadow: inset 0 -16px 20px -6px transparentize(#4dac2e, 0);
+			}
 		}
-	}
-	&.edit{
-		background: transparentize(#84d65b, 0.6);
-		box-shadow: inset 0 -16px 20px -6px transparentize(#4dac2e, 0.7);
-		&:hover{
-			background: #84d65b;
-			box-shadow: inset 0 -16px 20px -6px transparentize(#4dac2e, 0);
-		}
-	}
-	&.delete{
-		background: transparentize(#f8b747, 0.6);
-		box-shadow: inset 0 -16px 20px -6px transparentize(#ef8022, 0.7);
-		&:hover{
-			background: #f8b747;
-			box-shadow: inset 0 -16px 20px -6px transparentize(#ef8022, 0);
+		&.delete{
+			background: transparentize(#f8b747, 0.6);
+			box-shadow: inset 0 16px 20px -6px transparentize(#ef8022, 0.5);
+			&:hover{
+				background: #f8b747;
+				box-shadow: inset 0 -16px 20px -6px transparentize(#ef8022, 0);
+			}
 		}
 	}
 }
