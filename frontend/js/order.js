@@ -83,6 +83,12 @@ class orderClass{
 						sum = +$(this).find('.obligations input').val(),
 						checkboxProp = $(this).find('input[type="checkbox"]').length ? $(this).find('input[type="checkbox"]').prop('checked') : 1;
 
+				if($('header .log_out').length){
+					$('.sign_in_form').fadeIn(200);  //'.sign_in_form'
+					$('#login-email').focus(); //'#email'
+					return false;
+				}
+
 				if(checkboxProp){
 					if(0 >= price || price > 0.99){
 						$(this).find('.price input').next().fadeIn(200);
@@ -256,7 +262,7 @@ class orderClass{
 						html = html.find('form').css({display: 'none'});
 
 					if (orderDirection == 'sell') {
-						html.find('.obligations input.number').val(sellSum);
+						// html.find('.obligations input.number').val(sellSum);
 						html.find('.side').val('Sell');
 					}
 					else {
@@ -265,7 +271,7 @@ class orderClass{
 							html.find('.sell-container').html('');
 						}
 						html.find('input[type=submit]').toggleClass('sell buy').val('buy');
-						html.find('.obligations input.number').val(buySum);
+						// html.find('.obligations input.number').val(buySum);
 						html.find('.side').val('Buy');
 					}
 
@@ -274,9 +280,11 @@ class orderClass{
 						html.find('.checkbox span').text('Limit');
 					}
 					else {
-						// html.find('.price input.number').attr('disabled', true).val(priceMarket);
-						html.find('.price input.number').attr('disabled', true);
-						html.find('.obligations input.number').val('');
+						html.find('.price input.number').attr('disabled', true).removeAttr('name').val(priceMarket);
+						html.find('.obligations input.number').removeAttr('name').attr('disabled', true);
+						html.find('.obligations .regulator').hide();
+						// html.find('.price input.number').attr('disabled', true);
+						// html.find('.obligations input.number').val('');
 						html.find('.price label').text('Market price');
 						html.find('.price .regulator').remove();
 						html.find('.checkbox input[type=checkbox]').attr('checked', false);
@@ -346,7 +354,6 @@ class orderClass{
 
 				orderClass.tabReturn();
 				orderClass.showInfo();
-				// $("body select").msDropDown();
 			});
 		}();
 
@@ -385,24 +392,24 @@ class orderClass{
 				// }
 				if (checkboxProp) {
 					let html = $('.order_content.new .price').clone();
+
 					html.find('label').hide();
 					html.find('.regulator').hide();
+					$(this).parents('form').find('.obligations .regulator').fadeIn(200);
 					price.html(html.html()).find('.regulator').fadeIn(200);
 					price.find('label').fadeIn(200);
-					price.find('input').focus();
+					price.find('input').val('0.').focus();
 					price.find('input')[0].selectionStart = 4;
+					price.parents('form').find('.obligations input').removeAttr('disabled');
 				}
 				else {
-					let html = $('.order_content.new .price').clone();
-					// price.animate({opacity: 0}, 100);
+					let sum = $(this).parents('form').find('.obligations');
+
+					price.find('label').text('Market price');
+					price.find('input.number').attr('disabled', true).removeAttr('name').val('');
 					price.find('.regulator').fadeOut(200);
-					price.find('label').fadeOut(200);
-					html.find('label').text('Market price');
-					html.find('input.number').attr('disabled', true);
-					html.find('.regulator').remove();
-					setTimeout(function () {
-						price.html(html.html());
-					}, 200);
+					sum.find('input.number').attr('disabled', true);
+					sum.find('.regulator').fadeOut(200);
 					price.parents('form').find('.obligations input.number').val('');
 					price.parents('form').find('.volume input').focus();
 				}
@@ -440,7 +447,8 @@ class orderClass{
 					}
 					if (context.parents('.obligations').length) {
 						if (!(isNaN(price))) {
-							volumeInput.val(Math.round(sum / price));
+							let volume = Math.round(sum / price);
+							volumeInput.val((volume == 'Infinity') ? '' : volume);
 						}
 						else {
 							volumeInput.val('');
@@ -487,11 +495,11 @@ class orderClass{
 				$(this).parents('.order_content').toggleClass('active');
 			});
 
-			$('.order-title .delete').click(function () {
-				$(this).parent().find('.confirmation').addClass('active');
+			$('.order-title .delete').click(function (e) {
+				$(this).parent().find('.pop_up').fadeIn();
 			});
-			$('.confirmation .no').click(function () {
-				$(this).parent().removeClass('active');
+			$('.confirmation .no').click(function (e) {
+				$(this).parents('.pop_up').fadeOut();
 			});
 		}();
 

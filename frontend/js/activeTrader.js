@@ -60,7 +60,7 @@ class activeTraderClass{
 					setTimeout(function () {
 						if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == '')
 							takeData($('.content_bet.active '));
-					}, 400);
+					}, 700);
 					tab_content.addClass('max');
 				}
 				else{
@@ -86,7 +86,7 @@ class activeTraderClass{
 
 				order.css('overflow-y', 'hidden');
 				setTimeout(function () {
-					var orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight() + $('header').outerHeight() + 45),
+					var orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight() + $('header').outerHeight() + 47),
 							actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +
 									$('.active_trader .control').height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height());
 

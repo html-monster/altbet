@@ -32,11 +32,13 @@
           <div class="tab_item">
             <div class="my_position_tab">
               <div class="wrapper">
+
                 <div class="filters">
                   <input type="checkbox" id="cb1" class="checkbox" value="tab1" checked/>
                   <label for="cb1" class="sport"><span class="sub_tab">Sport</span></label>
                   <input type="checkbox" id="cb2" class="checkbox" value="tab2" checked/>
-                  <label for="cb2" class="finance"><span class="sub_tab">Finance</span></label>
+                  <label for="cb2" class=
+                          "finance"><span class="sub_tab">Finance</span></label>
                   <input type="checkbox" id="cb3" class="checkbox" value="tab3" checked/>
                   <label for="cb3" class="e_sport"><span class="sub_tab">E-sport</span></label>
                   <input type="checkbox" id="cb4" class="checkbox" value="tab4" checked/>
@@ -52,19 +54,19 @@
                           <th>Volume</th>
                           <th>Price</th>
                           <th>Latest</th>
-                          <!--<th>Change p.</th>-->
+                          <th>Pos</th>
                           <th></th>
                           <th></th>
                         </tr>
                       </thead>
-                      <tbody class="showhide active" id="tab1">
+                        <tbody class="showhide active" id="tab1">
                         <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
                           <td>0.33</td>
-                          <!--<td>0.02</td>-->
+                          <td><span class="sell">15</span></td>
                           <td>
                             <button class="edit btn wave">Edit</button>
                           </td>
@@ -72,54 +74,76 @@
                             <button class="delete btn wave">Cancel</button>
                           </td>
                         </tr>
-                      </tbody>
-                      <tbody class="showhide active" id="tab2">
                         <tr class="buy">
-                        <td>USD/UAH25-31.06.16</td>
-                        <td>14.03.16 19.09</td>
-                        <td>200</td>
-                        <td>0.33</td>
-                        <td>0.33</td>
-                        <!--<td>0.02</td>-->
-                        <td>
-                          <button class="edit btn wave">Edit</button>
-                        </td>
-                        <td>
-                          <button class="delete btn wave">Cancel</button>
-                        </td>
-                      </tr>
-                      </tbody>
-                      <tbody class="showhide active" id="tab3">
+                          <td>USD/UAH25-31.06.16</td>
+                          <td>14.03.16 19.09</td>
+                          <td>200</td>
+                          <td>0.33</td>
+                          <td>0.33</td>
+                          <td><span class="sell">15</span></td>
+                          <td>
+                            <button class="edit btn wave">Edit</button>
+                          </td>
+                          <td>
+                            <button class="delete btn wave">Cancel</button>
+                          </td>
+                        </tr>
                         <tr class="sell">
-                        <td>USD/UAH25-31.06.16</td>
-                        <td>14.03.16 19.09</td>
-                        <td>200</td>
-                        <td>0.33</td>
-                        <td>0.33</td>
-                        <!--<td>0.02</td>-->
-                        <td>
-                          <button class="edit btn wave">Edit</button>
-                        </td>
-                        <td>
-                          <button class="delete btn wave">Cancel</button>
-                        </td>
-                      </tr>
-                      </tbody>
-                      <tbody class="showhide active" id="tab4">
+                          <td>USD/UAH25-31.06.16</td>
+                          <td>14.03.16 19.09</td>
+                          <td>200</td>
+                          <td>0.33</td>
+                          <td>0.33</td>
+                          <td><span class="sell">15</span></td>
+                          <td>
+                            <button class="edit btn wave">Edit</button>
+                          </td>
+                          <td>
+                            <button class="delete btn wave">Cancel</button>
+                          </td>
+                        </tr>
+                        <tr class="buy">
+                          <td>USD/UAH25-31.06.16</td>
+                          <td>14.03.16 19.09</td>
+                          <td>200</td>
+                          <td>0.33</td>
+                          <td>0.33</td>
+                          <td><span class="buy">15</span></td>
+                          <td>
+                            <button class="edit btn wave">Edit</button>
+                          </td>
+                          <td>
+                            <button class="delete btn wave">Cancel</button>
+                          </td>
+                        </tr>
+                        <tr class="buy">
+                          <td>USD/UAH25-31.06.16</td>
+                          <td>14.03.16 19.09</td>
+                          <td>200</td>
+                          <td>0.33</td>
+                          <td>0.33</td>
+                          <td><span class="sell">15</span></td>
+                          <td>
+                            <button class="edit btn wave">Edit</button>
+                          </td>
+                          <td>
+                            <button class="delete btn wave">Cancel</button>
+                          </td>
+                        </tr>
                         <tr class="sell">
-                        <td>USD/UAH25-31.06.16</td>
-                        <td>14.03.16 19.09</td>
-                        <td>200</td>
-                        <td>0.33</td>
-                        <td>0.33</td>
-                        <!--<td>0.02</td>-->
-                        <td>
-                          <button class="edit btn wave">Edit</button>
-                        </td>
-                        <td>
-                          <button class="delete btn wave">Cancel</button>
-                        </td>
-                      </tr>
+                          <td>USD/UAH25-31.06.16</td>
+                          <td>14.03.16 19.09</td>
+                          <td>200</td>
+                          <td>0.33</td>
+                          <td>0.33</td>
+                          <td><span class="buy">15</span></td>
+                          <td>
+                            <button class="edit btn wave">Edit</button>
+                          </td>
+                          <td>
+                            <button class="delete btn wave">Cancel</button>
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -149,7 +173,7 @@
                           <th>Time</th>
                           <th>Volume</th>
                           <th>Price</th>
-                          <th>Latest</th>
+                          <th>BID/ASK</th>
                           <!--<th>Change p.</th>-->
                           <th>Profit/Loss</th>
                           <th></th>
@@ -166,63 +190,87 @@
                           <!--<td>0.02</td>-->
                           <td>4$</td>
                           <td>
-                            <button class="edit btn wave">Edit</button>
+                            <button class="buy btn wave">Buy</button>
                           </td>
                           <td>
-                            <button class="delete btn wave">Cancel</button>
+                            <button class="sell btn wave">Sell</button>
                           </td>
                         </tr>
-                      </tbody>
-                      <tbody class="showhide active" id="tab6">
-                        <tr class="buy">
-                        <td>USD/UAH25-31.06.16</td>
-                        <td>14.03.16 19.09</td>
-                        <td>200</td>
-                        <td>0.31</td>
-                        <td>0.33</td>
-                        <!--<td>0.02</td>-->
-                        <td>4$</td>
-                        <td>
-                          <button class="edit btn wave">Edit</button>
-                        </td>
-                        <td>
-                          <button class="delete btn wave">Cancel</button>
-                        </td>
-                      </tr>
-                      </tbody>
-                      <tbody class="showhide active" id="tab7">
                         <tr class="sell">
-                        <td>USD/UAH25-31.06.16</td>
-                        <td>14.03.16 19.09</td>
-                        <td>200</td>
-                        <td>0.31</td>
-                        <td>0.33</td>
-                        <!--<td>0.02</td>-->
-                        <td>4$</td>
-                        <td>
-                          <button class="edit btn wave">Edit</button>
-                        </td>
-                        <td>
-                          <button class="delete btn wave">Cancel</button>
-                        </td>
-                      </tr>
-                      </tbody>
-                      <tbody class="showhide active" id="tab8">
+                          <td>USD/UAH25-31.06.16</td>
+                          <td>14.03.16 19.09</td>
+                          <td>200</td>
+                          <td>0.66</td>
+                          <td>0.68</td>
+                          <!--<td>-0.03</td>-->
+                          <td>-6$</td>
+                          <td>
+                            <button class="buy btn wave">Buy</button>
+                          </td>
+                          <td>
+                            <button class="sell btn wave">Sell</button>
+                          </td>
+                        </tr>
                         <tr class="buy">
-                        <td>USD/UAH25-31.06.16</td>
-                        <td>14.03.16 19.09</td>
-                        <td>200</td>
-                        <td>0.31</td>
-                        <td>0.33</td>
-                        <!--<td>0.02</td>-->
-                        <td>4$</td>
-                        <td>
-                          <button class="edit btn wave">Edit</button>
-                        </td>
-                        <td>
-                          <button class="delete btn wave">Cancel</button>
-                        </td>
-                      </tr>
+                          <td>USD/UAH25-31.06.16</td>
+                          <td>14.03.16 19.09</td>
+                          <td>-200</td>
+                          <td>0.31</td>
+                          <td>0.33</td>
+                          <!--<td>0.02</td>-->
+                          <td>4$</td>
+                          <td>
+                            <button class="buy btn wave">Buy</button>
+                          </td>
+                          <td>
+                            <button class="sell btn wave">Sell</button>
+                          </td>
+                        </tr>
+                        <tr class="sell">
+                          <td>USD/UAH25-31.06.16</td>
+                          <td>14.03.16 19.09</td>
+                          <td>-200</td>
+                          <td>0.66</td>
+                          <td>0.68</td>
+                          <!--<td>-0.03</td>-->
+                          <td>-6$</td>
+                          <td>
+                            <button class="buy btn wave">Buy</button>
+                          </td>
+                          <td>
+                            <button class="sell btn wave">Sell</button>
+                          </td>
+                        </tr>
+                        <tr class="buy">
+                          <td>USD/UAH25-31.06.16</td>
+                          <td>14.03.16 19.09</td>
+                          <td>200</td>
+                          <td>0.31</td>
+                          <td>-0.33</td>
+                          <!--<td>0.02</td>-->
+                          <td>4$</td>
+                          <td>
+                            <button class="buy btn wave">Buy</button>
+                          </td>
+                          <td>
+                            <button class="sell btn wave">Sell</button>
+                          </td>
+                        </tr>
+                        <tr class="sell">
+                          <td>USD/UAH25-31.06.16</td>
+                          <td>14.03.16 19.09</td>
+                          <td>2-00</td>
+                          <td>0.31</td>
+                          <td>0.33</td>
+                          <!--<td>0.02</td>-->
+                          <td>4$</td>
+                          <td>
+                            <button class="buy btn wave">Buy</button>
+                          </td>
+                          <td>
+                            <button class="sell btn wave">Sell</button>
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>

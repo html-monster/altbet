@@ -37,4 +37,5 @@ class themeChangeClass {
 	}
 }
 
-// themeChangeClass.setColorscheme();
+if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru')
+	themeChangeClass.setColorscheme();

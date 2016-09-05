@@ -127,6 +127,10 @@
 						color: $my_pos_color;
 						@include my_pos_td_and_button;
 						.waves-ripple{  display: block;  }
+						span{
+							&.buy{  color: #3498da;  }
+							&.sell{  color: #ef4d22;  }
+						}
 					}
 				}
 				.divider, .ddArrow{  display: none;  }
@@ -134,26 +138,28 @@
 				.dd .ddTitle .ddTitleText {  padding-left: 0;  }
 				.dd .ddChild {  top: 42px !important;  }
 			}
-			.open_orders {
+			.open_orders, .my_position_container {
 				thead {
 					th {
 						&:nth-of-type(1){  width: 25%;  }
 						&:nth-of-type(2){  width: 16%;  }
-						&:nth-last-of-type(2){  width: 8%;  }
-					}
-				}
-			}
-			.my_position_container{
-				thead {
-					th {
-						&:nth-of-type(1){  width: 25%;  }
-						&:nth-of-type(2){  width: 15%;  }
 						&:nth-last-of-type(3){  width: 12%;  }
 						&:nth-last-of-type(1), &:nth-last-of-type(2){  width: 8%;  min-width: 74px;  }
 					}
 				}
 				tbody td:last-of-type{  padding-right: 12px;  }
 			}
+			//.my_position_container{
+			//	thead {
+			//		th {
+			//			&:nth-of-type(1){  width: 25%;  }
+			//			&:nth-of-type(2){  width: 15%;  }
+			//			&:nth-last-of-type(3){  width: 12%;  }
+			//			&:nth-last-of-type(1), &:nth-last-of-type(2){  width: 8%;  min-width: 74px;  }
+			//		}
+			//	}
+			//	tbody td:last-of-type{  padding-right: 12px;  }
+			//}
 			.my_order_history{
 				thead th{
 					padding-left: 5px;

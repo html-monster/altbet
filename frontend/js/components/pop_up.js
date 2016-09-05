@@ -1,4 +1,10 @@
 class popUpClass{
+	constructor(){
+		$(document).keyup(function (e) {
+			e = e || event;
+			if(e.keyCode == 27) $('.pop_up').fadeOut();
+		});
+	}
 	static popUpClose(closeButton, ...popUpWindow){ //.head_form .close
 		$(closeButton).click(function(e){
 			e = e || event;
@@ -35,27 +41,4 @@ class popUpClass{
 	}
 }
 
-// $(document).ready(function () {
-// 	$('.head_form .close').click(function(  ){
-// 		$('.sign_in_form').fadeOut(400);
-// 	});
-// 	$('.log_out .sign_in').click(function(e){
-// 		e.preventDefault();
-// 		$('.sign_in_form').fadeIn(400);
-// 		$('#email').focus();
-// 	});
-// 	$(document).click( function(event){
-// 		console.log(123);
-// 		$('.warning').fadeOut(400);
-// 		if( $(event.target).closest(".sign_in_content").length || $(event.target).closest(".log_out .sign_in").length )
-// 			return;
-// 		$('.sign_in_form').fadeOut(400);
-// 	});
-// 	$(document).click( function(event){
-// 		console.log(123);
-// 		$('.warning').fadeOut(400);
-// 		if( $(event.target).closest(".log_in").length )
-// 			return;
-// 		$('.user-menu').slideUp(400);
-// 	});
-// });
+new popUpClass();
