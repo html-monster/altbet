@@ -17,13 +17,15 @@ $(document).ready(function () {
 
 	new userInspectionClass();
 
-	tabs.tabFilter('.filters'); // page my_position
+	tabsClass.tabFilter('.filters'); // page my_position
 
-	tabs.tabsChange('.my_position'); // page my_position
-	tabs.tabsChange('.funds_tab'); // page user_page
-	tabs.tabsChange('.top_reg'); // page registration
+	new tabsClass();
+	// tabsClass.tabsChange('.my_position'); // page my_position
+	// tabsClass.tabsChange('.funds_tab'); // page user_page
+	// tabsClass.tabsChange('.top_reg'); // page registration
+	// tabsClass.tabsChange('.wrapper_user_page'); // page registration
 
-	tabs.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
+	tabsClass.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
 
 	popUpClass.popUpOpen('.log_out .sign_in', '.sign_in_form', '#login-email'); // pop-up login
 	popUpClass.popUpOpen('[data-log-out]', '.sign_in_form', '#login-email');
@@ -70,10 +72,18 @@ $(document).ready(function () {
 	Waves.init();
 	Waves.attach('.wave', ['waves-button']);
 
-	$('.input__field').change(function () {
-		if($(this).val() == '') $(this).parent().removeClass('input--filled');
-		else $(this).parent().addClass('input--filled');
-	});
+	(function showPass () {
+		let input = $('.input__field');
+
+		input.change(function () {
+			if($(this).val() == '') $(this).parent().removeClass('input--filled');
+			else $(this).parent().addClass('input--filled');
+		});
+		input.blur(function () {
+			if($(this).val() == '') $(this).parent().removeClass('input--filled');
+			else $(this).parent().addClass('input--filled');
+		});
+	})();
 
 	$('.show-schedule').click(function(){ // show chart on the main page
 		$(this).toggleClass('active')
@@ -114,10 +124,11 @@ $(document).ready(function () {
 		$(this).css('zIndex', 80);
 	});
 
-	$('.order').on('click', '[data-log-out]', function(e){
-		e = e || event;
-		e.preventDefault();
-		$('.sign_in_form').fadeIn(200);
-		$('#login-email').focus();
-	});
+	// $('.order').on('click', '[data-log-out]', function(e){
+	// 	e = e || event;
+	// 	e.preventDefault();
+	// 	$('.sign_in_form').fadeIn(200);
+	// 	$('#login-email').focus();
+	// });
+	new accountClass();
 });

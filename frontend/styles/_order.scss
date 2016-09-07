@@ -200,7 +200,7 @@
                 span{
                   padding: 0;
                   &.up{  color: #1196d4;  }
-                  &.down{  color: red;  }
+                  &.down{  color: #ef4d22;  }
                 }
               }
               &.market_button{
@@ -716,7 +716,7 @@
               top: 50%;
               &:after{  background: $order_sidebar_order_delete;  }
             }
-            .pop_up{  position: absolute;  }
+            .pop_up{  position: absolute;  background: rgba(0, 0, 0, 0.5); }
             .confirmation{
               display: flex;
               align-items: center;
@@ -745,6 +745,37 @@
                 &.yes{
                   background-image: linear-gradient(to bottom, #f8b747, #ef8022);
                 }
+              }
+            }
+            .error_pop_up {
+              display: none;
+              height: 100%;
+              padding: 10px;
+              position: absolute;
+              top: 0;
+              left: 100%;
+              z-index: 6;
+              color: #ef4d22;
+              background: rgba(0, 0, 0, 0.8);
+              &.active{
+                display: block;
+                left: 0;
+                animation-duration: 0.7s;
+                animation-fill-mode: both;
+              }
+              .container{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+              }
+              .close{
+                width: 16px;
+                height: 16px;
+                position: absolute;
+                top: 1px;
+                right: 1px;
+                cursor: pointer;
               }
             }
             .sell-container form{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));  }

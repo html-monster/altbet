@@ -5,14 +5,15 @@ body.about_body{
   background-color: #21323d;
 }
 .wrapper_about{
-  @include span(last 10.25 of 12);
-  @include push(1.8 of 12);
-  margin-top: 55px;
+  //@include span(last 10.25 of 12);
+  //@include push(1.8 of 12);
+  width: 85%;
+  margin-left: 15%;
+  margin-top: 70px;
+  padding: 15px;
+  overflow: hidden;
   //background-color: rgba(243, 253, 255, 0.92);
   //background-color: #fff;
-  height: 100%;
-  border-radius:5px;
-  padding: 15px;
   .menu_about{
     @include span(1.4 of 10.6);
     position: fixed;

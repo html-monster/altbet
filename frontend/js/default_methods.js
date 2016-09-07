@@ -55,4 +55,31 @@ class defaultMethods{
 			$(this).toggleClass('active');
 		});
 	}
+
+	static getClass(obj) {
+		return {}.toString.call(obj).slice(8, -1);
+	}
+
+	static objectFromArray(data, obj) {
+		obj = defaultMethods.getClass(obj) == 'Object' ? obj : {};
+
+		data.forEach(function (key) {
+			let item = key.split('=');
+
+			obj[item[0]] = item[1];
+		});
+
+		return obj;
+	}
+
+	static getId(obj) {
+		let id;
+
+		if (+obj.isMirror)
+			id = obj.Symbol + '_mirror__order';
+		else
+			id = obj.Symbol + '__order';
+
+		return id;
+	}
 }

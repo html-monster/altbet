@@ -82,9 +82,11 @@ class inputNumber{
 			e = e || event;
 			let code = e.which || e.charCode || e.keyCode;
 
-			if(!(code == 46 || code >= 48 && code <= 57 || code >= 8 && code <= 9
-					|| code == 27)){
-				return false;
+			if(code != 13){
+				if(!(code == 46 || code >= 48 && code <= 57 || code >= 8 && code <= 9
+						|| code == 27)){
+					return false;
+				}
 			}
 		});
 		this.parent.on('keydown', this.INPUT, function (e) {

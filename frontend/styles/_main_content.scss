@@ -223,16 +223,23 @@
             display: block;
             padding-left: 2px;
           }
-          .button-container{  height: 35px;  }
+          .button-container{
+            display: inline-flex;
+            height: 35px;
+            vertical-align: middle;
+          }
           button.event {
             height: 32px;
             padding: 0;
+            margin: 0 2px;
             border-radius: 4px;
             text-transform: uppercase;
             background: $default-button-bg;
             vertical-align: middle;
             @include main_page_event_button;
             position: relative;
+            &:first-child{  margin-left: 0;  }
+            &:last-child{  margin-right: 0;  }
             &:not([disabled]):after{
               content: '';
               display: block;
@@ -276,9 +283,9 @@
               }
             }
           }
-          .buy, .sell{
-            display: inline-block;
-          }
+          //.buy, .sell{
+          //  display: inline-block;
+          //}
           .buy{
             button{
 

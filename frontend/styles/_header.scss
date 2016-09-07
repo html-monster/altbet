@@ -25,11 +25,11 @@ header {
         font-size: 14px;
         color: #fff;
         &.win-lost{
-          .win{  color: #1196d4;  }
-          .lost{  color: red;  }
+          .win{  color: #4dac2e;  }
+          .lost{  color: #ef4d22;  }
         }
         &.invested strong{  color: #ef8022; }
-        &.available strong{  color: #4dac2e;  }
+        &.available strong{  color: #1196d4;  }
         strong {
           font-weight: normal;
           color: #fff;

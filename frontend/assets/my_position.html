@@ -51,10 +51,10 @@
                         <tr>
                           <th>Symbol</th>
                           <th>Time</th>
-                          <th>Volume</th>
+                          <th>Quantity</th>
                           <th>Price</th>
                           <th>Latest</th>
-                          <th>Pos</th>
+                          <th></th>
                           <th></th>
                           <th></th>
                         </tr>
@@ -65,8 +65,8 @@
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
-                          <td>0.33</td>
-                          <td><span class="sell">15</span></td>
+                          <td><span class="sell last_price">0.36</span></td>
+                          <td>order</td>
                           <td>
                             <button class="edit btn wave">Edit</button>
                           </td>
@@ -79,8 +79,8 @@
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
-                          <td>0.33</td>
-                          <td><span class="sell">15</span></td>
+                          <td><span class="sell last_price">0.36</span></td>
+                          <td>order</td>
                           <td>
                             <button class="edit btn wave">Edit</button>
                           </td>
@@ -93,8 +93,8 @@
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
-                          <td>0.33</td>
-                          <td><span class="sell">15</span></td>
+                          <td><span class="sell last_price">0.36</span></td>
+                          <td>order</td>
                           <td>
                             <button class="edit btn wave">Edit</button>
                           </td>
@@ -107,8 +107,8 @@
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
-                          <td>0.33</td>
-                          <td><span class="buy">15</span></td>
+                          <td><span class="buy last_price">0.36</span></td>
+                          <td>position</td>
                           <td>
                             <button class="edit btn wave">Edit</button>
                           </td>
@@ -121,8 +121,8 @@
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
-                          <td>0.33</td>
-                          <td><span class="sell">15</span></td>
+                          <td><span class="sell last_price">0.36</span></td>
+                          <td>order</td>
                           <td>
                             <button class="edit btn wave">Edit</button>
                           </td>
@@ -135,8 +135,8 @@
                           <td>14.03.16 19.09</td>
                           <td>200</td>
                           <td>0.33</td>
-                          <td>0.33</td>
-                          <td><span class="buy">15</span></td>
+                          <td><span class="buy last_price">0.36</span></td>
+                          <td>position</td>
                           <td>
                             <button class="edit btn wave">Edit</button>
                           </td>
@@ -171,7 +171,7 @@
                         <tr>
                           <th>Symbol</th>
                           <th>Time</th>
-                          <th>Volume</th>
+                          <th>Quantity</th>
                           <th>Price</th>
                           <th>BID/ASK</th>
                           <!--<th>Change p.</th>-->
@@ -295,8 +295,9 @@
                             <!--<option value="2">Closed</option>-->
                           <!--</select>-->
                         </th>
-                        <th>Volume</th>
+                        <th>Quantity</th>
                         <th>Price</th>
+                        <th>Fees</th>
                         <th>Profit/Loss</th>
                         <!--<th>Liquidity</th>-->
                         <!--<th>Fees</th>-->
@@ -310,9 +311,9 @@
                         <td>Buy</td>
                         <td>2</td>
                         <td>$6.00</td>
+                        <td><span class="down">$0.032</span></td>
                         <td>$0.33</td>
                         <!--<td>Add</td>-->
-                        <!--<td>($0.032)</td>-->
                         <!--<td>$0.968</td>-->
                       </tr>
                       <tr class="sell">
@@ -321,9 +322,9 @@
                         <td>Sell</td>
                         <td>1</td>
                         <td>$2.00</td>
+                        <td><span class="down">$0.032</span></td>
                         <td>$0.33</td>
                         <!--<td>Reduce</td>-->
-                        <!--<td>($0.032)</td>-->
                         <!--<td>$0.968</td>-->
                       </tr>
                       <tr>
@@ -332,9 +333,9 @@
                         <td>Closed</td>
                         <td>1</td>
                         <td>$4.00</td>
+                        <td><span class="down">$0.032</span></td>
                         <td>$0.44</td>
                         <!--<td>Reduce</td>-->
-                        <!--<td>($0.032)</td>-->
                         <!--<td>$0.968</td>-->
                       </tr>
                       <tr class="buy">
@@ -343,9 +344,9 @@
                         <td>Buy</td>
                         <td>4</td>
                         <td>$1.00</td>
+                        <td><span class="up">$0.076</span></td>
                         <td>$0.24</td>
                         <!--<td>Add</td>-->
-                        <!--<td>($0.076)</td>-->
                         <!--<td>$0.567</td>-->
                       </tr>
                       <tr>
@@ -354,9 +355,9 @@
                         <td>Closed</td>
                         <td>2</td>
                         <td>$1.00</td>
+                        <td><span class="down">$0.032</span></td>
                         <td>$0.67</td>
                         <!--<td>Add</td>-->
-                        <!--<td>($0.032)</td>-->
                         <!--<td>$0.968</td>-->
                       </tr>
                       <tr class="sell">
@@ -365,9 +366,9 @@
                         <td>Sell</td>
                         <td>1</td>
                         <td>$1.00</td>
+                        <td><span class="up">$0.076</span></td>
                         <td>$0.32</td>
                         <!--<td>Reduce</td>-->
-                        <!--<td>($0.123)</td>-->
                         <!--<td>$0.567</td>-->
                       </tr>
                     </tbody>

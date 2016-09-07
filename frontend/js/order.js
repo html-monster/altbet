@@ -1,6 +1,8 @@
+var id = [];
+
 class orderClass{
 	constructor(){
-		var id = [], limit = 0, self = this;
+		var limit = 0, self = this;
 
 		orderClass.showInfo();
 
@@ -14,7 +16,7 @@ class orderClass{
 					orderContent = $('#order'),
 					currentOrders = $('#current-orders'),
 					tab_content = $('.tab_content'),
-					checkbox = $('.left_order .tab input[type=checkbox');
+					checkbox = $('.left_order .tab input[type=checkbox]');
 
 			$(".left_order .wrapper .tab").click(function () {
 				var height;
@@ -81,9 +83,10 @@ class orderClass{
 				var price = +$(this).find('.price input').val(),
 						volume = +$(this).find('.volume input').val(),
 						sum = +$(this).find('.obligations input').val(),
-						checkboxProp = $(this).find('input[type="checkbox"]').length ? $(this).find('input[type="checkbox"]').prop('checked') : 1;
+						checkboxProp = $(this).find('input[type="checkbox"]').length ? $(this).find('input[type="checkbox"]').prop('checked') : 1,
+						staticProject = location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru';
 
-				if($('header .log_out').length){
+				if($('header .log_out').length && !staticProject){
 					$('.sign_in_form').fadeIn(200);  //'.sign_in_form'
 					$('#login-email').focus(); //'#email'
 					return false;
@@ -144,8 +147,11 @@ class orderClass{
 				var code = e.which ||e.charCode || e.keyCode,
 						message = $(this).next('.warning');
 
+				// if(code == 13)
+				// 	$(this).parents('form').submit();
+
 				if($(this).parents('.price').length || $(this).parents('.input').find('.spreader').length){
-					if(code	 < 46 || code	 > 57 || code	 == 47){
+					if((code	 < 46 || code	 > 57 || code	 == 47) && code != 13){
 						message.fadeIn(200);
 						return false;
 					}
@@ -181,7 +187,7 @@ class orderClass{
 					}
 				}
 				if($(this).parents('.volume').length){
-					if(code	 < 46 || code	 > 57 || code	 == 47 || code	 == 46){
+					if((code	 < 46 || code	 > 57 || code	 == 47 || code	 == 46) && code != 13){
 						message.fadeIn(200);
 						return false;
 					}
@@ -194,7 +200,7 @@ class orderClass{
 				if($(this).parents('.obligations').length){
 					var val = $(this).val().split('.');
 
-					if(code	 < 46 || code	 > 57 || code	 == 47){
+					if((code	 < 46 || code	 > 57 || code	 == 47) && code != 13){
 						message.fadeIn(200);
 					}
 					else{
@@ -262,6 +268,7 @@ class orderClass{
 						html = html.find('form').css({display: 'none'});
 
 					if (orderDirection == 'sell') {
+						html.find('.id').val(id[defaultMethods.searchValue(id, self.parents('.event-content').attr('id'))][0] + '__order_buy');
 						// html.find('.obligations input.number').val(sellSum);
 						html.find('.side').val('Sell');
 					}
@@ -273,6 +280,7 @@ class orderClass{
 						html.find('input[type=submit]').toggleClass('sell buy').val('buy');
 						// html.find('.obligations input.number').val(buySum);
 						html.find('.side').val('Buy');
+						html.find('.id').val(id[defaultMethods.searchValue(id, self.parents('.event-content').attr('id'))][0] + '__order_buy');
 					}
 
 					if(limit) {
@@ -448,7 +456,7 @@ class orderClass{
 					if (context.parents('.obligations').length) {
 						if (!(isNaN(price))) {
 							let volume = Math.round(sum / price);
-							volumeInput.val((volume == 'Infinity') ? '' : volume);
+							volumeInput.val((volume == 'Infinity' || isNaN(volume)) ? '' : volume);
 						}
 						else {
 							volumeInput.val('');
@@ -520,13 +528,29 @@ class orderClass{
 				}
 				orderClass.showInfo();
 			});
-			order_tab.on('click', '.close', function (e) {
+			order_tab.on('click', '.order-title .close', function (e) {
 				e.preventDefault();
 				var order = $(this).parents('.order_content');
 				if($(this).parents('.default_orders').length && id.length)
 					id.splice(defaultMethods.searchValue(id, order.attr('id').slice(0, -7)), 1);
 				order.remove();
 				orderClass.showInfo();
+			});
+			order_tab.on('click', '.error_pop_up .close', function () {
+				$(this).parents('.error_pop_up').removeClass('bounceInRight').addClass('bounceOutRight');
+				setTimeout(function () {
+					$(this).parents('.error_pop_up').removeClass('active')
+				}, 700);
+			});
+			$(document).keyup(function (e) {
+				e = e || event;
+
+				if(e.keyCode == 27) {
+					$('.error_pop_up').removeClass('bounceInRight').addClass('bounceOutRight');
+					setTimeout(function () {
+						$('.error_pop_up').removeClass('active')
+					}, 700);
+				}
 			});
 		}();
 
