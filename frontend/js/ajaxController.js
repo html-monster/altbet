@@ -13,12 +13,24 @@ class ajaxControllerClass{
 	}
 
 	static OnSuccessJs(e){
-		let serverData = e.split('/'), order;
+		let serverData = e.split('/'), orderID, sell, buy;
 
-console.log(e);
-		// if($(this).parents('.default_orders').length && id.length)
-		// 	id.splice(defaultMethods.searchValue(id, order.attr('id').slice(0, -7)), 1);
-		// order.remove();
+		orderID = '#' + serverData[0];
+		orderID += (+serverData[2]) ? '_mirror__order' : '__order' ;
+		sell = $(orderID + ' .sell-container');
+		buy = $(orderID + ' .buy-container');
+
+		if(sell.children().length && buy.children().length){
+			if(+serverData[1])
+				sell.html('');
+			else
+				buy.html('');
+		}
+		else{
+			id.splice(defaultMethods.searchValue(id, orderID.slice(0, -7)), 1);
+			$(orderID).remove();
+		}
+
 		orderClass.showInfo();
 	}
 

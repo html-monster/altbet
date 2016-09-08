@@ -223,10 +223,20 @@
             display: block;
             padding-left: 2px;
           }
+          .container{  display: flex;  }
           .button-container{
             display: inline-flex;
+            width: 50%;
             height: 35px;
             vertical-align: middle;
+            &:first-child{
+              justify-content: flex-end;
+              padding-right: 2px;
+            }
+            &:last-child{
+              justify-content: flex-start;
+              padding-left: 2px;
+            }
           }
           button.event {
             height: 32px;
