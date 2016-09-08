@@ -4,7 +4,7 @@ class ajaxControllerClass{
 		let object = defaultMethods.objectFromArray(this.data.split('&')),
 				id = defaultMethods.getId(object);
 
-		console.log(id);
+		console.log('Order sending start: ' + object.Symbol);
 		if(object.Side == 'Buy')
 			$('#'+id + ' .buy-container input[type=submit]').attr('disabled', true);
 		else
@@ -31,6 +31,7 @@ class ajaxControllerClass{
 			$(orderID).remove();
 		}
 
+		console.log('Order sending finished: ' + serverData[0]);
 		orderClass.showInfo();
 	}
 
@@ -48,6 +49,7 @@ class ajaxControllerClass{
 			$('#'+id + ' .sell-container input[type=submit]').removeAttr('disabled');
 		}
 
+		console.log('Order isn\'t sending: ' + object.Symbol);
 		element.find('.error_pop_up').removeClass('bounceOutRight').addClass('bounceInRight active');
 	}
 

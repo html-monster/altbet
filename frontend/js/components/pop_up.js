@@ -4,7 +4,7 @@ class popUpClass{
 			e = e || event;
 			if(e.keyCode == 27) $('.pop_up').fadeOut();
 		});
-		console.log($.browser.version.slice(0, 2)); // EDGE В ВЕРСИИ 50 МОГУТ ПОЛЕЗТЬ БАГИ
+		console.log("browser version: " + $.browser.version.slice(0, 2)); // EDGE В ВЕРСИИ 50 МОГУТ ПОЛЕЗТЬ БАГИ
 	}
 	static popUpClose(closeButton, ...popUpWindow){ //.head_form .close
 		$(closeButton).click(function(e){
@@ -27,7 +27,6 @@ class popUpClass{
 			$(popUpWindow).addClass('active').fadeIn(200);  //'.sign_in_form'
 			$(focusElement).focus(); //'#email'
 
-			console.log(browser);
 			if (browser)
 				$('body>.wrapper').addClass('blur');
 		});

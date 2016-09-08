@@ -21,7 +21,7 @@ $order_sidebar_head_separator: #e9eaee;
 }
 @mixin order_sidebar_current_order_title_buy{
 	background: linear-gradient(to bottom, transparentize(#64C9EF, 0.7), transparentize(#3498DA, 0.7));
-	span.edit{
+	.edit{
 		border-left: 1px solid rgba(53, 153, 218, 0.2);
 		border-bottom: 1px solid rgba(53, 153, 218, 0.2);
 	}
@@ -31,7 +31,7 @@ $order_sidebar_head_separator: #e9eaee;
 }
 @mixin order_sidebar_current_order_title_sell{
 	background: linear-gradient(to bottom, transparentize(#F88447, 0.7), transparentize(#EF4D22, 0.7));
-	span.edit{
+	.edit{
 		border-left: 1px solid rgba(239, 77, 33, 0.2);
 		border-bottom: 1px solid rgba(239, 77, 33, 0.2);
 	}

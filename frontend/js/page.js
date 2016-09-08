@@ -87,11 +87,14 @@ $(document).ready(function () {
 
 	$('.show-schedule').click(function(){ // show chart on the main page
 		$(this).toggleClass('active')
-					 .next().slideToggle();
+					 .next().toggleClass('active');
 		var schedule = $(this).next();
-		setTimeout(function(){
-			schedule.toggleClass('active');
-		}, 1000)
+		// setTimeout(function(){
+		// 	schedule.addClass('loader');
+		// }, 400);
+		// setTimeout(function(){
+		// 	schedule.removeClass('loader');
+		// }, 1000);
 	});
 
 

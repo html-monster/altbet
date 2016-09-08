@@ -15,6 +15,7 @@ footer{
   z-index: 54;
   color: #ffffff;
   transition: 0.4s ease-out;
+  overflow: hidden;
   &.active{  bottom: 0 !important;  }
   .footer_container{
     display: flex;

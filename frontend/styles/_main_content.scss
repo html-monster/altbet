@@ -331,10 +331,11 @@
           }
         }
       }
-      span.show-schedule{
+      .show-schedule{
         display: block;
         width: 40px;
         height: 20px;
+        min-height: inherit;
         position: absolute;
         left: calc(50% - 20px);
         bottom: 0;
@@ -366,20 +367,30 @@
         }
       }
       .schedule{
-        display: none;
+        //display: none;
+        height: 0;
         margin: 15px 10px 25px ;
         clear: both;
         position: relative;
-        &.active:after{
+        overflow: hidden;
+        transition: 0.4s ease-out;
+        &:after{
           content: '';
           display: block;
-          width: calc(100% - 10px);
-          height: 100%;
+          width: 100%;
+          height: 0;
           background: url("../Images/ajax-loader.gif") no-repeat center $main_page_tab_color_active;
           position: absolute;
           top: 0;
           left: 0;
         }
+        &.active{  height: 400px;  }
+        &.loader:after{  height: 100%;  }
+        svg{
+          max-width: 100% !important;
+          &> text:last-of-type{  visibility: hidden;  }
+        }
+        @include main_page_chart;
         img{  width: 100%;  }
       }
     }

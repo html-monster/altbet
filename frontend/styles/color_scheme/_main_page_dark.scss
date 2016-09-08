@@ -52,3 +52,20 @@ $main_page_event_chart_button: url(../Images/sprite.svg) no-repeat -224px -354px
 		&:active:after{  opacity: 0 !important;  }
 	}
 }
+@mixin main_page_chart{
+	.highcharts-container{
+		overflow: hidden;
+		background: linear-gradient(to bottom, #211e25, #292830);
+	}
+	rect.highcharts-background{
+		fill: transparent;
+	}
+	.highcharts-grid, .highcharts-axis{
+		path{  stroke: #3a3a3a;  }
+	}
+	text{
+		color: transparentize(#ffffff, 0.6) !important;
+		fill: transparentize(#ffffff, 0.6) !important;
+	}
+	.highcharts-tooltip path{  fill: #53515e;  }
+}
