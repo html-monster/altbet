@@ -10,8 +10,10 @@ class popUpClass{
 			e = e || event;
 			e.preventDefault();
 			popUpWindow.forEach(function (item) {
-				$(item).fadeOut(200); //.sign_in_form
+				$(item).fadeOut(200).removeClass('active'); //.sign_in_form
 			});
+			if(!$('.pop_up').hasClass('active'))
+				$('body>.wrapper').removeClass('blur');
 		});
 	}
 
@@ -19,8 +21,9 @@ class popUpClass{
 		$(openButton).click(function(e){//'.log_out .sign_in'
 			e = e || event;
 			e.preventDefault();
-			$(popUpWindow).fadeIn(200);  //'.sign_in_form'
+			$(popUpWindow).addClass('active').fadeIn(200);  //'.sign_in_form'
 			$(focusElement).focus(); //'#email'
+			$('body>.wrapper').addClass('blur');
 		});
 	}
 
@@ -31,12 +34,16 @@ class popUpClass{
 				if(target.some((element) =>  $(e.target).closest(element).length != 0))
 					return;
 			}
-			
 			$(popUp).removeClass('active');
+
+			if(!$('.pop_up').hasClass('active'))
+				$('body>.wrapper').removeClass('blur');
+
 			if(method == 'slideUp')
 				$(popUp).slideUp(400);
 			else
 				$(popUp).fadeOut(400);
+
 		});
 	}
 }
