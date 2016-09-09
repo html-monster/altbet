@@ -82,9 +82,9 @@ $trader_table_th_border_color: transparentize(#ffffff, 0.95);
 $trader_order_button_hover: transparentize(#ef4d22 * 1.1, 0.9);
 $trader_order_button_active: transparentize(#ef4d22 * 0.5, 0.9);
 @mixin trader_order_delete{
-	.buy-container span.delete:hover{  background: transparentize(#ebf7f9 * 0.95, 0.95);  }
-	.sell-container span.delete:hover{  background: transparentize(#fff1f1 * 0.95, 0.95);  }
-	.buy-container span.delete:active{  background: transparentize(#ebf7f9 * 1.1, 0.8);  }
-	.sell-container span.delete:active{  background: transparentize(#fff1f1 * 1.1, 0.8);  }
+	.buy-container .delete:hover{  background: transparentize(#ebf7f9 * 0.95, 0.95);  }
+	.sell-container .delete:hover{  background: transparentize(#fff1f1 * 0.95, 0.95);  }
+	.buy-container .delete:active{  background: transparentize(#ebf7f9 * 1.1, 0.8);  }
+	.sell-container .delete:active{  background: transparentize(#fff1f1 * 1.1, 0.8);  }
 }
 $trader_show_spread: linear-gradient(to right, #292830, #3a3943, #292830);

@@ -88,7 +88,7 @@ $(document).ready(function () {
 	$('.show-schedule').click(function(){ // show chart on the main page
 		$(this).toggleClass('active')
 					 .next().toggleClass('active');
-		var schedule = $(this).next();
+		// var schedule = $(this).next();
 		// setTimeout(function(){
 		// 	schedule.addClass('loader');
 		// }, 400);
@@ -97,6 +97,17 @@ $(document).ready(function () {
 		// }, 1000);
 	});
 
+	// $('.schedule').sortable('disabled') ; //drug disable
+
+	// order drag and drop ===============================================================================================
+	$(function() {
+		var current = $( ".ui-sort" );
+		current.sortable({
+			placeholder: 'ui-state-highlight',
+			cancel: '.not-sort'
+		});
+		current.disableSelection();
+	});
 
 	//cybersport==========================================================================================================
 	$('.stream_body .stream_title').click(function(){

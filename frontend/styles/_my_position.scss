@@ -167,12 +167,44 @@
 				thead {
 					th {
 						&:nth-of-type(1){  width: 25%;  }
-						&:nth-of-type(2){  width: 16%;  }
-						&:nth-last-of-type(3){  width: 12%;  }
+						&:nth-of-type(2){  width: 20%;  }
+						&:nth-last-of-type(3){  width: 8%;  }
 						&:nth-last-of-type(1), &:nth-last-of-type(2){  width: 8%;  min-width: 74px;  }
+						.sell{  color: #ef4d22;  }
+						.buy{  color: #3498da;  }
+						.profit{  color: #4dac2e;  }
+						.loss{  color: #ff3905;  }
 					}
 				}
-				tbody td:last-of-type{  padding-right: 12px;  }
+				tbody{
+					tr{
+						&.sell .quantity{  color: #ef4d22;  }
+						&.buy .quantity{  color: #3498da;  }
+					}
+					td{
+						&:last-of-type{  padding-right: 12px;  }
+						&.quantity{
+							padding-left: 25px;
+						}
+						&.profit{  color: #4dac2e;  }
+						&.loss{  color: #ff3905;  }
+						&.pl{  padding: 0;  text-align: center;  }
+						&.pos{
+							text-indent: -9999px;
+							&:before{
+								content: '';
+								display: block;
+								width: 16px;
+								height: 16px;
+								position: absolute;
+								top: calc(50% - 8px);
+								left: 27px;
+								background: url("../Images/sprite.svg") no-repeat -285px -177px;
+							}
+						}
+						.time{  opacity: 0.6;  }
+					}
+				}
 			}
 			//.my_position_container{
 			//	thead {

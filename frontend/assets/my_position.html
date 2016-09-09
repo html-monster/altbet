@@ -51,10 +51,11 @@
                         <tr>
                           <th>Symbol</th>
                           <th>Time</th>
+                          <th>Type</th>
                           <th>Quantity</th>
                           <th>Price</th>
                           <th>Latest</th>
-                          <th></th>
+                          <th>Position</th>
                           <th></th>
                           <th></th>
                         </tr>
@@ -62,11 +63,12 @@
                         <tbody class="showhide active" id="tab1">
                         <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
+                          <td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>
+                          <td>Buy</td>
+                          <td class="quantity">200</td>
                           <td>0.33</td>
                           <td><span class="sell last_price">0.36</span></td>
-                          <td>order</td>
+                          <td></td>
                           <td>
                             <button class="edit btn wave">Edit</button>
                           </td>
@@ -76,11 +78,12 @@
                         </tr>
                         <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
+                          <td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>
+                          <td>Buy</td>
+                          <td class="quantity">200</td>
                           <td>0.33</td>
                           <td><span class="sell last_price">0.36</span></td>
-                          <td>order</td>
+                          <td></td>
                           <td>
                             <button class="edit btn wave">Edit</button>
                           </td>
@@ -90,11 +93,12 @@
                         </tr>
                         <tr class="sell">
                           <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
+                          <td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>
+                          <td>Sell</td>
+                          <td class="quantity">200</td>
                           <td>0.33</td>
                           <td><span class="sell last_price">0.36</span></td>
-                          <td>order</td>
+                          <td></td>
                           <td>
                             <button class="edit btn wave">Edit</button>
                           </td>
@@ -104,25 +108,27 @@
                         </tr>
                         <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
+                          <td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>
+                          <td>Buy</td>
+                          <td class="quantity">200</td>
                           <td>0.33</td>
                           <td><span class="buy last_price">0.36</span></td>
-                          <td>position</td>
+                          <td class="pos">position</td>
                           <td>
-                            <button class="edit btn wave">Edit</button>
+                            <button class="edit btn wave" disabled>Edit</button>
                           </td>
                           <td>
-                            <button class="delete btn wave">Cancel</button>
+                            <button class="delete btn wave" disabled>Cancel</button>
                           </td>
                         </tr>
                         <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
+                          <td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>
+                          <td>Buy</td>
+                          <td class="quantity">200</td>
                           <td>0.33</td>
                           <td><span class="sell last_price">0.36</span></td>
-                          <td>order</td>
+                          <td></td>
                           <td>
                             <button class="edit btn wave">Edit</button>
                           </td>
@@ -132,16 +138,17 @@
                         </tr>
                         <tr class="sell">
                           <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
+                          <td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>
+                          <td>Sell</td>
+                          <td class="quantity">200</td>
                           <td>0.33</td>
                           <td><span class="buy last_price">0.36</span></td>
-                          <td>position</td>
+                          <td class="pos">position</td>
                           <td>
-                            <button class="edit btn wave">Edit</button>
+                            <button class="edit btn wave" disabled>Edit</button>
                           </td>
                           <td>
-                            <button class="delete btn wave">Cancel</button>
+                            <button class="delete btn wave" disabled>Cancel</button>
                           </td>
                         </tr>
                       </tbody>
@@ -171,11 +178,12 @@
                         <tr>
                           <th>Symbol</th>
                           <th>Time</th>
+                          <th>Type</th>
                           <th>Quantity</th>
                           <th>Price</th>
-                          <th>BID/ASK</th>
+                          <th><span class="sell">BID</span>|<span class="buy">ASK</span></th>
                           <!--<th>Change p.</th>-->
-                          <th>Profit/Loss</th>
+                          <th><span class="profit">Profit</span>|<span class="loss">Loss</span></th>
                           <th></th>
                           <th></th>
                         </tr>
@@ -183,12 +191,13 @@
                       <tbody class="showhide active" id="tab5">
                         <tr class="sell">
                           <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
+                          <td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>
+                          <td>Sell</td>
+                          <td class="quantity">200</td>
                           <td>0.31</td>
-                          <td>0.33</td>
+                          <td><span class="sell">0.69</span>|<span class="buy">0.72</span></td>
                           <!--<td>0.02</td>-->
-                          <td>4$</td>
+                          <td class="profit pl">4$</td>
                           <td>
                             <button class="buy btn wave">Buy</button>
                           </td>
@@ -198,12 +207,13 @@
                         </tr>
                         <tr class="sell">
                           <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
+                          <td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>
+                          <td>Sell</td>
+                          <td class="quantity">200</td>
                           <td>0.66</td>
-                          <td>0.68</td>
+                          <td><span class="sell">0.63</span>|<span class="buy">0.68</span></td>
                           <!--<td>-0.03</td>-->
-                          <td>-6$</td>
+                          <td class="loss pl">-6$</td>
                           <td>
                             <button class="buy btn wave">Buy</button>
                           </td>
@@ -213,12 +223,13 @@
                         </tr>
                         <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>-200</td>
+                          <td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>
+                          <td>Buy</td>
+                          <td class="quantity">200</td>
                           <td>0.31</td>
-                          <td>0.33</td>
+                          <td><span class="sell">0.69</span>|<span class="buy">0.72</span></td>
                           <!--<td>0.02</td>-->
-                          <td>4$</td>
+                          <td class="profit pl">4$</td>
                           <td>
                             <button class="buy btn wave">Buy</button>
                           </td>
@@ -228,12 +239,13 @@
                         </tr>
                         <tr class="sell">
                           <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>-200</td>
+                          <td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>
+                          <td>Sell</td>
+                          <td class="quantity">200</td>
                           <td>0.66</td>
-                          <td>0.68</td>
+                          <td><span class="sell">0.63</span>|<span class="buy">0.68</span></td>
                           <!--<td>-0.03</td>-->
-                          <td>-6$</td>
+                          <td class="loss pl">-6$</td>
                           <td>
                             <button class="buy btn wave">Buy</button>
                           </td>
@@ -243,12 +255,13 @@
                         </tr>
                         <tr class="buy">
                           <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>200</td>
+                          <td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>
+                          <td>Buy</td>
+                          <td class="quantity">200</td>
                           <td>0.31</td>
-                          <td>-0.33</td>
+                          <td><span class="sell">0.69</span>|<span class="buy">0.72</span></td>
                           <!--<td>0.02</td>-->
-                          <td>4$</td>
+                          <td class="profit pl">4$</td>
                           <td>
                             <button class="buy btn wave">Buy</button>
                           </td>
@@ -258,12 +271,13 @@
                         </tr>
                         <tr class="sell">
                           <td>USD/UAH25-31.06.16</td>
-                          <td>14.03.16 19.09</td>
-                          <td>2-00</td>
+                          <td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>
+                          <td>Sell</td>
+                          <td class="quantity">200</td>
                           <td>0.31</td>
-                          <td>0.33</td>
+                          <td><span class="sell">0.69</span>|<span class="buy">0.72</span></td>
                           <!--<td>0.02</td>-->
-                          <td>4$</td>
+                          <td class="profit pl">4$</td>
                           <td>
                             <button class="buy btn wave">Buy</button>
                           </td>
@@ -304,74 +318,74 @@
                         <!--<th>Credit/Debit</th>-->
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr class="buy">
-                        <td>USD/UAH25-31.06.16</td>
-                        <td>14.03.16 19.09</td>
-                        <td>Buy</td>
-                        <td>2</td>
-                        <td>$6.00</td>
-                        <td><span class="down">$0.032</span></td>
-                        <td>$0.33</td>
-                        <!--<td>Add</td>-->
-                        <!--<td>$0.968</td>-->
-                      </tr>
-                      <tr class="sell">
-                        <td>USD/UAH25-31.06.16</td>
-                        <td>14.03.16 19.09</td>
-                        <td>Sell</td>
-                        <td>1</td>
-                        <td>$2.00</td>
-                        <td><span class="down">$0.032</span></td>
-                        <td>$0.33</td>
-                        <!--<td>Reduce</td>-->
-                        <!--<td>$0.968</td>-->
-                      </tr>
-                      <tr>
-                        <td>USD/UAH25-31.06.16</td>
-                        <td>15.03.16 19.09</td>
-                        <td>Closed</td>
-                        <td>1</td>
-                        <td>$4.00</td>
-                        <td><span class="down">$0.032</span></td>
-                        <td>$0.44</td>
-                        <!--<td>Reduce</td>-->
-                        <!--<td>$0.968</td>-->
-                      </tr>
-                      <tr class="buy">
-                        <td>USD/UAH25-31.06.16</td>
-                        <td>15.03.16 19.09</td>
-                        <td>Buy</td>
-                        <td>4</td>
-                        <td>$1.00</td>
-                        <td><span class="up">$0.076</span></td>
-                        <td>$0.24</td>
-                        <!--<td>Add</td>-->
-                        <!--<td>$0.567</td>-->
-                      </tr>
-                      <tr>
-                        <td>USD/UAH25-31.06.16</td>
-                        <td>17.03.16 19.09</td>
-                        <td>Closed</td>
-                        <td>2</td>
-                        <td>$1.00</td>
-                        <td><span class="down">$0.032</span></td>
-                        <td>$0.67</td>
-                        <!--<td>Add</td>-->
-                        <!--<td>$0.968</td>-->
-                      </tr>
-                      <tr class="sell">
-                        <td>USD/UAH25-31.06.16</td>
-                        <td>17.03.16 19.09</td>
-                        <td>Sell</td>
-                        <td>1</td>
-                        <td>$1.00</td>
-                        <td><span class="up">$0.076</span></td>
-                        <td>$0.32</td>
-                        <!--<td>Reduce</td>-->
-                        <!--<td>$0.567</td>-->
-                      </tr>
-                    </tbody>
+                    <!--<tbody>-->
+                      <!--<tr class="buy">-->
+                        <!--<td>USD/UAH25-31.06.16</td>-->
+                        <!--<td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>-->
+                        <!--<td>Buy</td>-->
+                        <!--<td>2</td>-->
+                        <!--<td>$6.00</td>-->
+                        <!--<td><span class="down">$0.032</span></td>-->
+                        <!--<td>$0.33</td>-->
+                        <!--&lt;!&ndash;<td>Add</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td>$0.968</td>&ndash;&gt;-->
+                      <!--</tr>-->
+                      <!--<tr class="sell">-->
+                        <!--<td>USD/UAH25-31.06.16</td>-->
+                        <!--<td><span class="date">14.03.16</span> | <span class="time">19:09</span></td>-->
+                        <!--<td>Sell</td>-->
+                        <!--<td>1</td>-->
+                        <!--<td>$2.00</td>-->
+                        <!--<td><span class="down">$0.032</span></td>-->
+                        <!--<td>$0.33</td>-->
+                        <!--&lt;!&ndash;<td>Reduce</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td>$0.968</td>&ndash;&gt;-->
+                      <!--</tr>-->
+                      <!--<tr>-->
+                        <!--<td>USD/UAH25-31.06.16</td>-->
+                        <!--<td>15.03.16 19.09</td>-->
+                        <!--<td>Closed</td>-->
+                        <!--<td>1</td>-->
+                        <!--<td>$4.00</td>-->
+                        <!--<td><span class="down">$0.032</span></td>-->
+                        <!--<td>$0.44</td>-->
+                        <!--&lt;!&ndash;<td>Reduce</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td>$0.968</td>&ndash;&gt;-->
+                      <!--</tr>-->
+                      <!--<tr class="buy">-->
+                        <!--<td>USD/UAH25-31.06.16</td>-->
+                        <!--<td>15.03.16 19.09</td>-->
+                        <!--<td>Buy</td>-->
+                        <!--<td>4</td>-->
+                        <!--<td>$1.00</td>-->
+                        <!--<td><span class="up">$0.076</span></td>-->
+                        <!--<td>$0.24</td>-->
+                        <!--&lt;!&ndash;<td>Add</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td>$0.567</td>&ndash;&gt;-->
+                      <!--</tr>-->
+                      <!--<tr>-->
+                        <!--<td>USD/UAH25-31.06.16</td>-->
+                        <!--<td>17.03.16 19.09</td>-->
+                        <!--<td>Closed</td>-->
+                        <!--<td>2</td>-->
+                        <!--<td>$1.00</td>-->
+                        <!--<td><span class="down">$0.032</span></td>-->
+                        <!--<td>$0.67</td>-->
+                        <!--&lt;!&ndash;<td>Add</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td>$0.968</td>&ndash;&gt;-->
+                      <!--</tr>-->
+                      <!--<tr class="sell">-->
+                        <!--<td>USD/UAH25-31.06.16</td>-->
+                        <!--<td>17.03.16 19.09</td>-->
+                        <!--<td>Sell</td>-->
+                        <!--<td>1</td>-->
+                        <!--<td>$1.00</td>-->
+                        <!--<td><span class="up">$0.076</span></td>-->
+                        <!--<td>$0.32</td>-->
+                        <!--&lt;!&ndash;<td>Reduce</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td>$0.567</td>&ndash;&gt;-->
+                      <!--</tr>-->
+                    <!--</tbody>-->
                   </table>
                 </div>
               </div>

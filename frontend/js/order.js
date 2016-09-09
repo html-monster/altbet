@@ -566,17 +566,6 @@ class orderClass{
 					self.parent().find('span').text('Market');
 			});
 		}();
-
-
-		// order drag and drop ===============================================================================================
-		$(function() {
-			var current = $( ".ui-sort" );
-			current.sortable({
-				placeholder: "ui-state-highlight"
-			});
-			current.disableSelection();
-		});
-
 	}
 
 	static showInfo () {

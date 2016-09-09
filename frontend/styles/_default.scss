@@ -82,7 +82,9 @@ body > .wrapper{
   box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
   transition: 0.2s ease;
   @include btn-hover;
-  &[disabled]{  cursor: default !important; opacity: 0.6; }
+  &[disabled]{  cursor: default !important; opacity: 0.6;
+    &:after{  display: none;  }
+  }
   &:not([disabled]):active {
     box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);
   }

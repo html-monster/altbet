@@ -2,7 +2,10 @@ class popUpClass{
 	constructor(){
 		$(document).keyup(function (e) {
 			e = e || event;
-			if(e.keyCode == 27) $('.pop_up').fadeOut();
+			if(e.keyCode == 27){
+				$('.pop_up').fadeOut();
+				$('body>.wrapper').removeClass('blur');
+			}
 		});
 		console.log("browser version: " + $.browser.version.slice(0, 2)); // EDGE В ВЕРСИИ 50 МОГУТ ПОЛЕЗТЬ БАГИ
 	}
