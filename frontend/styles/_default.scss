@@ -29,13 +29,15 @@ html{
   }
 }
 
+:root{  overflow-x: hidden;  background-color: transparent;  }
+
 body,
 html{
   margin: 0;
   padding: 0;
   height: 100%;
   font-family: "open_sans_regular", sans-serif;
-  background-image: linear-gradient(to top, #bdc0cd, #ffffff);
+  background: $main-bg;
 }
 body>.wrapper{
   background: $main-bg -50px;

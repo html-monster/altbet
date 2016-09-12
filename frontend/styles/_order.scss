@@ -41,7 +41,7 @@
           font-size: 14px;
           line-height: 33px;
           position: relative;
-          border: 1px solid $order_sidebar_tab_bord;
+          border: 1px solid $order_sidebar_tab_color;
           border-radius: 4px 0 0 4px;
           &.active {
             background-image: $active_bg;
@@ -492,9 +492,18 @@
             padding-bottom: 5px;
             overflow-y: auto;
             .order_content{
-              &:last-child{  margin-bottom: 15px;  }
-              .order-title{  padding: 5px 30px 5px 15px; }
+              &:last-child{  padding: 0;  }
+              .order-title{
+                padding: 5px 30px 5px 15px;
+                background: linear-gradient(to bottom, #53515e, #292830);
+              }
               form input[type="submit"]{  border-left: none;  }
+              .close{
+                margin: 0;
+                position: absolute;
+                top: calc(50% - 8px);
+                right: 1px;
+              }
             }
           }
           //@keyframes pulse {
@@ -502,7 +511,7 @@
           //  100% {  transform: scale3d(1, 10, 1);  }
           //}
           .ui-state-highlight{
-            height: 55px;
+            height: 100px;
             margin-bottom: 15px;
             border: 1px dashed #fcefa1;
             //animation-name: pulse;
@@ -557,13 +566,32 @@
           }
           .order_content {
             padding-bottom: 10px;
-            //border-top: 1px solid #e9eaee;
-            //&:first-of-type{  border-top: none;  }
-            &.buy .order-title{
-              @include order_sidebar_current_order_title_buy;
+            .order_container{
+              border-bottom: 1px solid $order_sidebar_head_separator;
+              position: relative;
+              &:last-child{  border-bottom: none;  }
+              &:before{
+                content: '';
+                display: block;
+                width: 100%;
+                height: 1px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: rgba(255, 255, 255, 0.1);
+              }
             }
-            &.sell .order-title{
-              @include order_sidebar_current_order_title_sell;
+            .order_info{
+              padding: 5px 44px 5px 15px;
+              position: relative;
+              &.buy{
+                background: linear-gradient(to bottom, transparentize(#64C9EF, 0.7), transparentize(#3498DA, 0.7));
+                @include order_sidebar_current_order_title_buy;
+              }
+              &.sell{
+                background: linear-gradient(to bottom, transparentize(#F88447, 0.9), transparentize(#EF4D22, 0.9));
+                @include order_sidebar_current_order_title_sell;
+              }
             }
             .order-title{
               padding: 5px 20px 5px 15px;
@@ -585,7 +613,11 @@
               max-width: 140px;
               font-size: 13px;
               vertical-align: middle;
-              color: $order_sidebar_current_order_title_color;
+              color: transparentize(#ffffff, 0.2);
+            }
+            .timestamp{
+              font-size: 10px;
+              .time{  color: $order_sidebar_current_order_title_color;  }
             }
             a.close{
               float: right;
@@ -637,12 +669,12 @@
             }
             strong {
               display: inline-block;
-              padding-right: 10px;
+              padding-right: 6px;
               font-size: 12px;
               color: transparentize($order_sidebar_current_order_title_color, 0.5);
               line-height: 22px;
               &.current-order{
-                color: transparentize($order_sidebar_current_order_title_color, 0.5);
+                color: transparentize(#ffffff, 0.2);
                 &.up span{  color: #3498da;  }
                 &.down span{  color: #ef4d22;  }
               }
@@ -688,12 +720,12 @@
               display: flex;
               align-items: center;
               justify-content: center;
-              width: 30px;
-              height: 50%;
+              width: 22px;
+              height: 33px;
               padding: 0;
               border-radius: 0;
               position: absolute;
-              right: 0;
+              top: 0;
               cursor: pointer;
               transition: 0.4s ease-out;
               &:hover{  background-color: rgba(0, 0, 0, 0.1);  }
@@ -711,11 +743,11 @@
               }
             }
             .edit{
-              top: 0;
+              right: 22px;
               &:after{  background: $order_sidebar_order_edit;  }
             }
             .delete{
-              top: 50%;
+              right: 0;
               &:after{  background: $order_sidebar_order_delete;  }
             }
             .pop_up{  position: absolute;  background: rgba(0, 0, 0, 0.5); }
@@ -734,10 +766,10 @@
               transition: 0.4s ease-out;
               button{
                 width: 68px;
-                height: 36px;
+                height: 25px;
                 margin: 0 5px;
                 border-radius: 6px;
-                line-height: 29px;
+                line-height: 18px;
                 font-size: 12px;
                 font-weight: 600;
                 &.no{

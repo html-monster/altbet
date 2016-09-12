@@ -104,7 +104,8 @@ $(document).ready(function () {
 		var current = $( ".ui-sort" );
 		current.sortable({
 			placeholder: 'ui-state-highlight',
-			cancel: '.not-sort'
+			cancel: '.not-sort',
+			scroll: false
 		});
 		current.disableSelection();
 	});

@@ -53,10 +53,18 @@ $(document).ready(function () {
 		price -= 0.01;
 	}
 
-	$('.confirmation .yes').click(function () {
+	var currentOrders = $('#current-orders');
+	currentOrders.on('click', '.confirmation .yes', function () {
+		let parent = $(this).parents('.order_content');
+
+		if ($(this).parents('.my_order').children().length > 2)
+			$(this).parents('.order_container').remove();
+		else
+			parent.remove();
+	});
+	currentOrders.on('click', '.order_container .close', function () {
 		$(this).parents('.order_content').remove();
 	});
-
 });
 
 

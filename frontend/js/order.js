@@ -35,6 +35,9 @@ class orderClass{
 					}
 				}
 				else{
+					console.log(height);
+					console.log(windowHeight);
+					console.log(substructionHeight);
 					height = orderContent.height();
 					if(height + 7 > windowHeight - substructionHeight){
 						tab_content.addClass('max');
@@ -368,6 +371,7 @@ class orderClass{
 		//order edit =======================================================================================================
 		self.orderEdit = function () {
 			var container = $('.left_order'),
+					currentOrders = $('#current-orders'),
 					checkboxProp,
 					priceMarket = '';
 			container.on('change', 'label.checkbox input[type=checkbox]', function () {
@@ -486,15 +490,15 @@ class orderClass{
 				}, 0);
 			});
 
-			$('.order-title .edit').click(function () {
-				var title = $(this).parents('.current-order-title'),
+			currentOrders.on('click', '.order_info .edit', function () {
+				var //title = $(this).parents('.current-order-title'),
 						tab_content = $('.tab_content'),
 						windowHeight = window.innerHeight,
 						parent = $(this).parents('#current-orders'),
 						height;
 				setTimeout(function () {
 					height = parent[0].clientHeight;
-					if (height + 1 > windowHeight - 235)
+					if (height + 1 > windowHeight - 180)
 						tab_content.addClass('max');
 					else
 						tab_content.removeClass('max');
@@ -503,10 +507,13 @@ class orderClass{
 				$(this).parents('.order_content').toggleClass('active');
 			});
 
-			$('.order-title .delete').click(function (e) {
+			currentOrders.on('click', '.order_info .delete', function () {
 				$(this).parent().find('.pop_up').fadeIn();
 			});
-			$('.confirmation .no').click(function (e) {
+			currentOrders.on('click', '.order_content .close', function () {
+				$(this).parents('.order_content').children('.pop_up').fadeIn();
+			});
+			currentOrders.on('click', '.confirmation .no', function () {
 				$(this).parents('.pop_up').fadeOut();
 			});
 		}();

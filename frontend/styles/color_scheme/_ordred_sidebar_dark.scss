@@ -1,6 +1,5 @@
 //order_sidebar=========================================================================================================
 $order_sidebar_bg: linear-gradient(to bottom, #3b3a44, #292830);
-$order_sidebar_tab_bord: #fff;
 $order_sidebar_tab_color: #fff;
 $order_sidebar_head_separator: #000000;
 @mixin order_sidebar_tab_separator{
@@ -20,24 +19,22 @@ $order_sidebar_head_separator: #000000;
 	}
 }
 @mixin order_sidebar_current_order_title_buy{
-	background: linear-gradient(to bottom, transparentize(#64C9EF, 0.9), transparentize(#3498DA, 0.9));
-	.edit{
-		border-left: 1px solid #292830;
-		border-bottom: 1px solid #292830;
-	}
-	.delete{
-		border-left: 1px solid #292830;
-	}
+	//.edit{
+	//	border-left: 1px solid #292830;
+	//	border-bottom: 1px solid #292830;
+	//}
+	//.delete{
+	//	border-left: 1px solid #292830;
+	//}
 }
 @mixin order_sidebar_current_order_title_sell{
-	background: linear-gradient(to bottom, transparentize(#F88447, 0.9), transparentize(#EF4D22, 0.9));
-	.edit{
-		border-left: 1px solid #292830;
-		border-bottom: 1px solid #292830;
-	}
-	.delete{
-		border-left: 1px solid #292830;
-	}
+	//.edit{
+	//	border-left: 1px solid #292830;
+	//	border-bottom: 1px solid #292830;
+	//}
+	//.delete{
+	//	border-left: 1px solid #292830;
+	//}
 }
 $order_sidebar_current_order_title_color: #ffffff;
 @mixin order_sidebar_order_input{

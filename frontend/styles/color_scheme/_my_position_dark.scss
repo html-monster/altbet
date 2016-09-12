@@ -39,7 +39,6 @@ $my_pos_color: transparentize(#ffffff, 0.2);
 $my_pos_thead_border: 1px solid #000000;
 $my_pos_tr_border_color: #000000;
 @mixin my_pos_td_and_button{
-	position: relative;
 	&:after{
 		content: '';
 		display: block;
