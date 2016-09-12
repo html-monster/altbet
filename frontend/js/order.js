@@ -25,27 +25,6 @@ class orderClass{
 
 				$(".left_order .wrapper .tab").removeClass("active").eq($(this).index()).addClass("active");
 				$(".left_order .tab_item").hide().eq($(this).index()).show();
-				if($(this).index() == 1){
-					height = currentOrders.height();
-					if(height + 7 > windowHeight - substructionHeight){
-						tab_content.addClass('max');
-					}
-					else{
-						tab_content.removeClass('max');
-					}
-				}
-				else{
-					console.log(height);
-					console.log(windowHeight);
-					console.log(substructionHeight);
-					height = orderContent.height();
-					if(height + 7 > windowHeight - substructionHeight){
-						tab_content.addClass('max');
-					}
-					else{
-						tab_content.removeClass('max');
-					}
-				}
 			}).eq(0).addClass("active");
 
 			$(window).resize(function () {
@@ -58,21 +37,6 @@ class orderClass{
 				}
 			});
 
-			orderContent.bind('DOMSubtreeModified', function(event) {
-				if(checkbox.prop('checked')){
-					orderContent.css('overflow-y', 'hidden');
-				}
-				else{
-					if(orderContent[0].clientHeight + 3  > (orderSidebarHeight)){
-						orderContent.css('overflow-y', 'auto');
-						tab_content.addClass('max');
-					}
-					else{
-						orderContent.css('overflow-y', 'inherit');
-						tab_content.removeClass('max');
-					}
-				}
-			});
 		}();
 
 		// order validation ==================================================================================================

@@ -58,7 +58,7 @@
       border-radius: 6px;
       transition: 0.4s ease-out;
       cursor: default;
-      &.ui-sortable-helper{  transition: 0s;  }
+      &.ui-sortable-helper{  transition: 0s;  cursor: move;  }
       &:first-child{  margin-top: 0!important;  }
       &.clickable{
         .waves-ripple{  display: block;;  }

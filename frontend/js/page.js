@@ -105,7 +105,8 @@ $(document).ready(function () {
 		current.sortable({
 			placeholder: 'ui-state-highlight',
 			cancel: '.not-sort',
-			scroll: false
+			scroll: false,
+			delay: 200
 		});
 		current.disableSelection();
 	});

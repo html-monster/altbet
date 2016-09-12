@@ -457,8 +457,6 @@
         .tab_item {
           display: none;
           @include scroll;
-          //overflow: inherit;
-          overflow-y: inherit;
           transition: 0.4s ease-out;
           .default_orders, &#current-orders{
             border-top: 1px solid $order_sidebar_head_separator;
