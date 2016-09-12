@@ -22,7 +22,7 @@ class eventPageClass{
 
 				title = $('.wrapper_event_page .current_price h2').text();
 				if($(this).hasClass('volume')){
-					priceMarket = '0.' + self.parents('tbody').find('tr').eq(0).find('td.price span').text().replace(/[^0-9.]+/g, "");
+					priceMarket = self.parents('tbody').find('tr').eq(0).find('td.price span').text().replace(/[^0-9.]+/g, "");
 					volume = 0;
 					sellSum = 0;
 					buySum = 0;
@@ -40,7 +40,7 @@ class eventPageClass{
 					buySum = buySum.toFixed(2);
 				}
 				else{
-					priceMarket = '0.' + self.text().replace(/[^0-9.]+/g, "");
+					priceMarket = self.text().replace(/[^0-9.]+/g, "");
 				}
 
 				function createOrderForm(orderDirection, modification) {

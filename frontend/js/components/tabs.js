@@ -18,6 +18,7 @@ class tabsClass{
 		tab = tab || '.tab';
 		tab_item = tab_item || '.tab_item';
 		$(container).find(tab).click(function() {
+			if($(this).attr('data-disabled')) return false;
 			$(container).find(tab).removeClass("active").eq($(this).index()).addClass("active");
 			$(container).find(tab_item).hide().eq($(this).index()).fadeIn();
 		}).eq(0).addClass("active");

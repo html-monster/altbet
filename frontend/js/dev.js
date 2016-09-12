@@ -65,6 +65,26 @@ $(document).ready(function () {
 	currentOrders.on('click', '.order_container .close', function () {
 		$(this).parents('.order_content').remove();
 	});
+
+	if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){
+		let id = 0, setId = 0, orderId = 0;
+
+		$('.my_position_container tbody tr').each(function () {
+			$(this).attr('id', 'new_event_' + setId++);
+		});
+		$('.open_orders tbody tr').each(function () {
+			$(this).attr('id', 'event_' + id++);
+		});
+
+		for(let ii = 0; ii < 3; ii++){
+			let html = $('#current-orders .order_content').eq(0).clone();
+			$('#current-orders').append(html);
+		}
+		$('#current-orders .order_container').each(function () {
+			$(this).attr('id', 'event_' + orderId++ + '_order');
+		});
+	}
+
 });
 
 

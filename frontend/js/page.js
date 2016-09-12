@@ -52,6 +52,8 @@ $(document).ready(function () {
 	new activeTraderClass(); //active trader activation
 	new eventPageClass(); //active order on the event page
 
+	new myPosClass(); // activate my pos script
+
 	new themeChangeClass();
 	(function changeSelect(){
 		try {
@@ -106,7 +108,7 @@ $(document).ready(function () {
 			placeholder: 'ui-state-highlight',
 			cancel: '.not-sort',
 			scroll: false,
-			delay: 200
+			delay: 100
 		});
 		current.disableSelection();
 	});

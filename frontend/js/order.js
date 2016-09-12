@@ -19,9 +19,7 @@ class orderClass{
 					checkbox = $('.left_order .tab input[type=checkbox]');
 
 			$(".left_order .wrapper .tab").click(function () {
-				var height;
-
-				if($(this).attr('data-log-out')) return false;
+				if($(this).attr('data-disabled')) return false;
 
 				$(".left_order .wrapper .tab").removeClass("active").eq($(this).index()).addClass("active");
 				$(".left_order .tab_item").hide().eq($(this).index()).show();
@@ -186,152 +184,6 @@ class orderClass{
 			});
 		}();
 
-		// new order =========================================================================================================
-		self.addOrder = function () {
-			$('#exchange').on('click', 'button.event', function () {
-				var html, price = 0, volume = 0, buySum = 0, sellSum = 0, title, currentID, inputFocus, order = [], self = $(this);
-				price = $(this).find('.price').text().replace(/[^0-9.]+/g, "") || '0.';
-				title = $(this).parents('.event-content').find('.event-title .title').text();
-				currentID = $(this).parents('.event-content').attr('id');
-				order.push(currentID, title);
-
-				if(limit || $(this).hasClass('empty')){
-					volume = $(this).find('.volume').text();
-					buySum = (!(isNaN(price)) && !(isNaN(volume))) ? (price * volume).toFixed(2) : "";
-					sellSum = (!(isNaN(price)) && !(isNaN(volume))) ? ((1 - price) * volume).toFixed(2) : "";
-				}
-				else{
-					var ii = $(this).index(),
-							items = $(this).parent().children(),
-							priceMarket;
-					if($(this).parent('.sell').length){
-						sellSum = 0;
-						for(ii; ii < items.length; ii++){
-							volume += +$(this).parent().find('.event').eq(ii).find('.volume').text();
-							sellSum +=  (1 - +$(this).parent().find('.event').eq(ii).find('.price').text().replace(/[^0-9.]+/g, "")) * +$(this).parent().find('.event').eq(ii).find('.volume').text();
-						}
-						sellSum = sellSum.toFixed(2);
-						priceMarket = items.eq(items.length - 1).find('.price').text().replace(/[^0-9.]+/g, "");
-					}
-					else{
-						buySum = 0;
-						for(ii; ii > -1; ii--){
-							volume += +$(this).parent().find('.event').eq(ii).find('.volume').text();
-							buySum +=  +$(this).parent().find('.event').eq(ii).find('.price').text().replace(/[^0-9.]+/g, "") * +$(this).parent().find('.event').eq(ii).find('.volume').text();
-						}
-						buySum = buySum.toFixed(2);
-						priceMarket = items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
-					}
-				}
-
-				function createOrderForm(orderDirection, modification, limit) {
-					html = $('.order_content.new').clone();
-					html.removeClass('new');
-					if(modification == 'full'){
-						html.attr('id', id[defaultMethods.searchValue(id, self.parents('.event-content').attr('id'))][0] + '__order').css({display: 'none'});
-						html.find('h3').text(title);
-					}
-					else
-						html = html.find('form').css({display: 'none'});
-
-					if (orderDirection == 'sell') {
-						html.find('.id').val(id[defaultMethods.searchValue(id, self.parents('.event-content').attr('id'))][0] + '__order_buy');
-						// html.find('.obligations input.number').val(sellSum);
-						html.find('.side').val('Sell');
-					}
-					else {
-						if(modification == 'full'){
-							html.find('.buy-container').html(html.find('.sell-container').html());
-							html.find('.sell-container').html('');
-						}
-						html.find('input[type=submit]').toggleClass('sell buy').val('buy');
-						// html.find('.obligations input.number').val(buySum);
-						html.find('.side').val('Buy');
-						html.find('.id').val(id[defaultMethods.searchValue(id, self.parents('.event-content').attr('id'))][0] + '__order_buy');
-					}
-
-					if(limit) {
-						html.find('.price input.number').val(price);
-						html.find('.checkbox span').text('Limit');
-					}
-					else {
-						html.find('.price input.number').attr('disabled', true).removeAttr('name').val(priceMarket);
-						html.find('.obligations input.number').removeAttr('name').attr('disabled', true);
-						html.find('.obligations .regulator').hide();
-						// html.find('.price input.number').attr('disabled', true);
-						// html.find('.obligations input.number').val('');
-						html.find('.price label').text('Market price');
-						html.find('.price .regulator').remove();
-						html.find('.checkbox input[type=checkbox]').attr('checked', false);
-						html.find('.checkbox span').text('Market');
-					}
-
-					html.find('.volume input.number').val(volume);
-					html.find('.symbol').val(self.parents('.content_bet').find('.symbol_name').text());
-					if(self.parents('.event-content').hasClass('revers'))
-						html.find('.mirror').val('1');
-					else
-						html.find('.mirror').val('0');
-				}
-
-				if (defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id')) == -1) {
-					id.push(order);
-					if (($(this).parents().hasClass('sell'))) {
-
-						if(limit || $(this).hasClass('empty'))
-							createOrderForm('sell', 'full', true);
-						else
-							createOrderForm('sell', 'full', false);
-					}
-					else{
-						if(limit || $(this).hasClass('empty'))
-							createOrderForm('buy', 'full', true);
-						else
-							createOrderForm('buy', 'full', false);
-					}
-					$('#order .default_orders').append(html);
-					$('.order_content').fadeIn(400);
-					if(limit || $(this).hasClass('empty'))
-						inputFocus = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .price input');
-					else
-						inputFocus = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .volume input');
-
-					inputFocus.focus();
-					inputFocus[0].selectionStart = inputFocus.val().length;
-				}
-				else {
-					var container;
-					if (($(this).parents().hasClass('sell'))) {
-						container = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .sell-container');
-						if(limit || $(this).hasClass('empty'))
-							createOrderForm('sell', null, true);
-						else
-							createOrderForm('sell', null, false);
-					}
-					else {
-						container = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .buy-container');
-						if(limit || $(this).hasClass('empty'))
-							createOrderForm('buy', null, true);
-						else
-							createOrderForm('buy', null, false);
-					}
-					container.html(html);
-					$('.order_content form').fadeIn(400);
-					if(limit || $(this).hasClass('empty')){
-						inputFocus = container.find('.price input');
-					}
-					else{
-						inputFocus = container.find('.volume input');
-					}
-					inputFocus.focus();
-					inputFocus[0].selectionStart = inputFocus.val().length;
-				}
-
-				orderClass.tabReturn();
-				orderClass.showInfo();
-			});
-		}();
-
 		//order edit =======================================================================================================
 		self.orderEdit = function () {
 			var container = $('.left_order'),
@@ -455,20 +307,10 @@ class orderClass{
 			});
 
 			currentOrders.on('click', '.order_info .edit', function () {
-				var //title = $(this).parents('.current-order-title'),
-						tab_content = $('.tab_content'),
-						windowHeight = window.innerHeight,
-						parent = $(this).parents('#current-orders'),
-						height;
-				setTimeout(function () {
-					height = parent[0].clientHeight;
-					if (height + 1 > windowHeight - 180)
-						tab_content.addClass('max');
-					else
-						tab_content.removeClass('max');
-				}, 300);
-				$(this).parent().next().toggleClass('active').slideToggle(200);
-				$(this).parents('.order_content').toggleClass('active');
+				var tab_content = $('.tab_content');
+
+				$(this).parent().next().slideToggle(200);//.toggleClass('active')
+				// $(this).parents('.order_content').toggleClass('active');
 			});
 
 			currentOrders.on('click', '.order_info .delete', function () {
@@ -537,6 +379,164 @@ class orderClass{
 					self.parent().find('span').text('Market');
 			});
 		}();
+
+		orderClass.addOrder('#exchange', 'button.event', limit);
+	}
+
+	// new order =========================================================================================================
+	static addOrder(container, button, limit) {
+	$(container).on('click', button, function () {
+		var html,
+				data = {
+					price: 0,
+					volume: 0,
+					buySum: 0,
+					sellSum: 0,
+					priceMarket: 0
+				},
+				currentID, inputFocus, order = [], self = $(this);
+
+		data.price = $(this).find('.price').text().replace(/[^0-9.]+/g, "") || '0.';
+		data.title = $(this).parents('.event-content').find('.title').text();
+		currentID = $(this).parents('.event-content').attr('id');
+		order.push(currentID, data.title);
+
+		if(limit || $(this).hasClass('empty')){
+			data.volume = $(this).find('.volume').text();
+			data.buySum = (!(isNaN(data.price)) && !(isNaN(data.volume))) ? (data.price * data.volume).toFixed(2) : "";
+			data.sellSum = (!(isNaN(data.price)) && !(isNaN(data.volume))) ? ((1 - data.price) * data.volume).toFixed(2) : "";
+		}
+		else{
+			var ii = $(this).index(),
+					items = $(this).parent().children();
+			if($(this).parent('.sell').length){
+				data.sellSum = 0;
+				for(ii; ii < items.length; ii++){
+					data.volume += +$(this).parent().find('.event').eq(ii).find('.volume').text();
+					data.sellSum +=  (1 - +$(this).parent().find('.event').eq(ii).find('.price').text().replace(/[^0-9.]+/g, "")) * +$(this).parent().find('.event').eq(ii).find('.volume').text();
+				}
+				data.sellSum = data.sellSum.toFixed(2);
+				data.priceMarket = items.eq(items.length - 1).find('.price').text().replace(/[^0-9.]+/g, "");
+			}
+			else{
+				data.buySum = 0;
+				for(ii; ii > -1; ii--){
+					data.volume += +$(this).parent().find('.event').eq(ii).find('.volume').text();
+					data.buySum +=  +$(this).parent().find('.event').eq(ii).find('.price').text().replace(/[^0-9.]+/g, "") * +$(this).parent().find('.event').eq(ii).find('.volume').text();
+				}
+				data.buySum = data.buySum.toFixed(2);
+				data.priceMarket = items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+			}
+		}
+
+		if (defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id')) == -1) {
+			id.push(order);
+			if ($(this).parent('.sell').length) {
+
+				if(limit || $(this).hasClass('empty'))
+					html = orderClass.createOrderForm('sell', 'full', true, self, data);
+				else
+					html = orderClass.createOrderForm('sell', 'full', false, self, data);
+			}
+			else{
+				if(limit || $(this).hasClass('empty'))
+					html = orderClass.createOrderForm('buy', 'full', true, self, data);
+				else
+					html = orderClass.createOrderForm('buy', 'full', false, self, data);
+			}
+			$('#order .default_orders').append(html);
+			$('.order_content').fadeIn(400);
+			if(limit || $(this).hasClass('empty'))
+				inputFocus = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .price input');
+			else
+				inputFocus = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .volume input');
+
+			inputFocus.focus();
+			inputFocus[0].selectionStart = inputFocus.val().length;
+		}
+		else {
+			var container;
+			if ($(this).parent('.sell').length) {
+				container = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .sell-container');
+				if(limit || $(this).hasClass('empty'))
+					html = orderClass.createOrderForm('sell', null, true, self, data);
+				else
+					html = orderClass.createOrderForm('sell', null, false, self, data);
+			}
+			else {
+				container = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .buy-container');
+				if(limit || $(this).hasClass('empty'))
+					html = orderClass.createOrderForm('buy', null, true, self, data);
+				else
+					html = orderClass.createOrderForm('buy', null, false, self, data);
+			}
+			container.html(html);
+			$('.order_content form').fadeIn(400);
+			if(limit || $(this).hasClass('empty')){
+				inputFocus = container.find('.price input');
+			}
+			else{
+				inputFocus = container.find('.volume input');
+			}
+			inputFocus.focus();
+			inputFocus[0].selectionStart = inputFocus.val().length;
+		}
+
+		orderClass.tabReturn();
+		orderClass.showInfo();
+	});
+};
+
+	static createOrderForm(orderDirection, modification, limit, context, object) {
+		let html = $('.order_content.new').clone();
+		html.removeClass('new');
+		if(modification == 'full'){
+			html.attr('id', id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order').css({display: 'none'});
+			html.find('h3').text(object.title);
+		}
+		else
+			html = html.find('form').css({display: 'none'});
+
+		if (orderDirection == 'sell') {
+			html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
+			// html.find('.obligations input.number').val(sellSum);
+			html.find('.side').val('Sell');
+		}
+		else {
+			if(modification == 'full'){
+				html.find('.buy-container').html(html.find('.sell-container').html());
+				html.find('.sell-container').html('');
+			}
+			html.find('input[type=submit]').toggleClass('sell buy').val('buy');
+			// html.find('.obligations input.number').val(buySum);
+			html.find('.side').val('Buy');
+			html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
+		}
+
+		if(limit) {
+			html.find('.price input.number').val(object.price);
+			html.find('.checkbox span').text('Limit');
+		}
+		else {
+			html.find('.price input.number').attr('disabled', true).removeAttr('name').val(object.priceMarket);
+			html.find('.obligations input.number').removeAttr('name').attr('disabled', true);
+			html.find('.obligations .regulator').hide();
+			// html.find('.price input.number').attr('disabled', true);
+			// html.find('.obligations input.number').val('');
+			html.find('.price label').text('Market price');
+			html.find('.price .regulator').remove();
+			html.find('.checkbox input[type=checkbox]').attr('checked', false);
+			html.find('.checkbox span').text('Market');
+		}
+
+		html.find('.volume input.number').val(object.volume);
+		html.find('.symbol').val(context.parents('.content_bet').find('.symbol_name').text());
+		if(context.parents('.event-content').hasClass('revers'))
+			html.find('.mirror').val('1');
+		else
+			html.find('.mirror').val('0');
+
+		return html;
 	}
 
 	static showInfo () {
