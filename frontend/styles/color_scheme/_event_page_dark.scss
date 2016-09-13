@@ -1,4 +1,5 @@
 $event_page_color: transparentize(#ffffff, 0.2);
+$event_page_chart_bg: linear-gradient(to bottom, #211e25, #292830);
 $event_page_block_separate: #000000;
 @mixin event_page_current_price{
 	border-top: 1px solid transparentize(#ffffff, 0.9);
