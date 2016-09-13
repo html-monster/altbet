@@ -16,55 +16,53 @@ class myPosClass{
 
 			if(tab.eq(0).hasClass('active')){
 				$('#order').hide();
+				tab.removeClass('active');
+				tab.eq(1).addClass('active');
 				currentOrders.fadeIn();
-				setTimeout(function () {
-					scrollPos = $(id)[0].offsetTop;
-					currentOrders.animate({scrollTop: scrollPos} , 200);
-				}, 450);
+				if(!(context.hasClass('show'))){
+					setTimeout(function () {
+						scrollPos = $(id)[0].offsetTop;
+						currentOrders.animate({scrollTop: scrollPos} , 200);
+					}, 450);
+				}
+				else{
+					setTimeout(function () {
+						currentOrders.animate({scrollTop: 0} , 200);
+					}, 450);
+				}
 			}
-			else
+			else if(!(context.hasClass('show')))
 				currentOrders.animate({scrollTop: scrollPos} , 200);
+			else
+				currentOrders.animate({scrollTop: 0} , 200);
 
 			return id;
 		}
 
 		openOrders.on('click', '.edit', function () {
 			let id = moveTo($(this));
+
 			setTimeout(function () {
-				$(id).focus().find('.form-container').slideToggle(200);
+				$(id).find('.form-container').slideToggle(200);
 			}, 300);
 		});
 		openOrders.on('click', '.delete', function () {
 			let id = moveTo($(this));
+
 			setTimeout(function () {
-				$(id).focus().find('.pop_up').fadeIn();
+				$(id).find('.pop_up').fadeIn();
 			}, 300);
 		});
-		// posContainer.on('click', '.btn', function () {
-		// 	let html, data = {}, order = [], currentID;
-		//
-		// 	currentID = $(this).parents('.event-content').attr('id');
-		// 	order.push(currentID, data.title);
-		//
-		// 	data.title = $(this).parents('tr').find('.title').text();
-		// 	data.price = '0.';
-		//
-		// 	id.push(order);
-		//
-		// 	if(defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id')) == -1){
-		// 		let inputFocus = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .price input');
-		// 		if($(this).hasClass('sell')){
-		// 			html = orderClass.createOrderForm('sell', 'full', true, $(this), data);
-		// 		}
-		// 		else{
-		// 			html = orderClass.createOrderForm('buy', 'full', true, $(this) , data);
-		// 		}
-		// 		$('#order .default_orders').append(html);
-		// 		$('.order_content').fadeIn(400);
-		//
-		// 	}
-		//
-		// 	orderClass.showInfo();
-		// });
+		openOrders.on('click', '.show', function () {
+			let id = moveTo($(this));
+
+			setTimeout(function () {
+				let element  = $(id).parents('.order_content').detach();
+
+				element.hide();
+				currentOrders.prepend(element);
+				element.slideDown(200);
+			}, 500);
+		});
 	}
 }
