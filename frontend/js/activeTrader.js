@@ -7,6 +7,7 @@ class activeTraderClass{
 		this.tradeOn = function () {
 			var checkbox = $('.left_order .tab input.limit'),
 					autoTrade = $('.left_order .tab input.auto'),
+					order = $('#order'),
 					default_order = $('.left_order .default_orders'),
 					active_trader = $('.left_order .active_trader'),
 					buttons = $('#exchange .content_bet .event'),
@@ -19,6 +20,7 @@ class activeTraderClass{
 
 			if(checkbox.prop('checked')){
 				var ii = 0;
+				order.css('overflow-y', 'hidden');
 				autoTrade.parent().fadeIn(200);
 				default_order.fadeOut(200);
 				active_trader.fadeIn(200);
@@ -40,6 +42,7 @@ class activeTraderClass{
 			checkbox.change(function () {
 				ii = 0;
 				if($(this).prop('checked')){
+					order.css('overflow-y', 'hidden');
 					autoTrade.parent().fadeIn(200);
 					default_order.fadeOut(200);
 					setTimeout(function () {
@@ -65,6 +68,7 @@ class activeTraderClass{
 				}
 				else{
 					autoTrade.parent().fadeOut(200);
+					order.css('overflow-y', 'auto');
 					setTimeout(function () {
 						default_order.fadeIn(200);
 					}, 200);
@@ -81,10 +85,10 @@ class activeTraderClass{
 				var windowHeight = window.innerHeight,
 						footer = $('footer'),
 						footerHeight = footer.height() + 30,
-						tbody = $('.left_order table.limit tbody'),
-						order = $('#order');
+						tbody = $('.left_order table.limit tbody');
+						// order = $('#order');
 
-				order.css('overflow-y', 'hidden');
+				// order.css('overflow-y', 'hidden');
 				setTimeout(function () {
 					var orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight() + $('header').outerHeight() + 47),
 							actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +

@@ -51,6 +51,7 @@ gulp.task('styles', function() {
       .pipe(gulpIf(isDevelopment, sourcemaps.write()))
       .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
       .pipe(gulp.dest('public/styles'))
+      .pipe(gulp.dest('../../altbet/Alt.Bet/Content'))
       .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))));
 
 });

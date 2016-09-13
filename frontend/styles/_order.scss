@@ -456,6 +456,7 @@
         }
         .tab_item {
           display: none;
+          padding-bottom: 35px;
           @include scroll;
           transition: 0.4s ease-out;
           .default_orders, &#current-orders{
@@ -487,7 +488,6 @@
             .order_content form .container .obligations label{  width: calc(100% - 18px);  }
           }
           &#current-orders{
-            padding-bottom: 5px;
             overflow-y: auto;
             .order_content{
               &:last-child{  padding: 0;  }
@@ -825,14 +825,15 @@
                 &:hover{  background: $trader_order_button_hover;  }
                 &:active{  background: $trader_order_button_active;  }
                 &:after{  position: static;  }
+                box-shadow: none;
               }
               input.success{
                 box-shadow: none;
                 border-top: 1px solid $order_sidebar_order_border_color;
-                &:hover{  background: $trader_button_success no-repeat center  $trader_order_button_hover;  }
+                &:hover{  background: url(../../../../altbet/Alt.Bet) $trader_button_success no-repeat $trader_order_button_hover;  }
                 &:active{
                   box-shadow: none !important;
-                  background: $trader_button_success no-repeat center $trader_order_button_active;
+                  background: url(../Images/sprite.svg) $trader_button_success no-repeat $trader_order_button_active;
                 }
               }
             }
@@ -857,6 +858,12 @@
                   label{
                     border-left: none;
                     border-right: none;
+                  }
+                  .warning{
+                    left: auto;
+                    right: 0;
+                    &:before{  left: 88px;  }
+                    &:after{  left: 83px;  }
                   }
                 }
               }
@@ -942,7 +949,7 @@
                 transition: 0.4s ease-out;
                 &.sell{  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
                 &.buy{  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
-                &.success{  background: $trader_button_success no-repeat center;  }
+                &.success{  background: url("../Images/sprite.svg") $trader_button_success no-repeat;  }
               }
             }
           }

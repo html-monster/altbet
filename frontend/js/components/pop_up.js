@@ -22,7 +22,7 @@ class popUpClass{
 	}
 
 	static popUpOpen(openButton, popUpWindow, focusElement){
-		let browser = $.browser.chrome && ($.browser.version.slice(0, 2) > 50) || $.browser.mozilla;
+		let browser = $.browser.chrome && ($.browser.version.slice(0, 2) > 50) || $.browser.mozilla || $.browser.safari;
 
 		$(openButton).click(function(e){//'.log_out .sign_in'
 			e = e || event;

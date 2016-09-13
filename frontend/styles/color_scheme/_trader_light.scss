@@ -19,7 +19,7 @@ $trader_button_separator: #dcdcdc;
 $trader_table_td: #e9eaee;
 $trader_button_color: #000000;
 $trader_spread_button_bg: #f9eac3;
-$trader_button_success: url("../Images/ico-success.png");
+$trader_button_success: -262px -81px;
 @mixin trader_spread_button{
 	background: $trader_spread_button_bg;
 	cursor: default;

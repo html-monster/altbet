@@ -21,7 +21,7 @@ $trader_button_separator: #211e25;
 $trader_table_td: #211e25;
 $trader_button_color: #ffffff;
 $trader_spread_button_bg: transparentize(#f8b747, 0.8);
-$trader_button_success: url("../Images/ico-success-w.png");
+$trader_button_success: -262px -119px;
 @mixin trader_spread_button{
 	background: linear-gradient(to bottom, transparentize(#f8b747, 0.8), transparentize(#ef8022, 0.8));
 	cursor: default;

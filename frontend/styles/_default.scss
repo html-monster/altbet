@@ -172,7 +172,7 @@ i.wave{  display: inline-block;  font-style: normal; }
 .validation-summary-errors{
   display: block;
 	padding: 2px 0;
-  color: red;
+  color: #ff3905;
   font-size: 12px;
 }
 
@@ -578,3 +578,5 @@ i.wave{  display: inline-block;  font-style: normal; }
   left: 0;
   fill: none;
 }
+
+.hidden{  display: none;  }

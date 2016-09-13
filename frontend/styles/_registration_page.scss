@@ -328,7 +328,27 @@
     .input__field--yoshiko[disabled] ~ .input__label--yoshiko .input__label-content--yoshiko{
       color: transparentize(#8b8c8b, 0.6);
     }
+    .input-validation-error{
+      color: #ff3905;
+      box-shadow: inset 0 0 10px transparentize(#ff3905, 0.7);
+      border: 1px solid transparentize(#ff3905, 0.7);
+      //& ~ .input__label--kuro{
+      //  &:before, &:after{
+      //    border-color: #ff3905;
+      //  }
+      //}
+    }
 
+    .valid{
+      color: #4dac2e;
+      box-shadow: inset 0 0 10px transparentize(#4dac2e, 0.7);
+      border: 1px solid transparentize(#4dac2e, 0.7);
+      //& ~ .input__label--kuro{
+      //  &:before, &:after{
+      //    border-color: #4dac2e;
+      //  }
+      //}
+    }
 
     .call_time{
       padding-bottom: 10px;

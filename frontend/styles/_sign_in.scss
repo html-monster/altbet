@@ -75,6 +75,12 @@
         .input__field:focus {
           outline: none;
         }
+
+        .pass_container{
+          padding-top: 22px;
+          margin-bottom: 4em;
+        }
+
         .input__label {
           display: inline-block;
           padding: 0 1em;
@@ -134,6 +140,24 @@
         .input__field--kuro:focus + .input__label--kuro .input__label-content--kuro,
         .input--filled .input__label-content--kuro {
           animation: anim-2 0.4s both;
+        }
+
+        .input-validation-error{
+          color: #ff3905;
+          & ~ .input__label--kuro{
+            &:before, &:after{
+              border-color: #ff3905;
+            }
+          }
+        }
+
+        .valid{
+          color: #4dac2e;
+          & ~ .input__label--kuro{
+            &:before, &:after{
+              border-color: #4dac2e;
+            }
+          }
         }
 
         @keyframes anim-2 {

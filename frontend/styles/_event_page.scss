@@ -15,7 +15,7 @@
 		font-size: 14px;
 		font-weight: 600;
 		color: $main-color;
-		border-bottom: 1px solid $event_page_block_separate;
+		//border-bottom: 1px solid $event_page_block_separate;
 	}
 	.container{  display: flex;  }
   .chart_container {
@@ -26,6 +26,7 @@
     background: $bg_color;
     border-radius: 4px;
 		.chart{  height: 455px;  }
+		@include chart;
   }
   .event_info {
     width: 33.33%;
