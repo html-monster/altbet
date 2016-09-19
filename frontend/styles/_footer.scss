@@ -33,6 +33,19 @@ footer{
         width: 25%;
       }
     }
+    img.curacao{
+      float: left;
+      width: 25px;
+      margin-right: 5px;
+    }
+    span.curacao{
+      color: #ffffff;
+      opacity: 0.6;
+      &:last-of-type{
+        display: inline-block;
+        font-size: 10px;
+      }
+    }
   }
   .hide_show{
     display: flex;
@@ -123,4 +136,10 @@ footer{
     font-size: 10px;
     line-height: 2.2;
   }
+}
+
+.video_form .pop_up_content{
+  padding: 15px;
+  background: $main-bg;
+  border-radius: 6px;
 }

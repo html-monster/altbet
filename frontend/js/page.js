@@ -32,6 +32,7 @@ $(document).ready(function () {
 	popUpClass.popUpOpen('.sign_in_form a.register', '.sign_up_form', '#n_name');
 	// popUpClass.popUpOpen('.sign_up_form input.submit', '.sign_up_form .confirm');
 	popUpClass.popUpOpen('.first_page_wrapper .join', '.sign_up_form', '#n_name');
+	popUpClass.popUpOpen('.video button', '.video_form');
 
 	popUpClass.popUpClose('.sign_in_form a.register', '.sign_in_form');
 	popUpClass.popUpClose('.sign_in_form .close', '.sign_in_form'); // pop-up login
@@ -42,6 +43,7 @@ $(document).ready(function () {
 	popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_in_form a.register', '.first_page_wrapper .join'); // pop-up registration
 	popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in', 'header .deposit',
 			'header .my_order', '.order_screening', '[data-log-out]'); //pop-up login
+	popUpClass.globalPopUpClose('.video_form', 'fadeOut', '.pop_up_content', '.video button');
 
 	defaultMethods.maxHeight('.sign_up_form  .tab_content ', 105 + window.innerHeight * 0.1);
 	defaultMethods.activated('.content_bet .add_favorite');
@@ -141,6 +143,18 @@ $(document).ready(function () {
 		$('.help').css('zIndex', 10);
 		$(this).css('zIndex', 80);
 	});
+
+	// let ru = '<iframe width="760" height="430" src="https://www.youtube.com/embed/2tGHVK-b7H4" frameborder="0" allowfullscreen></iframe>',
+	// 		eng = '<iframe width="760" height="430" src="https://www.youtube.com/embed/H1Qwss9BQfI" frameborder="0" allowfullscreen></iframe>';
+
+	// $('.video button').click(function () {
+	// 	if($(this).hasClass('ru')){
+	// 		$('.video_form .pop_up_content').html(ru)
+	// 	}
+	// 	else{
+	// 		$('.video_form .pop_up_content').html(eng)
+	// 	}
+	// });
 
 	// $('.order').on('click', '[data-log-out]', function(e){
 	// 	e = e || event;

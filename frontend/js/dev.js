@@ -11,7 +11,7 @@ $(document).ready(function () {
 				$(this).attr('id', 'event' + flag++);
 			}
 		});
-		//my position
+		//my position=======================================================================================================
 		(function myPosition() {
 			for(var ii = 2; ii < 5; ii++){
 				let html = $('#tab1').clone(),
@@ -28,22 +28,24 @@ $(document).ready(function () {
 				parent.append(html);
 			}
 		})();
-		//my position
+		//my position=======================================================================================================
+
+
+		$('#current-orders span.price').each(function () {
+			$(this).text(defaultMethods.randomInteger(0.01, 0.99));
+		});
+		$('#current-orders span.volume').each(function () {
+			$(this).text(defaultMethods.randomInteger(1, 999))
+		});
+		$('#current-orders .current-order span').each(function () {
+			$(this).text(defaultMethods.randomInteger(1, 99));
+		});
+		$('#current-orders .last-price').each(function () {
+			$(this).text(defaultMethods.randomInteger(0.01, 0.99));
+		});
 	}
 
 
-	$('#current-orders span.price').each(function () {
-		$(this).text(defaultMethods.randomInteger(0.01, 0.99));
-	});
-	$('#current-orders span.volume').each(function () {
-		$(this).text(defaultMethods.randomInteger(1, 999))
-	});
-	$('#current-orders .current-order span').each(function () {
-		$(this).text(defaultMethods.randomInteger(1, 99));
-	});
-	$('#current-orders .last-price').each(function () {
-		$(this).text(defaultMethods.randomInteger(0.01, 0.99));
-	});
 
 
 	var price = 0.99, html;

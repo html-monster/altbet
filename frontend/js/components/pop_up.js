@@ -5,11 +5,13 @@ class popUpClass{
 			if(e.keyCode == 27){
 				$('.pop_up').fadeOut();
 				$('body>.wrapper').removeClass('blur');
+				$('.video_form iframe').removeAttr('src', '');
 			}
 		});
 		console.log("browser version: " + $.browser.version.slice(0, 2)); // EDGE В ВЕРСИИ 50 МОГУТ ПОЛЕЗТЬ БАГИ
 	}
 	static popUpClose(closeButton, ...popUpWindow){ //.head_form .close
+
 		$(closeButton).click(function(e){
 			e = e || event;
 			e.preventDefault();
@@ -18,6 +20,7 @@ class popUpClass{
 			});
 			if (!$('.pop_up').hasClass('active'))
 				$('body>.wrapper').removeClass('blur');
+
 		});
 	}
 
@@ -32,6 +35,18 @@ class popUpClass{
 
 			if (browser)
 				$('body>.wrapper').addClass('blur');
+
+			if($(this).parent('.video').length){
+				var ru = 'https://www.youtube.com/embed/2tGHVK-b7H4?autoplay=1',
+						eng = 'https://www.youtube.com/embed/H1Qwss9BQfI?autoplay=1';
+
+				if($(this).hasClass('ru')){
+					$('.video_form iframe').attr('src', ru);
+				}
+				else{
+					$('.video_form iframe').attr('src', eng);
+				}
+			}
 		});
 	}
 
@@ -44,8 +59,10 @@ class popUpClass{
 			}
 			$(popUp).removeClass('active');
 
-			if (!$('.pop_up').hasClass('active'))
+			if (!$('.pop_up').hasClass('active')){
 				$('body>.wrapper').removeClass('blur');
+				$('.video_form iframe').removeAttr('src', '');
+			}
 
 			if(method == 'slideUp')
 				$(popUp).slideUp(400);

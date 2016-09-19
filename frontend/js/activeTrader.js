@@ -26,17 +26,14 @@ class activeTraderClass{
 				active_trader.fadeIn(200);
 				buttons.attr('disabled', true);
 				event_container.eq(0).find('.event-content').eq(0).addClass('active');
-				activeTraderClass.spreadVisability();
+				// activeTraderClass.spreadVisability();
 
 				event_container.addClass('clickable').eq(0).addClass('active');
 				$('.active_trader .event_title .event_name').each(function () {
 					$(this).text(titles.eq(ii++).text());
 				});
 				setTimeout(function () {
-					tab_content.addClass('max');
-				}, 400);
-				setTimeout(function () {
-					takeData($('.content_bet.active '));
+					activeTraderClass.takeData($('.content_bet.active '));
 				}, 400);
 			}
 			checkbox.change(function () {
@@ -62,9 +59,8 @@ class activeTraderClass{
 					orderClass.tabReturn();
 					setTimeout(function () {
 						if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == '')
-							takeData($('.content_bet.active '));
+							activeTraderClass.takeData($('.content_bet.active '));
 					}, 700);
-					tab_content.addClass('max');
 				}
 				else{
 					autoTrade.parent().fadeOut(200);
@@ -75,12 +71,11 @@ class activeTraderClass{
 					active_trader.fadeOut(200);
 					buttons.removeAttr('disabled');
 					event_container.removeClass('clickable');
-					tab_content.removeClass('max');
 				}
 			});
-			$('.left_order .active_trader a').click(function (e) {
-				e.preventDefault();
-			});
+			// $('.left_order .active_trader a').click(function (e) {
+			// 	e.preventDefault();
+			// });
 			function tbodyResize(){
 				var windowHeight = window.innerHeight,
 						footer = $('footer'),
@@ -92,7 +87,7 @@ class activeTraderClass{
 				setTimeout(function () {
 					var orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight() + $('header').outerHeight() + 47),
 							actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +
-									$('.active_trader .control').height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height());
+									$('.active_trader .control').eq(0).height() + $('.active_trader .control').eq(1).height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height());
 
 					if(footer.hasClass('active')){
 						tbody.css('max-height', actveTraderHeight - footerHeight);
@@ -118,10 +113,10 @@ class activeTraderClass{
 					tabs.removeClass('active').eq(0).addClass('active');
 					$(this).find('.event-content').eq(0).addClass('active');
 
-					takeData($(this));
+					activeTraderClass.takeData($(this));
 					activeTraderClass.spreaderClean();
 					activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
-					activeTraderClass.spreadVisability();
+					// activeTraderClass.spreadVisability();
 				}
 			});
 			event_content.click(function (e) {
@@ -133,10 +128,10 @@ class activeTraderClass{
 					$(this).parents('.content_bet').addClass('active');
 					tabs.removeClass('active').eq($(this).index()).addClass('active');
 
-					takeData($(this));
+					activeTraderClass.takeData($(this));
 					activeTraderClass.spreaderClean();
 					activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
-					activeTraderClass.spreadVisability();
+					// activeTraderClass.spreadVisability();
 				}
 			});
 
@@ -156,97 +151,13 @@ class activeTraderClass{
 					event_content.removeClass('active');
 					tabs.removeClass('active');
 					$(this).addClass('active');
-					takeData($('.content_bet.active .event-content').eq($(this).index()));
+					activeTraderClass.takeData($('.content_bet.active .event-content').eq($(this).index()));
 					activeTraderClass.spreaderClean();
 				}
 			});
 
 		}();
-		function takeData(currentItem) {
-			var ii, priceSell = [], priceBuy = [], volumeSell = [], volumeBuy = [],
-					bestSell, bestBuy, currentPrice,
-					table = $('table.limit tbody tr'),
-					join_bid = $('.join_bid a'),
-					join_ask = $('.join_ask a'),
-					className = 'ask';
 
-			currentItem = currentItem.hasClass('content_bet') ? currentItem.find('.table').children('.event-content').eq(0) : currentItem;
-			if(!(currentItem.hasClass('content_bet')))
-				currentItem.addClass('active');
-
-			for(ii = 0; ii < currentItem.find('.sell').find('button.event').length; ii++){
-				priceSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.price').text());
-				volumeSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.volume').text());
-				bestSell = currentItem.find('.sell').find('button.event').eq(ii).find('.price').text();
-			}
-			for(ii = 0; ii < currentItem.find('.buy').find('button.event').length; ii++){
-				priceBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.price').text());
-				volumeBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.volume').text());
-			}
-			bestBuy = currentItem.find('.buy').find('button.event').eq(0).find('.price').text();
-
-			if(priceSell.length)
-				if(priceSell[0].search(/[0-9]+/i) == -1) bestSell = '';
-
-			if(priceBuy.length)
-				if(priceBuy[0].search(/[0-9]+/i) == -1) bestBuy = '';
-
-
-			join_bid.find('.price').text(bestSell);
-			join_ask.find('.price').text(bestBuy);
-
-			table.find('.size').removeClass('best_sell best_buy').find('.value').text('');
-			table.find('.my_size').find('.value').text('');// for development =============================================
-			table.find('.price_value').removeClass('best_sell best_buy');
-			table.each(function () {
-				var current = $(this);
-				currentPrice = $(this).find('.price_value').text();
-				if(defaultMethods.searchValue(priceSell, currentPrice) != -1){
-					ii = defaultMethods.searchValue(priceSell, currentPrice);
-					$(this).find('.size_sell').addClass('animated fadeOut').find('span.value').text(volumeSell[ii]);
-					// if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_bids').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeSell[ii]));  // for development =============================================
-					var context = $(this);
-					setTimeout(function () {
-						context.find('.size_sell').removeClass('animated fadeOut');
-						context.find('.my_bids').removeClass('animated fadeOut'); // for development =============================================
-					}, 1000);
-					if(bestSell == currentPrice){
-						$(this).find('.size_sell').addClass('best_sell');
-						$(this).find('.price_value').addClass('best_sell');
-					}
-				}
-				if(defaultMethods.searchValue(priceBuy, currentPrice) != -1){
-					ii = defaultMethods.searchValue(priceBuy, currentPrice);
-					$(this).find('.size_buy').addClass('animated fadeOut').find('span.value').text(volumeBuy[ii]);
-					// if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_offers').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeBuy[ii]));  // for development =============================================
-					var context = $(this);
-					setTimeout(function () {
-						context.find('.size_buy').removeClass('animated fadeOut');
-						context.find('.my_offers').removeClass('animated fadeOut'); // for development =============================================
-					}, 1000);
-					if(bestBuy == currentPrice){
-						$(this).find('.size_buy').addClass('best_buy');
-						$(this).find('.price_value').addClass('best_buy');
-					}
-				}
-
-				;(function separation() {
-					current = current.find('td.price_value');
-
-					current.removeClass('ask bid mid');
-					if(current.hasClass('best_sell')){
-						className = 'bid';
-					}
-					current.addClass(className);
-					if(current.hasClass('best_buy')){
-						className = 'mid';
-					}
-				})();
-			});
-
-
-			activeTraderClass.scrollTo();
-		}
 
 		this.addOrder = function () {
 			var //quantityButton = $('.active_trader .control .button.quantity'),
@@ -397,9 +308,12 @@ class activeTraderClass{
 						html.find('input[type=submit]').toggleClass('sell buy').val('buy');
 						html.find('.sell-container').html('');
 						html.find('.obligations input').val((price * quantity).toFixed(2));
+						html.find('.side').val('Buy');
 					}
-					else
+					else{
+						html.find('.side').val('Sell');
 						html.find('.obligations input').val(((1 - price) * quantity).toFixed(2));
+					}
 
 					if(modification == 'spread'){
 						html.find('.price.sell input').val(price2);
@@ -409,6 +323,13 @@ class activeTraderClass{
 						html.find('.price input').val(price);
 
 					html.find('.volume input').val(quantity);
+					html.find('.symbol').val($('.active_trader').attr('id').slice(7));
+					html.find('.direction').val(true);
+					html.find('.price_value').val(price);
+					if($('.active_trader .event_name').eq(0).hasClass('active'))
+						html.find('.mirror').val(0);
+					else
+						html.find('.mirror').val(1);
 				}
 			}
 
@@ -427,6 +348,24 @@ class activeTraderClass{
 
 		}();
 
+
+		this.marcketOrder = function () {
+			var container = $('.active_trader .control').eq(0);
+
+			$('.active_trader .market_button ').mousedown(function () {
+				if ($(this).hasClass('buy_mkt'))
+					container.find('.side').val('Buy');
+				else
+					container.find('.side').val('Sell');
+
+				container.find('.symbol').val($('.active_trader').attr('id').slice(7));
+
+				if($('.active_trader .event_name').eq(0).hasClass('active'))
+					container.find('.mirror').val(0);
+				else
+					container.find('.mirror').val(1);
+			});
+		}();
 		//spread show/hide =============================================================================================================
 
 		$('.active_trader .show_spread').click(function () {
@@ -590,7 +529,7 @@ class activeTraderClass{
 
 	static buttonActivation(current) {
 		if(current.parents('.active_trader').length){
-			var	html = '<div class="regulator" style="display: none;"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>',
+			var	html = '<div class="regulator min" style="display: none;"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>',
 					input = $('.active_trader input.quantity'),
 					quantity = current.hasClass('btn') ? current.text() : '',
 					market_button = $('.active_trader .control tr:first-of-type .market_button'),
@@ -599,9 +538,9 @@ class activeTraderClass{
 			//quantityButton.removeClass('activated');
 			if(current.parent().hasClass('quantity') || current.hasClass('quantity')){
 				if(current.parent('.input').length && (current.val() == '' || current.val() == 0)){
-					market_button.removeClass('active clickable');
-					limit_market_button.removeClass('active clickable');
-					$('.active_trader table.limit tbody td.size').removeClass('clickable');
+					market_button.removeClass('active clickable wave');
+					limit_market_button.removeClass('active clickable wave');
+					$('.active_trader table.limit tbody td.size').removeClass('clickable wave');
 					$('.active_trader .spread').find('button').removeClass('btn').attr('disabled', true);
 					$('.active_trader input.spreader').attr('disabled', true).parent().find('.regulator').fadeOut(400).remove();
 					activeTraderClass.spreaderClean();
@@ -611,12 +550,12 @@ class activeTraderClass{
 						$('.active_trader input.spreader').removeAttr('disabled').parent().append(html).find('.regulator').fadeIn(400);
 					limit_market_button.each(function () {
 						if ($(this).find('.price').text() != '') {
-							$(this).addClass('active clickable');
-							market_button.eq($(this).index()).addClass('active clickable');
+							$(this).addClass('active clickable wave');
+							market_button.eq($(this).index()).addClass('active clickable wave');
 						}
 						else{
-							$(this).removeClass('active clickable');
-							market_button.eq($(this).index()).removeClass('active clickable');
+							$(this).removeClass('active clickable wave');
+							market_button.eq($(this).index()).removeClass('active clickable wave');
 						}
 
 					});
@@ -644,6 +583,8 @@ class activeTraderClass{
 				indexBuy = table.find('.best_buy').parent().index(),
 				indeSell = table.find('.best_sell').parent().index(),
 				tbody = $('table.limit tbody');
+
+		if(tbody.hasClass('scroll_dis')) return false;
 
 		if(indexBuy == -1)
 			indexBuy = indeSell;
@@ -684,6 +625,106 @@ class activeTraderClass{
 				$(this).find('td').eq(ii).css('width', tdWidth[ii]);//  + 10
 			}
 		});
+	}
+
+	static takeData(currentItem) {
+		var ii, priceSell = [], priceBuy = [], volumeSell = [], volumeBuy = [],
+				bestSell, bestBuy, currentPrice,
+				table = $('table.limit tbody tr'),
+				join_bid = $('.join_bid a'),
+				join_ask = $('.join_ask a'),
+				className = 'ask',
+				activeTrader = $('.active_trader');
+
+		if(currentItem.hasClass('content_bet'))
+			activeTrader.attr('id', 'trader_' + currentItem.find('.symbol_name').text());
+		else
+			activeTrader.attr('id', 'trader_' + currentItem.parents('.content_bet').find('.symbol_name').text());
+
+		activeTrader.find('table.limit tbody').removeClass('scroll_dis');
+
+		currentItem = currentItem.hasClass('content_bet') ? currentItem.find('.table').children('.event-content').eq(0) : currentItem;
+		if(!(currentItem.hasClass('content_bet')))
+			currentItem.addClass('active');
+
+
+		if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){// for development ==============
+			for(ii = 0; ii < currentItem.find('.sell').find('button.event').length; ii++){
+				priceSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.price').text());
+				volumeSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.volume').text());
+				bestSell = currentItem.find('.sell').find('button.event').eq(ii).find('.price').text();
+			}
+			for(ii = 0; ii < currentItem.find('.buy').find('button.event').length; ii++){
+				priceBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.price').text());
+				volumeBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.volume').text());
+			}
+			bestBuy = currentItem.find('.buy').find('button.event').eq(0).find('.price').text();
+
+			if(priceSell.length)
+				if(priceSell[0].search(/[0-9]+/i) == -1) bestSell = '';
+
+			if(priceBuy.length)
+				if(priceBuy[0].search(/[0-9]+/i) == -1) bestBuy = '';
+
+
+			join_bid.find('.price').text(bestSell);
+			join_ask.find('.price').text(bestBuy);
+
+			table.find('.size').removeClass('best_sell best_buy').find('.value').text('');
+			table.find('.my_size').find('.value').text('');
+			table.find('.price_value').removeClass('best_sell best_buy');
+		}
+
+		table.each(function () {
+			var current = $(this);
+			currentPrice = $(this).find('.price_value').text();
+			if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru') {// for development =============
+				if(defaultMethods.searchValue(priceSell, currentPrice) != -1){
+					ii = defaultMethods.searchValue(priceSell, currentPrice);
+					$(this).find('.size_sell').addClass('animated fadeOut').find('span.value').text(volumeSell[ii]);
+					if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_bids').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeSell[ii]));  // for development =============================================
+					var context = $(this);
+					setTimeout(function () {
+						context.find('.size_sell').removeClass('animated fadeOut');
+						context.find('.my_bids').removeClass('animated fadeOut'); // for development =============================================
+					}, 1000);
+					if(bestSell == currentPrice){
+						$(this).find('.size_sell').addClass('best_sell');
+						$(this).find('.price_value').addClass('best_sell');
+					}
+				}
+				if(defaultMethods.searchValue(priceBuy, currentPrice) != -1){
+					ii = defaultMethods.searchValue(priceBuy, currentPrice);
+					$(this).find('.size_buy').addClass('animated fadeOut').find('span.value').text(volumeBuy[ii]);
+					if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_offers').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeBuy[ii]));  // for development =============================================
+					var context = $(this);
+					setTimeout(function () {
+						context.find('.size_buy').removeClass('animated fadeOut');
+						context.find('.my_offers').removeClass('animated fadeOut'); // for development =============================================
+					}, 1000);
+					if(bestBuy == currentPrice){
+						$(this).find('.size_buy').addClass('best_buy');
+						$(this).find('.price_value').addClass('best_buy');
+					}
+				}
+			}
+
+			;(function separation() {
+				current = current.find('td.price_value');
+
+				current.removeClass('ask bid mid');
+				if(current.hasClass('best_sell')){
+					className = 'bid';
+				}
+				current.addClass(className);
+				if(current.hasClass('best_buy')){
+					className = 'mid';
+				}
+			})();
+		});
+
+
+		activeTraderClass.scrollTo();
 	}
 
 }

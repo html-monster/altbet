@@ -5,10 +5,14 @@ class ajaxControllerClass{
 				id = defaultMethods.getId(object);
 
 		console.log('Order sending start: ' + object.Symbol);
-		if(object.Side == 'Buy')
+		if(object.Side == 'Buy'){
 			$('#'+id + ' .buy-container input[type=submit]').attr('disabled', true);
-		else
+			$('#order_content .buy-container input[type=submit]').attr('disabled', true);
+		}
+		else{
 			$('#'+id + ' .sell-container input[type=submit]').attr('disabled', true);
+			$('#order_content .sell-container input[type=submit]').attr('disabled', true);
+		}
 
 	}
 
@@ -31,6 +35,7 @@ class ajaxControllerClass{
 			$(orderID).remove();
 		}
 
+		$('#order_content').remove();
 		console.log('Order sending finished: ' + serverData[0]);
 		orderClass.showInfo();
 	}
@@ -43,10 +48,12 @@ class ajaxControllerClass{
 		if(object.Side == 'Buy'){
 			element = $('#'+id + ' .buy-container');
 			$('#'+id + ' .buy-container input[type=submit]').removeAttr('disabled');
+			$('#order_content .buy-container input[type=submit]').removeAttr('disabled');
 		}
 		else{
 			element = $('#'+id + ' .sell-container');
 			$('#'+id + ' .sell-container input[type=submit]').removeAttr('disabled');
+			$('#order_content .sell-container input[type=submit]').removeAttr('disabled');
 		}
 
 		console.log('Order isn\'t sending: ' + object.Symbol);

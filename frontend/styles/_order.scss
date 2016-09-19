@@ -70,6 +70,7 @@
               text-transform: capitalize;
               font-size: 13px;
             }
+            &.trader .help_message{  width: 250px;  }
             &.auto_trade{  display: none;  left: auto; right: 0; }
           }
         }
@@ -119,6 +120,9 @@
             }
             &.control{
               position: relative;
+              &:nth-of-type(1), &:nth-of-type(2){
+                tr input{  text-align: center !important;  }
+              }
               &.remote {
                 tr:first-of-type td:nth-of-type(2){  border-right: 1px solid $trader_table_td;  }
                 td{  @include btn-hover;  }
@@ -145,13 +149,22 @@
                   a{  cursor: pointer;  }
                   .order_content:active{  box-shadow: none;  }
                 }
+                &.button.quantity .waves-ripple{  display: block;  }
+                &:not(.clickable) .waves-ripple{  display: none;  }
                 &.clickable{  @include btn-hover;  }
+                &.market_button{
+                  &:after{  display: none;  }
+                  button{
+                    width: 100%;
+                    border: none;
+                  }
+                }
                 input{  width: 100%;  padding: 3px 5px;  text-align: center; @include trader_input;}
                 #order_content{  width: 100% !important;  }
               }
               .input{
                 input{  padding-right: 14px;  }
-                .regulator{
+                .regulator.min{
                   width: 12px;
                   height: 100%;
                   border-radius: 0;
@@ -204,8 +217,8 @@
                 }
               }
               &.market_button{
-                &.active span, &.active a{  color: #fff;  opacity: 1; }
-                span, a{  color: #fff;  opacity: 0.8; }
+                &.active span, &.active button{  color: #fff;  opacity: 1; }
+                span, button{  color: #fff;  opacity: 0.8; }
               }
               &.buy_mkt{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
               &.sell_mkt{  background: linear-gradient(to bottom, #64c9ef, #3498da); }
@@ -457,6 +470,7 @@
         .tab_item {
           display: none;
           padding-bottom: 35px;
+          overflow-x: hidden;
           @include scroll;
           transition: 0.4s ease-out;
           .default_orders, &#current-orders{

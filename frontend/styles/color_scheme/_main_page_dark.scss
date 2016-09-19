@@ -39,6 +39,9 @@ $main_page_event_chart_button: url(../Images/sprite.svg) no-repeat -224px -354px
 	&.e_sport:before{  background-position: -186px -276px;  }
 	&.finance:before{  background-position: -107px -276px;  }
 	&.society:before{  background-position: -27px -276px;  }
+
+	&.football:before{  background-position: -59px -429px;  }
+	&.politics:before{  background-position: -295px -429px;  }
 }
 @mixin main_page_event_button{
 	box-shadow: inset 0 18px 25px -8px rgba(255, 255, 255, 0.1);
