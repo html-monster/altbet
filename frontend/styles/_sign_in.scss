@@ -41,6 +41,7 @@
           z-index: 1;
           display: inline-block;
           margin: 0 1em 2em;
+          padding-right: 1px;
           width: calc(100% - 2em);
           height: 57px;
           vertical-align: top;
@@ -60,7 +61,7 @@
           z-index: 5;
           display: block;
           padding: 1em;
-          width: 100%;
+          width: calc(100% - 2px);
           border: none;
           border-radius: 0;
           box-shadow: none;
@@ -127,15 +128,15 @@
           transition-delay: 0.3s;
         }
 
-        .input__field--kuro:focus + .input__label--kuro::before,
-        .input--filled .input__label--kuro::before {
-          transform: translate3d(-10%, 0, 0);
-        }
-
-        .input__field--kuro:focus + .input__label--kuro::after,
-        .input--filled .input__label--kuro::after {
-          transform: translate3d(10%, 0, 0);
-        }
+        //.input__field--kuro:focus + .input__label--kuro::before,
+        //.input--filled .input__label--kuro::before {
+        //  transform: translate3d(-10%, 0, 0);
+        //}
+				//
+        //.input__field--kuro:focus + .input__label--kuro::after,
+        //.input--filled .input__label--kuro::after {
+        //  transform: translate3d(10%, 0, 0);
+        //}
 
         .input__field--kuro:focus + .input__label--kuro .input__label-content--kuro,
         .input--filled .input__label-content--kuro {

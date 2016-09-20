@@ -11,7 +11,7 @@ class tabsClass{
 					itemContainer.children('.tab_item').hide().eq($(this).index()).fadeIn();
 				}
 			});
-			tab.parent().find('.tab:first-child').addClass("active");
+			//tab.parent().find('.tab:first-child').addClass("active");
 		}();
 	}
 	static tabsChange(container, tab, tab_item) {

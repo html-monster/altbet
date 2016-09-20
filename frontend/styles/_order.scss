@@ -116,7 +116,7 @@
             //@include md(1400){  font-size: 12px;  }
             &.info tr{
               &:first-of-type td{  border-top: none;  }
-              td{  width: 50%;  padding: 5px 15px;  }
+              td{  width: 33.33%;  padding: 5px;  }
             }
             &.control{
               position: relative;
@@ -208,7 +208,7 @@
                 position: relative;
               }
               &:last-of-type{  border-right: none;  }
-              &.open_contracts, &.open_pnl{
+              &.trader_info{
                 a{  font-size: 11px;  }
                 span{
                   padding: 0;
@@ -220,14 +220,14 @@
                 &.active span, &.active button{  color: #fff;  opacity: 1; }
                 span, button{  color: #fff;  opacity: 0.8; }
               }
-              &.buy_mkt{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
-              &.sell_mkt{  background: linear-gradient(to bottom, #64c9ef, #3498da); }
-              &.join_bid{
+              &.sell_mkt{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
+              &.buy_mkt{  background: linear-gradient(to bottom, #64c9ef, #3498da); }
+              &.join_ask{
                 background: linear-gradient(to bottom, transparentize(#f88447, 0.7), transparentize(#ef4d22, 0.7));
                 span, a{  color: $trader_join_button;  }
                 &.active span, &.active a{  color: $trader_join_button;  }
               }
-              &.join_ask{
+              &.join_bid{
                 background: linear-gradient(to bottom, transparentize(#64c9ef, 0.7), transparentize(#3498da, 0.7));
                 span, a{  color: $trader_join_button;  }
                 &.active span, &.active a{  color: $trader_join_button;  }
@@ -420,7 +420,8 @@
                 @include btn-hover;
               }
               &.best_sell{
-                color: #ffffff;  background-image: linear-gradient(to bottom, #f88447, #ef4d22); font-weight: bold;  }
+                color: #ffffff;
+								background-image: linear-gradient(to bottom, #f88447, #ef4d22); font-weight: bold;  }
               &.size_buy{
                 background-color: transparentize(#64c9ef, 0.92);
                 &.clickable{
@@ -435,8 +436,9 @@
                 }
               }
               &.best_buy{
-                color: #ffffff; background-image: linear-gradient(to bottom, #64c9ef, #3498da); font-weight: bold;  }
-            }
+                color: #ffffff;
+								background-image: linear-gradient(to bottom, #64c9ef, #3498da); font-weight: bold;  }
+						}
           }
           #order_content{
             visibility: hidden;
@@ -553,8 +555,8 @@
               overflow: hidden;
             }
             .sell{
-              background-image: linear-gradient(to bottom, #f88447, #ef4d22);
               right: 100%;
+              background-image: linear-gradient(to bottom, #f88447, #ef4d22);
               //@include btn-shadow;
               //&:active{
               //  background: #963a3a;

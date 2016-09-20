@@ -1,5 +1,7 @@
 class activeTraderClass{
 	constructor(){
+		var content = $('.content');
+
 		$('.left_order .tab label').click(function (e) {
 			e.stopPropagation();
 		});
@@ -248,6 +250,7 @@ class activeTraderClass{
 				}
 				else if(context.hasClass('price_value') || context.hasClass('confim_button')){
 					var price1, price2;
+					console.log(1);
 					if(context.hasClass('ask')){
 						price2 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
 						price1 = (+price2 - +$('.active_trader input.spreader').val()).toFixed(2);
@@ -260,10 +263,12 @@ class activeTraderClass{
 						html = '<div class="spread_confim"><span class="sell ask confim_button" onmousedown="return false" onselectstart="return false">Sell</span><span class="buy bid confim_button" onmousedown="return false" onselectstart="return false">Buy</span></div>';
 					}
 					else{
+						console.log(2);
 						createOrderForm('.active_trader .template .order_content.spread', 'spread');
 					}
 				}
 				else{
+					console.log(3);
 					createOrderForm('.active_trader .template .order_content.default', 'buy');
 				}
 
@@ -386,7 +391,7 @@ class activeTraderClass{
 		if(input.hasClass('spreader') || input.parent().hasClass('spread')){
 			var orderContent = $('.order_content.spread');
 
-			input.focus();
+			// input.focus();
 			if(quantity) input.val(quantity);
 			input[0].selectionStart = input.val().length;
 			value = +(input.val() * 100).toFixed(0);
@@ -574,6 +579,7 @@ class activeTraderClass{
 			else if(current.parent().hasClass('spread')){
 				input = $('.active_trader input.spreader');
 				activeTraderClass.spreaderChangeVal(input, quantity);
+				input.focus();
 			}
 		}
 	}
@@ -725,6 +731,18 @@ class activeTraderClass{
 
 
 		activeTraderClass.scrollTo();
+	}
+
+	static getAjaxData (){
+		$.ajax({
+			url: '',
+			dataType: 'json',
+			success: ajaxOnSuccess()
+		});
+
+		function ajaxOnSuccess() {
+
+		}
 	}
 
 }

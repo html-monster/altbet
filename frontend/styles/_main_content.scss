@@ -300,9 +300,8 @@
           //}
           .buy{
             button{
-
               &:first-child{
-                background-image: linear-gradient(to bottom, #64c9ef, #3498da);
+                background-image: linear-gradient(to bottom, #f88447, #ef4d22);
                 span{
                   color: #fff;
                   opacity: 0.8;
@@ -318,7 +317,7 @@
           .sell{
             button{
               &:last-child{
-                background-image: linear-gradient(to bottom, #f88447, #ef4d22);
+                background-image: linear-gradient(to bottom, #64c9ef, #3498da);
                 span{
                   color: #fff;
                   opacity: 0.8;

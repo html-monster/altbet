@@ -25,7 +25,7 @@ footer{
     padding: 0 20px;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
     border-right: 1px solid #292830 * 0.9;
-    &:first-child{  border-left: none;  }
+    &:first-child{  width: 23%; border-left: none;  }
     &:last-child{  border-right: none;  }
     @include md(1700){
       padding: 0 10px;
@@ -35,17 +35,17 @@ footer{
     }
     img.curacao{
       float: left;
-      width: 25px;
+      width: 27px;
       margin-right: 5px;
     }
-    span.curacao{
-      color: #ffffff;
-      opacity: 0.6;
-      &:last-of-type{
-        display: inline-block;
-        font-size: 10px;
-      }
-    }
+    //span.curacao{
+    //  color: #ffffff;
+    //  opacity: 0.6;
+    //  &:last-of-type{
+    //    display: inline-block;
+    //    font-size: 10px;
+    //  }
+    //}
   }
   .hide_show{
     display: flex;
@@ -94,6 +94,11 @@ footer{
       width: 150px;
       height: 50px;
       background: url(../Images/sprite.svg) no-repeat -11px -17px;
+      &:last-of-type{
+        width: auto;
+        height: auto;
+        background: none;
+      }
     }
   }
   .contacts{
