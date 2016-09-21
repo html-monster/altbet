@@ -249,26 +249,34 @@ class activeTraderClass{
 					createOrderForm('.active_trader .template .order_content.default');
 				}
 				else if(context.hasClass('price_value') || context.hasClass('confim_button')){
-					var price1, price2;
-					console.log(1);
-					if(context.hasClass('ask')){
+					var price1, price2, spreadVal = +$('.active_trader input.spreader').val();
+					if(context.parents('tr').find('.mid').length){
+						var currentPrice = +(context.find('span.value').text()).slice(1);
+
+						price1 = (currentPrice - spreadVal).toFixed(2);
+						price1 = price1 < 0.01 ? 0.01 : price1;
+						price2 = (currentPrice + spreadVal).toFixed(2);
+						price2 = price2 > 0.99 ? 0.99 : price2;
+					}
+					else if(context.hasClass('ask')){
 						price2 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
-						price1 = (+price2 - +$('.active_trader input.spreader').val()).toFixed(2);
+						price1 = (+price2 - spreadVal).toFixed(2);
+						price1 = price1 < 0.01 ? 0.01 : price1;
 					}
 					else{
 						price1 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
-						price2 = (+price1 + +$('.active_trader input.spreader').val()).toFixed(2);
+						price2 = (+price1 + spreadVal).toFixed(2);
+						price2 = price2 > 0.99 ? 0.99 : price2;
 					}
+
 					if(context.hasClass('mid')){
 						html = '<div class="spread_confim"><span class="sell ask confim_button" onmousedown="return false" onselectstart="return false">Sell</span><span class="buy bid confim_button" onmousedown="return false" onselectstart="return false">Buy</span></div>';
 					}
 					else{
-						console.log(2);
 						createOrderForm('.active_trader .template .order_content.spread', 'spread');
 					}
 				}
 				else{
-					console.log(3);
 					createOrderForm('.active_trader .template .order_content.default', 'buy');
 				}
 
@@ -393,7 +401,7 @@ class activeTraderClass{
 
 			// input.focus();
 			if(quantity) input.val(quantity);
-			input[0].selectionStart = input.val().length;
+			// input[0].selectionStart = input.val().length;
 			value = +(input.val() * 100).toFixed(0);
 			tr.find('.price_value').removeClass('active');
 			if(bid == -1) bid = ask;
@@ -424,7 +432,17 @@ class activeTraderClass{
 			}
 			if(orderContent.parents('tr').find('.bid').length){
 				bid = (+orderContent.find('.price input').eq(1).val() + value / 100).toFixed(2);
-				if(bid > 0.99) ask = 0.99;
+				if(bid > 0.99) bid = 0.99;
+				orderContent.find('.price input').eq(0).val(bid);
+			}
+			if(orderContent.parents('tr').find('.mid').length){
+				var currentPrice = +(orderContent.parents('tr').find('.mid span.value').text()).slice(1);
+
+				ask = (currentPrice - value / 100).toFixed(2);
+				bid = (currentPrice + value / 100).toFixed(2);
+				if(ask < 0.01) ask = 0.01;
+				orderContent.find('.price input').eq(1).val(ask);
+				if(bid > 0.99) bid = 0.99;
 				orderContent.find('.price input').eq(0).val(bid);
 			}
 		}
@@ -580,6 +598,7 @@ class activeTraderClass{
 				input = $('.active_trader input.spreader');
 				activeTraderClass.spreaderChangeVal(input, quantity);
 				input.focus();
+				input[0].selectionStart = input.val().length;
 			}
 		}
 	}

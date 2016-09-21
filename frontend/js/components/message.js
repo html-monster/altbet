@@ -1,11 +1,11 @@
 class messageClass{
 	static showHelpMessage(helpHint, container){
-		$(helpHint).mouseover(function () {
-			$(this).parents(container).css('overflow-y', 'inherit');
-		});
-		$(helpHint).mouseleave(function () {
-			$(this).parents(container).css('overflow-y', 'hidden');
-		});
+		// $(helpHint).mouseover(function () {
+		// 	$(this).parents(container).css('overflow-y', 'inherit');
+		// });
+		// $(helpHint).mouseleave(function () {
+		// 	$(this).parents(container).css('overflow-y', 'hidden');
+		// });
 	}
 }
 

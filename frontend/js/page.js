@@ -48,7 +48,7 @@ $(document).ready(function () {
 	defaultMethods.maxHeight('.sign_up_form  .tab_content ', 105 + window.innerHeight * 0.1);
 	defaultMethods.activated('.content_bet .add_favorite');
 
-	messageClass.showHelpMessage('.active_trader .help', '.tab_item');
+	// messageClass.showHelpMessage('.active_trader .help', '.tab_item');
 
 	new orderClass();//order activation
 	new activeTraderClass(); //active trader activation
