@@ -743,7 +743,10 @@ class activeTraderClass{
 				}
 				current.addClass(className);
 				if(current.hasClass('best_buy')){
-					className = 'mid';
+					if(activeTrader.find('.best_buy').length && activeTrader.find('.best_sell').length )
+						className = 'mid';
+					else
+						className = 'bid';
 				}
 			})();
 		});
