@@ -154,12 +154,16 @@
                 &.clickable{  @include btn-hover;  }
                 &.market_button{
                   &:after{  display: none;  }
-                  &:not(active) button{
-                    color: transparentize(#ffffff, 0.5);
+                  &.active{
+                    button{  cursor: pointer; color: #ffffff; }
+                    a{  opacity: 1;  }
                   }
+                  a{  opacity: 0.5;  }
                   button{
+                    color: transparentize(#ffffff, 0.5);
                     width: 100%;
                     border: none;
+                    cursor: default;
                   }
                 }
                 input{  width: 100%;  padding: 3px 5px;  text-align: center; @include trader_input;}
@@ -839,7 +843,11 @@
                 width: 20% !important;
                 height: 59px !important;
               }
-              .success_btn{  border: none;   }
+              .success_btn{
+                border: none;
+                position: relative;
+                z-index: 1;
+              }
               .delete{
                 &:hover{  background: $trader_order_button_hover;  }
                 &:active{  background: $trader_order_button_active;  }

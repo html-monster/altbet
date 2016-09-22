@@ -362,7 +362,7 @@ i.wave{  display: inline-block;  font-style: normal; }
     position: absolute;
     top: 0;
     left: 22px;
-    background: $warning_message_arrow;
+    background: $warning_message_arrow * 0.98;
     z-index: 9;
   }
   p{
@@ -404,8 +404,8 @@ i.wave{  display: inline-block;  font-style: normal; }
 
 .valid input{  border: 1px solid #a3d39c !important;  color: #a3d39c !important;  }
 .invalid input{
-  border: 1px solid red !important;
-  color: red !important;
+  border: 1px solid #ff1e1e !important;
+  color: #ff1e1e !important;
   animation-name: shake;
   animation-duration: 1s;
   animation-fill-mode: both;
@@ -586,3 +586,24 @@ i.wave{  display: inline-block;  font-style: normal; }
 }
 
 .hidden{  display: none;  }
+
+.global_error_container{
+  width: 300px;
+  padding: 10px 15px;
+  position: fixed;
+  right: 100%;
+  bottom: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  box-shadow: 0 0 23px -5px rgba(0, 0, 0, 0.5);
+  z-index: 500;
+  &.active{
+    right: 10px;
+    animation-duration: 0.7s;
+    animation-fill-mode: both;
+  }
+  p{
+    color: #ef4d22;
+    font-size: 12px;
+  }
+}

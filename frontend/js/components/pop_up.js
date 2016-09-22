@@ -6,7 +6,12 @@ class popUpClass{
 				$('.pop_up').fadeOut();
 				$('body>.wrapper').removeClass('blur');
 				$('.video_form iframe').removeAttr('src', '');
+				$('#order_content').remove();
 			}
+			// if(e.keyCode == 49){
+			// 	console.log(1);
+			// 	defaultMethods.showError();
+			// }
 		});
 		console.log("browser version: " + $.browser.version.slice(0, 2)); // EDGE В ВЕРСИИ 50 МОГУТ ПОЛЕЗТЬ БАГИ
 	}

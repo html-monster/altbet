@@ -116,7 +116,7 @@ class activeTraderClass{
 					$(this).find('.event-content').eq(0).addClass('active');
 
 					activeTraderClass.takeData($(this));
-					activeTraderClass.spreaderClean();
+					activeTraderClass.spreaderClean(true);
 					activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
 					// activeTraderClass.spreadVisability();
 				}
@@ -131,7 +131,7 @@ class activeTraderClass{
 					tabs.removeClass('active').eq($(this).index()).addClass('active');
 
 					activeTraderClass.takeData($(this));
-					activeTraderClass.spreaderClean();
+					activeTraderClass.spreaderClean(true);
 					activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
 					// activeTraderClass.spreadVisability();
 				}
@@ -154,7 +154,7 @@ class activeTraderClass{
 					tabs.removeClass('active');
 					$(this).addClass('active');
 					activeTraderClass.takeData($('.content_bet.active .event-content').eq($(this).index()));
-					activeTraderClass.spreaderClean();
+					activeTraderClass.spreaderClean(true);
 				}
 			});
 
@@ -207,7 +207,14 @@ class activeTraderClass{
 
 			});
 
-			trader.on('click', '.confim_button', function (e) {
+			trader.on('click', '.spread_confim  .confim_button', function(e){
+				e.stopPropagation();
+				if(!($('.order label input.auto').prop('checked')))
+					addOrder($(this));
+				//console.log('lol');
+			});
+
+			trader.on('click', '.market_button.active', function (e) {
 				e.stopPropagation();
 				if(!($('.order label input.auto').prop('checked')))
 					addOrder($(this));
@@ -245,8 +252,14 @@ class activeTraderClass{
 				}
 
 
-				if(context.hasClass('size sell') || context.hasClass('join_ask')){
-					createOrderForm('.active_trader .template .order_content.default');
+				if(context.hasClass('sell_mkt')){
+					createOrderForm('.active_trader .template .order_content.default', 'sell_mkt');
+				}
+				else if(context.hasClass('buy_mkt')){
+					createOrderForm('.active_trader .template .order_content.default', 'buy_mkt');
+				}
+				else if(context.hasClass('size sell') || context.hasClass('join_ask')){
+					createOrderForm('.active_trader .template .order_content.default', 'sell');
 				}
 				else if(context.hasClass('price_value') || context.hasClass('confim_button')){
 					var price1, price2, spreadVal = +$('.active_trader input.spreader').val();
@@ -316,17 +329,21 @@ class activeTraderClass{
 						width: size - 4,
 						top: position
 					});
-					if(modification == 'buy'){
+					if(modification == 'buy' || modification == 'buy_mkt'){
 						html.find('.buy-container').html(html.find('.sell-container').html());
 						html.find('input[type=submit]').toggleClass('sell buy').val('buy');
 						html.find('.sell-container').html('');
-						html.find('.obligations input').val((price * quantity).toFixed(2));
 						html.find('.side').val('Buy');
 					}
-					else{
+					else
 						html.find('.side').val('Sell');
+
+					if(modification == 'buy')
+						html.find('.obligations input').val((price * quantity).toFixed(2));
+					else if(modification == 'sell')
 						html.find('.obligations input').val(((1 - price) * quantity).toFixed(2));
-					}
+					else if(modification == 'sell_mkt')
+						html.find('.obligations input').val('');
 
 					if(modification == 'spread'){
 						html.find('.price.sell input').val(price2);
@@ -338,7 +355,13 @@ class activeTraderClass{
 					html.find('.volume input').val(quantity);
 					html.find('.symbol').val($('.active_trader').attr('id').slice(7));
 					html.find('.direction').val(true);
-					html.find('.price_value').val(price);
+
+					if(modification == 'sell' || modification == 'buy')
+						html.find('.price_value').val(price);
+
+					if(modification == 'sell_mkt' || modification == 'buy_mkt')
+						html.find('.checkbox').append('<input type="checkbox" class="hidden" />');
+
 					if($('.active_trader .event_name').eq(0).hasClass('active'))
 						html.find('.mirror').val(0);
 					else
@@ -362,23 +385,23 @@ class activeTraderClass{
 		}();
 
 
-		this.marcketOrder = function () {
-			var container = $('.active_trader .control').eq(0);
-
-			$('.active_trader .market_button ').mousedown(function () {
-				if ($(this).hasClass('buy_mkt'))
-					container.find('.side').val('Buy');
-				else
-					container.find('.side').val('Sell');
-
-				container.find('.symbol').val($('.active_trader').attr('id').slice(7));
-
-				if($('.active_trader .event_name').eq(0).hasClass('active'))
-					container.find('.mirror').val(0);
-				else
-					container.find('.mirror').val(1);
-			});
-		}();
+		// this.marcketOrder = function () {
+		// 	var container = $('.active_trader .control').eq(0);
+		//
+		// 	$('.active_trader .market_button ').mousedown(function () {
+		// 		if ($(this).hasClass('buy_mkt'))
+		// 			container.find('.side').val('Buy');
+		// 		else
+		// 			container.find('.side').val('Sell');
+		//
+		// 		container.find('.symbol').val($('.active_trader').attr('id').slice(7));
+		//
+		// 		if($('.active_trader .event_name').eq(0).hasClass('active'))
+		// 			container.find('.mirror').val(0);
+		// 		else
+		// 			container.find('.mirror').val(1);
+		// 	});
+		// }();
 		//spread show/hide =============================================================================================================
 
 		$('.active_trader .show_spread').click(function () {
@@ -621,12 +644,12 @@ class activeTraderClass{
 		tbody.animate({scrollTop: (indexBuy + center) * 20 - tbody.height() / 2 + 10}, 400);
 	}
 
-	static spreaderClean() {
+	static spreaderClean(removeOrder) {
 		$('.active_trader table.limit tbody tr').find('.price_value').removeClass('active');
 		$('.active_trader input.spreader').val('');
 		$('.active_trader table.limit td.best_buy').removeClass('active');
 		$('.active_trader table.limit td.best_sell').removeClass('active');
-		$('.active_trader #order_content').remove();
+		if(removeOrder) $('.active_trader #order_content').remove();
 		$('.active_trader .spread_confim').remove();
 	}
 
@@ -743,6 +766,7 @@ class activeTraderClass{
 				}
 				current.addClass(className);
 				if(current.hasClass('best_buy')){
+					console.log(activeTrader.find('.best_buy').length && activeTrader.find('.best_sell').length);
 					if(activeTrader.find('.best_buy').length && activeTrader.find('.best_sell').length )
 						className = 'mid';
 					else

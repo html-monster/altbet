@@ -57,6 +57,8 @@ class orderClass{
 					return false;
 				}
 
+				console.log(1);
+
 				if(checkboxProp){
 					if(0 >= price || price > 0.99){
 						$(this).find('.price input').next().fadeIn(200);
@@ -81,6 +83,7 @@ class orderClass{
 						return false;
 					}
 				}
+				console.log(2);
 				return true;
 			});
 			order.on('focus','input', function () {

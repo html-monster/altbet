@@ -37,9 +37,9 @@ class activeTraderControllerClass{
 			}
 		});
 
-		// if(activeData.Positions) $('.open_contracts .quantity').text(activeData.Positions);
-		// if(activeData.GainLoss) $('.open_pnl .quantity').text(activeData.GainLoss);
 		if(activeData){
+			if(activeData.Positions) $('.open_contracts .quantity').text(activeData.Positions);
+			if(activeData.GainLoss) $('.open_pnl .quantity').text(activeData.GainLoss);
 			$(lines).each(function () {
 				var currnetLine = $(this),
 						noData = true;
@@ -182,6 +182,8 @@ class activeTraderControllerClass{
 			});
 		}
 		else{
+			$('.open_contracts .quantity').text('0');
+			$('.open_pnl .quantity').text('0');
 			td.each(function () {
 				if($(this).hasClass('size') || $(this).hasClass('my_size'))
 					$(this).find('.value').text('');

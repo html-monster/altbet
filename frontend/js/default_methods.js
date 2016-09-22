@@ -82,4 +82,8 @@ class defaultMethods{
 
 		return id;
 	}
+
+	static showError(){
+		$('.global_error_container').removeClass('bounceOutRight').addClass('bounceInRight active');
+	}
 }
