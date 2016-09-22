@@ -83,7 +83,14 @@ class defaultMethods{
 		return id;
 	}
 
-	static showError(){
-		$('.global_error_container').removeClass('bounceOutRight').addClass('bounceInRight active');
+	static showError(errorMessage){
+		let error = $('.global_error_container');
+
+		error.hide().fadeIn(200)
+				 .removeClass('bounceOutRight').addClass('bounceInRight active')
+				 .find('p').text(errorMessage);
+		setTimeout(function () {
+			error.fadeOut(800);
+		}, 5000);
 	}
 }

@@ -341,19 +341,26 @@ class activeTraderClass{
 					if(modification == 'spread'){
 						html.find('.price.sell input').val(price2);
 						html.find('.price.buy input').val(price1);
+						html.find('.SellOrderLimitPrice').val(price2);
+						html.find('.BuyOrderLimitPrice').val(price1);
 					}
 					else
 						html.find('.price input').val(price);
 
 					html.find('.volume input').val(quantity);
 					html.find('.symbol').val($('.active_trader').attr('id').slice(7));
-					html.find('.direction').val(true);
 
 					if(modification == 'sell' || modification == 'buy')
 						html.find('.price_value').val(price);
 
-					if(modification == 'sell_mkt' || modification == 'buy_mkt')
+
+					if(modification == 'sell_mkt' || modification == 'buy_mkt'){
+						html.find('form').attr('action', '/AltBet/Order/MarketTrading').removeAttr('data-ajax-url');
 						html.find('.checkbox').append('<input type="checkbox" class="hidden" />');
+						html.find('.direction').val(false);
+					}
+					else
+						html.find('.direction').val(true);
 
 					if($('.active_trader .event_name').eq(0).hasClass('active'))
 						html.find('.mirror').val(0);
@@ -759,7 +766,6 @@ class activeTraderClass{
 				}
 				current.addClass(className);
 				if(current.hasClass('best_buy')){
-					console.log(activeTrader.find('.best_buy').length && activeTrader.find('.best_sell').length);
 					if(activeTrader.find('.best_buy').length && activeTrader.find('.best_sell').length )
 						className = 'mid';
 					else

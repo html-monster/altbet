@@ -58,6 +58,7 @@ class ajaxControllerClass{
 
 		console.log('Order isn\'t sending: ' + object.Symbol);
 		element.find('.error_pop_up').removeClass('bounceOutRight').addClass('bounceInRight active');
+		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 	}
 
 }
