@@ -207,14 +207,7 @@ class activeTraderClass{
 
 			});
 
-			trader.on('click', '.spread_confim  .confim_button', function(e){
-				e.stopPropagation();
-				if(!($('.order label input.auto').prop('checked')))
-					addOrder($(this));
-				//console.log('lol');
-			});
-
-			trader.on('click', '.market_button.active', function (e) {
+			trader.on('click', '.confim_button', function (e) {
 				e.stopPropagation();
 				if(!($('.order label input.auto').prop('checked')))
 					addOrder($(this));
@@ -263,15 +256,15 @@ class activeTraderClass{
 				}
 				else if(context.hasClass('price_value') || context.hasClass('confim_button')){
 					var price1, price2, spreadVal = +$('.active_trader input.spreader').val();
-					if(context.parents('tr').find('.mid').length){
-						var currentPrice = +(context.find('span.value').text()).slice(1);
-
-						price1 = (currentPrice - spreadVal).toFixed(2);
-						price1 = price1 < 0.01 ? 0.01 : price1;
-						price2 = (currentPrice + spreadVal).toFixed(2);
-						price2 = price2 > 0.99 ? 0.99 : price2;
-					}
-					else if(context.hasClass('ask')){
+					// if(context.parents('tr').find('.mid').length){
+					// 	var currentPrice = +(context.find('span.value').text()).slice(1);
+					//
+					// 	price1 = (currentPrice - spreadVal).toFixed(2);
+					// 	price1 = price1 < 0.01 ? 0.01 : price1;
+					// 	price2 = (currentPrice + spreadVal).toFixed(2);
+					// 	price2 = price2 > 0.99 ? 0.99 : price2;
+					// }
+					if(context.hasClass('ask')){
 						price2 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
 						price1 = (+price2 - spreadVal).toFixed(2);
 						price1 = price1 < 0.01 ? 0.01 : price1;
@@ -458,16 +451,16 @@ class activeTraderClass{
 				if(bid > 0.99) bid = 0.99;
 				orderContent.find('.price input').eq(0).val(bid);
 			}
-			if(orderContent.parents('tr').find('.mid').length){
-				var currentPrice = +(orderContent.parents('tr').find('.mid span.value').text()).slice(1);
-
-				ask = (currentPrice - value / 100).toFixed(2);
-				bid = (currentPrice + value / 100).toFixed(2);
-				if(ask < 0.01) ask = 0.01;
-				orderContent.find('.price input').eq(1).val(ask);
-				if(bid > 0.99) bid = 0.99;
-				orderContent.find('.price input').eq(0).val(bid);
-			}
+			// if(orderContent.parents('tr').find('.mid').length){
+			// 	var currentPrice = +(orderContent.parents('tr').find('.mid span.value').text()).slice(1);
+			//
+			// 	ask = (currentPrice - value / 100).toFixed(2);
+			// 	bid = (currentPrice + value / 100).toFixed(2);
+			// 	if(ask < 0.01) ask = 0.01;
+			// 	orderContent.find('.price input').eq(1).val(ask);
+			// 	if(bid > 0.99) bid = 0.99;
+			// 	orderContent.find('.price input').eq(0).val(bid);
+			// }
 		}
 
 		function spreadHighlight(context) {
