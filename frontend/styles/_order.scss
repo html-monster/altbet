@@ -114,9 +114,12 @@
             font-size: 12px;
             //font-size: 13px;
             //@include md(1400){  font-size: 12px;  }
-            &.info tr{
-              &:first-of-type td{  border-top: none;  }
-              td{  width: 33.33%;  padding: 5px;  }
+            &.info{
+              border-top: 1px solid $trader_table_td;
+              tr{
+                &:first-of-type td{  border-top: none;  }
+                td{  width: 33.33%;  padding: 5px;  }
+              }
             }
             &.control{
               position: relative;

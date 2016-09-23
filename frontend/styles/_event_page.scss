@@ -174,8 +174,11 @@
           transition: 0.3s ease-out;
           &:nth-of-type(2),
           &:nth-of-type(3){
-            cursor: pointer;
             position: relative;
+						&.clickable{
+							cursor: pointer;
+							&:hover:after{  width: 100%;  }
+						}
             span{
               position: relative;
               z-index: 3;
@@ -192,7 +195,6 @@
               transition: 0.3s ease-out;
               z-index: 2;
             }
-            &:hover:after{  width: 100%;  }
           }
 					&.sell:after{  background: #ef4d22;  }
 					&.buy:after{  background: #3498da;  }
@@ -258,12 +260,12 @@
 			height: 31px;
 			&.sell{
 				background: linear-gradient(to bottom, #f88447, #ef4d22);
-				border-radius: 4px 0 0 4px;
-				border-right: 1px solid $event_page_block_separate;
+				border-radius: 0 4px 4px 0;
 			}
 			&.buy{
 				background: linear-gradient(to bottom, #64c9ef, #3498da);
-				border-radius: 0 4px 4px 0;
+				border-right: 1px solid $event_page_block_separate;
+				border-radius: 4px 0 0 4px;
 			}
 		}
 

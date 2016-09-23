@@ -1,13 +1,5 @@
 class activeTraderControllerClass{
 	static updateActiveTraiderData  (data) {
-		if ($('div[id^="trader_"]').attr('id') == null) return;
-
-		var identificators = $('div[id^="trader_"]').attr('id').replace('trader_', '').split('_');
-
-		// console.log(identificators);
-		// var td = $('.active_trader table.limit td');
-
-
 		var trader = $('.active_trader'),
 				isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1,
 				lines = $('.active_trader tr.visible'),
@@ -17,7 +9,16 @@ class activeTraderControllerClass{
 				// bestBuy = 1,
 				activeData = null,
 				bid = '', ask = '',
-			  className = 'ask';
+				className = 'ask';
+
+
+		if (!trader.attr('id')) return;
+		var identificators = trader.attr('id').replace('trader_', '').split('_');
+
+		// console.log(identificators);
+		// var td = $('.active_trader table.limit td');
+
+
 
 		td.removeClass('best_sell best_buy');
 		// td.find('span.value').addClass('rel');

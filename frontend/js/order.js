@@ -97,6 +97,8 @@ class orderClass{
 							return false;
 						}
 					}
+					else if($(this)[0].selectionStart < 2)
+						$(this).val('0.')
 				}
 			});
 

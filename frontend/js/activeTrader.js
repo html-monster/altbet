@@ -5,6 +5,9 @@ class activeTraderClass{
 		$('.left_order .tab label').click(function (e) {
 			e.stopPropagation();
 		});
+		if($('.wrapper_event_page').length)
+			$('.active_trader .event_title').hide();
+
 		// trader On/Off
 		this.tradeOn = function () {
 			var checkbox = $('.left_order .tab input.limit'),
@@ -16,6 +19,7 @@ class activeTraderClass{
 					event_container = $('.content_bet'),
 					titles = event_container.eq(0).find('.event-title .title'),
 					tab_content = $('.tab_content'),
+					executedOrders = $('.wrapper_event_page .executed_orders'),
 					webkit = ($.browser.webkit) ? 'webkit' : '';
 
 			$('.active_trader table.limit').addClass(webkit);
@@ -29,13 +33,18 @@ class activeTraderClass{
 				buttons.attr('disabled', true);
 				event_container.eq(0).find('.event-content').eq(0).addClass('active');
 				// activeTraderClass.spreadVisability();
+				if($('.wrapper_event_page').length)
+						executedOrders.find('td.clickable').removeClass('clickable');
 
 				event_container.addClass('clickable').eq(0).addClass('active');
 				$('.active_trader .event_title .event_name').each(function () {
 					$(this).text(titles.eq(ii++).text());
 				});
 				setTimeout(function () {
-					activeTraderClass.takeData($('.content_bet.active '));
+					if($('.content_bet.active').length)
+						activeTraderClass.takeData($('.content_bet.active'));
+					else
+						activeTraderClass.takeData($('.wrapper_event_page'));
 				}, 400);
 			}
 			checkbox.change(function () {
@@ -47,7 +56,7 @@ class activeTraderClass{
 					setTimeout(function () {
 						active_trader.fadeIn(200);
 					}, 200);
-					tbodyResize();
+					activeTraderClass.tbodyResize();
 					buttons.attr('disabled', true);
 					if(event_container.hasClass('active')){
 						event_container.addClass('clickable');
@@ -60,9 +69,16 @@ class activeTraderClass{
 					}
 					orderClass.tabReturn();
 					setTimeout(function () {
-						if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == '')
-							activeTraderClass.takeData($('.content_bet.active '));
+						if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == ''){
+
+							if($('.content_bet.active').length)
+								activeTraderClass.takeData($('.content_bet.active'));
+							else
+								activeTraderClass.takeData($('.wrapper_event_page'));
+						}
 					}, 700);
+					if($('.wrapper_event_page').length)
+						executedOrders.find('td.clickable').removeClass('clickable');
 				}
 				else{
 					autoTrade.parent().fadeOut(200);
@@ -73,31 +89,13 @@ class activeTraderClass{
 					active_trader.fadeOut(200);
 					buttons.removeAttr('disabled');
 					event_container.removeClass('clickable');
+					if($('.wrapper_event_page').length)
+						executedOrders.find('td.clickable').addClass('clickable');
 				}
 			});
 			// $('.left_order .active_trader a').click(function (e) {
 			// 	e.preventDefault();
 			// });
-			function tbodyResize(){
-				var windowHeight = window.innerHeight,
-						footer = $('footer'),
-						footerHeight = footer.height() + 30,
-						tbody = $('.left_order table.limit tbody');
-						// order = $('#order');
-
-				// order.css('overflow-y', 'hidden');
-				setTimeout(function () {
-					var orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight() + $('header').outerHeight() + 47),
-							actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title').height() + $('.active_trader .info').height() +
-									$('.active_trader .control').eq(0).height() + $('.active_trader .control').eq(1).height() + $('.active_trader .control.remote').height() + $('.active_trader .limit thead').height());
-
-					if(footer.hasClass('active')){
-						tbody.css('max-height', actveTraderHeight - footerHeight);
-					} else {
-						tbody.css('max-height', actveTraderHeight);
-					}
-				}, 300);
-			}
 		}();
 
 		this.eventChange = function () {
@@ -153,13 +151,15 @@ class activeTraderClass{
 					event_content.removeClass('active');
 					tabs.removeClass('active');
 					$(this).addClass('active');
-					activeTraderClass.takeData($('.content_bet.active .event-content').eq($(this).index()));
+					// if($('.content_bet.active').length)
+						activeTraderClass.takeData($('.content_bet.active .event-content').eq($(this).index()));
+					// else
+					// 	activeTraderClass.takeData($('.wrapper_event_page'));
 					activeTraderClass.spreaderClean(true);
 				}
 			});
 
 		}();
-
 
 		this.addOrder = function () {
 			var //quantityButton = $('.active_trader .control .button.quantity'),
@@ -686,6 +686,8 @@ class activeTraderClass{
 
 		if(currentItem.hasClass('content_bet'))
 			activeTrader.attr('id', 'trader_' + currentItem.find('.symbol_name').text());
+		else if(currentItem.hasClass('wrapper_event_page'))
+			activeTrader.attr('id', 'trader_' + currentItem.attr('id'));
 		else
 			activeTrader.attr('id', 'trader_' + currentItem.parents('.content_bet').find('.symbol_name').text());
 
@@ -778,17 +780,42 @@ class activeTraderClass{
 		activeTraderClass.scrollTo();
 	}
 
-	static getAjaxData (){
-		$.ajax({
-			url: '',
-			dataType: 'json',
-			success: ajaxOnSuccess()
-		});
+	static tbodyResize(showFooter){
+		var windowHeight = window.innerHeight,
+				footer = $('footer'),
+				footerHeight = footer.outerHeight(),
+				tbody = $('.left_order table.limit tbody'),
+				delay = 400;
+		// order = $('#order');
 
-		function ajaxOnSuccess() {
+		if(showFooter) delay = 0;
 
-		}
-	}
+		// order.css('overflow-y', 'hidden');
+		setTimeout(function () {
+			var orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight(true) + $('header').outerHeight(true)),
+					actveTraderHeight = orderSidebarHeight - ($('.active_trader .event_title')[0].offsetHeight + $('.active_trader .info').outerHeight() +
+							$('.active_trader .control').eq(0).outerHeight() + $('.active_trader .control').eq(1).outerHeight() +
+							$('.active_trader .control.remote').outerHeight() + $('.active_trader .limit thead').outerHeight() + 12);
+
+			if(footer.hasClass('active')){
+				tbody.css('max-height', actveTraderHeight - footerHeight);
+			} else {
+				tbody.css('max-height', actveTraderHeight);
+			}
+		}, delay);
+	};
+
+	// static getAjaxData (){
+	// 	$.ajax({
+	// 		url: '',
+	// 		dataType: 'json',
+	// 		success: ajaxOnSuccess()
+	// 	});
+	//
+	// 	function ajaxOnSuccess() {
+	//
+	// 	}
+	// }
 
 }
 

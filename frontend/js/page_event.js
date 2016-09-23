@@ -3,9 +3,9 @@ class eventPageClass{
 		var self = this;
 
 		self.tabularMarking = function () {
-			var executedOrders = $('.executed_orders');
+			var executedOrders = $('.wrapper_event_page .executed_orders');
 
-			executedOrders.on('mouseenter', 'td.volume', function () {
+			executedOrders.on('mouseenter', 'td.volume.clickable', function () {
 				$(this).parents('.executed_orders').find('tr').removeClass('active');
 				for(var ii = 0; ii <= $(this).parent().index(); ii++){
 					$(this).parents('.executed_orders').find('tr').eq(ii).addClass('active');
