@@ -136,6 +136,22 @@
         }
       }
     }
+		.ord_crt_cont{
+			button{
+				float: left;
+				width: 50%;
+				height: 31px;
+				&.sell{
+					background: linear-gradient(to bottom, #f88447, #ef4d22);
+					border-radius: 0 4px 4px 0;
+				}
+				&.buy{
+					background: linear-gradient(to bottom, #64c9ef, #3498da);
+					border-right: 1px solid $event_page_block_separate;
+					border-radius: 4px 0 0 4px;
+				}
+			}
+		}
   }
 	.executed, .comparison{
 		thead {
@@ -229,7 +245,7 @@
 				table-layout: fixed;
 				width: 100%;
       }
-      tr:last-of-type td{  padding-bottom: 5px;  }
+      //tr:last-of-type td{  padding-bottom: 5px;  }
       td{
         font-size: 14px;
         color: $main-color;
@@ -254,28 +270,13 @@
 			font-size: 14px;
 		}
 
-		button{
-			float: left;
-			width: 50%;
-			height: 31px;
-			&.sell{
-				background: linear-gradient(to bottom, #f88447, #ef4d22);
-				border-radius: 0 4px 4px 0;
-			}
-			&.buy{
-				background: linear-gradient(to bottom, #64c9ef, #3498da);
-				border-right: 1px solid $event_page_block_separate;
-				border-radius: 4px 0 0 4px;
-			}
-		}
-
     .table_wrap{
       width: 33.33%;
 			padding: 10px 0;
 			background: $bg_color;
 			border-radius: 4px;
 			&:first-child, &:nth-child(2){  margin-right: 10px;  }
-			&:last-child{  padding: 0; background: none;  }
+			&:last-child{  visibility: hidden;  }
     }
 
     .comparison_table {

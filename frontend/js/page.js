@@ -2,15 +2,15 @@ $(document).ready(function () {
 	new inputNumber('.order');
 	new inputNumber('.sing_up_form');
 
-	// if(location.hostname == "altbet.html-monster.ru"){
-	// 	let letAccess = new accessClass('.access_container input[name="login"]', '.access_container input[name="pass"]', $('.access_container input.required').parent());
-	//
-	// 	$('.access_container form').submit(function (event) {
-	// 		event = event || window.event;
-	// 		event.preventDefault ? event.preventDefault() : (event.returnValue=false);
-	// 		letAccess.checkAccess('access');
-	// 	});
-	// }
+	if(location.hostname == "altbet.html-monster.ru"){
+		let letAccess = new accessClass('.access_container input[name="login"]', '.access_container input[name="pass"]', $('.access_container input.required').parent());
+
+		$('.access_container form').submit(function (event) {
+			event = event || window.event;
+			event.preventDefault ? event.preventDefault() : (event.returnValue=false);
+			letAccess.checkAccess('access');
+		});
+	}
 
 	new menuClass();
 	new footerClass();

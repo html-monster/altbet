@@ -51,7 +51,7 @@ class defaultMethods{
 
 	static activated(element){
 		$(element).click(function (e) {
-			e.stopPropagation();
+			e.preventDefault();
 			$(this).toggleClass('active');
 		});
 	}
