@@ -369,6 +369,7 @@
                 }
                 &.hovered{  background: #ffc11a !important;  }
               }
+              &:last-of-type{  width: 0;  }
               &.size span.value, &.price span.value{  position: relative;  z-index: 3;  }
               &.my_bids.animated,
               &.my_offers.animated{

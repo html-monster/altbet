@@ -90,7 +90,7 @@ gulp.task('js',function(){
       presets: ['es2015']
     }),
     sourcemaps.init(),
-    $.uglify(),
+    // $.uglify(),
     gulp.dest('./public/js'),
     gulp.dest('../../altbet/Alt.Bet/Scripts')
 

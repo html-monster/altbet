@@ -308,7 +308,7 @@ class activeTraderClass{
 					}, 0);
 				}
 				else if(context.hasClass('size') || context.hasClass('price_value') || context.hasClass('confim_button'))
-					context.parents('tr').find('td.my_bids').append(html);
+					context.parents('tr').find('td:last-of-type').append(html);
 				else
 					context.parent().next().html('<td></td>').children().append(html);
 

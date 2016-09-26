@@ -70,16 +70,16 @@ class activeTraderControllerClass{
 									$(line).find('td.sell').addClass('animated fadeOut');
 									$(line).find('td.price_value').addClass('animated fadeOut');
 								}
-								if(userVolume == 0){
-									$(line).find('td.my_bids.my_size').find('span.value').text('');//.addClass('animated fadeOut')
+								if(userVolume == 0 && $(line).find('td.my_bids.my_size span.value').text()){
+									$(line).find('td.my_bids.my_size').addClass('animated fadeOut').find('span.value').text('');
 								}
 								else if ($(line).find('td.my_bids.my_size span.value').text() != userVolume){
-									$(line).find('td.my_bids.my_size').find('span.value').text(userVolume);//.addClass('animated fadeOut')
+									$(line).find('td.my_bids.my_size').addClass('animated fadeOut').find('span.value').text(userVolume);
 								}
 
 
 								setTimeout(function () {
-									$(line).find('.fadeOut').removeClass('fadeOut')
+									$(line).find('.fadeOut').removeClass('fadeOut animated');
 								}, 700);
 							}
 							else{
@@ -92,15 +92,15 @@ class activeTraderControllerClass{
 								}
 								// debugger;
 								// console.log(userVolume);
-								if(userVolume == 0){
-									$(line).find('td.my_offers.my_size').find('span.value').text('');//.addClass('animated fadeOut')
+								if(userVolume == 0 && $(line).find('td.my_offers.my_size span.value').text()){
+									$(line).find('td.my_offers.my_size').addClass('animated fadeOut').find('span.value').text('');
 								}
 								else if ($(line).find('td.my_offers.my_size span.value').text() != userVolume){
-									$(line).find('td.my_offers.my_size').find('span.value').text(userVolume);//.addClass('animated fadeOut')
+									$(line).find('td.my_offers.my_size').addClass('animated fadeOut').find('span.value').text(userVolume);
 								}
 
 								setTimeout(function () {
-									$(line).find('.fadeOut').removeClass('fadeOut')
+									$(line).find('.fadeOut').removeClass('fadeOut animated');
 								}, 700);
 							}
 							if(currnetLine.find('td.price_value span.value').text() == '$' + (activeData.Symbol.LastBid).toFixed(2))
@@ -125,16 +125,16 @@ class activeTraderControllerClass{
 									$(line).find('td.buy').addClass('animated fadeOut');
 									$(line).find('td.price_value').addClass('animated fadeOut');
 								}
-								if(userVolume == 0){
-									$(line).find('td.my_offers.my_size').find('span.value').text('');//.addClass('animated fadeOut')
+								if(userVolume == 0 && $(line).find('td.my_offers.my_size span.value').text()){
+									$(line).find('td.my_offers.my_size').addClass('animated fadeOut').find('span.value').text('');
 								}
 								else if ($(line).find('td.my_offers.my_size span.value').text() != userVolume){
-									$(line).find('td.my_offers.my_size').find('span.value').text(userVolume);//.addClass('animated fadeOut')
+									$(line).find('td.my_offers.my_size').addClass('animated fadeOut').find('span.value').text(userVolume);
 								}
 
 
 								setTimeout(function () {
-									$(line).find('.fadeOut').removeClass('fadeOut')
+									$(line).find('.fadeOut').removeClass('fadeOut animated');
 								}, 700);
 							}
 							else{
@@ -145,16 +145,16 @@ class activeTraderControllerClass{
 									$(line).find('td.sell').addClass('animated fadeOut');
 									$(line).find('td.price_value').addClass('animated fadeOut');
 								}
-								if(userVolume == 0){
-									$(line).find('td.my_bids.my_size').find('span.value').text('');//.addClass('animated fadeOut')
+								if(userVolume == 0 && $(line).find('td.my_bids.my_size span.value').text()){
+									$(line).find('td.my_bids.my_size').addClass('animated fadeOut').find('span.value').text('');
 								}
 								else if ($(line).find('td.my_bids.my_size span.value').text() != userVolume){
-									$(line).find('td.my_bids.my_size').find('span.value').text(userVolume);//.addClass('animated fadeOut')
+									$(line).find('td.my_bids.my_size').addClass('animated fadeOut').find('span.value').text(userVolume);
 								}
 
 
 								setTimeout(function () {
-									$(line).find('.fadeOut').removeClass('fadeOut')
+									$(line).find('.fadeOut').removeClass('fadeOut animated');
 								}, 700);
 							}
 							if(currnetLine.find('td.price_value span.value').text() == '$' + (1 - activeData.Symbol.LastAsk).toFixed(2))
