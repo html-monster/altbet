@@ -2,14 +2,14 @@ footer{
   display: flex;
   align-items: center;
   width: 100%;
-  height: 126px;
-  margin-top: -126px;
+  height: 150px;
+  margin-top: -150px;
   padding: 15px 40px;
   clear: both;
   box-shadow: 0 -6px 20px -3px rgba(0, 0, 0, 0.5);
   background-image: linear-gradient(to bottom, #3b3a44, #292830);
   position: fixed;
-  bottom: -125px;
+  bottom: -149px;
   z-index: 54;
   color: #ffffff;
   transition: 0.4s ease-out;
@@ -17,26 +17,27 @@ footer{
   &.active{  bottom: 0 !important;  }
   .footer_container{
     display: flex;
-    @include span(8.1 of 12);
-    @include push (1.5 of 12);
+    //@include span(8.1 of 12);
+    //@include push (1.5 of 12);
   }
   .footer_item{
-    width: 20%;
+    width: 15%;
     padding: 0 20px;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
     border-right: 1px solid #292830 * 0.9;
-    &:first-child{  width: 23%; border-left: none;  }
-    &:last-child{  border-right: none;  }
+    &:first-child{  border-left: none;  }//width: 23%;
+    &:last-child{  width: 40%; border-right: none;  }
+    .copy-right{  padding-left: 60px; font-size: 10px;  position: relative;  }
     @include md(1700){
       padding: 0 10px;
-      &:nth-child(3){
-        width: 25%;
-      }
+      .copy-right{  font-size: 9px;  }
     }
     img.curacao{
-      float: left;
-      width: 27px;
+      width: 50px;
       margin-right: 5px;
+      position: absolute;
+      left: 0;
+      top: calc(50% - 44px);
     }
     //span.curacao{
     //  color: #ffffff;

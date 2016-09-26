@@ -26,7 +26,7 @@ class footerClass{
 				// tbody.css('max-height', actveTraderHeight - footerHeight);
 				activeTraderClass.tbodyResize(true);
 				tabContent.removeClass('footer_active');
-				active_trader_footer.css('bottom', 128);
+				active_trader_footer.css('bottom', footerHeight + 2);
 			}
 			else {
 				scroll = orderSidebarHeight ;

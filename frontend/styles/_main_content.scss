@@ -307,7 +307,7 @@
                   opacity: 0.8;
                 }
               }
-              @include md(1450){
+              @include md(1360){
                 &:nth-of-type(3){
                   display: none;
                 }
@@ -323,7 +323,7 @@
                   opacity: 0.8;
                 }
               }
-              @include md(1450){
+              @include md(1360){
                 &:nth-last-of-type(3){
                   display: none;
                 }
