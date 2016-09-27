@@ -317,6 +317,13 @@ class activeTraderClass{
 					$('#order_content').addClass('active');
 				}, 0);
 				function createOrderForm(element, modification) {
+					var isMirror;
+
+					if($('#IsMirror').length)
+						isMirror = $('#IsMirror').val();
+					else
+						isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
+
 					html = $(element).clone();
 					html.attr('id', 'order_content').css({
 						width: size - 4,
@@ -362,7 +369,7 @@ class activeTraderClass{
 					else
 						html.find('.direction').val(true);
 
-					if($('.active_trader .event_name').eq(0).hasClass('active'))
+					if(!isMirror)
 						html.find('.mirror').val(0);
 					else
 						html.find('.mirror').val(1);

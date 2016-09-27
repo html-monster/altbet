@@ -1,7 +1,7 @@
 class activeTraderControllerClass{
 	static updateActiveTraiderData  (data) {
 		var trader = $('.active_trader'),
-				isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1,
+				isMirror,
 				lines = $('.active_trader tr.visible'),
 				tbody	= $('table.limit tbody'),
 				td = tbody.find('td'),
@@ -11,6 +11,10 @@ class activeTraderControllerClass{
 				bid = '', ask = '',
 				className = 'ask';
 
+		if($('#IsMirror').length)
+			isMirror = $('#IsMirror').val();
+		else
+			isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
 
 		if (!trader.attr('id')) return;
 		var identificators = trader.attr('id').replace('trader_', '').split('_');
@@ -159,13 +163,13 @@ class activeTraderControllerClass{
 							}
 							if(currnetLine.find('td.price_value span.value').text() == '$' + (1 - activeData.Symbol.LastAsk).toFixed(2))
 							{
-								ask = (activeData.Symbol.LastAsk).toFixed(2) == 1 ? '' : (activeData.Symbol.LastAsk).toFixed(2);
+								ask = (activeData.Symbol.LastAsk).toFixed(2) == 1 ? '' : (1 - activeData.Symbol.LastAsk).toFixed(2);
 								currnetLine.find('td.sell').addClass('best_sell');
 								currnetLine.find('td.price_value').addClass('best_sell');
 							}
 							if(currnetLine.find('td.price_value span.value').text() == '$' + (1 - activeData.Symbol.LastBid).toFixed(2))
 							{
-								bid = (activeData.Symbol.LastBid).toFixed(2) == 0 ? '' : (activeData.Symbol.LastBid).toFixed(2);
+								bid = (activeData.Symbol.LastBid).toFixed(2) == 0 ? '' : (1 -activeData.Symbol.LastBid).toFixed(2);
 								currnetLine.find('td.buy').addClass('best_buy');
 								currnetLine.find('td.price_value').addClass('best_buy');
 							}
@@ -192,9 +196,14 @@ class activeTraderControllerClass{
 		}
 
 
-
-		trader.find('.join_bid .price').text(bid);
-		trader.find('.join_ask .price').text(ask);
+		if(isMirror){
+			trader.find('.join_bid .price').text(ask);
+			trader.find('.join_ask .price').text(bid);
+		}
+		else{
+			trader.find('.join_bid .price').text(bid);
+			trader.find('.join_ask .price').text(ask);
+		}
 
 		tbody.find('tr').each(function () {
 			var current = $(this);
@@ -219,6 +228,7 @@ class activeTraderControllerClass{
 		//console.log('========================================================');
 		activeTraderClass.scrollTo();
 		tbody.addClass('scroll_dis');
+		activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
 		activeTraderClass.spreaderChangeVal(trader.find('input.spreader'));
 	}
 }

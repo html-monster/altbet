@@ -110,7 +110,7 @@ $(document).ready(function () {
 			placeholder: 'ui-state-highlight',
 			cancel: '.not-sort',
 			scroll: false,
-			delay: 100
+			delay: 200
 		});
 		current.disableSelection();
 	});
