@@ -12,7 +12,7 @@ class activeTraderControllerClass{
 				className = 'ask';
 
 		if($('#IsMirror').length)
-			isMirror = $('#IsMirror').val();
+			isMirror = $('#IsMirror').val() == 'False' ? 0 : 1;
 		else
 			isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
 

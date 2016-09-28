@@ -224,6 +224,7 @@ class orderClass{
 				if (checkboxProp) {
 					let html = $('.order_content.new .price').clone();
 
+					$(this).parent().find('span').text('Limit');
 					html.find('label').hide();
 					html.find('.regulator').hide();
 					$(this).parents('form').find('.obligations .regulator').fadeIn(200);
@@ -236,6 +237,7 @@ class orderClass{
 				else {
 					let sum = $(this).parents('form').find('.obligations');
 
+					$(this).parent().find('span').text('Market');
 					price.find('label').text('Market price');
 					price.find('input.number').attr('disabled', true).removeAttr('name').val('');
 					price.find('.regulator').fadeOut(200);
@@ -370,18 +372,18 @@ class orderClass{
 			});
 		}();
 
-		self.checkbox = function () {
-			var order_tab = $('#order');
-
-			order_tab.on('change', '[type=checkbox]', function () {
-				var self = $(this);
-
-				if(self.prop('checked'))
-					self.parent().find('span').text('Limit');
-				else
-					self.parent().find('span').text('Market');
-			});
-		}();
+		// self.checkbox = function () {
+		// 	var order_tab = $('#order');
+		//
+		// 	order_tab.on('change', '[type=checkbox]', function () {
+		// 		var self = $(this);
+		//
+		// 		 if(self.prop('checked'))
+		// 		 	self.parent().find('span').text('Limit');
+		// 		 else
+		// 		 	self.parent().find('span').text('Market');
+		// 	});
+		// }();
 
 		orderClass.addOrder('#exchange', 'button.event', limit);
 	}

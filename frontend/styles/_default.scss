@@ -491,6 +491,14 @@ i.wave{  display: inline-block;  font-style: normal; }
   0% {  background-color: orange;  }
   100% {  background-color: transparent;  }
 }
+@keyframes fadeColorOutSell {
+  0% {  color: #ef4d22;  }
+  100% {  color: orange;  }
+}
+@keyframes fadeColorOutBuy {
+  0% {  color: #3498da;  }
+  100% {  color: orange;  }
+}
 @keyframes shake {
   0%, 100% {  transform: translate3d(0, 0, 0);  }
   10%, 30%, 50%, 70%, 90% {  transform: translate3d(-10px, 0, 0);  }

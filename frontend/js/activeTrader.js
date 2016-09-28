@@ -319,8 +319,10 @@ class activeTraderClass{
 				function createOrderForm(element, modification) {
 					var isMirror;
 
+					console.log($('#IsMirror').length);
+					console.log($('#IsMirror').val());
 					if($('#IsMirror').length)
-						isMirror = $('#IsMirror').val();
+						isMirror = $('#IsMirror').val() == 'False' ? 0 : 1;
 					else
 						isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
 
@@ -369,6 +371,8 @@ class activeTraderClass{
 					else
 						html.find('.direction').val(true);
 
+					console.log(isMirror);
+					console.log(!isMirror);
 					if(!isMirror)
 						html.find('.mirror').val(0);
 					else

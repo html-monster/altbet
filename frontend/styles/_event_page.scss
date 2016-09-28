@@ -9,6 +9,7 @@
 		color: $main-color;
 		margin-bottom: 15px;
     text-align: left;
+		//&.fadeColorOut {  animation-name: fadeColorOutSell;  }
   }
 	h2{
 		padding-bottom: 15px;
@@ -188,6 +189,7 @@
         td{
           padding: 0 4px;
           transition: 0.3s ease-out;
+					&.animated{  animation-duration: 0s; }
           &:nth-of-type(2),
           &:nth-of-type(3){
             position: relative;
@@ -212,8 +214,14 @@
               z-index: 2;
             }
           }
-					&.sell:after{  background: #ef4d22;  }
-					&.buy:after{  background: #3498da;  }
+					&.sell{
+						&:after{  background: #ef4d22;  }
+						&.fadeColorOut {  animation-name: fadeColorOutSell;  }
+					}
+					&.buy{
+						&:after{  background: #3498da;  }
+						&.fadeColorOut {  animation-name: fadeColorOutBuy;  }
+					}
         }
       }
       &:nth-child(3){
