@@ -118,30 +118,35 @@ class eventPageClass{
 					data.priceMarket = self.text().replace(/[^0-9.]+/g, "");
 				}
 
+				var direction;
 				if(!(order.children().length > 1)){
 					if (self.parents('.sell').length) {
-						html = createOrderForm(self, 'sell', 'full', data);
+						direction = self.hasClass('price') ? 'buy' : 'sell';
+						html = createOrderForm(self, direction, 'full', data);
 						order.append(html);
-						inputFocus = $('.sell-container .volume input');
+						inputFocus = $('.'+ direction +'-container .volume input');
 					}
 					else{
-						html = createOrderForm(self, 'buy', 'full', data);
+						direction = self.hasClass('price') ? 'sell' : 'buy';
+						html = createOrderForm(self, direction, 'full', data);
 						order.append(html);
-						inputFocus = $('.buy-container .volume input');
+						inputFocus = $('.'+ direction +'-container .volume input');
 					}
 				}
 				else{
 					if (self.parents('.sell').length) {
-						html = createOrderForm(self, 'sell', null, data);
-						$('.default_orders .sell-container').html(html);
+						direction = self.hasClass('price') ? 'buy' : 'sell';
+						html = createOrderForm(self, direction, null, data);
+						$('.default_orders .'+ direction +'-container').html(html);
 						$('.order_content form').fadeIn(400);
-						inputFocus = $('.sell-container .volume input');
+						inputFocus = $('.'+ direction +'-container .volume input');
 					}
 					else{
-						html = createOrderForm(self, 'buy', null, data);
-						$('.default_orders .buy-container').html(html);
+						direction = self.hasClass('price') ? 'sell' : 'buy';
+						html = createOrderForm(self, direction, null, data);
+						$('.default_orders .'+ direction +'-container').html(html);
 						$('.order_content form').fadeIn(400);
-						inputFocus = $('.buy-container .volume input');
+						inputFocus = $('.'+ direction +'-container .volume input');
 					}
 				}
 

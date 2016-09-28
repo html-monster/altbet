@@ -319,8 +319,6 @@ class activeTraderClass{
 				function createOrderForm(element, modification) {
 					var isMirror;
 
-					console.log($('#IsMirror').length);
-					console.log($('#IsMirror').val());
 					if($('#IsMirror').length)
 						isMirror = $('#IsMirror').val() == 'False' ? 0 : 1;
 					else
@@ -815,18 +813,6 @@ class activeTraderClass{
 			}
 		}, delay);
 	};
-
-	// static getAjaxData (){
-	// 	$.ajax({
-	// 		url: '',
-	// 		dataType: 'json',
-	// 		success: ajaxOnSuccess()
-	// 	});
-	//
-	// 	function ajaxOnSuccess() {
-	//
-	// 	}
-	// }
 
 }
 

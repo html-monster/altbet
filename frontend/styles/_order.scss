@@ -519,10 +519,10 @@
             overflow-y: auto;
             .order_content{
               &:last-child{  padding: 0;  }
+              &.ui-sortable-handle .order-title{  cursor: move;  }
               .order-title{
                 padding: 5px 30px 5px 15px;
                 background: linear-gradient(to bottom, #53515e, #292830);
-                cursor: move;
               }
               form input[type="submit"]{  border-left: none;  }
               .close{

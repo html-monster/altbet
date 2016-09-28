@@ -545,6 +545,7 @@ class orderClass{
 	}
 
 	static showInfo () {
+		console.log($('#order .default_orders').children().length);
 		if($('#order .default_orders').children().length > 1)
 			$('#default_order_info').hide();
 		else
