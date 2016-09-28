@@ -2,14 +2,14 @@ footer{
   display: flex;
   align-items: center;
   width: 100%;
-  height: 150px;
-  margin-top: -150px;
-  padding: 15px 40px;
+  height: 180px;
+  margin-top: -180px;
+  padding: 15px 20px 15px 40px;
   clear: both;
   box-shadow: 0 -6px 20px -3px rgba(0, 0, 0, 0.5);
   background-image: linear-gradient(to bottom, #3b3a44, #292830);
   position: fixed;
-  bottom: -149px;
+  bottom: -179px;
   z-index: 54;
   color: #ffffff;
   transition: 0.4s ease-out;
@@ -25,19 +25,22 @@ footer{
     padding: 0 20px;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
     border-right: 1px solid #292830 * 0.9;
-    &:first-child{  border-left: none;  }//width: 23%;
-    &:last-child{  width: 40%; border-right: none;  }
-    .copy-right{  padding-left: 60px; font-size: 10px;  position: relative;  }
+    &:first-child{  padding-left: 0; border-left: none;  }//width: 23%;
+    &:last-child{  width: 40%;  padding-right: 0; border-right: none;  }
+    .copy-right{
+      padding-left: 60px; font-size: 11px;  position: relative;  opacity: 0.6;
+      a{  color: #ffffff;  }
+    }
     @include md(1700){
       padding: 0 10px;
-      .copy-right{  font-size: 9px;  }
+      .copy-right{  font-size: 10px;  }
     }
     img.curacao{
-      width: 50px;
+      width: 37px;
       margin-right: 5px;
       position: absolute;
       left: 0;
-      top: calc(50% - 44px);
+      top: 0;
     }
     //span.curacao{
     //  color: #ffffff;
@@ -141,8 +144,8 @@ footer{
   .copyright{
     font-size: 10px;
     line-height: 2.2;
+    opacity: 0.6;
   }
-  .copy-right{  font-size: 6px;  }
 }
 
 .video_form .pop_up_content{

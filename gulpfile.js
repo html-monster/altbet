@@ -85,10 +85,10 @@ gulp.task('assets', function() {
 gulp.task('js',function(){
   return combine(
     gulp.src(['frontend/js/**/*.js', '!frontend/js/test.js', '!frontend/js/access.js', '!frontend/js/theme_change.js']),
-    $.concat('all.js'),
     babel({
       presets: ['es2015']
     }),
+    $.concat('all.js'),
     sourcemaps.init(),
     // $.uglify(),
     gulp.dest('./public/js'),

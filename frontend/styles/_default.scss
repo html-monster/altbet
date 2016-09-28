@@ -535,14 +535,13 @@ i.wave{  display: inline-block;  font-style: normal; }
 .fadeInLeft {  animation-name: fadeInLeft;  }
 .shake {  animation-name: shake;  }
 .fadeOut span:after {  animation-name: fadeOut;  }
+.fadeOut:before {  animation-name: fadeOut;  }
 .rubberBand {  animation-name: rubberBand;  }
 .animated{
   animation-duration: 1s;
   animation-fill-mode: both;
-  span:after {
-    animation-duration: 1s;
-    animation-fill-mode: both;
-  }
+  &:before{  animation-duration: 1s;  animation-fill-mode: both;  }
+  span:after {  animation-duration: 1s;  animation-fill-mode: both;  }
 }
 
 .input_animate {
