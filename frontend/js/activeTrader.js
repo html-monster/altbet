@@ -369,8 +369,6 @@ class activeTraderClass{
 					else
 						html.find('.direction').val(true);
 
-					console.log(isMirror);
-					console.log(!isMirror);
 					if(!isMirror)
 						html.find('.mirror').val(0);
 					else
@@ -582,7 +580,7 @@ class activeTraderClass{
 		}
 	}
 
-	static buttonActivation(current) {
+	static buttonActivation(current, recalc) {
 		if(current.parents('.active_trader').length){
 			var	html = '<div class="regulator min" style="display: none;"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>',
 					input = $('.active_trader input.quantity'),
@@ -621,7 +619,7 @@ class activeTraderClass{
 					}
 					$('.active_trader table.limit tbody td.size').addClass('clickable');
 				}
-				activeTraderClass.recaluculateSum(current);
+				if(!recalc) activeTraderClass.recaluculateSum(current);
 			}
 			if(current.hasClass('spreader')) {
 				activeTraderClass.spreaderChangeVal(current);
@@ -667,7 +665,7 @@ class activeTraderClass{
 				quantity = +item.text() || +item.val() || '',
 				price = +order_content.find('.price input').val();
 
-		$('.active_trader .volume input').val(quantity);
+		$('.active_trader .volume input').not(item).val(quantity);
 		if(order_content.find('.sell-container').length)
 			order_content.find('.obligations input').val(((1 - price) * quantity).toFixed(2));
 		else

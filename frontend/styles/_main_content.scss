@@ -59,7 +59,8 @@
       transition: 0.4s ease-out;
       cursor: default;
       &.ui-sortable-helper{  transition: 0s;  cursor: move;  }
-      &:first-child{  margin-top: 0!important;  }
+			&.ui-sortable-handle .content_title{  cursor: move;  }
+			&:first-child{  margin-top: 0!important;  }
       &.clickable{
         .waves-ripple{  display: block;;  }
         .content_title, .table{  transition: 0.4s ease-out;  }

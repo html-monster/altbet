@@ -102,24 +102,25 @@ class orderClass{
 				}
 			});
 
-			order.on('mouseup', 'input.number', function () {
-				if($(this).parents('.price').length){
-					if($(this).val().length >= 2){
-						$(this)[0].selectionStart = $(this).val().length;
-					}
-				}
-			});
+			// order.on('mousedown', 'input.number', function () {
+			// 	console.log('yo');
+			// 	if($(this).parents('.price').length){
+			// 		if($(this).val().length >= 2){
+			// 			$(this)[0].selectionStart = $(this).val().length;
+			// 		}
+			// 	}
+			// });
 
 			order.on('keypress', 'input.number', function (e) {
 				e = e || window.e;
 				var code = e.which ||e.charCode || e.keyCode,
-						message = $(this).next('.warning');
+						message = $(this).next('.warning'),
+						condition = code != 13 && code != 8 && code != 9 && code != 37 && code != 39;
 
 				// if(code == 13)
 				// 	$(this).parents('form').submit();
-
 				if($(this).parents('.price').length || $(this).parents('.input').find('.spreader').length){
-					if((code	 < 46 || code	 > 57 || code	 == 47) && code != 13){
+					if((code	 < 46 || code	 > 57 || code	 == 47) && condition){
 						message.fadeIn(200);
 						return false;
 					}
@@ -155,7 +156,7 @@ class orderClass{
 					}
 				}
 				if($(this).parents('.volume').length){
-					if((code	 < 46 || code	 > 57 || code	 == 47 || code	 == 46) && code != 13){
+					if((code	 < 46 || code	 > 57 || code	 == 47 || code	 == 46) && condition){
 						message.fadeIn(200);
 						return false;
 					}
@@ -168,7 +169,7 @@ class orderClass{
 				if($(this).parents('.obligations').length){
 					var val = $(this).val().split('.');
 
-					if((code	 < 46 || code	 > 57 || code	 == 47) && code != 13){
+					if((code	 < 46 || code	 > 57 || code	 == 47) && condition){
 						message.fadeIn(200);
 					}
 					else{
@@ -545,7 +546,6 @@ class orderClass{
 	}
 
 	static showInfo () {
-		console.log($('#order .default_orders').children().length);
 		if($('#order .default_orders').children().length > 1)
 			$('#default_order_info').hide();
 		else

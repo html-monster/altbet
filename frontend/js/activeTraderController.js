@@ -228,7 +228,7 @@ class activeTraderControllerClass{
 		//console.log('========================================================');
 		activeTraderClass.scrollTo();
 		tbody.addClass('scroll_dis');
-		activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
+		activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), true);
 		activeTraderClass.spreaderChangeVal(trader.find('input.spreader'));
 	}
 }
