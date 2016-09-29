@@ -18,7 +18,6 @@
 			color: transparentize($my_pos_color, 0.3);
 			font-size: 14px;
 			@include my_pos_tab;
-			&:nth-child(1) {  margin: 0;  }
 			&.active {
 				color: $my_pos_color;
 				@include my_pos_active_tab;

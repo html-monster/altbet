@@ -16,6 +16,7 @@ $my_pos_color: #37343b;
 	box-shadow: 0 0 15px -2px rgba(0, 0, 0, 0.3);
 	border: solid 1px #dce1e6;
 	position: relative;
+	&:nth-child(1) {  margin: 0;  }
 	&:after{
 		height: 15px;
 		bottom: -9px;

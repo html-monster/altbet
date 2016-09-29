@@ -98,11 +98,39 @@
   .nav_bet{
     font-family: "open_sans_regular", sans-serif;
     color: #d0d0d0;
+    position: relative;
     @include scroll;
+    .menu_marker{
+      display: block;
+      width: 2px;
+      height: 40px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-image: linear-gradient(to bottom, #64c9ef, #3498da);
+      transition: 0.2s ease-out;
+      visibility: hidden;
+    }
     ul{  display: none;  }
+    & > li{
+      &:before{
+        content: '';
+        display: none;
+        width: 2px;
+        height: 40px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-image: linear-gradient(to bottom, #64c9ef, #3498da);
+      }
+      &.active_category:before{  display: block;  }
+    }
     li{
       position: relative;
       cursor: pointer;
+      &.active > span{
+        color: $link-color;
+      }
       span{
         display: block;
         font-size: 14px;
@@ -158,12 +186,12 @@
       & > span{
         padding: 7px 0 5px 13px;
         font-size: 16px;
-        line-height: 22px;
+        line-height: 28px;
         &:before{
           content: '';
           display: inline-block;
           width: 22px;
-          height: 22px;
+          height: 25px;
           vertical-align: bottom;
           margin-right: 5px;
           background: url("../Images/sprite.svg") no-repeat;

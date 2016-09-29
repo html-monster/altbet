@@ -17,6 +17,10 @@ $my_pos_color: transparentize(#ffffff, 0.2);
 @mixin my_pos_tab{
 	background: transparentize(#211e25, 0.8);
 	&:not(active){  position: relative;  }
+	&:nth-child(1) {
+		margin: 0;
+		&:after{  width: 200%;  }
+	}
 	&:after{
 		content: '';
 		display: block;

@@ -744,9 +744,9 @@
               }
             }
             .edit, .delete{
-              display: flex;
-              align-items: center;
-              justify-content: center;
+              //display: flex;
+              //align-items: center;
+              //justify-content: center;
               width: 22px;
               height: 33px;
               padding: 0;
@@ -762,6 +762,9 @@
                 display: block;
                 width: 13px;
                 height: 14px;
+                position: absolute;
+                top: calc(50% - 6px);
+                left: calc(50% - 7px);
               }
             }
             .price, .volume{
