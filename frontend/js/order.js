@@ -103,7 +103,6 @@ class orderClass{
 			});
 
 			// order.on('mousedown', 'input.number', function () {
-			// 	console.log('yo');
 			// 	if($(this).parents('.price').length){
 			// 		if($(this).val().length >= 2){
 			// 			$(this)[0].selectionStart = $(this).val().length;

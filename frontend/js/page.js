@@ -144,23 +144,14 @@ $(document).ready(function () {
 		$(this).css('zIndex', 80);
 	});
 
-	// let ru = '<iframe width="760" height="430" src="https://www.youtube.com/embed/2tGHVK-b7H4" frameborder="0" allowfullscreen></iframe>',
-	// 		eng = '<iframe width="760" height="430" src="https://www.youtube.com/embed/H1Qwss9BQfI" frameborder="0" allowfullscreen></iframe>';
+	$('.page_content_plan a').click(function (e) {
+		var target = $($(this).attr('href'));
+		e.preventDefault();
 
-	// $('.video button').click(function () {
-	// 	if($(this).hasClass('ru')){
-	// 		$('.video_form .pop_up_content').html(ru)
-	// 	}
-	// 	else{
-	// 		$('.video_form .pop_up_content').html(eng)
-	// 	}
-	// });
+		$('html,body').animate({
+			scrollTop: target.offset().top - 70
+		}, 1000);
+	});
 
-	// $('.order').on('click', '[data-log-out]', function(e){
-	// 	e = e || event;
-	// 	e.preventDefault();
-	// 	$('.sign_in_form').fadeIn(200);
-	// 	$('#login-email').focus();
-	// });
 	new accountClass();
 });

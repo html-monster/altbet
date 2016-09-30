@@ -4,7 +4,13 @@
 	.page_wrapper{  padding: 0 5px;  }
 	.page_content_plan{
 		margin-bottom: 10px;
-		strong{  display: block;  }
+		li{  display: block;  }
+		a{
+			color: #6d6d6d;
+			&:visited{  color: transparentize(#6d6d6d, 0.4);  }
+			&:hover{  color: #6d6d6d * 1.8;  }
+			&:before{  display: none;  }
+		}
 	}
 	h1{
 		margin-top: 0;
