@@ -176,6 +176,7 @@ class activeTraderClass{
 
 			$('.active_trader .control .button button').click(function () {
 				activeTraderClass.buttonActivation($(this));
+				inputNumber.clearInput($(this).parents('.active_trader').find('.control .volume.quantity input'));
 			});
 
 			trader.on('keyup', 'input.number', function(){
@@ -586,13 +587,14 @@ class activeTraderClass{
 					input = $('.active_trader input.quantity'),
 					quantity = current.hasClass('btn') ? current.text() : '',
 					market_button = $('.active_trader .control tr:first-of-type .market_button'),
-					limit_market_button = $('.active_trader .control tr:nth-last-of-type(2) .market_button');
+					limit_market_button = $('.active_trader .control tr:nth-last-of-type(2) .market_button'),
+					className = 'active clickable wave';
 
 			//quantityButton.removeClass('activated');
 			if(current.parent().hasClass('quantity') || current.hasClass('quantity')){
 				if(current.parent('.input').length && (current.val() == '' || current.val() == 0)){
-					market_button.removeClass('active clickable wave');
-					limit_market_button.removeClass('active clickable wave');
+					market_button.removeClass(className);
+					limit_market_button.removeClass(className);
 					$('.active_trader table.limit tbody td.size').removeClass('clickable wave');
 					$('.active_trader .spread').find('button').removeClass('btn').attr('disabled', true);
 					$('.active_trader input.spreader').attr('disabled', true).parent().find('.regulator').fadeOut(400).remove();
@@ -603,23 +605,27 @@ class activeTraderClass{
 						$('.active_trader input.spreader').removeAttr('disabled').parent().append(html).find('.regulator').fadeIn(400);
 					limit_market_button.each(function () {
 						if ($(this).find('.price').text() != '') {
-							$(this).addClass('active clickable wave');
-							market_button.eq($(this).index()).addClass('active clickable wave');
+							$(this).addClass(className);
+							market_button.eq($(this).index()).addClass(className);
 						}
 						else{
-							$(this).removeClass('active clickable wave');
-							market_button.eq($(this).index()).removeClass('active clickable wave');
+							$(this).removeClass(className);
+							market_button.eq($(this).index()).removeClass(className);
 						}
 
 					});
 					$('.active_trader .spread').find('button').addClass('btn').removeAttr('disabled');
+
 					if(!(current.parent('.input').length || current.parent('.regulator').length)){
-						input.focus().val(quantity);
+						if(+input.val() + +quantity >= 99999999)
+							input.focus().val(99999999);
+						else
+							input.focus().val(+input.val() + +quantity);
 						input[0].selectionStart = input.val().length;
 					}
 					$('.active_trader table.limit tbody td.size').addClass('clickable');
 				}
-				if(!recalc) activeTraderClass.recaluculateSum(current);
+				if(!recalc && !current.parents('td.button.quantity').length) activeTraderClass.recaluculateSum(current);
 			}
 			if(current.hasClass('spreader')) {
 				activeTraderClass.spreaderChangeVal(current);

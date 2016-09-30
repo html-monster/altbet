@@ -91,7 +91,7 @@ class orderClass{
 			order.on('keydown', 'input.number', function (e) {
 				e = e || window.e;
 				var code = e.which ||e.charCode || e.keyCode;
-				if($(this).parents('.price').length){
+				if($(this).parents('.price').length || $(this).hasClass('spreader')){
 					if($(this)[0].selectionStart == 2){
 						if(code == 37 || code == 8){
 							return false;

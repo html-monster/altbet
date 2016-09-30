@@ -73,6 +73,7 @@ class inputNumber{
 				input[0].selectionStart = input.val().length;
 			}
 
+			inputNumber.clearInput($(this).parents('.input').find('input'));
 			activeTraderClass.buttonActivation($(this).parents('.input').find('input.quantity'));
 			activeTraderClass.spreaderChangeVal($(this).parents('.input').find('input'), $(this).parents('.input').find('input').val());
 		});
@@ -97,10 +98,48 @@ class inputNumber{
 				return false;
 			}
 		});
+
+		this.parent.on('keyup', this.INPUT, function (e) {
+			inputNumber.clearInput($(this));
+		});
 		this.parent.on('contextmenu', this.INPUT, function (e) {
 			if(e.button == 2)
 				e.preventDefault();
 		});
-	}
 
+
+		//clearInput=======================================================================================================
+		this.parent.on('click', '.input .clear', function () {
+			var self = $(this);
+			self.parent().find('input').val('');
+			self.removeClass('active');
+			setTimeout(function () {
+				self.hide();
+			}, 150);
+		});
+		// $(document).keyup(function (e) {
+		// 	e = e || event;
+		// 	if(e.keyCode == 27){
+		// 		$('.input .clear').removeClass('active');
+		// 		setTimeout(function () {
+		// 			$('.input .clear').hide();
+		// 		}, 150);
+		// 	}
+		// });
+	}
+	static clearInput(current) {
+		var clearBtn = $('.input .clear');
+		if(current.val()){
+			clearBtn.show();
+			setTimeout(function () {
+				clearBtn.addClass('active');
+			}, 100);
+		}
+		else{
+			clearBtn.removeClass('active');
+			setTimeout(function () {
+				clearBtn.hide();
+			}, 150);
+		}
+	}
 }

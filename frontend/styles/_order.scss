@@ -170,7 +170,17 @@
                     cursor: default;
                   }
                 }
-                input{  width: 100%;  padding: 3px 5px;  text-align: center; @include trader_input;}
+                input{
+                  width: 100%;  padding: 3px 5px;  text-align: center; @include trader_input;
+                  &.quantity{  padding-right: 25px;  }
+                }
+                .clear{
+                  width: 14px;
+                  height: 14px;
+                  padding: 0;
+                  line-height: 0;
+                  border: none;
+                }
                 #order_content{  width: 100% !important;  }
               }
               .input{
@@ -475,7 +485,7 @@
             .delete{
               width: 33.33%;
               height: 31px;
-              position: static;
+              position: relative;
               border-left: none;
             }
             @include trader_order_delete;
@@ -859,7 +869,6 @@
               .delete{
                 &:hover{  background: $trader_order_button_hover;  }
                 &:active{  background: $trader_order_button_active;  }
-                &:after{  position: static;  }
                 box-shadow: none;
                 border-bottom: none;
               }
