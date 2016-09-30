@@ -124,7 +124,7 @@ header {
         display: inline-block;
         padding: 5px 16px;
         height: auto;
-        background: #1196d4;
+        background: linear-gradient(to bottom, #64c9ef, #3498da);
         margin-right: 15px;
         vertical-align: middle;
         @include md(1420) {

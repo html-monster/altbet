@@ -29,7 +29,7 @@ footer{
     &:last-child{  width: 40%;  padding-right: 0; border-right: none;  }
     .copy-right{
       padding-left: 60px; font-size: 11px;  position: relative;  color: rgba(255, 255, 255, 0.6);
-      a{  color: #ffffff;  }
+      a{  color: $link-color;  }
     }
     @include md(1700){
       padding: 0 10px;
@@ -152,4 +152,53 @@ footer{
   padding: 15px;
   background: $main-bg;
   border-radius: 6px;
+}
+.price_plan_form .pop_up_content{
+  display: flex;
+  width: 960px;
+  //height: 450px;
+  padding: 15px;
+  background: $bg_color;
+  border-radius: 6px;
+  color: $main-color;
+  text-align: center;
+  .item{
+    width: 33.33%;
+    padding: 30px 0;
+    background: $main-bg;
+    &:first-child, &:nth-child(2){
+      strong.price span{  left: 25px;  }
+    }
+  }
+  h2{
+    font-size: 19px;
+    font-weight: normal;
+    letter-spacing: 3.8px;
+  }
+  strong.price{
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+    font-weight: normal;
+    font-size: 100px;
+    position: relative;
+    span{
+      font-size: 32px;
+      position: absolute;
+      top: 30px;
+      left: 0;
+    }
+  }
+  .time{
+    display: block;
+    margin-bottom: 25px;
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 1.9px;
+    opacity: 0.6;
+  }
+  ul li{
+    height: 25px;
+    strong{  font-size: 18px; color: #ef4d22;  }
+  }
 }

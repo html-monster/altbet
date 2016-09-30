@@ -68,6 +68,7 @@ select{
   color: #666666;
   cursor: pointer;
 }
+ul{  list-style-type: none;  }
 *:focus{  outline: none;  }
 body > .wrapper{
   @include container(12);

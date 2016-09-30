@@ -33,6 +33,7 @@ $(document).ready(function () {
 	// popUpClass.popUpOpen('.sign_up_form input.submit', '.sign_up_form .confirm');
 	popUpClass.popUpOpen('.first_page_wrapper .join', '.sign_up_form', '#n_name');
 	popUpClass.popUpOpen('.video button', '.video_form');
+	popUpClass.popUpOpen('header .price_plan', '.price_plan_form');
 
 	popUpClass.popUpClose('.sign_in_form a.register', '.sign_in_form');
 	popUpClass.popUpClose('.sign_in_form .close', '.sign_in_form'); // pop-up login
@@ -44,6 +45,7 @@ $(document).ready(function () {
 	popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in', 'header .deposit',
 			'header .my_order', '.order_screening', '[data-log-out]'); //pop-up login
 	popUpClass.globalPopUpClose('.video_form', 'fadeOut', '.pop_up_content', '.video button');
+	popUpClass.globalPopUpClose('.price_plan_form', 'fadeOut', '.pop_up_content', 'header .price_plan');
 
 	defaultMethods.maxHeight('.sign_up_form  .tab_content ', 105 + window.innerHeight * 0.1);
 	defaultMethods.activated('.content_bet .add_favorite');
