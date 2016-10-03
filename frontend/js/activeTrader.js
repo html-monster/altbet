@@ -420,8 +420,8 @@ class activeTraderClass{
 	static spreaderChangeVal(input, quantity){
 		activeTraderClass.spreadVisability(null, true);
 		var value, ii,
-				ask = $('.active_trader .best_buy').parent().index(),
-				bid = $('.active_trader .best_sell').parent().index(),
+				ask = $('.active_trader .best_sell').parent().index(),
+				bid = $('.active_trader .best_buy').parent().index(),
 				limit = $('.active_trader table.limit'),
 				tr= $('.active_trader table.limit tbody tr'),
 				bestBuy = $('.active_trader table.limit td.best_buy'),
@@ -489,6 +489,7 @@ class activeTraderClass{
 				tr.eq(ii - value).find('.price_value').addClass('hovered');
 			}
 			if(context.hasClass('mid')){
+				console.log(1);
 				tr.eq(ii - value).find('.price_value').addClass('hovered');
 				tr.eq(ii + value).find('.price_value').addClass('hovered');
 			}

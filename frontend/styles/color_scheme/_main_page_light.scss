@@ -64,3 +64,13 @@ $main_page_event_chart_button: url(../Images/sprite.svg) no-repeat -166px -354px
 		box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);
 	}
 }
+@mixin pricing_plans_separate{
+	border-right: 1px solid #dce1e6 * 0.95;
+	&:first-child{
+		border-left: none;
+		strong.price span{  left: 50px;  }
+	}
+	&:nth-child(2), &:nth-child(3){
+		strong.price span{  left: 25px;  }
+	}
+}

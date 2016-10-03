@@ -154,21 +154,21 @@ footer{
   border-radius: 6px;
 }
 .price_plan_form .pop_up_content{
-  display: flex;
-  width: 960px;
+  //display: flex;
+  width: 1120px;
   //height: 450px;
   padding: 15px;
   background: $bg_color;
   border-radius: 6px;
   color: $main-color;
   text-align: center;
+  .container{  display: flex;  padding: 0 5px; background: $main-bg; box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.5);  }
   .item{
-    width: 33.33%;
-    padding: 30px 0;
+    width: 20%;
+    padding: 0 10px;
+    margin: 30px 0;
     background: $main-bg;
-    &:first-child, &:nth-child(2){
-      strong.price span{  left: 25px;  }
-    }
+    @include pricing_plans_separate;
   }
   h2{
     font-size: 19px;
@@ -201,4 +201,5 @@ footer{
     height: 25px;
     strong{  font-size: 18px; color: #ef4d22;  }
   }
+  ul.enterprise{  margin-top: 35px;  }
 }

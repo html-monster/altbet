@@ -50,7 +50,7 @@ $(document).ready(function () {
 
 	var price = 0.99, html;
 	for(var ii = 1; ii <= 99; ii++){
-		html = '<tr class="visible"><td class="my_bids my_size"><span class="value"></span></td><td class="size sell size_sell confim"><span class="container"><span class="value"></span></span></td><td class="price_value"><span class="container"><span class="value">$' + (price).toFixed(2) + '</span></span></td><td class="size buy size_buy confim"><span class="container"><span class="value"></span></span></td><td class="my_offers my_size"><span class="value"></span></td><td></td></tr>';
+		html = '<tr class="visible"><td class="my_offers my_size"><span class="value"></span></td><td class="size buy size_buy confim"><span class="container"><span class="value"></span></span></td><td class="price_value"><span class="container"><span class="value">$' + (price).toFixed(2) + '</span></span></td><td class="size sell size_sell confim"><span class="container"><span class="value"></span></span></td><td class="my_bids my_size"><span class="value"></span></td><td></td></tr>';
 		$('.left_order .active_trader .limit tbody').append(html);
 		price -= 0.01;
 	}
