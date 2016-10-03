@@ -154,25 +154,64 @@ footer{
   border-radius: 6px;
 }
 .price_plan_form .pop_up_content{
-  //display: flex;
-  width: 1120px;
-  //height: 450px;
+  width: 1200px;
   padding: 15px;
   background: $bg_color;
   border-radius: 6px;
   color: $main-color;
   text-align: center;
-  .container{  display: flex;  padding: 0 5px; background: $main-bg; box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.5);  }
+  .price_wrapper{  box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.5); background: $main-bg;  }
+  .container{
+    display: flex;
+    justify-content: center;
+    padding: 0 5px;
+  }
+  .item_fees{
+    display: inline-block;
+    width: 20%;
+    padding: 10px 5px 0;
+    font-size: 14px;
+  }
   .item{
     width: 20%;
-    padding: 0 10px;
+    padding: 0 5px;
     margin: 30px 0;
     background: $main-bg;
     @include pricing_plans_separate;
+    &:first-child{
+      border-left: none;
+      strong.price span{  left: 50px;  }
+    }
+    &:nth-child(2) {
+      h2{  color: #cd7f32;  }
+      strong.price{  color: #cd7f32;  }
+      .time .price{
+        color: #cd7f32;
+      }
+    }
+    &:nth-child(3) {
+      h2{  color: #8e8d8d;  }
+      strong.price{  color: #8e8d8d;  }
+      .time .price{
+        color: #8e8d8d;
+      }
+    }
+    &:nth-child(4) {
+      h2{  color: #d3af37;  }
+      strong.price{  color: #d3af37;  }
+      .time .price{
+        color: #d3af37;
+      }
+    }
+    &:nth-child(2), &:nth-child(3){
+      strong.price span{  left: 25px;  }
+    }
+    &:last-child{
+      border-right: none;
+    }
   }
   h2{
     font-size: 19px;
-    font-weight: normal;
     letter-spacing: 3.8px;
   }
   strong.price{
@@ -187,19 +226,31 @@ footer{
       position: absolute;
       top: 30px;
       left: 0;
+      color: $main-color;
     }
   }
   .time{
     display: block;
+    height: 42px;
     margin-bottom: 25px;
     font-size: 12px;
     line-height: 1.5;
     letter-spacing: 1.9px;
-    opacity: 0.6;
+    color: transparentize($main-color, 0.6);
+    span.same{
+      display: block;
+      font-size: 16px;
+      font-weight: bold;
+      color: $main-color;
+    }
   }
   ul li{
-    height: 25px;
-    strong{  font-size: 18px; color: #ef4d22;  }
+    line-height: 25px;
+    font-size: 14px;
+    strong{  font-size: 16px; color: #ef4d22;  }
   }
-  ul.enterprise{  margin-top: 35px;  }
+  ul.enterprise{
+    margin-top: 35px;
+    li{  font-size: inherit;  }
+  }
 }
