@@ -162,12 +162,13 @@ header {
       color: #fff;
     }
     .log_in {
-      display: flex;
+      display: none;
       height: 100%;
       align-items: center;
       justify-content: flex-end;
       cursor: pointer;
       position: relative;
+      &.active{  display: flex;  }
       ul.user-menu{
         display: none;
         width: 177px;
@@ -259,7 +260,7 @@ header {
       }
     }
     .log_out {
-      display: flex;
+      display: none;
       height: 100%;
       align-items: center;
       justify-content: center;
@@ -278,6 +279,7 @@ header {
         height: 25px;
         background: url("../Images/sprite.svg") no-repeat -424px -18px;
       }
+      &.active{  display: flex;  }
       a {
         width: 65px;
         margin-left: 5px;

@@ -40,9 +40,9 @@
           position: relative;
           z-index: 1;
           display: inline-block;
-          margin: 0 1em 2em;
+          margin: 0 0 2em;
           padding-right: 5px;
-          width: calc(100% - 2em);
+          //width: calc(100% - 2em);
           height: 57px;
           vertical-align: top;
           text-align: center;
@@ -220,6 +220,7 @@
           background: #f39e00;
           color: #ffffff;
           cursor: pointer;
+          &[disabled]{  opacity: 0.4;  }
           @include btn-shadow;
         }
       }

@@ -156,5 +156,6 @@ $(document).ready(function () {
 		}, 1000);
 	});
 
+	new ajaxLoginControllerClass();
 	new accountClass();
 });

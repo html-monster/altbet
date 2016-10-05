@@ -108,8 +108,6 @@ class activeTraderControllerClass{
 									$(line).find('td.sell').addClass('animated fadeOut');
 									$(line).find('td.price_value').addClass('animated fadeOut');
 								}
-								// debugger;
-								// console.log(userVolume);
 								if(userVolume == 0 && $(line).find('td.my_bids.my_size span.value').text()){
 									$(line).find('td.my_bids.my_size').addClass('animated fadeOut').find('span.value').text('');
 								}
@@ -130,7 +128,6 @@ class activeTraderControllerClass{
 									currnetLine.find('td.price_value').addClass('best_sell');
 								}
 							}
-								// console.log((activeData.Symbol.LastBid).toFixed(2));
 							if(currnetLine.find('td.price_value span.value').text() == '$' + (activeData.Symbol.LastBid).toFixed(2))
 							{
 								bid = (activeData.Symbol.LastBid).toFixed(2) == 0 ? '' : (activeData.Symbol.LastBid).toFixed(2);
@@ -233,7 +230,7 @@ class activeTraderControllerClass{
 			trader.find('.join_bid .price').text(bid);
 			trader.find('.join_ask .price').text(ask);
 		}
-
+		//
 		tbody.find('tr').each(function () {
 			var current = $(this);
 

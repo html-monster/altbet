@@ -76,6 +76,10 @@ class popUpClass{
 
 		});
 	}
+	static removePopUp(popUp){
+		$(popUp).removeClass('active').fadeOut(400);
+		$('body>.wrapper').removeClass('blur');
+	}
 }
 
 new popUpClass();
