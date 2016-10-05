@@ -163,6 +163,7 @@
 			}
 			.open_orders{
 				thead th:nth-last-of-type(3){  width: 8%;  }
+				thead th:nth-of-type(4){  padding: 0; text-align: center;  }
 			}
 			.my_position_container{
 				thead th{

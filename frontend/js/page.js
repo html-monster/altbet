@@ -53,6 +53,7 @@ $(document).ready(function () {
 	// messageClass.showHelpMessage('.active_trader .help', '.tab_item');
 
 	new orderClass();//order activation
+	new myOrderClass();
 	new activeTraderClass(); //active trader activation
 	new eventPageClass(); //active order on the event page
 

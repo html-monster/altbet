@@ -3,7 +3,8 @@ class ajaxControllerClass{
 	static OnBeginJs(){
 		let object = defaultMethods.objectFromArray(this.data.split('&')),
 				id = defaultMethods.getId(object);
-
+console.log($('#'+id));
+		// alert('Order sending start: ');
 		console.log('Order sending start: ' + object.Symbol);
 		if(object.Side == 'Buy'){
 			$('#'+id + ' .buy-container input[type=submit]').attr('disabled', true);

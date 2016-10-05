@@ -56,17 +56,21 @@ $(document).ready(function () {
 	}
 
 	var currentOrders = $('#current-orders');
-	currentOrders.on('click', '.confirmation .yes', function () {
+	currentOrders.on('click', '.confirmation .yes', function (e) {
 		let parent = $(this).parents('.order_content');
+// e.preventDefault();
 
-		if ($(this).parents('.my_order').children().length > 2)
-			$(this).parents('.order_container').remove();
-		else
-			parent.remove();
+		// if ($(this).parents('.my_order').children().length > 2)
+		// 	$(this).parents('.order_container').remove();
+		// else
+		// 	parent.remove();
 	});
-	currentOrders.on('click', '.order_container .close', function () {
-		$(this).parents('.order_content').remove();
-	});
+	// currentOrders.on('submit', '.confirmation form', function () {
+	// 	console.log(123);
+	// });
+	// currentOrders.on('click', '.order_container .close', function () {
+	// 	$(this).parents('.order_content').remove();
+	// });
 
 	if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){
 		let id = 0, setId = 0, orderId = 0;

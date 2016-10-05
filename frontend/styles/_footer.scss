@@ -165,12 +165,18 @@ footer{
     display: flex;
     justify-content: center;
     padding: 0 5px;
+    position: relative;
   }
   .item_fees{
     display: inline-block;
-    width: 20%;
-    padding: 10px 5px 0;
+    width: 25%;
+    padding: 10px 5px 15px;
     font-size: 14px;
+    .description{
+      position: absolute;
+      bottom: 0;
+      left: calc(50% - 125px);
+      font-size: 10px;  }
   }
   .item{
     width: 20%;
@@ -206,9 +212,7 @@ footer{
     &:nth-child(2), &:nth-child(3){
       strong.price span{  left: 25px;  }
     }
-    &:last-child{
-      border-right: none;
-    }
+    &:last-child{  border-right: none;  }
   }
   h2{
     font-size: 19px;

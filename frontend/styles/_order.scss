@@ -574,16 +574,12 @@
               overflow: hidden;
             }
             .sell{
-              right: 100%;
+              left: 100%;
               background-image: linear-gradient(to bottom, #f88447, #ef4d22);
-              //@include btn-shadow;
-              //&:active{
-              //  background: #963a3a;
-              //}
             }
             .buy{
+              right: 100%;
               background-image: linear-gradient(to bottom, #64c9ef, #3498da);
-              left: 100%;
             }
             &.active{
               span.confim_button{
@@ -595,7 +591,7 @@
                 padding: 0 5px;
                 top: -1px;
               }
-              .buy{  width: calc(100% + 2px);  }
+              .sell{  width: calc(100% + 2px);  }
             }
           }
           .order_content {

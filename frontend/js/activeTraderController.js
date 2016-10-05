@@ -49,6 +49,11 @@ class activeTraderControllerClass{
 				var currnetLine = $(this),
 						noData = true;
 
+				if(!activeData.Orders.length){
+					td.removeClass('best_sell');
+					td.removeClass('best_buy');
+				}
+
 				$(activeData.Orders).each(function () {
 					var side = this.Side;
 // console.log(this.SummaryPositionPrice);
@@ -65,8 +70,14 @@ class activeTraderControllerClass{
 							noData = false;
 						}
 
-						if(activeData.Symbol.LastAsk.toFixed(2) == 1) td.removeClass('best_sell');
-						if(activeData.Symbol.LastBid.toFixed(2) == 0) td.removeClass('best_buy');
+						if(isMirror){
+							if(activeData.Symbol.LastAsk.toFixed(2) == 1) td.removeClass('best_buy');
+							if(activeData.Symbol.LastBid.toFixed(2) == 0) td.removeClass('best_sell');
+						}
+						else{
+							if(activeData.Symbol.LastAsk.toFixed(2) == 1) td.removeClass('best_sell');
+							if(activeData.Symbol.LastBid.toFixed(2) == 0) td.removeClass('best_buy');
+						}
 
 						if(!isMirror && line){
 							if (side == 0) {
@@ -171,22 +182,22 @@ class activeTraderControllerClass{
 									$(line).find('.fadeOut').removeClass('fadeOut');
 								}, 700);
 							}
-							if(currnetLine.find('td.price_value span.value').text() == '$' + (1 - activeData.Symbol.LastBid).toFixed(2))
-							{
-								ask = (activeData.Symbol.LastBid).toFixed(2) == 1 ? '' : (1 - activeData.Symbol.LastBid).toFixed(2);
-								if(!currnetLine.find('td.price_value').hasClass('best_sell')){
-									td.removeClass('best_sell');
-									currnetLine.find('td.sell').addClass('best_sell');
-									currnetLine.find('td.price_value').addClass('best_sell');
-								}
-							}
 							if(currnetLine.find('td.price_value span.value').text() == '$' + (1 - activeData.Symbol.LastAsk).toFixed(2))
 							{
-								bid = (activeData.Symbol.LastAsk).toFixed(2) == 0 ? '' : (1 -activeData.Symbol.LastAsk).toFixed(2);
+								ask = (activeData.Symbol.LastAsk).toFixed(2) == 1 ? '' : (1 - activeData.Symbol.LastAsk).toFixed(2);
 								if(!currnetLine.find('td.price_value').hasClass('best_buy')){
 									td.removeClass('best_buy');
 									currnetLine.find('td.buy').addClass('best_buy');
 									currnetLine.find('td.price_value').addClass('best_buy');
+								}
+							}
+							if(currnetLine.find('td.price_value span.value').text() == '$' + (1 - activeData.Symbol.LastBid).toFixed(2))
+							{
+								bid = (activeData.Symbol.LastBid).toFixed(2) == 0 ? '' : (1 - activeData.Symbol.LastBid).toFixed(2);
+								if(!currnetLine.find('td.price_value').hasClass('best_sell')){
+									td.removeClass('best_sell');
+									currnetLine.find('td.sell').addClass('best_sell');
+									currnetLine.find('td.price_value').addClass('best_sell');
 								}
 							}
 						}
@@ -209,6 +220,8 @@ class activeTraderControllerClass{
 				if($(this).hasClass('size') || $(this).hasClass('my_size'))
 					$(this).find('.value').text('');
 			});
+			td.removeClass('best_sell');
+			td.removeClass('best_buy');
 		}
 
 

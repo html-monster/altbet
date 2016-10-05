@@ -403,8 +403,12 @@ class orderClass{
 
 		data.price = $(this).find('.price').text().replace(/[^0-9.]+/g, "") || '0.';
 		data.title = $(this).parents('.event-content').find('.title').text();
-		currentID = $(this).parents('.event-content').attr('id');
+		idDefine();
 		order.push(currentID, data.title);
+
+		function idDefine() {
+			currentID = self.parents('.event-content').attr('id') ? self.parents('.event-content').attr('id') : self.parents('.event-content').attr('data-symbol');
+		}
 
 		if(limit || $(this).hasClass('empty')){
 			data.volume = $(this).find('.volume').text();
@@ -434,7 +438,7 @@ class orderClass{
 			}
 		}
 
-		if (defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id')) == -1) {
+		if (defaultMethods.searchValue(id, currentID) == -1) {
 			id.push(order);
 			if ($(this).parent('.sell').length) {
 
@@ -451,25 +455,31 @@ class orderClass{
 			}
 			$('#order .default_orders').append(html);
 			$('.order_content').fadeIn(400);
-			if(limit || $(this).hasClass('empty'))
-				inputFocus = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .price input');
+			if(limit || $(this).hasClass('empty')) {
+				idDefine();
+				inputFocus = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .price input');
+			}
 			else
-				inputFocus = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .volume input');
-
+			{
+				idDefine();
+				inputFocus = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .volume input');
+			}
 			inputFocus.focus();
 			inputFocus[0].selectionStart = inputFocus.val().length;
 		}
 		else {
 			var container;
 			if ($(this).parent('.sell').length) {
-				container = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .sell-container');
+				idDefine();
+				container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .sell-container');
 				if(limit || $(this).hasClass('empty'))
 					html = orderClass.createOrderForm('sell', null, true, self, data);
 				else
 					html = orderClass.createOrderForm('sell', null, false, self, data);
 			}
 			else {
-				container = $('#' + id[defaultMethods.searchValue(id, $(this).parents('.event-content').attr('id'))][0] + '__order .buy-container');
+				idDefine();
+				container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .buy-container');
 				if(limit || $(this).hasClass('empty'))
 					html = orderClass.createOrderForm('buy', null, true, self, data);
 				else
@@ -493,17 +503,19 @@ class orderClass{
 };
 
 	static createOrderForm(orderDirection, modification, limit, context, object) {
-		let html = $('.order_content.new').clone();
+		let html = $('.order_content.new').clone(),
+				eventId = context.parents('.event-content').attr('id') ? context.parents('.event-content').attr('id') : context.parents('.event-content').attr('data-symbol');
+
 		html.removeClass('new');
 		if(modification == 'full'){
-			html.attr('id', id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order').css({display: 'none'});
+			html.attr('id', id[defaultMethods.searchValue(id, eventId)][0] + '__order').css({display: 'none'});
 			html.find('h3').text(object.title);
 		}
 		else
 			html = html.find('form').css({display: 'none'});
 
 		if (orderDirection == 'sell') {
-			html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
+			// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
 			// html.find('.obligations input.number').val(sellSum);
 			html.find('.side').val('Sell');
 		}
@@ -515,7 +527,7 @@ class orderClass{
 			html.find('input[type=submit]').toggleClass('sell buy').val('buy');
 			// html.find('.obligations input.number').val(buySum);
 			html.find('.side').val('Buy');
-			html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
+			// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
 		}
 
 		if(limit) {

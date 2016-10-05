@@ -489,7 +489,6 @@ class activeTraderClass{
 				tr.eq(ii - value).find('.price_value').addClass('hovered');
 			}
 			if(context.hasClass('mid')){
-				console.log(1);
 				tr.eq(ii - value).find('.price_value').addClass('hovered');
 				tr.eq(ii + value).find('.price_value').addClass('hovered');
 			}

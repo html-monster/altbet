@@ -63,9 +63,25 @@
 			&.ui-sortable-handle .content_title{  cursor: move;  }
       &.clickable{
         .waves-ripple{  display: block;;  }
+        .content_title{
+          &:hover + .table{
+            .event-content:first-child h3.event-title{  color: transparentize($link-color, 0.4);  }
+          }
+          &:after{
+            content: '';
+            display: block;
+            width: 2px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            z-index: 5;
+            opacity: 0;
+            box-shadow: 0 0 15px 0 transparentize($link-color * 0.5, 1);
+          }
+        }
         .content_title, .table{  transition: 0.4s ease-out;  }
-        &:hover{
-          .event-content:first-child h3.event-title{  color: transparentize($link-color, 0.4);  }
+        &:not(.event-content):hover{
+          //.event-content:first-child h3.event-title{  color: transparentize($link-color, 0.4);  }
           .content_title h2{  color: transparentize($link-color, 0.4);  }
         }
         .event-content{
@@ -74,8 +90,18 @@
           }
           &.active h3{  color: $link-color;  }
         }
-        &:active{
+        &.active{
           .content_title{
+            //&:before{
+            //  left: 100%;
+            //  background: linear-gradient( to bottom, $link-color, $link-color * 0.8);
+            //}
+            &:after{
+              transition: 0.4s ease-out;
+              right: -2px;
+              opacity: 1;
+              @include main_page_event_active;
+            }
             h2{  color: $link-color;  }
           }
         }
