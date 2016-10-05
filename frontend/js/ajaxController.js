@@ -3,28 +3,32 @@ class ajaxControllerClass{
 	static OnBeginJs(){
 		let object = defaultMethods.objectFromArray(this.data.split('&')),
 				id = defaultMethods.getId(object);
-console.log($('#'+id));
-		// alert('Order sending start: ');
-		console.log('Order sending start: ' + object.Symbol);
+			// console.log($('#'+id));
+			// console.log(this);
+		if(object.ID)
+			console.log('Order sending start: ' + object.ID);
+		else
+			console.log('Order sending start: ' + object.Symbol);
 		if(object.Side == 'Buy'){
-			$('#'+id + ' .buy-container input[type=submit]').attr('disabled', true);
-			$('#order_content .buy-container input[type=submit]').attr('disabled', true);
+			$('#'+id + ' .buy-container [type=submit]').attr('disabled', true);
+			$('#order_content .buy-container [type=submit]').attr('disabled', true);
 		}
 		else{
-			$('#'+id + ' .sell-container input[type=submit]').attr('disabled', true);
-			$('#order_content .sell-container input[type=submit]').attr('disabled', true);
+			$('#'+id + ' .sell-container [type=submit]').attr('disabled', true);
+			$('#order_content .sell-container [type=submit]').attr('disabled', true);
 		}
 
 	}
 
 	static OnSuccessJs(e){
 		let serverData = e.split('/'), orderID, sell, buy;
-
+// console.log(serverData);
 		orderID = '#' + serverData[0];
 		orderID += (+serverData[2]) ? '_mirror__order' : '__order' ;
 		sell = $(orderID + ' .sell-container');
 		buy = $(orderID + ' .buy-container');
 
+		// console.log($(orderID));
 		if(sell.children().length && buy.children().length){
 			if(+serverData[1])
 				sell.html('');

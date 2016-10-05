@@ -75,10 +75,18 @@ class defaultMethods{
 	static getId(obj) {
 		let id;
 
-		if (+obj.isMirror)
-			id = obj.Symbol + '_mirror__order';
-		else
-			id = obj.Symbol + '__order';
+		if (+obj.isMirror){
+			if(obj.ID)
+				id = obj.ID + '_mirror__order';
+			else
+				id = obj.Symbol + '_mirror__order';
+		}
+		else{
+			if(obj.ID)
+				id = obj.ID + '__order';
+			else
+				id = obj.Symbol + '__order';
+		}
 
 		return id;
 	}
