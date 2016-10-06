@@ -363,7 +363,7 @@ class activeTraderClass{
 
 
 					if(modification == 'sell_mkt' || modification == 'buy_mkt'){
-						html.find('form').attr('action', '/AltBet/Order/MarketTrading').removeAttr('data-ajax-url');
+						html.find('form').attr('action', globalData.rootUrl + 'Order/MarketTrading').removeAttr('data-ajax-url');
 						html.find('.checkbox').append('<input type="checkbox" class="hidden" />');
 						html.find('.direction').val(false);
 					}

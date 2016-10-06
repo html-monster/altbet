@@ -17,7 +17,8 @@ class popUpClass{
 	}
 	static popUpClose(closeButton, ...popUpWindow){ //.head_form .close
 
-		$(closeButton).click(function(e){
+		$(closeButton).click(callback);
+		function callback(e) {
 			e = e || event;
 			e.preventDefault();
 			popUpWindow.forEach(function (item) {
@@ -25,14 +26,14 @@ class popUpClass{
 			});
 			if (!$('.pop_up').hasClass('active'))
 				$('body>.wrapper').removeClass('blur');
-
-		});
+		}
 	}
 
 	static popUpOpen(openButton, popUpWindow, focusElement){
 		let browser = $.browser.chrome && ($.browser.version.slice(0, 2) > 50) || $.browser.mozilla;
 
-		$(openButton).click(function(e){//'.log_out .sign_in'
+		$(openButton).click(callback);
+		function callback(e) {
 			e = e || event;
 			e.preventDefault();
 			$(popUpWindow).addClass('active').fadeIn(200);  //'.sign_in_form'
@@ -52,11 +53,12 @@ class popUpClass{
 					$('.video_form iframe').attr('src', eng);
 				}
 			}
-		});
+		}
 	}
 
 	static globalPopUpClose(popUp, method, ...target){
-		$(document).click( function(e){
+		$(document).click(callback);
+		function callback(e) {
 			e = e || event;
 			if(target.length){
 				if(target.some((element) =>  $(e.target).closest(element).length != 0))
@@ -73,12 +75,19 @@ class popUpClass{
 				$(popUp).slideUp(400);
 			else
 				$(popUp).fadeOut(400);
-
-		});
+		}
 	}
-	static removePopUp(popUp){
+
+	static callback(){
+
+	}
+	static closePopUp(popUp){
 		$(popUp).removeClass('active').fadeOut(400);
 		$('body>.wrapper').removeClass('blur');
+	}
+
+	static removeEventPopUp(element){
+		$(element).unbind('click');
 	}
 }
 

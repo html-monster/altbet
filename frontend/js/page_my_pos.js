@@ -8,8 +8,8 @@ class myPosClass{
 		orderClass.addOrder(posContainer, '.btn');
 
 		function moveTo(context) {
-			let id = '#' + context.parents('tr').attr('id') + '_order',
-					scrollPos = $(id)[0].offsetTop;
+			let id = '#' + context.parents('tr').attr('id') + '__order',
+					scrollPos = $(id)[0].offsetTop - 33;
 
 			currentOrders.find('.form-container').slideUp(200);
 			currentOrders.find('.pop_up').fadeOut();
@@ -21,7 +21,7 @@ class myPosClass{
 				currentOrders.fadeIn();
 				if(!(context.hasClass('show'))){
 					setTimeout(function () {
-						scrollPos = $(id)[0].offsetTop;
+						scrollPos = $(id)[0].offsetTop - 33;
 						currentOrders.animate({scrollTop: scrollPos} , 200);
 					}, 450);
 				}

@@ -51,7 +51,7 @@ class orderClass{
 						checkboxProp = $(this).find('input[type="checkbox"]').length ? $(this).find('input[type="checkbox"]').prop('checked') : 1,
 						staticProject = location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru';
 
-				if($('header .log_out').length && !staticProject){
+				if(globalData.userIdentity == 'False'){
 					$('.sign_in_form').fadeIn(200);  //'.sign_in_form'
 					$('#login-email').focus(); //'#email'
 					return false;

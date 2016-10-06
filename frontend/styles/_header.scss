@@ -6,6 +6,10 @@ header {
   right: 0;
   z-index: 50;
   background: #292830;
+  @include md(1400){
+    button, a, .user-name{  font-size: 14px;  }
+    .user-name:after{  top: 6px;  }
+  }
   .header_info {
     @include span(last 10.19 of 12);
     display: flex;
@@ -158,7 +162,7 @@ header {
     }
     span {
       display: block;
-      margin: 0 10px;
+      margin-right: 10px;
       color: #fff;
     }
     .log_in {
