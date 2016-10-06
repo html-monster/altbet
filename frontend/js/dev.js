@@ -91,6 +91,124 @@ $(document).ready(function () {
 		});
 	}
 
+	new teamClass();
 });
+if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){
+	var globalData = {
+		userIdentity : 'True'
+	}
+}
+class teamClass{
+	constructor(){
 
 
+		var quantity = $('.content_bet:last-child').index(),
+				html = $(document.createElement("div")),
+				object = [
+					{
+						title : 'Chicago Bears( 85.9 ) - 0.7',
+						th : ['POS', 'PLAYER', 'FPPG'],
+						td : [
+							['QB', 'Brian Hoyer', '16,3'],
+							['RB', 'Jordan Howard', '12,5'],
+							['RB', 'Joique Bell', '0,6'],
+							['WR', 'Alshon Jeffery', '12,9'],
+							['WR', 'Eddie Royal', '15,8'],
+							['WR', 'Deonte Thompson	', '0'],
+							['TE', 'Zach Miller', '12,9'],
+							['FLEX', 'Jeremy Langford O', '10,1'],
+							['DST', 'Bears', '4,8'],
+							['Total', '', '85,9']
+						]
+					},
+					{
+						title : 'Dallas Cowboys( 86.6 ) + 0.7',
+						th : ['POS', 'PLAYER', 'FPPG'],
+						td : [
+							['QB', 'Dak Prescott', '17,5'],
+							['RB', 'Ezekiel Elliott', '18,7'],
+							['RB', 'Alfred Morris', '5,7'],
+							['WR', 'Cole Beasley', '12,9'],
+							['WR', 'T. Williams', '8,2'],
+							['WR', 'Brice Butler', '4,4'],
+							['TE', 'Jason Witten O', '10'],
+							['FLEX', 'Lance Dunbar', '4,4'],
+							['DST', 'Cowboys', '4,8'],
+							['Total', '', '86,6']
+						]
+					},
+					{
+						title : 'New York Giants( 87.6 ) - 7.9',
+						th : ['POS', 'PLAYER', 'FPPG'],
+						td : [
+							['QB', 'Eli Manning', '18,2'],
+							['RB', 'Orleans Darkwa', '4,8'],
+							['RB', 'Bobby Rainey', '1,7'],
+							['WR', 'O. Beckham Jr.', '16,7'],
+							['WR', 'Sterling Shepard', '18,1'],
+							['WR', 'Victor Cruz', '11,8'],
+							['TE', 'Larry Donnell', '6,3'],
+							['FLEX', 'Will Tye', '4'],
+							['DST', 'Giants', '6'],
+							['Total	', '', '87,6']
+						]
+					},
+					{
+						title : 'Washington Redskins(95.5 ) +7.9',
+						th : ['POS', 'PLAYER', 'FPPG'],
+						td : [
+								['QB', 'Kirk Cousins', '18,8'],
+								['RB', 'Matt Jones', '13,1'],
+								['RB', 'Chris Thompson', '8,8'],
+								['WR', 'DeSean Jackson', '12,1'],
+								['WR', 'Jamison Crowder', '12,4'],
+								['WR', 'Pierre Garcon', '8,6'],
+								['TE', 'Jordan Reed', '15,8'],
+								['FLEX', 'Rob Kelley', '0,6'],
+								['DST', 'Redskins', '5,3'],
+								['Total', '', '95,5'],
+						]
+					}
+	];
+
+		html.addClass('help').html('<div class="help_message"><strong></strong><table><thead></thead><tbody></tbody></table></div>');
+
+		$('.content_bet').each(function () {
+			$(this).css('z-index', quantity--)
+		});
+		$(object).each(function () {
+			var self = this;
+
+			$('.content_bet h2').each(function () {
+				var title = $(this).text().split('(');
+
+				title = title[0].replace('          ', '');
+				if(self.title.split('(')[0] == title){
+					var hoverHtml = html.clone();
+
+					hoverHtml.find('strong').text(self.title);
+					$(self.th).each(function () {
+						var th = $(document.createElement("th"));
+
+						th.text(this);
+						hoverHtml.find('thead').append(th);
+					});
+					$(self.td).each(function () {
+						var tr = $(document.createElement("tr"));
+
+
+						$(this).each(function () {
+							var td = $(document.createElement("td"));
+
+							td.html('<span></span>');
+							td.find('span').text(this);
+							tr.append(td);
+						});
+						hoverHtml.find('tbody').append(tr);
+					});
+					$(this).append(hoverHtml);
+				}
+			});
+		});
+	}
+}

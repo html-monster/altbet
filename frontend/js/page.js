@@ -156,15 +156,9 @@ $(document).ready(function () {
 		}, 1000);
 	});
 
-	// if(userIdentity == 'True'){
-	// 	$('header .log_out').removeClass('active');
-	// 	$('header .log_in').addClass('active');
-	// }
-	// else{
-	// 	$('header .log_in').removeClass('active');
-	// 	$('header .log_out').addClass('active');
-	// }
 
 	new ajaxLoginControllerClass();
 	new accountClass();
 });
+
+

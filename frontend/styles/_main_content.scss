@@ -58,6 +58,7 @@
       border-radius: 6px;
       transition: 0.4s ease-out;
       cursor: default;
+      overflow: inherit !important;
 			&:first-child{  margin-top: 0!important;  }
       &.ui-sortable-helper{  transition: 0s;  cursor: move;  }
 			&.ui-sortable-handle .content_title{  cursor: move;  }
@@ -166,7 +167,7 @@
         &.active {  background-position: -97px -90px;  }
       }
       .help{  right: -8px;  }
-      .help_message{  width: 190px;  }
+      .help_message{  width: 210px;  }
       .event_info{
         width: calc(24% - 20px);
         position: absolute;
@@ -436,5 +437,23 @@
   }
   .tab_item:first-child {
     display: block;
+  }
+  .help_message{
+    strong{
+      display: block;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: bolder;
+      color: $main-color;
+    }
+    table{
+      width: 100%;
+      tr:last-of-type td{
+        padding-top: 5px;
+        span{  font-weight: bold;  }
+      }
+      th{  font-size: 13px;  font-weight: bold;  }
+      span{  font-size: 12px;  font-weight: normal;  }
+    }
   }
 }
