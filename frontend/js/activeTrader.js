@@ -421,13 +421,13 @@ class activeTraderClass{
 		// }();
 		//spread show/hide =============================================================================================================
 
-		$('.active_trader .show_spread').click(function () {
-			activeTraderClass.spreadVisability(true);
-		});
+		// $('.active_trader .show_spread').click(function () {
+		// 	activeTraderClass.spreadVisability(true);
+		// });
 	}
 
 	static spreaderChangeVal(input, quantity){
-		activeTraderClass.spreadVisability(null, true);
+		// activeTraderClass.spreadVisability(null, true);
 		var value, ii,
 				ask = $('.active_trader .best_sell').parent().index(),
 				bid = $('.active_trader .best_buy').parent().index(),
@@ -446,12 +446,16 @@ class activeTraderClass{
 			tr.find('.price_value').removeClass('active');
 			if(bid == -1) bid = ask;
 			if(ask == -1) ask = bid;
-			if(ask == -1 && bid == -1) value= 0;
+			// if(ask == -1 && bid == -1) value= 0;
 			function addClass() {
 				if(ii < 0) return;
 				tr.eq(ii).find('.price_value').addClass('active');
 			}
+
 			if(value){
+				if(!(bestBuy.length || bestSell.length))
+					tr.find('.price_value').addClass('active');
+
 				for(ii = bid - 1; ii > ask; ii--){
 					addClass();
 				}
@@ -464,6 +468,8 @@ class activeTraderClass{
 				bestBuy.addClass('active');
 				bestSell.addClass('active');
 			}
+
+
 
 			if(orderContent.parents('tr').find('.ask').length){
 				ask = (+orderContent.find('.price input').eq(0).val() - value / 100).toFixed(2);
@@ -502,17 +508,17 @@ class activeTraderClass{
 				tr.eq(ii + value).find('.price_value').addClass('hovered');
 			}
 		}
-		limit.on('mouseenter', 'td.price_value.active', function () {
+		limit.on('mouseover', 'td.price_value.active', function () {
 			spreadHighlight($(this));
 		});
-		limit.on('mouseleave', 'td.price_value.active', function () {
+		limit.on('mouseout', 'td.price_value.active', function () {
 			$('.active_trader .limit td.price_value').removeClass('hovered');
 		});
-		limit.on('mouseenter', '.confim_button', function (e) {
+		limit.on('mouseover', '.confim_button', function (e) {
 			e.stopPropagation();
 			spreadHighlight($(this));
 		});
-		limit.on('mouseleave', '.confim_button', function (e) {
+		limit.on('mouseout', '.confim_button', function (e) {
 			e.stopPropagation();
 			$('.active_trader .limit td.price_value').removeClass('hovered');
 		});
@@ -630,11 +636,12 @@ class activeTraderClass{
 							input.focus().val(99999999);
 						else
 							input.focus().val(+input.val() + +quantity);
+
 						input[0].selectionStart = input.val().length;
 					}
 					$('.active_trader table.limit tbody td.size').addClass('clickable');
 				}
-				if(!recalc && !current.parents('td.button.quantity').length) activeTraderClass.recaluculateSum(current);
+				if(!recalc ) activeTraderClass.recaluculateSum(current);
 			}
 			if(current.hasClass('spreader')) {
 				activeTraderClass.spreaderChangeVal(current);

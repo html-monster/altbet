@@ -22,6 +22,7 @@ class ajaxLoginControllerClass{
 			$('header .log_out').removeClass('active');
 			$('header .log_in').addClass('active');
 			$('header .log_in .user-name').text(e.UserName);
+			$('.sign_in_form .input_animate').addClass('invalid');
 			popUpClass.removeEventPopUp('header .deposit, header .my_order');
 			globalData.userIdentity = 'True';
 		}

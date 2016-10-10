@@ -72,7 +72,7 @@ class myPosClass{
 					$('[data-symbol='+ id +']').addClass('hovered');
 				}
 			});
-			posContainer.find('tbody tr').mouseleave(function () {
+			posContainer.find('tbody tr').mouseout(function () {
 				if($('.left_order .tab input.limit').prop('checked'))
 					$('[data-symbol]').removeClass('hovered');
 			});

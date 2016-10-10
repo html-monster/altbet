@@ -68,15 +68,14 @@
           height: 57px;
           vertical-align: top;
           text-align: center;
-          &.invalid .input__label-content{
+          &.invalid .input__field{
             animation-name: shake;
             animation-duration: 1s;
             animation-fill-mode: both;
-            color: red;
           }
-          &.valid{
-            .input__field, .input__label-content{  color: #4dac2e;  }
-          }
+          //&.valid{
+          //  .input__field, .input__label-content{  color: #4dac2e;  }
+          //}
         }
         .input__field {
           position: relative;
@@ -90,10 +89,19 @@
           color: $sign_in__input_color;
           font-size: 14px;
           background: transparent;
-          opacity: 0;
+          //opacity: 0;
           text-align: center;
           transition: opacity 0.3s;
           -webkit-appearance: none; /* for box shadows to show on iOS */
+          &.input-validation-error{
+            color: #ff3905;
+            border-color: #ff3905;
+          }
+
+          &.valid{
+            color: #4dac2e;
+            border-color: #4dac2e;
+          }
         }
         .input__field:focus {
           outline: none;
@@ -158,11 +166,11 @@
         //  border-left: none;
         //}
 
-        .input__field--kuro:focus,
-        .input--filled .input__field--kuro {
-          opacity: 1;
-          transition-delay: 0.3s;
-        }
+        //.input__field--kuro:focus,
+        //.input--filled .input__field--kuro {
+        //  opacity: 1;
+        //  transition-delay: 0.3s;
+        //}
 
         //.input__field--kuro:focus + .input__label--kuro::before,
         //.input--filled .input__label--kuro::before {
@@ -179,23 +187,23 @@
           animation: anim-2 0.4s both;
         }
 
-        .input-validation-error{
-          color: #ff3905;
-          //& ~ .input__label--kuro{
-            //&:before, &:after{
-              border-color: #ff3905;
-            //}
-          //}
-        }
-
-        .valid{
-          color: #4dac2e;
-          //& ~ .input__label--kuro{
-            //&:before, &:after{
-              border-color: #4dac2e;
-            //}
-          //}
-        }
+        //.input-validation-error{
+        //  color: #ff3905;
+        //  //& ~ .input__label--kuro{
+        //    //&:before, &:after{
+        //      border-color: #ff3905;
+        //    //}
+        //  //}
+        //}
+				//
+        //.valid{
+        //  color: #4dac2e;
+        //  //& ~ .input__label--kuro{
+        //    //&:before, &:after{
+        //      border-color: #4dac2e;
+        //    //}
+        //  //}
+        //}
 
         @keyframes anim-2 {
           50% {  opacity: 0;  transform: scale3d(0.01, 0.01, 1);  }

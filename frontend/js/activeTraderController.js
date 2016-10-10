@@ -238,16 +238,19 @@ class activeTraderControllerClass{
 				current = current.find('td.price_value');
 
 				current.removeClass('ask bid mid');
-				if(current.hasClass('best_buy')){
+				if(current.hasClass('best_buy'))
 					className = 'bid';
-				}
+
+				if(!trader.find('.best_buy, .best_sell').length)
+					className = 'mid';
+
 				current.addClass(className);
-					if(current.hasClass('best_sell')){
-						if(trader.find('.best_buy').length && trader.find('.best_sell').length )
-							className = 'mid';
-						else
-							className = 'bid';
-					}
+				if(current.hasClass('best_sell')){
+					if(trader.find('.best_buy').length && trader.find('.best_sell').length )
+						className = 'mid';
+					else
+						className = 'bid';
+				}
 			})();
 
 		});

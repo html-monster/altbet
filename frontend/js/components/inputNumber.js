@@ -113,6 +113,7 @@ class inputNumber{
 			var self = $(this);
 			self.parent().find('input').val('');
 			self.removeClass('active');
+			activeTraderClass.spreaderClean(true);
 			setTimeout(function () {
 				self.hide();
 			}, 150);

@@ -118,8 +118,8 @@
 						&:nth-child(even){
 							background-color: transparentize(#dce1e6, 0.7);
 						}
-						&.buy{  background: linear-gradient(to bottom, transparentize(#64c9ef, 0.9), transparentize(#3498da, 0.9));  }
-						&.sell{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));  }
+						&.sell{  background: linear-gradient(to bottom, transparentize(#64c9ef, 0.9), transparentize(#3498da, 0.9));  }
+						&.buy{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));  }
 					}
 					td {
 						padding: 10px 12px;
@@ -138,14 +138,14 @@
 								vertical-align: middle;
 								background: url("../Images/sprite.svg") no-repeat;
 							}
-							&.buy{
+							&.sell{
 								color: #3498da;
 								&:before{
 									margin-top: -2px;
 									background-position: -234px -155px;
 								}
 							}
-							&.sell{
+							&.buy{
 								color: #ef4d22;
 								&:before{
 									background-position: -234px -135px;
@@ -162,17 +162,26 @@
 				.dd .ddChild {  top: 42px !important;  }
 			}
 			.open_orders{
-				thead th:nth-last-of-type(3){  width: 8%;  }
-				thead th:nth-of-type(4){  padding: 0; text-align: center;  }
+				thead {
+					th {
+						&:nth-of-type(1){  width: 25%;  }
+						&:nth-of-type(2){  width: 20%;  }
+						&:nth-of-type(4){  padding: 0;  text-align: center;  }
+						&:nth-last-of-type(3){  width: 8%;  }
+						&:nth-last-of-type(1), &:nth-last-of-type(2){  width: 15%;  min-width: 74px;  }
+					}
+				}
 			}
 			.my_position_container{
 				thead th{
+					&:nth-of-type(1){  width: 25%;  }
+					&:nth-of-type(2){  width: 8%;  }
+					&:nth-of-type(3){  padding: 0;  text-align: center;  }
 					&:nth-last-of-type(3), &:nth-last-of-type(4){  width: 12%;  padding: 0;  text-align: center;  }
-					&:nth-of-type(4){  padding: 0;  text-align: center;  }
 				}
 				tbody{
 					tr{
-						&.sell{
+						&.buy{
 							td:first-of-type:before{
 								background: linear-gradient(to right, rgba(239, 77, 34, 0.2), transparent);
 							}
@@ -180,7 +189,7 @@
 								background: linear-gradient(to bottom, rgba(248, 132, 71, 0.3), rgba(239, 77, 34, 0.3));
 							}
 						}
-						&.buy{
+						&.sell{
 							td:first-of-type:before{
 								background: linear-gradient(to right, rgba(52, 152, 218, 0.2), transparent);
 							}
@@ -215,20 +224,15 @@
 			}
 			.open_orders, .my_position_container {
 				thead {
-					th {
-						&:nth-of-type(1){  width: 25%;  }
-						&:nth-of-type(2){  width: 20%;  }
-						&:nth-last-of-type(1), &:nth-last-of-type(2){  width: 15%;  min-width: 74px;  }
-						.sell{  color: #ef4d22;  }
-						.buy{  color: #3498da;  }
-						.profit{  color: #4dac2e;  }
-						.loss{  color: #ff3905;  }
-					}
+					.sell{  color: #3498da;  }
+					.buy{  color: #ef4d22;  }
+					.profit{  color: #4dac2e;  }
+					.loss{  color: #ff3905;  }
 				}
 				tbody{
 					tr{
-						&.sell .quantity{  color: #ef4d22;  }
-						&.buy .quantity{  color: #3498da;  }
+						&.buy .quantity{  color: #ef4d22;  }
+						&.sell .quantity{  color: #3498da;  }
 					}
 					td{
 						&:last-of-type{  padding-right: 12px;  }
@@ -253,17 +257,6 @@
 					}
 				}
 			}
-			//.my_position_container{
-			//	thead {
-			//		th {
-			//			&:nth-of-type(1){  width: 25%;  }
-			//			&:nth-of-type(2){  width: 15%;  }
-			//			&:nth-last-of-type(3){  width: 12%;  }
-			//			&:nth-last-of-type(1), &:nth-last-of-type(2){  width: 8%;  min-width: 74px;  }
-			//		}
-			//	}
-			//	tbody td:last-of-type{  padding-right: 12px;  }
-			//}
 			.my_order_history{
 				thead th{
 					padding-left: 5px;
