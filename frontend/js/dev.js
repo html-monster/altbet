@@ -154,7 +154,7 @@ class teamClass{
 						]
 					},
 					{
-						title : 'Washington Redskins(95.5 ) +7.9',
+						title : 'Washington Redskins(95.5) +7.9',
 						th : ['POS', 'PLAYER', 'FPPG'],
 						td : [
 								['QB', 'Kirk Cousins', '18,8'],
@@ -167,6 +167,38 @@ class teamClass{
 								['FLEX', 'Rob Kelley', '0,6'],
 								['DST', 'Redskins', '5,3'],
 								['Total', '', '95,5'],
+						]
+					},
+					{
+						title : 'Buffalo Bills(73.9) -3.7',
+						th : ['POS', 'PLAYER', 'FPPG'],
+						td : [
+								['QB', 'Tyrod Taylor', '16.1'],
+								['RB', 'LeSean McCoy', '19.9'],
+								['RB', 'Jerome Felton', '0.0'],
+								['WR', 'Robert Woods', '6.4'],
+								['WR', 'Marquise Goodwin', '7.9'],
+								['WR', 'Walt Powell', '2.9'],
+								['TE', 'Charles Clay', '4.6'],
+								['FLEX', 'Mike Gillislee', '3.8'],
+								['DST', 'Bills', '12.3'],
+								['Total', '', '73.9']
+						]
+					},
+					{
+						title : 'New England Patriots(77.6)  +3.7',
+						th : ['POS', 'PLAYER', 'FPPG'],
+						td : [
+								['QB', 'Jacoby Brissett', '9.9'],
+								['RB', 'L. Blount', '19.6'],
+								['RB', 'James White', '5.6'],
+								['WR', 'Julian Edelman', '13.0'],
+								['WR', 'Chris Hogan', '8.7'],
+								['WR', 'Matthew Slater', '0.0'],
+								['TE', 'M. Bennett', '11.1'],
+								['FLEX', 'Rob Gronkowski', '0.0'],
+								['DST', 'Patriots', '9.7'],
+								['Total', '', '77.6']
 						]
 					}
 	];

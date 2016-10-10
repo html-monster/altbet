@@ -4,7 +4,7 @@ header {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 50;
+  z-index: 101;
   background: #292830;
   @include md(1400){
     button, a, .user-name{  font-size: 14px;  }

@@ -5,7 +5,7 @@ class activeTraderClass{
 		$('.left_order .tab label').click(function (e) {
 			e.stopPropagation();
 		});
-		if($('.wrapper_event_page').length)
+		if($('.wrapper_event_page').length || $('.my_position_tab').length)
 			$('.active_trader .event_title').hide();
 
 		// trader On/Off
@@ -15,7 +15,7 @@ class activeTraderClass{
 					order = $('#order'),
 					default_order = $('.left_order .default_orders'),
 					active_trader = $('.left_order .active_trader'),
-					buttons = $('#exchange .content_bet .event'),
+					buttons = $('.content_bet button.event'),
 					event_container = $('.content_bet'),
 					titles = event_container.eq(0).find('.event-title .title'),
 					tab_content = $('.tab_content'),
@@ -25,7 +25,9 @@ class activeTraderClass{
 			$('.active_trader table.limit').addClass(webkit);
 
 			if(checkbox.prop('checked')){
-				var ii = 0;
+				var ii = 0,
+						symbol = event_container.eq(0).attr('data-symbol');
+
 				order.css('overflow-y', 'hidden');
 				autoTrade.parent().fadeIn(200);
 				default_order.fadeOut(200);
@@ -36,13 +38,15 @@ class activeTraderClass{
 				if($('.wrapper_event_page').length)
 						executedOrders.find('td.clickable').removeClass('clickable');
 
+				$('[data-symbol=' + symbol + ']').addClass('active');
 				event_container.addClass('clickable').eq(0).addClass('active');
 				$('.active_trader .event_title .event_name').each(function () {
 					$(this).text(titles.eq(ii++).text());
 				});
 				setTimeout(function () {
+
 					if($('.content_bet.active').length)
-						activeTraderClass.takeData($('.content_bet.active'));
+						activeTraderClass.takeData($('.content_bet').eq(0));
 					else
 						activeTraderClass.takeData($('.wrapper_event_page'));
 				}, 400);
@@ -50,6 +54,8 @@ class activeTraderClass{
 			checkbox.change(function () {
 				ii = 0;
 				if($(this).prop('checked')){
+					var symbol = event_container.eq(0).attr('data-symbol');
+
 					order.css('overflow-y', 'hidden');
 					autoTrade.parent().fadeIn(200);
 					default_order.fadeOut(200);
@@ -61,6 +67,7 @@ class activeTraderClass{
 					if(event_container.hasClass('active')){
 						event_container.addClass('clickable');
 					} else {
+						$('[data-symbol=' + symbol + ']').addClass('active');
 						event_container.addClass('clickable').eq(0).addClass('active');
 						titles = $('.content_bet.active .event-title .title');
 						$('.active_trader .event_title .event_name').each(function () {
@@ -72,7 +79,7 @@ class activeTraderClass{
 						if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == ''){
 
 							if($('.content_bet.active').length)
-								activeTraderClass.takeData($('.content_bet.active'));
+								activeTraderClass.takeData($('.content_bet').eq(0));
 							else
 								activeTraderClass.takeData($('.wrapper_event_page'));
 						}
@@ -121,11 +128,13 @@ class activeTraderClass{
 			});
 			event_content.click(function (e) {
 				if (checkbox.prop('checked')) {
-					var titles = $(this).parents('.content_bet').find('.event-title .title');
+					var titles = $(this).parents('.content_bet').find('.event-title .title'),
+							symbol = $(this).attr('data-symbol');
 
 					e.stopPropagation();
 					tableLimitChangeData($(this), titles);
 					$(this).parents('.content_bet').addClass('active');
+					$('[data-symbol=' + symbol + ']').addClass('active');
 					tabs.removeClass('active').eq($(this).index()).addClass('active');
 
 					activeTraderClass.takeData($(this));
@@ -509,77 +518,77 @@ class activeTraderClass{
 		});
 	}
 
-	static spreadVisability(isButton, visibility) {
-		if($('.active_trader table.limit .best_buy').length && $('.active_trader table.limit .best_sell').length){
-			var tdWidth = [],
-					table = $('table.limit'),
-					tbody = $('.left_order table.limit tbody'),
-					hide = tbody.find('.mid').parent().hasClass('hidden'),
-					spread = tbody.find('.mid').parent(),
-					hidden = tbody.find('.hidden'),
-					visibleString = tbody.height() / tbody.find('tr').eq(0).height(),
-					spreadSize = tbody.find('.best_sell ').parent().index() - tbody.find('.best_buy ').parent().index() - 1;
-			isButton = isButton || false;
-
-			for (var ii = 0; ii < table.find('th').length; ii++) {
-				if($.browser.webkit){
-					if(ii == 1)
-						tdWidth.push(parseInt(table.find('th').eq(ii).css('width')) - 1 + 'px');
-					else
-						tdWidth.push(table.find('th').eq(ii).css('width'));
-				}
-				else{
-					tdWidth.push(parseInt(table.find('th').eq(ii).css('width')) + 'px');
-				}
-
-			}
-
-
-			if(!isButton){
-				hidden.animate({height: 20}).attr('class', 'visible');
-			}
-			else{
-
-				$('#order_content').remove();
-			}
-
-			if(spreadSize > visibleString - 4 && !isButton && visibility !== true){
-				$('.active_trader .show_spread .visibility').text('Hide');
-				setTimeout(function () {
-					spread.attr('class', 'hidden').animate({height: 0}, 400);
-					activeTraderClass.tdWidthChange(tdWidth);
-					activeTraderClass.scrollTo(true);
-					$('.active_trader .show_spread .visibility').text('Show');
-					$('.active_trader .show_spread').addClass('active');
-				}, 700);
-			}
-			else if(!isButton){
-				$('.active_trader .show_spread .visibility').text('Hide');
-				if(!(spreadSize > visibleString - 4)) $('.active_trader .show_spread').removeClass('active');
-			}
-
-			if(!hide && isButton || visibility === false) {
-				if(tbody.find('.hidden').length)
-					hidden.animate({height: 20}, 400).attr('class', 'visible');
-				if(isButton) activeTraderClass.scrollTo(true);
-				spread.attr('class', 'hidden').animate({height: 0}, 400);
-				activeTraderClass.tdWidthChange(tdWidth);
-				$('.active_trader .show_spread .visibility').text('Show');
-			}
-			else if(isButton || visibility === true){
-				hidden.animate({height: 20}, 400);
-				activeTraderClass.scrollTo();
-				setTimeout(function () {
-					hidden.attr('class', 'visible');
-				}, 400);
-				$('.active_trader .show_spread .visibility').text('Hide');
-			}
-		}
-		else{
-			$('.active_trader .show_spread').removeClass('active');
-			$('.left_order table.limit tbody .hidden').animate({height: 20}).attr('class', 'visible');
-		}
-	}
+	// static spreadVisability(isButton, visibility) {
+	// 	if($('.active_trader table.limit .best_buy').length && $('.active_trader table.limit .best_sell').length){
+	// 		var tdWidth = [],
+	// 				table = $('table.limit'),
+	// 				tbody = $('.left_order table.limit tbody'),
+	// 				hide = tbody.find('.mid').parent().hasClass('hidden'),
+	// 				spread = tbody.find('.mid').parent(),
+	// 				hidden = tbody.find('.hidden'),
+	// 				visibleString = tbody.height() / tbody.find('tr').eq(0).height(),
+	// 				spreadSize = tbody.find('.best_sell ').parent().index() - tbody.find('.best_buy ').parent().index() - 1;
+	// 		isButton = isButton || false;
+	//
+	// 		for (var ii = 0; ii < table.find('th').length; ii++) {
+	// 			if($.browser.webkit){
+	// 				if(ii == 1)
+	// 					tdWidth.push(parseInt(table.find('th').eq(ii).css('width')) - 1 + 'px');
+	// 				else
+	// 					tdWidth.push(table.find('th').eq(ii).css('width'));
+	// 			}
+	// 			else{
+	// 				tdWidth.push(parseInt(table.find('th').eq(ii).css('width')) + 'px');
+	// 			}
+	//
+	// 		}
+	//
+	//
+	// 		if(!isButton){
+	// 			hidden.animate({height: 20}).attr('class', 'visible');
+	// 		}
+	// 		else{
+	//
+	// 			$('#order_content').remove();
+	// 		}
+	//
+	// 		if(spreadSize > visibleString - 4 && !isButton && visibility !== true){
+	// 			$('.active_trader .show_spread .visibility').text('Hide');
+	// 			setTimeout(function () {
+	// 				spread.attr('class', 'hidden').animate({height: 0}, 400);
+	// 				activeTraderClass.tdWidthChange(tdWidth);
+	// 				activeTraderClass.scrollTo(true);
+	// 				$('.active_trader .show_spread .visibility').text('Show');
+	// 				$('.active_trader .show_spread').addClass('active');
+	// 			}, 700);
+	// 		}
+	// 		else if(!isButton){
+	// 			$('.active_trader .show_spread .visibility').text('Hide');
+	// 			if(!(spreadSize > visibleString - 4)) $('.active_trader .show_spread').removeClass('active');
+	// 		}
+	//
+	// 		if(!hide && isButton || visibility === false) {
+	// 			if(tbody.find('.hidden').length)
+	// 				hidden.animate({height: 20}, 400).attr('class', 'visible');
+	// 			if(isButton) activeTraderClass.scrollTo(true);
+	// 			spread.attr('class', 'hidden').animate({height: 0}, 400);
+	// 			activeTraderClass.tdWidthChange(tdWidth);
+	// 			$('.active_trader .show_spread .visibility').text('Show');
+	// 		}
+	// 		else if(isButton || visibility === true){
+	// 			hidden.animate({height: 20}, 400);
+	// 			activeTraderClass.scrollTo();
+	// 			setTimeout(function () {
+	// 				hidden.attr('class', 'visible');
+	// 			}, 400);
+	// 			$('.active_trader .show_spread .visibility').text('Hide');
+	// 		}
+	// 	}
+	// 	else{
+	// 		$('.active_trader .show_spread').removeClass('active');
+	// 		$('.left_order table.limit tbody .hidden').animate({height: 20}).attr('class', 'visible');
+	// 	}
+	// }
 
 	static buttonActivation(current, recalc) {
 		if(current.parents('.active_trader').length){

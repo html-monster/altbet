@@ -170,8 +170,47 @@
 					&:nth-last-of-type(3), &:nth-last-of-type(4){  width: 12%;  padding: 0;  text-align: center;  }
 					&:nth-of-type(4){  padding: 0;  text-align: center;  }
 				}
-				tbody td{
-					&:nth-last-of-type(4){  padding: 0;  text-align: center;  }
+				tbody{
+					tr{
+						&.sell{
+							td:first-of-type:before{
+								background: linear-gradient(to right, rgba(239, 77, 34, 0.2), transparent);
+							}
+							&.hovered{
+								background: linear-gradient(to bottom, rgba(248, 132, 71, 0.3), rgba(239, 77, 34, 0.3));
+							}
+						}
+						&.buy{
+							td:first-of-type:before{
+								background: linear-gradient(to right, rgba(52, 152, 218, 0.2), transparent);
+							}
+							&.hovered{
+								background: linear-gradient(to bottom, rgba(100, 201, 239, 0.3), rgba(52, 152, 218, 0.3));
+							}
+						}
+					}
+					td{
+						&:first-of-type:before{
+							content: '';
+							display: block;
+							width: 0;
+							height: 100%;
+							position: absolute;
+							top: 0;
+							left: 0;
+							background: linear-gradient(to right, transparentize(white, 0.7), transparent);
+							transition: 0.4s ease-out;
+						}
+						&:nth-last-of-type(4){  padding: 0;  text-align: center;  }
+					}
+				}
+				.clickable{
+					cursor: pointer;
+					&.active{  
+						//border-left: 2px solid $link-color;
+						td:first-of-type:before{  width: 100%;  }
+						strong.title{  color: #4dac2e; transition: 0.4s ease-out;  }
+					}
 				}
 			}
 			.open_orders, .my_position_container {

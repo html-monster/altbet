@@ -64,5 +64,17 @@ class myPosClass{
 				element.slideDown(200);
 			}, 500);
 		});
-	}
+
+			posContainer.find('tbody tr').mouseover(function () {
+				if($('.left_order .tab input.limit').prop('checked')){
+					var id = $(this).attr('data-symbol');
+
+					$('[data-symbol='+ id +']').addClass('hovered');
+				}
+			});
+			posContainer.find('tbody tr').mouseleave(function () {
+				if($('.left_order .tab input.limit').prop('checked'))
+					$('[data-symbol]').removeClass('hovered');
+			});
+		}
 }
