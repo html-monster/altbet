@@ -118,8 +118,8 @@
 						&:nth-child(even){
 							background-color: transparentize(#dce1e6, 0.7);
 						}
-						&.sell{  background: linear-gradient(to bottom, transparentize(#64c9ef, 0.9), transparentize(#3498da, 0.9));  }
-						&.buy{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));  }
+						&.buy{  background: linear-gradient(to bottom, transparentize(#64c9ef, 0.9), transparentize(#3498da, 0.9));  }
+						&.sell{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));  }
 					}
 					td {
 						padding: 10px 12px;
@@ -181,7 +181,7 @@
 				}
 				tbody{
 					tr{
-						&.buy{
+						&.sell{
 							td:first-of-type:before{
 								background: linear-gradient(to right, rgba(239, 77, 34, 0.2), transparent);
 							}
@@ -189,7 +189,7 @@
 								background: linear-gradient(to bottom, rgba(248, 132, 71, 0.3), rgba(239, 77, 34, 0.3));
 							}
 						}
-						&.sell{
+						&.buy{
 							td:first-of-type:before{
 								background: linear-gradient(to right, rgba(52, 152, 218, 0.2), transparent);
 							}
@@ -231,8 +231,8 @@
 				}
 				tbody{
 					tr{
-						&.buy .quantity{  color: #ef4d22;  }
-						&.sell .quantity{  color: #3498da;  }
+						&.sell .quantity{  color: #ef4d22;  }
+						&.buy .quantity{  color: #3498da;  }
 					}
 					td{
 						&:last-of-type{  padding-right: 12px;  }
