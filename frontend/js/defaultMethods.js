@@ -101,4 +101,16 @@ class defaultMethods{
 			error.fadeOut(800);
 		}, 5000);
 	}
+
+	static sendAjaxRequest(httpMethod, callback, onError, url, context, data) {
+		if(!data) data = context.serialize();
+		$.ajax({
+			url: url,
+			type: httpMethod,
+			dataType: 'json',
+			data: data,
+			success: callback,
+			error: onError
+		});
+	}
 }

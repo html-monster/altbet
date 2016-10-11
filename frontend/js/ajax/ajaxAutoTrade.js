@@ -1,23 +1,8 @@
-class myOrderClass{
+class ajaxAutoTradeClass{
 	constructor(){
-		var currentOrders = $('#current-orders'),
-				url = currentOrders.find('.confirmation form').attr('action');
-
-		currentOrders.on('submit', '.confirmation form', function () {
-			// var data = $(this).parent().find('input').val() ;
-			sendAjaxRequest('POST', onSuccessAjax, url, $(this));
-			// $.ajax(url, {
-			// 	type: 'POST',
-			// 	data: data,
-			// 	error: function (x, y, z) {
-			// 		console.log(x + '\n' + y + '\n' + z);
-			// 	}
-			// });
-		});
-
 		function onSuccessAjax(data) {
 			data = data.split('_');
-			console.log(data);
+			// console.log(data);
 			var id = '#' + data[0] + '__order';
 
 			if(data[1] == 'True'){
@@ -37,17 +22,11 @@ class myOrderClass{
 			console.log(x + '\n' + y + '\n' + z);
 			defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 		}
+	}
+	static sendLimitOrder(context){
+		var url = $('.template .order_content.new form').attr('data-ajax-url');
 
-		function sendAjaxRequest(httpMethod, callback, url, form) {
-			var data = form.serialize();
-			$.ajax({
-				url: url,
-				type: httpMethod,
-				dataType: 'json',
-				data: data,
-				success: callback,
-				error: onErrorAjax
-			});
-		}
+		console.log(url);
+		// defaultMethods.sendAjaxRequest('POST', onSuccessAjax, onErrorAjax, url, context, data);
 	}
 }

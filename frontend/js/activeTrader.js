@@ -203,9 +203,11 @@ class activeTraderClass{
 			});
 
 			trader.on('click', '.confim.clickable', function(e){
-				if(!($('.order label input.auto').prop('checked'))){
+				if($('.order label input.auto').prop('checked'))
+					ajaxAutoTradeClass.sendLimitOrder($(this));
+				else
 					addOrder($(this), e);
-				}
+
 			});
 
 			trader.on('click', '.price_value.active', function(){
@@ -641,7 +643,7 @@ class activeTraderClass{
 					}
 					$('.active_trader table.limit tbody td.size').addClass('clickable');
 				}
-				if(!recalc ) activeTraderClass.recaluculateSum(current);
+				if(!recalc) activeTraderClass.recaluculateSum(current);
 			}
 			if(current.hasClass('spreader')) {
 				activeTraderClass.spreaderChangeVal(current);
@@ -683,12 +685,16 @@ class activeTraderClass{
 	}
 
 	static recaluculateSum(item){
-		var order_content = $('.active_trader .order_content'),
+		var order_content = $('#order_content'),
 				quantity = +item.text() || +item.val() || '',
 				price = +order_content.find('.price input').val();
 
-		$('.active_trader .volume input').not(item).val(quantity);
-		if(order_content.find('.sell-container').length)
+		if(item.parents('td.button.quantity').length)
+			quantity = order_content.find('.volume input').val();
+		else
+			$('.active_trader .volume input').not(item).val(quantity);
+
+		if(order_content.find('.sell-container').children().length)
 			order_content.find('.obligations input').val(((1 - price) * quantity).toFixed(2));
 		else
 			order_content.find('.obligations input').val((price * quantity).toFixed(2));
