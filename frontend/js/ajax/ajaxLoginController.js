@@ -4,6 +4,7 @@ class ajaxLoginControllerClass{
 			if($('.sign_in_form .wrong_log').length){
 				$('[data-valmsg-for=UserIdentity]').removeClass('wrong_log');
 				$('.sign_in_form .input__field').removeClass('input-validation-error');
+				$('.sign_in_form .input_animate').removeClass('invalid');
 			}
 		});
 	}
@@ -22,13 +23,15 @@ class ajaxLoginControllerClass{
 			$('header .log_out').removeClass('active');
 			$('header .log_in').addClass('active');
 			$('header .log_in .user-name').text(e.UserName);
-			$('.sign_in_form .input_animate').addClass('invalid');
+			$('header .user_info').show();
+			$('.left_order .tab input.limit').removeAttr('disabled');
 			popUpClass.removeEventPopUp('header .deposit, header .my_order');
 			globalData.userIdentity = 'True';
 		}
 		else{
+			$('.sign_in_form .input_animate').addClass('invalid');
 			$('#submit_sign').removeAttr('disabled');
-			$('[data-valmsg-for=UserIdentity]').text('Wrong password or user name').addClass('wrong_log');
+			$('[data-valmsg-for=UserIdentity]').text('Wrong password or nickname').addClass('wrong_log');
 			$('.sign_in_form .input__field').addClass('input-validation-error').removeClass('valid');
 		}
 	}

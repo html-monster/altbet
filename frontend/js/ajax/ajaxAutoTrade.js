@@ -23,10 +23,32 @@ class ajaxAutoTradeClass{
 			defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 		}
 	}
-	static sendLimitOrder(context){
-		var url = $('.template .order_content.new form').attr('data-ajax-url');
+	static sendLimitOrder(context, modification, price){
+		var url = $('.template .order_content.new form').attr('data-ajax-url'),
+				data = {},
+				trader = $('.active_trader');
 
-		console.log(url);
-		// defaultMethods.sendAjaxRequest('POST', onSuccessAjax, onErrorAjax, url, context, data);
+		data.Symbol = trader.attr('id').slice(7);
+		data.Quantity = $('.active_trader .control .quantity.number').val();
+		if($('#IsMirror').length)
+			data.isMirror = $('#IsMirror').val() == 'False' ? 0 : 1;
+		else
+			data.isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
+
+		if(modification == 'market')
+			data.OrderType = 'false';
+		else{
+			data.OrderType = 'true';
+			data.LimitPrice = price;
+		}
+
+		if(modification == 'sell')
+			data.Side = 'Sell';
+		else
+			data.Side = 'Buy';
+
+		JSON.stringify(data);
+
+		defaultMethods.sendAjaxRequest('POST', onSuccessAjax, onErrorAjax, url, null, data);
 	}
 }

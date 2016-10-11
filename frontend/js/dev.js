@@ -106,7 +106,7 @@ class teamClass{
 				html = $(document.createElement("div")),
 				object = [
 					{
-						title : 'Chicago Bears( 85.9 ) - 0.7',
+						title : 'Chicago Bears(85.2) - 0.7',
 						th : ['POS', 'PLAYER', 'FPPG'],
 						td : [
 							['QB', 'Brian Hoyer', '16,3'],
@@ -122,7 +122,7 @@ class teamClass{
 						]
 					},
 					{
-						title : 'Dallas Cowboys( 86.6 ) + 0.7',
+						title : 'Dallas Cowboys(104.4) + 0.7',
 						th : ['POS', 'PLAYER', 'FPPG'],
 						td : [
 							['QB', 'Dak Prescott', '17,5'],
@@ -138,7 +138,7 @@ class teamClass{
 						]
 					},
 					{
-						title : 'New York Giants( 87.6 ) - 7.9',
+						title : 'New York Giants(105.7) - 7.9',
 						th : ['POS', 'PLAYER', 'FPPG'],
 						td : [
 							['QB', 'Eli Manning', '18,2'],
@@ -154,7 +154,7 @@ class teamClass{
 						]
 					},
 					{
-						title : 'Washington Redskins(95.5) +7.9',
+						title : 'Washington Redskins(107.9) +7.9',
 						th : ['POS', 'PLAYER', 'FPPG'],
 						td : [
 								['QB', 'Kirk Cousins', '18,8'],
@@ -212,10 +212,10 @@ class teamClass{
 			var self = this;
 
 			$('.content_bet h2').each(function () {
-				var title = $(this).text().split('(');
+				var title = $(this).text().split(')');
 
 				title = title[0].replace('          ', '');
-				if(self.title.split('(')[0] == title){
+				if(self.title.split(')')[0] == title){
 					var hoverHtml = html.clone();
 
 					hoverHtml.find('strong').text(self.title);

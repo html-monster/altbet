@@ -203,8 +203,14 @@ class activeTraderClass{
 			});
 
 			trader.on('click', '.confim.clickable', function(e){
-				if($('.order label input.auto').prop('checked'))
-					ajaxAutoTradeClass.sendLimitOrder($(this));
+				var price = $(this).parents('tr').find('.price_value .value').text().replace('$', '');
+
+				if($('.order label input.auto').prop('checked')){
+					if($(this).hasClass() == 'sell')
+						ajaxAutoTradeClass.sendLimitOrder($(this), 'sell', price);
+					else
+						ajaxAutoTradeClass.sendLimitOrder($(this), 'buy', price);
+				}
 				else
 					addOrder($(this), e);
 
