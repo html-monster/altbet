@@ -637,12 +637,11 @@
               display: flex;
               justify-content: space-between;
               align-items: center;
-              &:nth-child(2){
-                justify-content: flex-start;
-              }
+              //&:nth-child(2){
+              //  justify-content: flex-start;
+              //}
             }
             h3{
-              display: inline-block;
               margin-right: 10px;
               max-width: 140px;
               font-size: 13px;

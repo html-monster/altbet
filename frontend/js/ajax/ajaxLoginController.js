@@ -16,7 +16,7 @@ class ajaxLoginControllerClass{
 	}
 
 	static OnSuccessJs(e){
-		if(!e.Error){
+		if (!e.Error) {
 			popUpClass.closePopUp('.sign_in_form');
 			console.log('Welcome to hell }:-)');
 			$('#submit_sign').removeAttr('disabled');
@@ -27,11 +27,12 @@ class ajaxLoginControllerClass{
 			$('.left_order .tab input.limit').removeAttr('disabled');
 			popUpClass.removeEventPopUp('header .deposit, header .my_order');
 			globalData.userIdentity = 'True';
-		}
-		else{
+			wsActiveBettor.changeUser(e.UserName);
+
+		} else {
 			$('.sign_in_form .input_animate').addClass('invalid');
 			$('#submit_sign').removeAttr('disabled');
-			$('[data-valmsg-for=UserIdentity]').text('Wrong password or nickname').addClass('wrong_log');
+			$('[data-valmsg-for=UserIdentity]').text(e.Error).addClass('wrong_log');
 			$('.sign_in_form .input__field').addClass('input-validation-error').removeClass('valid');
 		}
 	}

@@ -621,7 +621,7 @@ i.wave{  display: inline-block;  font-style: normal; }
   fill: none;
 }
 
-.hidden{  display: none;  }
+.hidden{  display: none !important;  }
 
 .global_error_container{
   width: 300px;
