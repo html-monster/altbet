@@ -99,7 +99,7 @@ gulp.task('js',function(){
     // $.uglify(),
     // gulp.dest('./public/js'),
 		//
-    // gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js', 'frontend/js/theme_change.js']),
+		// gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js', 'frontend/js/themeChange.js']),
     // $.concat('access.js'),
     // babel({
     //   presets: ['es2015']

@@ -96,6 +96,13 @@ $(document).ready(function () {
 	$('.show-schedule').click(function(){ // show chart on the main page
 		$(this).toggleClass('active')
 					 .next().toggleClass('active');
+		if($(this).hasClass('active'))
+			$(this).parents('.content_bet').find('.content_title').css('max-height', 'inherit');
+		else{
+			setTimeout(() => {
+				$(this).parents('.content_bet').find('.content_title').removeAttr('style');
+			}, 400);
+		}
 		// var schedule = $(this).next();
 		// setTimeout(function(){
 		// 	schedule.addClass('loader');

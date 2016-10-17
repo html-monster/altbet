@@ -222,9 +222,10 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        max-height: 127px;
+        width: 24%;
         padding: 30px 10px 20px;
         margin-right: 2px;
-        width: 24%;
         border-radius: 6px 0 0 6px;
         @include main_page_event_bg;
         &.command{
@@ -383,16 +384,16 @@
         min-height: inherit;
         position: absolute;
         left: calc(50% - 20px);
-        bottom: 0;
+        top: 107px;
         z-index: 2;
         cursor: pointer;
         background: $main_page_event_chart_button;
+        transition: 0.4s ease-out;
         &:before, &:after{
           content: '';
           display: block;
           width: 15px;
           height: 1px;
-          border-radius: 2px;
           background: #eeeeef * 0.5;
           position: absolute;
           left: 12px;
