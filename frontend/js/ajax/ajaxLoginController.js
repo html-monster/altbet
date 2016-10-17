@@ -16,7 +16,7 @@ class ajaxLoginControllerClass{
 	}
 
 	static OnSuccessJs(e){
-		if (!e.Error) {
+		if (!e.Error && e.UserName) {
 			popUpClass.closePopUp('.sign_in_form');
 			console.log('Welcome to hell }:-)');
 			$('#submit_sign').removeAttr('disabled');
@@ -24,6 +24,7 @@ class ajaxLoginControllerClass{
 			$('header .log_in').addClass('active');
 			$('header .log_in .user-name').text(e.UserName);
 			$('header .user_info').show();
+			$('.left_order .tab').removeAttr('data-disabled');
 			$('.left_order .tab input.limit').removeAttr('disabled');
 			popUpClass.removeEventPopUp('header .deposit, header .my_order');
 			globalData.userIdentity = 'True';

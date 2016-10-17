@@ -9,6 +9,7 @@ class ajaxControllerClass{
 			console.log('Order sending start: ' + object.ID);
 		else
 			console.log('Order sending start: ' + object.Symbol);
+
 		if(object.Side == 'Buy'){
 			$('#'+id + ' .buy-container [type=submit]').attr('disabled', true);
 			$('#order_content .buy-container [type=submit]').attr('disabled', true);

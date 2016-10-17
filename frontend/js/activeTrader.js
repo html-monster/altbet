@@ -203,13 +203,18 @@ class activeTraderClass{
 			});
 
 			trader.on('click', '.confim.clickable', function(e){
-				var price = $(this).parents('tr').find('.price_value .value').text().replace('$', '');
+				var	price;
+
+				if($(this).hasClass('market_button'))
+						price = $(this).find('.price').text().replace('$', '');
+				else
+						price = $(this).parents('tr').find('.price_value .value').text().replace('$', '');
 
 				if($('.order label input.auto').prop('checked')){
-					if($(this).hasClass() == 'sell')
-						ajaxAutoTradeClass.sendLimitOrder($(this), 'sell', price);
+					if($(this).hasClass('sell'))
+						ajaxAutoTradeClass.sendOrder($(this), 'sell', price);
 					else
-						ajaxAutoTradeClass.sendLimitOrder($(this), 'buy', price);
+						ajaxAutoTradeClass.sendOrder($(this), 'buy', price);
 				}
 				else
 					addOrder($(this), e);
@@ -217,7 +222,11 @@ class activeTraderClass{
 			});
 
 			trader.on('click', '.price_value.active', function(){
-				if(!($('.order label input.auto').prop('checked')) || $(this).hasClass('mid'))
+				var context = $(this), price1 = (takeSpreadPrice(context)).price1, price2 = (takeSpreadPrice(context)).price2;
+
+				if($('.order label input.auto').prop('checked') && !($(this).hasClass('mid')))
+					ajaxAutoTradeClass.sendSpreadOrder(price1, price2);
+				else
 					addOrder($(this));
 
 				// if($(this).hasClass('mid'))
@@ -227,7 +236,11 @@ class activeTraderClass{
 
 			trader.on('click', '.confim_button', function (e) {
 				e.stopPropagation();
-				if(!($('.order label input.auto').prop('checked')))
+				var context = $(this), price1 = (takeSpreadPrice(context)).price1, price2 = (takeSpreadPrice(context)).price2;
+
+				if($('.order label input.auto').prop('checked'))
+					ajaxAutoTradeClass.sendSpreadOrder(price1, price2);
+				else
 					addOrder($(this));
 			});
 
@@ -242,6 +255,22 @@ class activeTraderClass{
 				}, 400);
 			});
 
+			function takeSpreadPrice(context) {
+				var price1, price2, spreadVal = +$('.active_trader input.spreader').val();
+
+				if(context.hasClass('ask')){
+					price2 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
+					price1 = (+price2 - spreadVal).toFixed(2);
+					price1 = price1 < 0.01 ? 0.01 : price1;
+				}
+				else{
+					price1 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
+					price2 = (+price1 + spreadVal).toFixed(2);
+					price2 = price2 > 0.99 ? 0.99 : price2;
+				}
+
+				return {price1, price2};
+			}
 
 			function addOrder(context, event) {
 				var position = context.position().top + 25,
@@ -273,25 +302,8 @@ class activeTraderClass{
 					createOrderForm('.active_trader .template .order_content.default', 'sell');
 				}
 				else if(context.hasClass('price_value') || context.hasClass('confim_button')){
-					var price1, price2, spreadVal = +$('.active_trader input.spreader').val();
-					// if(context.parents('tr').find('.mid').length){
-					// 	var currentPrice = +(context.find('span.value').text()).slice(1);
-					//
-					// 	price1 = (currentPrice - spreadVal).toFixed(2);
-					// 	price1 = price1 < 0.01 ? 0.01 : price1;
-					// 	price2 = (currentPrice + spreadVal).toFixed(2);
-					// 	price2 = price2 > 0.99 ? 0.99 : price2;
-					// }
-					if(context.hasClass('ask')){
-						price2 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
-						price1 = (+price2 - spreadVal).toFixed(2);
-						price1 = price1 < 0.01 ? 0.01 : price1;
-					}
-					else{
-						price1 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
-						price2 = (+price1 + spreadVal).toFixed(2);
-						price2 = price2 > 0.99 ? 0.99 : price2;
-					}
+					var price1 = (takeSpreadPrice(context)).price1, price2 = (takeSpreadPrice(context)).price2;
+
 
 					if(context.hasClass('mid')){
 						html = '<div class="spread_confim"><span class="sell ask confim_button" onmousedown="return false" onselectstart="return false">Sell</span><span class="buy bid confim_button" onmousedown="return false" onselectstart="return false">Buy</span></div>';

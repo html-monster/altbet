@@ -11,6 +11,7 @@ var myOrdersControllerClass = new function () {
 	var htmlTmp, orderTmp;
 	this.createTemplate = function () {
 		htmlTmp = $('.order_content.tmp').clone();
+		htmlTmp.removeClass('tmp');
 		htmlTmp.find('.order_container').each(function () {
 			if($(this).index() == 1)
 				orderTmp = $(this).clone();
@@ -59,6 +60,7 @@ var myOrdersControllerClass = new function () {
 								newItem = true,
 								order = orderTmp.clone();
 
+						// console.log(orderInfo);
 						self.find('.order_container').each(function () {
 							if(($(this).attr('id')).slice(0, -7) == orderInfo.ID){
 								newItem = false;
@@ -66,7 +68,8 @@ var myOrdersControllerClass = new function () {
 						});
 
 						if(newItem){
-							createChild(self, order, orderInfo);
+							createChild(self.find('.order-title'), order, orderInfo);
+							// console.log(orderInfo.ID);
 						}
 					});
 				}
@@ -125,7 +128,7 @@ var myOrdersControllerClass = new function () {
 		childTmp.find('.date').text((date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear());
 		childTmp.find('.time').text((date.getHours() - 3) + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()));
 
-		childTmp.insertAfter('.my_order .order-title');
+		childTmp.insertAfter(context);
 		// if(direction == 'sell')
 			// context.find('.my_order').append(childTmp);
 		// else
