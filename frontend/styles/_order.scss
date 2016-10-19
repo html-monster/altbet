@@ -961,16 +961,20 @@
                 @include order_sidebar_order_input;
               }
               label.checkbox{
-                width: 27.33%;
+                width: 33.33%;
                 height: 31px;
-                margin-left: 6%;
+                //margin-left: 6%;
                 color: #707070;
                 line-height: 31px;
                 text-align: left;
+                border-top: 1px solid $order_sidebar_order_border_color;
+                border-right: 1px solid $order_sidebar_order_border_color;
                 @include checkbox_vertical;
+                padding-left: calc(6% + 25px);
                 &>span{
                   color: $checkbox_label_color;
-                  &:before{  background: #4dac2e; transition: 0.4s ease-out;  }
+                  &:before{  left: calc(6% + 16px); background: #4dac2e; transition: 0.4s ease-out;  }
+                  &:after{  left: calc(6% + 17px);  }
                 }
                 input:checked ~ span{
                   &:before{  background: #ef8022;  }
@@ -1002,6 +1006,7 @@
                 color: #ffffff;
                 border: 1px solid $order_sidebar_order_border_color;
                 border-bottom: none;
+                border-left: none;
                 cursor: pointer;
                 transition: 0.4s ease-out;
                 &.sell{  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }

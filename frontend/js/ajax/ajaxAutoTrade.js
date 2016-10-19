@@ -71,7 +71,7 @@ var ajaxAutoTradeClass = new function () {
 		else
 			data.isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
 
-		console.log(data);
+		// console.log(data);
 		JSON.stringify(data);
 
 		defaultMethods.sendAjaxRequest('POST', onSuccessAjax, onErrorAjax, url, null, data);

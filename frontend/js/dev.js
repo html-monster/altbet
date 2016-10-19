@@ -90,6 +90,9 @@ $(document).ready(function () {
 			$(this).attr('id', 'event_' + orderId++ + '_order');
 		});
 	}
+	$('.schedule').mousedown(function (e) {
+		e.stopPropagation();
+	});
 
 	new teamClass();
 });
@@ -106,7 +109,7 @@ class teamClass{
 				html = $(document.createElement("div")),
 				object = [
 					{
-						title : 'Chicago Bears(85.2) - 0.7',
+						title : 'Chicago Bears (85.2) - 0.7',
 						th : ['POS', 'PLAYER', 'FPPG'],
 						td : [
 							['QB', 'Brian Hoyer', '16,3'],
@@ -122,7 +125,7 @@ class teamClass{
 						]
 					},
 					{
-						title : 'Dallas Cowboys(104.4) + 0.7',
+						title : 'Dallas Cowboys (104.4) + 0.7',
 						th : ['POS', 'PLAYER', 'FPPG'],
 						td : [
 							['QB', 'Dak Prescott', '17,5'],
@@ -138,7 +141,7 @@ class teamClass{
 						]
 					},
 					{
-						title : 'New York Giants(105.7) - 7.9',
+						title : 'New York Giants (105.7) - 7.9',
 						th : ['POS', 'PLAYER', 'FPPG'],
 						td : [
 							['QB', 'Eli Manning', '18,2'],
@@ -154,7 +157,7 @@ class teamClass{
 						]
 					},
 					{
-						title : 'Washington Redskins(107.9) +7.9',
+						title : 'Washington Redskins (107.9) +7.9',
 						th : ['POS', 'PLAYER', 'FPPG'],
 						td : [
 								['QB', 'Kirk Cousins', '18,8'],
@@ -170,7 +173,7 @@ class teamClass{
 						]
 					},
 					{
-						title : 'Buffalo Bills(73.9) -3.7',
+						title : 'Buffalo Bills (73.9) -3.7',
 						th : ['POS', 'PLAYER', 'FPPG'],
 						td : [
 								['QB', 'Tyrod Taylor', '16.1'],
@@ -186,7 +189,7 @@ class teamClass{
 						]
 					},
 					{
-						title : 'New England Patriots(77.6)  +3.7',
+						title : 'New England Patriots (77.6)  +3.7',
 						th : ['POS', 'PLAYER', 'FPPG'],
 						td : [
 								['QB', 'Jacoby Brissett', '9.9'],
@@ -205,16 +208,19 @@ class teamClass{
 
 		html.addClass('help').html('<div class="help_message"><strong></strong><table><thead></thead><tbody></tbody></table></div>');
 
-		$('.content_bet').each(function () {
-			$(this).css('z-index', quantity--)
-		});
+		// $('.schedule').mouseup(function (e) {
+		// 	e.stopPropagation();
+		// });
+		// $('.content_bet').each(function () {
+		// 	$(this).css('z-index', quantity--)
+		// });
 		$(object).each(function () {
 			var self = this;
 
 			$('.content_bet h2').each(function () {
 				var title = $(this).text().split(')');
 
-				title = title[0].replace('          ', '');
+				title = title[0];//.replace(/([\s]{2})/g, '');
 				if(self.title.split(')')[0] == title){
 					var hoverHtml = html.clone();
 

@@ -51,7 +51,7 @@ gulp.task('styles', function() {
       .pipe(gulpIf(isDevelopment, sourcemaps.write()))
       .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
       .pipe(gulp.dest('public/styles'))
-      .pipe(gulp.dest('../../altbet/Alt.Bet/Content'))
+      .pipe(gulp.dest('../../altbetNew/Alt.Bet/Content'))
       .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))));
 
 });
@@ -92,7 +92,7 @@ gulp.task('js',function(){
     sourcemaps.init(),
     // $.uglify(),
     gulp.dest('./public/js'),
-    gulp.dest('../../altbet/Alt.Bet/Scripts')
+    gulp.dest('../../altbetNew/Alt.Bet/Scripts')
 
     // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js']),
     // $.concat('vendors.js'),
@@ -117,6 +117,7 @@ gulp.task('js',function(){
 
 gulp.task('styles:assets', function() {
   return gulp.src('frontend/Images/**/*.{svg,png,jpg,gif,ico}', {since: gulp.lastRun('styles:assets')})
+      .pipe(gulp.dest('../../altbetNew/Alt.Bet/Images'))
       .pipe(gulp.dest('public/Images'));
 });
 

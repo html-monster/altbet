@@ -137,6 +137,7 @@
   &>span{
     color: #FFF * 0.5;
     transition: 0.2s ease-out;
+    user-select: none;
     &:before, &:after{
       content: '';
       display: block;
@@ -166,7 +167,7 @@
     display: none;
     &:checked ~ span{
       color: $checkbox_label_color;
-      &:before{  background: linear-gradient(to bottom, #3aab4a, #3aab4a * 0.9);  }
+      &:before{  background: #4dac2e;  }
       &:after{  top: calc(50% - 3px);  }
     }
   }

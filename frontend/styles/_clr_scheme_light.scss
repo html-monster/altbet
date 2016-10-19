@@ -50,7 +50,15 @@ $breadcrumbs-color: transparentize(#000000, 0.5);
 
 @mixin chart{
 	svg > text:last-of-type{  visibility: hidden;  }
-	.highcharts-container{  overflow: hidden;  }
+	.highcharts-container{
+		padding-top: 10px;
+		border-radius: 6px;
+		background: #eeeeef;
+		overflow: hidden;
+	}
+	rect.highcharts-background{
+		fill: transparent;
+	}
 }
 
 @import "color_scheme/main_page_light";

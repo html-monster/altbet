@@ -33,7 +33,7 @@ $main_page_gif: url("../Images/ajax-loader-w.gif");
 
 $main_page_event_title: #000000;
 $main_page_event_chart_button: url(../Images/sprite.svg) no-repeat -166px -354px;
-@mixin main_page_event_bg{  background: #ffffff; .waves-ripple{  display: block;	} }
+@mixin main_page_event_bg{  background: #ffffff; }
 @mixin main_page_event_icon{
 	&.sport:before{  background-position: -68px -306px;  }
 	&.e_sport:before{  background-position: -186px -306px;  }
@@ -68,6 +68,9 @@ $main_page_event_chart_button: url(../Images/sprite.svg) no-repeat -166px -354px
 	background: $link-color;
 	box-shadow: none;
 }
+$main_page_event_opacity: 0.05;
+$main_page_event_info_pl_bg: -396px -566px;
+$main_page_event_info_pos_bg: -463px -566px;
 @mixin pricing_plans_separate{
 	border-right: 1px solid #dce1e6 * 0.95;
 	&:last-child h2{  color: #e5e4e2; text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);  }

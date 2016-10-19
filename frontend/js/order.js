@@ -410,7 +410,7 @@ class orderClass{
 			currentID = self.parents('.event-content').attr('id') ? self.parents('.event-content').attr('id') : self.parents('.event-content').attr('data-symbol');
 		}
 
-		if(limit || $(this).hasClass('empty')){
+		if((globalData.basicMode || $(this).hasClass('empty'))){
 			data.volume = $(this).find('.volume').text();
 			data.buySum = (!(isNaN(data.price)) && !(isNaN(data.volume))) ? (data.price * data.volume).toFixed(2) : "";
 			data.sellSum = (!(isNaN(data.price)) && !(isNaN(data.volume))) ? ((1 - data.price) * data.volume).toFixed(2) : "";
@@ -442,20 +442,20 @@ class orderClass{
 			id.push(order);
 			if ($(this).parent('.sell').length) {
 
-				if(limit || $(this).hasClass('empty'))
+				if((globalData.basicMode || $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('sell', 'full', true, self, data);
 				else
 					html = orderClass.createOrderForm('sell', 'full', false, self, data);
 			}
 			else{
-				if(limit || $(this).hasClass('empty'))
+				if((globalData.basicMode || $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('buy', 'full', true, self, data);
 				else
 					html = orderClass.createOrderForm('buy', 'full', false, self, data);
 			}
 			$('#order .default_orders').append(html);
 			$('.order_content').fadeIn(400);
-			if(limit || $(this).hasClass('empty')) {
+			if((globalData.basicMode || $(this).hasClass('empty'))) {
 				idDefine();
 				inputFocus = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .price input');
 			}
@@ -472,7 +472,7 @@ class orderClass{
 			if ($(this).parent('.sell').length) {
 				idDefine();
 				container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .sell-container');
-				if(limit || $(this).hasClass('empty'))
+				if((globalData.basicMode || $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('sell', null, true, self, data);
 				else
 					html = orderClass.createOrderForm('sell', null, false, self, data);
@@ -480,14 +480,14 @@ class orderClass{
 			else {
 				idDefine();
 				container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .buy-container');
-				if(limit || $(this).hasClass('empty'))
+				if((globalData.basicMode || $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('buy', null, true, self, data);
 				else
 					html = orderClass.createOrderForm('buy', null, false, self, data);
 			}
 			container.html(html);
 			$('.order_content form').fadeIn(400);
-			if(limit || $(this).hasClass('empty')){
+			if((globalData.basicMode || $(this).hasClass('empty'))){
 				inputFocus = container.find('.price input');
 			}
 			else{

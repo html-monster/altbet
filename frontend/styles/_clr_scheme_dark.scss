@@ -51,6 +51,7 @@ $breadcrumbs-color: transparentize(#ffffff, 0.5);
 @mixin chart{
 	svg > text:last-of-type{  visibility: hidden;  }
 	.highcharts-container{
+		padding-top: 10px;
 		border-radius: 6px;
 		background: linear-gradient(to bottom, #211e25, #292830);
 	}

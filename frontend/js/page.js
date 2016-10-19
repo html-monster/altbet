@@ -60,6 +60,8 @@ $(document).ready(function () {
 
 	new myPosClass(); // activate my pos script
 
+	new modeSwitchClass(); //mode switch activate
+
 	new themeChangeClass();
 	(function changeSelect(){
 		try {
@@ -96,6 +98,7 @@ $(document).ready(function () {
 	$('.show-schedule').click(function(){ // show chart on the main page
 		$(this).toggleClass('active')
 					 .next().toggleClass('active');
+		$(this).parents('.table').toggleClass('active');
 		if($(this).hasClass('active'))
 			$(this).parents('.content_bet').find('.content_title').css('max-height', 'inherit');
 		else{

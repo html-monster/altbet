@@ -5,19 +5,46 @@
   padding: 15px;
   position: relative;
   .nav_items {
-    .tabs{
-      span.tab{
-        &.active {
-          @include main_page_tab_icon_active;
-          span{
-            &:after{  margin-bottom: 0;  }
-            &:before{  margin-top: -30px;  }
+    .mode_wrapper{
+      display: flex;
+      align-items: center;
+      width: 145px;
+      height: 40px;
+      padding: 0 10px;
+      float: right;
+      color: $main-color;
+      background: $bg_color;
+      border-radius: 6px;
+      .mode_switch{
+        width: 100%;
+        @include checkbox_vertical;
+        padding: 0;
+        padding-right: 25px;
+        input:checked ~ span{
+          &:before{  background: #ef8022  }
+        }
+        span{
+          color: $checkbox_label_color;
+          &:before{  background: #4dac2e;  }
+          &:before{
+            left: inherit;
+            right: 2px;
+          }
+          &:after{
+            left: inherit;
+            right: 3px;
           }
         }
       }
     }
     .tabs {
-      margin: 10px 0;
+      width: 63.33%;
+      padding: 15px;
+      background: $main-bg;
+      position: fixed;
+      top: 70px;
+      left: 15%;
+      z-index: 93;
       span.tab {
         display: inline-block;
         margin-right: 10px;
@@ -28,6 +55,13 @@
         color: $main_page_tab_color;
         border-radius: 6px;
         cursor: pointer;
+        &.active {
+          @include main_page_tab_icon_active;
+          span{
+            &:after{  margin-bottom: 0;  }
+            &:before{  margin-top: -30px;  }
+          }
+        }
         span{
           display: inline-block;
           padding: 10px 0;
@@ -44,6 +78,7 @@
         @include main_page_tab_icon;
       }
     }
+    .tab_content{  padding-top: 60px;  }
     .ui-state-highlight{
       height: 102px;
       border: 1px dashed #fcefa1;
@@ -89,7 +124,10 @@
           &:hover{
             h3.event-title{  color: transparentize($link-color, 0.4) !important;  }
           }
-          &.active h3{  color: $link-color;  }
+          &.active{
+            &:after{  opacity: $main_page_event_opacity;  }
+            h3{  color: $link-color;  }
+          }
         }
         &.active{
           .content_title{
@@ -108,9 +146,35 @@
         }
         &.active .content_title h2{  color: $link-color;  }
       }
+      &.basic_mode_js{
+        .table{
+          .event-title a{  display: none;  }
+          .event-content{
+            //.container{
+            //  margin-top: 5px;
+            //  margin-bottom: -5px;
+            //}
+            .button-container{
+              &:first-child{  padding-right: 10px;  }
+              &:last-child{  padding-left: 10px;  }
+            }
+            .buy button:not(:first-child){  display: none;  }
+            .sell button:not(:last-child){  display: none;  }
+            button.event{
+              width: 56px;
+              height: 38px;
+              &.empty{  width: 60px;  }
+              span{
+                line-height: 16px;
+                &.price{  font-size: 15px;  }
+                &.volume{  font-size: 12px;  }
+              }
+            }
+          }
+        }
+      }
       .waves-ripple{  display: none;  }
       h2, h3 {
-        display: inline-block;
         color: $main_page_event_title;
         text-align: left;
         font-size: 14px;
@@ -127,6 +191,7 @@
       h3{
         margin-bottom: 5px;
         position: relative;
+        z-index: 2;
         span{  position: relative;  }
         a {
           display: inline-block;
@@ -160,6 +225,7 @@
         left: calc(50% - 10px);
         background: url(../Images/sprite.svg) no-repeat -97px -123px;
         z-index: 2;
+        transition: 0.2s ease-out;
         &:hover {
           animation-duration: 1s;
           animation-fill-mode: both;
@@ -234,11 +300,25 @@
           &:before{
             content: '';
             width: 20px;
-            height: 34px;
-            background: url("../Images/sprite.svg") no-repeat -27px -347px;
+            height: 18px;
             position: absolute;
-            top: calc(50% - 13px);
+            top: calc(50% - 3px);
             left: 10px;
+            background: url("../Images/sprite.svg") no-repeat -27px -356px;
+          }
+          h2{
+            &:before{
+              content: '';
+              display: block;
+              height: 10px;
+              width: 15px;
+              position: absolute;
+              top: calc(50% - 5px);
+              left: -19px;
+              background: url("../Images/sprite.svg") no-repeat;
+            }
+            &:first-of-type:before{  background-position: -27px -346px;  }
+            &:last-of-type:before{  background-position: -27px -372px;  }
           }
         }
       }
@@ -246,31 +326,73 @@
         //display: flex;
         width: 76%;
         border-radius: 0 6px 6px 0;
-        @include main_page_event_bg;
         vertical-align: middle;
         position: relative;
         cursor: default;
+        @include main_page_event_bg;
+        &.active{
+          padding-bottom: 10px;
+          .event-content{
+            position: static;
+            &:before{  height: calc(100% - 25px) !important; right: calc(50% - 1px) !important;  }
+            &:after{  width: 50%;  }
+            &:nth-of-type(2).active:after{  right: 0; left: inherit;  }
+          }
+        }
         .event-content {
           float: left;
-          width: 50%;
+          width: calc(50% - 1px);
           height: 100%;
           max-height: 127px;
           padding: 10px 5px 31px;
+          position: relative;
+          &:after{
+            content: '';
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background: #000;
+            opacity: 0;
+          }
+          &:first-of-type{
+            margin-right: 2px;
+            &:before{
+              content: '';
+              display: block;
+              width: 2px;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              right: -2px;
+              background: $main-bg;
+            }
+          }
+          &:last-of-type{  margin-left: 2px;  }
           h3 {
             display: block;
             padding-left: 2px;
           }
-          .container{  display: flex;  }
+          .container{
+            display: flex;
+            margin-top: 18px;
+            margin-bottom: -18px;
+            position: relative;
+            z-index: 2;
+          }
           .button-container{
             display: inline-flex;
             width: 50%;
             height: 35px;
             vertical-align: middle;
-            &:first-child{
+            &:first-of-type{
               justify-content: flex-end;
-              padding-right: 2px;
+              padding-right: 3px;
             }
-            &:last-child{
+            &:last-of-type{
               justify-content: flex-start;
               padding-left: 2px;
             }
@@ -375,6 +497,42 @@
               }
             }
           }
+          .pl, .pos{
+            width: 115px;
+            height: 22px;
+            //padding-top: 4px;
+            //visibility: hidden;
+            position: absolute;
+            bottom: -45px;
+            font-size: 12px;
+            color: $main-color;
+            background: url("../Images/sprite.svg") no-repeat;
+            overflow: hidden;
+            strong{
+              display: block;
+              margin-top: -15px;
+              transition: 0.2s ease-out;
+            }
+          }
+          .pl{
+            padding-left: 25px;
+            padding-right: 30px;
+            right: -6px;
+            background-position: $main_page_event_info_pl_bg;
+            span{
+              &.win{  color: #4dac2e;  }
+              &.lost{  color: #ff3905;  }
+            }
+          }
+          .pos{
+            padding-right: 25px;
+            padding-left: 30px;
+            left: -6px;
+            background-position: $main_page_event_info_pos_bg;
+            span{
+              color: #bab500;
+            }
+          }
         }
       }
       .show-schedule{
@@ -384,7 +542,7 @@
         min-height: inherit;
         position: absolute;
         left: calc(50% - 20px);
-        top: 107px;
+        top: 108px;
         z-index: 2;
         cursor: pointer;
         background: $main_page_event_chart_button;
@@ -415,9 +573,10 @@
       .schedule{
         //display: none;
         height: 0;
-        margin: 15px 10px 25px ;
-        clear: both;
+        margin: 0 10px 30px;
         position: relative;
+        z-index: 2;
+        clear: both;
         overflow: hidden;
         transition: 0.4s ease-out;
         &:after{
