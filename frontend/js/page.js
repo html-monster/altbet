@@ -17,6 +17,11 @@ $(document).ready(function () {
 
 	new userInspectionClass();
 
+	// if($('.content_bet').length)
+	// 	globalData.mainPage = true;
+	// else
+	// 	globalData.mainPage = false;
+
 	tabsClass.tabFilter('.filters'); // page my_position
 
 	new tabsClass();
@@ -106,6 +111,11 @@ $(document).ready(function () {
 				$(this).parents('.content_bet').find('.content_title').removeAttr('style');
 			}, 400);
 		}
+		if($('.show-schedule').hasClass('active'))
+			globalData.MainCharOn = true;
+		else
+			globalData.MainCharOn = false;
+
 		// var schedule = $(this).next();
 		// setTimeout(function(){
 		// 	schedule.addClass('loader');

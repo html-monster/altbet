@@ -19,9 +19,18 @@ class orderClass{
 					checkbox = $('.left_order .tab input[type=checkbox]');
 
 			$(".left_order .wrapper .tab").click(function () {
+				var tab = $(".left_order .wrapper .tab");
 				if($(this).attr('data-disabled')) return false;
 
-				$(".left_order .wrapper .tab").removeClass("active").eq($(this).index()).addClass("active");
+				if(tab.index() == 0){
+					if($('.left_order .tab input.limit').prop('checked')) globalData.tradeOn = true;
+					globalData.myOrdersOn = false;
+				}
+				else{
+					globalData.tradeOn = false;
+					globalData.myOrdersOn = true;
+				}
+				tab.removeClass("active").eq($(this).index()).addClass("active");
 				$(".left_order .tab_item").hide().eq($(this).index()).show();
 			}).eq(0).addClass("active");
 
@@ -569,6 +578,8 @@ class orderClass{
 		if (!(tab.eq(0).hasClass('active'))) {
 			tab.removeClass("active").eq(0).addClass("active");
 			tab_item.hide().eq(0).fadeIn(0);
+			if($('.left_order .tab input.limit').prop('checked')) globalData.tradeOn = true;
+			globalData.myOrdersOn = false;
 		}
 	}
 }

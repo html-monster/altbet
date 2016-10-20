@@ -1,12 +1,3 @@
-// class myOrdersControllerClass{
-// 	constructor(){
-// 		this.html = $('#current-orders .order_content').eq(0);
-// 	}
-// 	static updateData(data){
-// 		console.log(data);
-// 		console.log(myOrdersControllerClass.html);
-// 	}
-// }
 var myOrdersControllerClass = new function () {
 	var htmlTmp, orderTmp;
 	this.createTemplate = function () {
@@ -26,6 +17,7 @@ var myOrdersControllerClass = new function () {
 		// console.log(data);
 		// console.log(html);
 		// console.log(item);
+		console.log(335);
 		$(data).each(function () {
 			var item = this,
 					newItem = true,

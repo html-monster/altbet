@@ -23,7 +23,7 @@ class activeTraderClass{
 					webkit = ($.browser.webkit) ? 'webkit' : '';
 
 			$('.active_trader table.limit').addClass(webkit);
-
+			globalData.tradeOn = false;
 			if(checkbox.prop('checked')){
 				var ii = 0,
 						symbol = event_container.eq(0).attr('data-symbol');
@@ -50,6 +50,7 @@ class activeTraderClass{
 					else
 						activeTraderClass.takeData($('.wrapper_event_page'));
 				}, 400);
+				globalData.tradeOn = true;
 			}
 			checkbox.change(function () {
 				ii = 0;
@@ -86,6 +87,8 @@ class activeTraderClass{
 					}, 700);
 					if($('.wrapper_event_page').length)
 						executedOrders.find('td.clickable').removeClass('clickable');
+
+					globalData.tradeOn = true;
 				}
 				else{
 					autoTrade.parent().fadeOut(200);
@@ -98,6 +101,8 @@ class activeTraderClass{
 					event_container.removeClass('clickable');
 					if($('.wrapper_event_page').length)
 						executedOrders.find('td.clickable').addClass('clickable');
+
+					globalData.tradeOn = false;
 				}
 			});
 			// $('.left_order .active_trader a').click(function (e) {
@@ -698,7 +703,10 @@ class activeTraderClass{
 		$('.active_trader input.spreader').val('');
 		$('.active_trader table.limit td.best_buy').removeClass('active');
 		$('.active_trader table.limit td.best_sell').removeClass('active');
-		if(removeOrder) $('.active_trader #order_content').remove();
+		if(removeOrder){
+			$('.active_trader table.limit td.size ').removeClass('clickable');
+			$('.active_trader #order_content').remove();
+		}
 		$('.active_trader .spread_confim').remove();
 	}
 

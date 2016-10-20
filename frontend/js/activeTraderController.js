@@ -221,14 +221,13 @@ class activeTraderControllerClass{
 			td.removeClass('best_buy');
 		}
 
-
 		if(isMirror){
 			if(trader.find('.join_bid .price').text() != ask) trader.find('.join_bid .price').text(ask);
-			if(trader.find('.join_bid .price').text() != bid) trader.find('.join_ask .price').text(bid);
+			if(trader.find('.join_ask .price').text() != bid) trader.find('.join_ask .price').text(bid);
 		}
 		else{
 			if(trader.find('.join_bid .price').text() != bid) trader.find('.join_bid .price').text(bid);
-			if(trader.find('.join_bid .price').text() != ask) trader.find('.join_ask .price').text(ask);
+			if(trader.find('.join_ask .price').text() != ask) trader.find('.join_ask .price').text(ask);
 		}
 		//
 		tbody.find('tr').each(function () {

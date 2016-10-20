@@ -472,7 +472,8 @@
             font-weight: normal;
             transition: 0.5s ease-out;
             &.active{
-              margin-top: 0 !important;
+							transform: translateY(-5px);
+              //margin-top: 0 !important;
               opacity: 1 !important;
             }
             form{
