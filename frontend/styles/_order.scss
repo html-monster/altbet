@@ -369,6 +369,7 @@
               &:last-of-type{  border-right: none;  }
             }
             td{
+							user-select: none;
               transition: 0.4s ease-out;
               &:nth-of-type(1){  width: 60px;  }
               &:nth-of-type(5){  width: 68px; }
@@ -980,6 +981,11 @@
                 input:checked ~ span{
                   &:before{  background: #ef8022;  }
                 }
+								.profit{
+									padding: 0;
+									color: $main-color;
+									span{  color: #4dac2e;  }
+								}
               }
               .delete{
                 display: flex;

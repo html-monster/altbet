@@ -7,7 +7,7 @@ class modeSwitchClass{
 				$('.mode_info_js').hide();
 				$('.content_bet button').each(function () {
 					var price = $(this).find('.price:not(.empty)').text();
-					$(this).find('.price:not(.empty)').text(price.slice(1));
+					$(this).find('.price:not(.empty)').text(price.replace('$', ''));
 				});
 				globalData.basicMode = false;
 				localStorage.setItem('tradingMode', 'expert');

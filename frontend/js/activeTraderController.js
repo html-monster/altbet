@@ -43,16 +43,18 @@ class activeTraderControllerClass{
 		});
 
 		if(activeData){
+
 			if(activeData.Positions) $('.open_contracts .quantity').text(activeData.Positions);
 			if(activeData.GainLoss) $('.open_pnl .quantity').text(activeData.GainLoss);
+
+			if(!activeData.Orders.length){
+				td.removeClass('best_sell');
+				td.removeClass('best_buy');
+			}
 			$(lines).each(function () {
 				var currnetLine = $(this),
 						noData = true;
 
-				if(!activeData.Orders.length){
-					td.removeClass('best_sell');
-					td.removeClass('best_buy');
-				}
 
 				$(activeData.Orders).each(function () {
 					var side = this.Side;
@@ -198,7 +200,6 @@ class activeTraderControllerClass{
 								}
 							}
 						}
-
 					});
 				});
 

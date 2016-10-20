@@ -523,14 +523,14 @@ class activeTraderClass{
 			$('.active_trader .limit td.price_value').removeClass('hovered');
 			context.parents('tr').find('.price_value').addClass('hovered');
 			if(context.hasClass('ask')){
-				tr.eq(ii + value).find('.price_value').addClass('hovered');
+				tr.eq((ii + value) > 98 ? 98 : ii + value).find('.price_value').addClass('hovered');
 			}
 			if(context.hasClass('bid')){
-				tr.eq(ii - value).find('.price_value').addClass('hovered');
+				tr.eq((ii - value) < 1 ? 0 : ii - value).find('.price_value').addClass('hovered');
 			}
 			if(context.hasClass('mid')){
-				tr.eq(ii - value).find('.price_value').addClass('hovered');
-				tr.eq(ii + value).find('.price_value').addClass('hovered');
+				tr.eq((ii - value) < 1 ? 0 : ii - value).find('.price_value').addClass('hovered');
+				tr.eq((ii + value) > 98 ? 98 : ii + value).find('.price_value').addClass('hovered');
 			}
 		}
 		limit.on('mouseover', 'td.price_value.active', function () {

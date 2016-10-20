@@ -272,29 +272,34 @@ class orderClass{
 						price = priceInput.val();
 					}
 					if (context.parents('.price').length) {//(price * volume).toFixed(2)
-						if (!(isNaN(volume))) {
+						if (volume) {
 							sumInput.val((price * volume).toFixed(2));
 						}
-						else {
-							sumInput.val('');
-						}
+						// else {
+						// 	sumInput.val('');
+						// }
 					}
 					if (context.parents('.volume').length) {
-						if (!(isNaN(price))) {
+						if (price) {
 							sumInput.val((price * volume).toFixed(2));
 						}
-						else {
-							sumInput.val('');
-						}
+						// else {
+						// 	sumInput.val('');
+						// }
 					}
 					if (context.parents('.obligations').length) {
-						if (!(isNaN(price))) {
+						if (price) {
 							let volume = Math.round(sum / price);
-							volumeInput.val((volume == 'Infinity' || isNaN(volume)) ? '' : volume);
+							volumeInput.val((volume == 'Infinity') ? '' : volume);
+							context.parents('form').find('.profit span').text('$' + ((1 - price) * ((volume == 'Infinity') ? '' : volume)).toFixed(2));
 						}
-						else {
-							volumeInput.val('');
-						}
+						// else {
+						// 	volumeInput.val('');
+						// }
+					}
+					else{
+						if(globalData.basicMode && price && volume && sum)
+							context.parents('form').find('.profit span').text('$' + ((1 - price) * volume).toFixed(2));
 					}
 				}
 				else {
@@ -421,8 +426,8 @@ class orderClass{
 
 		if((globalData.basicMode || $(this).hasClass('empty'))){
 			data.volume = $(this).find('.volume').text();
-			data.buySum = (!(isNaN(data.price)) && !(isNaN(data.volume))) ? (data.price * data.volume).toFixed(2) : "";
-			data.sellSum = (!(isNaN(data.price)) && !(isNaN(data.volume))) ? ((1 - data.price) * data.volume).toFixed(2) : "";
+			data.buySum = (data.price && data.volume) ? (data.price * data.volume).toFixed(2) : "";
+			data.sellSum = (data.price && data.volume) ? ((1 - data.price) * data.volume).toFixed(2) : "";
 		}
 		else{
 			var ii = $(this).index(),
@@ -525,7 +530,7 @@ class orderClass{
 
 		if (orderDirection == 'sell') {
 			// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
-			// html.find('.obligations input.number').val(sellSum);
+			if(globalData.basicMode) html.find('.obligations input.number').val(object.sellSum);
 			html.find('.side').val('Sell');
 		}
 		else {
@@ -534,7 +539,7 @@ class orderClass{
 				html.find('.sell-container').html('');
 			}
 			html.find('input[type=submit]').toggleClass('sell buy').val('buy');
-			// html.find('.obligations input.number').val(buySum);
+			if(globalData.basicMode) html.find('.obligations input.number').val(object.buySum);
 			html.find('.side').val('Buy');
 			// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
 		}
@@ -561,6 +566,13 @@ class orderClass{
 			html.find('.mirror').val('1');
 		else
 			html.find('.mirror').val('0');
+
+		if(globalData.basicMode){
+			let container = html.find('.checkbox');
+			container.css({paddingLeft: 0, textAlign: 'center'}).children().hide();
+			container.append('<strong class="profit">Profit: <span></span></strong>');
+			container.find('.profit span').text('$' + ((1 - object.price) * object.volume).toFixed(2));
+		}
 
 		return html;
 	}
