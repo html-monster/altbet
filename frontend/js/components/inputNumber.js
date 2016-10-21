@@ -110,12 +110,20 @@ class inputNumber{
 
 		//clearInput=======================================================================================================
 		this.parent.on('click', '.input .clear', function () {
-			var self = $(this);
+			var self = $(this),
+					quantityNull = true,
+					spreadClearBtn = $('.spread_container .clear');
+
 			self.parent().find('input').val('');
 			self.removeClass('active');
-			activeTraderClass.spreaderClean(true);
+			if(self.parents('.quantity').length) spreadClearBtn.removeClass('active');
+			if($('.active_trader .number.quantity').val().length)
+				quantityNull = false;
+
+			activeTraderClass.spreaderClean(quantityNull);
 			setTimeout(function () {
 				self.hide();
+				if(self.parents('.quantity').length) spreadClearBtn.hide();
 			}, 150);
 		});
 		// $(document).keyup(function (e) {
@@ -129,7 +137,9 @@ class inputNumber{
 		// });
 	}
 	static clearInput(current) {
-		var clearBtn = $('.input .clear');
+		var clearBtn = current.parent().find('.clear'),
+				spreadClearBtn = $('.spread_container .clear');
+
 		if(current.val()){
 			clearBtn.show();
 			setTimeout(function () {
@@ -138,8 +148,10 @@ class inputNumber{
 		}
 		else{
 			clearBtn.removeClass('active');
+			if(current.parents('.quantity').length) spreadClearBtn.removeClass('active');
 			setTimeout(function () {
 				clearBtn.hide();
+				if(current.parents('.quantity').length) spreadClearBtn.hide();
 			}, 150);
 		}
 	}

@@ -190,7 +190,10 @@ class activeTraderClass{
 
 			$('.active_trader .control .button button').click(function () {
 				activeTraderClass.buttonActivation($(this));
-				inputNumber.clearInput($(this).parents('.active_trader').find('.control .volume.quantity input'));
+				if($(this).parent('.spread').length)
+					inputNumber.clearInput($('.active_trader .number.spreader'));
+				else
+					inputNumber.clearInput($('.active_trader .volume.quantity input'));
 			});
 
 			trader.on('keyup', 'input.number', function(){
@@ -673,6 +676,7 @@ class activeTraderClass{
 			}
 			else if(current.parent().hasClass('spread')){
 				input = $('.active_trader input.spreader');
+				// inputNumber.clearInput($('.active_trader').find('.control input.spreader'));
 				activeTraderClass.spreaderChangeVal(input, quantity);
 				input.focus();
 				input[0].selectionStart = input.val().length;
@@ -683,17 +687,19 @@ class activeTraderClass{
 	static scrollTo(center) {
 		var table = $('table.limit tbody tr'),
 				indexBuy = table.find('.best_buy').parent().index(),
-				indeSell = table.find('.best_sell').parent().index(),
+				indexSell = table.find('.best_sell').parent().index(),
 				tbody = $('table.limit tbody');
 
 		if(tbody.hasClass('scroll_dis')) return false;
 
+		if(indexBuy == -1 && indexSell == -1)
+			indexSell = 49;
 		if(indexBuy == -1)
-			indexBuy = indeSell;
-		else if(indeSell == -1)
-			indeSell = indexBuy;
+			indexBuy = indexSell;
+		else if(indexSell == -1)
+			indexSell = indexBuy;
 
-		center = center ? 0 : (indeSell - indexBuy) / 2;
+		center = center ? 0 : (indexSell - indexBuy) / 2;
 
 		tbody.animate({scrollTop: (indexBuy + center) * 20 - tbody.height() / 2 + 10}, 400);
 	}
