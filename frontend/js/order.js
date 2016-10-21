@@ -568,7 +568,7 @@ class orderClass{
 			html.find('.mirror').val('0');
 
 		if(globalData.basicMode){
-			let container = html.find('.checkbox');
+			let container = html.find('.switch');
 			container.css({paddingLeft: 0, textAlign: 'center'}).children().hide();
 			container.append('<strong class="profit">Profit: <span></span></strong>');
 			container.find('.profit span').text('$' + ((1 - object.price) * object.volume).toFixed(2));

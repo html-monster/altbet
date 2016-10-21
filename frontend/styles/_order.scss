@@ -962,30 +962,39 @@
                 text-align: center;
                 @include order_sidebar_order_input;
               }
-              label.checkbox{
+              .switch{
                 width: 33.33%;
                 height: 31px;
-                //margin-left: 6%;
+                //padding-left: calc(6% + 25px);
+                border-top: 1px solid $order_sidebar_order_border_color;
+                border-right: 1px solid $order_sidebar_order_border_color;
+                padding-left: 6%;
+                .profit{
+                  padding: 0;
+                  color: $main-color;
+                  span{  color: #4dac2e;  }
+                }
+              }
+              label.checkbox{
+                display: block;
+                width: 100%;
+                //width: 33.33%;
+                height: 31px;
                 color: #707070;
                 line-height: 31px;
                 text-align: left;
-                border-top: 1px solid $order_sidebar_order_border_color;
-                border-right: 1px solid $order_sidebar_order_border_color;
+                //border-top: 1px solid $order_sidebar_order_border_color;
+                //border-right: 1px solid $order_sidebar_order_border_color;
                 @include checkbox_vertical;
-                padding-left: calc(6% + 25px);
+                //padding-left: calc(6% + 25px);
                 &>span{
                   color: $checkbox_label_color;
-                  &:before{  left: calc(6% + 16px); background: #4dac2e; transition: 0.4s ease-out;  }
-                  &:after{  left: calc(6% + 17px);  }
+                  &:before{  background: #4dac2e; transition: 0.4s ease-out;  }//left: calc(6% + 16px);
+                  //&:after{  left: calc(6% + 17px);  }
                 }
                 input:checked ~ span{
                   &:before{  background: #ef8022;  }
                 }
-								.profit{
-									padding: 0;
-									color: $main-color;
-									span{  color: #4dac2e;  }
-								}
               }
               .delete{
                 display: flex;

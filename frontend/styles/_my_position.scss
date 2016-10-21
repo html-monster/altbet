@@ -75,9 +75,9 @@
 					&.society:before{  background-position: -26px -304px;  }
 				}
 			}
-			tbody.showhide{
+			.filter_item{
 				display: none;
-				&.active{  display: table-row-group;  }
+				&.active{  display: block;  }
 			}
 			.table_content{
 				table {
@@ -173,11 +173,36 @@
 				}
 			}
 			.my_position_container{
+				& > table thead th{
+					background: none;
+					color: $main-color;
+					&:after{  display: none;  }
+				}
 				thead th{
-					&:nth-of-type(1){  width: 25%;  }
+					width: 11%;
+					padding: 10px 0;
+					background: linear-gradient(to bottom, #3a3942, #292830);
+					color: rgba(255, 255, 255, 0.8);
+					text-align: center;
+					//background: linear-gradient(to bottom, transparentize(#3a3942, 0.8), transparentize(#292830, 0.8));
+					position: relative;
+					&:after{
+						content: '';
+						display: block;
+						width: 100%;
+						height: 1px;
+						position: absolute;
+						left: 0;
+						top: 0;
+						background: rgba(255, 255, 255, 0.1);
+					}
+					&:nth-of-type(1){  width: 25%;  padding-left: 12px;  text-align: left;  }
 					&:nth-of-type(2){  width: 8%;  }
-					&:nth-of-type(3){  padding: 0;  text-align: center;  }
-					&:nth-last-of-type(3), &:nth-last-of-type(4){  width: 12%;  padding: 0;  text-align: center;  }
+					&:last-of-type{  width: 20%;  padding-right: 12px;  text-align: right;  }
+					.close_out{
+						background-image: linear-gradient(to bottom, #646470, #34343d);
+						line-height: 10px;
+					}
 				}
 				tbody{
 					tr{
@@ -199,6 +224,8 @@
 						}
 					}
 					td{
+						padding: 10px 0;
+						text-align: center;
 						&:first-of-type:before{
 							content: '';
 							display: block;
@@ -210,7 +237,9 @@
 							background: linear-gradient(to right, transparentize(white, 0.7), transparent);
 							transition: 0.4s ease-out;
 						}
-						&:nth-last-of-type(4){  padding: 0;  text-align: center;  }
+						//&:nth-last-of-type(4){  padding: 0;  text-align: center;  }
+						&:first-of-type{  padding-left: 12px; text-align: left;  }
+						&:last-of-type{  text-align: right;  }
 					}
 				}
 				.clickable{
