@@ -1,4 +1,5 @@
 $(document).ready(function () {
+	new defaultMethods();
 	new inputNumber('.order');
 	new inputNumber('.sing_up_form');
 

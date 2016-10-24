@@ -374,16 +374,16 @@ class orderClass{
 					$(this).parents('.error_pop_up').removeClass('active')
 				}, 700);
 			});
-			$(document).keyup(function (e) {
-				e = e || event;
-
-				if(e.keyCode == 27) {
-					$('.error_pop_up').removeClass('bounceInRight').addClass('bounceOutRight');
-					setTimeout(function () {
-						$('.error_pop_up').removeClass('active')
-					}, 700);
-				}
-			});
+			// $(document).keyup(function (e) {
+			// 	e = e || event;
+			//
+			// 	if(e.keyCode == 27) {
+			// 		$('.error_pop_up').removeClass('bounceInRight').addClass('bounceOutRight');
+			// 		setTimeout(function () {
+			// 			$('.error_pop_up').removeClass('active')
+			// 		}, 700);
+			// 	}
+			// });
 		}();
 
 		// self.checkbox = function () {

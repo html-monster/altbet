@@ -92,21 +92,21 @@ gulp.task('js',function(){
     sourcemaps.init(),
     // $.uglify(),
     gulp.dest('./public/js'),
-    gulp.dest('../../altbetNew/Alt.Bet/Scripts'),
+    gulp.dest('../../altbetNew/Alt.Bet/Scripts')
 
-    gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js']),
-    $.concat('vendors.js'),
-    $.uglify(),
-    gulp.dest('./public/js'),
-
-		gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js', 'frontend/js/themeChange.js']),
-    $.concat('access.js'),
-    babel({
-      presets: ['es2015']
-    }),
-    sourcemaps.init(),
-    $.uglify(),
-    gulp.dest('./public/js')
+    // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js']),
+    // $.concat('vendors.js'),
+    // $.uglify(),
+    // gulp.dest('./public/js'),
+		//
+		// gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js', 'frontend/js/themeChange.js']),
+    // $.concat('access.js'),
+    // babel({
+    //   presets: ['es2015']
+    // }),
+    // sourcemaps.init(),
+    // $.uglify(),
+    // gulp.dest('./public/js')
   ).on('error', $.notify.onError(function (err) {
     return {
       title: 'JS',

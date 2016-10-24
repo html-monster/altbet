@@ -1,4 +1,57 @@
 class defaultMethods{
+	constructor(){
+		$(document).keyup(function (e) {
+			e = e || event;
+
+			if(e.keyCode == 27) {
+				$('.message_pop_up').removeClass('bounceInRight').addClass('bounceOutRight');
+			}
+		});
+
+		$(document).mousemove(function () {
+			removeMesOnAction();
+		});
+
+		$(document).click(function () {
+			removeMesOnAction();
+		});
+
+		$(document).on('mouseenter', '.global_message_container.clone', function () {
+			console.log($(this)[0].tagData);
+				clearTimeout($(this)[0].tagData.timeFadeOut);
+				clearTimeout($(this)[0].tagData.timeRemove);
+		});
+		$(document).on('mouseleave', '.global_message_container.clone', function () {
+			var self = $(this);
+
+			self[0].tagData.timeFadeOut = setTimeout(function () {
+				self.fadeOut(800);
+			}, 1000);
+			self[0].tagData.timeFadeOut = setTimeout(function () {
+				self.remove();
+			}, 1800);
+		});
+
+		function removeMesOnAction() {
+			let errorMessage = $('.global_message_container.clone:not(.remove_js)'),
+					TIMEOUT = 2000,
+					ANIMATION_TIME = 800;
+
+			errorMessage.each(function () {
+				let self = $(this);
+				self.addClass('remove_js');
+				self[0].tagData = {};
+				self[0].tagData.timeFadeOut = setTimeout(function () {
+					self.fadeOut(ANIMATION_TIME);
+				}, TIMEOUT);
+				self[0].tagData.timeRemove = setTimeout(function () {
+					self.remove();
+				}, TIMEOUT + ANIMATION_TIME);
+
+			});
+		}
+	}
+
 	static isInteger(num) {
 		return (num ^ 0) === num;
 	}
@@ -92,14 +145,15 @@ class defaultMethods{
 	}
 
 	static showError(errorMessage){
-		let error = $('.global_error_container');
+		defaultMethods.showMessage(errorMessage, 'error');
+	}
 
-		error.hide().fadeIn(200)
-				 .removeClass('bounceOutRight').addClass('bounceInRight active')
-				 .find('p').text(errorMessage);
-		setTimeout(function () {
-			error.fadeOut(800);
-		}, 5000);
+	static showWarning(warningMessage){
+		defaultMethods.showMessage(warningMessage, 'alert');
+	}
+
+	static showInfo(infoMessage){
+		defaultMethods.showMessage(infoMessage, 'info');
 	}
 
 	static sendAjaxRequest(httpMethod, callback, onError, url, context, data) {
@@ -113,4 +167,34 @@ class defaultMethods{
 			error: onError
 		});
 	}
+	static showMessage(message, messageName) {
+		let error = $('#global_message').clone(),
+				windowHeight = $(window).outerHeight(),
+				allMessages,
+				position = 0,
+				totalHeight = 0,
+				ii = 1;
+
+		error.removeAttr('id').addClass('clone ' + messageName);
+		error.find('p').text(message);
+		$('body').append(error);
+
+		position = error.outerHeight(true);
+		allMessages = $('.global_message_container.clone');
+		allMessages.each(function () {
+			let currentPosition = +$(this).css('bottom').replace('px', '');
+
+			totalHeight += $(this).outerHeight(true);
+
+			if(allMessages.length != ii++){
+				$(this).css('bottom', currentPosition + position);
+			}
+
+			if(totalHeight > windowHeight)
+				allMessages.eq(0).remove();
+		});
+
+		error.hide().fadeIn(200)
+				 .removeClass('bounceOutRight').addClass('bounceInRight active');
+	};
 }

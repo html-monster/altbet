@@ -622,23 +622,25 @@ i.wave{  display: inline-block;  font-style: normal; }
 
 .hidden{  display: none !important;  }
 
-.global_error_container{
+.global_message_container{
   width: 300px;
   padding: 10px 15px;
+  margin-top: 15px;
   position: fixed;
-  right: 100%;
+  right: -100%;
   bottom: 10px;
   background: rgba(0, 0, 0, 0.7);
   border-radius: 6px;
   box-shadow: 0 0 23px -5px rgba(0, 0, 0, 0.5);
   z-index: 500;
+  transition: 0.4s ease-out;
   &.active{
     right: 10px;
     animation-duration: 0.7s;
     animation-fill-mode: both;
   }
-  p{
-    color: #ef4d22;
-    font-size: 12px;
-  }
+  &.error p {  color: #ef4d22;  }
+  &.alert p{  color: #ef8022;  }
+  &.info p{  color: #3498DA;  }
+  p{  font-size: 12px;  }
 }
