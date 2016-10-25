@@ -6,148 +6,254 @@
   <title>Altbet</title>
   <link href="/styles/index_light.css" rel="stylesheet">
   <script src="/js/access.js"></script>
+  <script src="../../../../altbetNew/Alt.Bet/Scripts/webSocketManager.js"></script>
 </head>
 <body>
-  <div class="first_page_wrapper">
-    <header class="first_page">
-      <div class="header_info">
-        <div class="logo-container">
-          <a href="index.html " class="logo"></a>
-        </div>
-        <div class="header_right">
-          <ul class="page_menu">
-            <li><a href="#" class="active">Start</a></li>
-            <li><a href="#">Main</a></li>
-            <li><a href="#">Pricing</a></li>
-            <li><a href="#">Contacts</a></li>
-            <li><a href="#">More</a></li>
-          </ul>
-          <form class="header_form">
-            <div class="select">
-              <select class="language img" name="odds" id="change_language" style="width: 80px;">
-                <option value="en" data-title="English">English</option>
-                <option value="ru" data-title="Russian">Русский</option>
-              </select>
-            </div>
-          </form>
-          <div class="user">
-            <div class="log_in" style="display: none">
-              <ul class="user-menu">
-                <li>
-                  <strong>
-                    Theme color
-                    <span class="dark color_pick" title="dark theme"></span>
-                    <span class="light color_pick" title="light theme"></span>
-                  </strong>
-                </li>
-                <li><a href="user_page.html">Account</a></li>
-                <li><a href="user_page.html">Funds</a></li>
-                <li><a href="#">Log out</a></li>
-              </ul>
-              <span class="count_message">
+
+<div class="first_page_wrapper">
+  <header class="first_page">
+    <div class="header_info">
+      <div class="logo-container">
+        <a href="index.html" class="logo"></a>
+      </div>
+      <div class="header_right">
+        <ul id="menu" class="page_menu">
+          <li data-menuanchor="firstPage" class="active"><a href="#firstPage">Start</a></li>
+          <li data-menuanchor="secondPage"><a href="#secondPage">Main</a></li>
+          <li data-menuanchor="thirdPage"><a href="#thirdPage">Contacts</a></li>
+          <li data-menuanchor="fourthPage"><a href="#fourthPage">More</a></li>
+          <li data-menuanchor="lastPage"><a href="#lastPage">Pricing</a></li>
+        </ul>
+        <!--<form class="header_form">-->
+          <!--<div class="select">-->
+            <!--<select class="language img" name="odds" id="change_language" style="width: 80px;">-->
+              <!--<option value="en" data-title="English">English</option>-->
+              <!--<option value="ru" data-title="Russian">Русский</option>-->
+            <!--</select>-->
+          <!--</div>-->
+        <!--</form>-->
+        <div class="user">
+          <div class="log_in" style="display: none">
+            <ul class="user-menu">
+              <li>
+                <strong>
+                  Theme color
+                  <span class="dark color_pick" title="dark theme"></span>
+                  <span class="light color_pick" title="light theme"></span>
+                </strong>
+              </li>
+              <li><a href="user_page.html">Account</a></li>
+              <li><a href="user_page.html">Funds</a></li>
+              <li><a href="#">Log out</a></li>
+            </ul>
+            <span class="count_message">
             <span class="count">99</span>
           </span>
-              <span class="user-name">seller@seller.mai.ru</span>
+            <span class="user-name">seller@seller.mai.ru</span>
+          </div>
+          <div class="log_out" style="display: flex;">
+            <a href="#" class="sign_in">Login/Join</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <div id="fullpage">
+    <div class="section">
+      <div id="start_betting" data-anchor="slide1" class="slide">
+        <div class="content">
+          <h1>Start betting now!</h1>
+          <span class="describe">Place a sportbook single bet and you’ll get 3x $10</span>
+          <span class="describe">Free bets back to play with anytime</span>
+          <button class="join btn wave">Join Now</button>
+          <div class="container">
+            <a class="conditions" href="conditions.html">T&C’s Apply</a>
+            <span class="mouse_ico"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div id="main_category" data-anchor="slide2" class="slide">
+        <div class="content">
+          <div class="wrapper">
+            <div class="container_up">
+              <a href="#" class="item_category">
+                <span>Sport</span>
+              </a>
+              <a href="#" class="item_category">
+                <span>Finance</span>
+              </a>
             </div>
-            <div class="log_out" style="display: flex;">
-              <a href="#" class="sign_in">Login/Join</a>
+            <div class="container_down">
+              <a href="#" class="item_category">
+                <span>E-sport</span>
+              </a>
+              <a href="#" class="item_category">
+                <span>Society</span>
+              </a>
+              <button class="join btn wave">Join Now</button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="section">
+      <div id="contact_us" data-anchor="slide3" class="slide">
+        <div class="content">
+          <h2>Talk To Us</h2>
+          <span class="describe">Questions? Comments? Find us online. We are always availiable to help you out.</span>
+
+          <div class="contacts">
+            <div class="item">
+              <strong>start<a href="#">chat</a></strong></div>
+            <div class="item">
+              <strong><a href="mailto:info@alt.bet">info@alt.bet</a></strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div id="see_more" data-anchor="slide4" class="slide">
+        <div class="content">
+          <h2>See more about us</h2>
+          <span class="describe">I’m con­vinced that without bad design, the world would be a far less stim­u­lat­ing place;</span>
+          <span class="describe">we would have noth­ing to mar­vel over and noth­ing to be nos­tal­gic about.</span>
+          <div class="video">
+            <span class="movie"></span>
+            <button class="eng btn">Eng</button>
+            <button class="ru btn">Ru</button>
+          </div>
+          <div class="advantages">
+            <div class="item">
+              <h3>Simplicity</h3>
+              <span class="icon"></span>
+
+              <span class="info"> <strong>About Alt.Bet Exchange</strong> Alt.Bet Exchange offers a transparent, neutral, non manipulated marketplace for wagering on predictions in various events. Driven by its mission to make prediction markets user friendly, alt.bet delivers state of the art technology, aggressive pricing and outstanding customer service to gaming operators and trading community. </span>
+            </div>
+            <div class="item">
+              <h3>Transparency</h3>
+              <span class="icon"></span>
+              <span class="info"> <strong>Ultimate In-Play</strong>Alt.Bet Exchange is currently operating four prediction exchanges — Sports, E-Sports, Political and Financial Predictions. We are proud to be the “alternative” start-up, and to deliver Ultimate In-Play exchange to its participants.</span>
+            </div>
+            <div class="item">
+              <h3>Fairness</h3>
+              <span class="icon"></span>
+              <span class="info"><strong>Alt.Bet Exchange Offers</strong>
+                <ul>
+                  <li>- The Best Matching Prices. </li>
+                  <li>- No Deposits and Trade Limits.</li>
+                  <li>- No Restrictions.</li>
+                  <li>- Active Bettor</li>
+                  <li>- Simultaneous Multi Order Trade Slip.</li>
+                  <li>- Continuous Rebalance.</li>
+                  <li>- Clean Optimized Ultralight Interface.</li>
+                </ul>
+              </span>
             </div>
           </div>
         </div>
       </div>
-    </header>
-    <div id="start_betting" class="slide">
-      <div class="content">
-        <h1>Start betting now!</h1>
-        <span class="describe">Place a sportbook single bet and you’ll get 3x $10</span>
-        <span class="describe">Free bets back to play with anytime</span>
-        <span class="join btn wave">Join Now</span>
-        <div class="container">
-          <a class="conditions" href="conditions.html">T&C’s Apply</a>
-        </div>
-      </div>
     </div>
-    <div class="pricing">
-      <div class="content">
-        <div class="item">
-          <h3>Moon</h3>
-          <strong><span>0</span></strong>
-          <span class="title">NO CREDIT CARD NEEDED</span>
-          <ul class="describe">
-            <li>Custom Domain 24/7</li>
-            <li>Cusommer Support</li>
-          </ul>
-          <a href="#" class="subscribe">Try Free</a>
-        </div>
-        <div class="item">
-          <h3>Planet</h3>
-          <strong>$<span>6</span></strong>
-          <span class="title">BILLED PER MONTH</span>
-          <ul class="describe">
-            <li>Mobile-Optimized</li>
-            <li>No Transaction Fees</li>
-            <li>Custom Domain</li>
-            <li>24/7 Cusommer Support</li>
-          </ul>
-          <a href="#" class="subscribe">Purchase</a>
-        </div>
-        <div class="item">
-          <h3>Galaxy</h3>
-          <strong>$<span>24</span></strong>
-          <span class="title">BILLED PER MONTH</span>
-          <ul class="describe">
-            <li>Mobile-Optimized</li>
-            <li>No Transaction Fees</li>
-            <li>Unlimited Projects</li>
-            <li>Custom Domain</li>
-            <li>24/7 Cusommer Support</li>
-          </ul>
-          <a href="#" class="subscribe">Purchase</a>
-        </div>
-      </div>
-    </div>
-    <div id="contact_us">
-      <div class="content">
-        <h2>Talk To Us</h2>
-        <span class="describe">Questions? Comments? Find us online. We are always availiable to help you out.</span>
-        <div class="contacts">
-          <div class="item"><strong><a href="tel:+44 (0)208 834 8000">+44 (0)208 834 8000</a></strong></div>
-          <div class="item"><strong>start<a href="#">chat</a></strong></div>
-          <div class="item"><strong><a href="mailto:info@alt.bet">info@alt.bet</a></strong></div>
-        </div>
-      </div>
-    </div>
-    <div id="see_more">
-      <div class="content">
-        <h2>See more about us</h2>
-        <span class="describe">I’m con­vinced that without bad design, the world would be a far less stim­u­lat­ing place;</span>
-        <span class="describe">we would have noth­ing to mar­vel over and noth­ing to be nos­tal­gic about.</span>
-        <span class="movie" title="click to watch"></span>
-        <div class="advantages">
-          <div class="item">
-            <h3>Highest Limits</h3>
-            <span>You can bet more at alt.bet than any other bookmaker</span>
-          </div>
-          <div class="item">
-            <h3>Better Than An Exchange</h3>
-            <span>Our odds provide better value than exchanges</span>
-          </div>
-          <div class="item">
-            <h3>Arbitrage Friendly</h3>
-            <span>We are the only bookmaker to welcome Arbitrage bets</span>
+    <div class="section">
+      <div id="pricing" data-anchor="slide5" class="slide price_plan_form">
+        <div class="content">
+          <div class="wrapp_price">
+            <div class="item">
+              <h2>Free</h2>
+              <strong class="price"><span class="value">$</span>0</strong>
+              <span class="time">PER MONTH</span>
+              <ul class="info">
+                <li>Low Fees</li>
+                <li>Rebates for Liquidity Adding</li>
+                <li>Low Settlement Fees</li>
+                <li>No Deposit Fees</li>
+                <li>$10 Deposit Minimum</li>
+                <li>Pass Through Withdrawal Fees</li>
+              </ul>
+              <button class="purchase btn wave">Try Free</button>
+            </div>
+            <div class="item">
+              <h2>Bronze</h2>
+              <strong class="price"><span class="value">$</span>10</strong>
+              <span class="time">PER MONTH <span class="same">(or $<span class="price">99</span>/year)</span></span>
+              <ul class="info">
+                <li>1500 contracts included</li>
+                <li>(18000/year contracts included)</li>
+                <li>Low Fees</li>
+                <li>Rebates for Liquidity Adding</li>
+                <li>Waived Settlement Fees</li>
+                <li>No Deposit Fees</li>
+                <li>No Deposit Minimum</li>
+                <li>Waived Withdrawal Fees</li>
+                <li>save up to <strong>36%</strong></li>
+              </ul>
+              <button class="purchase btn wave">Purchase</button>
+            </div>
+            <div class="item">
+              <h2>Silver</h2>
+              <strong class="price"><span class="value">$</span>30</strong>
+              <span class="time">PER MONTH <span class="same">(or $<span class="price">299</span>/year)</span></span>
+              <ul class="info">
+                <li>5000 contracts included</li>
+                <li>(60000/year contracts included)</li>
+                <li>Low Fees</li>
+                <li>Rebates for Liquidity Adding</li>
+                <li>Waived Settlement Fees</li>
+                <li>No Deposit Fees</li>
+                <li>No Deposit Minimum</li>
+                <li>Waived Withdrawal Fees</li>
+                <li>save up to <strong>42%</strong></li>
+              </ul>
+              <button class="purchase btn wave">Purchase</button>
+            </div>
+            <div class="item">
+              <h2>Gold</h2>
+              <strong class="price"><span class="value">$</span>100</strong>
+              <span class="time">PER MONTH <span class="same">(or $<span class="price">999</span>/year)</span></span>
+              <ul class="info">
+                <li>20000 contracts included</li>
+                <li>(240000/year contracts included)</li>
+                <li>Low Fees</li>
+                <li>Rebates for Liquidity Adding</li>
+                <li>Waived Settlement Fees</li>
+                <li>No Deposit Fees</li>
+                <li>No Deposit Minimum</li>
+                <li>Waived Withdrawal Fees</li>
+                <li>save up to <strong>52%</strong></li>
+              </ul>
+              <button class="purchase btn wave">Purchase</button>
+            </div>
+            <div class="item">
+              <h2>Enterprise</h2>
+              <ul class="info enterprise">
+                <li>If You are Licensed Gaming Operator, please <a href="mailTo:enterprise@alt.bet"
+                                                                   class="text_decoration">Contact Us</a> for details.
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="footer">
-      <div class="warning_container"><span>Please gamble responsibly</span></div>
-      <div class="copyright"><span>Copyright © 2016 Alt.Bet Exchange B.V. All rights reserved.</span></div>
     </div>
   </div>
 
-  <div include-html="include/footer.html"></div>
 
-  <script src="/js/vendors.js" defer></script>
-  <script src="/js/all.js" defer></script>
+  <div class="footer">
+    <div class="warning_container"><span>Please gamble responsibly</span></div>
+    <div class="copyright"><span>Copyright © 2016 Alt.Bet Exchange B.V. All rights reserved.</span></div>
+  </div>
+</div>
+
+
+<div include-html="include/footer.html"></div>
+
+<script src="/js/vendors.js" defer></script>
+<script src="/js/landingPage.js" defer></script>
+<script src="/js/all.js" defer></script>
 </body>
 </html>

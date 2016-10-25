@@ -151,6 +151,7 @@
         z-index: 2;
 				opacity: 0.2;
         background: url(../Images/sprite.svg) no-repeat -84px -114px;
+        transition: 0.2s ease-out;
         &:hover{
           animation-duration: 1s;
           animation-fill-mode: both;

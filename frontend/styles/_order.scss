@@ -536,6 +536,7 @@
               .order-title{
                 padding: 5px 30px 5px 15px;
                 background: linear-gradient(to bottom, #53515e, #292830);
+                @include md(1400){  padding: 5px 20px 5px 5px;  }
               }
               form input[type="submit"]{  border-left: none;  }
               .close{
@@ -620,6 +621,9 @@
             .order_info{
               padding: 5px 44px 5px 15px;
               position: relative;
+              @include md(1400){
+                padding: 5px 44px 5px 5px;
+              }
               &.buy{
                 background: linear-gradient(to bottom, transparentize(#64C9EF, 0.7), transparentize(#3498DA, 0.7));
                 @include order_sidebar_current_order_title_buy;

@@ -28,8 +28,12 @@ class ajaxLoginControllerClass{
 			$('.left_order .tab input.limit').removeAttr('disabled');
 			popUpClass.removeEventPopUp('header .deposit, header .my_order');
 			globalData.userIdentity = 'True';
-			wsActiveBettor.changeUser(e.UserName);
-
+			if(!globalData.landingPage) wsActiveBettor.changeUser(e.UserName);
+			else{
+				$('.first_page_wrapper button.join').remove();
+				$('.first_page_wrapper .container_down').append('<a href="' + globalData.rootUrl + '" class="join_link btn wave">Trade Now</a>');
+				location.href = globalData.rootUrl;
+			}
 		} else {
 			$('.sign_in_form .input_animate').addClass('invalid');
 			$('#submit_sign').removeAttr('disabled');

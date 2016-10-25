@@ -17,7 +17,6 @@ var myOrdersControllerClass = new function () {
 		// console.log(data);
 		// console.log(html);
 		// console.log(item);
-		console.log(335);
 		$(data).each(function () {
 			var item = this,
 					newItem = true,
@@ -29,7 +28,7 @@ var myOrdersControllerClass = new function () {
 				var self = $(this),
 						lastPrice = self.find('.last-price');
 
-				if(item.Symbol == self.find('h3').text()){
+				if(item.ID == self.attr('id')){
 					newItem = false;
 					if(item.LastSide == null || item.LastPrice == 1){
 						lastPrice.addClass('hidden');
@@ -67,6 +66,7 @@ var myOrdersControllerClass = new function () {
 				}
 			});
 			if(newItem){
+					html.attr('id', item.ID);
 					html.find('h3').text(item.Symbol);
 					if(item.LastSide == null)
 						lastPrice.addClass('hidden');

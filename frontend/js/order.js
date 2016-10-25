@@ -20,9 +20,10 @@ class orderClass{
 
 			$(".left_order .wrapper .tab").click(function () {
 				var tab = $(".left_order .wrapper .tab");
+
 				if($(this).attr('data-disabled')) return false;
 
-				if(tab.index() == 0){
+				if($(this).index() == 0){
 					if($('.left_order .tab input.limit').prop('checked')) globalData.tradeOn = true;
 					globalData.myOrdersOn = false;
 				}

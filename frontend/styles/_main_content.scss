@@ -497,7 +497,7 @@
             }
           }
           .pl, .pos{
-            width: 115px;
+            width: 145px;
             height: 22px;
             //padding-top: 4px;
             //visibility: hidden;
@@ -518,9 +518,11 @@
             padding-right: 30px;
             right: -6px;
             background-position: $main_page_event_info_pl_bg;
+            //.profit{  color: #4dac2e;  }
+            //.loss{  color: #ff3905;  }
             span{
               &.win{  color: #4dac2e;  }
-              &.lost{  color: #ff3905;  }
+              &.lose{  color: #ff3905;  }
             }
           }
           .pos{

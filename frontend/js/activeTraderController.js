@@ -51,6 +51,15 @@ class activeTraderControllerClass{
 				td.removeClass('best_sell');
 				td.removeClass('best_buy');
 			}
+
+			if(isMirror){
+				if(activeData.Symbol.LastAsk.toFixed(2) == 1) td.removeClass('best_buy');
+				if(activeData.Symbol.LastBid.toFixed(2) == 0) td.removeClass('best_sell');
+			}
+			else{
+				if(activeData.Symbol.LastAsk.toFixed(2) == 1) td.removeClass('best_sell');
+				if(activeData.Symbol.LastBid.toFixed(2) == 0) td.removeClass('best_buy');
+			}
 			$(lines).each(function () {
 				var currnetLine = $(this),
 						noData = true;
@@ -72,14 +81,6 @@ class activeTraderControllerClass{
 							noData = false;
 						}
 
-						if(isMirror){
-							if(activeData.Symbol.LastAsk.toFixed(2) == 1) td.removeClass('best_buy');
-							if(activeData.Symbol.LastBid.toFixed(2) == 0) td.removeClass('best_sell');
-						}
-						else{
-							if(activeData.Symbol.LastAsk.toFixed(2) == 1) td.removeClass('best_sell');
-							if(activeData.Symbol.LastBid.toFixed(2) == 0) td.removeClass('best_buy');
-						}
 
 						if(!isMirror && line){
 							if (side == 0) {

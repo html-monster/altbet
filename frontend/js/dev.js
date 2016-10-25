@@ -93,6 +93,10 @@ $(document).ready(function () {
 	$('.schedule').mousedown(function (e) {
 		e.stopPropagation();
 	});
+	$('a.favorite').click(function (e) {
+		e.preventDefault();
+		$(this).toggleClass('active');
+	});
 
 	new teamClass();
 });
