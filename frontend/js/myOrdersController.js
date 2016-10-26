@@ -17,19 +17,22 @@ var myOrdersControllerClass = new function () {
 		// console.log(data);
 		// console.log(html);
 		// console.log(item);
+		let currentOrders = $('#current-orders .order_content');
+		currentOrders.addClass('thisRemoveJs');
+		$('.order_container').addClass('thisRemoveJs');
 		$(data).each(function () {
 			var item = this,
 					newItem = true,
 					html = htmlTmp.clone(),
 					lastPrice = html.find('.last-price');
 
-			// console.log(item);
-			$('#current-orders .order_content').each(function () {
+			currentOrders.each(function () {
 				var self = $(this),
 						lastPrice = self.find('.last-price');
 
 				if(item.ID == self.attr('id')){
 					newItem = false;
+					$(this).removeClass('thisRemoveJs');
 					if(item.LastSide == null || item.LastPrice == 1){
 						lastPrice.addClass('hidden');
 					}
@@ -55,6 +58,7 @@ var myOrdersControllerClass = new function () {
 						self.find('.order_container').each(function () {
 							if(($(this).attr('id')).slice(0, -7) == orderInfo.ID){
 								newItem = false;
+								$(this).removeClass('thisRemoveJs');
 							}
 						});
 
@@ -82,7 +86,7 @@ var myOrdersControllerClass = new function () {
 						var orderInfo = this,
 								order = orderTmp.clone();
 
-						createChild(html, order, orderInfo);
+						createChild(html.find('.order-title'), order, orderInfo);
 					});
 
 
@@ -90,6 +94,8 @@ var myOrdersControllerClass = new function () {
 			}
 
 		});
+		// console.log($('#current-orders .thisRemoveJs'));
+		$('#current-orders .thisRemoveJs').remove();
 		// console.log('=======================================');
 	};
 	function createChild(context, childTmp, data) {
