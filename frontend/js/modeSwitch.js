@@ -24,10 +24,18 @@ class modeSwitchClass{
 				localStorage.setItem('tradingMode', 'basic');
 			}
 		}
-		if(localStorage.tradingMode == 'expert')
-			$('.mode_switch input').prop('checked', true);
-		else
-			$('.mode_switch input').prop('checked', false);
+		if(localStorage.tradingMode){
+			if(localStorage.tradingMode == 'expert')
+				$('.mode_switch input').prop('checked', true);
+			else
+				$('.mode_switch input').prop('checked', false);
+		}
+		else{
+			if($('.mode_switch input').prop('checked'))
+				localStorage.tradingMode = 'expert';
+			else
+				localStorage.tradingMode = 'basic';
+		}
 
 		checkMode('.mode_switch input');
 		$('.mode_switch input').change(function () {

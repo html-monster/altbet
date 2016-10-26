@@ -21,14 +21,15 @@ class defaultMethods{
 				clearTimeout($(this)[0].tagData.timeRemove);
 		});
 		$(document).on('mouseleave', '.global_message_container.clone', function () {
-			var self = $(this);
-
+			let self = $(this),
+					TIMEOUT = 1000,
+					ANIMATION_TIME = 800;
 			self[0].tagData.timeFadeOut = setTimeout(function () {
-				self.fadeOut(800);
-			}, 1000);
-			self[0].tagData.timeFadeOut = setTimeout(function () {
+				self.fadeOut(ANIMATION_TIME);
+			}, TIMEOUT);
+			self[0].tagData.timeRemove = setTimeout(function () {
 				self.remove();
-			}, 1800);
+			}, TIMEOUT + ANIMATION_TIME);
 		});
 
 		function removeMesOnAction() {
