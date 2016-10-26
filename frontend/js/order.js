@@ -2,7 +2,7 @@ var id = [];
 
 class orderClass{
 	constructor(){
-		var limit = 0, self = this;
+		var self = this;
 
 		orderClass.showInfo();
 
@@ -400,11 +400,11 @@ class orderClass{
 		// 	});
 		// }();
 
-		orderClass.addOrder('#exchange', 'button.event', limit);
+		orderClass.addOrder('#exchange', 'button.event');
 	}
 
 	// new order =========================================================================================================
-	static addOrder(container, button, limit) {
+	static addOrder(container, button) {
 	$(container).on('click', button, function () {
 		var html,
 				data = {

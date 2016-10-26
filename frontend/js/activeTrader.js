@@ -852,7 +852,6 @@ class activeTraderClass{
 		var windowHeight = window.innerHeight,
 				footer = $('footer'),
 				footerHeight = footer.outerHeight(),
-				eventTitleHeight = ($('.active_trader .event_title').length) ? $('.active_trader .event_title')[0].offsetHeight : '',
 				tbody = $('.left_order table.limit tbody'),
 				delay = 400;
 		// order = $('#order');
@@ -861,15 +860,16 @@ class activeTraderClass{
 
 		// order.css('overflow-y', 'hidden');
 		setTimeout(function () {
-			var orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight(true) + $('header').outerHeight(true)),
-					actveTraderHeight = orderSidebarHeight - (eventTitleHeight + $('.active_trader .info').outerHeight() +
+			var	orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight(true) + $('header').outerHeight(true)),
+			 		eventTitleHeight = ($('.active_trader .event_title').length) ? $('.active_trader .event_title')[0].offsetHeight : '',
+					activeTraderHeight = orderSidebarHeight - (eventTitleHeight + $('.active_trader .info').outerHeight() +
 							$('.active_trader .control').eq(0).outerHeight() + $('.active_trader .control').eq(1).outerHeight() +
 							$('.active_trader .control.remote').outerHeight() + $('.active_trader .limit thead').outerHeight() + 12);
 
 			if(footer.hasClass('active')){
-				tbody.css('max-height', actveTraderHeight - footerHeight);
+				tbody.css('max-height', activeTraderHeight - footerHeight);
 			} else {
-				tbody.css('max-height', actveTraderHeight);
+				tbody.css('max-height', activeTraderHeight);
 			}
 		}, delay);
 	};

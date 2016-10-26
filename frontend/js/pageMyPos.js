@@ -5,7 +5,7 @@ class myPosClass{
 				currentOrders = $('#current-orders'),
 				tab = $('.left_order .tab');
 
-		orderClass.addOrder(posContainer, '.btn');
+		orderClass.addOrder(posContainer, '.btnJs');
 
 		function moveTo(context) {
 			let id = '#' + context.parents('tr').attr('id') + '__order',

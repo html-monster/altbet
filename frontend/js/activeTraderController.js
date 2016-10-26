@@ -4,6 +4,8 @@ class activeTraderControllerClass{
 				isMirror,
 				lines = $('.active_trader tr.visible'),
 				tbody	= $('table.limit tbody'),
+				pos = $('.open_contracts .quantity'),
+				pnl = $('.open_pnl .quantity'),
 				td = tbody.find('td'),
 				// bestSell = 0,
 				// bestBuy = 1,
@@ -42,11 +44,20 @@ class activeTraderControllerClass{
 			}
 		});
 
+
 		if(activeData){
+			if(pos.data('Positions')!== activeData.Positions){
+				pos.data('Positions', activeData.Positions);
+				pos.text(activeData.Positions);
+			}
+			if(pnl.data('GainLoss')!== activeData.GainLoss){
+				if(activeData.GainLoss < 0)
+					pnl.removeClass('profit').addClass('loss').text('($' + (activeData.GainLoss).toFixed(2).toString().slice(1) + ')');
+				else
+					pnl.removeClass('loss').addClass('profit').text('$' + (activeData.GainLoss).toFixed(2));
 
-			if(activeData.Positions) $('.open_contracts .quantity').text(activeData.Positions);
-			if(activeData.GainLoss) $('.open_pnl .quantity').text(activeData.GainLoss);
-
+				pnl.data('GainLoss', activeData.GainLoss);
+			}
 			if(!activeData.Orders.length){
 				td.removeClass('best_sell');
 				td.removeClass('best_buy');
@@ -213,8 +224,8 @@ class activeTraderControllerClass{
 			});
 		}
 		else{
-			$('.open_contracts .quantity').text('0');
-			$('.open_pnl .quantity').text('0');
+			pos.text('0');
+			pnl.removeClass('loss').addClass('profit').text('$0.00');
 			td.each(function () {
 				if($(this).hasClass('size') || $(this).hasClass('my_size'))
 					$(this).find('.value').text('');
