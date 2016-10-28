@@ -39,14 +39,13 @@ class activeTraderClass{
 				if($('.wrapper_event_page').length)
 						executedOrders.find('td.clickable').removeClass('clickable');
 
-				$('[data-symbol=' + symbol + ']').addClass('active');
+				if(symbol) $('[data-symbol=' + symbol + ']').addClass('active');
 				event_container.addClass('clickable').eq(0).addClass('active');
 				$('.active_trader .event_title .event_name').each(function () {
 					$(this).text(titles.eq(ii++).text());
 				});
 				setTimeout(function () {
-
-					if($('.content_bet.active').length)
+					if(globalData.mainPage)
 						activeTraderClass.takeData($('.content_bet').eq(0));
 					else
 						activeTraderClass.takeData($('.wrapper_event_page'));
@@ -69,7 +68,7 @@ class activeTraderClass{
 					if(event_container.hasClass('active')){
 						event_container.addClass('clickable');
 					} else {
-						$('[data-symbol=' + symbol + ']').addClass('active');
+						if(symbol) $('[data-symbol=' + symbol + ']').addClass('active');
 						event_container.addClass('clickable').eq(0).addClass('active');
 						titles = $('.content_bet.active .event-title .title');
 						$('.active_trader .event_title .event_name').each(function () {
@@ -79,8 +78,7 @@ class activeTraderClass{
 					orderClass.tabReturn();
 					setTimeout(function () {
 						if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == ''){
-
-							if($('.content_bet.active').length)
+							if(globalData.mainPage)
 								activeTraderClass.takeData($('.content_bet').eq(0));
 							else
 								activeTraderClass.takeData($('.wrapper_event_page'));
@@ -113,12 +111,12 @@ class activeTraderClass{
 
 		this.eventChange = function () {
 			var checkbox = $('.left_order .tab input.limit'),
-					event_container = $('.content_bet'),
+					event_container = '.content_bet',
 					event_content = $('.event-content'),
 					tabs = $('.active_trader .event_title .event_name');
 
 			tabs.eq(0).addClass('active');
-			event_container.click(function () {
+			$('.tab_item').on('click', 'event_container', function () {
 				if (checkbox.prop('checked')) {
 					var titles = $(this).find('.event-title .title');
 
@@ -153,7 +151,7 @@ class activeTraderClass{
 			function tableLimitChangeData(current, title) {
 				var ii = 0;
 
-				event_container.removeClass('active');
+				$(event_container).removeClass('active');
 				event_content.removeClass('active');
 				current.addClass('active');
 				tabs.each(function () {
@@ -767,7 +765,7 @@ class activeTraderClass{
 
 		if(currentItem.hasClass('content_bet'))
 			activeTrader.attr('id', 'trader_' + currentItem.find('.symbol_name').text());
-		else if(currentItem.hasClass('wrapper_event_page'))
+		else if(globalData.eventPageOn)
 			activeTrader.attr('id', 'trader_' + currentItem.attr('id'));
 		else
 			activeTrader.attr('id', 'trader_' + currentItem.parents('.content_bet').find('.symbol_name').text());
