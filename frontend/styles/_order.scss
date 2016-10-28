@@ -133,7 +133,10 @@
               }
               &.remote {
                 tr:first-of-type td:nth-of-type(2){  border-right: 1px solid $trader_table_td;  }
-                td{  @include btn-hover;  }
+                td{
+                  user-select: none;
+                  @include btn-hover;
+                }
               }
               tr{
                 //&:first-of-type td:last-of-type{  border-top: 1px solid #313d62;  }
@@ -294,6 +297,28 @@
             }
           }
           .table_limit{
+            position: relative;
+            &:before{
+              content: '';
+              display: block;
+              width: 20%;
+              height: calc(100% - 28px);
+              position: absolute;
+              top: 28px;
+              transform: scaleX(0);
+              opacity: 0.1;
+              transition: 0.4s ease-out;
+            }
+            &:before {
+              left: calc(20% - 1px);
+              transform: translateX(-50%) scaleX(0.01);
+              background: #b5e5ec;
+            }
+            &.clickable{
+              &:before{
+                transform: scaleX(0.98);
+              }
+            }
             .show_spread{
               min-width: 93px;
               padding: 0 5px;
@@ -325,6 +350,27 @@
           table.limit{
             position: relative;
             &:not(.webkit) tbody tr{  width: calc(100% + 14px);  }
+            &:before{
+              content: '';
+              display: block;
+              width: 20%;
+              height: calc(100% - 28px);
+              position: absolute;
+              top: 28px;
+              transform: scaleX(0);
+              opacity: 0.1;
+              transition: 0.4s ease-out;
+            }
+            &:before{
+              right: calc(20% + 3px);
+              transform: translateX(50%) scaleX(0.01);
+              background: #ffcbc2;
+            }
+            &.clickable{
+              &:before{
+                transform: scaleX(1);
+              }
+            }
             thead{
               background: $trader_table_thead_bg;
               &:after{
@@ -410,7 +456,8 @@
               &.size .container:not(.best_buy):not(.best_sell):before{
                 content: '';
                 display: block;
-                width: 0;
+                width: 100%;
+                //width: 0;
                 height: 100%;
                 position: absolute;
                 top: 0;
@@ -418,6 +465,7 @@
                 transition: 0.4s ease-out;
                 opacity: 0.2;
                 z-index: 1;
+                transform: translateX(-50%) scaleX(0.01);
               }
               &.size .container:not(.best_buy):not(.best_sell):before{
                 transition: 0.3s ease-out;
@@ -425,21 +473,20 @@
               }
               &.size.size_sell .container:not(.best_buy):not(.best_sell):before,
               &.size.size_sell .container:not(.best_buy):not(.best_sell):after{
-                left: auto;
-                right: 0;
+                transform: translateX(50%) scaleX(0.01);
               }
               &.clickable{  cursor: pointer; }
               &.size_sell{
                 background-color: transparentize(#ef4d22, 0.92);
                 &.clickable{
                   &:hover .container:before{
-                    width: calc(200% + 2px) !important;
-                    background-color: #f88447;
+                    transform: translateX(-51%) scaleX(2.01) !important;
+                    background: #f88447;
                   }
-                  .container:after{
-                    width: 100% !important;
-                    background-color: #ffcbc2;
-                  }
+                  //.container:after{
+                  //  transform: scaleX(1) !important;
+                  //  background: #ffcbc2;
+                  //}
                 }
               }
               &.best_sell, &.best_buy{
@@ -452,13 +499,13 @@
                 background-color: transparentize(#64c9ef, 0.92);
                 &.clickable{
                   &:hover .container:before{
-                    width: calc(200% + 1px) !important;
-                    background-color: #64c9ef;
+                    transform: translateX(51%) scaleX(2.01) !important;
+                    background: #64c9ef;
                   }
-                  .container:after{
-                    width: 100% !important;
-                    background-color: #b5e5ec;
-                  }
+                  //.container:after{
+                  //  transform: scaleX(1) !important;
+                  //  background: #b5e5ec;
+                  //}
                 }
               }
               &.best_buy{

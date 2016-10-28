@@ -154,21 +154,37 @@
             //  margin-top: 5px;
             //  margin-bottom: -5px;
             //}
+
             .button-container{
-              &:first-child{  padding-right: 10px;  }
-              &:last-child{  padding-left: 10px;  }
+              &:first-child{
+                //padding-right: 15px;
+                button.event{
+                  transform: scaleX(1.21) scaleY(1.19) translateX(-15px);
+                }
+              }
+              &:last-child{
+                //padding-left: 15px;
+                button.event{
+                  transform: scaleX(1.21) scaleY(1.19) translateX(15px);
+                }
+              }
             }
             .buy button:not(:first-child){  display: none;  }
             .sell button:not(:last-child){  display: none;  }
             button.event{
-              width: 56px;
-              height: 38px;
-              &.empty{  width: 60px;  }
-              span{
-                line-height: 16px;
-                &.price{  font-size: 15px;  }
-                &.volume{  font-size: 12px;  }
-              }
+              //width: 56px;
+              //height: 38px;
+              //transform: scaleX(1.75);
+              transform: scaleX(1.21) scaleY(1.19);
+              //&.empty{
+              //  width: 60px;
+              //  transform: scaleX(1.22) scaleY(1.19);
+              //}
+              //span{
+              //  line-height: 16px;
+              //  &.price{  font-size: 15px;  }
+              //  &.volume{  font-size: 12px;  }
+              //}
             }
           }
         }
@@ -509,7 +525,7 @@
             overflow: hidden;
             strong{
               display: block;
-              margin-top: -15px;
+              margin-top: -25px;
               transition: 0.2s ease-out;
             }
           }

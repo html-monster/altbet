@@ -19,7 +19,7 @@ var myOrdersControllerClass = new function () {
 		// console.log(item);
 		let currentOrders = $('#current-orders .order_content');
 		currentOrders.addClass('thisRemoveJs');
-		$('.order_container').addClass('thisRemoveJs');
+		$('#current-orders .order_container').addClass('thisRemoveJs');
 		$(data).each(function () {
 			var item = this,
 					newItem = true,

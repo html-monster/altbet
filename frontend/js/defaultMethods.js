@@ -17,8 +17,8 @@ class defaultMethods{
 		});
 
 		$(document).on('mouseenter', '.global_message_container.clone', function () {
-				clearTimeout($(this)[0].tagData.timeFadeOut);
-				clearTimeout($(this)[0].tagData.timeRemove);
+				if($(this)[0].tagData) clearTimeout($(this)[0].tagData.timeFadeOut);
+				if($(this)[0].tagData) clearTimeout($(this)[0].tagData.timeRemove);
 		});
 		$(document).on('mouseleave', '.global_message_container.clone', function () {
 			let self = $(this),

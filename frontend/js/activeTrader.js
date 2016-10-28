@@ -177,7 +177,7 @@ class activeTraderClass{
 		}();
 
 		this.addOrder = function () {
-			var //quantityButton = $('.active_trader .control .button.quantity'),
+			let //quantityButton = $('.active_trader .control .button.quantity'),
 					trader = $('.active_trader'),
 					size = trader.width(),
 					html;
@@ -430,7 +430,14 @@ class activeTraderClass{
 
 		}();
 
+		this.controlMethods = function () {
+			let trader = $('.active_trader');
 
+			trader.on('click', '.active_trader_footer td', function () {
+				let method = ($(this).find('a').attr('class')).slice(0, -2);
+				ajaxControlTraderClass[method]();
+			});
+		}();
 		// this.marcketOrder = function () {
 		// 	var container = $('.active_trader .control').eq(0);
 		//
@@ -639,6 +646,8 @@ class activeTraderClass{
 				if(current.parent('.input').length && (current.val() == '' || current.val() == 0)){
 					market_button.removeClass(className);
 					limit_market_button.removeClass(className);
+					$('.active_trader .table_limit').removeClass('clickable');
+					$('.active_trader table.limit').removeClass('clickable');
 					$('.active_trader table.limit tbody td.size').removeClass('clickable wave');
 					$('.active_trader .spread').find('button').removeClass('btn').attr('disabled', true);
 					$('.active_trader input.spreader').attr('disabled', true).parent().find('.regulator').fadeOut(400).remove();
@@ -668,6 +677,8 @@ class activeTraderClass{
 
 						input[0].selectionStart = input.val().length;
 					}
+					$('.active_trader .table_limit').addClass('clickable');
+					$('.active_trader table.limit').addClass('clickable');
 					$('.active_trader table.limit tbody td.size').addClass('clickable');
 				}
 				if(!recalc) activeTraderClass.recaluculateSum(current);
@@ -711,6 +722,8 @@ class activeTraderClass{
 		$('.active_trader table.limit td.best_buy').removeClass('active');
 		$('.active_trader table.limit td.best_sell').removeClass('active');
 		if(removeOrder){
+			$('.active_trader .table_limit ').removeClass('clickable');
+			$('.active_trader table.limit ').removeClass('clickable');
 			$('.active_trader table.limit td.size ').removeClass('clickable');
 			$('.active_trader #order_content').remove();
 		}
