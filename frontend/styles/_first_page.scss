@@ -90,6 +90,14 @@ header.first_page {
 }
 
 .first_page_wrapper {
+  .main_bg{
+    position: fixed;
+    width: 100%;
+    height: calc(100% + 800px);
+    background: url('../Images/first_page/fp_bg33.jpg') no-repeat -2px -2px;
+    background-size: 110%;
+    transition: 0.7s ease;
+  }
   .slide {
     //display: flex;
     //justify-content: center;
@@ -258,6 +266,7 @@ header.first_page {
     color: #fff;
     font-family: OpenSans, sans-serif;
     font-size: 18px;
+    line-height: 48px;
     font-weight: bold;
     text-align: center;
     padding: 0;
@@ -670,14 +679,7 @@ body {
 
   }
 }
-.main_bg{
-  position: fixed;
-  width: 100%;
-  height: calc(100% + 800px);
-  background: url('../Images/first_page/fp_bg33.jpg') no-repeat -2px 0;
-  background-size: 110%;
-  transition: 0.7s ease;
-}
+
 
 
 
