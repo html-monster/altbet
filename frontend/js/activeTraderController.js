@@ -246,7 +246,7 @@ class activeTraderControllerClass{
 		tbody.find('tr').each(function () {
 			var current = $(this);
 
-			;(function separation() {
+			(function separation() {
 				current = current.find('td.price_value');
 
 				current.removeClass('ask bid mid');
