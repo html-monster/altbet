@@ -8,6 +8,14 @@
   <script src="/js/access.js"></script>
 </head>
 <body>
+<div id="p_prldr">
+  <div class="contpre">
+    <span class="svg_anm">
+    </span> <br> <br>
+    Loading ...
+  </div>
+</div>
+
 <div class="first_page_wrapper">
   <div class="main_bg"></div>
   <header class="first_page">
@@ -53,99 +61,68 @@
             <span class="user-name">seller@seller.mai.ru</span>
           </div>
           <div class="log_out" style="display: flex;">
-            <a href="#" class="sign_in">Login/Join</a>
+            <a href="#" class="sign_in">Join/Login</a>
           </div>
         </div>
       </div>
     </div>
   </header>
-
-
   <div id="fullpage">
-    <div class="section">
+    <div class="section first_slide ">
       <div id="start_betting" data-anchor="slide1" class="slide start_slide">
 
         <div class="content">
           <h1>TRADE YOUR BETS NOW!</h1>
-          <span
-            class="describe">Join   -   Deposit  - Choose the Favorite Event - Make a Bet   - Follow the Event - <strong>Trade</strong> - Mulitply Wins / Limit Losses - Cash Out - Be Happy  - Repeat</span>
-          <button class="join btn wave">Join Now</button>
-          <div class="container">
-            <a class="conditions" href="conditions.html">T&C’s Apply</a>
-            <span class="mouse_ico"></span>
-          </div>
+          <span class="info info_f fadeInLeftBig ">Follow the Event</span>
+          <span class="info info_s fadeInRightBig">Trade</span>
+          <span class="info info_th fadeInUpBig">Win</span>
+          <button class="join btn wave ">Join Now</button>
+
         </div>
       </div>
-      <div data-anchor="slide2" class="slide start_slide">
-
-        <div class="content">
-          <h1>TRADE YOUR BETS NOW!</h1>
-          <span class="describe">Join - Deposit</span>
-          <button class="join btn wave">Join Now</button>
-          <div class="container">
-            <a class="conditions" href="conditions.html">T&C’s Apply</a>
-            <span class="mouse_ico"></span>
-          </div>
-        </div>
-      </div>
-      <div data-anchor="slide3" class="slide start_slide">
-
-        <div class="content">
-          <h1>TRADE YOUR BETS NOW!</h1>
-          <span class="describe">Choose the Favorite Event - Make a Bet</span>
-          <button class="join btn wave">Join Now</button>
-          <div class="container">
-            <a class="conditions" href="conditions.html">T&C’s Apply</a>
-            <span class="mouse_ico"></span>
-          </div>
-        </div>
-      </div>
-      <div data-anchor="slide4" class="slide start_slide">
-
-        <div class="content">
-          <h1>TRADE YOUR BETS NOW!</h1>
-
-          <span class="describe">Follow the Event - <strong>Trade</strong> </span>
-          <button class="join btn wave">Join Now</button>
-          <div class="container">
-            <a class="conditions" href="conditions.html">T&C’s Apply</a>
-            <span class="mouse_ico"></span>
-          </div>
-        </div>
-      </div>
-      <div data-anchor="slide5" class="slide start_slide">
-
-        <div class="content">
-          <h1>TRADE YOUR BETS NOW!</h1>
-
-          <span class="describe"> Mulitply Wins / Limit Losses - Be Happy  - Repeat </span>
-          <button class="join btn wave">Join Now</button>
-          <div class="container">
-            <a class="conditions" href="conditions.html">T&C’s Apply</a>
-            <span class="mouse_ico"></span>
-          </div>
-        </div>
-      </div>
-
-
     </div>
-    <div class="section">
+
+    <div class="section second_slide">
+
+      <div class="sport_video video_category" id="sport_link_video">
+        <video preload="auto" loop autoplay>
+          <source src="../video/sport.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+        </video>
+      </div>
+      <div class="finance_video video_category" id="finance_link_video">
+        <video preload="auto" loop autoplay>
+          <source src="../video/finance_video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+        </video>
+      </div>
+      <div class="esport_video video_category" id="e_sport_link_video">
+        <video preload="auto" loop autoplay>
+          <source src="../video/e_sport.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+        </video>
+      </div>
+      <div class="society_video video_category" id="society_link_video">
+        <video preload="auto" loop autoplay>
+          <source src="../video/society_video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+        </video>
+      </div>
+
       <div id="main_category" data-anchor="slide2" class="slide">
+
         <div class="content">
+
           <div class="wrapper">
             <div class="container_up">
-              <a href="#" class="item_category">
+              <a href="#" class="item_category" id="sport_link">
                 <span>Sport</span>
               </a>
-              <a href="#" class="item_category">
+              <a href="#" class="item_category" id="finance_link">
                 <span>Finance</span>
               </a>
             </div>
             <div class="container_down">
-              <a href="#" class="item_category">
+              <a href="#" class="item_category" id="e_sport_link">
                 <span>E-sport</span>
               </a>
-              <a href="#" class="item_category">
+              <a href="#" class="item_category" id="society_link">
                 <span>Society</span>
               </a>
               <button class="join btn wave">Join Now</button>
@@ -159,9 +136,9 @@
     <div class="section">
       <div id="see_more" data-anchor="slide3 " class="slide">
         <div class="content">
-          <h2>Advantages</h2>
-          <span class="describe">I’m con­vinced that without bad design, the world would be a far less stim­u­lat­ing place;</span>
-          <span class="describe">we would have noth­ing to mar­vel over and noth­ing to be nos­tal­gic about.</span>
+          <h2>Our Advantages</h2>
+          <!--<span class="describe">I’m con­vinced that without bad design, the world would be a far less stim­u­lat­ing place;</span>-->
+          <!--<span class="describe">we would have noth­ing to mar­vel over and noth­ing to be nos­tal­gic about.</span>-->
           <div class="video">
             <span class="movie"></span>
             <button class="eng btn">Eng</button>
