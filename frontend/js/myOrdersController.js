@@ -37,7 +37,7 @@ var myOrdersControllerClass = new function () {
 						lastPrice.addClass('hidden');
 					}
 					else{
-						if(lastPrice.text() != (item.LastPrice).toFixed(2)) lastPrice.removeClass('hidden').text((item.LastPrice).toFixed(2));
+						if(lastPrice.text() != Math.round10(item.LastPrice, -2)) lastPrice.removeClass('hidden').text(Math.round10(item.LastPrice, -2));
 						if(item.LastSide){
 							if(lastPrice.hasClass('up')) lastPrice.removeClass('up').addClass('down');
 						}
@@ -75,7 +75,7 @@ var myOrdersControllerClass = new function () {
 					if(item.LastSide == null)
 						lastPrice.addClass('hidden');
 					else{
-						lastPrice.text((item.LastPrice).toFixed(2));
+						lastPrice.text(Math.round10(item.LastPrice, -2));
 						if(item.LastSide)
 							lastPrice.addClass('down');
 						else
@@ -119,12 +119,12 @@ var myOrdersControllerClass = new function () {
 		childTmp.find('.form-container').addClass(direction + '-container');
 		childTmp.find('[type=submit]').addClass(direction).val(direction);
 
-		childTmp.find('.order_info .price').text(data.isMirror ? (1 - data.Price).toFixed(2) : data.Price);
-		childTmp.find('.form-container .price input').val(data.isMirror ? (1 - data.Price).toFixed(2) : data.Price);
+		childTmp.find('.order_info .price').text(data.isMirror ? Math.round10(1 - data.Price, -2) : data.Price);
+		childTmp.find('.form-container .price input').val(data.isMirror ? Math.round10(1 - data.Price, -2) : data.Price);
 		childTmp.find('.order_info .volume').text(data.Volume);
 		childTmp.find('.form-container .volume input').val(data.Volume);
 		childTmp.find('.date').text((date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear());
-		childTmp.find('.time').text((date.getHours() - 3) + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()));
+		childTmp.find('.time').text((date.getHours() - 2) + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()));
 
 		childTmp.insertAfter(context);
 		// if(direction == 'sell')

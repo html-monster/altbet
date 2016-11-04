@@ -45,7 +45,7 @@ class activeTraderClass{
 					$(this).text(titles.eq(ii++).text());
 				});
 				setTimeout(function () {
-					if(globalData.mainPage)
+					if(globalData.mainPage || globalData.myPosOn)
 						activeTraderClass.takeData($('.content_bet').eq(0));
 					else
 						activeTraderClass.takeData($('.wrapper_event_page'));
@@ -78,7 +78,7 @@ class activeTraderClass{
 					orderClass.tabReturn();
 					setTimeout(function () {
 						if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == ''){
-							if(globalData.mainPage)
+							if(globalData.mainPage || globalData.myPosOn)
 								activeTraderClass.takeData($('.content_bet').eq(0));
 							else
 								activeTraderClass.takeData($('.wrapper_event_page'));

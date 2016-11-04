@@ -164,12 +164,21 @@
 			.open_orders{
 				thead {
 					th {
-						&:nth-of-type(1){  width: 25%;  }
-						&:nth-of-type(2){  width: 20%;  }
-						&:nth-of-type(4){  padding: 0;  text-align: center;  }
-						&:nth-last-of-type(3){  width: 8%;  }
-						&:nth-last-of-type(1), &:nth-last-of-type(2){  width: 15%;  min-width: 74px;  }
+						width: 8%;
+						&:nth-of-type(2){  width: 15%;  }
+						&:nth-of-type(3), &:nth-of-type(4), &:nth-of-type(5),
+						&:nth-of-type(6), &:nth-of-type(7){  padding: 0;  text-align: center;  }
+						&:nth-last-of-type(1){  width: 20%;  min-width: 74px;  }
 					}
+				}
+				tbody td{
+					width: 8%;
+					&:nth-of-type(1){  width: 25%;  }
+					&:nth-of-type(2){  width: 15%;  }
+					&:nth-of-type(3), &:nth-of-type(4), &:nth-of-type(5),
+					&:nth-of-type(6), &:nth-of-type(7){  padding: 0;  text-align: center;  }
+					&:nth-last-of-type(1){  width: 20%;  min-width: 74px;
+						text-align: right;  }
 				}
 				.filter_item.active{  display: table-row-group;  }
 			}
@@ -211,7 +220,7 @@
 							td:first-of-type:before{
 								background: linear-gradient(to right, rgba(239, 77, 34, 0.2), transparent);
 							}
-							&.hovered{
+							&.clickable:hover{
 								background: linear-gradient(to bottom, rgba(248, 132, 71, 0.3), rgba(239, 77, 34, 0.3));
 							}
 						}
@@ -219,7 +228,7 @@
 							td:first-of-type:before{
 								background: linear-gradient(to right, rgba(52, 152, 218, 0.2), transparent);
 							}
-							&.hovered{
+							&.clickable:hover{
 								background: linear-gradient(to bottom, rgba(100, 201, 239, 0.3), rgba(52, 152, 218, 0.3));
 							}
 						}
@@ -286,17 +295,33 @@
 						.time{  opacity: 0.6;  }
 					}
 				}
+				p{
+					padding: 12px;
+					font-size: 14px;
+					color: $main-color;
+					position: absolute;
+					top: 0;
+					left: 0;
+				}
 			}
 			.my_order_history{
 				thead th{
 					padding-left: 5px;
+					&:nth-child(3){  text-align: center;  }
 					&:nth-last-of-type(1){  width: 12%;  }
-					&:nth-last-of-type(2){  width: 10%;  }
+					&:nth-last-of-type(2){  width: 10%;  text-align: center;  }
 					&:nth-last-of-type(3){  padding: 0;  text-align: center;}
 				}
-				tbody td{  padding-left: 5px;  }
+				tbody td{
+					padding-left: 5px;
+					&:nth-child(3), &:nth-last-of-type(2){  text-align: center;  }
+				}
 			}
 		}
   }
+	#my_position_container{
+		min-height: 45px;
+		position: relative;
+	}
 }
 

@@ -1,10 +1,30 @@
-// const Contacts = React.createClass({
-// 	render() {
-// 		return (
-// 				<div></div>
-// 		);
-// 	}
-// });
+var positionControllerClass = new function () {
+	this.checkTab = function () {
+		setData('.my_position .tab');
+		$('.my_position .tab').click(setData(this));
+		function setData(self) {
+			globalData.myPosTabOn.openPrders = false;
+			globalData.myPosTabOn.myPositions = false;
+			globalData.myPosTabOn.orderHistory = false;
+			if($(self).eq(0).hasClass('active'))
+				globalData.myPosTabOn.openPrders = true;
+			else if($(self).eq(1).hasClass('active'))
+				globalData.myPosTabOn.myPositions = true;
+			else
+				globalData.myPosTabOn.orderHistory = false;
+		}
+	};
+	this.filterData = function (data, id) {
+		var newData = [];
+
+		data.forEach(function (item) {
+			if(item.Category === id.split('_')[1])
+				newData.push(item);
+		});
+
+		return newData;
+	}
+};
 /*
 // var positionControllerClass = new function () {
 // 	var htmlTmp, itemTmp;

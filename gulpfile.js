@@ -84,7 +84,8 @@ gulp.task('assets', function() {
 // });
 gulp.task('js',function(){
   return combine(
-    gulp.src(['frontend/js/**/*.js', '!frontend/js/test.js', '!frontend/js/access.js', '!frontend/js/theme_change.js', '!frontend/js/pageFirst.js']),
+    gulp.src(['frontend/js/**/*.js', '!frontend/js/test.js', '!frontend/js/access.js', '!frontend/js/theme_change.js',
+      '!frontend/js/pageFirst.js', '!frontend/js/index.js']),//'!myPositionsController.js'
     babel({
       presets: ['es2015']
     }),
@@ -94,7 +95,8 @@ gulp.task('js',function(){
     gulp.dest('./public/js'),
     gulp.dest('../../altbetNew/Alt.Bet/Scripts')
 
-    // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js']),
+    // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js',
+    // 'vendor/eventEmitter/eventEmitter.min.js']),
     // $.concat('vendors.js'),
     // $.uglify(),
     // gulp.dest('./public/js'),

@@ -92,10 +92,9 @@ header.first_page {
 .first_page_wrapper {
   .main_bg{
     position: fixed;
-    width: 100%;
-    height: calc(100% + 800px);
+    width: 115%;
+    height: calc(100% + 1200px);
     background: url('../Images/first_page/fp_bg33.jpg') no-repeat -2px -2px;
-    background-size: 110%;
     transition: 0.7s ease;
   }
   .slide {
@@ -664,18 +663,18 @@ header.first_page {
 
 body {
   &.fp-viewing-secondPage-slide2 .main_bg {
-    transform: translateY(-200px);
+    transform: translateY(-175px);
   }
   &.fp-viewing-thirdPage-slide3 .main_bg {
-    transform: translateY(-400px);
+    transform: translateY(-350px);
 
   }
   &.fp-viewing-fourthPage-slide4 .main_bg {
-    transform: translateY(-600px);
+    transform: translateY(-525px);
 
   }
   &.fp-viewing-lastPage-slide5 .main_bg {
-    transform: translateY(-800px);
+    transform: translateY(-700px);
 
   }
 }

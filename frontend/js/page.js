@@ -26,6 +26,7 @@ $(document).ready(function () {
 	tabsClass.tabFilter('.filters'); // page my_position
 
 	new tabsClass();
+	// if(globalData.positionData) positionControllerClass.checkTab();
 	// tabsClass.tabsChange('.my_position'); // page my_position
 	// tabsClass.tabsChange('.funds_tab'); // page user_page
 	// tabsClass.tabsChange('.top_reg'); // page registration

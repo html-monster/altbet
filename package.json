@@ -1,17 +1,16 @@
 {
-  "main": "gulpfile.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "./node_modules/gulp/bin/gulp.js"
+    "gulp": "./node_modules/gulp/bin/gulp.js",
+    "devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090 --host localhost",
+    "webpack": "webpack"
   },
   "author": "Aleksey",
   "license": "ISC",
   "dependencies": {
     "assets-webpack-plugin": "^3.2.0",
     "autoprefixer": "^6.2.3",
-    "babel-core": "^6.4.0",
-    "babel-loader": "^6.2.1",
-    "babel-preset-es2015": "^6.3.13",
     "browser-sync": "^2.11.0",
     "css-mqpacker": "^4.0.0",
     "cssnano": "^3.4.0",
@@ -41,16 +40,27 @@
     "stream-combiner2": "^1.1.1",
     "stylelint": "^3.2.2",
     "vinyl-named": "^1.1.0",
-    "webpack": "^1.12.11",
-    "webpack-stream": "^3.1.0"
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6"
   },
   "devDependencies": {
+    "babel": "5.x",
     "babel-core": "^6.4.0",
+    "babel-loader": "5.*",
     "babel-preset-es2015": "^6.3.13",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-babel": "^6.1.1",
     "gulp-sass": "^2.3.1",
-    "gulp-uglify": "^1.5.1"
+    "gulp-uglify": "^1.5.1",
+    "css-loader": "^0.22.0",
+    "file-loader": "^0.8.5",
+    "json-loader": "^0.5.4",
+    "react-hot-loader": "^1.3.0",
+    "style-loader": "^0.13.0",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.12.12",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-stream": "^3.1.0"
   },
   "name": "altbet",
   "version": "1.0.0",
