@@ -31,18 +31,18 @@ $(document).ready(function () {
 		//my position=======================================================================================================
 
 
-		$('#current-orders span.price').each(function () {
-			$(this).text(defaultMethods.randomInteger(0.01, 0.99));
-		});
-		$('#current-orders span.volume').each(function () {
-			$(this).text(defaultMethods.randomInteger(1, 999))
-		});
-		$('#current-orders .current-order span').each(function () {
-			$(this).text(defaultMethods.randomInteger(1, 99));
-		});
-		$('#current-orders .last-price').each(function () {
-			$(this).text(defaultMethods.randomInteger(0.01, 0.99));
-		});
+		// $('#current-orders span.price').each(function () {
+		// 	$(this).text(defaultMethods.randomInteger(0.01, 0.99));
+		// });
+		// $('#current-orders span.volume').each(function () {
+		// 	$(this).text(defaultMethods.randomInteger(1, 999))
+		// });
+		// $('#current-orders .current-order span').each(function () {
+		// 	$(this).text(defaultMethods.randomInteger(1, 99));
+		// });
+		// $('#current-orders .last-price').each(function () {
+		// 	$(this).text(defaultMethods.randomInteger(0.01, 0.99));
+		// });
 	}
 
 

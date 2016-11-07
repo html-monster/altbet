@@ -1,5 +1,5 @@
 'use strict';
-const React = require('react');
+// const React = require('react');
 
 /*const historyItem = React.createClass({
 	render: function() {

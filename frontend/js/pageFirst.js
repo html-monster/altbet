@@ -1,15 +1,15 @@
 $(document).ready(function () {
 
   var $preloader = $('#p_prldr'),
-    $svg_anm   = $preloader.find('.svg_anm');
+      $svg_anm   = $preloader.find('.svg_anm');
   $svg_anm.fadeOut();
   $preloader.delay().fadeOut();
 
   $('#fullpage').fullpage({
     menu: '#menu',
-    anchors: ['firstPage', 'secondPage', 'thirdPage', 'fourthPage', 'lastPage'],
+    anchors: (globalData.userIdentity == 'True') ? ['secondPage', 'thirdPage', 'fourthPage', 'lastPage'] : ['firstPage', 'secondPage', 'thirdPage', 'fourthPage', 'lastPage'],
     navigation: true,
-    navigationTooltips: ['Start', 'Markets', 'Advantages', 'Pricing', 'Contacts'],
+    navigationTooltips: (globalData.userIdentity == 'True') ? ['Markets', 'Advantages', 'Pricing', 'Contacts'] : ['Start', 'Markets', 'Advantages', 'Pricing', 'Contacts'],
     slidesNavigation: false,
     slidesNavPosition: 'bottom',
     loopBottom: true,

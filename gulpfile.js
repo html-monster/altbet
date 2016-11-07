@@ -96,7 +96,7 @@ gulp.task('js',function(){
     gulp.dest('../../altbetNew/Alt.Bet/Scripts')
 
     // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js',
-    // 'vendor/eventEmitter/eventEmitter.min.js']),
+    // 'vendor/eventEmitter/eventEmitter.min.js', 'vendor/react-0.14.7/build/react.min.js', 'vendor/react-0.14.7/build/react-dom.min.js']),
     // $.concat('vendors.js'),
     // $.uglify(),
     // gulp.dest('./public/js'),

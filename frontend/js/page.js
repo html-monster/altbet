@@ -71,21 +71,13 @@ $(document).ready(function () {
 	new modeSwitchClass(); //mode switch activate
 
 	new themeChangeClass();
-	(function changeSelect(){
-		try {
-			$("body select").msDropDown();
-		} catch(e) {
-			alert(e.message);
-		}
-	})();
-
-	/*$('.first_page_wrapper').fullpage({
-		//Scrolling
-		css3: true,
-		//menu: '.main-menu',
-		// anchors: ['header', 'whatwedo', 'portfolio', 'resp', 'team', 'contact', 'footer'],
-		scrollingSpeed: 1000
-	});*/
+	// (function changeSelect(){
+	// 	try {
+	// 		$("body select").msDropDown();
+	// 	} catch(e) {
+	// 		alert(e.message);
+	// 	}
+	// })();
 
 	Waves.init();
 	Waves.attach('.wave', ['waves-button']);
@@ -114,6 +106,7 @@ $(document).ready(function () {
 				$(this).parents('.content_bet').find('.content_title').removeAttr('style');
 			}, 400);
 		}
+
 		if($('.show-schedule').hasClass('active'))
 			globalData.MainCharOn = true;
 		else

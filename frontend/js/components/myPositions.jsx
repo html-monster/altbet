@@ -1,5 +1,5 @@
 'use strict';
-const React = require('react');
+// const React = require('react');
 
 const PosItem = React.createClass({
 	render: function() {
