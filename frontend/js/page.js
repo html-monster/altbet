@@ -71,13 +71,13 @@ $(document).ready(function () {
 	new modeSwitchClass(); //mode switch activate
 
 	new themeChangeClass();
-	// (function changeSelect(){
-	// 	try {
-	// 		$("body select").msDropDown();
-	// 	} catch(e) {
-	// 		alert(e.message);
-	// 	}
-	// })();
+	(function changeSelect(){
+		try {
+			$("body select").msDropDown();
+		} catch(e) {
+			alert(e.message);
+		}
+	})();
 
 	/*$('.first_page_wrapper').fullpage({
 		//Scrolling
