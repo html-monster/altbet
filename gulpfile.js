@@ -84,8 +84,8 @@ gulp.task('assets', function() {
 // });
 gulp.task('js',function(){
   return combine(
-    gulp.src(['frontend/js/**/*.js', '!frontend/js/test.js', '!frontend/js/access.js', '!frontend/js/theme_change.js',
-      '!frontend/js/pageFirst.js', '!frontend/js/index.js']),//'!myPositionsController.js'
+    gulp.src(['frontend/js/nonReact/**/*.js', '!frontend/js/nonReact/test.js', '!frontend/js/nonReact/access.js', '!frontend/js/nonReact/theme_change.js',
+      '!frontend/js/nonReact/pageFirst.js']),
     babel({
       presets: ['es2015']
     }),
@@ -95,20 +95,20 @@ gulp.task('js',function(){
     gulp.dest('./public/js'),
     gulp.dest('../../altbetNew/Alt.Bet/Scripts')
 
-    // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js',
+    // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-js/js/msdropdown/jquery.dd.min.js',
     // 'vendor/eventEmitter/eventEmitter.min.js', 'vendor/react-0.14.7/build/react.min.js', 'vendor/react-0.14.7/build/react-dom.min.js']),
     // $.concat('vendors.js'),
     // $.uglify(),
     // gulp.dest('./public/js'),
     // gulp.dest('../../altbetNew/Alt.Bet/Scripts'),
 		//
-    // gulp.src(['vendor/fullpage.js/jquery.fullPage.min.js', 'frontend/js/pageFirst.js']),
+    // gulp.src(['vendor/fullpage.js/jquery.fullPage.min.js', 'frontend/js/nonReact/pageFirst.js']),
     // $.concat('landingPage.js'),
     // $.uglify(),
     // gulp.dest('./public/js'),
     // gulp.dest('../../altbetNew/Alt.Bet/Scripts'),
 		//
-		// gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/access.js', 'frontend/js/themeChange.js']),
+		// gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/nonReact/access.js', 'frontend/js/nonReact/themeChange.js']),
     // $.concat('access.js'),
     // babel({
     //   presets: ['es2015']
@@ -152,7 +152,7 @@ gulp.task('dev',
             'serve',
             function() {
               gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
-              gulp.watch('frontend/js/**/*.js', gulp.series('js'));
+              gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));
               gulp.watch('frontend/assets/**/*.html', gulp.series('assets'));
               gulp.watch('frontend/fonts/**/*.*', gulp.series('fonts'));
               gulp.watch('frontend/Images/**/*.{svg,png,jpg,gif,ico}', gulp.series('styles:assets'));

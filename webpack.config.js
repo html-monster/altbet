@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 
 module.exports = {
-    entry: "./frontend/js/index.js",
+    entry: "./frontend/js/react/index.js",
     output: {
         path: __dirname + '/../../altbetNew/Alt.Bet/Scripts',
         publicPath: "Scripts/",
