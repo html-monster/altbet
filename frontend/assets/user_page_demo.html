@@ -16,12 +16,20 @@
   <div class="wrapper_about wrapper_user_page">
     <ul class="tabs">
       <li class="tab"><span>Funds</span></li>
-      <li class="tab"><span>Setting</span></li>
-      <li class="tab"><a href="#">Sign Out</a></li>
+      <li class="tab"><span>My Preferences</span></li>
+      <li class="tab"><span>Settings</span></li>
     </ul>
     <div class="tab_content">
       <div class="tab_item">
         <h1>Account</h1>
+        <div class="user_info">
+          <div class="logo"></div>
+          <div class="personal_info">
+            <h3 class="mail">shkilko@yahoo.com</h3>
+            <strong>Gene Shkilko</strong>
+            <span>shkilko@yahoo.com</span>
+          </div>
+        </div>
         <div class="funds_tab">
           <div class="wrapper_user">
             <div class="tabs">
@@ -79,7 +87,7 @@
                           </select>
                         </div>
                         <div class="select_funds funds_margin">
-                          <select class="time" name="odds" >
+                          <select class="time" name="odds">
                             <option value="-1">Year</option>
                             <option value="0">2016</option>
                             <option value="1">2017</option>
@@ -112,13 +120,53 @@
 
         </div>
       </div>
-      <div class="tab_item settings">
-        <form action="#" class="setting_form">
-        <h2>Settings</h2>
-        <div class="left_column column">
+      <div class="tab_item preferences">
+        <h2>Preferences</h2>
+        <div class="user_info">
+          <div class="logo"></div>
+          <div class="personal_info">
+            <h3 class="mail">shkilko@yahoo.com</h3>
+            <strong>Gene Shkilko</strong>
+            <span>shkilko@yahoo.com</span>
+          </div>
+        </div>
+        <span class="section_user">General</span>
 
-                  <span class="input_animate input--yoshiko">
-                    <input class="input__field input__field--yoshiko" type="text" id="f_name" />
+        <form action="#">
+
+
+          <div class="change-color">
+            <strong>Theme color:</strong>
+            <span class="dark color_pick" title="dark theme"></span>
+            <span class="light color_pick" title="light theme"></span>
+          </div>
+
+
+          <div class="mode_wrapper">
+            <label class="mode_switch">
+              <input type="checkbox" name="limit" class="limit">
+              <span>Expert Mode</span>
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="tab_item settings">
+        <h2>Settings</h2>
+        <div class="user_info">
+          <div class="logo"></div>
+          <div class="personal_info">
+            <h3 class="mail">shkilko@yahoo.com</h3>
+            <strong>Gene Shkilko</strong>
+            <span>shkilko@yahoo.com</span>
+          </div>
+        </div>
+        <form action="#" class="setting_form">
+          <div class="column">
+
+            <span class="section_user">Personal info</span>
+
+            <span class="input_animate input--yoshiko">
+                    <input class="input__field input__field--yoshiko" type="text" id="f_name" disabled/>
                     <label class="input__label input__label--yoshiko" for="f_name">
                       <span class="input__label-content input__label-content--yoshiko" data-content="First Name">First Name</span>
                     </label>
@@ -128,8 +176,8 @@
                     </span>
 				          </span>
 
-          <span class="input_animate input--yoshiko">
-                    <input class="input__field input__field--yoshiko" type="text" id="l_name" />
+            <span class="input_animate input--yoshiko">
+                    <input class="input__field input__field--yoshiko" type="text" id="l_name" disabled/>
                     <label class="input__label input__label--yoshiko" for="l_name">
                       <span class="input__label-content input__label-content--yoshiko" data-content="Last Name">Last Name</span>
                     </label>
@@ -139,56 +187,28 @@
                     </span>
 				          </span>
 
-          <span class="input_animate input--yoshiko">
-                    <input class="input__field input__field--yoshiko" type="text" id="n_name"/>
+
+            <span class="input_animate input--yoshiko">
+                    <input class="input__field input__field--yoshiko" type="text" id="n_name" disabled/>
                     <label class="input__label input__label--yoshiko" for="n_name">
                       <span class="input__label-content input__label-content--yoshiko" data-content="User Name">User Name</span>
                     </label>
                     <span class="validation-summary-errors">User name must be at least 4 characters </span>
 				          </span>
 
-          <div class="birthday">
-            <label>Date of birth<span class="validation-summary-errors">Wrong date</span></label>
-            <div class="container">
-              <input type="text" class="number input__field--yoshiko" placeholder="DD" maxlength="2" >
-              <input type="text" class="number input__field--yoshiko" placeholder="MM" maxlength="2">
-              <input type="text" class="number input__field--yoshiko" placeholder="YYYY" maxlength="4">
+            <div class="birthday">
+              <label>Date of birth<span class="validation-summary-errors">Wrong date</span></label>
+              <div class="container">
+                <input type="text" class="number input__field--yoshiko" placeholder="DD" maxlength="2" disabled>
+                <input type="text" class="number input__field--yoshiko" placeholder="MM" maxlength="2" disabled>
+                <input type="text" class="number input__field--yoshiko" placeholder="YYYY" maxlength="4" disabled>
+              </div>
             </div>
-          </div>
 
-          <span class="input_animate input--yoshiko">
-                    <input class="input__field input__field--yoshiko" type="text" id="c_name"/>
-                    <label class="input__label input__label--yoshiko" for="c_name">
-                      <span class="input__label-content input__label-content--yoshiko" data-content="Country">Country</span>
-                    </label>
-                    <span class="validation-summary-errors"></span>
-                     <span class="info top">
-                      <i>Indicate the country of your permanent residence</i>
-                     </span>
-				          </span>
+            <span class="section_user">Contact Info</span>
 
-          <span class="input_animate input--yoshiko">
-                    <input class="input__field input__field--yoshiko" type="text" id="s_name"/>
-                    <label class="input__label input__label--yoshiko" for="s_name">
-                      <span class="input__label-content input__label-content--yoshiko" data-content="Address">Address</span>
-                    </label>
-                    <span class="validation-summary-errors"></span>
-                     <span class="info top">
-                      <i>Enter address manually</i>
-                    </span>
-				          </span>
-
-          <span class="input_animate input--yoshiko">
-                    <input class="input__field input__field--yoshiko" type="tel" id="t_number"/>
-                    <label class="input__label input__label--yoshiko" for="t_number">
-                      <span class="input__label-content input__label-content--yoshiko" data-content="Phone">Phone</span>
-                    </label>
-                    <span class="validation-summary-errors"></span>
-				          </span>
-        </div>
-        <div class="right_column column">
-                  <span class="input_animate input--yoshiko">
-                    <input class="input__field input__field--yoshiko" type="email" id="e_name"/>
+            <span class="input_animate input--yoshiko">
+                    <input class="input__field input__field--yoshiko" type="email" id="e_name" disabled/>
                     <label class="input__label input__label--yoshiko" for="e_name">
                       <span class="input__label-content input__label-content--yoshiko" data-content="Email Address">Email Address</span>
                     </label>
@@ -200,6 +220,46 @@
                     </span>
 				          </span>
 
+            <span class="input_animate input--yoshiko">
+                    <input class="input__field input__field--yoshiko" type="text" id="c_name" disabled/>
+                    <label class="input__label input__label--yoshiko" for="c_name">
+                      <span class="input__label-content input__label-content--yoshiko"
+                            data-content="Country">Country</span>
+                    </label>
+                    <span class="validation-summary-errors"></span>
+                     <span class="info top">
+                      <i>Indicate the country of your permanent residence</i>
+                     </span>
+				          </span>
+
+            <span class="input_animate input--yoshiko">
+                    <input class="input__field input__field--yoshiko" type="text" id="s_name" disabled/>
+                    <label class="input__label input__label--yoshiko" for="s_name">
+                      <span class="input__label-content input__label-content--yoshiko"
+                            data-content="Address">Address</span>
+                    </label>
+                    <span class="validation-summary-errors"></span>
+                     <span class="info top">
+                      <i>Enter address manually</i>
+                    </span>
+				          </span>
+
+            <span class="input_animate input--yoshiko">
+                    <input class="input__field input__field--yoshiko" type="tel" id="t_number" disabled/>
+                    <label class="input__label input__label--yoshiko" for="t_number">
+                      <span class="input__label-content input__label-content--yoshiko" data-content="Phone">Phone</span>
+                    </label>
+                    <span class="validation-summary-errors"></span>
+				          </span>
+            <span class="input_animate input--yoshiko">
+          <i class=" btn wave waves-input-wrapper waves-effect waves-button">
+            <input type="submit" value="Submit">
+          </i>
+         </span>
+
+        </form>
+        <form action="#" class="change_password">
+          <span class="section_user">Change Password</span>
           <span class="input_animate input--yoshiko pass_container">
                     <input class="input__field input__field--yoshiko" type="password" id="r_pass"/>
                     <span class="show_password"></span>
@@ -225,15 +285,17 @@
                     </label>
                     <span class="validation-summary-errors"></span>
 				          </span>
-        </div>
+          <span class="input_animate input--yoshiko">
+          <i class=" btn wave waves-input-wrapper waves-effect waves-button">
+            <input type="submit" value="Change Password">
+          </i>
+         </span>
+
         </form>
       </div>
-      <div class="tab_item">
-        <h2>Settings</h2>
-      </div>
+
     </div>
   </div>
-
 </div>
 
 <div include-html="include/footer.html"></div>
