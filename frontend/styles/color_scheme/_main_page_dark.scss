@@ -3,6 +3,7 @@ $main_page_tab_color: #ffffff;
 $main_page_tab_color_active: #211e25;
 $main_page_tab_bg: linear-gradient(to bottom, #53515e, #292830);;
 $main_page_gif: url("../Images/ajax-loader.gif");
+$main_page_pos_color: #bab500;
 @mixin main_page_tab_icon{
 	&:before {
 		content: '';

@@ -165,7 +165,7 @@ header {
       left: 0;
     }
     span {
-      display: block;
+      //display: block;
       margin-right: 10px;
       color: #fff;
     }
@@ -307,20 +307,22 @@ header {
         text-align: center;
         box-shadow: 0 7px 10px -2px rgba(0, 0, 0, 0.5);
         transition: 0.4s ease-out;
-        strong{  display: block;  margin-bottom: 3px;  font-size: 14px;  font-weight: normal; color: #ffffff; }
-        span {
-          display: inline-block;
-          width: 35px;
-          height: 35px;
-          margin: 0;
-          border-radius: 4px;
-          border: 1px solid #211e25;
-          cursor: pointer;
-          &:hover, &.active{  border: 1px solid $link-color;  }
-          &.dark {  background: linear-gradient(to top, #53515e, #292830);  }
-          &.light {  background: linear-gradient(to top, #FFFFFF, #606060);  }
-        }
       }
     }
+  }
+}
+.change-color{
+  strong{  display: block;  margin-bottom: 3px;  font-size: 14px;  font-weight: normal; color: #ffffff; }
+  span.color_pick {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    margin: 0;
+    border-radius: 4px;
+    border: 1px solid #211e25;
+    cursor: pointer;
+    &:hover, &.active{  border: 1px solid $link-color;  }
+    &.dark {  background: linear-gradient(to top, #53515e, #292830);  }
+    &.light {  background: linear-gradient(to top, #FFFFFF, #606060);  }
   }
 }

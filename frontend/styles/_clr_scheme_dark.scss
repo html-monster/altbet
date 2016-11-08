@@ -1,11 +1,12 @@
 $main-bg: #211e25;
 $link-color: #3498da;
-$main-color: transparentize(#ffffff, 0.2);
+$main-color: transparentize(#ffffff, 0.3);
 $main-color-darker: #dedede;
 $main-color-hover: #ffffff;
 $default-button-bg: #211e25;
 $active_bg: linear-gradient(to top, #bdc0cd, #ffffff);
 $bg_color: linear-gradient(to bottom, #53515e, #292830);
+$color-max: #000;
 
 $checkbox_bg: #53525d;
 $checkbox_label_color: #ffffff;
@@ -15,6 +16,11 @@ $help_block: url("../Images/sprite.svg") no-repeat -50px -182px;
 
 $warning_message_bg: linear-gradient(to bottom, #3a3943, #292830);
 $warning_message_arrow: #3a3943;
+
+@mixin separator{
+	border-top: 1px solid #17161b;
+	border-bottom: 1px solid #3b3a44;
+}
 
 @mixin regulator{
 	border-left: 1px solid #211e25;
@@ -75,3 +81,4 @@ $breadcrumbs-color: transparentize(#ffffff, 0.5);
 @import "color_scheme/registration_dark";
 @import "color_scheme/event_page_dark";
 @import "color_scheme/my_position_dark";
+@import "color_scheme/user_page_dark";

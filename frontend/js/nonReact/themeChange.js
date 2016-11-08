@@ -5,18 +5,22 @@ class themeChangeClass {
 			return styleUrl.slice(styleUrl.indexOf('index_'), styleUrl.indexOf('.'));
 		};
 		if(self.styleSearch() == 'index_dark')
-			$('.user span.dark').addClass('active');
+			$('.change-color span.dark').addClass('active');
 		else
-			$('.user span.light').addClass('active');
+			$('.change-color span.light').addClass('active');
 
 		$('.change-color span').click(function () {
-			$('.user .color_pick').removeClass('active');
-			$(this).addClass('active');
+			let colorPickDark = $('.change-color .color_pick.dark'),
+					colorPickLight = $('.change-color .color_pick.light');
+
+			$('.change-color .color_pick').removeClass('active');
 			if($(this).hasClass('dark')) {
+				colorPickDark.addClass('active');
 				tagLink.attr('href', styleUrl.replace(self.styleSearch(), 'index_dark'));
 				localStorage.setItem('colorScheme', 'index_dark')
 			}
 			else{
+				colorPickLight.addClass('active');
 				tagLink.attr('href', styleUrl.replace(self.styleSearch(), 'index_light'));
 				localStorage.setItem('colorScheme', 'index_light')
 			}

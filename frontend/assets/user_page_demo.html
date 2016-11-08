@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Altbet</title>
-  <link href="/styles/index_light.css" rel="stylesheet">
+  <link href="/styles/index_landing.css" rel="stylesheet">
   <script src="/js/access.js"></script>
 
 </head>
@@ -15,25 +15,23 @@
   <div include-html="include/main-menu.html"></div>
   <div class="wrapper_about wrapper_user_page">
     <ul class="tabs">
-      <li class="tab"><span>Funds</span></li>
+      <li class="tab active"><span>Funds</span></li>
       <li class="tab"><span>My Preferences</span></li>
       <li class="tab"><span>Settings</span></li>
     </ul>
     <div class="tab_content">
       <div class="tab_item">
-        <h1>Account</h1>
+        <h2>Account</h2>
         <div class="user_info">
-          <div class="logo"></div>
           <div class="personal_info">
             <h3 class="mail">shkilko@yahoo.com</h3>
             <strong>Gene Shkilko</strong>
-            <span>shkilko@yahoo.com</span>
           </div>
         </div>
         <div class="funds_tab">
           <div class="wrapper_user">
             <div class="tabs">
-              <span class="tab">Account Balance</span>
+              <span class="tab active">Account Balance</span>
               <span class="tab" data-disabled="true">Deposit Funds</span>
               <!--<span class="tab">Withdraw Funds</span>-->
               <!--<span class="tab">Transaction History</span>-->
@@ -54,8 +52,9 @@
                 </div>
               </div>
               <div class="tab_item">
-                <div class="user_content deposit_funds">
+                <!--<div class="user_content deposit_funds">
                   <h3>Deposit by Credit Carde</h3>
+                  <hr>
                   <div class="table_responsive">
                     <form class="deposit">
                       <i>Please input your information into the form below.</i><br>
@@ -113,7 +112,7 @@
                       <input type="submit" value="Submit" id="submit_deposit_funds">
                     </form>
                   </div>
-                </div>
+                </div>-->
               </div>
             </div>
           </div>
@@ -123,32 +122,47 @@
       <div class="tab_item preferences">
         <h2>Preferences</h2>
         <div class="user_info">
-          <div class="logo"></div>
           <div class="personal_info">
             <h3 class="mail">shkilko@yahoo.com</h3>
             <strong>Gene Shkilko</strong>
-            <span>shkilko@yahoo.com</span>
           </div>
         </div>
-        <span class="section_user">General</span>
-
-        <form action="#">
-
-
-          <div class="change-color">
-            <strong>Theme color:</strong>
-            <span class="dark color_pick" title="dark theme"></span>
-            <span class="light color_pick" title="light theme"></span>
-          </div>
-
-
-          <div class="mode_wrapper">
-            <label class="mode_switch">
-              <input type="checkbox" name="limit" class="limit">
-              <span>Expert Mode</span>
-            </label>
-          </div>
-        </form>
+        <div class="section">
+          <h3 class="section_user">General</h3>
+          <hr>
+          <form action="#">
+            <ul class="preferences_list">
+              <li>
+                <label class="checkbox change-color">
+                  <strong>Theme color:</strong>
+                  <span class="dark color_pick" title="dark theme"></span>
+                  <span class="light color_pick" title="light theme"></span>
+                </label>
+              </li>
+              <li>
+                <label class="checkbox checkbox_horizontal">
+                  <input type="checkbox" name="limit" class="limit">
+                  <strong>Expert mode on:</strong>
+                  <span></span>
+                </label>
+              </li>
+              <li>
+                <label class="checkbox checkbox_horizontal">
+                  <input type="checkbox" name="limit" class="limit">
+                  <strong>Active trader on:</strong>
+                  <span></span>
+                </label>
+              </li>
+              <li>
+                <label class="checkbox checkbox_horizontal">
+                  <input type="checkbox" name="limit" class="limit">
+                  <strong>Auto trade on:</strong>
+                  <span></span>
+                </label>
+              </li>
+            </ul>
+          </form>
+        </div>
       </div>
       <div class="tab_item settings">
         <h2>Settings</h2>
@@ -157,13 +171,13 @@
           <div class="personal_info">
             <h3 class="mail">shkilko@yahoo.com</h3>
             <strong>Gene Shkilko</strong>
-            <span>shkilko@yahoo.com</span>
           </div>
         </div>
         <form action="#" class="setting_form">
           <div class="column">
 
-            <span class="section_user">Personal info</span>
+            <h3 class="section_user">Personal info</h3>
+            <hr>
 
             <span class="input_animate input--yoshiko">
                     <input class="input__field input__field--yoshiko" type="text" id="f_name" disabled/>
@@ -205,7 +219,8 @@
               </div>
             </div>
 
-            <span class="section_user">Contact Info</span>
+            <h3 class="section_user">Contact Info</h3>
+            <hr>
 
             <span class="input_animate input--yoshiko">
                     <input class="input__field input__field--yoshiko" type="email" id="e_name" disabled/>
@@ -252,14 +267,15 @@
                     <span class="validation-summary-errors"></span>
 				          </span>
             <span class="input_animate input--yoshiko">
-          <i class=" btn wave waves-input-wrapper waves-effect waves-button">
-            <input type="submit" value="Submit">
-          </i>
-         </span>
-
+              <!--<i clss=" btn wave waves-input-wrapper waves-effect waves-button">-->
+                <input type="submit" class="btn wave" value="Submit">
+              <!--</i>-->
+            </span>
+          </div>
         </form>
         <form action="#" class="change_password">
-          <span class="section_user">Change Password</span>
+          <h3 class="section_user">Change Password</h3>
+          <hr>
           <span class="input_animate input--yoshiko pass_container">
                     <input class="input__field input__field--yoshiko" type="password" id="r_pass"/>
                     <span class="show_password"></span>
@@ -286,10 +302,8 @@
                     <span class="validation-summary-errors"></span>
 				          </span>
           <span class="input_animate input--yoshiko">
-          <i class=" btn wave waves-input-wrapper waves-effect waves-button">
-            <input type="submit" value="Change Password">
-          </i>
-         </span>
+              <input type="submit" class="btn wave" value="Change Password">
+          </span>
 
         </form>
       </div>

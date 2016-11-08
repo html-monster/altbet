@@ -1027,6 +1027,8 @@
                   border: none;
                   text-align: center;
                   span{
+                    display: inline-block;
+                    width: 45px;
                     position: relative;
                     &:before{
                       left: -20px;

@@ -231,8 +231,8 @@ header.first_page {
     }
     &.sport_video {
       opacity: 0;
-      left: calc(50% - 382px);
-      top: calc(50% - 212px);
+      left: calc(50% - 383px);
+      top: calc(50% - 211px);
       &.active {
         opacity: 1;
       }
@@ -240,15 +240,15 @@ header.first_page {
     &.finance_video {
       opacity: 0;
       left: 50%;
-      top: calc(50% - 212px);
+      top: calc(50% - 211px);
       &.active {
         opacity: 1;
       }
     }
     &.esport_video {
       opacity: 0;
-      left: calc(50% - 382px);
-      top: calc(50%);
+      left: calc(50% - 383px);
+      top: calc(50% + 1px);
       &.active {
         opacity: 1;
       }
@@ -256,7 +256,7 @@ header.first_page {
     &.society_video {
       opacity: 0;
       left: 50%;
-      top: calc(50%);
+      top: calc(50% + 1px);
       &.active {
         opacity: 1;
       }

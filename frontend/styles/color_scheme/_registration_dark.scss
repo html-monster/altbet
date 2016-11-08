@@ -18,10 +18,6 @@ $reg_title: transparentize(#ffffff, 0.2);
 		&:-ms-input-placeholder{  color: transparentize(#8b8c8b, 0.6);  }
 	}
 }
-@mixin reg_separator{
-	border-top: 1px solid #17161b;
-	border-bottom: 1px solid #3b3a44;
-}
 @mixin reg_help_message{
 	background-image: linear-gradient(to top, #ffffff, #f2f2f2);
 	&:before{  background: #ffffff * 1.01;  }

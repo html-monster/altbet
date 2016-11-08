@@ -14,10 +14,6 @@ $reg_title: #292830;
 		&:-ms-input-placeholder{  color: transparentize(#878787, 0.6);  }
 	}
 }
-@mixin reg_separator{
-	border-top: 1px solid #aaadb9;
-	border-bottom: 1px solid #fff;
-}
 @mixin reg_help_message{
 	i{
 		background-image: linear-gradient(to top, #ffffff, #f2f2f2);

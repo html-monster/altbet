@@ -93,29 +93,29 @@ gulp.task('js',function(){
     sourcemaps.init(),
     // $.uglify(),
     gulp.dest('./public/js'),
-    gulp.dest('../../altbetNew/Alt.Bet/Scripts')
+    gulp.dest('../../altbetNew/Alt.Bet/Scripts'),
 
-    // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-js/js/msdropdown/jquery.dd.min.js',
-    // 'vendor/eventEmitter/eventEmitter.min.js', 'vendor/react-0.14.7/build/react.min.js', 'vendor/react-0.14.7/build/react-dom.min.js']),
-    // $.concat('vendors.js'),
-    // $.uglify(),
-    // gulp.dest('./public/js'),
-    // gulp.dest('../../altbetNew/Alt.Bet/Scripts'),
-		//
-    // gulp.src(['vendor/fullpage.js/jquery.fullPage.min.js', 'frontend/js/nonReact/pageFirst.js']),
-    // $.concat('landingPage.js'),
-    // $.uglify(),
-    // gulp.dest('./public/js'),
-    // gulp.dest('../../altbetNew/Alt.Bet/Scripts'),
-		//
-		// gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/nonReact/access.js', 'frontend/js/nonReact/themeChange.js']),
-    // $.concat('access.js'),
-    // babel({
-    //   presets: ['es2015']
-    // }),
-    // sourcemaps.init(),
-    // $.uglify(),
-    // gulp.dest('./public/js')
+    gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/drag_drop/drag_drop.js', 'vendor/ms-Dropdown-js/js/msdropdown/jquery.dd.min.js',
+    'vendor/eventEmitter/eventEmitter.min.js', 'vendor/react-0.14.7/build/react.min.js', 'vendor/react-0.14.7/build/react-dom.min.js']),
+    $.concat('vendors.js'),
+    $.uglify(),
+    gulp.dest('./public/js'),
+    gulp.dest('../../altbetNew/Alt.Bet/Scripts'),
+
+    gulp.src(['vendor/fullpage.js/jquery.fullPage.min.js', 'frontend/js/nonReact/pageFirst.js']),
+    $.concat('landingPage.js'),
+    $.uglify(),
+    gulp.dest('./public/js'),
+    gulp.dest('../../altbetNew/Alt.Bet/Scripts'),
+
+		gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/nonReact/access.js', 'frontend/js/nonReact/themeChange.js']),
+    $.concat('access.js'),
+    babel({
+      presets: ['es2015']
+    }),
+    sourcemaps.init(),
+    $.uglify(),
+    gulp.dest('./public/js')
   ).on('error', $.notify.onError(function (err) {
     return {
       title: 'JS',
