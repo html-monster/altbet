@@ -24,7 +24,7 @@
         <h2>Account</h2>
         <div class="user_info">
           <div class="personal_info">
-            <h3 class="mail">shkilko@yahoo.com</h3>
+            <strong class="mail">shkilko@yahoo.com</strong>
             <strong>Gene Shkilko</strong>
           </div>
         </div>
@@ -123,7 +123,7 @@
         <h2>Preferences</h2>
         <div class="user_info">
           <div class="personal_info">
-            <h3 class="mail">shkilko@yahoo.com</h3>
+            <strong class="mail">shkilko@yahoo.com</strong>
             <strong>Gene Shkilko</strong>
           </div>
         </div>
@@ -135,8 +135,8 @@
               <li>
                 <label class="checkbox change-color">
                   <strong>Theme color:</strong>
-                  <span class="dark color_pick" title="dark theme"></span>
-                  <span class="light color_pick" title="light theme"></span>
+                  <button class="dark color_pick" title="dark theme"></button>
+                  <button class="light color_pick" title="light theme"></button>
                 </label>
               </li>
               <li>
@@ -161,15 +161,17 @@
                 </label>
               </li>
             </ul>
+            <span class="input_animate input--yoshiko">
+              <input type="submit" class="btn wave" value="Change Password">
+            </span>
           </form>
         </div>
       </div>
       <div class="tab_item settings">
         <h2>Settings</h2>
         <div class="user_info">
-          <div class="logo"></div>
           <div class="personal_info">
-            <h3 class="mail">shkilko@yahoo.com</h3>
+            <strong class="mail">shkilko@yahoo.com</strong>
             <strong>Gene Shkilko</strong>
           </div>
         </div>
@@ -267,8 +269,8 @@
                     <span class="validation-summary-errors"></span>
 				          </span>
             <span class="input_animate input--yoshiko">
-              <!--<i clss=" btn wave waves-input-wrapper waves-effect waves-button">-->
-                <input type="submit" class="btn wave" value="Submit">
+              <!--<i class=" btn wave waves-input-wrapper waves-effect waves-button">-->
+                <input type="submit" class="btn wave" value="Submit" disabled="disabled">
               <!--</i>-->
             </span>
           </div>
@@ -277,10 +279,19 @@
           <h3 class="section_user">Change Password</h3>
           <hr>
           <span class="input_animate input--yoshiko pass_container">
+                    <input class="input__field input__field--yoshiko" type="password" id="curr_pass"/>
+                    <span class="show_password"></span>
+                    <label class="input__label input__label--yoshiko" for="curr_pass">
+                      <span class="input__label-content input__label-content--yoshiko" data-content="Current Password">Current Password</span>
+                    </label>
+                    <span class="validation-summary-errors"></span>
+				          </span>
+
+          <span class="input_animate input--yoshiko pass_container">
                     <input class="input__field input__field--yoshiko" type="password" id="r_pass"/>
                     <span class="show_password"></span>
                     <label class="input__label input__label--yoshiko" for="r_pass">
-                      <span class="input__label-content input__label-content--yoshiko" data-content="Password">Current Password</span>
+                      <span class="input__label-content input__label-content--yoshiko" data-content="New Password">New Password</span>
                     </label>
                     <span class="validation-summary-errors"></span>
 				          </span>
@@ -289,15 +300,7 @@
                     <input class="input__field input__field--yoshiko" type="password" id="r_confirm_pass"/>
                     <span class="show_password"></span>
                     <label class="input__label input__label--yoshiko" for="r_confirm_pass">
-                      <span class="input__label-content input__label-content--yoshiko" data-content="Confirm Password">New Password</span>
-                    </label>
-                    <span class="validation-summary-errors"></span>
-				          </span>
-
-          <span class="input_animate input--yoshiko">
-                    <input class="input__field input__field--yoshiko" type="text" id="question"/>
-                    <label class="input__label input__label--yoshiko" for="question">
-                      <span class="input__label-content input__label-content--yoshiko" data-content="Security question">Confirm Password</span>
+                      <span class="input__label-content input__label-content--yoshiko" data-content="Confirm Password">Confirm Password</span>
                     </label>
                     <span class="validation-summary-errors"></span>
 				          </span>

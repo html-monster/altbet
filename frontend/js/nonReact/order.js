@@ -290,7 +290,7 @@ class orderClass{
 					}
 					if (context.parents('.obligations').length) {
 						if (price) {
-							let volume = Math.round(sum / price);
+							let volume = Math.round10(sum / price) || '';
 							volumeInput.val((volume == 'Infinity') ? '' : volume);
 							context.parents('form').find('.profit span').text('$' + ((1 - price) * ((volume == 'Infinity') ? '' : volume)).toFixed(2));
 						}

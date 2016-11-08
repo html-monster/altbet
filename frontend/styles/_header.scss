@@ -206,7 +206,7 @@ header {
             font-weight: normal;
             border-top: none;
             padding-right: 12px;
-            span{
+            button{
               display: inline-block;
               width: 20px;
               height: 20px;
@@ -313,7 +313,7 @@ header {
 }
 .change-color{
   strong{  display: block;  margin-bottom: 3px;  font-size: 14px;  font-weight: normal; color: #ffffff; }
-  span.color_pick {
+  .color_pick {
     display: inline-block;
     width: 35px;
     height: 35px;
@@ -321,6 +321,7 @@ header {
     border-radius: 4px;
     border: 1px solid #211e25;
     cursor: pointer;
+    transition: 0.2s ease-out;
     &:hover, &.active{  border: 1px solid $link-color;  }
     &.dark {  background: linear-gradient(to top, #53515e, #292830);  }
     &.light {  background: linear-gradient(to top, #FFFFFF, #606060);  }

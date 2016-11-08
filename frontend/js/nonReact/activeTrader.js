@@ -217,7 +217,7 @@ class activeTraderClass{
 				else
 						price = $(this).parents('tr').find('.price_value .value').text().replace('$', '');
 
-				if($('.order label input.auto').prop('checked')){
+				if(globalData.autoTradeOn){
 					if($(this).hasClass('sell'))
 						ajaxAutoTradeClass.sendOrder($(this), 'sell', price);
 					else
@@ -231,7 +231,7 @@ class activeTraderClass{
 			trader.on('click', '.price_value.active', function(){
 				var context = $(this), price1 = (takeSpreadPrice(context)).price1, price2 = (takeSpreadPrice(context)).price2;
 
-				if($('.order label input.auto').prop('checked') && !($(this).hasClass('mid')))
+				if(globalData.autoTradeOn && !($(this).hasClass('mid')))
 					ajaxAutoTradeClass.sendSpreadOrder(price1, price2);
 				else
 					addOrder($(this));
@@ -245,7 +245,7 @@ class activeTraderClass{
 				e.stopPropagation();
 				var context = $(this), price1 = (takeSpreadPrice(context)).price1, price2 = (takeSpreadPrice(context)).price2;
 
-				if($('.order label input.auto').prop('checked'))
+				if(globalData.autoTradeOn)
 					ajaxAutoTradeClass.sendSpreadOrder(price1, price2);
 				else
 					addOrder($(this));
@@ -423,7 +423,10 @@ class activeTraderClass{
 				if($(this).prop('checked')){
 					trader.find('#order_content').remove();
 					trader.find('.spread_confim').remove();
+					globalData.autoTradeOn = true;
 				}
+				else
+					globalData.autoTradeOn = false;
 			});
 
 		}();

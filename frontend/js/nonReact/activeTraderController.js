@@ -53,6 +53,8 @@ class activeTraderControllerClass{
 			if(pnl.data('GainLoss')!== activeData.GainLoss){
 				if(activeData.GainLoss < 0)
 					pnl.removeClass('profit').addClass('loss').text('($' + (activeData.GainLoss).toFixed(2).toString().slice(1) + ')');
+				else if(activeData.GainLoss == 0)
+					pnl.removeClass('profit loss').text('$' + (activeData.GainLoss).toFixed(2));
 				else
 					pnl.removeClass('loss').addClass('profit').text('$' + (activeData.GainLoss).toFixed(2));
 

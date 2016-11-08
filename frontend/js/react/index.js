@@ -6,7 +6,7 @@ const MyOrderHistoryApp = require('./components/myPosHistory.jsx');
 window.ee = new EventEmitter();
 
 if(globalData.myPosOn){
-	if (positionData) {
+	if (positionData && positionData.length) {
 		ReactDOM.render(
 				<div>
 					<MyPosApp
@@ -37,7 +37,7 @@ if(globalData.myPosOn){
 	else
 		$('#my_position_container').html('<p>You have no positions</p>');
 
-	if (openOrdersData) {
+	if (openOrdersData && openOrdersData.length) {
 		ReactDOM.render(
 				<table>
 					<MyOpenOrdersApp

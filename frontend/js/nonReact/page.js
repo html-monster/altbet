@@ -80,7 +80,7 @@ $(document).ready(function () {
 	// })();
 
 	Waves.init();
-	Waves.attach('.wave', ['waves-button']);
+	Waves.attach('.wave:not([disabled])', ['waves-button']);
 
 	(function showPass () {
 		let input = $('.input__field');

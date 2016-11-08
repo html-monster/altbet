@@ -33,6 +33,19 @@
       transition: 0.1s ease-out;
     }
   }
+  input[type=submit]{
+    width: 100%;
+    padding: 7px 6px;
+    border-radius: 4px;
+    background: #f39e00 !important;
+    color: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    @include btn-shadow;
+  }
+  i {
+    background-color: transparent !important;
+  }
   & > .tab_content {
     width: 960px;
     padding: 30px;
@@ -47,6 +60,7 @@
         top: 11px;
         right: 0;
         text-align: right;
+        strong{  display: block;  font-weight: normal;  }
         //display: flex;
         //align-items: center;
         //margin-bottom: 10px;
@@ -309,6 +323,7 @@
         transition: 0.4s ease-out;
 			}
 		}
+    i{  width: 275px;  }
   }
 
   .settings {
@@ -317,23 +332,7 @@
       margin: 10px 0 20px;
       width: 400px;
     }
-    i {
-      width: 100%;
-			background-color: transparent !important;
-      input[type=submit] {
-        padding: 7px 6px;
-      }
-    }
-		input[type=submit]{
-			width: 100%;
-			padding: 15px 0;
-			border-radius: 4px;
-			background: #f39e00 !important;
-			color: #ffffff;
-			text-align: center;
-			cursor: pointer;
-			@include btn-shadow;
-		}
+    i{  width: 100%;  }
   }
 }
 
