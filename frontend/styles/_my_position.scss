@@ -181,6 +181,10 @@
 						text-align: right;  }
 				}
 				.filter_item.active{  display: table-row-group;  }
+				&>div{
+					position: relative;
+					min-height: 45px;
+				}
 			}
 			.my_position_container{
 				& > table thead th{
@@ -305,6 +309,8 @@
 				}
 			}
 			.my_order_history{
+				position: relative;
+				min-height: 45px;
 				thead th{
 					padding-left: 5px;
 					&:nth-child(3){  text-align: center;  }

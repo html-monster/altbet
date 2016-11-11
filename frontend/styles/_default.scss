@@ -81,7 +81,7 @@ body > .wrapper{
   font-size: 12px;
   font-weight: bold;
 }
-.btn{
+.btn:not([type=submit]):not(i){
   box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
   transition: 0.2s ease;
   @include btn-hover;
@@ -91,6 +91,13 @@ body > .wrapper{
   &:not([disabled]):active {
     box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);
   }
+}
+i.btn [type=submit], [type=submit]{
+  cursor: pointer;
+  box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
+  transition: 0.2s ease;
+  &[disabled]{  cursor: default !important; opacity: 0.6;  }
+  &:not([disabled]):active {  box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);  }
 }
 input, select, button, a {
   &:focus {
@@ -246,6 +253,13 @@ label.checkbox{
   color: #ff3905;
   font-size: 12px;
 }
+//.valid{
+//  display: block;
+//  height: 22px;
+//  padding: 2px 0;
+//  color: #4dac2e;
+//  font-size: 12px;
+//}
 
 .close{
   &:hover{

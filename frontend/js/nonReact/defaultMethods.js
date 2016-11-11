@@ -22,8 +22,9 @@ class defaultMethods{
 		});
 		$(document).on('mouseleave', '.global_message_container.clone', function () {
 			let self = $(this),
-					TIMEOUT = 1000,
+					TIMEOUT = 2000,
 					ANIMATION_TIME = 800;
+
 			self[0].tagData.timeFadeOut = setTimeout(function () {
 				self.fadeOut(ANIMATION_TIME);
 			}, TIMEOUT);
@@ -156,17 +157,6 @@ class defaultMethods{
 		defaultMethods.showMessage(infoMessage, 'info');
 	}
 
-	static sendAjaxRequest(httpMethod, callback, onError, url, context, data) {
-		if(!data) data = context.serialize();
-		$.ajax({
-			url: url,
-			type: httpMethod,
-			dataType: 'json',
-			data: data,
-			success: callback,
-			error: onError
-		});
-	}
 	static showMessage(message, messageName) {
 		let error = $('#global_message').clone(),
 				windowHeight = $(window).outerHeight(),
@@ -196,5 +186,17 @@ class defaultMethods{
 
 		error.hide().fadeIn(200)
 				 .removeClass('bounceOutRight').addClass('bounceInRight active');
-	};
+	}
+
+	static sendAjaxRequest(httpMethod, callback, onError, url, context, data) {
+		if(!data) data = context.serialize();
+		$.ajax({
+			url: url,
+			type: httpMethod,
+			dataType: 'json',
+			data: data,
+			success: callback,
+			error: onError
+		});
+	}
 }

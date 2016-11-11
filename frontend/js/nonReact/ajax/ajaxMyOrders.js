@@ -27,7 +27,9 @@ class myOrderClass{
 			}
 		}
 		function onErrorAjax(x, y, z) {
-			console.log(x + '\n' + y + '\n' + z);
+			console.dir('XMLHTTPRequest object: ', x);
+			console.dir('textStatus: ',  y);
+			console.dir('errorThrown: ',  z);
 			defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 		}
 	}

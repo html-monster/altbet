@@ -136,16 +136,16 @@ $(document).ready(function () {
 	});
 
 	//cybersport==========================================================================================================
-	$('.stream_body .stream_title').click(function(){
-		$(this).toggleClass('active');
-		$('.menu_stream').slideToggle();
-		$('.stream_video').slideToggle();
-	});
-	$('.main_list a').click(function(event){
-		event.preventDefault();
-		var attr = $(this).attr('href');
-		$('.stream_video iframe').attr('src', attr);
-	});
+	// $('.stream_body .stream_title').click(function(){
+	// 	$(this).toggleClass('active');
+	// 	$('.menu_stream').slideToggle();
+	// 	$('.stream_video').slideToggle();
+	// });
+	// $('.main_list a').click(function(event){
+	// 	event.preventDefault();
+	// 	var attr = $(this).attr('href');
+	// 	$('.stream_video iframe').attr('src', attr);
+	// });
 
 
 
@@ -176,6 +176,7 @@ $(document).ready(function () {
 
 	new ajaxLoginControllerClass();
 	new accountClass();
+	new ajaxThemeChangeClass();
 });
 
 

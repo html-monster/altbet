@@ -109,7 +109,7 @@ gulp.task('js',function(){
     // gulp.dest('../../altbetNew/Alt.Bet/Scripts'),
 		//
 		// gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/nonReact/access.js', 'frontend/js/nonReact/themeChange.js']),
-    // $.concat('access.js'),
+    // $.concat('jQuery.js'),
     // babel({
     //   presets: ['es2015']
     // }),

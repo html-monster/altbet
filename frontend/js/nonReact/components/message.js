@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 class messageClass{
 	static showHelpMessage(helpHint, container){
 		// $(helpHint).mouseover(function () {

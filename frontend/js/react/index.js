@@ -66,7 +66,7 @@ if(globalData.myPosOn){
 		);
 	}
 	else
-		$('#open_orders').append('<p>You have no order or positions</p>');
+		$('#open_orders').html('<p>You have no order or positions</p>');
 
 
 	ReactDOM.render(

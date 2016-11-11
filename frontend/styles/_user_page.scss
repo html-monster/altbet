@@ -40,12 +40,24 @@
     background: #f39e00 !important;
     color: #ffffff;
     text-align: center;
-    cursor: pointer;
-    @include btn-shadow;
   }
   i {
     background-color: transparent !important;
   }
+  span.valid{
+    display: block;
+    height: 22px;
+    padding: 2px 0;
+    color: #4dac2e;
+    font-size: 12px;
+    border: none;
+    box-shadow: none;
+  }
+  .answer_message{
+    font-size: 12px;
+    &.validation-summary-errors{  position: static;  }
+  }
+  .input--yoshiko .validation-summary-errors{  max-width: 265px;  }
   & > .tab_content {
     width: 960px;
     padding: 30px;
@@ -116,7 +128,7 @@
 
     hr {
       clear: both;
-      //margin: 20px 0;
+      margin-bottom: 5px;
       @include separator;
     }
   }
@@ -294,15 +306,14 @@
       //.mode_switch {
       //  @include checkbox_horizontal;
       //}
+    form .preferences_list li {  height: 22px;  }
+    .color_scheme_switch label{
+      display: block;
+      padding-top: 5px;
+      height: 100%;
+      cursor: default;
+    }
 		.preferences_list{
-			li{
-				&:first-of-type label{
-					display: block;
-					padding-top: 5px;
-					height: 100%;
-					cursor: default;
-				}
-			}
 			label{
 				padding-left: 200px;
 				position: relative;

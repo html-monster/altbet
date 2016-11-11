@@ -46,12 +46,10 @@ class popUpClass{
 				var ru = 'https://www.youtube.com/embed/YnxdfE-ichk?autoplay=1',
 						eng = 'https://www.youtube.com/embed/koqOo6C1VnQ?autoplay=1';
 
-				if($(this).hasClass('ru')){
+				if($(this).hasClass('ru'))
 					$('.video_form iframe').attr('src', ru);
-				}
-				else{
+				else
 					$('.video_form iframe').attr('src', eng);
-				}
 			}
 		}
 	}
@@ -78,9 +76,6 @@ class popUpClass{
 		}
 	}
 
-	static callback(){
-
-	}
 	static closePopUp(popUp){
 		$(popUp).removeClass('active').fadeOut(400);
 		$('body>.wrapper').removeClass('blur');
