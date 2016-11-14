@@ -368,6 +368,7 @@
   @include reg_input_color;
   &[disabled]{
     & ~ .info{  display: none;  }
+    color: transparentize($main-color, 0.3);
   }
 }
 textarea.input__field--yoshiko{

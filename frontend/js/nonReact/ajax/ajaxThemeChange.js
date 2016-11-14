@@ -15,16 +15,17 @@ class ajaxThemeChangeClass{
 			else
 				return false;
 
-			defaultMethods.sendAjaxRequest('POST', onSuccessAjax, onErrorAjax, `${globalData.rootUrl}Account/EditUser`, null, data);
+			if(globalData.userIdentity == 'True')
+				defaultMethods.sendAjaxRequest('POST', onSuccessAjax, onErrorAjax, `${globalData.rootUrl}Account/EditPreferences`, null, data);
+			else
+				themeChangeClass.setColorScheme($('.change-color button'), data.Theme);
 		});
 
-		function onSuccessAjax(data) {
-			console.log(data);
-			if(data){
-
-			}
+		function onSuccessAjax(e) {
+			if(e)
+				defaultMethods.showError(e);
 			else
-				themeChangeClass.setColorScheme($(this), data.Theme);
+				themeChangeClass.setColorScheme($('.change-color button'), data.Theme);
 		}
 		function onErrorAjax(x, y, z) {
 			console.dir('XMLHTTPRequest object: ', x);

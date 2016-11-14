@@ -22,6 +22,7 @@ class activeTraderClass{
 					executedOrders = $('.wrapper_event_page .executed_orders'),
 					webkit = ($.browser.webkit) ? 'webkit' : '';
 
+			if(autoTrade.prop('checked')) globalData.autoTradeOn = true;
 			$('.active_trader table.limit').addClass(webkit);
 			globalData.tradeOn = false;
 			if(checkbox.prop('checked')){
@@ -53,56 +54,7 @@ class activeTraderClass{
 				globalData.tradeOn = true;
 			}
 			checkbox.change(function () {
-				ii = 0;
-				if($(this).prop('checked')){
-					var symbol = event_container.eq(0).attr('data-symbol');
-
-					order.css('overflow-y', 'hidden');
-					autoTrade.parent().fadeIn(200);
-					default_order.fadeOut(200);
-					setTimeout(function () {
-						active_trader.fadeIn(200);
-					}, 200);
-					activeTraderClass.tbodyResize();
-					buttons.attr('disabled', true);
-					if(event_container.hasClass('active')){
-						event_container.addClass('clickable');
-					} else {
-						if(symbol) $('[data-symbol=' + symbol + ']').addClass('active');
-						event_container.addClass('clickable').eq(0).addClass('active');
-						titles = $('.content_bet.active .event-title .title');
-						$('.active_trader .event_title .event_name').each(function () {
-							$(this).text(titles.eq(ii++).text());
-						});
-					}
-					orderClass.tabReturn();
-					setTimeout(function () {
-						if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == ''){
-							if(globalData.mainPage || globalData.myPosOn)
-								activeTraderClass.takeData($('.content_bet').eq(0));
-							else
-								activeTraderClass.takeData($('.wrapper_event_page'));
-						}
-					}, 700);
-					if($('.wrapper_event_page').length)
-						executedOrders.find('td.clickable').removeClass('clickable');
-
-					globalData.tradeOn = true;
-				}
-				else{
-					autoTrade.parent().fadeOut(200);
-					order.css('overflow-y', 'auto');
-					setTimeout(function () {
-						default_order.fadeIn(200);
-					}, 200);
-					active_trader.fadeOut(200);
-					buttons.removeAttr('disabled');
-					event_container.removeClass('clickable');
-					if($('.wrapper_event_page').length)
-						executedOrders.find('td.clickable').addClass('clickable');
-
-					globalData.tradeOn = false;
-				}
+				activeTraderClass.traderOnCheck($(this));
 			});
 			// $('.left_order .active_trader a').click(function (e) {
 			// 	e.preventDefault();
@@ -888,6 +840,67 @@ class activeTraderClass{
 		}, delay);
 	};
 
+	static traderOnCheck(context){
+		let ii = 0;
+		let autoTrade = $('.left_order .tab input.auto'),
+				order = $('#order'),
+				default_order = $('.left_order .default_orders'),
+				active_trader = $('.left_order .active_trader'),
+				buttons = $('.content_bet button.event'),
+				event_container = $('.content_bet'),
+				titles = event_container.eq(0).find('.event-title .title'),
+				executedOrders = $('.wrapper_event_page .executed_orders');
+
+		if(context.prop('checked')){
+			var symbol = event_container.eq(0).attr('data-symbol');
+
+			order.css('overflow-y', 'hidden');
+			autoTrade.parent().fadeIn(200);
+			default_order.fadeOut(200);
+			setTimeout(function () {
+				active_trader.fadeIn(200);
+			}, 200);
+			activeTraderClass.tbodyResize();
+			buttons.attr('disabled', true);
+			if(event_container.hasClass('active')){
+				event_container.addClass('clickable');
+			} else {
+				if(symbol) $('[data-symbol=' + symbol + ']').addClass('active');
+				event_container.addClass('clickable').eq(0).addClass('active');
+				titles = $('.content_bet.active .event-title .title');
+				$('.active_trader .event_title .event_name').each(function () {
+					$(this).text(titles.eq(ii++).text());
+				});
+			}
+			orderClass.tabReturn();
+			setTimeout(function () {
+				if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == ''){
+					if(globalData.mainPage || globalData.myPosOn)
+						activeTraderClass.takeData($('.content_bet').eq(0));
+					else
+						activeTraderClass.takeData($('.wrapper_event_page'));
+				}
+			}, 700);
+			if($('.wrapper_event_page').length)
+				executedOrders.find('td.clickable').removeClass('clickable');
+
+			globalData.tradeOn = true;
+		}
+		else{
+			autoTrade.parent().fadeOut(200);
+			order.css('overflow-y', 'auto');
+			setTimeout(function () {
+				default_order.fadeIn(200);
+			}, 200);
+			active_trader.fadeOut(200);
+			buttons.removeAttr('disabled');
+			event_container.removeClass('clickable');
+			if($('.wrapper_event_page').length)
+				executedOrders.find('td.clickable').addClass('clickable');
+
+			globalData.tradeOn = false;
+		}
+	}
 }
 
 

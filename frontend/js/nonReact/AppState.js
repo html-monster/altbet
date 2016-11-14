@@ -1,33 +1,43 @@
 class AppStateClass{
 	static updateAppState(stateParams){
 		if(stateParams){
-			let tagLink = $('link[rel=stylesheet]'), styleUrl = tagLink.attr('href');
+			let modeSwitch = $('.mode_switch input'),
+					traderCheckbox = $('.left_order .tab input.limit'),
+					autoTrade = $('.left_order .tab input.auto');
 
 			if(stateParams.Mode && stateParams.Mode == 'basic'){
-				$('.mode_switch input').prop('checked', false);
+				modeSwitch.prop('checked', false);
 				globalData.basicMode = true;
+				modeSwitchClass.checkMode(modeSwitch);
 			}
 			else{
-				$('.mode_switch input').prop('checked', true);
+				modeSwitch.prop('checked', true);
 				globalData.basicMode = false;
+				modeSwitchClass.checkMode(modeSwitch);
 			}
 			if(stateParams.Theme && stateParams.Theme == 'dark')
-				themeChangeClass.setColorScheme('dark');
+				themeChangeClass.setColorScheme($('.change-color button'), 'dark');
 			else
-				themeChangeClass.setColorScheme('light');
+				themeChangeClass.setColorScheme($('.change-color button'), 'light');
 
 			if(stateParams.Bettor && stateParams.Bettor == "false"){
-				$('.left_order .tab input.limit').prop('checked', false);
+				traderCheckbox.prop('checked', false);
 				globalData.tradeOn = false;
+				activeTraderClass.traderOnCheck(traderCheckbox);
 			}
 			else{
-				$('.left_order .tab input.limit').prop('checked', true);
+				traderCheckbox.prop('checked', true);
 				globalData.tradeOn = true;
+				activeTraderClass.traderOnCheck(traderCheckbox);
 			}
-			if(stateParams.trade && stateParams.trade == "false")
-				$('.left_order .tab input.auto').prop('checked', false);
-			else
-				$('.left_order .tab input.auto').prop('checked', true);
+			if(stateParams.trade && stateParams.trade == "false"){
+				autoTrade.prop('checked', false);
+				globalData.autoTradeOn = false;
+			}
+			else{
+				autoTrade.prop('checked', true);
+				globalData.autoTradeOn = true;
+			}
 		}
 	}
 }
