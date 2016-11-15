@@ -1,1 +1,12 @@
 $user_page_balance: #000;
+@mixin user_validation_params{
+	.invalidJs{
+		color: #ff3905;
+		border: 1px solid transparentize(#ff3905, 0.7);
+	}
+
+	.validJs{
+		color: #4dac2e;
+		border: 1px solid transparentize(#4dac2e, 0.7);
+	}
+}

@@ -1,14 +1,17 @@
 class ajaxChangePassClass{
 
-	static onBeginAjax(){
-		console.log('begin');
-	}
+	// static onBeginAjax(){
+	// 	console.log('begin');
+	// }
 
 	static onSuccessAjax(e){
 		let message = $('.wrapper_user_page .change_password .answer_message');
-		if(e){
-			message.removeClass('valid').addClass('validation-summary-errors').text(e);
+		if(e.Error){
+			message.removeClass('valid').addClass('validation-summary-errors').text(e.Error);
+			$('.wrapper_user_page #user_curr_pass').removeClass('valid').addClass('input-validation-error')
 		}
+		else if(e.ErrorUpdate)
+			message.removeClass('valid').addClass('validation-summary-errors').text(e.ErrorUpdate);
 		else{
 			message.removeClass('validation-summary-errors').addClass('valid')
 						 .text('You password was successfully changed');

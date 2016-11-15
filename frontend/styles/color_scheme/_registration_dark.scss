@@ -38,3 +38,14 @@ $reg_title: transparentize(#ffffff, 0.2);
 	&.web:after{  background-position: -361px -123px; }
 	&.phone:after{  background-position: -330px -124px; }
 }
+@mixin validation_params{
+	.input-validation-error{
+		color: #ff3905;
+		border: 1px solid transparentize(#ff3905, 0.7);
+	}
+
+	.valid{
+		color: #4dac2e;
+		border: 1px solid transparentize(#4dac2e, 0.7);
+	}
+}

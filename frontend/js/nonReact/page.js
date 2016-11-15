@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	new defaultMethods();
+	// new inputValidationClass();
 	new inputNumber('.order');
 	new inputNumber('.sing_up_form');
 
@@ -133,6 +134,17 @@ $(document).ready(function () {
 			delay: 200
 		});
 		current.disableSelection();
+	});
+	// date picker =======================================================================================================
+	$(function() {
+		$( "input.datePickerJs" ).datepicker({
+			yearRange: "1901:c+0",
+			maxDate: "0",
+			minDate: new Date(1, 1 - 1, 1),
+			changeMonth: true,
+			changeYear: true,
+			showAnim: 'slideDown'
+		});
 	});
 
 	//cybersport==========================================================================================================

@@ -42,6 +42,7 @@
     color: #ffffff;
     text-align: center;
   }
+  @include user_validation_params;
   i {
     background-color: transparent !important;
   }
@@ -169,9 +170,7 @@
         }
         &.pl {
           color: #4dac2e;
-          &:before {
-            background: transparentize(#4dac2e, 0.8);
-          }
+          &:before {  background: transparentize(#4dac2e, 0.8);  }
           &.neg {
             color: #ef4d22;
             &:before {
@@ -181,15 +180,11 @@
         }
         &.inv {
           color: #ef8022;
-          &:before {
-            background: transparentize(#ef8022, 0.8);
-          }
+          &:before {  background: transparentize(#ef8022, 0.8);  }
         }
         &.ava {
           color: #1196d4;
-          &:before {
-            background: transparentize(#1196d4, 0.8);
-          }
+          &:before {  background: transparentize(#1196d4, 0.8);  }
         }
         span {
           padding-left: 5px;
@@ -235,10 +230,12 @@
               left: 35%;
             }
           }
+          strong{  margin-bottom: -24px;  }
         }
         &.inv {
           background: transparentize(#ef8022, 0.8);
           color: #ef8022;
+          strong{  margin-top: -24px;  }
         }
         &.ava {
           background: transparentize(#1196d4, 0.8);

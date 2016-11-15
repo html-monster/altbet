@@ -46,12 +46,12 @@ class accountClass{
 				let valid = [];
 				$(context).each(function () {
 					if($(this).val().length < 3){
-						$(this).addClass('input-validation-error').removeClass('valid');
+						$(this).addClass('invalidJs').removeClass('validJs');
 						showMessage('password min length is 3 characters', this);
 						valid.push(false);
 					}
 					else{
-						$(this).addClass('valid').removeClass('input-validation-error');
+						$(this).addClass('validJs').removeClass('invalidJs');
 						showMessage('', this);
 						valid.push(true);
 					}
@@ -69,29 +69,29 @@ class accountClass{
 
 					if($(elements.context).val() != $(elements.sameText).val() &&
 							contextLength && sameTextLength){
-						$(elements.context).addClass('input-validation-error').removeClass('valid');
-						$(elements.sameText).addClass('input-validation-error').removeClass('valid');
+						$(elements.context).addClass('invalidJs').removeClass('validJs');
+						$(elements.sameText).addClass('invalidJs').removeClass('validJs');
 						showMessage('Password aren`t match', elements.context, elements.sameText);
 						valid = false;
 						if($(elements.context).val() != $(elements.anotherText).val() &&
 								$(elements.sameText).val() != $(elements.anotherText).val()){
-							$(elements.anotherText).addClass('valid').removeClass('input-validation-error');
+							$(elements.anotherText).addClass('validJs').removeClass('invalidJs');
 							showMessage('',	elements.anotherText);
 						}
 					}
 					else{
 						if(contextLength) {
-							$(elements.context).addClass('valid').removeClass('input-validation-error');
+							$(elements.context).addClass('validJs').removeClass('invalidJs');
 							showMessage('', elements.context);
 							valid = true;
 						}
 						if(sameTextLength) {
-							$(elements.sameText).addClass('valid').removeClass('input-validation-error');
+							$(elements.sameText).addClass('validJs').removeClass('invalidJs');
 							showMessage('',	elements.sameText);
 							valid = true;
 						}
 						if(anotherTextLength) {
-							$(elements.anotherText).addClass('valid').removeClass('input-validation-error');
+							$(elements.anotherText).addClass('validJs').removeClass('invalidJs');
 							showMessage('',	elements.anotherText);
 							valid = true;
 						}
@@ -99,16 +99,16 @@ class accountClass{
 
 					if($(elements.context).val() == $(elements.anotherText).val() &&
 					contextLength && anotherTextLength){
-						$(elements.context).addClass('input-validation-error').removeClass('valid');
-						$(elements.anotherText).addClass('input-validation-error').removeClass('valid');
+						$(elements.context).addClass('invalidJs').removeClass('validJs');
+						$(elements.anotherText).addClass('invalidJs').removeClass('validJs');
 						showMessage('Old password and new password are match', elements.context, elements.anotherText);
 						valid = false;
 					}
 
 					if($(elements.sameText).val() == $(elements.anotherText).val() &&
 					sameTextLength && anotherTextLength){
-						$(elements.sameText).addClass('input-validation-error').removeClass('valid');
-						$(elements.anotherText).addClass('input-validation-error').removeClass('valid');
+						$(elements.sameText).addClass('invalidJs').removeClass('validJs');
+						$(elements.anotherText).addClass('invalidJs').removeClass('validJs');
 						showMessage('Old password and new password are match', elements.sameText, elements.anotherText);
 						valid = false;
 					}
@@ -128,7 +128,8 @@ class accountClass{
 					elementVal = $('.balance strong'),
 					elementMapVal = $('.color_map span'),
 					value = [],
-					data = {};
+					data = {},
+					profitPositive;
 
 			let animate = function (options) {
 				var start = Date.now(); // сохранить время начала
@@ -153,7 +154,7 @@ class accountClass{
 			};
 
 			elementVal.each(function () {
-				value.push(+$(this).text());
+				value.push(+$(this).attr('data-content'));
 			});
 
 			data.all = value[0] + value[1] + value[2];
@@ -164,6 +165,7 @@ class accountClass{
 				$('.balance .pl').removeClass('neg').addClass('pos');
 				$('.balance .inv').removeClass('neg');
 				$('.color_map .pl').removeClass('neg');
+				profitPositive = true;
 			}
 			else{
 				data.inv = ((value[1] / (value[1] + value[2])) * 100).toFixed(2);
@@ -172,16 +174,19 @@ class accountClass{
 				$('.balance .pl').removeClass('pos').addClass('neg');
 				$('.balance .inv').addClass('neg');
 				$('.color_map .pl').addClass('neg');
+				profitPositive = false;
 			}
 
 			setTimeout(function () {
 				animate({
 					duration: 1000,
 					step    : function (progress) {
-						elementVal.eq(0).text('$' + Math.round((value[0] * progress)));
+						if(profitPositive) elementVal.eq(0).text('$' + Math.round((value[0] * progress)));
+						else elementVal.eq(0).text('$(' + Math.round((value[0] * progress)) + ')');
 						elementVal.eq(1).text('$' + Math.round((value[1] * progress)));
 						elementVal.eq(2).text('$' + Math.round((value[2] * progress)));
-						elementMapVal.eq(0).text('$' + Math.round((value[0] * progress)));
+						if(profitPositive) elementMapVal.eq(0).text('$' + Math.round((value[0] * progress)));
+						else elementMapVal.eq(0).text('$(' + Math.round((value[0] * progress)) + ')');
 						elementMapVal.eq(1).text('$' + Math.round((value[1] * progress)));
 						elementMapVal.eq(2).text('$' + Math.round((value[2] * progress)));
 					},

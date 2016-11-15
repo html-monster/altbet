@@ -1,1 +1,14 @@
 $user_page_balance: #dce1e6;
+@mixin user_validation_params{
+	.invalidJs{
+		color: #ff3905;
+		box-shadow: inset 0 0 10px transparentize(#ff3905, 0.7);
+		border: 1px solid transparentize(#ff3905, 0.7);
+	}
+
+	.validJs{
+		color: #4dac2e;
+		box-shadow: inset 0 0 10px transparentize(#4dac2e, 0.7);
+		border: 1px solid transparentize(#4dac2e, 0.7);
+	}
+}

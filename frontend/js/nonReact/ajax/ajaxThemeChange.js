@@ -6,10 +6,10 @@ class ajaxThemeChangeClass{
 			IsTrade: null
 		};
 		$('.change-color button').click(function () {
-			if($(this).hasClass('dark') && !$(this).hasClass('active')){
+			if($(this).hasClass('dark') && !$(this).parent().find('.dark').hasClass('active')){
 				data.Theme = 'dark';
 			}
-			else if(!$(this).parent().find('.light').hasClass('active')){
+			else if($(this).hasClass('light') && !$(this).parent().find('.light').hasClass('active')){
 				data.Theme = 'light';
 			}
 			else
