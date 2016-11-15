@@ -137,7 +137,11 @@ $(document).ready(function () {
 	});
 	// date picker =======================================================================================================
 	$(function() {
-		$( "input.datePickerJs" ).datepicker({
+		let input = $( "input.datePickerJs" );
+		input.keyup(function () { return false; });
+		input.keydown(function () { return false; });
+		input.keypress(function () { return false; });
+		input.datepicker({
 			yearRange: "1901:c+0",
 			maxDate: "0",
 			minDate: new Date(1, 1 - 1, 1),
