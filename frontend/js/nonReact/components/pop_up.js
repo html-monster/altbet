@@ -43,8 +43,8 @@ class popUpClass{
 				$('body>.wrapper').addClass('blur');
 
 			if($(this).parent('.video').length){
-				var ru = 'https://www.youtube.com/embed/YnxdfE-ichk?autoplay=1',
-						eng = 'https://www.youtube.com/embed/koqOo6C1VnQ?autoplay=1';
+				var ru = 'https://www.youtube.com/embed/Gv491v-RGPA?autoplay=1',
+						eng = 'https://www.youtube.com/embed/i0hV6e9Cph4?autoplay=1';
 
 				if($(this).hasClass('ru'))
 					$('.video_form iframe').attr('src', ru);

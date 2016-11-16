@@ -14,7 +14,7 @@ class ajaxChangePassClass{
 			message.removeClass('valid').addClass('validation-summary-errors').text(e.ErrorUpdate);
 		else{
 			message.removeClass('validation-summary-errors').addClass('valid')
-						 .text('You password was successfully changed');
+						 .text('Your password was successfully changed');
 
 			setTimeout(() => {
 				$('.wrapper_user_page .change_password [type=password]').removeClass('validation-summary-errors valid').val('');
