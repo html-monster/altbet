@@ -27,7 +27,7 @@ const PosItem = React.createClass({
 						<span className="sell">{(itemData.IsMirror ? Math.round10(1 - mainData.LastAsk, -2) : mainData.LastBid)}</span> |
 						<span className="buy"> {(itemData.IsMirror ? Math.round10(1 - mainData.LastBid, -2) : mainData.LastAsk)}</span>
 					</td>
-					<td className={'pl ' + plClass}>{(itemData.CommonProfitLoss < 0) ? '$(' + (itemData.CommonProfitLoss).toString().slice(1) + ')' : '$' + itemData.CommonProfitLoss}</td>
+					<td className={'pl ' + plClass}>{(itemData.CommonProfitLoss < 0) ? '($' + (itemData.CommonProfitLoss).toString().slice(1) + ')' : '$' + itemData.CommonProfitLoss}</td>
 					<td>
 						<span className="buy"><button className="buy btn event wave empty btnJs">Buy</button></span>
 						<span className="sell" style={style}><button className="sell btn event wave empty btnJs">Sell</button></span>
@@ -57,7 +57,7 @@ const MyPositionOrders = React.createClass({
 							<th>{}</th>
 							<th>
 									<span className={'pl ' + plClass}>
-										{(data.CommonSymbolProfitLoss < 0 ? '$(' + (data.CommonSymbolProfitLoss).toString().slice(1) + ')' : '$' + data.CommonSymbolProfitLoss)}
+										{(data.CommonSymbolProfitLoss < 0 ? '($' + (data.CommonSymbolProfitLoss).toString().slice(1) + ')' : '$' + data.CommonSymbolProfitLoss)}
 									</span>
 							</th>
 							<th><button className="btn close_out wave">Close Out</button></th>

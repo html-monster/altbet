@@ -420,7 +420,13 @@ label.checkbox{
     }
   }
 }
-
+.timestamp{
+	width: auto;
+	height: auto;
+	opacity: 1;
+	position: relative;
+	&:after{  display: none;  }
+}
 .warning{
   display: none;
   width: 125px;
@@ -429,7 +435,7 @@ label.checkbox{
   padding: 5px;
   border-radius: 5px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
-  z-index: 10;
+  z-index: 81;
   &:before{
     content: '';
     display: block;

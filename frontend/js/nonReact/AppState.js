@@ -7,12 +7,12 @@ class AppStateClass{
 
 			if(stateParams.Mode && stateParams.Mode == 'basic'){
 				modeSwitch.prop('checked', false);
-				globalData.basicMode = true;
+				globalData.basicMode = 'True';
 				modeSwitchClass.checkMode(modeSwitch);
 			}
 			else{
 				modeSwitch.prop('checked', true);
-				globalData.basicMode = false;
+				globalData.basicMode = 'False';
 				modeSwitchClass.checkMode(modeSwitch);
 			}
 			if(stateParams.Theme && stateParams.Theme == 'dark')

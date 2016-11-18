@@ -287,17 +287,17 @@ class orderClass{
 							sum = Math.round10(price * volume, -2);
 							sumInput.val(sum);
 						}
-						feesInput.val(fee);
-						riskInput.val(Math.round10(fee + sum, -2));
+						feesInput.val(fee || '');
+						riskInput.val(Math.round10(fee + sum || '', -2));
 					}
 					if (context.parents('.obligations').length) {
 						if (price) {
 							volume = Math.round10(sum / price) || '';
 							volumeInput.val((volume == 'Infinity') ? '' : volume);
 							fee = Math.round10(0.0086 * volume, -2);
-							feesInput.val(fee);
-							riskInput.val(Math.round10(fee + sum, -2));
-							profitInput.val(Math.round10((1 - price) * ((volume == 'Infinity') ? '' : volume), -2));
+							feesInput.val(fee || '');
+							riskInput.val(Math.round10(fee + sum, -2) || '');
+							profitInput.val(Math.round10((1 - price) * ((volume == 'Infinity') ? '' : volume), -2) || '');
 						}
 					}
 					else{
@@ -307,7 +307,7 @@ class orderClass{
 				}
 				else {
 					if (context.parents('.volume').length) {
-						feesInput.val(fee);
+						feesInput.val(fee || '');
 						sumInput.val('');
 					}
 					if (context.parents('.obligations').length) {
@@ -428,7 +428,7 @@ class orderClass{
 		currentID = idDefine();
 		order.push(currentID, data.title);
 
-		if((globalData.basicMode || $(this).hasClass('empty'))){
+		if((globalData.basicMode == 'True' || $(this).hasClass('empty'))){
 			data.volume = $(this).find('.volume').text();
 			data.buySum = (data.price && data.volume) ? (data.price * data.volume).toFixed(2) : "";
 			data.sellSum = (data.price && data.volume) ? ((1 - data.price) * data.volume).toFixed(2) : "";
@@ -460,20 +460,20 @@ class orderClass{
 			id.push(order);
 			if ($(this).parent('.sell').length) {
 
-				if((globalData.basicMode || $(this).hasClass('empty')))
+				if((globalData.basicMode == 'True' || $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('sell', 'full', true, self, data);
 				else
 					html = orderClass.createOrderForm('sell', 'full', false, self, data);
 			}
 			else{
-				if((globalData.basicMode || $(this).hasClass('empty')))
+				if((globalData.basicMode == 'True' || $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('buy', 'full', true, self, data);
 				else
 					html = orderClass.createOrderForm('buy', 'full', false, self, data);
 			}
 			$('#order .default_orders').append(html);
 			$('.order_content').fadeIn(400);
-			if((globalData.basicMode || $(this).hasClass('empty'))) {
+			if((globalData.basicMode == 'True' || $(this).hasClass('empty'))) {
 				currentID = idDefine();
 				inputFocus = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .price input');
 			}
@@ -490,7 +490,7 @@ class orderClass{
 			if ($(this).parent('.sell').length) {
 				currentID = idDefine();
 				container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .sell-container');
-				if((globalData.basicMode || $(this).hasClass('empty')))
+				if((globalData.basicMode == 'True' || $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('sell', null, true, self, data);
 				else
 					html = orderClass.createOrderForm('sell', null, false, self, data);
@@ -498,14 +498,14 @@ class orderClass{
 			else {
 				currentID = idDefine();
 				container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .buy-container');
-				if((globalData.basicMode || $(this).hasClass('empty')))
+				if((globalData.basicMode == 'True' || $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('buy', null, true, self, data);
 				else
 					html = orderClass.createOrderForm('buy', null, false, self, data);
 			}
 			container.html(html);
 			$('.order_content form').fadeIn(400);
-			if((globalData.basicMode || $(this).hasClass('empty'))){
+			if((globalData.basicMode == 'True' || $(this).hasClass('empty'))){
 				inputFocus = container.find('.price input');
 			}
 			else{
@@ -535,7 +535,7 @@ class orderClass{
 
 		if (orderDirection == 'sell') {
 			// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
-			if(globalData.basicMode){
+			if(globalData.basicMode == 'True'){
 				sumVal = +object.sellSum;
 				html.find('.obligations input.number').val(object.sellSum);
 			}
@@ -547,7 +547,7 @@ class orderClass{
 				html.find('.sell-container').html('');
 			}
 			html.find('input[type=submit]').toggleClass('sell buy').val('buy');
-			if(globalData.basicMode){
+			if(globalData.basicMode == 'True'){
 				sumVal = +object.buySum;
 				html.find('.obligations input.number').val(object.buySum);
 			}
@@ -573,7 +573,7 @@ class orderClass{
 			html.find('.fees input').val(Math.round10(object.volume * 0.0086, -2));
 		}
 
-		if(globalData.basicMode) html.find('.form_container').addClass('basic_mode');
+		if(globalData.basicMode == 'True') html.find('.form_container').addClass('basic_mode');
 		html.find('.volume input.number').val(object.volume);
 		html.find('.symbol').val(context.parents('.event-content').attr('data-symbol').replace(/_mirror/, ''));
 
@@ -582,7 +582,7 @@ class orderClass{
 		else
 			html.find('.mirror').val('0');
 
-		if(globalData.basicMode){
+		if(globalData.basicMode == 'True'){
 			let fee = Math.round10(object.volume * 0.0086, -2);
 			// let container = html.find('.switch');
 			// container.css({paddingLeft: 0, textAlign: 'center'}).children().hide();

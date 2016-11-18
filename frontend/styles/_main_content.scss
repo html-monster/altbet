@@ -272,7 +272,17 @@
           display: inline-block;
           margin-right: 5px;
           vertical-align: top;
-          &.date{  color: $main-color;  opacity: 0.5;  }
+          &.date{
+						width: auto;
+						height: auto;
+						color: $main-color;
+						position: relative;
+						&:after{  display: none;  }
+						span{
+							width: 100px;
+							right: 0;
+						}
+					}
           &.time{  color: $main-color-darker;  }
         }
         i{

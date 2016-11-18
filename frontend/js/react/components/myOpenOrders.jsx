@@ -14,8 +14,11 @@ const OpenOrderItem = React.createClass({
 						{(data.isMirror ? data.Symbol.AwayName : data.Symbol.HomeName)}
 					</td>
 					<td>
-						<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`} | </span>
-						<span className="time">{`${date.getHours() - 2}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
+						<span className="timestamp help">
+							<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`} | </span>
+							<span className="time">{`${date.getHours() - 2}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
+							<span className="help_message"><strong>MM/DD/YYYY | HH:MM</strong></span>
+						</span>
 					</td>
 					<td>{(data.isMirror ? (data.Side ? 'Buy' : 'Sell') : (data.Side ? 'Sell' : 'Buy'))}</td>
 					<td className="quantity">{data.Volume}</td>
