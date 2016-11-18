@@ -1,6 +1,6 @@
 class eventPageClass{
 	constructor(){
-		var self = this;
+		let self = this;
 
 		$('.left_order .tab input.limit').change(function () {
 			if($(this).prop('checked'))
@@ -10,11 +10,11 @@ class eventPageClass{
 		});
 
 		self.tabularMarking = function () {
-			var executedOrders = $('.wrapper_event_page .executed_orders');
+			let executedOrders = $('.wrapper_event_page .executed_orders');
 
 			executedOrders.on('mouseenter', 'td.volume.clickable', function () {
 				$(this).parents('.executed_orders').find('tr').removeClass('active');
-				for(var ii = 0; ii <= $(this).parent().index(); ii++){
+				for(let ii = 0; ii <= $(this).parent().index(); ii++){
 					$(this).parents('.executed_orders').find('tr').eq(ii).addClass('active');
 				}
 			});
@@ -24,12 +24,19 @@ class eventPageClass{
 		}();
 
 		self.tableAddOrder = function () {
-			var order = $('#order .default_orders');
+			let order = $('#order .default_orders'), data;
 
-			function createOrderForm(context, orderDirection, modification, data) {
-				var html = $('.order_content.new').clone();
-				var title = $('.wrapper_event_page .current_price h2').text();
-				var symbol = $('.wrapper_event_page').attr('id');
+			data = {
+				title: $('.wrapper_event_page .current_price h2').text(),
+				price: '0.',
+				priceMarket: '0.',
+				volume: ''
+			};
+
+			/*function createOrderForm(context, orderDirection, modification, data) {
+				let html = $('.order_content.new').clone();
+				let title = $('.wrapper_event_page .current_price h2').text();
+				let symbol = $('.wrapper_event_page').attr('id');
 
 				html.removeClass('new');
 
@@ -83,25 +90,22 @@ class eventPageClass{
 				}
 
 				return html;
-			}
+			}*/
 
 			$('.executed_orders.order_create').on('click', 'td.clickable', function () {
-				var html, data, inputFocus, self = $(this);
+				let html, inputFocus, self = $(this), currentId, ordersArr = [], limit;
 
-				data = {
-					price: 0,
-					priceMarket: 0,
-					volume: '',
-					buySum: '',
-					sellSum: ''
-				};
+				data.buySum = '';
+				data.sellSum = '';
 
+				// data.title = $('.wrapper_event_page .current_price h2').text();
 				if($(this).hasClass('volume')){
+					limit = false;
 					data.priceMarket = self.parents('tbody').find('tr').eq(0).find('td.price span').text().replace(/[^0-9.]+/g, "");
 					data.volume = 0;
 					data.sellSum = 0;
 					data.buySum = 0;
-					for(var ii = 0; ii <= self.parent().index() ; ii++){
+					for(let ii = 0; ii <= self.parent().index() ; ii++){
 						data.price = +self.parents('tbody').find('tr').eq(ii).find('td.data.price span').text().replace(/[^0-9.]+/g, "");
 						data.volume += +self.parents('tbody').find('tr').eq(ii).find('td.volume span').text();
 						if(self.parents('.sell').length){
@@ -115,38 +119,44 @@ class eventPageClass{
 					data.buySum = data.buySum.toFixed(2);
 				}
 				else{
-					data.priceMarket = self.text().replace(/[^0-9.]+/g, "");
+					limit = true;
+					data.price = '0.'
 				}
 
-				var direction;
+				let direction;
+				currentId = $(this).parents('.event-content').attr('id') ? $(this).parents('.event-content').attr('id')
+						: $(this).parents('.event-content').attr('data-symbol');
+				ordersArr.push(currentId, data.title);
+				id.push(ordersArr);
+				let focus = (limit) ? '.price' : '.volume';
 				if(!(order.children().length > 1)){
 					if (self.parents('.sell').length) {
 						direction = self.hasClass('price') ? 'buy' : 'sell';
-						html = createOrderForm(self, direction, 'full', data);
+						html = orderClass.createOrderForm(direction, 'full', limit, self, data);//self, direction, 'full', data
 						order.append(html);
-						inputFocus = $('.'+ direction +'-container .volume input');
+						inputFocus = $(`.${direction}-container ${focus} input`);
 					}
 					else{
 						direction = self.hasClass('price') ? 'sell' : 'buy';
-						html = createOrderForm(self, direction, 'full', data);
+						html = orderClass.createOrderForm(direction, 'full', limit, self, data);//self, direction, 'full', data
 						order.append(html);
-						inputFocus = $('.'+ direction +'-container .volume input');
+						inputFocus = $(`.${direction}-container ${focus} input`);
 					}
 				}
 				else{
 					if (self.parents('.sell').length) {
 						direction = self.hasClass('price') ? 'buy' : 'sell';
-						html = createOrderForm(self, direction, null, data);
+						html = orderClass.createOrderForm(direction, null, limit, self, data);//self, direction, null, data
 						$('.default_orders .'+ direction +'-container').html(html);
 						$('.order_content form').fadeIn(400);
-						inputFocus = $('.'+ direction +'-container .volume input');
+						inputFocus = $(`.${direction}-container ${focus} input`);
 					}
 					else{
 						direction = self.hasClass('price') ? 'sell' : 'buy';
-						html = createOrderForm(self, direction, null, data);
+						html = orderClass.createOrderForm(direction, null, limit, self, data);//self, direction, null, data
 						$('.default_orders .'+ direction +'-container').html(html);
 						$('.order_content form').fadeIn(400);
-						inputFocus = $('.'+ direction +'-container .volume input');
+						inputFocus = $(`.${direction}-container ${focus} input`);
 					}
 				}
 
@@ -161,30 +171,36 @@ class eventPageClass{
 			});
 
 			$('.ord_crt_cont .btn').click(function () {
-				var html, inputFocus, self = $(this);
+				let html, inputFocus, self = $(this), ordersArr = [], currentId;
 
+				data.price = '0.';
+				data.volume = '';
 
+				currentId = $(this).parents('.event-content').attr('id') ? $(this).parents('.event-content').attr('id')
+						: $(this).parents('.event-content').attr('data-symbol');
+				ordersArr.push(currentId, data.title);
+				id.push(ordersArr);
 				if(!(order.children().length > 1)){
 					if (self.hasClass('sell')) {
-						html = createOrderForm(self, 'sell', 'full');
+						html = orderClass.createOrderForm('sell', 'full', 'limit', self, data);//self, 'sell', 'full'
 						order.append(html);
 						inputFocus = $('.sell-container .price input');
 					}
 					else{
-						html = createOrderForm(self, 'buy', 'full');
+						html = orderClass.createOrderForm('buy', 'full', 'limit', self, data);//self, 'buy', 'full'
 						order.append(html);
 						inputFocus = $('.buy-container .price input');
 					}
 				}
 				else{
 					if (self.hasClass('sell')) {
-						html = createOrderForm(self, 'sell');
+						html = orderClass.createOrderForm('sell', null, 'limit', self, data);//self, 'sell'
 						$('.default_orders .sell-container').html(html);
 						$('.order_content form').fadeIn(400);
 						inputFocus = $('.sell-container .price input');
 					}
 					else{
-						html = createOrderForm(self, 'buy');
+						html = orderClass.createOrderForm('buy', null, 'limit', self, data);//self, 'buy'
 						$('.default_orders .buy-container').html(html);
 						$('.order_content form').fadeIn(400);
 						inputFocus = $('.buy-container .price input');

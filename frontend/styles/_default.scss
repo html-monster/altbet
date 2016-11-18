@@ -346,12 +346,13 @@ label.checkbox{
   height: 12px;
   border-radius: 50%;
   position: absolute;
-  right: 1px;
+  right: 5px;
   z-index: 80;
   top: calc(50% - 6px);
   cursor: help;
   opacity: 0.5;
   transition: 0.2s ease-out;
+  @include md(1450){  right: 1px;  }
   &:after{
     content: '';
     display: inline-block;

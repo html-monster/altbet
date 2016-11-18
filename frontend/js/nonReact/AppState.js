@@ -22,11 +22,13 @@ class AppStateClass{
 
 			if(stateParams.Bettor && stateParams.Bettor == "false"){
 				traderCheckbox.prop('checked', false);
+				autoTrade.parent().fadeIn(200);
 				globalData.tradeOn = false;
 				activeTraderClass.traderOnCheck(traderCheckbox);
 			}
 			else{
 				traderCheckbox.prop('checked', true);
+				autoTrade.parent().fadeOut(200);
 				globalData.tradeOn = true;
 				activeTraderClass.traderOnCheck(traderCheckbox);
 			}

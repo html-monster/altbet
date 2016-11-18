@@ -3,10 +3,11 @@ var id = [];
 class orderClass{
 	constructor(){
 		var self = this;
+		// const takerFees = 0.0086;
 
 		orderClass.showInfo();
 
-		// sidebar height and current order ==================================================================================
+		// sidebar height and current order ================================================================================
 		self.orderSize = function () {
 			// numericalVerification($('.order_content input'));
 			var windowHeight = window.innerHeight,
@@ -47,7 +48,7 @@ class orderClass{
 
 		}();
 
-		// order validation ==================================================================================================
+		// order validation ================================================================================================
 		self.formValidation = function() {
 			var order = $('.order');
 
@@ -261,9 +262,13 @@ class orderClass{
 				var priceInput = context.parents('form').find('.price input'),
 						volumeInput = context.parents('form').find('.volume input'),
 						sumInput = context.parents('form').find('.obligations input'),
+						feesInput = context.parents('form').find('.fees input'),
+						riskInput = context.parents('form').find('.risk input'),
+						profitInput = context.parents('form').find('.profit input'),
 						price,
-						volume = volumeInput.val(),
-						sum = sumInput.val();
+						volume = +volumeInput.val(),
+						sum = +sumInput.val(),
+						fee = Math.round10(0.0086 * volume, -2);
 
 				if (checkboxProp) {
 					if (context.parents('.sell-container').length) {
@@ -274,41 +279,40 @@ class orderClass{
 					}
 					if (context.parents('.price').length) {//(price * volume).toFixed(2)
 						if (volume) {
-							sumInput.val((price * volume).toFixed(2));
+							sumInput.val(Math.round10(price * volume, -2));
 						}
-						// else {
-						// 	sumInput.val('');
-						// }
 					}
 					if (context.parents('.volume').length) {
 						if (price) {
-							sumInput.val((price * volume).toFixed(2));
+							sum = Math.round10(price * volume, -2);
+							sumInput.val(sum);
 						}
-						// else {
-						// 	sumInput.val('');
-						// }
+						feesInput.val(fee);
+						riskInput.val(Math.round10(fee + sum, -2));
 					}
 					if (context.parents('.obligations').length) {
 						if (price) {
-							let volume = Math.round10(sum / price) || '';
+							volume = Math.round10(sum / price) || '';
 							volumeInput.val((volume == 'Infinity') ? '' : volume);
-							context.parents('form').find('.profit span').text('$' + ((1 - price) * ((volume == 'Infinity') ? '' : volume)).toFixed(2));
+							fee = Math.round10(0.0086 * volume, -2);
+							feesInput.val(fee);
+							riskInput.val(Math.round10(fee + sum, -2));
+							profitInput.val(Math.round10((1 - price) * ((volume == 'Infinity') ? '' : volume), -2));
 						}
-						// else {
-						// 	volumeInput.val('');
-						// }
 					}
 					else{
-						if(globalData.basicMode && price && volume && sum)
-							context.parents('form').find('.profit span').text('$' + ((1 - price) * volume).toFixed(2));
+						if(price && volume && sum)
+							profitInput.val(Math.round10((1 - price) * volume, -2));
 					}
 				}
 				else {
 					if (context.parents('.volume').length) {
+						feesInput.val(fee);
 						sumInput.val('');
 					}
 					if (context.parents('.obligations').length) {
 						volumeInput.val('');
+						feesInput.val('');
 					}
 				}
 			}
@@ -418,12 +422,11 @@ class orderClass{
 
 		data.price = $(this).find('.price').text().replace(/[^0-9.]+/g, "") || '0.';
 		data.title = $(this).parents('.event-content').find('.title').text();
-		idDefine();
-		order.push(currentID, data.title);
+		let idDefine = () => $(this).parents('.event-content').attr('id') ? $(this).parents('.event-content').attr('id')
+				: $(this).parents('.event-content').attr('data-symbol');
 
-		function idDefine() {
-			currentID = self.parents('.event-content').attr('id') ? self.parents('.event-content').attr('id') : self.parents('.event-content').attr('data-symbol');
-		}
+		currentID = idDefine();
+		order.push(currentID, data.title);
 
 		if((globalData.basicMode || $(this).hasClass('empty'))){
 			data.volume = $(this).find('.volume').text();
@@ -471,12 +474,12 @@ class orderClass{
 			$('#order .default_orders').append(html);
 			$('.order_content').fadeIn(400);
 			if((globalData.basicMode || $(this).hasClass('empty'))) {
-				idDefine();
+				currentID = idDefine();
 				inputFocus = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .price input');
 			}
 			else
 			{
-				idDefine();
+				currentID = idDefine();
 				inputFocus = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .volume input');
 			}
 			inputFocus.focus();
@@ -485,7 +488,7 @@ class orderClass{
 		else {
 			var container;
 			if ($(this).parent('.sell').length) {
-				idDefine();
+				currentID = idDefine();
 				container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .sell-container');
 				if((globalData.basicMode || $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('sell', null, true, self, data);
@@ -493,7 +496,7 @@ class orderClass{
 					html = orderClass.createOrderForm('sell', null, false, self, data);
 			}
 			else {
-				idDefine();
+				currentID = idDefine();
 				container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .buy-container');
 				if((globalData.basicMode || $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('buy', null, true, self, data);
@@ -519,7 +522,8 @@ class orderClass{
 
 	static createOrderForm(orderDirection, modification, limit, context, object) {
 		let html = $('.order_content.new').clone(),
-				eventId = context.parents('.event-content').attr('id') ? context.parents('.event-content').attr('id') : context.parents('.event-content').attr('data-symbol');
+				eventId = context.parents('.event-content').attr('id') ? context.parents('.event-content').attr('id') : context.parents('.event-content').attr('data-symbol'),
+				sumVal;
 
 		html.removeClass('new');
 		if(modification == 'full'){
@@ -531,7 +535,10 @@ class orderClass{
 
 		if (orderDirection == 'sell') {
 			// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
-			if(globalData.basicMode) html.find('.obligations input.number').val(object.sellSum);
+			if(globalData.basicMode){
+				sumVal = +object.sellSum;
+				html.find('.obligations input.number').val(object.sellSum);
+			}
 			html.find('.side').val('Sell');
 		}
 		else {
@@ -540,7 +547,10 @@ class orderClass{
 				html.find('.sell-container').html('');
 			}
 			html.find('input[type=submit]').toggleClass('sell buy').val('buy');
-			if(globalData.basicMode) html.find('.obligations input.number').val(object.buySum);
+			if(globalData.basicMode){
+				sumVal = +object.buySum;
+				html.find('.obligations input.number').val(object.buySum);
+			}
 			html.find('.side').val('Buy');
 			// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
 		}
@@ -559,20 +569,27 @@ class orderClass{
 			html.find('.price .regulator').remove();
 			html.find('.checkbox input[type=checkbox]').attr('checked', false);
 			html.find('.checkbox span').text('Market');
+			html.find('.fees span').hide();
+			html.find('.fees input').val(Math.round10(object.volume * 0.0086, -2));
 		}
 
+		if(globalData.basicMode) html.find('.form_container').addClass('basic_mode');
 		html.find('.volume input.number').val(object.volume);
-		html.find('.symbol').val(context.parents('.content_bet').find('.symbol_name').text());
+		html.find('.symbol').val(context.parents('.event-content').attr('data-symbol').replace(/_mirror/, ''));
+
 		if(context.parents('.event-content').hasClass('revers'))
 			html.find('.mirror').val('1');
 		else
 			html.find('.mirror').val('0');
 
 		if(globalData.basicMode){
-			let container = html.find('.switch');
-			container.css({paddingLeft: 0, textAlign: 'center'}).children().hide();
-			container.append('<strong class="profit">Profit: <span></span></strong>');
-			container.find('.profit span').text('$' + ((1 - object.price) * object.volume).toFixed(2));
+			let fee = Math.round10(object.volume * 0.0086, -2);
+			// let container = html.find('.switch');
+			// container.css({paddingLeft: 0, textAlign: 'center'}).children().hide();
+			// container.append('<strong class="profit">Profit: <span></span></strong>');
+			html.find('.fees input').val(fee || '');
+			html.find('.risk input').val(Math.round10(fee + sumVal, -2) || '');
+			html.find('.profit input').val(Math.round10((1 - object.price) * object.volume, -2) || '');
 		}
 
 		return html;

@@ -1,10 +1,6 @@
 class ajaxThemeChangeClass{
 	constructor(){
-		let data = {
-			IsMode: null,
-			IsBettor: null,
-			IsTrade: null
-		};
+		let data = {};
 		$('.change-color button').click(function () {
 			if($(this).hasClass('dark') && !$(this).parent().find('.dark').hasClass('active')){
 				data.Theme = 'dark';
@@ -16,7 +12,7 @@ class ajaxThemeChangeClass{
 				return false;
 
 			if(globalData.userIdentity == 'True')
-				defaultMethods.sendAjaxRequest('POST', onSuccessAjax, onErrorAjax, `${globalData.rootUrl}Account/EditPreferences`, null, data);
+				defaultMethods.sendAjaxRequest('POST', onSuccessAjax, onErrorAjax, `${globalData.rootUrl}Account/EditTheme`, null, data);
 			else
 				themeChangeClass.setColorScheme($('.change-color button'), data.Theme);
 		});

@@ -93,6 +93,7 @@ gulp.task('js',function(){
     sourcemaps.init(),
     // $.uglify(),
     gulp.dest('./public/js'),
+    gulp.dest('../../altbetNew/Alt.Bet/Scripts')
 
 
     // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js', 'vendor/ms-Dropdown-js/js/msdropdown/jquery.dd.min.js',
