@@ -1,5 +1,7 @@
 'use strict';
 
+var OPTIONS = require('./gulpinc/pathes');
+
 const path = require('path');
 const del = require('del');
 const gulp = require('gulp');
@@ -51,7 +53,7 @@ gulp.task('styles', function() {
       .pipe(gulpIf(isDevelopment, sourcemaps.write()))
       .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
       .pipe(gulp.dest('public/styles'))
-      .pipe(gulp.dest('../../altbetNew/Alt.Bet/Content'))
+      .pipe(gulp.dest(OPTIONS.path.dest_server + '/Content'))
       .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))));
 
 });
@@ -93,20 +95,20 @@ gulp.task('js',function(){
     sourcemaps.init(),
     // $.uglify(),
     gulp.dest('./public/js'),
-    gulp.dest('../../altbetNew/Alt.Bet/Scripts')
+    gulp.dest(OPTIONS.path.dest_server + '/Scripts')
 
     // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js', 'vendor/ms-Dropdown-js/js/msdropdown/jquery.dd.min.js',
     // 'vendor/eventEmitter/eventEmitter.min.js', 'vendor/react-0.14.7/build/react.min.js', 'vendor/react-0.14.7/build/react-dom.min.js']),
     // $.concat('vendors.js'),
     // $.uglify(),
     // gulp.dest('./public/js'),
-    // gulp.dest('../../altbetNew/Alt.Bet/Scripts'),
+    // gulp.dest(OPTIONS.path.dest_server + '/Scripts'),
 		//
     // gulp.src(['vendor/fullpage.js/jquery.fullPage.min.js', 'frontend/js/nonReact/pageFirst.js']),
     // $.concat('landingPage.js'),
     // $.uglify(),
     // gulp.dest('./public/js'),
-    // gulp.dest('../../altbetNew/Alt.Bet/Scripts'),
+    // gulp.dest(OPTIONS.path.dest_server + '/Scripts'),
 		//
 		// gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/nonReact/access.js']),
     // $.concat('jQuery.js'),
@@ -126,7 +128,7 @@ gulp.task('js',function(){
 
 gulp.task('styles:assets', function() {
   return gulp.src('frontend/Images/**/*.{svg,png,jpg,gif,ico}', {since: gulp.lastRun('styles:assets')})
-      .pipe(gulp.dest('../../altbetNew/Alt.Bet/Images'))
+      .pipe(gulp.dest(OPTIONS.path.dest_server + '/Images'))
       .pipe(gulp.dest('public/Images'));
 });
 

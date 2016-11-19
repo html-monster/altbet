@@ -1,5 +1,18 @@
+// $(document).ready(function() {
+//     jQuery.validator.addMethod("testValidator", function (value, element, params) {
+//         0||console.debug( 'value', value );
+//         0||console.debug( 'element', element );
+//         0||console.debug( 'params', params );
+//         return false; //this.optional(element) || value == params[0] + params[1];
+//     },
+//     // jQuery.validator.format("Please enter the correct value for {0} + {1}")
+//     'Test Validator works');
+// });
+
 class accountClass{
 	constructor(){
+		// var hello = 1;
+		// BM: passwordCompare
 		this.passwordCompare = function () {
 			let currentPass = '.wrapper_user_page #user_curr_pass',
 					newPass = '.wrapper_user_page #user_pass',
@@ -41,7 +54,6 @@ class accountClass{
 
 				return valid && minLengthValid;
 			});
-
 			function minCheck(...context) {
 				let valid = [];
 				$(context).each(function () {
@@ -123,6 +135,7 @@ class accountClass{
 			}
 		}();
 
+        // BM: balanceAnimation
 		this.balanceAnimation = function () {
 			let element = $('.balance span'),
 					elementVal = $('.balance strong'),
