@@ -97,6 +97,7 @@ gulp.task('js',function(){
     gulp.dest('./public/js'),
     gulp.dest(OPTIONS.path.dest_server + '/Scripts')
 
+
     // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js', 'vendor/ms-Dropdown-js/js/msdropdown/jquery.dd.min.js',
     // 'vendor/eventEmitter/eventEmitter.min.js', 'vendor/react-0.14.7/build/react.min.js', 'vendor/react-0.14.7/build/react-dom.min.js']),
     // $.concat('vendors.js'),

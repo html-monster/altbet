@@ -219,8 +219,8 @@ header.first_page {
   .video_category {
     display: block;
     position: absolute;
-    border-radius: 7px;
-    width: 381px;
+    border-radius: 9px;
+    width: 382px;
     height: 210px;
     overflow: hidden;
     video {
@@ -238,24 +238,27 @@ header.first_page {
       }
     }
     &.finance_video {
+      width: 383px;
       opacity: 0;
-      left: 50%;
+      left: calc(50% - 2px);
       top: calc(50% - 211px);
       &.active {
         opacity: 1;
       }
     }
     &.esport_video {
+      width: 383px;
       opacity: 0;
-      left: calc(50% - 383px);
+      left: calc(50% - 384px);
       top: calc(50% + 1px);
       &.active {
         opacity: 1;
       }
     }
     &.society_video {
+      width: 383px;
       opacity: 0;
-      left: 50%;
+      left: calc(50% - 2px);
       top: calc(50% + 1px);
       &.active {
         opacity: 1;

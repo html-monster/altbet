@@ -108,6 +108,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
   box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.2);
   &:-webkit-autofill{  -webkit-box-shadow: inset 0 0 0 50px #fff !important;  }
 }
+input.datePickerJs:not([disabled]){  cursor: pointer;  }
 .clear{
   display: none;
   width: 14px;
@@ -345,12 +346,13 @@ label.checkbox{
   height: 12px;
   border-radius: 50%;
   position: absolute;
-  right: 1px;
+  right: 5px;
   z-index: 80;
   top: calc(50% - 6px);
   cursor: help;
   opacity: 0.5;
   transition: 0.2s ease-out;
+  @include md(1450){  right: 1px;  }
   &:after{
     content: '';
     display: inline-block;
@@ -418,7 +420,13 @@ label.checkbox{
     }
   }
 }
-
+.timestamp{
+	width: auto;
+	height: auto;
+	opacity: 1;
+	position: relative;
+	&:after{  display: none;  }
+}
 .warning{
   display: none;
   width: 125px;
@@ -427,7 +435,7 @@ label.checkbox{
   padding: 5px;
   border-radius: 5px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
-  z-index: 10;
+  z-index: 81;
   &:before{
     content: '';
     display: block;

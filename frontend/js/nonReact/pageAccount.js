@@ -172,18 +172,18 @@ class accountClass{
 
 			data.all = value[0] + value[1] + value[2];
 			if(value[0] >= 0){
-				data.pl = ((value[0] / data.all) * 100).toFixed(2);
-				data.inv = ((value[1] / data.all) * 100).toFixed(2);
-				data.av = ((value[2] / data.all) * 100).toFixed(2);
+				data.pl = ((value[0] / data.all) * 100);
+				data.inv = ((value[1] / data.all) * 100);
+				data.av = ((value[2] / data.all) * 100);
 				$('.balance .pl').removeClass('neg').addClass('pos');
 				$('.balance .inv').removeClass('neg');
 				$('.color_map .pl').removeClass('neg');
 				profitPositive = true;
 			}
 			else{
-				data.inv = ((value[1] / (value[1] + value[2])) * 100).toFixed(2);
-				data.pl = (data.inv - ((value[1] + value[0]) / (value[1] + value[2])) * 100).toFixed(2);
-				data.av = ((value[2] / (value[1] + value[2])) * 100).toFixed(2);
+				data.inv = ((value[1] / (value[1] + value[2])) * 100);
+				data.pl = (data.inv - ((value[1] + value[0]) / (value[1] + value[2])) * 100);
+				data.av = ((value[2] / (value[1] + value[2])) * 100);
 				$('.balance .pl').removeClass('pos').addClass('neg');
 				$('.balance .inv').addClass('neg');
 				$('.color_map .pl').addClass('neg');
@@ -194,14 +194,14 @@ class accountClass{
 				animate({
 					duration: 1000,
 					step    : function (progress) {
-						if(profitPositive) elementVal.eq(0).text('$' + Math.round((value[0] * progress)));
-						else elementVal.eq(0).text('$(' + Math.round((value[0] * progress)) + ')');
-						elementVal.eq(1).text('$' + Math.round((value[1] * progress)));
-						elementVal.eq(2).text('$' + Math.round((value[2] * progress)));
-						if(profitPositive) elementMapVal.eq(0).text('$' + Math.round((value[0] * progress)));
-						else elementMapVal.eq(0).text('$(' + Math.round((value[0] * progress)) + ')');
-						elementMapVal.eq(1).text('$' + Math.round((value[1] * progress)));
-						elementMapVal.eq(2).text('$' + Math.round((value[2] * progress)));
+						if(profitPositive) elementVal.eq(0).text('$' + Math.round10((value[0] * progress), -2));
+						else elementVal.eq(0).text('($' + (Math.round10((value[0] * progress), -2)).toString().slice(1) + ')');
+						elementVal.eq(1).text('$' + Math.round10((value[1] * progress), -2));
+						elementVal.eq(2).text('$' + Math.round10((value[2] * progress), -2));
+						if(profitPositive) elementMapVal.eq(0).text('$' + Math.round10((value[0] * progress), -2));
+						else elementMapVal.eq(0).text('($' + (Math.round10((value[0] * progress), -2)).toString().slice(1) + ')');
+						elementMapVal.eq(1).text('$' + Math.round10((value[1] * progress), -2));
+						elementMapVal.eq(2).text('$' + Math.round10((value[2] * progress), -2));
 					},
 					complete: function () {}
 				});

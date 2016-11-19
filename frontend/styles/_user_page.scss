@@ -69,6 +69,7 @@
     .tab_item {
       display: none;
       position: relative;
+      &:first-child {  display: block;  }
       .user_info {
         position: absolute;
         top: 11px;
@@ -108,12 +109,6 @@
         padding-bottom: 10px;
         //border-bottom: 1px solid #fff;
       }
-      &:first-child {
-        display: block;
-        //h1 {
-        //  margin-bottom: 0;
-        //}
-      }
       h2 {
         margin-bottom: 55px;
         font-size: 24px;
@@ -125,7 +120,7 @@
 
 		.input_animate{
 			display: block;
-			overflow: hidden;
+      height: 75.97px;
 		}
 
     hr {
@@ -226,7 +221,7 @@
             color: #ef4d22;
             strong {
               position: absolute;
-              top: calc(50% - 12px);
+              top: 50%;
               left: 35%;
             }
           }
@@ -335,14 +330,7 @@
     i{  width: 275px;  }
   }
 
-  .settings {
-    .column {  width: 100%;  }
-    .birthday {
-      margin: 10px 0 20px;
-      width: 400px;
-    }
-    i{  width: 100%;  }
-  }
+  .settings .column {  width: 100%;  } 
 }
 
 

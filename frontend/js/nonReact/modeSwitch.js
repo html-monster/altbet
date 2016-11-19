@@ -29,7 +29,7 @@ class modeSwitchClass{
 				var price = $(this).find('.price:not(.empty)').text();
 				$(this).find('.price:not(.empty)').text(price.replace('$', ''));
 			});
-			globalData.basicMode = false;
+			globalData.basicMode = 'False';
 			// localStorage.setItem('tradingMode', 'expert');
 		}
 		else{
@@ -40,7 +40,7 @@ class modeSwitchClass{
 				var price = $(this).find('.price:not(.empty)').text();
 				$(this).find('.price:not(.empty)').text('$' + price);
 			});
-			globalData.basicMode = true;
+			globalData.basicMode = 'True';
 			// localStorage.setItem('tradingMode', 'basic');
 		}
 	}

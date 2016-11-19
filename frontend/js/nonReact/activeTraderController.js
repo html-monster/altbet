@@ -19,9 +19,9 @@ class activeTraderControllerClass{
 			isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
 
 		if (!trader.attr('id')) return;
-		var identificators = trader.attr('id').replace('trader_', '').split('_');
+		var indentificators = trader.attr('id').replace('trader_', '').split('_');
 
-		// console.log(identificators);
+		// console.log(indentificators);
 		// var td = $('.active_trader table.limit td');
 
 
@@ -35,9 +35,9 @@ class activeTraderControllerClass{
 		 });*/
 
 		$(data).each(function () {
-			if (this.Symbol.Exchange == identificators[0]
-					&& this.Symbol.Name == identificators[1]
-					&& this.Symbol.Currency == identificators[2])
+			if (this.Symbol.Exchange == indentificators[0]
+					&& this.Symbol.Name == indentificators[1]
+					&& this.Symbol.Currency == indentificators[2])
 			{
 				activeData = this;
 				// console.log(activeData);

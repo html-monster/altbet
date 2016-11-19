@@ -37,9 +37,9 @@ $(document).ready(function () {
 
 	popUpClass.popUpOpen('.log_out .sign_in', '.sign_in_form', '#login-email'); // pop-up login
 	popUpClass.popUpOpen('[data-log-out]', '.sign_in_form', '#login-email');
-	popUpClass.popUpOpen('.sign_in_form a.register', '.sign_up_form', '#n_name');
+	popUpClass.popUpOpen('.sign_in_form a.register', '.sign_up_form', '#f_name');
 	// popUpClass.popUpOpen('.sign_up_form input.submit', '.sign_up_form .confirm');
-	popUpClass.popUpOpen('.first_page_wrapper .join', '.sign_up_form', '#n_name');
+	popUpClass.popUpOpen('.first_page_wrapper .join', '.sign_up_form', '#f_name');
 	popUpClass.popUpOpen('.video button', '.video_form');
 	popUpClass.popUpOpen('header .price_plan', '.price_plan_form');
 
@@ -137,7 +137,11 @@ $(document).ready(function () {
 	});
 	// date picker =======================================================================================================
 	$(function() {
-		$( "input.datePickerJs" ).datepicker({
+		let input = $( "input.datePickerJs" );
+		input.keyup(function () { return false; });
+		input.keydown(function () { return false; });
+		input.keypress(function () { return false; });
+		input.datepicker({
 			yearRange: "1901:c+0",
 			maxDate: "0",
 			minDate: new Date(1, 1 - 1, 1),
@@ -147,7 +151,7 @@ $(document).ready(function () {
 		});
 	});
 
-	//cybersport==========================================================================================================
+	//cyber sport ========================================================================================================
 	// $('.stream_body .stream_title').click(function(){
 	// 	$(this).toggleClass('active');
 	// 	$('.menu_stream').slideToggle();

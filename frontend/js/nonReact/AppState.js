@@ -7,12 +7,12 @@ class AppStateClass{
 
 			if(stateParams.Mode && stateParams.Mode == 'basic'){
 				modeSwitch.prop('checked', false);
-				globalData.basicMode = true;
+				globalData.basicMode = 'True';
 				modeSwitchClass.checkMode(modeSwitch);
 			}
 			else{
 				modeSwitch.prop('checked', true);
-				globalData.basicMode = false;
+				globalData.basicMode = 'False';
 				modeSwitchClass.checkMode(modeSwitch);
 			}
 			if(stateParams.Theme && stateParams.Theme == 'dark')
@@ -22,11 +22,13 @@ class AppStateClass{
 
 			if(stateParams.Bettor && stateParams.Bettor == "false"){
 				traderCheckbox.prop('checked', false);
+				autoTrade.parent().fadeIn(200);
 				globalData.tradeOn = false;
 				activeTraderClass.traderOnCheck(traderCheckbox);
 			}
 			else{
 				traderCheckbox.prop('checked', true);
+				autoTrade.parent().fadeOut(200);
 				globalData.tradeOn = true;
 				activeTraderClass.traderOnCheck(traderCheckbox);
 			}

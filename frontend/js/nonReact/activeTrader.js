@@ -846,7 +846,7 @@ class activeTraderClass{
 				order = $('#order'),
 				default_order = $('.left_order .default_orders'),
 				active_trader = $('.left_order .active_trader'),
-				buttons = $('.content_bet button.event'),
+				buttons = $('.event-content button.event'),
 				event_container = $('.content_bet'),
 				titles = event_container.eq(0).find('.event-title .title'),
 				executedOrders = $('.wrapper_event_page .executed_orders');
