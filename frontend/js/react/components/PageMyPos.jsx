@@ -29,7 +29,7 @@ export default class PageMyPos extends React.Component
 
     render()
     {
-        const { positionData, historyData } = this.props.data;
+        const { openOrdersData, positionData, historyData } = this.props.data;
 
         return <div className="my_position">
                 <div className="container">

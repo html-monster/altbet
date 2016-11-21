@@ -51,7 +51,7 @@ const MyOpenOrdersApp = React.createClass({
 			newData = positionControllerClass.filterData(newData, self.props.id);
 			self.setState({data: newData});
 
-			__DEV__&&console.debug( 'newData', newData );
+			// __DEV__&&console.debug( 'newData', newData );
 		});
 	},
 	render: function() {

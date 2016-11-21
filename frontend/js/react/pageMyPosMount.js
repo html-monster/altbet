@@ -9,7 +9,7 @@ window.ee = new EventEmitter();
 if(globalData.myPosOn){
 	    // временно рендерим PageMyPos
         ReactDOM.render(
-            <PageMyPos data={{positionData, historyData}}/>
+            <PageMyPos data={{openOrdersData, positionData, historyData}}/>
             ,
             document.getElementById('DiPageMyAssets')
         );
