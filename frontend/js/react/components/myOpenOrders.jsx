@@ -50,6 +50,8 @@ const MyOpenOrdersApp = React.createClass({
 		window.ee.addListener('myOpenOrder.update', function(newData) {
 			newData = positionControllerClass.filterData(newData, self.props.id);
 			self.setState({data: newData});
+
+			__DEV__&&console.debug( 'newData', newData );
 		});
 	},
 	render: function() {

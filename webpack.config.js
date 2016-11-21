@@ -15,7 +15,7 @@ var devFlagPlugin = new webpack.DefinePlugin({
 module.exports = {
     devtool: 'cheap-inline-module-source-map',
 
-    entry: "./frontend/js/react/pageMyPos.js",
+    entry: "./frontend/js/react/pageMyPosMount.js",
     output: {
         path: __dirname + DEST_SERVER + '/Scripts',
         publicPath: "Scripts/",
