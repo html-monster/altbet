@@ -37,7 +37,7 @@
 	}
 });*/
 
-const MyOrderHistoryApp = React.createClass({
+const MyOrderHistoryTabData = React.createClass({
 	getInitialState: function() {
 		return {
 			data: this.props.data
@@ -99,4 +99,4 @@ const MyOrderHistoryApp = React.createClass({
 	}
 });
 
-module.exports = MyOrderHistoryApp;
+module.exports = MyOrderHistoryTabData;

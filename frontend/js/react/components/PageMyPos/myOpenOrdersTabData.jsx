@@ -38,27 +38,29 @@ const OpenOrderItem = React.createClass({
 	}
 });
 
-const MyOpenOrdersApp = React.createClass({
-	getInitialState: function() {
-		return {
-			data: positionControllerClass.filterData(this.props.data, this.props.id),
-			id: this.props.id
-		};
-	},
-	componentDidMount: function() {
-		let self = this;
-		window.ee.addListener('myOpenOrder.update', function(newData) {
-			newData = positionControllerClass.filterData(newData, self.props.id);
-			self.setState({data: newData});
-
-			// __DEV__&&console.debug( 'newData', newData );
-		});
-	},
+const MyOpenOrdersTabData = React.createClass({
+	// getInitialState: function() {
+	// 	return {
+	// 		data: positionControllerClass.filterData(this.props.data, this.props.id),
+	// 		id: this.props.id
+	// 	};
+	// },
+	// componentDidMount: function() {
+	// 	let self = this;
+	// 	window.ee.addListener('myOpenOrder.update', function(newData) {
+	// 		newData = positionControllerClass.filterData(newData, self.props.id);
+	// 		self.setState({data: newData});
+    //
+	// 		// __DEV__&&console.debug( 'newData', newData );
+	// 	});
+	// },
 	render: function() {
-		let data = this.state.data;
+		let data = positionControllerClass.filterData(this.props.data, this.props.id);
+		// __DEV__&&console.debug( 'MyOpenOrdersTabData data', data );
+
 		if (data.length) {
 			return (
-					<tbody className="filter_item active" id={this.state.id}>
+					<tbody className="filter_item active" id={this.props.id}>
 						{
 							data.map(function (item) {
 								return <OpenOrderItem data={item} key={item.ID}/>
@@ -73,4 +75,4 @@ const MyOpenOrdersApp = React.createClass({
 	}
 });
 
-module.exports = MyOpenOrdersApp;
+module.exports = MyOpenOrdersTabData;
