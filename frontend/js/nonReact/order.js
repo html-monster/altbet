@@ -429,7 +429,7 @@ class orderClass{
 		currentID = idDefine();
 		order.push(currentID, data.title);
 
-		if((globalData.basicMode == 'True' || $(this).hasClass('empty'))){
+		if((globalData.basicMode || $(this).hasClass('empty'))){
 			data.volume = $(this).find('.volume').text();
 			data.buySum = (data.price && data.volume) ? (data.price * data.volume).toFixed(2) : "";
 			data.sellSum = (data.price && data.volume) ? ((1 - data.price) * data.volume).toFixed(2) : "";
@@ -461,20 +461,20 @@ class orderClass{
 			id.push(order);
 			if ($(this).parent('.sell').length) {
 
-				if((globalData.basicMode == 'True' || $(this).hasClass('empty')))
+				if((globalData.basicMode || $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('sell', 'full', true, self, data);
 				else
 					html = orderClass.createOrderForm('sell', 'full', false, self, data);
 			}
 			else{
-				if((globalData.basicMode == 'True' || $(this).hasClass('empty')))
+				if((globalData.basicMode|| $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('buy', 'full', true, self, data);
 				else
 					html = orderClass.createOrderForm('buy', 'full', false, self, data);
 			}
 			$('#order .default_orders').append(html);
 			$('.order_content').fadeIn(400);
-			if((globalData.basicMode == 'True' || $(this).hasClass('empty'))) {
+			if((globalData.basicMode|| $(this).hasClass('empty'))) {
 				currentID = idDefine();
 				inputFocus = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .price input');
 			}
@@ -491,7 +491,7 @@ class orderClass{
 			if ($(this).parent('.sell').length) {
 				currentID = idDefine();
 				container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .sell-container');
-				if((globalData.basicMode == 'True' || $(this).hasClass('empty')))
+				if((globalData.basicMode|| $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('sell', null, true, self, data);
 				else
 					html = orderClass.createOrderForm('sell', null, false, self, data);
@@ -499,14 +499,14 @@ class orderClass{
 			else {
 				currentID = idDefine();
 				container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .buy-container');
-				if((globalData.basicMode == 'True' || $(this).hasClass('empty')))
+				if((globalData.basicMode|| $(this).hasClass('empty')))
 					html = orderClass.createOrderForm('buy', null, true, self, data);
 				else
 					html = orderClass.createOrderForm('buy', null, false, self, data);
 			}
 			container.html(html);
 			$('.order_content form').fadeIn(400);
-			if((globalData.basicMode == 'True' || $(this).hasClass('empty'))){
+			if((globalData.basicMode || $(this).hasClass('empty'))){
 				inputFocus = container.find('.price input');
 			}
 			else{
@@ -539,16 +539,16 @@ class orderClass{
 		if(modification == 'full'){
 			html.attr('id', id[defaultMethods.searchValue(id, eventId)][0] + '__order').css({display: 'none'});
 			html.find('h3').text(object.title);
-			if(globalData.basicMode == 'True') html.find('form').addClass('basic_mode');
+			if(globalData.basicMode) html.find('form').addClass('basic_mode');
 		}
 		else{
 			html = html.find('form').css({display: 'none'});
-			if(globalData.basicMode == 'True') html.addClass('basic_mode');
+			if(globalData.basicMode) html.addClass('basic_mode');
 		}
 
 		if (orderDirection == 'sell') {
 			// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
-			if(globalData.basicMode == 'True'){
+			if(globalData.basicMode){
 				sumVal = +object.sellSum;
 				html.find('.obligations input.number').val(object.sellSum);
 			}
@@ -560,7 +560,7 @@ class orderClass{
 				html.find('.sell-container').html('');
 			}
 			html.find('input[type=submit]').toggleClass('sell buy').val('buy');
-			if(globalData.basicMode == 'True'){
+			if(globalData.basicMode){
 				sumVal = +object.buySum;
 				html.find('.obligations input.number').val(object.buySum);
 			}
@@ -594,7 +594,7 @@ class orderClass{
 		else
 			html.find('.mirror').val('0');
 
-		if(globalData.basicMode == 'True'){
+		if(globalData.basicMode){
 			let fee = Math.round10(object.volume * 0.0086, -2);
 			// let container = html.find('.switch');
 			// container.css({paddingLeft: 0, textAlign: 'center'}).children().hide();
