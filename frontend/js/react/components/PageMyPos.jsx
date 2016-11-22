@@ -3,36 +3,51 @@
  */
 
 // import React, {PropTypes, Component} from 'react'
-const MyPosApp = require('./myPositions.jsx');
-const MyOpenOrdersApp = require('./myOpenOrders.jsx');
-const MyOrderHistoryApp = require('./myPosHistory.jsx');
+const MyPosTabData = require('./PageMyPos/myPosTabData.jsx');
+const MyOpenOrdersTabData = require('./PageMyPos/myOpenOrdersTabData.jsx');
+const MyOrderHistoryTabData = require('./PageMyPos/myOrderHistoryTabData.jsx');
 
 
-export default class  PageMyPos extends React.Component
+export default class PageMyPos extends React.Component
 {
-    constructor()
+    constructor(props)
     {
         super();
-        if( __DEV__ )
-        {
-            this.propTypes = {
-                data: React.PropTypes.shape({
-                    positionData: React.PropTypes.number.isRequired,
-                    historyData: React.PropTypes.array.isRequired,
-                })
-            };
-        } // endif
+
+        this.state = {data: props.data};
     }
+
+    componentDidMount()
+    {
+		let self = this;
+		window.ee.addListener('myOpenOrder.update', function(newData)
+		{
+			// __DEV__&&console.debug( 'newData', newData );
+            // let prevData = self.state.data;
+            // newData = newData && newData.length ? positionControllerClass.filterData(newData, self.props.id) : [];
+            newData = Object.assign(self.state.data, {openOrdersData: newData});
+            self.setState(newData);
+		});
+
+		window.ee.addListener('myPosOrder.update', function(newData) {
+            newData = Object.assign(self.state.data, {positionData: newData});
+			self.setState(newData);
+		});
+	}
+
     // onYearBtnClick(e) {
     //     // this.props.actions.getPhotos(+e.target.getAttribute('data-year'));
     // }
 
     render()
     {
-        const { openOrdersData, positionData, historyData } = this.props.data;
+        const { openOrdersData, positionData, historyData } = this.state.data;
 
-        return (
-            <div className="my_position">
+        // __DEV__||console.debug( 'openOrdersData ', openOrdersData  );
+        const myOpenOrdersFilters = ['openOrders_Sport', 'openOrders_Finance', 'openOrders_E-sport', 'openOrders_Society'];
+        const myPosFilers = ['MyPos_Sport', 'MyPos_Finance', 'MyPos_E-sport', 'MyPos_Society'];
+
+        return <div className="my_position">
                 <div className="container">
                     <div className="tabs">
                         <span className="tab">Open orders</span>
@@ -61,42 +76,31 @@ export default class  PageMyPos extends React.Component
                                         <div className="open_orders table_content">
                                             <table>
                                                 <thead>
-                                                <tr>
-                                                    <th>Symbol</th>
-                                                    <th>Time</th>
-                                                    <th>Type</th>
-                                                    <th>Quantity</th>
-                                                    <th>Price</th>
-                                                    <th>Latest</th>
-                                                    <th>Position</th>
-                                                    <th></th>
-                                                </tr>
+                                                    <tr>
+                                                        <th>Symbol</th>
+                                                        <th>Time</th>
+                                                        <th>Type</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price</th>
+                                                        <th>Latest</th>
+                                                        <th>Position</th>
+                                                        <th></th>
+                                                    </tr>
                                                 </thead>
                                             </table>
                                             <div id="open_orders">
                                                 {
                                                     (openOrdersData && openOrdersData.length) ?
                                                         <table>
-                                                            <MyOpenOrdersApp
-                                                                key="openOrders_Sport"
-                                                                data={positionControllerClass.filterData(openOrdersData, 'openOrders_Sport')}
-                                                                id={'openOrders_Sport'}
-                                                            />
-                                                            <MyOpenOrdersApp
-                                                                key="openOrders_Finance"
-                                                                data={positionControllerClass.filterData(openOrdersData, 'openOrders_Finance')}
-                                                                id={'openOrders_Finance'}
-                                                            />
-                                                            <MyOpenOrdersApp
-                                                                key="openOrders_E-sport"
-                                                                data={positionControllerClass.filterData(openOrdersData, 'openOrders_E-sport')}
-                                                                id={'openOrders_E-sport'}
-                                                            />
-                                                            <MyOpenOrdersApp
-                                                                key="openOrders_Society"
-                                                                data={positionControllerClass.filterData(openOrdersData, 'openOrders_Society')}
-                                                                id={'openOrders_Society'}
-                                                            />
+                                                                    {/*data={positionControllerClass.filterData(openOrdersData, 'openOrders_Sport')}*/}
+                                                            {
+                                                                myOpenOrdersFilters.map((val) =>
+                                                                    <MyOpenOrdersTabData
+                                                                            key={val}
+                                                                            data={openOrdersData}
+                                                                            id={val}
+                                                                    />)
+                                                            }
                                                         </table>
                                                         :
                                                         <p>You have no order or positions</p>
@@ -127,42 +131,31 @@ export default class  PageMyPos extends React.Component
                                         <div className="my_position_container table_content">
                                             <table>
                                                 <thead>
-                                                <tr>
-                                                    <th>Symbol</th>
-                                                    <th>Type</th>
-                                                    <th>Quantity</th>
-                                                    <th>Price</th>
-                                                    <th><span className="sell">BID</span> | <span className="buy">ASK</span></th>
-                                                    <th><span className="profit">Profit</span> | <span className="loss">Loss</span></th>
-                                                    <th></th>
-                                                </tr>
+                                                    <tr>
+                                                        <th>Symbol</th>
+                                                        <th>Type</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price</th>
+                                                        <th><span className="sell">BID</span> | <span className="buy">ASK</span></th>
+                                                        <th><span className="profit">Profit</span> | <span className="loss">Loss</span></th>
+                                                        <th></th>
+                                                    </tr>
                                                 </thead>
                                             </table>
 
                                             <div id="my_position_container">
+                                                                    {/*data={positionControllerClass.filterData(positionData, 'MyPos_Sport')}*/}
                                                 {
                                                     (positionData && positionData.length) ?
                                                         <div>
-                                                            <MyPosApp
-                                                                key="MyPos_Sport"
-                                                                data={positionControllerClass.filterData(positionData, 'MyPos_Sport')}
-                                                                id={'MyPos_Sport'}
-                                                            />
-                                                            <MyPosApp
-                                                                key="MyPos_Finance"
-                                                                data={positionControllerClass.filterData(positionData, 'MyPos_Finance')}
-                                                                id={'MyPos_Finance'}
-                                                            />
-                                                            <MyPosApp
-                                                                key="MyPos_E-sport"
-                                                                data={positionControllerClass.filterData(positionData, 'MyPos_E-sport')}
-                                                                id={'MyPos_E-sport'}
-                                                            />
-                                                            <MyPosApp
-                                                                key="MyPos_Society"
-                                                                data={positionControllerClass.filterData(positionData, 'MyPos_Society')}
-                                                                id={'MyPos_Society'}
-                                                            />
+                                                            {
+                                                                myPosFilers.map((val) =>
+                                                                    <MyPosTabData
+                                                                            key={val}
+                                                                            data={positionData}
+                                                                            id={val}
+                                                                    />)
+                                                            }
                                                         </div>
                                                         :
                                                         <p>You have no positions</p>
@@ -180,7 +173,7 @@ export default class  PageMyPos extends React.Component
                             <div className="my_position_tab">
                                 <div className="wrapper">
                                     <div className="my_order_history table_content" id="my_order_history">
-                                        <MyOrderHistoryApp key="my_order_history" data={historyData}/>
+                                        <MyOrderHistoryTabData key="my_order_history" data={historyData}/>
                                     </div>
                                 </div>
                             </div>
@@ -188,7 +181,6 @@ export default class  PageMyPos extends React.Component
                     </div>
                 </div>
             </div>
-        )
     }
 }
 
