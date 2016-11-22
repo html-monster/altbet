@@ -27,28 +27,32 @@ module.exports = {
                 test: /\.js$/,
                 loader: "babel",
                 exclude: [/node_modules/, /public/],
-                // query: {
-                //   plugins: ['transform-runtime'],
-                //   presets: ['es2015', 'stage-0', 'react'],
-                // },
+                query: {
+                  plugins: ['transform-runtime'],
+                  presets: ['es2015', 'stage-0', 'react'],
+                },
             },
             {
                 test: /\.jsx$/,
-                loader: "react-hot!babel",
-                exclude: [/node_modules/, /public/]
+                loader: "babel-loader",
+                exclude: [/node_modules/, /public/],
+                query: {
+                  // plugins: ['transform-runtime'],
+                  presets: ['es2015', 'stage-0', 'react'],
+                },
             }
         ]
     },
     watch: true,
 
     watchOptions: {
-        aggregateTimeout: 100
+        aggregateTimeout: 300
     },
 
     plugins: [
         new WebpackNotifierPlugin({title: 'bundle.js', alwaysNotify: true}),
         new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
         // new webpack.NoErrorsPlugin(),
         devFlagPlugin
     ],
