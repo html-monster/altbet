@@ -8,7 +8,7 @@ const MyOpenOrdersApp = require('./myOpenOrders.jsx');
 const MyOrderHistoryApp = require('./myPosHistory.jsx');
 
 
-export default class PageMyPos extends React.Component
+export default class  PageMyPos extends React.Component
 {
     constructor()
     {
@@ -31,12 +31,13 @@ export default class PageMyPos extends React.Component
     {
         const { openOrdersData, positionData, historyData } = this.props.data;
 
-        return <div className="my_position">
+        return (
+            <div className="my_position">
                 <div className="container">
                     <div className="tabs">
-                        <span className="tab hello">Open orders</span>
-                        <span className="tab active hello">My positions</span>
-                        <span className="tab hello">History</span>
+                        <span className="tab">Open orders</span>
+                        <span className="tab active">My positions</span>
+                        <span className="tab">History</span>
                     </div>
 
                     <div className="tab_content">
@@ -60,16 +61,16 @@ export default class PageMyPos extends React.Component
                                         <div className="open_orders table_content">
                                             <table>
                                                 <thead>
-                                                    <tr>
-                                                        <th>Symbol</th>
-                                                        <th>Time</th>
-                                                        <th>Type</th>
-                                                        <th>Quantity</th>
-                                                        <th>Price</th>
-                                                        <th>Latest</th>
-                                                        <th>Position</th>
-                                                        <th></th>
-                                                    </tr>
+                                                <tr>
+                                                    <th>Symbol</th>
+                                                    <th>Time</th>
+                                                    <th>Type</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th>Latest</th>
+                                                    <th>Position</th>
+                                                    <th></th>
+                                                </tr>
                                                 </thead>
                                             </table>
                                             <div id="open_orders">
@@ -77,24 +78,24 @@ export default class PageMyPos extends React.Component
                                                     (openOrdersData && openOrdersData.length) ?
                                                         <table>
                                                             <MyOpenOrdersApp
-                                                                    key="openOrders_Sport"
-                                                                    data={positionControllerClass.filterData(openOrdersData, 'openOrders_Sport')}
-                                                                    id={'openOrders_Sport'}
+                                                                key="openOrders_Sport"
+                                                                data={positionControllerClass.filterData(openOrdersData, 'openOrders_Sport')}
+                                                                id={'openOrders_Sport'}
                                                             />
                                                             <MyOpenOrdersApp
-                                                                    key="openOrders_Finance"
-                                                                    data={positionControllerClass.filterData(openOrdersData, 'openOrders_Finance')}
-                                                                    id={'openOrders_Finance'}
+                                                                key="openOrders_Finance"
+                                                                data={positionControllerClass.filterData(openOrdersData, 'openOrders_Finance')}
+                                                                id={'openOrders_Finance'}
                                                             />
                                                             <MyOpenOrdersApp
-                                                                    key="openOrders_E-sport"
-                                                                    data={positionControllerClass.filterData(openOrdersData, 'openOrders_E-sport')}
-                                                                    id={'openOrders_E-sport'}
+                                                                key="openOrders_E-sport"
+                                                                data={positionControllerClass.filterData(openOrdersData, 'openOrders_E-sport')}
+                                                                id={'openOrders_E-sport'}
                                                             />
                                                             <MyOpenOrdersApp
-                                                                    key="openOrders_Society"
-                                                                    data={positionControllerClass.filterData(openOrdersData, 'openOrders_Society')}
-                                                                    id={'openOrders_Society'}
+                                                                key="openOrders_Society"
+                                                                data={positionControllerClass.filterData(openOrdersData, 'openOrders_Society')}
+                                                                id={'openOrders_Society'}
                                                             />
                                                         </table>
                                                         :
@@ -126,15 +127,15 @@ export default class PageMyPos extends React.Component
                                         <div className="my_position_container table_content">
                                             <table>
                                                 <thead>
-                                                    <tr>
-                                                        <th>Symbol</th>
-                                                        <th>Type</th>
-                                                        <th>Quantity</th>
-                                                        <th>Price</th>
-                                                        <th><span className="sell">BID</span> | <span className="buy">ASK</span></th>
-                                                        <th><span className="profit">Profit</span> | <span className="loss">Loss</span></th>
-                                                        <th></th>
-                                                    </tr>
+                                                <tr>
+                                                    <th>Symbol</th>
+                                                    <th>Type</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th><span className="sell">BID</span> | <span className="buy">ASK</span></th>
+                                                    <th><span className="profit">Profit</span> | <span className="loss">Loss</span></th>
+                                                    <th></th>
+                                                </tr>
                                                 </thead>
                                             </table>
 
@@ -143,24 +144,24 @@ export default class PageMyPos extends React.Component
                                                     (positionData && positionData.length) ?
                                                         <div>
                                                             <MyPosApp
-                                                                    key="MyPos_Sport"
-                                                                    data={positionControllerClass.filterData(positionData, 'MyPos_Sport')}
-                                                                    id={'MyPos_Sport'}
+                                                                key="MyPos_Sport"
+                                                                data={positionControllerClass.filterData(positionData, 'MyPos_Sport')}
+                                                                id={'MyPos_Sport'}
                                                             />
                                                             <MyPosApp
-                                                                    key="MyPos_Finance"
-                                                                    data={positionControllerClass.filterData(positionData, 'MyPos_Finance')}
-                                                                    id={'MyPos_Finance'}
+                                                                key="MyPos_Finance"
+                                                                data={positionControllerClass.filterData(positionData, 'MyPos_Finance')}
+                                                                id={'MyPos_Finance'}
                                                             />
                                                             <MyPosApp
-                                                                    key="MyPos_E-sport"
-                                                                    data={positionControllerClass.filterData(positionData, 'MyPos_E-sport')}
-                                                                    id={'MyPos_E-sport'}
+                                                                key="MyPos_E-sport"
+                                                                data={positionControllerClass.filterData(positionData, 'MyPos_E-sport')}
+                                                                id={'MyPos_E-sport'}
                                                             />
                                                             <MyPosApp
-                                                                    key="MyPos_Society"
-                                                                    data={positionControllerClass.filterData(positionData, 'MyPos_Society')}
-                                                                    id={'MyPos_Society'}
+                                                                key="MyPos_Society"
+                                                                data={positionControllerClass.filterData(positionData, 'MyPos_Society')}
+                                                                id={'MyPos_Society'}
                                                             />
                                                         </div>
                                                         :
@@ -187,6 +188,7 @@ export default class PageMyPos extends React.Component
                     </div>
                 </div>
             </div>
+        )
     }
 }
 

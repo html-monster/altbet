@@ -387,8 +387,19 @@ class activeTraderClass{
 			let trader = $('.active_trader');
 
 			trader.on('click', '.active_trader_footer td', function () {
-				let method = ($(this).find('a').attr('class')).slice(0, -2);
-				ajaxControlTraderClass[method]();
+				$(this).find('.confirm_window').removeClass('bounceOutDown').addClass('bounceInUp');
+				$(this).find('.confirm_window').addClass('active');
+			});
+			$('.active_trader_footer button').click(function (e) {
+				e.stopPropagation();
+				if($(this).hasClass('yes')){
+					let method = ($(this).parents('td').find('a').attr('class')).slice(0, -2);
+					ajaxControlTraderClass.ajaxDataSender(method);
+				}
+				$(this).parents('.confirm_window').removeClass('bounceInUp').addClass('bounceOutDown');
+				setTimeout(() => {
+					$(this).parents('.confirm_window').removeClass('active');
+				}, 500);
 			});
 		}();
 		// this.marcketOrder = function () {
@@ -584,7 +595,11 @@ class activeTraderClass{
 	// 		$('.left_order table.limit tbody .hidden').animate({height: 20}).attr('class', 'visible');
 	// 	}
 	// }
-
+	/**
+	 * Активирует и дезактиварует кнопки в трейдре
+	 * @param current дом узел (кнопки или поля ввода в контрольной панеле трейдера)
+	 * @param recalc bool (вызывает функцию пересчета recaluculateSum для пересчета кол. и суммы в контрольной панеле и в вызваном ордере одновременно)
+	 */
 	static buttonActivation(current, recalc) {
 		if(current.parents('.active_trader').length){
 			var	html = '<div class="regulator min" style="display: none;"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>',
@@ -649,6 +664,11 @@ class activeTraderClass{
 		}
 	}
 
+	/**
+	 * вычисляет в трейдере центр между бидом и аском
+	 * @param center
+	 * @returns {boolean}
+	 */
 	static scrollTo(center) {
 		var table = $('table.limit tbody tr'),
 				indexBuy = table.find('.best_buy').parent().index(),
@@ -669,6 +689,10 @@ class activeTraderClass{
 		tbody.animate({scrollTop: (indexBuy + center) * 20 - tbody.height() / 2 + 10}, 400);
 	}
 
+	/**
+	 * удаляет вызванный ордер в трейдере, дизактивирует все активные элементы в трейдере(сбрасывает его в изначальное состояние)
+	 * @param removeOrder
+	 */
 	static spreaderClean(removeOrder) {
 		$('.active_trader table.limit tbody tr').find('.price_value').removeClass('active');
 		$('.active_trader input.spreader').val('');
@@ -683,6 +707,10 @@ class activeTraderClass{
 		$('.active_trader .spread_confim').remove();
 	}
 
+	/**
+	 * для пересчета кол. и суммы в контрольной панеле и в вызваном ордере одновременно
+	 * @param item дом узел с которым ордер будет синхронизирован в пересчете
+	 */
 	static recaluculateSum(item){
 		var order_content = $('#order_content'),
 				quantity = +item.text() || +item.val() || '',
@@ -699,7 +727,12 @@ class activeTraderClass{
 			order_content.find('.obligations input').val((price * quantity).toFixed(2));
 	}
 
-	//spread show/hide =============================================================================================================
+	//spread show/hide ===================================================================================================
+	/**
+	 * исользуется, когда спредер прячится пересчитывает ширину ячеек в таблице
+	 * @toDelete 19/11/2016
+	 * @param tdWidth
+	 */
 	static tdWidthChange(tdWidth) {
 
 		$('table.limit').find('tr').each(function () {
@@ -709,6 +742,10 @@ class activeTraderClass{
 		});
 	}
 
+	/**
+	 * берет данные при смене события(название события, symbol и т.п.)
+	 * @param currentItem дом узел события с которого берется symbol
+	 */
 	static takeData(currentItem) {
 		var ii, priceSell = [], priceBuy = [], volumeSell = [], volumeBuy = [],
 				bestSell, bestBuy, currentPrice,
@@ -814,6 +851,10 @@ class activeTraderClass{
 		activeTraderClass.scrollTo();
 	}
 
+	/**
+	 * просчет высоты таблицы с данным в трейдере
+	 * @param showFooter bool включен футер или нет
+	 */
 	static tbodyResize(showFooter){
 		var windowHeight = window.innerHeight,
 				footer = $('footer'),
@@ -840,6 +881,10 @@ class activeTraderClass{
 		}, delay);
 	};
 
+	/**
+	 * включает и отключает трейдер
+	 * @param context дом узел чекбокса трейдера
+	 */
 	static traderOnCheck(context){
 		let ii = 0;
 		let autoTrade = $('.left_order .tab input.auto'),

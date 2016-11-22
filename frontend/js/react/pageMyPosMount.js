@@ -1,6 +1,6 @@
 // const ReactDOM = require('react-dom');
 // const React = require('react');
-import PageMyPos from './components/pageMyPos.jsx';
+import PageMyPos from './components/PageMyPos.jsx';
 // const MyPosApp = require('./components/myPositions.jsx');
 // const MyOpenOrdersApp = require('./components/myOpenOrders.jsx');
 // const MyOrderHistoryApp = require('./components/myPosHistory.jsx');

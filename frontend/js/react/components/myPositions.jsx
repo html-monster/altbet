@@ -83,7 +83,6 @@ const MyPosApp = React.createClass({
 		};
 	},
 	componentDidMount: function() {
-		0||console.debug( 'mountt' );
 		let self = this;
 		window.ee.addListener('myPosOrder.update', function(newData) {
 			newData = positionControllerClass.filterData(newData, self.props.id);
