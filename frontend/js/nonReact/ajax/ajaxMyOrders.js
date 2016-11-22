@@ -26,10 +26,9 @@ class myOrderClass{
 				defaultMethods.showError('Internal server error, try again later');
 			}
 		}
-		function onErrorAjax(x, y, z) {
-			console.dir('XMLHTTPRequest object: ', x);
-			console.dir('textStatus: ',  y);
-			console.dir('errorThrown: ',  z);
+		function onErrorAjax(x, y) {
+			console.log('XMLHTTPRequest object: ', x);
+			console.log('textStatus: ',  y);
 			defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 		}
 	}

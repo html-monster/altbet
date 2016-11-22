@@ -75,28 +75,25 @@ const MyPositionOrders = React.createClass({
 	}
 });
 
-const MyPosTabData = React.createClass({
-	// getInitialState: function() {
-	// 	return {
-	// 		data: positionControllerClass.filterData(this.props.data, this.props.id),
-	// 		// id: this.props.id
-	// 	};
-	// },
-	// componentDidMount: function() {
-	// 	0||console.debug( 'mountt' );
-	// 	let self = this;
-	// 	window.ee.addListener('myPosOrder.update', function(newData) {
-	// 		newData = positionControllerClass.filterData(newData, self.props.id);
-	// 		self.setState({data: newData});
-	// 	});
-	// },
-	render: function()
-	{
-		let data = positionControllerClass.filterData(this.props.data, this.props.id);
-
+const MyPosApp = React.createClass({
+	getInitialState: function() {
+		return {
+			data: positionControllerClass.filterData(this.props.data, this.props.id),
+			// id: this.props.id
+		};
+	},
+	componentDidMount: function() {
+		let self = this;
+		window.ee.addListener('myPosOrder.update', function(newData) {
+			newData = positionControllerClass.filterData(newData, self.props.id);
+			self.setState({data: newData});
+		});
+	},
+	render: function() {
+		let data = this.state.data;
 		if (data.length) {
 			return (
-					<div className="filter_item active" id={this.props.id}>
+					<div className="filter_item active" id={this.state.id}>
 						{
 							data.map(function (item) {
 								return <MyPositionOrders data={item} key={item.Symbol.Exchange}/>
@@ -111,4 +108,4 @@ const MyPosTabData = React.createClass({
 	}
 });
 
-module.exports = MyPosTabData;
+module.exports = MyPosApp;

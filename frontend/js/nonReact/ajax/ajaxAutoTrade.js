@@ -4,10 +4,9 @@ var ajaxAutoTradeClass = new function () {
 
 		console.log('Order sending finished: ' + data[0]);
 	}
-	function onErrorAjax(x, y, z) {
-		console.dir('XMLHTTPRequest object: ', x);
-		console.dir('textStatus: ',  y);
-		console.dir('errorThrown: ',  z);
+	function onErrorAjax(x, y) {
+		console.log('XMLHTTPRequest object: ', x);
+		console.log('textStatus: ',  y);
 		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 	}
 	this.sendOrder = function(context, modification, price){

@@ -47,7 +47,7 @@
     "stream-combiner2": "^1.1.1",
     "stylelint": "^3.2.2",
     "vinyl-named": "^1.1.0",
-    "react": "^0.15.0",
+    "react": "*",
     "react-dom": "^0.14.6",
     "react-redux": "^4.0.6",
     "react-router": "^3.0.0",

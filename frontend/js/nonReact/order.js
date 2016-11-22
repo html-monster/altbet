@@ -348,6 +348,7 @@ class orderClass{
 			});
 		}();
 
+		//order delete =====================================================================================================
 		self.orderDelete = function () {
 			var order_tab = $('#order');
 			order_tab.on('click', '.delete', function (e) {
@@ -520,6 +521,15 @@ class orderClass{
 	});
 };
 
+	/**
+	 * формирует html ордера создоваемого
+	 * @param orderDirection string направление ордера sell buy
+	 * @param modification string если full, то будет полный ордер с тайтлом
+	 * @param limit bool лимитный или маркетный
+	 * @param context дом узел с которого идет вызов, чтобы взять symbol объекта
+	 * @param object передаются данные для ордера
+	 * @returns html ордера
+	 */
 	static createOrderForm(orderDirection, modification, limit, context, object) {
 		let html = $('.order_content.new').clone(),
 				eventId = context.parents('.event-content').attr('id') ? context.parents('.event-content').attr('id') : context.parents('.event-content').attr('data-symbol'),
@@ -529,9 +539,12 @@ class orderClass{
 		if(modification == 'full'){
 			html.attr('id', id[defaultMethods.searchValue(id, eventId)][0] + '__order').css({display: 'none'});
 			html.find('h3').text(object.title);
+			if(globalData.basicMode == 'True') html.find('form').addClass('basic_mode');
 		}
-		else
+		else{
 			html = html.find('form').css({display: 'none'});
+			if(globalData.basicMode == 'True') html.addClass('basic_mode');
+		}
 
 		if (orderDirection == 'sell') {
 			// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
@@ -573,7 +586,6 @@ class orderClass{
 			html.find('.fees input').val(Math.round10(object.volume * 0.0086, -2));
 		}
 
-		if(globalData.basicMode == 'True') html.find('.form_container').addClass('basic_mode');
 		html.find('.volume input.number').val(object.volume);
 		html.find('.symbol').val(context.parents('.event-content').attr('data-symbol').replace(/_mirror/, ''));
 
@@ -595,6 +607,9 @@ class orderClass{
 		return html;
 	}
 
+	/**
+	 * скрывает и показывает информацию при отсутсвие ордеров в сайдбаре
+	 */
 	static showInfo () {
 		if($('#order .default_orders').children().length > 1)
 			$('#default_order_info').hide();
@@ -602,6 +617,9 @@ class orderClass{
 			$('#default_order_info').show();
 	}
 
+	/**
+	 * возвращает с вкладки your orders на trade slip
+	 */
 	static tabReturn() {
 		var tab = $(".left_order .wrapper .tab"),
 				tab_item = $(".left_order .tab_item");

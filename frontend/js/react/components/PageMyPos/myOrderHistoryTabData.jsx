@@ -75,7 +75,7 @@ const MyOrderHistoryTabData = React.createClass({
 										<td>
 											<span className="timestamp help">
 												<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`} | </span>
-												<span className="time">{`${date.getHours() - 2}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
+												<span className="time">{`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
 												<span className="help_message"><strong>MM/DD/YYYY | HH:MM</strong></span>
 											</span>
 										</td>

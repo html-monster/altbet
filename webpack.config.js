@@ -4,8 +4,8 @@ var path = require('path');
 var webpack = require('webpack');
 var WebpackNotifierPlugin = require('webpack-notifier');
 
-const DEST_SERVER = '/../altbetNew/RefactoredCore/Alt.Bet';
-// const DEST_SERVER = '/../../altbetNew/Alt.Bet';
+// const DEST_SERVER = '/../altbetNew/RefactoredCore/Alt.Bet';
+const DEST_SERVER = '/../../altbetNew/Alt.Bet';
 
 
 var devFlagPlugin = new webpack.DefinePlugin({
@@ -28,25 +28,24 @@ module.exports = {
                 loader: "babel",
                 exclude: [/node_modules/, /public/],
                 query: {
-                  plugins: ['transform-runtime'],
+                  // plugins: ['transform-runtime'],
                   presets: ['es2015', 'stage-0', 'react'],
                 },
             },
             {
                 test: /\.jsx$/,
-                loader: "babel-loader",
+                loader: "babel",//react-hot!
                 exclude: [/node_modules/, /public/],
                 query: {
-                  // plugins: ['transform-runtime'],
-                  presets: ['es2015', 'stage-0', 'react'],
-                },
+                    presets: ['es2015', 'stage-0', 'react'],
+                }
             }
         ]
     },
     watch: true,
 
     watchOptions: {
-        aggregateTimeout: 300
+        aggregateTimeout: 100
     },
 
     plugins: [
