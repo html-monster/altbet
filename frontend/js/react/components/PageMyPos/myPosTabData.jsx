@@ -22,7 +22,7 @@ const PosItem = React.createClass({
 					</td>
 					<td className="side">{(itemData.Side ? 'Short' : 'Long')}</td>
 					<td className="quantity">{itemData.CommonVolume}</td>
-					<td className="avg_price">{(itemData.IsMirror ? Math.round10(1 - itemData.AvgPrice, -2) : Math.round10(itemData.AvgPrice, -2))}</td>
+					<td className="avg_price">{Math.round10(itemData.AvgPrice, -2)}</td>
 					<td className="spread">
 						<span className="sell">{(itemData.IsMirror ? Math.round10(1 - mainData.LastAsk, -2) : mainData.LastBid)}</span> |
 						<span className="buy"> {(itemData.IsMirror ? Math.round10(1 - mainData.LastBid, -2) : mainData.LastAsk)}</span>

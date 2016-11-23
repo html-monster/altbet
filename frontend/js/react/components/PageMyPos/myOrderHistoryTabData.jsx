@@ -71,7 +71,7 @@ const MyOrderHistoryTabData = React.createClass({
 							return (
 									<tr className={(item.IsMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))}
 											key={item.Time.slice(6).slice(0, -2)}>
-										<td>{(item.isMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}</td>
+										<td>{(item.IsMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}</td>
 										<td>
 											<span className="timestamp help">
 												<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`} | </span>
