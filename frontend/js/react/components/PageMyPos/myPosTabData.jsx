@@ -40,8 +40,8 @@ const PosItem = React.createClass({
 const MyPositionOrders = React.createClass({
 	handleCloseOut: function() {
 		let data = this.props.data.Symbol,
-				jsonData = { Symbol: data.Exchange };
-		console.log(`${data.Exchange}_${data.Name}_${data.Currency}`);
+				jsonData = { Symbol: `${data.Exchange}_${data.Name}_${data.Currency}` };
+
 		defaultMethods.sendAjaxRequest('POST', this.callback, null, globalData.rootUrl + 'order/closeout', null, jsonData);
 	},
 
