@@ -38,6 +38,17 @@ const PosItem = React.createClass({
 });
 
 const MyPositionOrders = React.createClass({
+	handleCloseOut: function() {
+		let data = this.props.data.Symbol,
+				jsonData = { Symbol: data.Exchange };
+		console.log(`${data.Exchange}_${data.Name}_${data.Currency}`);
+		defaultMethods.sendAjaxRequest('POST', this.callback, null, globalData.rootUrl + 'order/closeout', null, jsonData);
+	},
+
+	callback: function (e) {
+		console.log(e);
+	},
+
 	render: function() {
 		let data = this.props.data;
 		let plClass;
@@ -47,21 +58,21 @@ const MyPositionOrders = React.createClass({
 			plClass = 'profit';
 
 		return (
-		<table className="pos tmp">
+				<table className="pos tmp">
 					<thead>
-						<tr>
-							<th className="title">{data.Symbol.HomeName + ' - ' + data.Symbol.AwayName}</th>
-							<th>{}</th>
-							<th><span className="quantity">{data.CommonSymbolVolume}</span></th>
-							<th>{}</th>
-							<th>{}</th>
-							<th>
+					<tr>
+						<th className="title">{data.Symbol.HomeName + ' - ' + data.Symbol.AwayName}</th>
+						<th>{}</th>
+						<th><span className="quantity">{data.CommonSymbolVolume}</span></th>
+						<th>{}</th>
+						<th>{}</th>
+						<th>
 									<span className={'pl ' + plClass}>
 										{(data.CommonSymbolProfitLoss < 0 ? '($' + (data.CommonSymbolProfitLoss).toString().slice(1) + ')' : '$' + data.CommonSymbolProfitLoss)}
 									</span>
-							</th>
-							<th><button className="btn close_out wave">Close Out</button></th>
-						</tr>
+						</th>
+						<th><button className="btn close_out wave" onClick={this.handleCloseOut}>Close Out</button></th>
+					</tr>
 					</thead>
 					<tbody className="showhide active">
 					{

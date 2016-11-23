@@ -10,3 +10,35 @@ $user_page_balance: #000;
 		border: 1px solid transparentize(#4dac2e, 0.7);
 	}
 }
+@mixin user_balance_color_map{
+	&.pl {
+		color: #4dac2e;
+		&:before {  background: transparentize(#4dac2e, 0.5);  }
+		&.neg {
+			color: #ff3905;
+			&:before {  background: #ff3905;  }
+		}
+	}
+	&.inv {
+		color: #ef8022;
+		&:before {  background: transparentize(#ef8022, 0.5);  }
+	}
+	&.ava {
+		color: #1196d4;
+		&:before {  background: transparentize(#1196d4, 0.5);  }
+	}
+}
+@mixin user_balance_color{
+	&.pl {
+		height: 100%;
+		left: 0;
+		top: 0;
+		&.pos {  background: transparentize(#4dac2e, 0.5);  }
+		&.neg {
+			background: transparentize(#ff3905, 0.5);
+			position: absolute;
+		}
+	}
+	&.inv {  background: transparentize(#ef8022, 0.5);  }
+	&.ava {  background: transparentize(#1196d4, 0.5);  }
+}

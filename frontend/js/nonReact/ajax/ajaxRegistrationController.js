@@ -1,21 +1,35 @@
-class ajaxRegisterControllerClass{
+class ajaxRegistrationControllerClass{
 	constructor(){
-		// $('.sign_in_form .input__field').keydown(function () {
-		// 	if($('.sign_in_form .wrong_log').length){
-		// 		$('[data-valmsg-for=UserIdentity]').removeClass('wrong_log');
-		// 		$('.sign_in_form .input__field').removeClass('input-validation-error');
-		// 		$('.sign_in_form .input_animate').removeClass('invalid');
-		// 	}
-		// });
+		$('.sign_up_form form').submit(function () {
+			if(!(checkAreement('agreement', $(this)) && checkAreement('agreement_age', $(this)))) return false;
+		});
+		function checkAreement(item, context){
+			if(context.find(`#${item}`).prop('checked')) return true;
+			else{
+				context.find(`.agreement label[for=${item}]`).addClass('animated shake');
+				setTimeout(() => {
+					context.find(`.agreement label[for=${item}]`).removeClass('animated shake');
+				}, 500);
+				return false;
+			}
+		}
 	}
 	static OnBeginJs(){
-		// let object = defaultMethods.objectFromArray(this.data.split('&'));
-		//
-		// $('#submit_sign').attr('disabled', true);
+		let object = defaultMethods.objectFromArray(this.data.split('&'));
+
+		// $('#submit_sign_up').attr('disabled', true);
+		console.log(object);
 		// console.log('User "' + object.UserIdentity + '" try to enter the site');
 	}
 
 	static OnSuccessJs(e){
+		ajaxLoginControllerClass.OnSuccessJs(e);
+		if (!e.Error && e.UserName) {
+			console.log(111);
+		}
+		else{
+			console.log(222);
+		}
 		// if (!e.Error && e.UserName) {
 		// 	popUpClass.closePopUp('.sign_in_form');
 		// 	console.log('Welcome to hell }:-)');
@@ -44,7 +58,7 @@ class ajaxRegisterControllerClass{
 	}
 
 	static OnFailureJs(){
-		// $('#submit_sign').removeAttr('disabled');
-		// defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+		$('#submit_sign_up').removeAttr('disabled');
+		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 	}
 }

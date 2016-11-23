@@ -24,7 +24,7 @@ class modeSwitchClass{
 		if($(context).prop('checked')){
 			$(context).parent().find('span').text('Expert Mode');
 			$('.content_bet').removeClass('basic_mode_js');
-			$('.mode_info_js').hide();
+			// $('.mode_info_js').hide();
 			$('.content_bet button').each(function () {
 				var price = $(this).find('.price:not(.empty)').text();
 				$(this).find('.price:not(.empty)').text(price.replace('$', ''));
@@ -35,7 +35,7 @@ class modeSwitchClass{
 		else{
 			$(context).parent().find('span').text('Basic Mode');
 			$('.content_bet').addClass('basic_mode_js');
-			$('.mode_info_js').show();
+			// $('.mode_info_js').show();
 			$('.content_bet button').each(function () {
 				var price = $(this).find('.price:not(.empty)').text();
 				$(this).find('.price:not(.empty)').text('$' + price);
