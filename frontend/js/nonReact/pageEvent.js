@@ -23,7 +23,7 @@ class eventPageClass{
 			});
 		}();
 
-		self.tableAddOrder = function () {
+		self.addOrder = function () {
 			let order = $('#order .default_orders'), data;
 
 			data = {

@@ -218,51 +218,37 @@ header.first_page {
   top: 100%;
   .video_category {
     display: block;
-    position: absolute;
-    border-radius: 9px;
     width: 382px;
     height: 210px;
+    position: absolute;
     overflow: hidden;
+    border-radius: 9px;
+    opacity: 0;
+    &.active {  opacity: 1;  }
     video {
-      border-radius: 7px;
       display: block;
       height: 217px;
       width: 387px;
+      border-radius: 7px;
     }
     &.sport_video {
-      opacity: 0;
       left: calc(50% - 383px);
       top: calc(50% - 211px);
-      &.active {
-        opacity: 1;
-      }
     }
     &.finance_video {
       width: 383px;
-      opacity: 0;
-      left: calc(50% - 2px);
-      top: calc(50% - 211px);
-      &.active {
-        opacity: 1;
-      }
+      left: calc(50% - 384px);
+      top: calc(50% + 1px);
     }
     &.esport_video {
       width: 383px;
-      opacity: 0;
-      left: calc(50% - 384px);
-      top: calc(50% + 1px);
-      &.active {
-        opacity: 1;
-      }
+      left: calc(50% - 2px);
+      top: calc(50% - 211px);
     }
     &.society_video {
       width: 383px;
-      opacity: 0;
       left: calc(50% - 2px);
       top: calc(50% + 1px);
-      &.active {
-        opacity: 1;
-      }
     }
   }
   #main_category {

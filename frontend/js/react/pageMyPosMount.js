@@ -1,9 +1,9 @@
 // const ReactDOM = require('react-dom');
 // const React = require('react');
-import PageMyPos from './components/pageMyPos.jsx';
-// const MyPosApp = require('./components/myPositions.jsx');
-// const MyOpenOrdersApp = require('./components/myOpenOrders.jsx');
-// const MyOrderHistoryApp = require('./components/myPosHistory.jsx');
+import PageMyPos from './components/PageMyPos.jsx';
+// const MyPosTabData = require('./components/myPosTabData.jsx');
+// const MyOpenOrdersTabData = require('./components/myOpenOrdersTabData.jsx');
+// const MyOrderHistoryTabData = require('./components/myOrderHistoryTabData.jsx');
 window.ee = new EventEmitter();
 
 if(globalData.myPosOn){
@@ -19,22 +19,22 @@ if(globalData.myPosOn){
 		// ReactDOM.render(
 		// 	(positionData && positionData.length) ?
 		// 		<div>
-		// 			<MyPosApp
+		// 			<MyPosTabData
 		// 					key="MyPos_Sport"
 		// 					data={positionControllerClass.filterData(positionData, 'MyPos_Sport')}
 		// 					id={'MyPos_Sport'}
 		// 			/>
-		// 			<MyPosApp
+		// 			<MyPosTabData
 		// 					key="MyPos_Finance"
 		// 					data={positionControllerClass.filterData(positionData, 'MyPos_Finance')}
 		// 					id={'MyPos_Finance'}
 		// 			/>
-		// 			<MyPosApp
+		// 			<MyPosTabData
 		// 					key="MyPos_E-sport"
 		// 					data={positionControllerClass.filterData(positionData, 'MyPos_E-sport')}
 		// 					id={'MyPos_E-sport'}
 		// 			/>
-		// 			<MyPosApp
+		// 			<MyPosTabData
 		// 					key="MyPos_Society"
 		// 					data={positionControllerClass.filterData(positionData, 'MyPos_Society')}
 		// 					id={'MyPos_Society'}
@@ -50,22 +50,22 @@ if(globalData.myPosOn){
     // ReactDOM.render(
     //     (openOrdersData && openOrdersData.length) ?
     //         <table>
-    //             <MyOpenOrdersApp
+    //             <MyOpenOrdersTabData
     //                     key="openOrders_Sport"
     //                     data={positionControllerClass.filterData(openOrdersData, 'openOrders_Sport')}
     //                     id={'openOrders_Sport'}
     //             />
-    //             <MyOpenOrdersApp
+    //             <MyOpenOrdersTabData
     //                     key="openOrders_Finance"
     //                     data={positionControllerClass.filterData(openOrdersData, 'openOrders_Finance')}
     //                     id={'openOrders_Finance'}
     //             />
-    //             <MyOpenOrdersApp
+    //             <MyOpenOrdersTabData
     //                     key="openOrders_E-sport"
     //                     data={positionControllerClass.filterData(openOrdersData, 'openOrders_E-sport')}
     //                     id={'openOrders_E-sport'}
     //             />
-    //             <MyOpenOrdersApp
+    //             <MyOpenOrdersTabData
     //                     key="openOrders_Society"
     //                     data={positionControllerClass.filterData(openOrdersData, 'openOrders_Society')}
     //                     id={'openOrders_Society'}
@@ -79,7 +79,7 @@ if(globalData.myPosOn){
 
 
 	// ReactDOM.render(
-	// 		<MyOrderHistoryApp
+	// 		<MyOrderHistoryTabData
 	// 				key="my_order_history"
 	// 				data={historyData}
 	// 		/>

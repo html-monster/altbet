@@ -37,7 +37,7 @@
 	}
 });*/
 
-const MyOrderHistoryApp = React.createClass({
+const MyOrderHistoryTabData = React.createClass({
 	getInitialState: function() {
 		return {
 			data: this.props.data
@@ -71,11 +71,11 @@ const MyOrderHistoryApp = React.createClass({
 							return (
 									<tr className={(item.IsMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))}
 											key={item.Time.slice(6).slice(0, -2)}>
-										<td>{(item.isMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}</td>
+										<td>{(item.IsMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}</td>
 										<td>
 											<span className="timestamp help">
 												<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`} | </span>
-												<span className="time">{`${date.getHours() - 2}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
+												<span className="time">{`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
 												<span className="help_message"><strong>MM/DD/YYYY | HH:MM</strong></span>
 											</span>
 										</td>
@@ -99,4 +99,4 @@ const MyOrderHistoryApp = React.createClass({
 	}
 });
 
-module.exports = MyOrderHistoryApp;
+module.exports = MyOrderHistoryTabData;

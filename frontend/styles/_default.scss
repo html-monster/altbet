@@ -582,63 +582,6 @@ label.checkbox{
   }
 }
 
-@keyframes fadeOut {
-  0% {  background-color: orange;  }
-  100% {  background-color: transparent;  }
-}
-@keyframes fadeColorOutSell {
-  0% {  color: #ef4d22;  }
-  100% {  color: orange;  }
-}
-@keyframes fadeColorOutBuy {
-  0% {  color: #3498da;  }
-  100% {  color: orange;  }
-}
-@keyframes shake {
-  0%, 100% {  transform: translate3d(0, 0, 0);  }
-  10%, 30%, 50%, 70%, 90% {  transform: translate3d(-10px, 0, 0);  }
-  20%, 40%, 60%, 80% {  transform: translate3d(10px, 0, 0);  }
-}
-@keyframes rubberBand {
-  0% {  transform: scale3d(1, 1, 1);  }
-  30% {  transform: scale3d(1.25, 0.75, 1);  }
-  40% {  transform: scale3d(0.75, 1.25, 1);  }
-  50% {  transform: scale3d(1.15, 0.85, 1);  }
-  65% {  transform: scale3d(.95, 1.05, 1);  }
-  75% {  transform: scale3d(1.05, .95, 1);  }
-  100% {  transform: scale3d(1, 1, 1);  }
-}
-@keyframes fadeInLeft {
-  0% {  opacity: 0;  transform: translate3d(-100%, 0, 0);  }
-  100% {  opacity: 1;  transform: none;  }
-}
-@keyframes bounceInRight {
-  0%, 60%, 75%, 90%, 100% {  animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);  }
-  0% {  opacity: 0;  transform: translate3d(3000px, 0, 0);  }
-  60% {  opacity: 1;  transform: translate3d(-25px, 0, 0);  }
-  75% {  transform: translate3d(10px, 0, 0);  }
-  90% {  transform: translate3d(-5px, 0, 0);  }
-  100% {  transform: none;  }
-}
-@keyframes bounceOutRight {
-  20% {  opacity: 1;  transform: translate3d(-20px, 0, 0);  }
-  100% {  opacity: 0;  transform: translate3d(2000px, 0, 0);  }
-}
-
-.bounceInRight {  animation-name: bounceInRight;  }
-.bounceOutRight {  animation-name: bounceOutRight;  }
-.fadeInLeft {  animation-name: fadeInLeft;  }
-.shake {  animation-name: shake;  }
-.fadeOut span:after {  animation-name: fadeOut;  }
-.fadeOut:before {  animation-name: fadeOut;  }
-.rubberBand {  animation-name: rubberBand;  }
-.animated{
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  &:before{  animation-duration: 1s;  animation-fill-mode: both;  }
-  span:after {  animation-duration: 1s;  animation-fill-mode: both;  }
-}
-
 .input_animate {
   position: relative;
   display: inline-block;

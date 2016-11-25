@@ -7,6 +7,10 @@ class popUpClass{
 				$('body>.wrapper').removeClass('blur');
 				$('.video_form iframe').removeAttr('src', '');
 				$('#order_content').remove();
+				$('.confirm_window').removeClass('bounceInUp').addClass('bounceOutDown');
+				setTimeout(() => {
+					$('.confirm_window').removeClass('active');
+				}, 500);
 			}
 			// if(e.keyCode == 49){
 			// 	console.log(1);

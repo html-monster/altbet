@@ -18,7 +18,7 @@ $my_pos_color: transparentize(#ffffff, 0.2);
 	background: transparentize(#211e25, 0.8);
 	&:not(active){  position: relative;  }
 	&:nth-child(1) {
-		margin: 0;
+		//margin: 0;
 		&.active:nth-child(1):after{  width: 200%;  }
 	}
 	&:after{

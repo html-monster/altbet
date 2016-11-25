@@ -11,7 +11,7 @@ class ajaxLoginControllerClass{
 	static OnBeginJs(){
 		let object = defaultMethods.objectFromArray(this.data.split('&'));
 
-		$('#submit_sign').attr('disabled', true);
+		$('#submit_sign_in').attr('disabled', true);
 		console.log('User "' + object.UserIdentity + '" try to enter the site');
 	}
 
@@ -19,7 +19,7 @@ class ajaxLoginControllerClass{
 		if (!e.Error && e.UserName) {
 			popUpClass.closePopUp('.sign_in_form');
 			console.log('Welcome to hell }:-)');
-			$('#submit_sign').removeAttr('disabled');
+			$('#submit_sign_in').removeAttr('disabled');
 			$('header .log_out').removeClass('active');
 			$('header .log_in').addClass('active');
 			$('header .log_in .user-name').text(e.UserName);
@@ -37,14 +37,14 @@ class ajaxLoginControllerClass{
 			}
 		} else {
 			$('.sign_in_form .input_animate').addClass('invalid');
-			$('#submit_sign').removeAttr('disabled');
+			$('#submit_sign_in').removeAttr('disabled');
 			$('[data-valmsg-for=UserIdentity]').text(e.Error).addClass('wrong_log');
 			$('.sign_in_form .input__field').addClass('input-validation-error').removeClass('valid');
 		}
 	}
 
 	static OnFailureJs(){
-		$('#submit_sign').removeAttr('disabled');
+		$('#submit_sign_in').removeAttr('disabled');
 		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 	}
 }
