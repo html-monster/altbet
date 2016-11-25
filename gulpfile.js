@@ -95,22 +95,27 @@ gulp.task('js',function(){
     sourcemaps.init(),
     // $.uglify(),
     gulp.dest('./public/js'),
-    gulp.dest(OPTIONS.path.dest_server + '/Scripts')
+    gulp.dest(OPTIONS.path.dest_server + '/Scripts'),
 
 
-    // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js', 'vendor/ms-Dropdown-js/js/msdropdown/jquery.dd.min.js',
-    // 'vendor/eventEmitter/eventEmitter.min.js', 'vendor/react-0.14.7/build/react.min.js', 'vendor/react-0.14.7/build/react-dom.min.js']),
+    // gulp.src(['vendor/Waves/dist/waves.min.js',
+    //     'vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js',
+    //     'vendor/ms-Dropdown-js/js/msdropdown/jquery.dd.min.js',
+    //     'vendor/eventEmitter/eventEmitter.min.js',
+    //     'vendor/react-0.14.7/build/react.min.js',
+    //     'vendor/react-0.14.7/build/react-dom.min.js',
+    //     'vendor/momentjs/moment-min.js']),
     // $.concat('vendors.js'),
     // $.uglify(),
     // gulp.dest('./public/js'),
     // gulp.dest(OPTIONS.path.dest_server + '/Scripts'),
-		//
+    //
     // gulp.src(['vendor/fullpage.js/jquery.fullPage.min.js', 'frontend/js/nonReact/pageFirst.js']),
     // $.concat('landingPage.js'),
     // $.uglify(),
     // gulp.dest('./public/js'),
     // gulp.dest(OPTIONS.path.dest_server + '/Scripts'),
-		//
+    //
 		// gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/nonReact/access.js']),
     // $.concat('jQuery.js'),
     // babel({
