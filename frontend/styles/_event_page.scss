@@ -26,9 +26,10 @@
     padding: 15px;
     background: $bg_color;
     border-radius: 4px;
-		.chart{
+		&>.chart { background: $main_page_gif no-repeat center; }
+		.chart {
 			height: 455px;
-			background: $event_page_chart_bg;
+			//background: $event_page_chart_bg;
 			border-radius: 6px;
 			position: relative;
 			//&:after{
@@ -42,7 +43,7 @@
 			//	left: 0;
 			//	z-index: 0;
 			//}
-            .chart { min-height: 200px; background: $main_page_gif no-repeat center; } // Vlasakh
+            .chart { min-height: 200px; background: $event_page_chart_bg; } // Vlasakh
 			[data-highcharts-chart]{
 				height: 100%;
 				position: relative;
