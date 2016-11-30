@@ -43,6 +43,33 @@ $order_sidebar_current_order_title_color: #ffffff;
 	transition: 0.4s ease-out;
 	&:focus{  background: #3e3d45;  }
 }
+@mixin order_sidebar_confirm_window{
+	background: $bg_color;
+	color: #89888c;
+	.container {
+		padding: 10px;
+		background: $main-bg;
+		border: 1px solid #000;
+		border-radius: 4px;
+	}
+	span{
+		display: block;
+		margin-bottom: 10px;
+		font-size: 14px;
+	}
+	.button_container{
+		display: flex;
+		justify-content: center;
+	}
+	button{
+		width: auto;
+		margin: 0 5px;
+		border-radius: 6px;
+		font-size: 12px;
+		&.yes{  background: linear-gradient(to bottom, #f8b747, #ef8022);  }
+		&.no{  background: linear-gradient(to top, #bdc0cd, #ffffff);  color: #211e25;  }
+	}
+}
 $order_sidebar_order_label_color: #ffffff;
 $order_sidebar_order_edit: url("../Images/sprite.svg") no-repeat -163px -135px;
 $order_sidebar_order_delete: url("../Images/sprite.svg") no-repeat -163px -178px;

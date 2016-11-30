@@ -49,7 +49,8 @@ $(document).ready(function () {
 
 	popUpClass.globalPopUpClose('.warning'); // all warning message
 	popUpClass.globalPopUpClose('.user-menu', 'slideUp', '.log_in'); // login user menu
-	popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_in_form a.register', '.first_page_wrapper .join'); // pop-up registration
+	popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_in_form a.register', '.first_page_wrapper .join',
+	'#ui-datepicker-div', '.ui-corner-all'); // pop-up registration
 	popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in', 'header .deposit',
 			'header .my_order', '.order_screening', '[data-log-out]'); //pop-up login
 	popUpClass.globalPopUpClose('.video_form', 'fadeOut', '.pop_up_content', '.video button');
@@ -149,6 +150,15 @@ $(document).ready(function () {
 			changeYear: true,
 			showAnim: 'slideDown'
 		});
+
+		//validation =======================================================================================================
+		/*$('body').on('click', '#ui-datepicker-div  .ui-datepicker-current-day', function () {
+			console.log(133);
+			if(input.val().length) {
+				input.addClass('valid');
+				console.log(546354);
+			}
+		});*/
 	});
 
 	//cyber sport ========================================================================================================
@@ -191,6 +201,7 @@ $(document).ready(function () {
 
 
 	new ajaxLoginControllerClass();
+	new ajaxRegistrationControllerClass();
 	new accountClass();
 	new ajaxThemeChangeClass();
 });

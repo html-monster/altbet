@@ -12,6 +12,7 @@
 		.tabs { @include my_pos_tab_container_styles; }
 		.tab {
 			display: inline-block;
+			margin-right: 4px;
 			padding: 10px 15px;
 			border-radius: 5px 5px 0 0;
 			border: 1px solid transparent;
@@ -258,7 +259,7 @@
 				}
 				.clickable{
 					cursor: pointer;
-					&.active{  
+					&.active{
 						//border-left: 2px solid $link-color;
 						td:first-of-type:before{  width: 100%;  }
 						strong.title{  color: #4dac2e; transition: 0.4s ease-out;  }

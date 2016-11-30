@@ -12,3 +12,35 @@ $user_page_balance: #dce1e6;
 		border: 1px solid transparentize(#4dac2e, 0.7);
 	}
 }
+@mixin user_balance_color_map{
+	&.pl {
+		color: #4dac2e;
+		&:before {  background: transparentize(#4dac2e, 0.8);  }
+		&.neg {
+			color: #ef4d22;
+			&:before {  background: #f7c4ab;  }
+		}
+	}
+	&.inv {
+		color: #ef8022;
+		&:before {  background: transparentize(#ef8022, 0.8);  }
+	}
+	&.ava {
+		color: #1196d4;
+		&:before {  background: transparentize(#1196d4, 0.8);  }
+	}
+}
+@mixin user_balance_color{
+	&.pl {
+		height: 100%;
+		left: 0;
+		top: 0;
+		&.pos {  background: transparentize(#4dac2e, 0.8);  }
+		&.neg {
+			background: transparentize(#ef4d22, 0.8);
+			position: absolute;
+		}
+	}
+	&.inv {  background: transparentize(#ef8022, 0.8);  }
+	&.ava {  background: transparentize(#1196d4, 0.8);  }
+}

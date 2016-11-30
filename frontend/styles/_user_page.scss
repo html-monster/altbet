@@ -101,13 +101,16 @@
         //  }
         //}
       }
-      h3.section_user {
-        display: block;
-        //color: #fff;
-        opacity: 0.8;
-        margin: 10px 0;
-        padding-bottom: 10px;
-        //border-bottom: 1px solid #fff;
+      h3{
+        &.section_user {
+          display: block;
+          //color: #fff;
+          opacity: 0.8;
+          margin: 10px 0;
+          padding-bottom: 10px;
+          //border-bottom: 1px solid #fff;
+        }
+        &.mail{  font-weight: normal;  }
       }
       h2 {
         margin-bottom: 55px;
@@ -163,24 +166,7 @@
           height: 20px;
           margin-right: 10px;
         }
-        &.pl {
-          color: #4dac2e;
-          &:before {  background: transparentize(#4dac2e, 0.8);  }
-          &.neg {
-            color: #ef4d22;
-            &:before {
-              background: #f7c4ab;
-            }
-          }
-        }
-        &.inv {
-          color: #ef8022;
-          &:before {  background: transparentize(#ef8022, 0.8);  }
-        }
-        &.ava {
-          color: #1196d4;
-          &:before {  background: transparentize(#1196d4, 0.8);  }
-        }
+        @include user_balance_color_map;
         span {
           padding-left: 5px;
         }
@@ -207,35 +193,7 @@
         width: 0;
         white-space: nowrap;
         transition: 1s ease-in;
-        &.pl {
-          height: 100%;
-          left: 0;
-          top: 0;
-          &.pos {
-            background: transparentize(#4dac2e, 0.8);
-            color: #4dac2e;
-          }
-          &.neg {
-            background: transparentize(#ef4d22, 0.8);
-            position: absolute;
-            color: #ef4d22;
-            strong {
-              position: absolute;
-              top: 50%;
-              left: 35%;
-            }
-          }
-          strong{  margin-bottom: -24px;  }
-        }
-        &.inv {
-          background: transparentize(#ef8022, 0.8);
-          color: #ef8022;
-          strong{  margin-top: -24px;  }
-        }
-        &.ava {
-          background: transparentize(#1196d4, 0.8);
-          color: #1196d4;
-        }
+        @include user_balance_color;
       }
     }
     /*.deposit_funds {
@@ -329,11 +287,7 @@
 		}
     i{  width: 275px;  }
   }
-
-  .settings .column {  width: 100%;  } 
+  i.btn{  width: 100%;  }
+  .settings .column {  width: 100%;  }
 }
 
-
-//естшму трайдер
-//аутотрайде
-//

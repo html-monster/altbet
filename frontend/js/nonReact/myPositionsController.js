@@ -14,6 +14,12 @@ var positionControllerClass = new function () {
 				globalData.myPosTabOn.orderHistory = false;
 		}
 	};
+
+	/**
+	 * @param data
+	 * @param id
+	 * @returns {Array}
+	 */
 	this.filterData = function (data, id) {
 		var newData = [];
 
