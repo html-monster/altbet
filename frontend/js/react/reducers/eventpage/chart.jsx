@@ -1,4 +1,4 @@
-import { LOGIN_SUCCES, LOGIN_FAIL } from '../constants/User';
+import { LOGIN_SUCCES, LOGIN_FAIL } from '../../constants/User';
 
 
 const initialState = {

@@ -23,14 +23,14 @@ const sourceMap = process.env.TEST || process.env.NODE_ENV !== 'production'
 
 module.exports = {
     // entry: ['./frontend/js/react/indexmp.tsx'],
-    entry: ['./frontend/js/react/indexmp.jsx'],
+    entry: ['./frontend/js/react/models'],
     // entry: [ './frontend/js/react/indexmp.tsx' ].concat(applicationEntries),
 
     output: {
         path: __dirname + options.path.destServer + '/Scripts',
         // path: 'D:/Project/altbetNew/RefactoredCore/Alt.Bet/Scripts',
         publicPath: "Scripts/",
-        filename: "bundler.js"
+        filename: "bundlem.js"
     },
 
     // output: {
@@ -49,13 +49,12 @@ module.exports = {
     resolve: {
         extensions: [
             '',
-            '.jsx',
-            '.js',
+            '.ts',
         ],
     },
 
     plugins: [
-        new WebpackNotifierPlugin({title: 'bundleR.js', alwaysNotify: true}),
+        new WebpackNotifierPlugin({title: 'bundle-M.js', alwaysNotify: true}),
 
         new webpack.DefinePlugin({
             __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
@@ -71,27 +70,11 @@ module.exports = {
         // ],
         loaders: [
             {
-                test: /\.jsx$/,
-                loader: "babel-loader",
-                exclude: [/node_modules/, /public/],
-                query: {
-                    presets: ['es2015', 'stage-0', 'react'],
-                  }
-            },
-            {
-                test: /\.js$/,
-                loader: "babel-loader",
-                exclude: [/node_modules/, /public/],
-                query: {
-                    presets: ['es2015', 'stage-0', 'react'],
-                  }
-            },
-            // {
-            //     test: /\.jsx?$/,
-            //     // loader: 'awesome-typescript-loader',
-            //     loader: 'ts-loader',
-            //     exclude: /node_modules/,
-            // }
+                test: /\.ts?$/,
+                // loader: 'awesome-typescript-loader',
+                loader: 'ts-loader',
+                exclude: /node_modules/,
+            }
         ],
     },
 
