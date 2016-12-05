@@ -10,19 +10,18 @@ class EventPage extends React.Component
         super();
 
         // this.state = {data: props.data};
+        // 0||console.debug( 'this.props', this.props, props );
     }
 
     render()
     {
-        // const {test1} = this.props;
-
-        return <Chart />
+        return <Chart data={this.props.eventPage.pageEventData} />
     }
 }
 
 
 export default connect(state => ({
-    chart: state.chart,
+    eventPage: state.eventPage,
 }),
 dispatch => ({
     // pageActions: bindActionCreators(pageActions, dispatch),
