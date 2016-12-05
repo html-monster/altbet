@@ -71,7 +71,8 @@ $breadcrumbs-color: transparentize(#ffffff, 0.5);
 		color: transparentize(#ffffff, 0.6) !important;
 		fill: transparentize(#ffffff, 0.6) !important;
 	}
-	.highcharts-tooltip path, .highcharts-button rect{  fill: #53515e;  }
+	.highcharts-tooltip path { fill: #53515e; }
+	//.highcharts-tooltip path, .highcharts-button rect{ fill: #53515e; }
 }
 
 @import "color_scheme/main_page_dark";

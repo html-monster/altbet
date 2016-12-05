@@ -23,14 +23,16 @@ const sourceMap = process.env.TEST || process.env.NODE_ENV !== 'production'
 
 module.exports = {
     // entry: ['./frontend/js/react/indexmp.tsx'],
-    entry: ['./frontend/js/react/models'],
+    entry: ['./frontend/js/ts'],
     // entry: [ './frontend/js/react/indexmp.tsx' ].concat(applicationEntries),
 
     output: {
         path: __dirname + options.path.destServer + '/Scripts',
         // path: 'D:/Project/altbetNew/RefactoredCore/Alt.Bet/Scripts',
         publicPath: "Scripts/",
-        filename: "bundlem.js"
+        filename: "bundlem.js",
+        libraryTarget: "var",
+        library: "ABpp"
     },
 
     // output: {
@@ -79,6 +81,7 @@ module.exports = {
     },
 
     externals: {
+        // '../frontend/js/ts/index': 'ABpp1', не работает
         // 'react/lib/ReactContext': 'window',
         // 'react/lib/ExecutionEnvironment': true,
         // 'react/addons': true,

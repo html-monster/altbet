@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux'
 
-import chart from './eventpage/chart'
+import eventPage from './eventPage'
 
 
 export default combineReducers({
-    chart
+    eventPage
 });

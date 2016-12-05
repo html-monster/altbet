@@ -19,14 +19,15 @@
 		//border-bottom: 1px solid $event_page_block_separate;
 	}
 	.container{  display: flex;  }
-  .chart_container {
+  .chart_container { position: relative;
+    .chk-chart-type { position: absolute; right: 13px; top: 13px }
     width: 67.66%;
     margin-bottom: 10px;
 		margin-right: 10px;
     padding: 15px;
     background: $bg_color;
     border-radius: 4px;
-		&>.chart { background: $main_page_gif no-repeat center; }
+		& .chart { background: $main_page_gif no-repeat center; }
 		.chart {
 			height: 455px;
 			//background: $event_page_chart_bg;

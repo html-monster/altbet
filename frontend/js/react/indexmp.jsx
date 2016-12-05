@@ -7,16 +7,18 @@ import 'babel-polyfill';
 // const {PropTypes, Component} = require('react');
 import { Provider } from 'react-redux';
 
-import EventPage from './components/EventPage';
+import EventPage from './containers/EventPage';
 import configureStore from './store/configureStore';
 
 
-const store = configureStore();
+// Altbet App object
+ABpp = ABpp.App;
 
+const store = configureStore();
 
 ReactDOM.render(
     <Provider store={store}>
-        <EventPage test1="smth" />
+        <EventPage />
     </Provider>,
   document.getElementById('DiEventPage')
 );

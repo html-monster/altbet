@@ -1,3 +1,2 @@
-/**
- * Created by tianna on 01.12.16.
- */
+declare let __DEV__;
+declare let ABpp;

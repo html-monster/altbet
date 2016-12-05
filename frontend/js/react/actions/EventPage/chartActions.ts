@@ -1,10 +1,25 @@
-import { ON_CHART_MOUNT } from '../../constants/ActionTypesPageEvent'
+import { ON_CHART_MOUNT, ON_CHART_TYPE_CHANGE } from '../../constants/ActionTypesPageEvent.js';
+import { Chart } from "../../models/PageEvent/Chart";
+
+declare let window;
+
+export function actionChartTypeChange(checked)
+{
+    return (dispatch, getState) => {
+        let ChartObj = getState().eventPage.Chart.ChartObj;
+        ChartObj.setType(!checked ? Chart.TYPE_AREASPLINE : Chart.TYPE_SPLINE);
+        // dispatch({
+        //     type: ON_CHART_MOUNT,
+        //     payload: { Chart: ChartObj }
+        // });
+    }
+}
+
 
 
 export function actionChartMount()
 {
-// 0||console.debug( 'ABpp.EventPage', ABpp.EventPage );
-    var ChartObj = new ABpp.EventPage.Chart();
+    let ChartObj = new Chart();
     // Listen for chart data
     window.ee.addListener('EventPage.Chart.setData', function (data)
     {
@@ -12,11 +27,10 @@ export function actionChartMount()
         ChartObj.drawEventChart(data);
     });
 
-        __DEV__&&console.warn( 'this', this );
-    return (dispatch) => {
+    return function(dispatch){
         dispatch({
             type: ON_CHART_MOUNT,
-            payload: {}
+            payload: { Chart: ChartObj, types: Chart }
         });
     }
 }

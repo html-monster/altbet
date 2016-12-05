@@ -51,6 +51,7 @@ module.exports = {
             '',
             '.jsx',
             '.js',
+            '.ts',
         ],
     },
 
@@ -86,12 +87,12 @@ module.exports = {
                     presets: ['es2015', 'stage-0', 'react'],
                   }
             },
-            // {
-            //     test: /\.jsx?$/,
-            //     // loader: 'awesome-typescript-loader',
-            //     loader: 'ts-loader',
-            //     exclude: /node_modules/,
-            // }
+            {
+                test: /\.ts?$/,
+                // loader: 'awesome-typescript-loader',
+                loader: 'ts-loader',
+                exclude: /node_modules/,
+            }
         ],
     },
 

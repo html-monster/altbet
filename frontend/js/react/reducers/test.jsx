@@ -13,7 +13,7 @@ const initialState = {
 };
 
 
-export default function eventPage(state = initialState, action)
+export default function test(state = initialState, action)
 {
     switch (action.type) {
         case ON_CHART_MOUNT:

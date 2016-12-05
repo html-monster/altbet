@@ -1,7 +1,8 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import Chart from './EventPage/Chart'
+import Chart from '../components/EventPage/Chart'
+import * as chartActions from '../actions/EventPage/chartActions.ts';
 
 class EventPage extends React.Component
 {
@@ -9,22 +10,25 @@ class EventPage extends React.Component
     {
         super();
 
+        // ABpp.controllers.EventPage
+
         // this.state = {data: props.data};
         // 0||console.debug( 'this.props', this.props, props );
     }
 
     render()
     {
-        return <Chart data={this.props.eventPage.pageEventData} />
+        return <Chart data={this.props.eventPage} actions={this.props.chartActions} />
     }
 }
 
+// __DEV__&&console.debug( 'connect', connect );
 
 export default connect(state => ({
     eventPage: state.eventPage,
 }),
 dispatch => ({
-    // pageActions: bindActionCreators(pageActions, dispatch),
-    // userActions: bindActionCreators(userActions, dispatch)
+    // eventPageActions: bindActionCreators(eventPageActions, dispatch),
+    chartActions: bindActionCreators(chartActions, dispatch),
 })
 )(EventPage)

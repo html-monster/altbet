@@ -1,7 +1,7 @@
-import { ON_CHART_MOUNT } from '../constants/ActionTypesPageEvent'
+import { ON_TEST } from '../constants/ActionTypesPageEvent'
 
 
-export function actionChartMount()
+export function actionTest()
 {
 // // 0||console.debug( 'ABpp.EventPage', ABpp.EventPage );
 //     var ChartObj = new ABpp.EventPage.Chart();

@@ -10,7 +10,8 @@
     "removeComments": false,
     "sourceMap": false,
     "inlineSourceMap": true,
-    "noEmitHelpers": true
+    "noEmitHelpers": true,
+    "allowJs": true
   },
   "exclude": [
     "node_modules",

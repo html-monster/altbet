@@ -1,19 +1,31 @@
-import { LOGIN_SUCCES, LOGIN_FAIL } from '../../constants/User';
+import {
+    ON_CHART_MOUNT,
+    ON_CHART_TYPE_CHANGE,
+} from '../constants/ActionTypesPageEvent';
 
 
 const initialState = {
-  chartId: appData.pageEventData.chartId,
+    pageEventData: appData.pageEventData,
+    Chart: {
+        ChartObj: null,
+        types: null,
+    },
 };
 
 
-export default function user(state = initialState, action)
+export default function eventPage(state = initialState, action)
 {
-  switch(action.type) {
-    case LOGIN_SUCCES:
-      return { ...state, name: action.payload, error: '' }
+    switch (action.type) {
+        case ON_CHART_MOUNT:
+            state.Chart.ChartObj = action.payload.Chart;
+            state.Chart.types = action.payload.types;
+            return {...state };
 
-    default:
-      return state
-  }
+        case ON_CHART_TYPE_CHANGE:
+            return {...state, name: action.payload, error: ''};
+
+        default:
+            return state
+    }
 
 }
