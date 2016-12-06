@@ -1,6 +1,8 @@
 declare let Highcharts;
 declare let moment;
 
+let __HiDEV__ = !false;
+
 /**
  * Generator for chart's virtual point
  *
@@ -11,8 +13,8 @@ export class Generator
     private genTickTime = 3; // generate new point, seconds
     private FLAG_GEN_STARTED = 0;
     private genLastPoint = 0;
-    private flagForceStop = true; // !!!!!!!!!!!!!!!
-    // private flagForceStop = false;
+    // private flagForceStop = true; // !!!!!!!!!!!!!!!
+    private flagForceStop = false;
 
     private flagActive = false;
     private TiGenerator = [];
@@ -25,7 +27,7 @@ export class Generator
     public start(inChartContainer = null)
     {
         if (this.flagForceStop) return;
-// 0||console.debug( 'start' );
+// __HiDEV__||console.debug( 'start' );
 // return;
         inChartContainer && (this.chartContainer = inChartContainer);
 
@@ -43,20 +45,20 @@ export class Generator
      */
     public addPoint()
     {
-0||console.debug( 'addPoint' );
+__HiDEV__||console.debug( 'addPoint' );
         // for turn off generator
         if (this.flagForceStop) return;
 
         // let prevTi = this.TiGenerator.length;
-// 0||console.debug( 'prevTi, this.TiGenerator', prevTi, this.TiGenerator );
+// __HiDEV__||console.debug( 'prevTi, this.TiGenerator', prevTi, this.TiGenerator );
 //         this._stopTimer();
-0||console.debug( 'this.TiGenerator', this.TiGenerator );
-// 0||console.warn( 'prevTi', prevTi );
+// __HiDEV__||console.warn( 'prevTi', prevTi );
 
         var data = Highcharts.charts[0].series[0].options.data;
 
         if( data.length )
         {
+__HiDEV__||console.debug( 'this.TiGenerator', this.TiGenerator );
             // delete virtual point
             this.genLastPoint > 0 && data.splice(this.genLastPoint, 1);
 
@@ -67,24 +69,29 @@ export class Generator
             // d1.toUTCString();
             let time = d1.getTime() - new Date().getTimezoneOffset() * 60 * 1000; // correct with timezone
 
-            0||console.debug( 'time', time, moment.unix(time/1000), moment.unix(data[data.length-1].x/1000), data[data.length-1] );
+            __HiDEV__||console.debug( 'time', time, moment.unix(time/1000), moment.unix(data[data.length-1].x/1000), data[data.length-1] );
 
 // return ;
-            true || Highcharts.charts[0].series[0].addPoint({
-                x: Math.floor(time),
-                // x: moment().unix() * 1000,
-                y: yy,
-                virtual: true,
-                current: moment().format("Do, h:mm:ss a")
-            }, true);
+            try {
+                false || Highcharts.charts[0].series[0].addPoint({
+                    x: Math.floor(time),
+                    // x: moment().unix() * 1000,
+                    y: yy,
+                    virtual: true,
+                    current: moment().format("Do, h:mm:ss a")
+                }, true);
+            } catch (e) {
+                __DEV__&&console.debug( 'set v point', e.getMessage() );
+            }
 
 
             this.genLastPoint = data.length-1;
         } // endif
+// __HiDEV__||console.debug( 'this.chartContainer', this.chartContainer );
         // this.chartContainer && this.chartContainer.redraw();
-        console.groupCollapsed("Chart 0 data");
-        0||console.debug( 'Highcharts.charts[0].series[0].options.data', JSON.stringify(Highcharts.charts[0].series[0].options.data) );
-        console.groupEnd();
+        __DEV__||console.groupCollapsed("Chart 0 data");
+        __DEV__||console.debug( 'Highcharts.charts[0].series[0].options.data', JSON.stringify(Highcharts.charts[0].series[0].options.data) );
+        __DEV__||console.groupEnd();
 
 
         // prevTi && this._startGenerator();
@@ -97,7 +104,7 @@ export class Generator
      */
     public cancel()
     {
-        // 0||console.warn( 'Try cancel' );
+        // __HiDEV__||console.warn( 'Try cancel' );
         this._stopTimer();
 
         this._deleteVirtPoint();
@@ -120,7 +127,7 @@ export class Generator
         }, this.genTickTime * 1000);
 
         this.TiGenerator.push(timer);
-        // 0||console.debug( 'this.TiGenerator', this.TiGenerator );
+        // __HiDEV__||console.debug( 'this.TiGenerator', this.TiGenerator );
     };
 
 
@@ -143,13 +150,13 @@ export class Generator
      */
     private _stopTimer()
     {
-        0||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
+        __HiDEV__||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
         while( this.TiGenerator.length )
         {
             clearInterval(this.TiGenerator[0]);
             this.TiGenerator.pop();
         } // endwhile
-        0||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
+        __HiDEV__||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
 
         this.flagActive = false;
     }

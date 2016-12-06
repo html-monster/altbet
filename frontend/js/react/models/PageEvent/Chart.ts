@@ -22,6 +22,7 @@ declare let window : any;
 export class Chart
 {
     public static TYPE_AREASPLINE = 'areaspline';
+    // public static TYPE_AREASPLINE = 'candlestick';
     public static TYPE_SPLINE = 'spline';
 
     public static THEME_DARK = 'dark';
@@ -38,6 +39,7 @@ export class Chart
     private Generator : Generator = null;
     private chartType = null;
     private chartTheme = null;
+    private currData = null; // current chart data
 
     private themeOpts: any = {
         dark: {
@@ -171,7 +173,7 @@ export class Chart
                         text: '5m',
                         // dataGrouping: {
                         //     units: [
-                        //         ['minute', [3]]
+                        //         ['minute', [5]]
                         //     ]
                         // }
                     }, {
@@ -180,7 +182,7 @@ export class Chart
                         text: '15m',
                         // dataGrouping: {
                         //     units: [
-                        //         ['minute', [10]]
+                        //         ['minute', [15]]
                         //     ]
                         // }
                     }, {
@@ -189,7 +191,7 @@ export class Chart
                         text: '1h',
                         // dataGrouping: {
                         //     units: [
-                        //         ['minute', [30]]
+                        //         ['hour', [1]]
                         //     ]
                         // }
                     }, {
@@ -198,7 +200,7 @@ export class Chart
                         text: '1d',
                         // dataGrouping: {
                         //     units: [
-                        //         ['hour', [2]]
+                        //         ['day', [1]]
                         //     ]
                         // }
                     }, {
@@ -215,7 +217,7 @@ export class Chart
                 enabled: true,
                 // selected: 1,
                 buttonPosition: {
-                    x: 470
+                    x: 20
                 },
                 labelStyle: {
                     display: 'none'
@@ -339,6 +341,7 @@ export class Chart
     private createChart (data)
     {
         var self = this;
+        // 0||console.debug( 'data', data );
 
         var isMirror = $('input[type=hidden]#IsMirror').val().toUpperCase() == "TRUE";
         $('div[id^="eventContainer_"]').each(function () {
@@ -356,7 +359,10 @@ export class Chart
 
                         self.chartData[0].data.push({
                             x: timeValue,
-                            y: isMirror ? 1 - this.Open : this.Open
+                            y: isMirror ? 1 - this.Open : this.Open,
+                            Close: isMirror ? 1 - this.Close : this.Close,
+                            High: isMirror ? 1 - this.High : this.High,
+                            Low: isMirror ? 1 - this.Low : this.Low
                         });
                         // self.chartData[1].data.push({
                         //     x: timeValue,
@@ -411,7 +417,7 @@ export class Chart
             //     });
             // });
 
-            var chartsOptions = {
+            var chartsOptions : any = {
                 chart: {
                     height: self.chartData[0].height,
                     spacingTop: 20,
@@ -423,12 +429,13 @@ export class Chart
                     text: ''
                 },
                 credits: {
-                    enabled: true
+                    enabled: false
                 },
                 legend: {
                     enabled: false
                 },
                 tooltip: {
+                    enabled: false,
                     valueDecimals: 2
                 },
                 rangeSelector: self.chartData[0].rangeSelector,
@@ -484,6 +491,9 @@ export class Chart
                 yAxis: [],
                 series: []
             };
+            // 0||console.debug( '__LDEV__', __LDEV__ );
+            __LDEV__ && (chartsOptions.tooltip.enabled = true);
+
 
             // chartsOptions.series[0] = {
             //         data: chartData[1].data,
@@ -592,46 +602,44 @@ export class Chart
             this.chartContainer = $('<div class="chart"></div>')
                 .appendTo('#' + container)
                 .highcharts(chartsOptions);
+
+            // start gen virtual point
+            self.Generator.start(this.chartContainer);
         });
 
 
         // set default range to 15 min
-        Highcharts.charts[0].rangeSelector.buttons[2].setState(2);
-        Highcharts.charts[0].series[0].xAxis.setExtremes(Highcharts.charts[0].series[0].xAxis.max - 60 * 60 * 1000 * 24, Highcharts.charts[0].series[0].xAxis.max, true);
-        Highcharts.charts[0].rangeSelector.setSelected(2);
-        setTimeout(function() {
-            // Highcharts.charts[0].rangeSelector.setSelected(2);
-            // Highcharts.charts[0].series[0].selected = 2;
-            __DEV__&&console.debug( 'Highcharts.charts[0].rangeSelector.setSelected', Highcharts.charts[0].rangeSelector.setSelected );
-        }, 2000);
-
-        // 0||console.debug( 'Highcharts.charts', Highcharts.charts[0] );
-
-        if (Highcharts.charts[0].rangeSelector && Highcharts.charts[0].rangeSelector.buttons.length != 0) {
-
-            // $(Highcharts.charts[0].rangeSelector.buttons).each(function () {
-            //     this.hide();
-            //     this.setState(0)
-            // });
-            // Highcharts.charts[0].rangeSelector.buttons[0].show();
-            //
-            //
-            // // show buttons always
-            // Highcharts.charts[0].rangeSelector.buttons[1].show();
-            // Highcharts.charts[0].rangeSelector.buttons[2].show();
-            // Highcharts.charts[0].rangeSelector.buttons[3].show();
-            // Highcharts.charts[0].rangeSelector.buttons[4].show();
-            // Highcharts.charts[0].rangeSelector.buttons[5].show();
-            // var rangeMin = (Highcharts.charts[0].series[0].xAxis.max - Highcharts.charts[0].series[0].xAxis.min) / 1000 / 60;
-            // if (rangeMin > 100) {
-            //     // Highcharts.charts[0].series[1].xAxis.setExtremes(Highcharts.charts[0].series[1].xAxis.max - 100 * 1000 * 60, Highcharts.charts[0].series[1].xAxis.max, Highcharts.charts[0].series[1].xAxis.max);
-            // }
-            // if (rangeMin >= 300) {
-            //     // Highcharts.charts[0].series[1].xAxis.setExtremes(Highcharts.charts[0].series[1].xAxis.max - 300 * 1000 * 60, Highcharts.charts[0].series[1].xAxis.max, Highcharts.charts[0].series[1].xAxis.max);
-            //     // Highcharts.charts[0].rangeSelector.buttons[1].setState(0);
-            //     // Highcharts.charts[0].rangeSelector.buttons[2].setState(2);
-            // }
+        try {
+            Highcharts.charts[0].rangeSelector.buttons[2].setState(2);
+            Highcharts.charts[0].series[0].xAxis.setExtremes(Highcharts.charts[0].series[0].xAxis.max - 60 * 60 * 1000 * 24, Highcharts.charts[0].series[0].xAxis.max, true);
+            Highcharts.charts[0].rangeSelector.setSelected(2);
+        } catch (e) {
         }
+
+        // if (Highcharts.charts[0].rangeSelector && Highcharts.charts[0].rangeSelector.buttons.length != 0) {
+        //     // $(Highcharts.charts[0].rangeSelector.buttons).each(function () {
+        //     //     this.hide();
+        //     //     this.setState(0)
+        //     // });
+        //     // Highcharts.charts[0].rangeSelector.buttons[0].show();
+        //     //
+        //     //
+        //     // // show buttons always
+        //     // Highcharts.charts[0].rangeSelector.buttons[1].show();
+        //     // Highcharts.charts[0].rangeSelector.buttons[2].show();
+        //     // Highcharts.charts[0].rangeSelector.buttons[3].show();
+        //     // Highcharts.charts[0].rangeSelector.buttons[4].show();
+        //     // Highcharts.charts[0].rangeSelector.buttons[5].show();
+        //     // var rangeMin = (Highcharts.charts[0].series[0].xAxis.max - Highcharts.charts[0].series[0].xAxis.min) / 1000 / 60;
+        //     // if (rangeMin > 100) {
+        //     //     // Highcharts.charts[0].series[1].xAxis.setExtremes(Highcharts.charts[0].series[1].xAxis.max - 100 * 1000 * 60, Highcharts.charts[0].series[1].xAxis.max, Highcharts.charts[0].series[1].xAxis.max);
+        //     // }
+        //     // if (rangeMin >= 300) {
+        //     //     // Highcharts.charts[0].series[1].xAxis.setExtremes(Highcharts.charts[0].series[1].xAxis.max - 300 * 1000 * 60, Highcharts.charts[0].series[1].xAxis.max, Highcharts.charts[0].series[1].xAxis.max);
+        //     //     // Highcharts.charts[0].rangeSelector.buttons[1].setState(0);
+        //     //     // Highcharts.charts[0].rangeSelector.buttons[2].setState(2);
+        //     // }
+        // }
 
 
         // setGrouping();
@@ -639,28 +647,29 @@ export class Chart
         // redraw();
 
         // $('.highcharts-input-group').remove();
-        this.Generator.start(this.chartContainer);
     }
 
 
     /**
      * @param charts
-     * @param data
+     * @param inData
      */
-    private updateChart(charts, data)
+    private updateChart(charts, inData)
     {
         var self = this;
 
         var isMirror = $('input[type=hidden]#IsMirror').val().toUpperCase() == "TRUE";
 
+        // check for data difference
+        this.checkForNewData(inData);
+
         $(charts).each(function ()
         {
             var identificators = $($(Highcharts.charts[0].container).parent().parent()).attr('id').replace('eventContainer_', '').split('_');
 
-
             $(Highcharts.charts).each(function ()
             {
-                $(data).each(function () {
+                $(inData).each(function () {
                     if (this.Symbol.Exchange == identificators[0]
                         && this.Symbol.Name == identificators[1]
                         && this.Symbol.Currency == identificators[2]) {
@@ -718,9 +727,26 @@ export class Chart
                 // setGrouping();
 
                 // redraw();
+
+                self.currData = inData;
             });
         });
     }
+
+
+
+    private checkForNewData(inData)
+    {
+        // 0||console.debug( 'inData', inData );
+
+        // Object.keys().map(function(key, index) {
+        //    [key];
+        // });
+        // inData.forEach(() => {
+        //
+        // });
+    }
+
 
 
     private createLabel(sender, message)
@@ -754,7 +780,7 @@ export class Chart
             align: 'left',
             x: 10,
             verticalAlign: 'top',
-            y: 0
+            y: 40
         }), null, 'spacingBox');
     }
 
@@ -771,8 +797,11 @@ export class Chart
                 if (point && point.dataGroup)
                 {
                     // 0||console.debug( 'point.dataGroup', point.dataGroup );
+__LDEV__&&console.debug( 'point.series.options', point );
+
                     if( point.series.options.data[point.dataGroup.start].virtual ) return;
 
+0||console.debug( 'point.dataGroup.start', point.dataGroup, point.series.options.data[point.dataGroup.start] );
                     var open = point.series.options.data[point.dataGroup.start].y;
                     var close = point.series.options.data[point.dataGroup.start + point.dataGroup.length - 1].y;
                     var high = 0;
@@ -789,7 +818,8 @@ export class Chart
                     if (Highcharts.charts[0].series[0].searchPoint(event, true))
                     {
                         if (open < 1) {
-                            var yy = 0; //Highcharts.charts[0].series[1].searchPoint(event, true);
+                            // var yy = 0; //Highcharts.charts[0].series[1].searchPoint(event, true);
+                            var yy = Highcharts.charts[0].series[0].searchPoint(event, true);
                             var data = {
                                 date: Highcharts.charts[0].series[0].searchPoint(event, true).x,
                                 open: open.toString().slice(1),// Highcharts.charts[0].series[0].data[currentIndex - 1],
@@ -803,7 +833,7 @@ export class Chart
                     point.highlight(e, data);
                 }
             } catch (e) {
-                __DEV__&&console.warn( 'e', e );
+                // __DEV__&&console.warn( 'e', e );
             }
         });
     }

@@ -57,6 +57,7 @@
 			}
 		}
 		@include chart;
+		.chart .highcharts-input-group { display: none; }
   }
   .event_info {
     width: 33.33%;
