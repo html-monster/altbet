@@ -28,6 +28,15 @@ export class Chart
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
+    public static GROUP_MIN = 1;
+    public static GROUP_5MIN = 5;
+    public static GROUP_15MIN = 15;
+    public static GROUP_60MIN = 60;
+    public static GROUP_1DAY = 60*24;
+    public static GROUP_ALL = 60*24;
+
+    private groups = []; // for btn groups
+
     private chartData = [];
     private charts = [];
     //var boxplotMultiplier = 500;
@@ -39,7 +48,10 @@ export class Chart
     private Generator : Generator = null;
     private chartType = null;
     private chartTheme = null;
+
     private currData = null; // current chart data
+    private dataRaw = []; // raw data, from server
+    private dataGrouped = []; // grouped data
 
     private themeOpts: any = {
         dark: {
@@ -70,6 +82,14 @@ export class Chart
         this.Generator = new Generator();
 
         this.initChartOpts();
+
+        this.groups = [Chart.GROUP_MIN,
+            Chart.GROUP_5MIN,
+            Chart.GROUP_15MIN,
+            Chart.GROUP_60MIN,
+            Chart.GROUP_1DAY,
+            Chart.GROUP_ALL,
+        ];
 
 		window.ee.addListener('setSiteTheme', function(newData)
 		{
@@ -122,7 +142,7 @@ export class Chart
         if (this.charts.length == 0)
             this.createChart(data);
         else
-            this.updateChart(this.charts, data);
+           ;//this.updateChart(this.charts, data);
     }
 
 
@@ -243,22 +263,22 @@ export class Chart
                 minorTickLength: 0,
                 tickLength: 0,
                 events: {
-                    afterSetExtremes: function (e) {
-                        var min = this.min;
-                        var max = this.max;
-
-                        if (this.series[0].groupedData != null) {
-
-                        }
-                        //console.log(this.series[0].groupedData.length);
-
-                        $(Highcharts.charts).each(function () {
-                            this.xAxis[0].setExtremes(min, max);
-                        });
-
-                        self.redraw();
-                        //this.chart.xAxis[1].setExtremes(this.min, this.max);
-                    }
+                    // afterSetExtremes: function (e) {
+                    //     var min = this.min;
+                    //     var max = this.max;
+                    //
+                    //     if (this.series[0].groupedData != null) {
+                    //
+                    //     }
+                    //     //console.log(this.series[0].groupedData.length);
+                    //
+                    //     $(Highcharts.charts).each(function () {
+                    //         this.xAxis[0].setExtremes(min, max);
+                    //     });
+                    //
+                    //     self.redraw();
+                    //     //this.chart.xAxis[1].setExtremes(this.min, this.max);
+                    // }
                 }
             },
             yAxis: {
@@ -338,10 +358,91 @@ export class Chart
 
 
 
+    /** @deprecated */
+    private setGrouping() {
+        if (Highcharts.charts[0].series[0].options.dataGrouping.units != null)
+            Highcharts.charts[0].series[1].options.dataGrouping.units[0] = Highcharts.charts[0].series[0].options.dataGrouping.units[0];
+    };
+
+
+
+    private groupData(inGr)
+    {
+        let rdata = this.dataRaw;
+        let grData = this.dataGrouped = [];
+        if( rdata.length )
+        {
+            var jj = -1;
+            let firstGrDate = rdata[0].x;
+            let sum = 0;
+            let cou = 0;
+
+
+            for( var ii in rdata )
+            {
+                var val = rdata[ii];
+
+                let end = moment.unix(val.x/1000);
+                let duration = moment.duration(end.diff(moment.unix(firstGrDate/1000)));
+                let minDiff = duration.asMinutes();
+                if( jj == -1 || minDiff > inGr )
+                {
+                    jj++;
+
+                    // avg for prev
+                    jj > 0 && (grData[jj-1].y = sum/cou);
+                    // jj > 0 && (grData[jj-1].avg = {sum, cou}); // debug
+
+                    sum = val.y;
+                    cou = 1;
+                    firstGrDate = val.x;
+                    grData[jj] = {x: val.x,
+                        open: val.y,
+                        min: val.y,
+                        max: val.y,
+                        close: val.y,
+                        vol: val.Vol,
+                        dt: moment.unix(val.x/1000).format('Do h:mm:ss a'),
+                        items: [val],
+                        // name: 'hello ',
+                        color: '',
+                    }
+                }
+                else
+                {
+                    sum += val.y;
+                    cou++;
+                    grData[jj].close = val.y;
+                    grData[jj].vol += val.Vol;
+                    if (grData[jj].min > val.y) grData[jj].min = val.y;
+                    if (grData[jj].max < val.y) grData[jj].max = val.y;
+                    grData[jj].items.push(val);
+                } // endif
+
+            } // endfor
+
+            // avg for prev
+            (grData[jj].y = sum/cou);
+
+
+            // debug
+            // for( var ii in grData )
+            // {
+            //     grData[ii].itemsr = JSON.stringify(grData[ii].items);
+            // } // endfor
+        } // endif
+
+        __LDEV__&&console.debug( 'dataRaw', this.dataRaw );
+        __LDEV__&&console.debug( 'grData', grData );
+    }
+
+
+
     private createChart (data)
     {
         var self = this;
         // 0||console.debug( 'data', data );
+
 
         var isMirror = $('input[type=hidden]#IsMirror').val().toUpperCase() == "TRUE";
         $('div[id^="eventContainer_"]').each(function () {
@@ -362,7 +463,9 @@ export class Chart
                             y: isMirror ? 1 - this.Open : this.Open,
                             Close: isMirror ? 1 - this.Close : this.Close,
                             High: isMirror ? 1 - this.High : this.High,
-                            Low: isMirror ? 1 - this.Low : this.Low
+                            Low: isMirror ? 1 - this.Low : this.Low,
+                            Vol: this.Volume,
+                            dt: moment.unix(timeValue/1000).format('Do h:mm:ss a')
                         });
                         // self.chartData[1].data.push({
                         //     x: timeValue,
@@ -375,6 +478,14 @@ export class Chart
             });
 
             self.charts.push(1);
+
+
+            // make group data from raw
+            self.dataRaw = self.chartData[0].data;
+            self.groupData(Chart.GROUP_MIN);
+            self.chartData[0].data = self.dataGrouped;
+            0||console.debug( 'self.chartData[0].data', self.chartData[0].data );
+
 
             var container = $(this).attr('id');
 
@@ -436,7 +547,8 @@ export class Chart
                 },
                 tooltip: {
                     enabled: false,
-                    valueDecimals: 2
+                    valueDecimals: 2,
+                    // pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}</b><br/>'
                 },
                 rangeSelector: self.chartData[0].rangeSelector,
                 navigator: self.chartData[0].navigator,
@@ -444,27 +556,27 @@ export class Chart
                     areaspline: {
                         lineWidth: 3,
                         dataGrouping: {
-                            approximation: 'average',
-                            enabled: true,
-                            forced: true,
-                            units: [
-                                ['minute', [1, 5, 15]],
-                                ['hour', [1]],
-                                ['day', [1]],
-                            ],
+                            enabled: false,
+                            // approximation: 'average',
+                            // forced: true,
+                            // units: [
+                            //     ['minute', [1, 5, 15]],
+                            //     ['hour', [1]],
+                            //     ['day', [1]],
+                            // ],
                         }
                     },
                     spline: {
                         lineWidth: 3,
                         dataGrouping: {
-                            approximation: 'average',
-                            enabled: true,
-                            forced: true,
-                            units: [
-                                ['minute', [1, 5, 15]],
-                                ['hour', [1]],
-                                ['day', [1]],
-                            ],
+                            enabled: false,
+                            // approximation: 'average',
+                            // forced: true,
+                            // units: [
+                            //     ['minute', [1, 5, 15]],
+                            //     ['hour', [1]],
+                            //     ['day', [1]],
+                            // ],
                         }
                     },
                     column: {
@@ -495,40 +607,6 @@ export class Chart
             __LDEV__ && (chartsOptions.tooltip.enabled = true);
 
 
-            // chartsOptions.series[0] = {
-            //         data: chartData[1].data,
-            //         name: chartData[1].name,
-            //         type: chartData[1].type,
-            //     };
-            // chartData[0].data.map((val) => {
-            //     // val.Y_orig = val.y;
-            //     val.y += 0.2;
-            //     return val;
-            // });
-
-
-            // set min and max value for axis
-            // let min = 1;
-            // let max = 0;
-            // chartData[0].data.forEach((val) => {
-            //     min > val.y && (min = val.y);
-            //     max < val.y && (max = val.y);
-            // });
-            // chartData[0].yAxis.max = max;
-            // chartData[0].yAxis.min = min + 0.01;
-            // 0||console.debug( 'min/max', min, max );
-
-
-            // set point colors
-            // chartData[1].data.map((val) => {
-            //     // val.color = val.color == 'red' ? '#FF0000' : '#00FF00';
-            //     return val;
-            // });
-
-            // 0||console.warn( 'chartData[0].data', (new Date(chartData[0].data[chartData[0].data.length].x)) );
-            // 0||console.warn( 'chartData[0].data', (new Date(chartData[0].data[chartData[0].data.length].x)) );
-
-
             // Add data to charts options
             var flag = false;
             $(self.chartData).each(function (key) {
@@ -536,7 +614,7 @@ export class Chart
                     data: self.chartData[key].data,
                     name: self.chartData[key].name,
                     type: self.chartData[key].type,
-                    turboThreshold: 0,
+                    turboThreshold: 0, // This saves expensive data checking and indexing in long series
                     states: {
                         hover: {
                             enabled: false
@@ -599,9 +677,9 @@ export class Chart
             0||console.info( 'chartsOptions', chartsOptions );
             0||console.info( 'chartsOptions', JSON.stringify(chartsOptions) );
             console.groupEnd();
-            this.chartContainer = $('<div class="chart"></div>')
-                .appendTo('#' + container)
-                .highcharts(chartsOptions);
+            this.chartContainer = $('<div class="chart"></div>');
+                this.chartContainer.appendTo('#' + container);
+                this.chartContainer = this.chartContainer.highcharts(chartsOptions);
 
             // start gen virtual point
             self.Generator.start(this.chartContainer);
@@ -647,7 +725,34 @@ export class Chart
         // redraw();
 
         // $('.highcharts-input-group').remove();
+        self.activateGroupBtns();
     }
+
+
+
+    /**
+     * Bind click to group chart btns
+     */
+    private activateGroupBtns()
+    {
+        var self = this;
+        for (var ii = 0, countii = $(".highcharts-button").length; ii < countii; ii++)
+        {
+            let val = $(".highcharts-button")[ii];
+            // $(val).addClass('gb' + ii).click(function () { self.onBtnGroupClick.bind(self) });
+            $(val).addClass('gb' + ii).click(function () { self.onBtnGroupClick(this) });
+        } // endfor
+    }
+
+
+
+    private onBtnGroupClick(that)
+    {
+        0||console.debug( 'clicked', that.classList[1][2] );
+        this.groupData(this.groups[that.classList[1][2]]);
+        Highcharts.charts[0].redraw();
+    }
+
 
 
     /**
@@ -657,6 +762,8 @@ export class Chart
     private updateChart(charts, inData)
     {
         var self = this;
+        __LDEV__&&console.debug( 'Update chart' );
+        // return;
 
         var isMirror = $('input[type=hidden]#IsMirror').val().toUpperCase() == "TRUE";
 
@@ -794,46 +901,108 @@ export class Chart
                 var event = this.pointer.normalize(e.originalEvent); // Find coordinates within the chart
                 var point = this.series[0].searchPoint(event, true); // Get the hovered point
 
-                if (point && point.dataGroup)
+                // if (point && point.dataGroup)
+                if (point)
                 {
-                    // 0||console.debug( 'point.dataGroup', point.dataGroup );
-__LDEV__&&console.debug( 'point.series.options', point );
-
-                    if( point.series.options.data[point.dataGroup.start].virtual ) return;
-
-0||console.debug( 'point.dataGroup.start', point.dataGroup, point.series.options.data[point.dataGroup.start] );
-                    var open = point.series.options.data[point.dataGroup.start].y;
-                    var close = point.series.options.data[point.dataGroup.start + point.dataGroup.length - 1].y;
-                    var high = 0;
-                    var low = 65535;
-
-                    for (var i = point.dataGroup.start; i < point.dataGroup.start + point.dataGroup.length; i++) {
-                        if (point.series.options.data[i].y > high)
-                            high = point.series.options.data[i].y;
-
-                        if (point.series.options.data[i].y < low)
-                            low = point.series.options.data[i].y;
+                    var {
+dataGroup
+, pointAttr
+, clientX
+,dist
+,distX
+,getLabelConfig
+,highlight
+,importEvents
+,index
+,options
+,series
+,plotX
+,plotY
+,state
+,x
+,y
+                    } = point
+                    let debug = {
+dataGroup
+, pointAttr
+, clientX
+,dist
+,distX
+,getLabelConfig
+,highlight
+,importEvents
+,index
+,options
+,series
+,plotX
+,plotY
+,state
+,x
+,y
                     }
+// __LDEV__&&console.debug( 'point', debug );
 
-                    if (Highcharts.charts[0].series[0].searchPoint(event, true))
+
+                    let optionalParams = point.series.options.data;
+                    // 0 ||console.debug( 'point.dataGroup.start', point.dataGroup, optionalParams );
+                    // let extremes = Highcharts.charts[0].series[0].xAxis.getExtremes();
+                    let min = Infinity, xx;
+                    // __LDEV__&&console.debug( 'min > 2', min > 2 );
+                    // search nearest
+                    for( var ii in optionalParams )
                     {
-                        if (open < 1) {
-                            // var yy = 0; //Highcharts.charts[0].series[1].searchPoint(event, true);
-                            var yy = Highcharts.charts[0].series[0].searchPoint(event, true);
+                        var val = optionalParams[ii];
+                        // if( ii == index) 0||console.debug( 'index', val );
+                        // if( val.x == x ) 0||console.debug( 'series', val );
+                        if( Math.abs(val.x - x) < min ) { min = Math.abs(val.x - x); xx = ii; }
+
+                    } // endfor
+                    // __LDEV__&&console.debug( 'min,', min,  xx);
+
+                    // if virtual
+                    if( point.series.options.data[xx].virtual ) xx--;
+                    // __LDEV__&&console.debug( 'Highcharts.charts[0].series[0].xAxis.getExtremes()', extremes );
+
+                    // var open = point.series.options.data[point.dataGroup.start].y;
+                    // var close = point.series.options.data[point.dataGroup.start + point.dataGroup.length - 1].y;
+                    // var high = 0;
+                    // var low = 65535;
                             var data = {
-                                date: Highcharts.charts[0].series[0].searchPoint(event, true).x,
-                                open: open.toString().slice(1),// Highcharts.charts[0].series[0].data[currentIndex - 1],
-                                high: high.toString().slice(1),
-                                low: low.toString().slice(1),
-                                close: close.toString().slice(1), //Highcharts.charts[0].series[0].data[currentIndex + 1],
-                                volume: yy ? yy['y'] : 0
+                                date: point.series.options.data[xx].x,
+                                open: point.series.options.data[xx].open,// Highcharts.charts[0].series[0].data[currentIndex - 1],
+                                high: point.series.options.data[xx].max,
+                                low: point.series.options.data[xx].min,
+                                close: point.series.options.data[xx].close, //Highcharts.charts[0].series[0].data[currentIndex + 1],
+                                volume: point.series.options.data[xx].vol
                             };
-                        }
-                    }
+// __LDEV__&&console.debug( 'point.series.options.data[index].x', point.series.options.data[xx].x );
+                    // for (var i = point.group.start; i < point.dataGroup.start + point.dataGroup.length; i++) {
+                    //     if (point.series.options.data[i].y > high)
+                    //         high = point.series.options.data[i].y;
+                    //
+                    //     if (point.series.options.data[i].y < low)
+                    //         low = point.series.options.data[i].y;
+                    // }
+                    //
+                    // if (Highcharts.charts[0].series[0].searchPoint(event, true))
+                    // {
+                    //     if (open < 1) {
+                    //         // var yy = 0; //Highcharts.charts[0].series[1].searchPoint(event, true);
+                    //         // var yy = Highcharts.charts[0].series[0].searchPoint(event, true);
+                    //         // var data = {
+                    //         //     date: Highcharts.charts[0].series[0].searchPoint(event, true).x,
+                    //         //     open: open.toString().slice(1),// Highcharts.charts[0].series[0].data[currentIndex - 1],
+                    //         //     high: high.toString().slice(1),
+                    //         //     low: low.toString().slice(1),
+                    //         //     close: close.toString().slice(1), //Highcharts.charts[0].series[0].data[currentIndex + 1],
+                    //         //     volume: yy ? yy['y'] : 0
+                    //
+                    //     }
+                    // }
                     point.highlight(e, data);
                 }
             } catch (e) {
-                // __DEV__&&console.warn( 'e', e );
+                __DEV__&&console.warn( 'e', e );
             }
         });
     }

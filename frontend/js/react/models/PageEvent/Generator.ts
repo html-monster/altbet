@@ -1,7 +1,7 @@
 declare let Highcharts;
 declare let moment;
 
-let __HiDEV__ = !false;
+let __HiDEV__ = !true;
 
 /**
  * Generator for chart's virtual point
@@ -77,6 +77,11 @@ __HiDEV__||console.debug( 'this.TiGenerator', this.TiGenerator );
                     x: Math.floor(time),
                     // x: moment().unix() * 1000,
                     y: yy,
+                    open: data[data.length-1].open,
+                    close: data[data.length-1].close,
+                    min: data[data.length-1].min,
+                    max: data[data.length-1].max,
+                    vol: data[data.length-1].vol,
                     virtual: true,
                     current: moment().format("Do, h:mm:ss a")
                 }, true);
