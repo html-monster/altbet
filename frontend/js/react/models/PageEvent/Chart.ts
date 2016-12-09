@@ -175,7 +175,7 @@ export class Chart
             height: 450,
             type: self.chartType,
             animation: {
-                    duration: 1000,
+                    duration: 700,
                     // easing: 'easeOutBounce'
                 },
             // type: 'spline',
@@ -203,7 +203,7 @@ export class Chart
                 buttons: [
                     {
                         type: 'minute',
-                        count: 5*60, // диапазон отображения
+                        count: 3*60, // диапазон отображения
                         text: '1m',
                         // dataGrouping: {
                         //     units: [
@@ -497,7 +497,6 @@ export class Chart
         // return;
         for( let ii in inData )
         {
-            let lastPoint = this.dataGrouped[this.dataGrouped.length-1];
             let val = inData[ii];
             let dt = val.Time.replace('/Date(', '').replace(')/', '') * 1 - new Date().getTimezoneOffset() * 60 * 1000;
             let end = moment.unix(dt/1000);
@@ -508,9 +507,15 @@ export class Chart
             val.Vol = val.Volume;
             this.dataRaw.push(val);
 
-            let duration = moment.duration(end.diff(moment.unix(lastPoint.x/1000)));
-            let minDiff = duration.asMinutes();
-            if( minDiff > this.groups[this.currGroup] )
+            if( this.dataGrouped.length )
+            {
+                var lastPoint = this.dataGrouped[this.dataGrouped.length-1];
+
+                var duration = moment.duration(end.diff(moment.unix(lastPoint.x/1000)));
+                var minDiff = duration.asMinutes();
+            } // endif
+
+            if( !this.dataGrouped.length || minDiff > this.groups[this.currGroup] )
             {
                 this.dataGrouped.push({x: dt,
                     y: val.Open,
@@ -860,8 +865,11 @@ export class Chart
     {
         // 0||console.debug( 'clicked', that.classList[1][2] );
         this.groupData(this.groups[that.classList[1][2]]);
-        this.setChartData(this.dataGrouped);
+        // this.setChartData(this.dataGrouped); // in restart !
         this.Generator.restart();
+        setTimeout(() =>
+            Highcharts.charts[0].series[0].xAxis.setExtremes(Highcharts.charts[0].series[0].xAxis.max - 60 * 60 * 6, Highcharts.charts[0].series[0].xAxis)
+        , 1000);
     }
 
 
@@ -902,7 +910,7 @@ export class Chart
 
                         $(additionalValues).each(function ()
                         {
-                            0||console.warn( 'Update chart', additionalValues );
+                            0||console.warn( 'Update chart (add points)', additionalValues );
                             self.addPoint(additionalValues);
                             self.setChartData(self.dataGrouped);
 

@@ -45,8 +45,11 @@ export class Generator
      */
     public restart()
     {
-        this.cancel();
-        this.start();
+        if( this.TiGenerator.length )
+        {
+            this.cancel();
+            this.start();
+        } // endif
     }
 
 
@@ -151,8 +154,8 @@ export class Generator
      */
     private _deleteVirtPoint()
     {
-        var data = Highcharts.charts[0].series[0].options.data;
-        this.genLastPoint && data.splice(this.genLastPoint, 1);
+        // var data = Highcharts.charts[0].series[0].options.data;
+        // this.genLastPoint && data.splice(this.genLastPoint, 1);
         this.genLastPoint = 0;
         this.chartObj.setChartData(null, true);
     };
