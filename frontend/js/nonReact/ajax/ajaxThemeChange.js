@@ -12,7 +12,12 @@ class ajaxThemeChangeClass{
 				return false;
 
 			if(globalData.userIdentity == 'True')
-				defaultMethods.sendAjaxRequest('POST', onSuccessAjax, onErrorAjax, `${globalData.rootUrl}Account/EditTheme`, null, data);
+				defaultMethods.sendAjaxRequest({
+					httpMethod: 'POST',
+					callback: onSuccessAjax,
+					onError: onErrorAjax,
+					url: `${globalData.rootUrl}Account/EditTheme`,
+					data: data});
 			else
 				themeChangeClass.setColorScheme($('.change-color button'), data.Theme);
 		});

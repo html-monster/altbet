@@ -266,6 +266,7 @@
           a{  font-size: 11px;  }
           span{
             padding: 0;
+            padding-left: 3px;
             &.up{  color: #1196d4;  }
             &.down{  color: #ef4d22;  }
             &.profit{  color: #4dac2e;  }
@@ -337,7 +338,7 @@
       }
       &:before {
         left: calc(20% - 1px);
-        transform: translateX(-50%) scaleX(0.01);
+        //transform: translateX(-50%) scaleX(0.01);
         background: #b5e5ec;
       }
       &.clickable{
@@ -389,7 +390,7 @@
       }
       &:before{
         right: calc(20% + 3px);
-        transform: translateX(50%) scaleX(0.01);
+        //transform: translateX(50%) scaleX(0.01);
         background: #ffcbc2;
       }
       &.clickable{
@@ -594,7 +595,7 @@
         .order-title{
           padding: 5px 30px 5px 15px;
           background: linear-gradient(to bottom, #53515e, #292830);
-          @include md(1400){  padding: 5px 20px 5px 5px;  }
+          @include md(1400){  padding: 5px;  }
         }
         form input[type="submit"]{  border-left: none;  }
         .close{
@@ -614,7 +615,7 @@
       position: relative;
       h3, .current-order{  color: #ffffff;  }
       h3{  line-height: 20px;  }
-      strong.last-price{  margin-top: 0;  }
+      //strong.last-price{  margin-top: 0;  }
       a.close{
         margin-right: 0;
         position: absolute;
@@ -712,10 +713,11 @@
       }
     }
     .order_info{
-      padding: 5px 44px 5px 15px;
+      padding: 0 5px 0 15px;
       position: relative;
       @include md(1400){
-        padding: 5px 44px 5px 5px;
+        padding: 0;
+        padding-left: 5px;
       }
       &.buy{
         background: linear-gradient(to bottom, transparentize(#64C9EF, 0.7), transparentize(#3498DA, 0.7));
@@ -736,20 +738,28 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      //position: relative;
       //&:nth-child(2){
       //  justify-content: flex-start;
       //}
     }
     h3{
       margin-right: 10px;
-      max-width: 140px;
+      max-width: 55%;
       font-size: 13px;
       vertical-align: middle;
       color: transparentize(#ffffff, 0.2);
     }
     .timestamp{
+      min-width: 100px;
       font-size: 10px;
+      &:before{  right: 9px;  }
       .time{  color: $order_sidebar_current_order_title_color;  }
+      .help_message{
+        width: 160px;
+        top: 25px;
+        right: 4px;
+      }
     }
     a.close{
       float: right;
@@ -804,15 +814,20 @@
       padding-right: 6px;
       font-size: 12px;
       color: transparentize($order_sidebar_current_order_title_color, 0.5);
-      line-height: 22px;
+      line-height: 23px;
+      letter-spacing: 0.2px;
       &.current-order{
+        padding: 0;
         color: transparentize(#ffffff, 0.2);
         &.up span{  color: #3498da;  }
         &.down span{  color: #ef4d22;  }
       }
       &.last-price{
-        margin-top: -1px;
-        vertical-align: middle;
+        //margin-top: -1px;
+        //vertical-align: middle;
+        position: absolute;
+        top: calc(50% - 11px);
+        right: 70px;
         &:before{
           content: '';
           display: inline-block;
@@ -848,18 +863,23 @@
         font-family: 'open_sans_bold', sans-serif;
       }
     }
+    .button_container{
+      display: flex;
+      max-width: 44px;
+    }
     .edit, .delete{
       //display: flex;
       //align-items: center;
       //justify-content: center;
       width: 22px;
-      height: 33px;
+      //height: 30px;
       padding: 0;
       border-radius: 0;
-      position: absolute;
-      top: 0;
+      //position: absolute;
+      //top: 0;
       cursor: pointer;
       transition: 0.4s ease-out;
+      position: relative;
       &:hover{  background-color: rgba(0, 0, 0, 0.1);  }
       &:active{  background-color: rgba(255, 255, 255, 0.5);  }
       &:after{
@@ -878,11 +898,11 @@
       }
     }
     .edit{
-      right: 22px;
+      //right: 22px;
       &:after{  background: $order_sidebar_order_edit;  }
     }
     .delete{
-      right: 0;
+      //right: 0;
       &:after{  background: $order_sidebar_order_delete;  }
     }
     .pop_up{  position: absolute;  background: rgba(0, 0, 0, 0.5); }

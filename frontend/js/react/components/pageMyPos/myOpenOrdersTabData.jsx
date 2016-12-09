@@ -1,5 +1,5 @@
 'use strict';
-// const React = require('react');
+import React from 'react';
 
 const OpenOrderItem = React.createClass({
 	render: function() {
@@ -24,8 +24,8 @@ const OpenOrderItem = React.createClass({
 					<td>{(data.isMirror ? Math.round10(1 - data.Price, -2) : data.Price)}</td>
 					<td>
 						{
-							(data.Symbol.LastPrice || data.Symbol.LastPrice == 1) ?
-								<span className={`${(data.isMirror ? (data.Side ? 'buy' : 'sell') : (data.Side ? 'sell' : 'buy'))} last_price`}>
+							(data.Symbol.LastSide != null) ?
+								<span className={`${data.isMirror ? (data.Symbol.LastSide ? 'buy' : 'sell') : (data.Symbol.LastSide ? 'sell' : 'buy')} last_price`}>
 									{data.isMirror ? Math.round10(1 - data.Symbol.LastPrice, -2) : data.Symbol.LastPrice}
 								</span>
 							:

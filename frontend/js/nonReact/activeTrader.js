@@ -8,6 +8,7 @@ class activeTraderClass{
 		if($('.wrapper_event_page').length || $('.my_position_tab').length)
 			$('.active_trader .event_title').hide();
 
+
 		// trader On/Off
 		this.tradeOn = function () {
 			var checkbox = $('.left_order .tab input.limit'),
@@ -22,9 +23,9 @@ class activeTraderClass{
 					executedOrders = $('.wrapper_event_page .executed_orders'),
 					webkit = ($.browser.webkit) ? 'webkit' : '';
 
-			if(autoTrade.prop('checked')) globalData.autoTradeOn = true;
 			$('.active_trader table.limit').addClass(webkit);
-			globalData.tradeOn = false;
+			// if(autoTrade.prop('checked')) globalData.autoTradeOn = true;
+			// globalData.tradeOn = false;
 			if(checkbox.prop('checked')){
 				var ii = 0,
 						symbol = event_container.eq(0).attr('data-symbol');
@@ -252,13 +253,13 @@ class activeTraderClass{
 
 
 				if(context.hasClass('sell_mkt')){
-					createOrderForm('.active_trader .template .order_content.default', 'sell_mkt');
+					createOrderForm('.template .order_content.default', 'sell_mkt');
 				}
 				else if(context.hasClass('buy_mkt')){
-					createOrderForm('.active_trader .template .order_content.default', 'buy_mkt');
+					createOrderForm('.template .order_content.default', 'buy_mkt');
 				}
 				else if(context.hasClass('size sell') || context.hasClass('join_ask')){
-					createOrderForm('.active_trader .template .order_content.default', 'sell');
+					createOrderForm('.template .order_content.default', 'sell');
 				}
 				else if(context.hasClass('price_value') || context.hasClass('confim_button')){
 					var price1 = (takeSpreadPrice(context)).price1, price2 = (takeSpreadPrice(context)).price2;
@@ -268,11 +269,11 @@ class activeTraderClass{
 						html = '<div class="spread_confim"><span class="sell ask confim_button" onmousedown="return false" onselectstart="return false">Sell</span><span class="buy bid confim_button" onmousedown="return false" onselectstart="return false">Buy</span></div>';
 					}
 					else{
-						createOrderForm('.active_trader .template .order_content.spread', 'spread');
+						createOrderForm('.template .order_content.spread', 'spread');
 					}
 				}
 				else{
-					createOrderForm('.active_trader .template .order_content.default', 'buy');
+					createOrderForm('.template .order_content.default', 'buy');
 				}
 
 				trader.find('#order_content').remove();
@@ -764,12 +765,12 @@ class activeTraderClass{
 
 		activeTrader.find('table.limit tbody').removeClass('scroll_dis');
 
-		currentItem = currentItem.hasClass('content_bet') ? currentItem.find('.table').children('.event-content').eq(0) : currentItem;
-		if(!(currentItem.hasClass('content_bet')))
-			currentItem.addClass('active');
+		// currentItem = currentItem.hasClass('content_bet') ? currentItem.find('.table').children('.event-content').eq(0) : currentItem;
+		// if(!(currentItem.hasClass('content_bet')))
+		// 	currentItem.addClass('active');
 
 
-		if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){// for development ==============
+	/*	if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){// for development ==============
 			for(ii = 0; ii < currentItem.find('.sell').find('button.event').length; ii++){
 				priceSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.price').text());
 				volumeSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.volume').text());
@@ -845,10 +846,10 @@ class activeTraderClass{
 						className = 'bid';
 				}
 			})();
-		});
+		});*/
 
 
-		activeTraderClass.scrollTo();
+		// activeTraderClass.scrollTo();
 	}
 
 	/**

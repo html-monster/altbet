@@ -30,16 +30,18 @@ class ajaxControllerClass{
 		buy = $(orderID + ' .buy-container');
 
 		// console.log($(orderID));
-		if(sell.children().length && buy.children().length){
-			if(+serverData[1])
-				sell.html('');
-			else
-				buy.html('');
-		}
-		else{
-			id.splice(defaultMethods.searchValue(id, orderID.slice(0, -7)), 1);
-			$(orderID).remove();
-		}
+		// if(!($(orderID).parents('#current-orders').length)){
+			if(sell.children().length && buy.children().length){
+				if(+serverData[1])
+					sell.html('');
+				else
+					buy.html('');
+			}
+			else{
+				id.splice(defaultMethods.searchValue(id, orderID.slice(0, -7)), 1);
+				$(orderID).remove();
+			}
+		// }
 
 		$('#order_content').remove();
 		console.log('Order sending finished: ' + serverData[0]);
@@ -48,16 +50,13 @@ class ajaxControllerClass{
 
 	static OnFailureJs(){
 		let object = defaultMethods.objectFromArray(this.data.split('&')),
-				id = defaultMethods.getId(object),
-				element;
+				id = defaultMethods.getId(object);
 
 		if(object.Side == 'Buy'){
-			element = $('#'+id + ' .buy-container');
 			$('#'+id + ' .buy-container input[type=submit]').removeAttr('disabled');
 			$('#order_content .buy-container input[type=submit]').removeAttr('disabled');
 		}
 		else{
-			element = $('#'+id + ' .sell-container');
 			$('#'+id + ' .sell-container input[type=submit]').removeAttr('disabled');
 			$('#order_content .sell-container input[type=submit]').removeAttr('disabled');
 		}

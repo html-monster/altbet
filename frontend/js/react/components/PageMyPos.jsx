@@ -3,9 +3,10 @@
  */
 
 // import React, {PropTypes, Component} from 'react'
-const MyPosTabData = require('./PageMyPos/myPosTabData.jsx');
-const MyOpenOrdersTabData = require('./PageMyPos/myOpenOrdersTabData.jsx');
-const MyOrderHistoryTabData = require('./PageMyPos/myOrderHistoryTabData.jsx');
+import React from 'react';
+import MyPosTabData from './pageMyPos/myPosTabData.jsx';
+import MyOpenOrdersTabData from './pageMyPos/myOpenOrdersTabData.jsx';
+import MyOrderHistoryTabData from './pageMyPos/myOrderHistoryTabData.jsx';
 
 
 export default class PageMyPos extends React.Component
@@ -19,21 +20,21 @@ export default class PageMyPos extends React.Component
 
     componentDidMount()
     {
-		let self = this;
-		window.ee.addListener('myOpenOrder.update', function(newData)
-		{
-			// __DEV__&&console.debug( 'newData', newData );
-            // let prevData = self.state.data;
-            // newData = newData && newData.length ? positionControllerClass.filterData(newData, self.props.id) : [];
-            newData = Object.assign(self.state.data, {openOrdersData: newData});
-            self.setState(newData);
-		});
+        window.ee.addListener('myOpenOrder.update', (newData) =>
+        {
+          // __DEV__&&console.debug( 'newData', newData );
+                // let prevData = self.state.data;
+                // newData = newData && newData.length ? positionControllerClass.filterData(newData, self.props.id) : [];
+                newData = Object.assign(this.state.data, {openOrdersData: newData});
+                this.setState(newData);
+        });
 
-		window.ee.addListener('myPosOrder.update', function(newData) {
-            newData = Object.assign(self.state.data, {positionData: newData});
-			self.setState(newData);
-		});
-	}
+        window.ee.addListener('myPosOrder.update', (newData) =>
+				{
+          newData = Object.assign(this.state.data, {positionData: newData});
+          this.setState(newData);
+        });
+	  }
 
     // onYearBtnClick(e) {
     //     // this.props.actions.getPhotos(+e.target.getAttribute('data-year'));
@@ -137,7 +138,7 @@ export default class PageMyPos extends React.Component
                                                         <th>Quantity</th>
                                                         <th>Price</th>
                                                         <th><span className="sell">BID</span> | <span className="buy">ASK</span></th>
-                                                        <th><span className="profit">Profit</span> | <span className="loss">Loss</span></th>
+                                                        <th><span className="profit">Profit</span>/<span className="loss">Loss</span></th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>

@@ -37,7 +37,7 @@ class modeSwitchClass{
 			$('.content_bet').addClass('basic_mode_js');
 			// $('.mode_info_js').show();
 			$('.content_bet button').each(function () {
-				var price = $(this).find('.price:not(.empty)').text();
+				var price = $(this).find('.price:not(.empty)').text().replace('$', '');
 				$(this).find('.price:not(.empty)').text('$' + price);
 			});
 			globalData.basicMode = true;

@@ -13,7 +13,12 @@ var ajaxControlTraderClass = new function () {
 				data = {};
 
 		data.symbol = ($('.active_trader').attr('id')).slice(7);
-		defaultMethods.sendAjaxRequest('POST', onSuccessAjax, onErrorAjax, url, null, data);
+		defaultMethods.sendAjaxRequest({
+			httpMethod: 'POST',
+			callback: onSuccessAjax,
+			onError: onErrorAjax,
+			url: url,
+			data: data});
 	};
 	// this.CancelAll = function () {
 	// 	let url = globalData.rootUrl + 'Order/CancelAll',

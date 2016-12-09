@@ -1,5 +1,5 @@
 'use strict';
-// const React = require('react');
+import React from 'react';
 
 /*const historyItem = React.createClass({
 	render: function() {
@@ -94,7 +94,7 @@ const MyOrderHistoryTabData = React.createClass({
 			)
 		}
 		return (
-				<tr><td><p>order history is empty</p></td></tr>
+				<p>order history is empty</p>
 		);
 	}
 });

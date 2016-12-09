@@ -139,14 +139,14 @@
 								vertical-align: middle;
 								background: url("../Images/sprite.svg") no-repeat;
 							}
-							&.sell{
+							&.buy{
 								color: #3498da;
 								&:before{
 									margin-top: -2px;
 									background-position: -234px -155px;
 								}
 							}
-							&.buy{
+							&.sell{
 								color: #ef4d22;
 								&:before{
 									background-position: -234px -135px;

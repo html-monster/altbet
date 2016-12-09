@@ -36,7 +36,12 @@ var ajaxAutoTradeClass = new function () {
 		else
 			data.Side = 'Buy';
 
-		defaultMethods.sendAjaxRequest('POST', onSuccessAjax, onErrorAjax, url, null, data);
+		defaultMethods.sendAjaxRequest({
+			httpMethod: 'POST',
+			callback: onSuccessAjax,
+			onError: onErrorAjax,
+			url: url,
+			data: data});
 	};
 
 	this.sendSpreadOrder = function(buyPrice, sellPrice){
@@ -58,6 +63,11 @@ var ajaxAutoTradeClass = new function () {
 		// console.log(data);
 		JSON.stringify(data);
 
-		defaultMethods.sendAjaxRequest('POST', onSuccessAjax, onErrorAjax, url, null, data);
+		defaultMethods.sendAjaxRequest({
+			httpMethod: 'POST',
+			callback: onSuccessAjax,
+			onError: onErrorAjax,
+			url: url,
+			data: data});
 	}
 };

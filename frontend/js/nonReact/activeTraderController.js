@@ -244,7 +244,7 @@ class activeTraderControllerClass{
 			if(trader.find('.join_bid .price').text() != bid) trader.find('.join_bid .price').text(bid);
 			if(trader.find('.join_ask .price').text() != ask) trader.find('.join_ask .price').text(ask);
 		}
-		//
+
 		tbody.find('tr').each(function () {
 			var current = $(this);
 

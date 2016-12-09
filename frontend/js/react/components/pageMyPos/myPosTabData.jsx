@@ -1,5 +1,5 @@
 'use strict';
-// const React = require('react');
+import React from 'react';
 
 const PosItem = React.createClass({
 	render: function() {
@@ -42,7 +42,11 @@ const MyPositionOrders = React.createClass({
 		let data = this.props.data.Symbol,
 				jsonData = { Symbol: `${data.Exchange}_${data.Name}_${data.Currency}` };
 
-		defaultMethods.sendAjaxRequest('POST', this.callback, null, globalData.rootUrl + 'order/closeout', null, jsonData);
+		defaultMethods.sendAjaxRequest({
+			httpMethod: 'POST',
+			callback: this.callback,
+			url: globalData.rootUrl + 'order/closeout',
+			data: jsonData});
 	},
 
 	callback: function (e) {

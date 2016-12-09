@@ -183,20 +183,34 @@ class defaultMethods{
 			if(totalHeight > windowHeight)
 				allMessages.eq(0).remove();
 		});
-
 		error.hide().fadeIn(200)
 				 .removeClass('bounceOutRight').addClass('bounceInRight active');
 	}
 
-	static sendAjaxRequest(httpMethod, callback, onError, url, context, data) {
-		if(!data) data = context.serialize();
+	/**
+	 * функция отправки ajax
+	 * @param httpMethod
+	 * @param callback
+	 * @param onError
+	 * @param beforeSend
+	 * @param url
+	 * @param context - форма с которой идет вызов(нужна для серилизации данных)
+	 * @param data - сформированный объект данных для отправки
+	 */
+	static sendAjaxRequest({httpMethod = 'POST', callback = null, onError = null, beforeSend = null, url, context = null, data = null}) {
+		if(!data && callback) data = context.serialize();
+		if(!data && !context) {
+			console.error('для ajax нужно передать данные или контекст вызова');
+			return false;
+		}
 		$.ajax({
 			url: url,
 			type: httpMethod,
 			dataType: 'json',
 			data: data,
 			success: callback,
-			error: onError
+			error: onError,
+			beforeSend: beforeSend
 		});
 	}
 }

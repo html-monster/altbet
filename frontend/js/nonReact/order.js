@@ -279,7 +279,11 @@ class orderClass{
 					}
 					if (context.parents('.price').length) {//(price * volume).toFixed(2)
 						if (volume) {
-							sumInput.val(Math.round10(price * volume, -2));
+							sum = Math.round10(price * volume, -2);
+							sumInput.val(sum);
+							feesInput.val(fee || '');
+							riskInput.val(Math.round10(fee + sum, -2) || '');
+							profitInput.val(Math.round10((1 - price) * ((volume == 'Infinity') ? '' : volume), -2) || '');
 						}
 					}
 					if (context.parents('.volume').length) {
@@ -288,7 +292,7 @@ class orderClass{
 							sumInput.val(sum);
 						}
 						feesInput.val(fee || '');
-						riskInput.val(Math.round10(fee + sum || '', -2));
+						riskInput.val(Math.round10(fee + sum, -2) || '');
 					}
 					if (context.parents('.obligations').length) {
 						if (price) {
@@ -303,6 +307,8 @@ class orderClass{
 					else{
 						if(price && volume && sum)
 							profitInput.val(Math.round10((1 - price) * volume, -2));
+						else
+							profitInput.val('');
 					}
 				}
 				else {
@@ -333,12 +339,12 @@ class orderClass{
 			currentOrders.on('click', '.order_info .edit', function () {
 				var tab_content = $('.tab_content');
 
-				$(this).parent().next().slideToggle(200);//.toggleClass('active')
+				$(this).parents('.order_info').next().slideToggle(200);//.toggleClass('active')
 				// $(this).parents('.order_content').toggleClass('active');
 			});
 
 			currentOrders.on('click', '.order_info .delete', function () {
-				$(this).parent().find('.pop_up').fadeIn();
+				$(this).parents('.order_info').find('.pop_up').fadeIn();
 			});
 			currentOrders.on('click', '.order_content .close', function () {
 				$(this).parents('.order_content').children('.pop_up').fadeIn();
@@ -571,6 +577,7 @@ class orderClass{
 		if(limit) {
 			html.find('.price input.number').val(object.price);
 			html.find('.checkbox span').text('Limit');
+			html.find('.checkbox input').prop('checked', true);
 		}
 		else {
 			html.find('.price input.number').attr('disabled', true).removeAttr('name').val(object.priceMarket);
