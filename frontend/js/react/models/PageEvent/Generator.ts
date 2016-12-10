@@ -10,7 +10,7 @@ let __HiDEV__ = !true;
  */
 export class Generator
 {
-    private genTickTime = 3; // generate new point, seconds
+    private genTickTime = 30; // generate new point, seconds
     private FLAG_GEN_STARTED = 0;
     private genLastPoint = 0;
     // private flagForceStop = true; // !!!!!!!!!!!!!!!
@@ -18,18 +18,18 @@ export class Generator
 
     private flagActive = false;
     private TiGenerator = [];
-    private chartContainer = null; // chart dom node
+    private chartObj = null; // chart object
 
 
     /**
      * Start generator
      */
-    public start(inChartContainer = null)
+    public start(inChartObj = null)
     {
         if (this.flagForceStop) return;
 // __HiDEV__||console.debug( 'start' );
 // return;
-        inChartContainer && (this.chartContainer = inChartContainer);
+        inChartObj && (this.chartObj = inChartObj);
 
         if( !this.TiGenerator.length )
         {
@@ -41,39 +41,44 @@ export class Generator
 
 
     /**
+     * Restart generator
+     */
+    public restart()
+    {
+        this.cancel();
+        this.start();
+    }
+
+
+
+    /**
      * Generates new virtual point
      */
     public addPoint()
     {
-__HiDEV__||console.debug( 'addPoint' );
+// __HiDEV__||console.debug( 'addPoint' );
         // for turn off generator
         if (this.flagForceStop) return;
 
-        // let prevTi = this.TiGenerator.length;
-// __HiDEV__||console.debug( 'prevTi, this.TiGenerator', prevTi, this.TiGenerator );
-//         this._stopTimer();
-// __HiDEV__||console.warn( 'prevTi', prevTi );
 
         var data = Highcharts.charts[0].series[0].options.data;
 
         if( data.length )
         {
-__HiDEV__||console.debug( 'this.TiGenerator', this.TiGenerator );
             // delete virtual point
-            this.genLastPoint > 0 && data.splice(this.genLastPoint, 1);
+            this.genLastPoint > 0 && this._deleteVirtPoint();
 
             // Set virtual point
             let yy = data[data.length-1].y;
 
-            var d1 = new Date();
             // d1.toUTCString();
-            let time = d1.getTime() - new Date().getTimezoneOffset() * 60 * 1000; // correct with timezone
+            let time = (new Date()).getTime() - (new Date()).getTimezoneOffset() * 60 * 1000; // correct with timezone
+            // time -= 60 * 1000; // minus 1 min
 
-            __HiDEV__||console.debug( 'time', time, moment.unix(time/1000), moment.unix(data[data.length-1].x/1000), data[data.length-1] );
+            // __HiDEV__||console.debug( 'time', time, moment.unix(time/1000), moment.unix(data[data.length-1].x/1000), data[data.length-1] );
 
-// return ;
             try {
-                false || Highcharts.charts[0].series[0].addPoint({
+                Highcharts.charts[0].series[0].addPoint({
                     x: Math.floor(time),
                     // x: moment().unix() * 1000,
                     y: yy,
@@ -85,18 +90,22 @@ __HiDEV__||console.debug( 'this.TiGenerator', this.TiGenerator );
                     virtual: true,
                     current: moment().format("Do, h:mm:ss a")
                 }, true);
+
+                // Highcharts.charts[0].redraw();
+
+
             } catch (e) {
-                __DEV__&&console.debug( 'set v point', e.getMessage() );
+                // __HiDEV__&&console.debug( 'set v point', e.getMessage() );
             }
 
 
             this.genLastPoint = data.length-1;
         } // endif
-// __HiDEV__||console.debug( 'this.chartContainer', this.chartContainer );
-        // this.chartContainer && this.chartContainer.redraw();
-        __DEV__||console.groupCollapsed("Chart 0 data");
-        __DEV__||console.debug( 'Highcharts.charts[0].series[0].options.data', JSON.stringify(Highcharts.charts[0].series[0].options.data) );
-        __DEV__||console.groupEnd();
+// __HiDEV__||console.debug( 'this.chartObj', this.chartObj );
+        // this.chartObj && this.chartObj.redraw();
+        // __DEV__||console.groupCollapsed("Chart 0 data");
+        // __DEV__||console.debug( 'Highcharts.charts[0].series[0].options.data', JSON.stringify(Highcharts.charts[0].series[0].options.data) );
+        // __DEV__||console.groupEnd();
 
 
         // prevTi && this._startGenerator();
@@ -145,6 +154,7 @@ __HiDEV__||console.debug( 'this.TiGenerator', this.TiGenerator );
         var data = Highcharts.charts[0].series[0].options.data;
         this.genLastPoint && data.splice(this.genLastPoint, 1);
         this.genLastPoint = 0;
+        this.chartObj.setChartData(null, true);
     };
 
 
@@ -155,13 +165,13 @@ __HiDEV__||console.debug( 'this.TiGenerator', this.TiGenerator );
      */
     private _stopTimer()
     {
-        __HiDEV__||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
+        // __HiDEV__||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
         while( this.TiGenerator.length )
         {
             clearInterval(this.TiGenerator[0]);
             this.TiGenerator.pop();
         } // endwhile
-        __HiDEV__||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
+        // __HiDEV__||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
 
         this.flagActive = false;
     }

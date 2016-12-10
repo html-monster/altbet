@@ -15,6 +15,8 @@ declare let Highcharts : any;
 declare let $ : any;
 declare let window : any;
 
+__LDEV__ = false;
+
 
 /**
  * Event page chart
@@ -28,14 +30,18 @@ export class Chart
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
+    public static GROUP_DEF = 15;
     public static GROUP_MIN = 1;
     public static GROUP_5MIN = 5;
     public static GROUP_15MIN = 15;
     public static GROUP_60MIN = 60;
     public static GROUP_1DAY = 60*24;
-    public static GROUP_ALL = 60*24;
+    public static GROUP_ALL = -1;
+    public static GROUP_INTERVALS = [3, 6, 24, 96, 720];
+
 
     private groups = []; // for btn groups
+    private currGroup = 0;
 
     private chartData = [];
     private charts = [];
@@ -49,7 +55,7 @@ export class Chart
     private chartType = null;
     private chartTheme = null;
 
-    private currData = null; // current chart data
+    private currData = null; // current chart data from socket
     private dataRaw = []; // raw data, from server
     private dataGrouped = []; // grouped data
 
@@ -142,7 +148,19 @@ export class Chart
         if (this.charts.length == 0)
             this.createChart(data);
         else
-           ;//this.updateChart(this.charts, data);
+           this.updateChart(this.charts, data);
+    }
+
+
+
+    /**
+     * Set new data to chart
+     * @param inData
+     */
+    public setChartData(inData, isCurrent?)
+    {
+        if (isCurrent) inData = this.dataGrouped;
+        Highcharts.charts[0].series[0].setData(inData, true);
     }
 
 
@@ -151,10 +169,15 @@ export class Chart
     {
         var self = this;
 
+
         // часть настроек в createChart и PlotOptions
         this.chartData = [{
             height: 450,
             type: self.chartType,
+            animation: {
+                    duration: 1000,
+                    // easing: 'easeOutBounce'
+                },
             // type: 'spline',
             name: 'Price',
             rangeSelector: {
@@ -180,7 +203,7 @@ export class Chart
                 buttons: [
                     {
                         type: 'minute',
-                        count: 180, // диапазон отображения
+                        count: 5*60, // диапазон отображения
                         text: '1m',
                         // dataGrouping: {
                         //     units: [
@@ -237,7 +260,8 @@ export class Chart
                 enabled: true,
                 // selected: 1,
                 buttonPosition: {
-                    x: 20
+                    x: 310,
+                    y: 10
                 },
                 labelStyle: {
                     display: 'none'
@@ -368,6 +392,9 @@ export class Chart
 
     private groupData(inGr)
     {
+        // correct group for All
+        if (inGr == Chart.GROUP_ALL) inGr = this.getGroupCorrect();
+
         let rdata = this.dataRaw;
         let grData = this.dataGrouped = [];
         if( rdata.length )
@@ -382,6 +409,7 @@ export class Chart
             {
                 var val = rdata[ii];
 
+                // checks for group bound
                 let end = moment.unix(val.x/1000);
                 let duration = moment.duration(end.diff(moment.unix(firstGrDate/1000)));
                 let minDiff = duration.asMinutes();
@@ -402,14 +430,15 @@ export class Chart
                         max: val.y,
                         close: val.y,
                         vol: val.Vol,
+                        virtual: false,
                         dt: moment.unix(val.x/1000).format('Do h:mm:ss a'),
                         items: [val],
                         // name: 'hello ',
                         color: '',
-                    }
-                }
-                else
-                {
+                    };
+
+                // same group
+                } else {
                     sum += val.y;
                     cou++;
                     grData[jj].close = val.y;
@@ -430,18 +459,93 @@ export class Chart
             // {
             //     grData[ii].itemsr = JSON.stringify(grData[ii].items);
             // } // endfor
+            // this.currGroup =
+            this.groups.some((item, key) => { if (inGr == item) { this.currGroup = key; return true; } });
         } // endif
 
-        __LDEV__&&console.debug( 'dataRaw', this.dataRaw );
-        __LDEV__&&console.debug( 'grData', grData );
+        // __LDEV__&&console.debug( 'dataRaw  this.currGroup', this.dataRaw, this.currGroup );
     }
 
 
 
-    private createChart (data)
+    /**
+     * Get appropriate group for All
+     * @return number
+     */
+    private getGroupCorrect() : number
+    {
+        let end = moment.unix(this.dataRaw[this.dataRaw.length - 1].x/1000);
+        let duration = moment.duration(end.diff(moment.unix(this.dataRaw[0].x/1000)));
+        let minDiff = duration.asHours();
+
+        let group : number = 1;
+        let interv = Chart.GROUP_INTERVALS;
+        for(let ii = interv.length-1; ii > 0; ii-- )
+        {
+            group = interv[ii];
+            if( minDiff > group ) continue;
+            else break;
+        } // endfor
+
+        return group;
+    }
+
+
+
+    private addPoint(inData)
+    {
+        // return;
+        for( let ii in inData )
+        {
+            let lastPoint = this.dataGrouped[this.dataGrouped.length-1];
+            let val = inData[ii];
+            let dt = val.Time.replace('/Date(', '').replace(')/', '') * 1 - new Date().getTimezoneOffset() * 60 * 1000;
+            let end = moment.unix(dt/1000);
+
+            // add to raw data
+            val.x = dt;
+            val.y = val.Open;
+            val.Vol = val.Volume;
+            this.dataRaw.push(val);
+
+            let duration = moment.duration(end.diff(moment.unix(lastPoint.x/1000)));
+            let minDiff = duration.asMinutes();
+            if( minDiff > this.groups[this.currGroup] )
+            {
+                this.dataGrouped.push({x: dt,
+                    y: val.Open,
+                    open: val.Open,
+                    min: val.Open,
+                    max: val.Open,
+                    close: val.Open,
+                    vol: val.Volume,
+                    virtual: false,
+                    dt: moment.unix(dt/1000).format('Do h:mm:ss a'),
+                    items: [val],
+                });
+            }
+            else
+            {
+                lastPoint.y = (lastPoint.y + val.Open) / 2;
+                lastPoint.close = val.Open;
+                lastPoint.vol += val.Volume;
+                if (lastPoint.min > val.Open) lastPoint.min = val.Open;
+                if (lastPoint.max < val.Open) lastPoint.max = val.Open;
+                lastPoint.items && lastPoint.items.push(val);
+            } // endif
+        } // endfor
+
+        // __LDEV__&&console.debug( 'this.dataGrouped  this.groups[this.currGroup]', this.dataGrouped, this.dataRaw, this.groups[this.currGroup] );
+    }
+
+
+
+    private createChart (inData)
     {
         var self = this;
-        // 0||console.debug( 'data', data );
+        // 0||console.debug( 'inData', inData );
+
+        self.currData = inData;
 
 
         var isMirror = $('input[type=hidden]#IsMirror').val().toUpperCase() == "TRUE";
@@ -449,7 +553,7 @@ export class Chart
 
             var identificators = $(this).attr('id').replace('eventContainer_', '').split('_');
 
-            $(data).each(function () {
+            $(inData).each(function () {
                 if (this.Symbol.Exchange == identificators[0]
                     && this.Symbol.Name == identificators[1]
                     && this.Symbol.Currency == identificators[2]) {
@@ -467,7 +571,7 @@ export class Chart
                             Vol: this.Volume,
                             dt: moment.unix(timeValue/1000).format('Do h:mm:ss a')
                         });
-                        // self.chartData[1].data.push({
+                        // self.chartData[1].inData.push({
                         //     x: timeValue,
                         //     y: volumeValue,
                         //     color: this.Open > this.Close ? '#9DB201' : '#FF3728'
@@ -480,11 +584,11 @@ export class Chart
             self.charts.push(1);
 
 
-            // make group data from raw
+            // make group inData from raw
             self.dataRaw = self.chartData[0].data;
-            self.groupData(Chart.GROUP_MIN);
+            self.groupData(Chart.GROUP_DEF);
             self.chartData[0].data = self.dataGrouped;
-            0||console.debug( 'self.chartData[0].data', self.chartData[0].data );
+            // 0||console.debug( 'self.chartData[0].inData', self.chartData[0].data );
 
 
             var container = $(this).attr('id');
@@ -507,11 +611,11 @@ export class Chart
                         ' ' + ('0' + localDate.getHours()).slice(-2) +
                         ':' + ('0' + localDate.getMinutes()).slice(-2) +
                         ':' + ('0' + localDate.getSeconds()).slice(-2) + ' ' +
+                    '<b>Volume:</b> ' + data.volume.toString().substr(0, 3) + '  <br/> ' +
                     '<b>Open:</b> ' + parseFloat("0" + data.open).toFixed(2).substr(1, 3) + ' ' +
                     '<b>High:</b> ' + parseFloat("0" + data.high).toFixed(2).substr(1, 3) + ' ' +
                     '<b>Low:</b> ' + parseFloat("0" + data.low).toFixed(2).substr(1, 3) + ' ' +
-                    '<b>Close:</b> ' + parseFloat("0" + data.close).toFixed(2).substr(1, 3) + ' ' +
-                    '<b>Vol:</b> ' + data.volume.toString().substr(0, 3));
+                    '<b>Close:</b> ' + parseFloat("0" + data.close).toFixed(2).substr(1, 3) + ' ');
                 this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
             };
 
@@ -603,18 +707,17 @@ export class Chart
                 yAxis: [],
                 series: []
             };
-            // 0||console.debug( '__LDEV__', __LDEV__ );
             __LDEV__ && (chartsOptions.tooltip.enabled = true);
 
 
-            // Add data to charts options
+            // Add inData to charts options
             var flag = false;
             $(self.chartData).each(function (key) {
                 chartsOptions.series[key] = {
                     data: self.chartData[key].data,
                     name: self.chartData[key].name,
                     type: self.chartData[key].type,
-                    turboThreshold: 0, // This saves expensive data checking and indexing in long series
+                    turboThreshold: 0, // This saves expensive inData checking and indexing in long series
                     states: {
                         hover: {
                             enabled: false
@@ -673,24 +776,29 @@ export class Chart
 
 
             // render chart
-            console.groupCollapsed("Charts");
-            0||console.info( 'chartsOptions', chartsOptions );
-            0||console.info( 'chartsOptions', JSON.stringify(chartsOptions) );
-            console.groupEnd();
+            if( __DEV__ )
+            {
+                console.groupCollapsed("Charts");
+                console.info( 'chartsOptions', chartsOptions );
+                console.info( 'chartsOptions', JSON.stringify(chartsOptions) );
+                console.info( 'self.dataRaw  self.dataGrouped', self.dataRaw, self.dataGrouped );
+                console.groupEnd();
+            } // endif
+
             this.chartContainer = $('<div class="chart"></div>');
                 this.chartContainer.appendTo('#' + container);
                 this.chartContainer = this.chartContainer.highcharts(chartsOptions);
 
             // start gen virtual point
-            self.Generator.start(this.chartContainer);
+            self.Generator.start(self);
         });
 
 
         // set default range to 15 min
         try {
-            Highcharts.charts[0].rangeSelector.buttons[2].setState(2);
-            Highcharts.charts[0].series[0].xAxis.setExtremes(Highcharts.charts[0].series[0].xAxis.max - 60 * 60 * 1000 * 24, Highcharts.charts[0].series[0].xAxis.max, true);
-            Highcharts.charts[0].rangeSelector.setSelected(2);
+            // Highcharts.charts[0].series[0].xAxis.setExtremes(Highcharts.charts[0].series[0].xAxis.max - 60 * 60 * 1000 * 24, Highcharts.charts[0].series[0].xAxis.max, true);
+            // Highcharts.charts[0].rangeSelector.buttons[2].setState(2);
+            // Highcharts.charts[0].rangeSelector.setSelected(2);
         } catch (e) {
         }
 
@@ -726,6 +834,8 @@ export class Chart
 
         // $('.highcharts-input-group').remove();
         self.activateGroupBtns();
+
+        $(".highcharts-button.gb2").click();
     }
 
 
@@ -748,9 +858,10 @@ export class Chart
 
     private onBtnGroupClick(that)
     {
-        0||console.debug( 'clicked', that.classList[1][2] );
+        // 0||console.debug( 'clicked', that.classList[1][2] );
         this.groupData(this.groups[that.classList[1][2]]);
-        Highcharts.charts[0].redraw();
+        this.setChartData(this.dataGrouped);
+        this.Generator.restart();
     }
 
 
@@ -762,13 +873,10 @@ export class Chart
     private updateChart(charts, inData)
     {
         var self = this;
-        __LDEV__&&console.debug( 'Update chart' );
+        // __LDEV__&&console.debug( 'Update chart' );
         // return;
 
         var isMirror = $('input[type=hidden]#IsMirror').val().toUpperCase() == "TRUE";
-
-        // check for data difference
-        this.checkForNewData(inData);
 
         $(charts).each(function ()
         {
@@ -776,43 +884,43 @@ export class Chart
 
             $(Highcharts.charts).each(function ()
             {
-                $(inData).each(function () {
+                $(inData).each(function (key) {
                     if (this.Symbol.Exchange == identificators[0]
                         && this.Symbol.Name == identificators[1]
                         && this.Symbol.Currency == identificators[2]) {
 
-                        var additionalValues = this.Ticks.slice(self.chartData[0].data.length);
+                        // TODO: check for data difference
+                        let additionalValues = self.checkForNewData(this.Ticks, key);
+
+                        // var additionalValues = this.Ticks.slice(self.chartData[0].data.length);
 
                         // stop generator
-                        if (additionalValues.length) {
-                            self.Generator.cancel();
-                        }
+                        if (additionalValues.length) { self.Generator.cancel(); }
 
+                        // __LDEV__&&console.debug( 'this.currData, inData', self.currData, inData, additionalValues, key);
+        // return 1;
 
                         $(additionalValues).each(function ()
                         {
                             0||console.warn( 'Update chart', additionalValues );
+                            self.addPoint(additionalValues);
+                            self.setChartData(self.dataGrouped);
 
-                            var volumeValue = this.Volume;
-                            var timeValue = this.Time.replace('/Date(', '').replace(')/', '') * 1 - new Date().getTimezoneOffset() * 60 * 1000;
 
-                            var yy = isMirror ? 1 - this.Open : this.Open;
-                            Highcharts.charts[0].series[0].addPoint({
-                                x: timeValue,
-                                y: yy
-                            });
-
-                            // Highcharts.charts[0].series[1].addPoint({
+                            // var volumeValue = this.Volume;
+                            // var timeValue = this.Time.replace('/Date(', '').replace(')/', '') * 1 - new Date().getTimezoneOffset() * 60 * 1000;
+                            //
+                            // var yy = isMirror ? 1 - this.Open : this.Open;
+                            // Highcharts.charts[0].series[0].addPoint({
                             //     x: timeValue,
-                            //     y: volumeValue,
-                            //     color: this.Open > this.Close ? '#9DB201' : '#FF3728'
+                            //     y: yy
                             // });
-
-
-                            // update min max remake by extreme
-                            // 0||console.debug( 'Highcharts.charts[0].yAxis[0].dataMin, yy', Highcharts.charts[0].yAxis[0].dataMin, yy );
-                            // if (Highcharts.charts[0].yAxis[0].dataMin > yy) Highcharts.charts[0].yAxis[0].dataMin = yy;
-                            // if (Highcharts.charts[0].yAxis[0].dataMax < yy) Highcharts.charts[0].yAxis[0].dataMax = yy;
+                            //
+                            // // Highcharts.charts[0].series[1].addPoint({
+                            // //     x: timeValue,
+                            // //     y: volumeValue,
+                            // //     color: this.Open > this.Close ? '#9DB201' : '#FF3728'
+                            // // });
                         });
 
 
@@ -841,17 +949,33 @@ export class Chart
     }
 
 
-
-    private checkForNewData(inData)
+    /**
+     * Old and new data difference
+     * @returns {Array}
+     */
+    private checkForNewData(inData, key)
     {
         // 0||console.debug( 'inData', inData );
+        let diff = [];
 
-        // Object.keys().map(function(key, index) {
-        //    [key];
-        // });
-        // inData.forEach(() => {
-        //
-        // });
+        let ticks = this.currData[key].Ticks.reverse();
+        // for( var ii = this.currData[key].Ticks.length-1, jj = inData.length-1; ii >= 0; ii--, jj-- )
+        for( var ii = 0, countii = ticks.length; ii < countii; ii++ )
+        {
+            let val = ticks[ii];
+            if( inData[ii].Open != val.Open ) diff.push(val);
+        } // endfor
+
+        // diff.push('-----------')
+        for( countii = inData.length; ii < countii; ii++ )
+        {
+            diff.push(inData[ii]);
+        } // endfor
+        diff = inData.slice(ticks.length);
+
+
+        // 0||console.debug( 'diff', diff,  ticks , inData, ticks.length, inData.length);
+        return diff;
     }
 
 
@@ -885,9 +1009,9 @@ export class Chart
 
         this.label.align(Highcharts.extend(this.label.getBBox(), {
             align: 'left',
-            x: 10,
+            x: 5,
             verticalAlign: 'top',
-            y: 40
+            y: -20
         }), null, 'spacingBox');
     }
 
@@ -895,6 +1019,7 @@ export class Chart
 
     private showHighlights(e)
     {
+        // TODO: через индекс
         $(Highcharts.charts).each(function ()
         {
             try {
@@ -904,47 +1029,14 @@ export class Chart
                 // if (point && point.dataGroup)
                 if (point)
                 {
-                    var {
-dataGroup
-, pointAttr
-, clientX
-,dist
-,distX
-,getLabelConfig
-,highlight
-,importEvents
-,index
-,options
-,series
-,plotX
-,plotY
-,state
-,x
-,y
-                    } = point
-                    let debug = {
-dataGroup
-, pointAttr
-, clientX
-,dist
-,distX
-,getLabelConfig
-,highlight
-,importEvents
-,index
-,options
-,series
-,plotX
-,plotY
-,state
-,x
-,y
-                    }
+                    var x1 = point.x;
+                    // var { dataGroup , pointAttr , clientX ,dist ,distX ,getLabelConfig ,highlight ,importEvents ,index ,options ,series ,plotX ,plotY ,state ,x ,y} = point;
+                    // let debug = { dataGroup , pointAttr , clientX ,dist ,distX ,getLabelConfig ,highlight ,importEvents ,index ,options ,series ,plotX ,plotY ,state ,x ,y};
 // __LDEV__&&console.debug( 'point', debug );
 
 
                     let optionalParams = point.series.options.data;
-                    // 0 ||console.debug( 'point.dataGroup.start', point.dataGroup, optionalParams );
+                    // 0 ||console.debug( 'point.series', point.series );
                     // let extremes = Highcharts.charts[0].series[0].xAxis.getExtremes();
                     let min = Infinity, xx;
                     // __LDEV__&&console.debug( 'min > 2', min > 2 );
@@ -954,7 +1046,7 @@ dataGroup
                         var val = optionalParams[ii];
                         // if( ii == index) 0||console.debug( 'index', val );
                         // if( val.x == x ) 0||console.debug( 'series', val );
-                        if( Math.abs(val.x - x) < min ) { min = Math.abs(val.x - x); xx = ii; }
+                        if( Math.abs(val.x - x1) < min ) { min = Math.abs(val.x - x1); xx = ii; }
 
                     } // endfor
                     // __LDEV__&&console.debug( 'min,', min,  xx);
