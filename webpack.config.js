@@ -1,60 +1,61 @@
 'use strict';
 
-var path = require('path');
+// var path = require('path');
+// var WebpackNotifierPlugin = require('webpack-notifier');
 var webpack = require('webpack');
-var WebpackNotifierPlugin = require('webpack-notifier');
 
-// const DEST_SERVER = '/../altbetNew/RefactoredCore/Alt.Bet';
-const DEST_SERVER = '/../../altbetNew/Alt.Bet';
+let configBundle = require('./webpackinc/webpack.bundle');
+let configBundleR = require('./webpackinc/webpack.config.redux');
+let configBundleM = require('./webpackinc/webpack.config.models');
+
 
 
 var devFlagPlugin = new webpack.DefinePlugin({
   __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
 });
 
-module.exports = {
-    // devtool: 'cheap-inline-module-source-map',
-    devtool: process.env.NODE_ENV === 'production' ?
-        'source-map' :
-        'inline-source-map',
-
-    entry: "./frontend/js/react/index.js",
-    output: {
-        path: __dirname + DEST_SERVER + '/Scripts',
-        publicPath: "Scripts/",
-        filename: "bundle.js"
-    },
-    module: {
-        loaders: [
-            {
-                test: /\.jsx$/,
-                loader: "babel-loader",
-                exclude: [/node_modules/, /public/],
-                query: {
-                    presets: ['es2015', 'stage-0', 'react'],
-                }
-            },
-            {
-                test: /\.js$/,
-                loader: "babel-loader",
-                exclude: [/node_modules/, /public/],
-                query: {
-                    presets: ['es2015', 'stage-0', 'react'],
-                }
-            }
-        ]
-    },
-    watch: true,
-
-    watchOptions: {
-        aggregateTimeout: 100
-    },
-
-    plugins: [
-        new WebpackNotifierPlugin({title: 'bundle.js', alwaysNotify: true}),
-        new webpack.optimize.OccurenceOrderPlugin(),
-        // new webpack.HotModuleReplacementPlugin(),
-        // new webpack.NoErrorsPlugin(),
-        devFlagPlugin
-    ],
-};
+module.exports = [configBundle, configBundleR, configBundleM];
+// {
+//     devtool: 'cheap-inline-module-source-map',
+//
+//     entry: "./frontend/js/react/pageMyPosMount.js",
+//     output: {
+//         path: __dirname + pathes.destServer + '/Scripts',
+//         publicPath: "Scripts/",
+//         filename: "bundle.js"
+//     },
+//     module: {
+//         loaders: [
+//             {
+//                 test: /\.js$/,
+//                 loader: "babel",
+//                 exclude: [/node_modules/, /public/],
+//                 query: {
+//                   // plugins: ['transform-runtime'],
+//                   presets: ['es2015', 'stage-0', 'react'],
+//                 },
+//             },
+//             {
+//                 test: /\.jsx$/,
+//                 loader: "babel",//react-hot!
+//                 exclude: [/node_modules/, /public/],
+//                 query: {
+//                     presets: ['es2015', 'stage-0', 'react'],
+//                 }
+//             }
+//         ]
+//     },
+//     watch: true,
+//
+//     watchOptions: {
+//         aggregateTimeout: 100
+//     },
+//
+//     plugins: [
+//         new WebpackNotifierPlugin({title: 'bundle.js', alwaysNotify: true}),
+//         new webpack.optimize.OccurenceOrderPlugin(),
+//         // new webpack.HotModuleReplacementPlugin(),
+//         // new webpack.NoErrorsPlugin(),
+//         devFlagPlugin
+//     ],
+// };

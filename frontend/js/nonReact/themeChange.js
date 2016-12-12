@@ -27,7 +27,9 @@ class themeChangeClass {
 		// });
 
 	}
-	static setColorScheme(context, theme) {
+	static setColorScheme(context, theme)
+	{
+        let currentTheme = 'dark';
 		let tagLink = $('link[rel=stylesheet]'), styleUrl = tagLink.attr('href');
 
 		function styleSearch () {
@@ -44,7 +46,12 @@ class themeChangeClass {
 		}
 		else if(theme == 'light' && styleSearch() != 'index_light'){//localStorage.getItem('colorScheme') == 'index_light'
 			tagLink.attr('href', styleUrl.replace(styleSearch(), 'index_light'));
+			currentTheme = 'light';
 		}
+
+        location.reload();
+        // ABpp.config.currentTheme = theme;
+        // window.ee.emit('setSiteTheme', currentTheme);
 	}
 }
 
