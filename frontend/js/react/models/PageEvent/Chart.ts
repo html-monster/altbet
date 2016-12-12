@@ -1,5 +1,6 @@
 /**
  * Created by Vlasakh on 01.12.16.
+ * @link http://api.highcharts.com/highstock/Axis.setExtremes
  */
 
 /// <reference path="./../../../.d/common.d.ts" />
@@ -15,7 +16,7 @@ declare let Highcharts : any;
 declare let $ : any;
 declare let window : any;
 
-__LDEV__ = false;
+// __LDEV__ = false;
 
 
 /**
@@ -168,6 +169,7 @@ export class Chart
     private initChartOpts()
     {
         var self = this;
+        let xx = $(".chart_container .chart").width() - 217 - 30;
 
 
         // часть настроек в createChart и PlotOptions
@@ -260,7 +262,7 @@ export class Chart
                 enabled: true,
                 // selected: 1,
                 buttonPosition: {
-                    x: 310,
+                    x: xx, //310,
                     y: 10
                 },
                 labelStyle: {
@@ -610,17 +612,21 @@ export class Chart
                 var localDate = new Date(data.date + new Date().getTimezoneOffset() * 60 * 1000);
 
                 self.createLabel(Highcharts.charts[0],
-                    '<b>Date:</b> ' + //('0' + localDate.getMonth() + 1).slice(-2) +
+                    '<b>Datetime:</b> ' + //('0' + localDate.getMonth() + 1).slice(-2) +
 //                        '-' + ('0' + localDate.getDate()).slice(-2) +
 //                        '-' + localDate.getFullYear() +
+                        ' ' + ('0' + localDate.getMonth()).slice(-2) +
+                        '/' + ('0' + localDate.getDay()).slice(-2) +
+                        '/' + ('0' + localDate.getFullYear()).slice(-2) +
                         ' ' + ('0' + localDate.getHours()).slice(-2) +
                         ':' + ('0' + localDate.getMinutes()).slice(-2) +
                         ':' + ('0' + localDate.getSeconds()).slice(-2) + ' ' +
-                    '<b>Volume:</b> ' + data.volume.toString().substr(0, 3) + '  <br/> ' +
+                    '<b>Vol:</b> ' + data.volume.toString().substr(0, 3) + '  <br/> ' +
+                    '<b>Close:</b> ' + parseFloat("0" + data.close).toFixed(2).substr(1, 3) + ' ' +
                     '<b>Open:</b> ' + parseFloat("0" + data.open).toFixed(2).substr(1, 3) + ' ' +
-                    '<b>High:</b> ' + parseFloat("0" + data.high).toFixed(2).substr(1, 3) + ' ' +
                     '<b>Low:</b> ' + parseFloat("0" + data.low).toFixed(2).substr(1, 3) + ' ' +
-                    '<b>Close:</b> ' + parseFloat("0" + data.close).toFixed(2).substr(1, 3) + ' ');
+                    '<b>High:</b> ' + parseFloat("0" + data.high).toFixed(2).substr(1, 3) + ' '
+                );
                 this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
             };
 
@@ -867,9 +873,9 @@ export class Chart
         this.groupData(this.groups[that.classList[1][2]]);
         // this.setChartData(this.dataGrouped); // in restart !
         this.Generator.restart();
-        setTimeout(() =>
-            Highcharts.charts[0].series[0].xAxis.setExtremes(Highcharts.charts[0].series[0].xAxis.max - 60 * 60 * 6, Highcharts.charts[0].series[0].xAxis)
-        , 1000);
+        // setTimeout(() =>
+        //     Highcharts.charts[0].series[0].xAxis.setExtremes(Highcharts.charts[0].series[0].xAxis.max - 60 * 60 * 6, Highcharts.charts[0].series[0].xAxis)
+        // , 1000);
     }
 
 

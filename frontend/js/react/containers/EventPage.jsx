@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import Chart from '../components/EventPage/Chart'
 import * as chartActions from '../actions/EventPage/chartActions.ts';
+// import * as eventPageActions from '../actions/eventPageActions.ts';
 
 class EventPage extends React.Component
 {
@@ -26,6 +27,7 @@ class EventPage extends React.Component
 
 export default connect(state => ({
     eventPage: state.eventPage,
+    // test: state.Ttest,
 }),
 dispatch => ({
     // eventPageActions: bindActionCreators(eventPageActions, dispatch),
