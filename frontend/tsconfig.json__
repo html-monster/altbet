@@ -1,0 +1,119 @@
+"Active-orders" : {
+  "MessageID": "ba6c95e4-d9d2-446a-9c81-56a68e4ac422",
+  "MessageType": "GetOrdersResponse",
+  "ActiveOrders":[
+    {
+      "MessageID": "27f61766-1953-41eb-bb48-6540b9ee0150",
+      "MessageType": "NewOrderRequest",
+      "Account": "seller@seller.ua",
+      "ExpirationDate": "\/Date(4102441200000)\/",
+      "ID": "13562214-4a93-4b14-89e4-b00e47f1de59",
+      "LimitPrice": 0.90000000,
+      "OrderType": 2,
+      "Quantity": 10000,
+      "Side": 1,
+      "StopPrice": 0.00000000,
+      "Symbol": {
+        "Currency": "USD",
+        "Exchange":"FIRST",
+        "Name": "UAH\/USD"
+      },
+      "Time": "\/Date(1462457558783)\/",
+      "TimeInForce": 0,
+      "isMirror": 0
+    },
+    {
+      "MessageID": "b4d2077b-9e75-47df-9a53-102d1d8d83dc",
+      "MessageType": "NewOrderRequest",
+      "Account": "buyer@buyer.ua",
+      "ExpirationDate": "\/Date(4102441200000)\/",
+      "ID": "4ab43cd3-2c08-41fb-a2b9-247a4807f9b0",
+      "LimitPrice": 0.05000000,
+      "OrderType": 2,
+      "Quantity": 10000,
+      "Side": 0,
+      "StopPrice": 0.00000000,
+      "Symbol": {
+        "Currency": "USD",
+        "Exchange":"FIRST",
+        "Name": "UAH\/USD"
+      },
+      "Time": "\/Date(1462462806933)\/",
+      "TimeInForce": 0,
+      "isMirror": 0
+    },
+    {
+      "MessageID": "3bd596c8-4b17-4303-b3b6-6de0518f585b",
+      "MessageType": "NewOrderRequest",
+      "Account": "buyer@buyer.ua",
+      "ExpirationDate": "\/Date(4102441200000)\/",
+      "ID": "88eae391-6205-453a-b91d-a65533b8667c",
+      "LimitPrice": 0.09000000,
+      "OrderType": 2,
+      "Quantity": 150,
+      "Side": 0,
+      "StopPrice": 0.00000000,
+      "Symbol": {
+        "Currency": "USD",
+        "Exchange":"FIRST",
+        "Name": "UAH\/USD"
+      },
+      "Time": "\/Date(1462462819320)\/",
+      "TimeInForce": 0,
+      "isMirror": 0
+    }
+  ],
+  "Ticks":[
+    {
+      "MessageID": "b11a1033-1008-40ed-b986-5ce2c3a5b670",
+      "MessageType": "Tick",
+      "Ask": 0,
+      "AskSize": 0,
+      "Bid": 0,
+      "BidSize": 0,
+      "Currency": "USD",
+      "Price": 0.90000000,
+      "Symbol": {
+        "Currency": "USD",
+        "Exchange": "FIRST",
+        "Name": "UAH\/USD"
+      },
+      "Time": "\/Date(1462465943240+0300)\/",
+      "Volume": 10000
+    },
+    {
+      "MessageID": "c7e2c65b-15e2-40e4-8fd8-65ab71dae5ce",
+      "MessageType": "Tick",
+      "Ask": 0,
+      "AskSize": 0,
+      "Bid": 0,
+      "BidSize": 0,
+      "Currency": "USD",
+      "Price": 0.90000000,
+      "Symbol": {
+      "Currency": "USD",
+      "Exchange":"FIRST",
+      "Name": "UAH\/USD"
+      },
+      "Time": "\/Date(1462465946890+0300)\/",
+      "Volume": 10
+    },
+    {
+      "MessageID": "61e6f734-394c-4fbd-af2f-2aac9ab2e357",
+      "MessageType": "Tick",
+      "Ask": 0,
+      "AskSize": 0,
+      "Bid": 0,
+      "BidSize": 0,
+      "Currency": "USD",
+      "Price": 0.90000000,
+      "Symbol": {
+        "Currency": "USD",
+        "Exchange": "FIRST",
+        "Name": "UAH\/USD"
+      },
+      "Time": "\/Date(1462466163583+0300)\/",
+      "Volume": 10
+    }
+  ]
+}
