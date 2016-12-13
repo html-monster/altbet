@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 const options = require('./pathes');
 const webpack = require('webpack');
 const WebpackNotifierPlugin = require('webpack-notifier');
@@ -14,6 +15,18 @@ module.exports = {
         'inline-source-map',
 
     entry: "./frontend/js/react/index.js",
+=======
+
+// var path = require('path');
+const options = require('./pathes');
+const webpack = require('webpack');
+const WebpackNotifierPlugin = require('webpack-notifier');
+
+module.exports = {
+    devtool: 'cheap-inline-module-source-map',
+
+    entry: "./frontend/js/react/pageMyPosMount.js",
+>>>>>>> Stashed changes
     output: {
         path: __dirname + options.path.destServer + '/Scripts',
         publicPath: "Scripts/",
@@ -22,6 +35,7 @@ module.exports = {
     module: {
         loaders: [
             {
+<<<<<<< Updated upstream
                 test: /\.jsx$/,
                 loader: "babel-loader",
                 exclude: [/node_modules/, /public/],
@@ -32,6 +46,19 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: "babel-loader",
+=======
+                test: /\.js$/,
+                loader: "babel",
+                exclude: [/node_modules/, /public/],
+                query: {
+                  // plugins: ['transform-runtime'],
+                  presets: ['es2015', 'stage-0', 'react'],
+                },
+            },
+            {
+                test: /\.jsx$/,
+                loader: "babel",//react-hot!
+>>>>>>> Stashed changes
                 exclude: [/node_modules/, /public/],
                 query: {
                     presets: ['es2015', 'stage-0', 'react'],
@@ -50,6 +77,10 @@ module.exports = {
         new webpack.optimize.OccurenceOrderPlugin(),
         // new webpack.HotModuleReplacementPlugin(),
         // new webpack.NoErrorsPlugin(),
+<<<<<<< Updated upstream
         devFlagPlugin
+=======
+        // devFlagPlugin
+>>>>>>> Stashed changes
     ],
 };
