@@ -174,33 +174,10 @@ label.checkbox{
   user-select: none;
 }
 
-// Common horizontal check box
-.checkbox_horizontal { position: relative; padding-left: 35px; cursor: pointer;
-    // for green-brown checkbox
-    input:not(:checked) ~ .label b { font-weight: bold; }
-    input:checked ~ .label i { font-weight: bold; }
-    input, input:checked {
-      & ~ span.label { color: $main-color;
-        b { font-weight: normal; }
-        i { font-style: normal; }
-      }
-    }
-    &.green-brown { color: $main-color;
-        input:checked ~ span:before{  background: #ef8022  }
-        span{
-          &:before{ top: 5px; background: #4dac2e;  }
-          &:after{ top: 6px; }
-        }
-    }
-    // for left oriented label
-    &.label-left { padding-left: 0; padding-right: 40px;
-      &>span {
-        &:before{ left: inherit; right: 2px; }
-        &:after{ left: inherit; right: 18px; }
-      }
-      input:checked ~ span:after { left: inherit; right: 3px; }
-    }
-
+.checkbox_horizontal{
+	padding-left: 35px;
+	cursor: pointer;
+	position: relative;
 	&>span{
 		color: #FFF * 0.5;
 		transition: 0.2s ease-out;

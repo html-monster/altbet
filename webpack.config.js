@@ -1,20 +1,16 @@
 'use strict';
 
-// var path = require('path');
-// var WebpackNotifierPlugin = require('webpack-notifier');
-var webpack = require('webpack');
-
 let configBundle = require('./webpackinc/webpack.bundle');
 let configBundleR = require('./webpackinc/webpack.config.redux');
 let configBundleM = require('./webpackinc/webpack.config.models');
 
-
-
-var devFlagPlugin = new webpack.DefinePlugin({
-  __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
-});
-
 module.exports = [configBundle, configBundleR, configBundleM];
+
+
+// var devFlagPlugin = new webpack.DefinePlugin({
+//   __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
+// });
+
 // {
 //     devtool: 'cheap-inline-module-source-map',
 //
