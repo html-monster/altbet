@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 
 import configureStore from './store/configureStore';
 import EventPage from './containers/EventPage';
+import MainPage from './containers/EventPage';
 import Sidebar from './components/Sidebar.jsx';
 
 
@@ -39,6 +40,29 @@ if(!globalData.userPageOn){
 		document.getElementById('sidebar')
 	);
 }
+
+
+// if(true || globalData.eventPageOn){
+// 	ReactDOM.render(
+// 		<Provider store={store}>
+// 			<EventPage />
+// 		</Provider>,
+// 	  document.getElementById('DiEventPage')
+// 	);
+// }
+
+// if(!globalData.userPageOn){
+// 	ReactDOM.render(
+// 		<Provider store={store}>
+// 			<Sidebar
+// 				data={appData.yourOrders}
+// 				globalData={globalData}
+//
+// 			/>
+// 		</Provider>,
+// 		document.getElementById('sidebar')
+// 	);
+// }
 
 // --display-error-details
 // --display-modules

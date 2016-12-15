@@ -16,7 +16,7 @@ declare let Highcharts : any;
 declare let $ : any;
 declare let window : any;
 
-// __LDEV__ = false;
+__LDEV__ = false;
 
 
 /**
