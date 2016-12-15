@@ -1,5 +1,4 @@
-
-var path = require('path');
+const path = require('path');
 const options = require('./pathes');
 const webpack = require('webpack');
 const WebpackNotifierPlugin = require('webpack-notifier');

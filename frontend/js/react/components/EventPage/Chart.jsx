@@ -2,6 +2,7 @@
  * Created by Vlasakh on 20.11.16.
  */
 
+import React from 'react' ;
 
 export default class Chart extends React.Component
 {
@@ -14,8 +15,6 @@ export default class Chart extends React.Component
 
     componentDidMount()
     {
-		let self = this;
-
         this.props.actions.actionChartMount();
 	}
 

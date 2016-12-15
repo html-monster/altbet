@@ -99,19 +99,19 @@ gulp.task('js',function(){
 
 
     // gulp.src(['vendor/Waves/dist/waves.min.js', 'vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js', 'vendor/ms-Dropdown-js/js/msdropdown/jquery.dd.min.js',
-    // 'vendor/eventEmitter/eventEmitter.min.js', '!vendor/react-15.3.1/build/react.js', '!vendor/react-15.3.1/build/react-dom.js',
+    // 'vendor/eventEmitter/eventEmitter.min.js', 'vendor/momentjs/moment-min.js', '!vendor/react-15.3.1/build/react.js', '!vendor/react-15.3.1/build/react-dom.js',
     //   'frontend//js/nonReact/browserCheck.js']),
     // $.concat('vendors.js'),
     // // $.uglify(),
     // gulp.dest('./public/js'),
     // gulp.dest(OPTIONS.path.dest_server + '/Scripts'),
-		//
+	//
     // gulp.src(['vendor/fullpage.js/jquery.fullPage.min.js', 'frontend/js/nonReact/pageFirst.js']),
     // $.concat('landingPage.js'),
     // $.uglify(),
     // gulp.dest('./public/js'),
     // gulp.dest(OPTIONS.path.dest_server + '/Scripts'),
-		//
+	//
 		// gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/nonReact/access.js']),
     // $.concat('jQuery.js'),
     // babel({

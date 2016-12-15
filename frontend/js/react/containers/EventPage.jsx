@@ -1,7 +1,8 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import React from 'react' ;
 
-import Chart from '../components/EventPage/Chart'
+import Chart from '../components/EventPage/Chart';
 import * as chartActions from '../actions/EventPage/chartActions.ts';
 // import * as eventPageActions from '../actions/eventPageActions.ts';
 

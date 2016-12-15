@@ -8,7 +8,7 @@ class ajaxChangePassClass{
 		let message = $('.wrapper_user_page .change_password .answer_message');
 		if(e.Error){
 			message.removeClass('valid').addClass('validation-summary-errors').text(e.Error);
-			$('.wrapper_user_page #user_curr_pass').removeClass('valid').addClass('input-validation-error')
+			$('.wrapper_user_page #user_curr_pass').removeClass('validJs').addClass('invalidJs')
 		}
 		else if(e.ErrorUpdate)
 			message.removeClass('valid').addClass('validation-summary-errors').text(e.ErrorUpdate);
