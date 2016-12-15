@@ -6,6 +6,7 @@ import PageMyPos from './components/PageMyPos.jsx';
 
 window.ee = new EventEmitter();
 
+
 if(globalData.myPosOn) {
 	// временно рендерим PageMyPos
 	ReactDOM.render(

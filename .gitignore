@@ -37,3 +37,4 @@ node_modules
 11
 public
 webpackinc/pathes.js
+gulpinc/pathes.js
