@@ -18,6 +18,7 @@ import Sidebar from './components/Sidebar.jsx';
 ABpp = ABpp.App;
 
 const store = configureStore();
+
 if(globalData.eventPageOn){
 	ReactDOM.render(
 		<Provider store={store}>
@@ -26,6 +27,7 @@ if(globalData.eventPageOn){
 	  document.getElementById('DiEventPage')
 	);
 }
+
 if(!globalData.userPageOn){
 	ReactDOM.render(
 		<Provider store={store}>

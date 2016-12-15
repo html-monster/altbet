@@ -38,13 +38,13 @@ if(globalData.myPosOn) {
 }
 
 // временно рендерим Sidebar
-if(!globalData.userPageOn){
-	ReactDOM.render(
-			<Sidebar
-					data={appData.yourOrders}
-					globalData={globalData}
-			/>
-			,
-			document.getElementById('sidebar')
-	);
-}
+// if(!globalData.userPageOn){
+// 	ReactDOM.render(
+// 			<Sidebar
+// 					data={appData.yourOrders}
+// 					globalData={globalData}
+// 			/>
+// 			,
+// 			document.getElementById('sidebar')
+// 	);
+// }

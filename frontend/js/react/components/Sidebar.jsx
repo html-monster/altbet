@@ -8,7 +8,8 @@ import NewOrder from './sidebar/order/NewOrder.jsx';
 import TradeSlip from './sidebar/TradeSlip.jsx';
 // import * as sidebarActions from '../actions/sidebarActions.js';
 
-export default class Sidebar extends React.Component
+// export default
+class Sidebar extends React.Component
 {
 	constructor(props)
 	{
@@ -178,11 +179,11 @@ export default class Sidebar extends React.Component
 }
 
 
-// export default connect(state => ({
-// 		sidebar: state.sidebar,
-// 		// test: state.Ttest,
-// 	}),
-// 	dispatch => ({
-// 		// eventPageActions: bindActionCreators(sidebarActions, dispatch),
-// 	})
-// )(Sidebar)
+export default connect(state => ({
+		sidebar: state.sidebar,
+		// test: state.Ttest,
+	}),
+	dispatch => ({
+		// eventPageActions: bindActionCreators(sidebarActions, dispatch),
+	})
+)(Sidebar)
