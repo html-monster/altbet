@@ -1,9 +1,13 @@
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import React from 'react';
+
 import EventOrders from './sidebar/YourOrders.jsx';
 import NewOrder from './sidebar/order/NewOrder.jsx';
-import ActiveTrader from './sidebar/ActiveTrader.jsx';
+// import ActiveTrader from './sidebar/ActiveTrader.jsx';
+import TradeSlip from './sidebar/TradeSlip.jsx';
+// import * as sidebarActions from '../actions/sidebarActions.js';
 
-// let awesomeData = {"CategoryList":null,"CategoryName":null,"GainLoss":-1960.8,"Invested":5409.2,"Orders":[{"Side":1,"SummaryPositionPrice":[{"ParticularUserQuantity":6,"Price":0.5,"Quantity":6},{"ParticularUserQuantity":0,"Price":0.53,"Quantity":4000},{"ParticularUserQuantity":50,"Price":0.54,"Quantity":50},{"ParticularUserQuantity":50,"Price":0.55,"Quantity":50},{"ParticularUserQuantity":50,"Price":0.56,"Quantity":50},{"ParticularUserQuantity":50,"Price":0.57,"Quantity":50},{"ParticularUserQuantity":20,"Price":0.58,"Quantity":20}]},{"Side":0,"SummaryPositionPrice":[{"ParticularUserQuantity":5,"Price":0.4,"Quantity":5}]}],"Positions":8616,"Symbol":{"AwayAlias":"NNN","AwayHandicap":3.5,"AwayName":"New England Patriots","AwayPoints":null,"CategoryId":"1518ed47-ee93-4979-93de-344d526c3e36","Currency":"USD","Exchange":"BBB-NNN-12312016","FullName":"Buffalo Bills_vs_New England Patriots","HomeAlias":"BBB","HomeHandicap":-3.5,"HomeName":"Buffalo Bills","HomePoints":null,"LastAsk":0.5,"LastBid":0.4,"LastPrice":0.48,"LastSide":0,"Name":"BBB-NNN","StartDate":"/Date(1483138800000+0200)/","Status":"inprogress"}};
 export default class Sidebar extends React.Component
 {
 	constructor(props)
@@ -58,20 +62,14 @@ export default class Sidebar extends React.Component
 						</span>
 				</div>
 				<div className="tab_content order-content">
-					<div className="tab_item" id="order">
-						<div className="default_orders">
-							<p id="default_order_info">MAKE YOUR SELECTION(S) ON THE LEFT BY CLICKING ON THE PRICES. OR TURN ON ACTIVE BETTOR ABOVE.</p>
-						</div>
 
-						{/* // BM: --------------------------------------------------- ACTIVE TRADER ---*/}
-						<ActiveTrader data={{}} />
-
-					</div>
+					{/* // BM: --------------------------------------------------- TRADE SLIP ---*/}
+					<TradeSlip actions={this.props.sidebarActions}/>
 
 					{/* // BM: --------------------------------------------------- YOUR ORDERS ---*/}
 					<EventOrders data={sideBarData}/>
-
 				</div>
+
 			</div>
 			<div className="template">
 
@@ -115,7 +113,7 @@ export default class Sidebar extends React.Component
 							<input className="price_value" name="LimitPrice" type="hidden" value=""/>
 							<div className="container">
 								<input type="submit" className="btn sell" value="Sell" style={{textTransform: 'uppercase'}}/>
-								<span className="delete "></span>
+								<span className="delete ">{}</span>
 								<div className="checkbox"></div>
 							</div>
 						</form>
@@ -169,7 +167,7 @@ export default class Sidebar extends React.Component
 										</div>
 									</div>
 								</div>
-								<span className="delete"></span>
+								<span className="delete">{}</span>
 							</div>
 						</form>
 					</div>
@@ -178,3 +176,13 @@ export default class Sidebar extends React.Component
 		</div>
 	}
 }
+
+
+// export default connect(state => ({
+// 		sidebar: state.sidebar,
+// 		// test: state.Ttest,
+// 	}),
+// 	dispatch => ({
+// 		// eventPageActions: bindActionCreators(sidebarActions, dispatch),
+// 	})
+// )(Sidebar)

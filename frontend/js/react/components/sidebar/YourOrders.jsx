@@ -93,7 +93,7 @@ class OrderItem extends React.Component
 {
 	onSuccessAjax(data) {
 		data = data.split('_');
-		var id = '#' + data[0] + '__order';
+		let id = '#' + data[0] + '__order';
 
 		if(data[1] == 'True'){
 			console.log($(id).parents('.order_content').find('h3').text() + ' order is deleted');

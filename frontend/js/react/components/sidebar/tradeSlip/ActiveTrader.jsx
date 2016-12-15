@@ -1,5 +1,5 @@
 import React from 'react';
-import AnimateOnUpdate from '../Animation.jsx';
+import AnimateOnUpdate from '../../Animation.jsx';
 
 export default class ActiveTrader extends React.Component {
 	constructor(props) {
