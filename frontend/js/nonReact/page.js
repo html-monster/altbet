@@ -63,7 +63,7 @@ $(document).ready(function () {
 
 	new orderClass();//order activation
 	new myOrderClass();
-	myOrdersControllerClass.createTemplate();
+	// myOrdersControllerClass.createTemplate();
 	// positionControllerClass.createTemplate();
 	new activeTraderClass(); //active trader activation
 	new eventPageClass(); //active order on the event page

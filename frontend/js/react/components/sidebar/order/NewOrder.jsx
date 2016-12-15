@@ -14,7 +14,7 @@ export default class NewOrder extends React.Component{
 			url: '/AltBet/eng/Order/Create',
 			action: 'create'
 		};
-		return <div className="order_content new" style={{display: 'none'}} >
+		return <div className="order_content new" > {/*style={{display: 'none'}}*/}
 			<div className="order-title">
 				<h3>New England Patriots</h3>
 				<a href="#" className="close"><span>{}</span></a>

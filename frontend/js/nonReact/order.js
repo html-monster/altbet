@@ -1,8 +1,8 @@
-var id = [];
+let id = [];
 
 class orderClass{
 	constructor(){
-		var self = this;
+		let self = this;
 		// const takerFees = 0.0086;
 
 		orderClass.showInfo();
@@ -10,7 +10,7 @@ class orderClass{
 		// sidebar height and current order ================================================================================
 		self.orderSize = function () {
 			// numericalVerification($('.order_content input'));
-			var windowHeight = window.innerHeight,
+			let windowHeight = window.innerHeight,
 					windowWidth = window.innerWidth,
 					substructionHeight = $('.left_order .tabs').height() + 45 + $('header').height(),
 					orderSidebarHeight = windowHeight - substructionHeight,
@@ -20,7 +20,7 @@ class orderClass{
 					checkbox = $('.left_order .tab input[type=checkbox]');
 
 			$(".left_order .wrapper .tab").click(function () {
-				var tab = $(".left_order .wrapper .tab");
+				let tab = $(".left_order .wrapper .tab");
 
 				if($(this).attr('data-disabled')) return false;
 
@@ -50,13 +50,13 @@ class orderClass{
 
 		// order validation ================================================================================================
 		self.formValidation = function() {
-			var order = $('.order');
+			let order = $('.order');
 
 			order.on('submit','form', function () {
 
 				if($(this).find('[data-log-out]').attr('data-log-out')) return false;
 
-				var price = +$(this).find('.price input').val(),
+				let price = +$(this).find('.price input').val(),
 						volume = +$(this).find('.volume input').val(),
 						sum = +$(this).find('.obligations input').val(),
 						checkboxProp = $(this).find('input[type="checkbox"]').length ? $(this).find('input[type="checkbox"]').prop('checked') : 1,
@@ -101,7 +101,7 @@ class orderClass{
 
 			order.on('keydown', 'input.number', function (e) {
 				e = e || window.e;
-				var code = e.which ||e.charCode || e.keyCode;
+				let code = e.which ||e.charCode || e.keyCode;
 				if($(this).parents('.price').length || $(this).hasClass('spreader')){
 					if($(this)[0].selectionStart == 2){
 						if(code == 37 || code == 8){
@@ -123,7 +123,7 @@ class orderClass{
 
 			order.on('keypress', 'input.number', function (e) {
 				e = e || window.e;
-				var code = e.which ||e.charCode || e.keyCode,
+				let code = e.which ||e.charCode || e.keyCode,
 						message = $(this).next('.warning'),
 						condition = code != 13 && code != 8 && code != 9 && code != 37 && code != 39;
 
@@ -177,7 +177,7 @@ class orderClass{
 						return false;
 				}
 				if($(this).parents('.obligations').length){
-					var val = $(this).val().split('.');
+					let val = $(this).val().split('.');
 
 					if((code	 < 46 || code	 > 57 || code	 == 47) && condition){
 						message.fadeIn(200);
@@ -200,12 +200,12 @@ class orderClass{
 
 		//order edit =======================================================================================================
 		self.orderEdit = function () {
-			var container = $('.left_order'),
+			let container = $('.left_order'),
 					currentOrders = $('#current-orders'),
 					checkboxProp,
 					priceMarket = '';
 			container.on('change', 'label.checkbox input[type=checkbox]', function () {
-				var price = $(this).parents('form').find('.price'),
+				let price = $(this).parents('form').find('.price'),
 						id,
 						items;
 				checkboxProp = $(this).parents('form').find('input[type=checkbox]').prop('checked');
@@ -259,7 +259,7 @@ class orderClass{
 				}
 			});
 			function calculation(context) {
-				var priceInput = context.parents('form').find('.price input'),
+				let priceInput = context.parents('form').find('.price input'),
 						volumeInput = context.parents('form').find('.volume input'),
 						sumInput = context.parents('form').find('.obligations input'),
 						feesInput = context.parents('form').find('.fees input'),
@@ -324,11 +324,11 @@ class orderClass{
 			}
 
 			container.on('keyup', 'input.number', function () {
-				checkboxProp = $(this).parents('form').find('input[type=checkbox]').length ? $(this).parents('form').find('input[type=checkbox]').prop('checked') : 1;
+				// checkboxProp = $(this).parents('form').find('input[type=checkbox]').length ? $(this).parents('form').find('input[type=checkbox]').prop('checked') : 1;
 				calculation($(this));
 			});
 			container.on('click', '.regulator span', function () {
-				var thisItem = $(this);
+				let thisItem = $(this);
 				checkboxProp = $(this).parents('form').find('input[type=checkbox]').length ? $(this).parents('form').find('input[type=checkbox]').prop('checked') : 1;
 
 				setTimeout(function () {
@@ -337,7 +337,7 @@ class orderClass{
 			});
 
 			currentOrders.on('click', '.order_info .edit', function () {
-				var tab_content = $('.tab_content');
+				let tab_content = $('.tab_content');
 
 				$(this).parents('.order_info').next().slideToggle(200);//.toggleClass('active')
 				// $(this).parents('.order_content').toggleClass('active');
@@ -356,11 +356,11 @@ class orderClass{
 
 		//order delete =====================================================================================================
 		self.orderDelete = function () {
-			var order_tab = $('#order');
+			let order_tab = $('#order');
 			order_tab.on('click', '.delete', function (e) {
 				e.preventDefault();
 				$('.active_trader .spread_confim').remove();
-				var form = $(this).parents('form'),
+				let form = $(this).parents('form'),
 						order = $(this).parents('.order_content');
 				if(order.find('form').length <= 1){
 					if($(this).parents('.default_orders').length && id.length)
@@ -374,7 +374,7 @@ class orderClass{
 			});
 			order_tab.on('click', '.order-title .close', function (e) {
 				e.preventDefault();
-				var order = $(this).parents('.order_content');
+				let order = $(this).parents('.order_content');
 				if($(this).parents('.default_orders').length && id.length)
 					id.splice(defaultMethods.searchValue(id, order.attr('id').slice(0, -7)), 1);
 				order.remove();
@@ -399,10 +399,10 @@ class orderClass{
 		}();
 
 		// self.checkbox = function () {
-		// 	var order_tab = $('#order');
+		// 	let order_tab = $('#order');
 		//
 		// 	order_tab.on('change', '[type=checkbox]', function () {
-		// 		var self = $(this);
+		// 		let self = $(this);
 		//
 		// 		 if(self.prop('checked'))
 		// 		 	self.parent().find('span').text('Limit');
@@ -417,7 +417,7 @@ class orderClass{
 	// new order =========================================================================================================
 	static addOrder(container, button) {
 	$(container).on('click', button, function () {
-		var html,
+		let html,
 				data = {
 					price: 0,
 					volume: 0,
@@ -441,7 +441,7 @@ class orderClass{
 			data.sellSum = (data.price && data.volume) ? ((1 - data.price) * data.volume).toFixed(2) : "";
 		}
 		else{
-			var ii = $(this).index(),
+			let ii = $(this).index(),
 					items = $(this).parent().children();
 			if($(this).parent('.sell').length){
 				data.sellSum = 0;
@@ -493,7 +493,7 @@ class orderClass{
 			inputFocus[0].selectionStart = inputFocus.val().length;
 		}
 		else {
-			var container;
+			let container;
 			if ($(this).parent('.sell').length) {
 				currentID = idDefine();
 				container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .sell-container');
@@ -628,7 +628,7 @@ class orderClass{
 	 * возвращает с вкладки your orders на trade slip
 	 */
 	static tabReturn() {
-		var tab = $(".left_order .wrapper .tab"),
+		let tab = $(".left_order .wrapper .tab"),
 				tab_item = $(".left_order .tab_item");
 		if (!(tab.eq(0).hasClass('active'))) {
 			tab.removeClass("active").eq(0).addClass("active");

@@ -593,7 +593,7 @@
         &:last-child{  padding: 0;  }
         &.ui-sortable-handle .order-title{  cursor: move;  }
         .order-title{
-          padding: 5px 30px 5px 15px;
+          padding: 5px 10px 5px 15px;
           background: linear-gradient(to bottom, #53515e, #292830);
           @include md(1400){  padding: 5px;  }
         }

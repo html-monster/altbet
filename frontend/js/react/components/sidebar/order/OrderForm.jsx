@@ -39,14 +39,12 @@ export default class OrderForm extends React.Component{
 	{
 		let data = this.props.data;
 		let formData = this.props.formData;
-		let className = 'sell';
+		let className;
 
-		if(data.isMirror){
-			className = (data.isMirror) ?
-					data.Side ? 'buy' : 'sell'
-					:
-					data.Side ? 'sell' : 'buy';
-		}
+		className = (data.isMirror) ?
+			data.Side ? 'buy' : 'sell'
+			:
+			data.Side ? 'sell' : 'buy';
 
 		let html = <div>
 			<div className="container">
