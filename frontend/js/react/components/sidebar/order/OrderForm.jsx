@@ -39,30 +39,45 @@ export default class OrderForm extends React.Component{
 	{
 		let data = this.props.data;
 		let formData = this.props.formData;
-		let className;
+		let className = data.Side ? 'sell' : 'buy';
+		let style = data.Limit == undefined || data.Limit ? {display: 'block'} : {display: 'none'};
+		let symbol = data.Symbol ? `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}` : '';
 
-		className = (data.isMirror) ?
-			data.Side ? 'buy' : 'sell'
-			:
-			data.Side ? 'sell' : 'buy';
+		if(!data.NewOrder){
+			className = (data.isMirror) ?
+				data.Side ? 'buy' : 'sell'
+				:
+				data.Side ? 'sell' : 'buy';
+		}
 
 		let html = <div>
 			<div className="container">
 				<div className="price">
-					<label>Market price</label>
+					<label htmlFor={`${symbol}-${data.Side}-${data.isMirror}-price`}>
+						{
+							data.Limit == undefined || data.Limit ?
+									'Your price'
+								:
+									'Market price'
+						}
+					</label>
 					<div className="input">
-						<input className="number" data-validation="0.33" maxLength="4" name="LimitPrice" type="text" autoComplete="off" defaultValue={data.Price}/>
+						<input type="text" id={`${symbol}-${data.Side}-${data.isMirror}-price`} className="number" data-validation="0.33"
+							   maxLength="4" name="LimitPrice" autoComplete="off" defaultValue={data.Price} disabled={!(data.Limit == undefined || data.Limit)}/>
 						<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
-						<div className="regulator">
-							<span className="plus" title="Press Arrow Up">{}</span>
-							<span className="minus" title="Press Arrow Down">{}</span>
-						</div>
+						{
+							<div className="regulator" style={style}>
+								<span className="plus" title="Press Arrow Up">{}</span>
+								<span className="minus" title="Press Arrow Down">{}</span>
+							</div>
+						}
 					</div>
 				</div>
 				<div className="volume">
-					<label>Quantity</label>
+					<label htmlFor={`${symbol}-${data.Side}-${data.isMirror}-quantity`}>Quantity</label>
 					<div className="input">
-						<input className="number" data-validation="123" maxLength="7" name="Quantity" type="text" autoComplete="off" defaultValue={data.Volume}/>
+						<input type="text" id={`${symbol}-${data.Side}-${data.isMirror}-quantity`} className="number" data-validation="123"
+							   maxLength="7" name="Quantity" autoComplete="off" defaultValue={data.Volume}/>
 						<div className="warning" style={{display: 'none'}}>
 							<p>Available integer value more than 0</p>
 						</div>
@@ -73,14 +88,17 @@ export default class OrderForm extends React.Component{
 					</div>
 				</div>
 				<div className="obligations">
-					<label>Sum</label>
+					<label htmlFor={`${symbol}-${data.Side}-${data.isMirror}-sum`}>Sum</label>
 					<div className="input">
-						<input type="text" className="number" data-validation="40.59" maxLength="7" autoComplete="off"/>
+						<input type="text" id={`${symbol}-${data.Side}-${data.isMirror}-sum`} className="number" data-validation="40.59"
+							   maxLength="7" autoComplete="off" disabled={!(data.Limit == undefined || data.Limit)}/>
 						<div className="warning" style={{display: 'none'}}><p>Minimal available value 0.01</p></div>
-						<div className="regulator">
-							<span className="plus" title="Press Arrow Up">{}</span>
-							<span className="minus" title="Press Arrow Down">{}</span>
-						</div>
+						{
+							<div className="regulator" style={style}>
+								<span className="plus" title="Press Arrow Up">{}</span>
+								<span className="minus" title="Press Arrow Down">{}</span>
+							</div>
+						}
 					</div>
 				</div>
 			</div>
@@ -112,15 +130,15 @@ export default class OrderForm extends React.Component{
 				</div>
 			</div>
 			{data.ID ? <input name="ID" type="hidden" value={data.ID}/> : ''}
-			<input name="Symbol" type="hidden" className="symbol" value={data.Symbol ? `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}` : ''}/>
+			<input name="Symbol" type="hidden" className="symbol" value={symbol}/>
 			<input name="isMirror" type="hidden" className="mirror" value={data.isMirror}/>
 			<input name="Side" type="hidden" className="side" value={(className)[0].toUpperCase() + (className).slice(1)}/>
 			<div className="container">
 				<div className="switch">
 					<label className="checkbox">
-						<input name="OrderType" type="checkbox" value="true" defaultChecked={true}/>
+						<input name="OrderType" type="checkbox" value="true" defaultChecked={data.Limit == undefined ? true : data.Limit}/>
 						<input name="OrderType" type="hidden" value="false"/>
-						<span>Limit</span>
+						<span>{data.Limit == undefined || data.Limit ? 'Limit' : 'Market'}</span>
 					</label>
 				</div>
 				<input type="submit" className={`btn ${className}`} value={className} style={{textTransform: 'uppercase'}}/>

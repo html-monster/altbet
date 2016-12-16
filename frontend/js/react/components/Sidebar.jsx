@@ -75,7 +75,7 @@ class Sidebar extends React.Component
 			<div className="template">
 
 				{/* // BM: --------------------------------------------------- NEW ORDER ---*/}
-				<NewOrder data={{}}/>
+				{/*<NewOrder data={{}}/>*/}
 
 				<div className="order_content default" style={{position: 'absolute', left: 0, zIndex: 10, opacity: 0, marginTop: 5}}>
 					<div className="sell-container">

@@ -100,9 +100,9 @@
       &.clickable{
         .waves-ripple{  display: block;;  }
         .content_title{
-          &:hover + .table{
-            .event-content:first-child h3.event-title{  color: transparentize($link-color, 0.4);  }
-          }
+          //&:hover + .table{
+          //  .event-content:first-child h3.event-title{  color: transparentize($link-color, 0.4);  }
+          //}
           //&:after{
           //  content: '';
           //  display: block;

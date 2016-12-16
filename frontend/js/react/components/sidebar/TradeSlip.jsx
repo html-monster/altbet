@@ -4,7 +4,78 @@
 import React from 'react';
 import NewOrder from './order/NewOrder.jsx';
 import ActiveTrader from './tradeSlip/ActiveTrader.jsx';
-let data = [{"ID":"HC-DT-12192016_HC-DT_USD","LastPrice":0.51,"LastSide":0,"Orders":[{"Category":"Society","ID":"f93b7184-8b49-4d12-bfe1-62920678b6ca","Price":0.5,"Side":0,"Symbol":{"AwayAlias":"DT","AwayHandicap":null,"AwayName":"Donald Trump","AwayPoints":null,"CategoryId":"f2ad43d6-22db-43aa-95ad-5572e3a1b960","Currency":"USD","Exchange":"HC-DT-12192016","FullName":"Hillary Clinton_vs_Donald Trump","HomeAlias":"HC","HomeHandicap":null,"HomeName":"Hillary Clinton","HomePoints":null,"LastAsk":1,"LastBid":0.5,"LastPrice":0.51,"LastSide":0,"Name":"HC-DT","StartDate":"/Date(1482141600000+0200)/","Status":"inprogress"},"Time":"/Date(1480670933720)/","Volume":20,"isMirror":0,"isPosition":0}],"Positions":0,"Symbol":"Hillary Clinton"}];
+let data = [
+	{
+		"ID":"HC-DT-12192016_HC-DT_USD",
+		"EventTitle":"Hillary Clinton",
+		"Positions":0,
+		"isMirror":0,
+		"Orders":[
+			{
+				"Category":"Society",
+				"Price":0.75,
+				"Side":1,
+				"Symbol":{
+					"Exchange":"HC-DT-12192016",
+					"Name":"HC-DT",
+					"Currency":"USD"
+				},
+				"Volume":666,
+				"Limit":false,
+				"NewOrder": true,
+				"isMirror":0
+			},
+			{
+				"Category":"Society",
+				"Price":'0.',
+				"Side":0,
+				"Symbol":{
+					"Exchange":"HC-DT-12192016",
+					"Name":"HC-DT",
+					"Currency":"USD"
+				},
+				"Limit":true,
+				"NewOrder": true,
+				"isMirror":0
+			}
+		]
+	},
+	{
+		"ID":"NYG-WAS-12252016_NYG-WAS_USD",
+		"EventTitle":"Washington Redskins",
+		"Positions":50,
+		"isMirror":1,
+		"Orders":[
+			{
+				"Category":"Society",
+				"Price":0.22,
+				"Side":1,
+				"Symbol":{
+					"Exchange":"NYG-WAS-12252016",
+					"Name":"NYG-WAS",
+					"Currency":"USD"
+				},
+				"Volume":252,
+				"Limit":false,
+				"NewOrder": true,
+				"isMirror":1
+			},
+			{
+				"Category":"Society",
+				"Price":'0.',
+				"Side":0,
+				"Symbol":{
+					"Exchange":"NYG-WAS-12252016",
+					"Name":"NYG-WAS",
+					"Currency":"USD"
+				},
+				"Limit":true,
+				"NewOrder": true,
+				"isMirror":1
+			},
+		]
+	}
+];
 export default class TradeSlip extends React.Component{
 	constructor(props)
 	{
@@ -24,7 +95,7 @@ export default class TradeSlip extends React.Component{
 					:
 						/* // BM: --------------------------------------------------- NEW ORDER ---*/
 						data.map((item) =>
-							<NewOrder data={item} key={item.ID}/>
+							<NewOrder data={item} key={`${item.ID}-${item.isMirror}`}/>
 						)
 				}
 			</div>
