@@ -4,7 +4,7 @@ declare let globalData : any;
 declare let window : any;
 
 
-// import { Chart } from "./models/PageEvent/Chart";
+import { User } from "../react/models/User";
 
 // local dev option
 window.__LDEV__ = true;
@@ -27,6 +27,8 @@ export class App
                 currentPage: null       // current page
             };
 
+    public User: User = null;           // user entity
+
 
     private static instance = null;
 
@@ -41,8 +43,12 @@ export class App
     {
         // set current theme from server
         this.config.currentTheme = globalData.theme;
+
         // set current page from server
         this.config.currentPage = this.setCurrentPage();
+
+        // create user
+        this.createUser();
     }
 
 
@@ -52,6 +58,18 @@ export class App
             return App.PAGE_MAIN;
         else if( globalData.eventPageOn )
             return App.PAGE_EVENT;
+    }
+
+
+    private createUser()
+    {
+        this.User = new User();
+        this.User.settings = {
+            ...this.User.settings,
+            basicMode: globalData.basicMode,
+            tradeOn: globalData.tradeOn,
+            autoTradeOn: globalData.autoTradeOn,
+        };
     }
 }
 

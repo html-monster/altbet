@@ -10,7 +10,7 @@
     "removeComments": false,
     "sourceMap": false,
     "inlineSourceMap": true,
-    "noEmitHelpers": true,
+    "noEmitHelpers": false,
     "allowJs": true
   },
   "exclude": [

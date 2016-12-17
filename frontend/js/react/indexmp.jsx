@@ -31,7 +31,17 @@ ReactDOM.render(
 );
 
 
-if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_EVENT ){
+if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MAIN ) {
+	ReactDOM.render(
+		<Provider store={store}>
+			<MainPage />
+		</Provider>,
+	  document.getElementById('DiMPMainpage')
+	);
+}
+
+
+if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_EVENT ) {
 	ReactDOM.render(
 		<Provider store={store}>
 			<EventPage />

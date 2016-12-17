@@ -15,7 +15,7 @@ class RApp extends React.Component
     {
         super(props, context)
 
-        0||console.debug( 'constr', ABpp.config );
+        0||console.debug( 'constr', ABpp.User );
         // globalData.theme
     }
 

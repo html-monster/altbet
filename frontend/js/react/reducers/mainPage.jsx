@@ -5,11 +5,7 @@ import {
 
 
 const initialState = {
-    pageEventData: appData.pageEventData,
-    Chart: {
-        ChartObj: null,
-        types: null,
-    },
+    marketsData: appData.pageHomeData,
 };
 
 

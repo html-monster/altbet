@@ -1,18 +1,19 @@
+import React from 'react' ;
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import React from 'react' ;
 
-// import Chart from '../components/EventPage/Chart';
+import BaseController from '../common/BaseController';
+// import Chart from '../components/MainPage/Chart';
 import * as mainPageActions from '../actions/mainPageActions';
-// import * as eventPageActions from '../actions/eventPageActions.ts';
+// import * as MainPageActions from '../actions/MainPageActions.ts';
 
-class EventPage extends React.Component
+class MainPage extends React.Component implements BaseController
 {
     constructor(props)
     {
         super();
 
-        // ABpp.controllers.EventPage
+        // ABpp.controllers.MainPage
 
         // this.state = {data: props.data};
         // 0||console.debug( 'this.props', this.props, props );
@@ -20,8 +21,33 @@ class EventPage extends React.Component
 
     render()
     {
-        return <div>Hello</div>
-        // return <Chart data={this.props.eventPage} actions={this.props.chartActions} />
+        let isBasicMode = ABpp.User.settings.basicMode;
+        return (
+            <div className="nav_items">
+                <div className="wrapper" id="exchange">
+                    <div className="tabs">
+                        <span className="tab"><span data-content="Closing soon"></span></span>
+                        <span className="tab"><span data-content="Popular"></span></span>
+                        <span className="tab"><span data-content="Trending"></span></span>
+                        <span className="tab"><span data-content="New"></span></span>
+                        <span className="tab"><span data-content="Movers"></span></span>
+                        <div className="mode_wrapper">
+                            <label className="mode_switch">
+                                <input defaultChecked={!isBasicMode} id="Mode" name="Mode" type="checkbox" />
+                                <input name="Mode" type="hidden" defaultValue={!isBasicMode} />
+                                { isBasicMode ? <span>Basic Mode</span> : <span>Expert Mode</span> }
+                            </label>
+                        </div>
+                    </div>
+                    <div className="tab_content">
+                        <div className="tab_item ui-sort">
+                            {/*@Html.Action("GetExchanges")*/}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+        // return <Chart data={this.props.MainPage} actions={this.props.chartActions} />
     }
 }
 
@@ -32,7 +58,7 @@ export default connect(state => ({
     // test: state.Ttest,
 }),
 dispatch => ({
-    // eventPageActions: bindActionCreators(eventPageActions, dispatch),
+    // MainPageActions: bindActionCreators(MainPageActions, dispatch),
     // chartActions: bindActionCreators(mainPageActions, dispatch),
 })
-)(EventPage)
+)(MainPage)
