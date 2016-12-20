@@ -5,8 +5,6 @@
 
 /// <reference path="./../../../.d/common.d.ts" />
 
-import { Generator } from './Generator' ;
-
 interface JQuery {
 // interface JQueryStatic {
 //     highcharts(t1);
@@ -14,7 +12,11 @@ interface JQuery {
 
 declare let Highcharts : any;
 declare let $ : any;
-declare let window : any;
+declare var window;
+
+
+
+import { Generator } from './Generator' ;
 
 __LDEV__ = false;
 

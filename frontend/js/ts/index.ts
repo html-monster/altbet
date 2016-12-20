@@ -5,6 +5,9 @@ declare let window : any;
 
 
 import { User } from "../react/models/User";
+import { WebsocketModel } from "../react/models/Websocket";
+
+// declare var WebsocketModel: WebsocketModel;
 
 // local dev option
 window.__LDEV__ = true;
@@ -28,6 +31,7 @@ export class App
             };
 
     public User: User = null;           // user entity
+    public Websocket: WebsocketModel = null; // websocket object
 
 
     private static instance = null;

@@ -15,13 +15,14 @@ class MainPage extends React.Component implements BaseController
 
         // ABpp.controllers.MainPage
 
-        // this.state = {data: props.data};
-        // 0||console.debug( 'this.props', this.props, props );
+        0||console.debug( 'this.props', this.props, props );
+        this.state = {data: props.mainPageData};
     }
 
     render()
     {
         let isBasicMode = ABpp.User.settings.basicMode;
+
         return (
             <div className="nav_items">
                 <div className="wrapper" id="exchange">
@@ -54,7 +55,7 @@ class MainPage extends React.Component implements BaseController
 // __DEV__&&console.debug( 'connect', connect );
 
 export default connect(state => ({
-    mainPage: state.mainPage,
+    mainPageData: state.mainPage,
     // test: state.Ttest,
 }),
 dispatch => ({

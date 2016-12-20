@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import mainPage from './mainPage';
 import eventPage from './eventPage';
 import sidebar from './sidebar';
 // import test from './test'
@@ -7,6 +8,6 @@ import sidebar from './sidebar';
 
 export default combineReducers({
     eventPage,
-	sidebar
-    // test
+	sidebar,
+    mainPage
 });

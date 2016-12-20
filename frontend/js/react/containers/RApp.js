@@ -1,9 +1,8 @@
 import React from 'react' ;
-// import { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-// import User from '../components/User'
+import WebsocketModel from '../models/Websocket';
 // import Page from '../components/Page'
 // import * as pageActions from '../actions/PageActions';
 // import * as userActions from '../actions/UserActions';
@@ -13,9 +12,12 @@ class RApp extends React.Component
 {
     constructor(props, context)
     {
-        super(props, context)
+        super(props, context);
 
-        0||console.debug( 'constr', ABpp.User );
+        ABpp.Websocket = new WebsocketModel();
+        ABpp.Websocket.connectSocketServer();
+
+        // 0||console.debug( 'constr', ABpp.User );
         // globalData.theme
     }
 
