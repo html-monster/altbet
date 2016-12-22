@@ -2,7 +2,7 @@ import React from 'react' ;
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import WebsocketModel from '../models/Websocket';
+import {WebsocketModel} from '../models/Websocket';
 // import Page from '../components/Page'
 // import * as pageActions from '../actions/PageActions';
 // import * as userActions from '../actions/UserActions';
@@ -14,6 +14,7 @@ class RApp extends React.Component
     {
         super(props, context);
 
+        // activate websocket
         ABpp.Websocket = new WebsocketModel();
         ABpp.Websocket.connectSocketServer();
 

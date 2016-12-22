@@ -10,6 +10,7 @@
 // declare var globalData;
 
 
+
 export class WebsocketModel
 {
     private noSupportMessage = "Your browser cannot support WebSocket!";

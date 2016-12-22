@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import BaseController from '../common/BaseController';
-// import Chart from '../components/MainPage/Chart';
-import * as mainPageActions from '../actions/mainPageActions';
+import ExchangeItem from '../components/MainPage/ExchangeItem';
+// import * as mainPageActions from '../actions/mainPageActions';
 // import * as MainPageActions from '../actions/MainPageActions.ts';
 
 class MainPage extends React.Component implements BaseController
@@ -19,9 +19,12 @@ class MainPage extends React.Component implements BaseController
         this.state = {data: props.mainPageData};
     }
 
+
     render()
     {
         let isBasicMode = ABpp.User.settings.basicMode;
+        let data = this.props.mainPageData.marketsData;
+
 
         return (
             <div className="nav_items">
@@ -42,7 +45,9 @@ class MainPage extends React.Component implements BaseController
                     </div>
                     <div className="tab_content">
                         <div className="tab_item ui-sort">
-                            {/*@Html.Action("GetExchanges")*/}
+                            {data.map((item, key) =>
+                                <ExchangeItem key={key} data={item} />
+                            )}
                         </div>
                     </div>
                 </div>

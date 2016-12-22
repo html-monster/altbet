@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import RApp from './containers/RApp';
 import EventPage from './containers/EventPage';
-// import MainPage from './containers/MainPage';
+import MainPage from './containers/MainPage';
 import Sidebar from './components/Sidebar.jsx';
 
 
@@ -31,7 +31,7 @@ ReactDOM.render(
 );
 
 
-/*
+__DEV__&&console.debug( 'ABpp.config.currentPage, ABpp.CONSTS.PAGE_MAIN', ABpp.config.currentPage, ABpp.CONSTS.PAGE_MAIN );
 if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MAIN ) {
 	ReactDOM.render(
 		<Provider store={store}>
@@ -40,7 +40,7 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MAIN ) {
 	  document.getElementById('DiMPMainpage')
 	);
 }
-*/
+
 
 if(!globalData.userPageOn){
 	ReactDOM.render(
