@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import BaseController from '../common/BaseController';
 import ExchangeItem from '../components/MainPage/ExchangeItem';
 // import * as mainPageActions from '../actions/mainPageActions';
-// import * as MainPageActions from '../actions/MainPageActions.ts';
+import * as mainPageActions from '../actions/MainPageActions.ts';
 
 class MainPage extends React.Component implements BaseController
 {
@@ -15,8 +15,9 @@ class MainPage extends React.Component implements BaseController
 
         // ABpp.controllers.MainPage
 
-        0||console.debug( 'this.props', this.props, props );
-        this.state = {data: props.mainPageData};
+        0||console.debug( 'this.props'  , props );
+        // this.state = {data: props.mainPageData};
+        props.mainPageActions.actionOnLoad();
     }
 
 
@@ -64,7 +65,7 @@ export default connect(state => ({
     // test: state.Ttest,
 }),
 dispatch => ({
-    // MainPageActions: bindActionCreators(MainPageActions, dispatch),
-    // chartActions: bindActionCreators(mainPageActions, dispatch),
+    // mainPageActions: bindActionCreators(mainPageActions, dispatch),
+    mainPageActions: bindActionCreators(mainPageActions, dispatch),
 })
 )(MainPage)

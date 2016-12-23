@@ -1,22 +1,43 @@
-import { ON_TEST } from '../constants/ActionTypesPageMain'
+import { ON_SOCKET_MESSAGE } from '../constants/ActionTypesPageMain';
+import { WebsocketModel } from '../models/Websocket';
 
 
-export function actionTest()
-{
-// // 0||console.debug( 'ABpp.EventPage', ABpp.EventPage );
-//     var ChartObj = new ABpp.EventPage.Chart();
-//     // Listen for chart data
-//     window.ee.addListener('EventPage.Chart.setData', function (data)
+// export function actionOnLoad()
+// {
+//     return (dispatch) =>
 //     {
-//         // __DEV__&&console.warn( 'EventPage.Chart.setData listened', data );
-//         ChartObj.drawEventChart(data);
-//     });
+//         ABpp.Websocket.subscribe()
 //
 //         __DEV__&&console.warn( 'this', this );
-//     return (dispatch) => {
 //         dispatch({
-//             type: ON_CHART_MOUNT,
+//             type: ON_LOAD,
 //             payload: {}
 //         });
 //     }
+// }
+
+
+export function actionOnLoad()
+{
+    return (dispatch, getState) =>
+    {
+        ABpp.Websocket.subscribe((inData) =>
+        {
+            let state = getState().mainPage.marketsData;
+
+            if( JSON.stringify(inData) != JSON.stringify(state) )
+            {
+// __DEV__&&console.debug( 'inData', inData, state );
+                dispatch({
+                    type: ON_SOCKET_MESSAGE,
+                    payload: inData
+                });
+//             }
+//             else
+//             {
+// __DEV__&&console.debug('samedata');
+            } // endif
+
+        }, WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES);
+    }
 }

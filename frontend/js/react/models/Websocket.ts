@@ -13,10 +13,12 @@
 
 export class WebsocketModel
 {
+    public static CALLBACK_MAINPAGE_EXCHANGES = "CMPE1";      // a main page recieve data callback
+
     private noSupportMessage = "Your browser cannot support WebSocket!";
     private ws = null;
 
-    public callbackMainPage = null;     // a main page recieve data callback
+    private callbacks = {};
 
 
     public connectSocketServer()
@@ -82,6 +84,12 @@ export class WebsocketModel
 
 
 
+    public subscribe(callback, type) {
+        this.callbacks[type] = callback;
+    };
+
+
+
     private disconnectWebSocket()
     {
         var self = this;
@@ -123,11 +131,11 @@ export class WebsocketModel
 
         // main page events data
         if (data.SymbolsAndOrders != null) {
-            if(self.callbackMainPage) {
+            if(self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]) {
             // if(globalData.mainPage) {
                 // 0||console.debug( 'data.SymbolsAndOrders.Result', data.SymbolsAndOrders.Result );
                 // dataController.updateOrderData(data.SymbolsAndOrders.Result);
-                self.callbackMainPage(data.SymbolsAndOrders.Result);
+                self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES](data.SymbolsAndOrders.Result);
             }
         }
 
@@ -169,7 +177,7 @@ export class WebsocketModel
     private onClose() {
         // console.log('socket closed'); //self.ws.readyState
         defaultMethods.showError('socket closed');
-        setTimeout(function () { this.connectSocketServer(); }, 1000);
+        setTimeout(() => { this.connectSocketServer(); }, 1000);
         //appendMessage('* Connection closed<br/>');
         //$('#messageInput').attr("disabled", "disabled");
         //$('#sendButton').attr("disabled", "disabled");

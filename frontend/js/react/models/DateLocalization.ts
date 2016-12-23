@@ -5,7 +5,7 @@
 
 export class DateLocalization
 {
-    private currentTimestamp;
+    private currentTimestamp = 0;
 
     /**
      * Convert C# excellent format to unixtimestamp
@@ -14,9 +14,13 @@ export class DateLocalization
      */
     public fromSharp(inDate, inReturn = 1)
     {
-
-        let time = this.currentTimestamp = inDate.replace('/Date(', '').replace(')/', '') * 1 - (new Date()).getTimezoneOffset() * 60 * 1000;
-        return inReturn ? time : this;
+        let retval ;
+        try {
+            retval = this.currentTimestamp = inDate.replace('/Date(', '').replace(')/', '') * 1 - (new Date()).getTimezoneOffset() * 60 * 1000;
+        } catch (e) {
+            retval = undefined;
+        }
+            return inReturn ? retval : this;
     }
 
 
@@ -28,6 +32,6 @@ export class DateLocalization
     public unixToLocalDate(inTimeStamp : any = '')
     {
         if (!inTimeStamp) inTimeStamp = this.currentTimestamp;
-        return moment.unix(inTimeStamp/1000).format('MM/DD/Y');
+        return inTimeStamp > 0 ? moment.unix(inTimeStamp/1000).format('MM/DD/Y') : 'undefined';
     }
 }

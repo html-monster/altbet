@@ -1,1 +1,2 @@
-export const ON_TEST = 'ON_TEST';
+// export const ON_LOAD = 'ON_MAINPAGE_LOAD';
+export const ON_SOCKET_MESSAGE = 'ON_MAINPAGE_SOCKET_MESSAGE';
