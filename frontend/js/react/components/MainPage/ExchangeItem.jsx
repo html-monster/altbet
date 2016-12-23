@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import {DateLocalization} from './../../models/DateLocalization';
+import {Common} from './../../common/Common';
 
 
 export default class ExchangeItem extends React.Component
@@ -6,37 +8,57 @@ export default class ExchangeItem extends React.Component
     render()
     {
         let isBasicMode = ABpp.User.settings.basicMode;
-
-
+        let $DateLocalization = new DateLocalization();
         let data = this.props.data;
-        return <div className={"content_bet " + (isBasicMode ? " basic_mode_js" : "") + " categoryFilterJs"} style={{}}>{/*id={data.Symbol.Exchange}*/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
+        let symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
+
+
+        return <div className={"content_bet " + (isBasicMode ? " basic_mode_js" : "") + " categoryFilterJs"} id={symbol} style={{}}>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
             <input name={data.Symbol.Status} type="hidden" value="inprogress" />
 
-            <div className="event_info "> {/*@(eventClass.TryGetValue(new Guid(Model.CategoryList.Split('/')[1]), out value) ? value : "")*/}
+            <div className={"event_info " + appData.pageHomeDataIcons[data.CategoryList.split('/')[1].toUpperCase()]}> {/*@(eventClass.TryGetValue(new Guid(Model.CategoryList.Split('/')[1]), out value) ? value : "")*/}
                 <span className="date help">
-                    {data.Symbol.StartDate}
+                    {$DateLocalization.fromSharp(data.Symbol.StartDate, 0).unixToLocalDate()}
                     <span className="help_message"><span>MM/DD/YYYY</span></span>
                 </span>
                 {/*@*<i className="half_time">ht<span>half-time</span></i>*@*/}
             </div>
             <div className="content_title command">
-                <h2>{data.Symbol.HomeName} { (data.Symbol.HomePoints != null) ? <span>(data.Symbol.HomePoints)</span> : '' }</h2>
-                <h2>{data.Symbol.AwayName} {(data.Symbol.AwayPoints != null) ? <span>(data.Symbol.AwayPoints)</span> : ''}</h2>
-                <span className="symbol_name hidden">{data.Symbol.Exchange}</span>
+                <h2>{data.Symbol.HomeName} {(data.Symbol.HomePoints != null) ? <span>{data.Symbol.HomePoints}</span> : '' }</h2>
+                <h2>{data.Symbol.AwayName} {(data.Symbol.AwayPoints != null) ? <span>{data.Symbol.AwayPoints}</span> : ''}</h2>
+                <span className="symbol_name hidden">{symbol}</span>
             </div>
             <div className="table not-sort wave"> {/*id="exchange_table"*/}
-                <div className="event-content" data-symbol={data.Symbol.Exchange}>
-{/*
+                <div className="event-content" data-symbol={symbol}>
                     <h3 className="event-title">
                         <span className="title">{data.Symbol.HomeName}</span>
-                        <span>{(data.Symbol.HomeHandicap != null ? (data.Symbol.HomeHandicap > 0 ? "+" + data.Symbol.HomeHandicap : data.Symbol.HomeHandicap) : "")}</span>
+                        <span>{(data.Symbol.HomeHandicap != null ? (data.Symbol.HomeHandicap > 0 ? " +" + data.Symbol.HomeHandicap : " " + data.Symbol.HomeHandicap) : false)}</span>
                         <a href="/eng/Sport/American_Football/NFL/BUB-NEP-12312016/0">see more</a>
                     </h3>
-*/}
-{/*
+
                     <div className="container">
                         <div className="sell button-container">
-                                @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Buy && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
+                            {
+                                (data.Orders.length && data.Orders.some((item) => item.Side == 0) ?
+                                        data.Orders.map((item) =>
+                                            (item.Side == 0 ?
+                                                    item.SummaryPositionPrice.map((item) =>
+                                                        <button className="event animated sell real not-sort">
+                                                            <span className="price">{ABpp.User.settings.basicMode ? item.Price : item.Price}</span>
+                                                            <span className="volume">{item.Quantity}</span>
+                                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
+                                                        </button>
+                                                    )
+                                                : ""
+                                            )
+                                        )
+                                    :   <button className="event animated empty sell real not-sort">
+                                            <span className="price empty">OFFER</span>
+                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
+                                        </button>
+                                )
+                            }
+{/*                                @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Buy && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
                             {
                                 foreach (var spsItem in Model.Orders.Single(x => x.Side == AltBet.Exchange.Side.Buy).SummaryPositionPrice.Where(x => x.Quantity != 0).ToList())
                                 {
@@ -53,8 +75,32 @@ export default class ExchangeItem extends React.Component
                                     <span className="price empty">OFFER</span>
                                     <div className="symbolName" style="display: none">data.Symbol</div>
                                 </button>
+                            }*/}
+                        </div>
+
+                        <div className="buy button-container">
+                            {
+                                (data.Orders.length && data.Orders.some((item) => item.Side == 1) ?
+                                        data.Orders.map((item) =>
+                                            (item.Side == 1 ?
+                                                    item.SummaryPositionPrice.map((item) =>
+                                                        <button className="event animated buy real not-sort">
+                                                            <span className="price">{Common.toFixed(ABpp.User.settings.basicMode ? item.Price : item.Price, 2)}</span>
+                                                            <span className="volume">{item.Quantity}</span>
+                                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
+                                                        </button>
+                                                    )
+                                                : false
+                                            )
+                                        )
+                                    :   <button className="event animated empty buy real not-sort">
+                                            <span className="price empty">BID</span>
+                                            <div className="symbolName" style={{display: 'none'}}>data.Symbol</div>
+                                        </button>
+                                )
                             }
                         </div>
+{/*
                         <div className="buy button-container">
                             @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Sell && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
                             {
@@ -75,22 +121,43 @@ export default class ExchangeItem extends React.Component
                                 </button>
                             }
                         </div>
+*/}
                         <div className="pl mode_info_js">
                             <strong>P/L: <span></span></strong>
                         </div>
                     </div>
-*/}
                 </div>
-                <div className="event-content revers" data-symbol={data.Symbol.Exchange + "_mirror"}>
-{/*
+
+
+                <div className="event-content revers" data-symbol={symbol + "_mirror"}>
                     <h3 className="event-title">
                         <span className="title">{data.Symbol.AwayName}</span>
-                        <span>{(data.Symbol.AwayHandicap != null ? (data.Symbol.AwayHandicap > 0 ? "+{0}" + data.Symbol.AwayHandicap : data.Symbol.AwayHandicap) : "")}</span>
-                        /!*@Html.RouteLink("see more", "EventPage", new { controller = "Event", action = "Index", main = Model.CategoryName.Split('/')[2], sub = Model.CategoryName.Split('/')[1].Replace(" ", "_"), category = Model.CategoryName.Split('/')[0].Replace(" ", "_"), exchangename = Model.Symbol.Exchange, reflection = "1" }, new object())*!/
+                        <span>{(data.Symbol.AwayHandicap != null ? (data.Symbol.AwayHandicap > 0 ? " +" + data.Symbol.AwayHandicap : " " + data.Symbol.AwayHandicap) : "")}</span>
+                        <a href="/eng/Sport/American_Football/NFL/BUB-NEP-12312016/0">see more</a>
                     </h3>
-*/}
-{/*
+
                     <div className="container">
+                        <div className="sell button-container">
+                            {
+                                data.Orders.length && data.Orders.some((item) => item.Side == 0) ?
+                                        data.Orders.map((item) =>
+                                            item.Side == 0 ?
+                                                    item.SummaryPositionPrice.map((item) =>
+                                                        <button className="event animated sell mirror not-sort">
+                                                            <span className="price">{(1-(ABpp.User.settings.basicMode ? item.Price : item.Price)).toFixed(2)}</span>
+                                                            <span className="volume">{item.Quantity}</span>
+                                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
+                                                        </button>
+                                                    )
+                                                : false
+                                        )
+                                    :   <button className="event animated empty sell mirror not-sort">
+                                            <span className="price empty">OFFER</span>
+                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
+                                        </button>
+                            }
+                        </div>
+{/*
                         <div className="sell button-container">
                             @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Sell && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
                             {
@@ -111,6 +178,29 @@ export default class ExchangeItem extends React.Component
                                 </button>
                             }
                         </div>
+                        */}
+                        <div className="buy button-container">
+                            {
+                                data.Orders.length && data.Orders.some((item) => item.Side == 1) ?
+                                        data.Orders.map((item) =>
+                                            item.Side == 1 ?
+                                                    item.SummaryPositionPrice.map((item) =>
+                                                        <button className="event animated sell mirror not-sort">
+                                                            <span className="price">{(1 - (ABpp.User.settings.basicMode ? item.Price : item.Price)).toFixed(2)}</span>
+                                                            <span className="volume">{item.Quantity}</span>
+                                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
+                                                        </button>
+                                                    )
+                                                : false
+                                        )
+                                    :   <button className="event animated empty buy mirror not-sort">
+                                            <span className="price empty">BID</span>
+                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
+                                        </button>
+                            }
+                        </div>
+
+                        {/*
                         <div className="buy button-container">
                             @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Buy && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
                             {
@@ -131,18 +221,19 @@ export default class ExchangeItem extends React.Component
                                 </button>
                             }
                         </div>
+*/}
                         <div className="pos mode_info_js">
                             <strong>Pos: <span></span></strong>
                         </div>
                     </div>
-*/}
                 </div>
-{/*                <button className="show-schedule" title="Показать график"></button>
+
+                <button className="show-schedule" title="Показать график"></button>
                 <div className="schedule loader not-sort">
-                    <div id="@string.Format("container_{0}", Model.Symbol)"></div>
-                    <!--img src="~/Images/chart_white.svg" alt=""-->
+                    <div id={"container_" + symbol}></div>
+                    {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                 </div>
-                <a href="#" className="add_favorite" title="Add to favorite"></a>*/}
+                <a href="#" className="add_favorite" title="Add to favorite"></a>
             </div>
         </div>;
     }

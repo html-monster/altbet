@@ -31,7 +31,6 @@ ReactDOM.render(
 );
 
 
-__DEV__&&console.debug( 'ABpp.config.currentPage, ABpp.CONSTS.PAGE_MAIN', ABpp.config.currentPage, ABpp.CONSTS.PAGE_MAIN );
 if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MAIN ) {
 	ReactDOM.render(
 		<Provider store={store}>
