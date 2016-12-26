@@ -11,111 +11,111 @@ import {
 
 const initialState = {
 	orderNewData: [
-		{
-			"ID":"BBB-NNN-12312016_BBB-NNN_USD",
-			"EventTitle":"Hillary Clinton",
-			"Positions":0,
-			"isMirror":0,
-			"Orders":[
-				{
-					"Category":"Society",
-					"Price":0.53,
-					"Side":0,
-					"Symbol":{
-						"Exchange":"BBB-NNN-12312016",
-						"Name":"BBB-NNN",
-						"Currency":"USD"
-					},
-					"Volume":4,
-					"Limit":false,
-					"NewOrder": true,
-					"isMirror":0
-				},
-				{
-					"Category":"Society",
-					"Price":'0.',
-					"Side":1,
-					"Symbol":{
-						"Exchange":"HC-DT-12192016",
-						"Name":"HC-DT",
-						"Currency":"USD"
-					},
-					"Limit":true,
-					"NewOrder": true,
-					"isMirror":0
-				}
-			]
-		},
-		{
-			"ID":"HC-DT-12192016_HC-DT_USD",
-			"EventTitle":"Hillary Clinton",
-			"Positions":0,
-			"isMirror":0,
-			"Orders":[
-				{
-					"Category":"Society",
-					"Price":0.75,
-					"Side":1,
-					"Symbol":{
-						"Exchange":"HC-DT-12192016",
-						"Name":"HC-DT",
-						"Currency":"USD"
-					},
-					"Volume":666,
-					"Limit":false,
-					"NewOrder": true,
-					"isMirror":0
-				},
-				{
-					"Category":"Society",
-					"Price":'0.',
-					"Side":0,
-					"Symbol":{
-						"Exchange":"HC-DT-12192016",
-						"Name":"HC-DT",
-						"Currency":"USD"
-					},
-					"Limit":true,
-					"NewOrder": true,
-					"isMirror":0
-				}
-			]
-		},
-		{
-			"ID":"NYG-WAS-12252016_NYG-WAS_USD",
-			"EventTitle":"Washington Redskins",
-			"Positions":50,
-			"isMirror":1,
-			"Orders":[
-				{
-					"Category":"Society",
-					"Price":'0.',
-					"Side":1,
-					"Symbol":{
-						"Exchange":"NYG-WAS-12252016",
-						"Name":"NYG-WAS",
-						"Currency":"USD"
-					},
-					"Limit":true,
-					"NewOrder": true,
-					"isMirror":1
-				},
-				{
-					"Category":"Society",
-					"Price":0.43,
-					"Side":0,
-					"Symbol":{
-						"Exchange":"NYG-WAS-12252016",
-						"Name":"NYG-WAS",
-						"Currency":"USD"
-					},
-					"Volume":252,
-					"Limit":true,
-					"NewOrder": true,
-					"isMirror":1
-				},
-			]
-		}
+		// {
+		// 	"ID":"BBB-NNN-12312016_BBB-NNN_USD",
+		// 	"EventTitle":"Hillary Clinton",
+		// 	"Positions":0,
+		// 	"isMirror":0,
+		// 	"Orders":[
+		// 		{
+		// 			"Category":"Society",
+		// 			"Price":0.53,
+		// 			"Side":0,
+		// 			"Symbol":{
+		// 				"Exchange":"BBB-NNN-12312016",
+		// 				"Name":"BBB-NNN",
+		// 				"Currency":"USD"
+		// 			},
+		// 			"Volume":4,
+		// 			"Limit":false,
+		// 			"NewOrder": true,
+		// 			"isMirror":0
+		// 		},
+		// 		{
+		// 			"Category":"Society",
+		// 			"Price":'0.',
+		// 			"Side":1,
+		// 			"Symbol":{
+		// 				"Exchange":"HC-DT-12192016",
+		// 				"Name":"HC-DT",
+		// 				"Currency":"USD"
+		// 			},
+		// 			"Limit":true,
+		// 			"NewOrder": true,
+		// 			"isMirror":0
+		// 		}
+		// 	]
+		// },
+		// {
+		// 	"ID":"HC-DT-12192016_HC-DT_USD",
+		// 	"EventTitle":"Hillary Clinton",
+		// 	"Positions":0,
+		// 	"isMirror":0,
+		// 	"Orders":[
+		// 		{
+		// 			"Category":"Society",
+		// 			"Price":0.75,
+		// 			"Side":1,
+		// 			"Symbol":{
+		// 				"Exchange":"HC-DT-12192016",
+		// 				"Name":"HC-DT",
+		// 				"Currency":"USD"
+		// 			},
+		// 			"Volume":666,
+		// 			"Limit":false,
+		// 			"NewOrder": true,
+		// 			"isMirror":0
+		// 		},
+		// 		{
+		// 			"Category":"Society",
+		// 			"Price":'0.',
+		// 			"Side":0,
+		// 			"Symbol":{
+		// 				"Exchange":"HC-DT-12192016",
+		// 				"Name":"HC-DT",
+		// 				"Currency":"USD"
+		// 			},
+		// 			"Limit":true,
+		// 			"NewOrder": true,
+		// 			"isMirror":0
+		// 		}
+		// 	]
+		// },
+		// {
+		// 	"ID":"NYG-WAS-12252016_NYG-WAS_USD",
+		// 	"EventTitle":"Washington Redskins",
+		// 	"Positions":50,
+		// 	"isMirror":1,
+		// 	"Orders":[
+		// 		{
+		// 			"Category":"Society",
+		// 			"Price":'0.',
+		// 			"Side":1,
+		// 			"Symbol":{
+		// 				"Exchange":"NYG-WAS-12252016",
+		// 				"Name":"NYG-WAS",
+		// 				"Currency":"USD"
+		// 			},
+		// 			"Limit":true,
+		// 			"NewOrder": true,
+		// 			"isMirror":1
+		// 		},
+		// 		{
+		// 			"Category":"Society",
+		// 			"Price":0.43,
+		// 			"Side":0,
+		// 			"Symbol":{
+		// 				"Exchange":"NYG-WAS-12252016",
+		// 				"Name":"NYG-WAS",
+		// 				"Currency":"USD"
+		// 			},
+		// 			"Volume":252,
+		// 			"Limit":true,
+		// 			"NewOrder": true,
+		// 			"isMirror":1
+		// 		},
+		// 	]
+		// }
 	],
 };
 
