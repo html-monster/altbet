@@ -1,23 +1,19 @@
 
 import 'babel-polyfill';
-// import * as React from 'react'
-// import * as React from 'react';
-// import { render } from 'react-dom';
-// import { createStore } from 'redux';
-// const {PropTypes, Component} = require('react');
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import configureStore from './store/configureStore';
 import RApp from './containers/RApp';
+import MainPage from './containers/MainPage';
 import EventPage from './containers/EventPage';
 import Sidebar from './components/Sidebar.jsx';
 
 
 // Altbet App object
-let constants = ABpp.App;
-ABpp = ABpp.App.getInstance();
+let constants = ABpp.ABpp;
+ABpp = ABpp.ABpp.getInstance();
 ABpp.CONSTS = constants;
 
 const store = configureStore();

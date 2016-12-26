@@ -17,7 +17,7 @@ window.__LDEV__ = true;
  * Altbet common App object
  * Singleton
  */
-export class App
+export class ABpp
 {
     public static PAGE_MAIN = 1;
     public static PAGE_EVENT = 2;
@@ -32,6 +32,7 @@ export class App
 
     public User: User = null;           // user entity
     public Websocket: WebsocketModel = null; // websocket object
+    public baseUrl: "";                 // add before urls
 
 
     private static instance = null;
@@ -59,9 +60,9 @@ export class App
     private setCurrentPage()
     {
         if( globalData.mainPage )
-            return App.PAGE_MAIN;
+            return ABpp.PAGE_MAIN;
         else if( globalData.eventPageOn )
-            return App.PAGE_EVENT;
+            return ABpp.PAGE_EVENT;
     }
 
 

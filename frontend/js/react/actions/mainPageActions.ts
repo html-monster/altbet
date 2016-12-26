@@ -4,59 +4,77 @@ import {
 } from '../constants/ActionTypesPageMain';
 import { WebsocketModel } from '../models/Websocket';
 import { Common } from '../common/Common';
+import { actionOnOrderCreate } from './Sidebar/defaultOrderActions.js';
 
 
 var __LDEV__ = true;
+
+/**
+ * Create bet form in side bar
+ * @param props
+ * @return {(dispatch:any, getState:any)=>undefined}
+ */
 export function actionOnPosPriceClick(props)
 {
     let flag = false;
-    let qt = 0, bpr = props.type == 1 ? 0 : 99;
-    for( let val of props.PosPrice )
+    let qt : any = 0,
+        bpr : any = props.type == 1 ? 0 : 99;
+    if( props.isempty )
     {
-        if (!flag && val.Price == props.price) flag = true;
-        if( props.type == 1 )
+        bpr = "0.";
+        qt = '';
+    }
+    else
+    {
+        for( let val of props.PosPrice )
         {
-            if( flag )
+            if (!flag && val.Price == props.price) flag = true;
+            if( props.type == 1 )
             {
-                qt += val.Quantity;
-                bpr < val.Price && (bpr = val.Price);
-            } // endif
-        }
-        else
-        {
-            if( !flag || val.Price == props.price )
+                if( flag )
+                {
+                    qt += val.Quantity;
+                    bpr < val.Price && (bpr = val.Price);
+                } // endif
+            }
+            else
             {
-                qt += val.Quantity;
-                bpr > val.Price && (bpr = val.Price);
+                if( !flag || val.Price == props.price )
+                {
+                    qt += val.Quantity;
+                    bpr > val.Price && (bpr = val.Price);
+                } // endif
             } // endif
-        } // endif
-    } // endfor
+        } // endfor
+    } // endif
 
     props.ismirror && (bpr = Common.toFixed(1 - bpr, 2));
 
+
     let outStruc = {
-        "ID": props.data.exdata.Exchange, // "NYG-WAS-12252016_NYG-WAS_USD",
+        "ID": `${props.data.exdata.Exchange}_${props.data.exdata.Name}_${props.data.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
         "EventTitle": props.ismirror ? props.data.exdata.AwayName : props.data.exdata.HomeName,
-        "Positions": 0, // ?
+        "Positions": props.data.exdata.Positions,
         "isMirror": props.ismirror ? 1 : 0,
         "Orders": [
             {
-                "Category": "Society", // ?
                 "Price": bpr,
-                "Side": 0,
+                "Side": props.type == 1 ? 0 : 1, // sell/buy
                 "Symbol": {
                     "Exchange": props.data.exdata.Exchange,
                     "Name": props.data.exdata.Name,
                     "Currency": props.data.exdata.Currency
                 },
                 "Volume": qt,
-                "Limit": false, // ?
-                "NewOrder": true, // ?
+                "Limit": props.isempty ? 'true' : 'false', // empty ? true : false
+                "NewOrder": true,
                 "isMirror": props.ismirror ? 1 : 0
             },
         ]
     };
     __LDEV__&&console.debug( 'outStruc', props, outStruc );
+
+    actionOnOrderCreate(outStruc);
 
 
     return (dispatch, getState) =>
@@ -80,7 +98,7 @@ export function actionOnLoad()
 
             if( JSON.stringify(inData) != JSON.stringify(state) )
             {
-__DEV__&&console.debug( 'inData', inData, state );
+// __DEV__&&console.debug( 'inData', inData, state );
                 dispatch({
                     type: ON_SOCKET_MESSAGE,
                     payload: inData
