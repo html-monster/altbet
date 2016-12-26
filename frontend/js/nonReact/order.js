@@ -15,7 +15,7 @@ class orderClass{
 					substructionHeight = $('.left_order .tabs').height() + 45 + $('header').height(),
 					orderSidebarHeight = windowHeight - substructionHeight,
 					orderContent = $('#order'),
-					currentOrders = $('#current-orders'), 
+					currentOrders = $('#current-orders'),
 					tab_content = $('.tab_content'),
 					checkbox = $('.left_order .tab input[type=checkbox]');
 
@@ -416,7 +416,7 @@ class orderClass{
 	}
 
 	// new order =========================================================================================================
-	static addOrder(container, button) {
+		static addOrder(container, button) {
 	$(container).on('click', button, function () {
 		let html,
 			data = {

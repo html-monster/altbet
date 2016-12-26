@@ -14,12 +14,11 @@
     "allowJs": true,
     "allowUnreachableCode": true,
     "skipLibCheck": true,
-    "pretty": true
+    "pretty": false
 
   },
   "exclude": [
     "node_modules",
-    "backup",
     "dist"
   ]
 }

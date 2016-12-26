@@ -34,11 +34,7 @@ node_modules
 
 .idea
 
-<<<<<<< HEAD
-public
-webpack.config.js
-
 11
-=======
 public
->>>>>>> master
+webpackinc/pathes.js
+gulpinc/pathes.js

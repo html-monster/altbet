@@ -1,5 +1,4 @@
-
-var path = require('path');
+const path = require('path');
 const options = require('./pathes');
 const webpack = require('webpack');
 const WebpackNotifierPlugin = require('webpack-notifier');
@@ -23,14 +22,14 @@ const sourceMap = process.env.TEST || process.env.NODE_ENV !== 'production'
 
 module.exports = {
     // entry: ['./frontend/js/react/indexmp.tsx'],
-    entry: ['./frontend/js/react/indexmp.jsx'],
+    entry: ['./frontend/styles/index-admin.scss'],
     // entry: [ './frontend/js/react/indexmp.tsx' ].concat(applicationEntries),
 
     output: {
-        path: __dirname + options.path.destServer + '/Scripts',
+        path: __dirname + options.path.destServer + '/Content',
         // path: 'D:/Project/altbetNew/RefactoredCore/Alt.Bet/Scripts',
-        publicPath: "Scripts/",
-        filename: "bundler.js"
+        publicPath: "Content/",
+        filename: "index-admin.css",
     },
 
     // output: {
@@ -49,54 +48,33 @@ module.exports = {
     resolve: {
         extensions: [
             '',
-            '.jsx',
-            '.js',
-            '.ts',
+            '.scss',
         ],
     },
 
     plugins: [
-        new WebpackNotifierPlugin({title: 'bundleR.js', alwaysNotify: true}),
+        new WebpackNotifierPlugin({title: 'index-admin.css', alwaysNotify: true}),
 
-        new webpack.DefinePlugin({
-            __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
-            __TEST__: JSON.stringify(process.env.TEST || false),
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        }),
+        // new webpack.DefinePlugin({
+        //     __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
+        //     __TEST__: JSON.stringify(process.env.TEST || false),
+        //     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        // }),
     ],
     // ].concat(sourceMap),
 
     module: {
-        // preLoaders: [
-        //   loaders.tslint,
-        // ],
         loaders: [
-            {
-                test: /\.jsx$/,
-                loader: "babel-loader",
-                exclude: [/node_modules/, /public/],
-                query: {
-                    presets: ['es2015', 'stage-0', 'react'],
-                  }
-            },
-            {
-                test: /\.js$/,
-                loader: "babel-loader",
-                exclude: [/node_modules/, /public/],
-                query: {
-                    presets: ['es2015', 'stage-0', 'react'],
-                  }
-            },
-            {
-                test: /\.ts?$/,
-                // loader: 'awesome-typescript-loader',
-                loader: 'ts-loader',
-                exclude: /node_modules/,
-            }
-        ],
+          {
+            test: /\.scss$/,
+            loaders: ["sass-loader"]
+            // loaders: ["sass-loader?sourceMap"]
+          }
+        ]
     },
 
     externals: {
+        // '../frontend/js/ts/index': 'ABpp1', не работает
         // 'react/lib/ReactContext': 'window',
         // 'react/lib/ExecutionEnvironment': true,
         // 'react/addons': true,

@@ -2,11 +2,12 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react' ;
 
+import BaseController from '../common/BaseController';
 import Chart from '../components/EventPage/Chart';
 import * as chartActions from '../actions/EventPage/chartActions.ts';
 // import * as eventPageActions from '../actions/eventPageActions.ts';
 
-class EventPage extends React.Component
+class EventPage extends React.Component implements BaseController
 {
     constructor(props)
     {

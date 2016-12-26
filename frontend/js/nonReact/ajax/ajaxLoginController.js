@@ -29,7 +29,8 @@ class ajaxLoginControllerClass{
 			popUpClass.removeEventPopUp('header .deposit, header .my_order');
 			globalData.userIdentity = 'True';
 			if(!globalData.landingPage) AppStateClass.updateAppState(e);
-			if(!globalData.landingPage) wsActiveBettor.changeUser(e.UserName);
+			if(!globalData.landingPage) ABpp.Websocket.changeUser(e.UserName);
+			// if(!globalData.landingPage) wsActiveBettor.changeUser(e.UserName);
 			else{
 				$('.first_page_wrapper button.join').remove();
 				$('.first_page_wrapper .container_down').append('<a href="' + globalData.rootUrl + '" class="join_link btn wave">Trade Now</a>');

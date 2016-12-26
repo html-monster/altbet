@@ -10,16 +10,49 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import configureStore from './store/configureStore';
+import RApp from './containers/RApp';
 import EventPage from './containers/EventPage';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Sidebar.jsx';
 
 
 // Altbet App object
-ABpp = ABpp.App;
+let constants = ABpp.App;
+ABpp = ABpp.App.getInstance();
+ABpp.CONSTS = constants;
 
 const store = configureStore();
 
-if(globalData.eventPageOn){
+ReactDOM.render(
+    <Provider store={store}>
+        <RApp />
+    </Provider>,
+  document.getElementById('DiRoot')
+);
+
+
+if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MAIN ) {
+	ReactDOM.render(
+		<Provider store={store}>
+			<MainPage />
+		</Provider>,
+	  document.getElementById('DiMPMainpage')
+	);
+}
+
+if(!globalData.userPageOn){
+	ReactDOM.render(
+		<Provider store={store}>
+			<Sidebar
+				data={appData.yourOrders}
+				globalData={globalData}
+			/>
+		</Provider>,
+		document.getElementById('sidebar')
+	);
+}
+
+
+if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_EVENT ) {
 	ReactDOM.render(
 		<Provider store={store}>
 			<EventPage />
@@ -28,14 +61,7 @@ if(globalData.eventPageOn){
 	);
 }
 
-if(!globalData.userPageOn){
-	ReactDOM.render(
-		<Provider store={store}>
-			<Sidebar />
-		</Provider>,
-		document.getElementById('sidebar')
-	);
-}
+
 
 // --display-error-details
 // --display-modules

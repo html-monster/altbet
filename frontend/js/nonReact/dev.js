@@ -101,9 +101,8 @@ $(document).ready(function () {
 	new teamClass();
 });
 if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){
-	var globalData = {
-		userIdentity : 'True'
-	}
+	var globalData;
+	globalData.userIdentity = 'True';
 }
 class teamClass{
 	constructor(){

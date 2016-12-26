@@ -7,6 +7,7 @@
 let configBundle = require('./webpackinc/webpack.bundle');
 let configBundleR = require('./webpackinc/webpack.config.redux');
 let configBundleM = require('./webpackinc/webpack.config.models');
+// let configAdmin = require('./webpackinc/webpack.config.admin');
 
 
 
@@ -14,7 +15,12 @@ let configBundleM = require('./webpackinc/webpack.config.models');
 //   __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
 // });
 
-module.exports = [configBundle, configBundleR, configBundleM];
+module.exports = [
+    configBundle,
+    configBundleR,
+    configBundleM,
+    // configAdmin,
+    ];
 
 
 // var devFlagPlugin = new webpack.DefinePlugin({
