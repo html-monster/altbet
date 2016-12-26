@@ -63,7 +63,15 @@ export default class ButtonContainer extends React.Component
                                 : ""
                             )
                         )
-                    :   <button className={`event animated empty ${className} ${mirrorClass} not-sort`}>
+                    :   <button className={`event animated empty ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this,
+                                {
+                                    isempty: true,
+                                    PosPrice: [],
+                                    ismirror: data.ismirror,
+                                    price: 0,
+                                    type: data.type == "sell" ? 1 : 2,
+                                    data: data,
+                                })}>
                             <span className="price empty">{emptBtnName}</span>
                             <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
                         </button>

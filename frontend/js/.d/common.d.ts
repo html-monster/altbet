@@ -6,7 +6,7 @@ declare var window : any;
 declare var dataController;
 declare var mainChartController;
 declare var globalData;
-// declare var defaultMethods;
+declare var defaultMethods;
 
 
 // interface globalData

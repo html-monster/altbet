@@ -14,6 +14,10 @@ class RApp extends React.Component
     {
         super(props, context);
 
+        // set base for link urls
+        if( location.host == 'localhost' ) ABpp.baseUrl = "/AltBet"   ;
+
+
         // activate websocket
         ABpp.Websocket = new WebsocketModel();
         ABpp.Websocket.connectSocketServer();

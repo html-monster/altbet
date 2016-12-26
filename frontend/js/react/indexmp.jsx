@@ -16,8 +16,8 @@ import Sidebar from './components/Sidebar.jsx';
 
 
 // Altbet App object
-let constants = ABpp.App;
-ABpp = ABpp.App.getInstance();
+let constants = ABpp.ABpp;
+ABpp = ABpp.ABpp.getInstance();
 ABpp.CONSTS = constants;
 
 const store = configureStore();

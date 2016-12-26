@@ -25,6 +25,8 @@ export default class ExchangeItem extends React.Component
                 Currency : data.Symbol.Currency,
             }
         };
+        // 0||console.debug( 'data', data );
+
 
         return <div className={"content_bet " + (isBasicMode ? " basic_mode_js" : "") + " categoryFilterJs"} id={symbol} style={{}}>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
             <input name={data.Symbol.Status} type="hidden" value="inprogress" />
@@ -46,7 +48,7 @@ export default class ExchangeItem extends React.Component
                     <h3 className="event-title">
                         <span className="title">{data.Symbol.HomeName}</span>
                         <span>{(data.Symbol.HomeHandicap != null ? (data.Symbol.HomeHandicap > 0 ? " +" + data.Symbol.HomeHandicap : " " + data.Symbol.HomeHandicap) : false)}</span>
-                        <a href="/eng/Sport/American_Football/NFL/BUB-NEP-12312016/0">see more</a>
+                        <a href={ABpp.baseUrl + data.CategoryUrl + "/0"}>see more</a>
                     </h3>
 
                     <div className="container">
@@ -163,7 +165,7 @@ export default class ExchangeItem extends React.Component
                     <h3 className="event-title">
                         <span className="title">{data.Symbol.AwayName}</span>
                         <span>{(data.Symbol.AwayHandicap != null ? (data.Symbol.AwayHandicap > 0 ? " +" + data.Symbol.AwayHandicap : " " + data.Symbol.AwayHandicap) : "")}</span>
-                        <a href="/eng/Sport/American_Football/NFL/BUB-NEP-12312016/0">see more</a>
+                        <a href={ABpp.baseUrl + data.CategoryUrl + "/1"}>see more</a>
                     </h3>
 
                     <div className="container">
