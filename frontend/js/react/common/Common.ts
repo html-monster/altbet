@@ -12,7 +12,7 @@ export class Common
      * @param precision
      * @return {string}
      */
-    public static toFixed(value, precision) {
+    public static toFixed(value, precision) : any {
         return (Math.round(value * 100) / 100).toFixed(precision);
     }
 
@@ -22,7 +22,7 @@ export class Common
      * Two objects deep compare
      * @return {boolean}
      */
-    public static deepCompare ()
+    public static deepCompare()
     {
     /*    var i, l, leftChain, rightChain;
 

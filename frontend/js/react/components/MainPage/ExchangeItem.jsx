@@ -1,6 +1,8 @@
 import React from 'react';
+
+import ButtonContainer from './ButtonContainer';
 import {DateLocalization} from './../../models/DateLocalization';
-import {Common} from './../../common/Common';
+// import {Common} from './../../common/Common';
 
 
 export default class ExchangeItem extends React.Component
@@ -11,7 +13,18 @@ export default class ExchangeItem extends React.Component
         let $DateLocalization = new DateLocalization();
         let data = this.props.data;
         let symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
-
+        let commProps = {
+            symbolName: symbol,
+            Orders: data.Orders,
+            exdata: {
+                HomeName : data.Symbol.HomeName,
+                AwayName : data.Symbol.AwayName,
+                Positions : data.Positions,
+                Exchange : data.Symbol.Exchange,
+                Name : data.Symbol.Name,
+                Currency : data.Symbol.Currency,
+            }
+        };
 
         return <div className={"content_bet " + (isBasicMode ? " basic_mode_js" : "") + " categoryFilterJs"} id={symbol} style={{}}>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
             <input name={data.Symbol.Status} type="hidden" value="inprogress" />
@@ -37,6 +50,13 @@ export default class ExchangeItem extends React.Component
                     </h3>
 
                     <div className="container">
+                        <ButtonContainer actions={this.props.actions} data={{
+                            type: 'sell',
+                            side: 0,
+                            ismirror: false,
+                            ...commProps
+                        }}/>
+{/*
                         <div className="sell button-container">
                             {
                                 (data.Orders.length && data.Orders.some((item) => item.Side == 0) ?
@@ -44,7 +64,7 @@ export default class ExchangeItem extends React.Component
                                             (item.Side == 0 ?
                                                     item.SummaryPositionPrice.map((item) =>
                                                         <button className="event animated sell real not-sort">
-                                                            <span className="price">{ABpp.User.settings.basicMode ? item.Price : item.Price}</span>
+                                                            <span className="price">{Common.toFixed(ABpp.User.settings.basicMode ? item.Price : item.Price, 2)}</span>
                                                             <span className="volume">{item.Quantity}</span>
                                                             <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
                                                         </button>
@@ -58,7 +78,7 @@ export default class ExchangeItem extends React.Component
                                         </button>
                                 )
                             }
-{/*                                @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Buy && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
+/!*                                @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Buy && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
                             {
                                 foreach (var spsItem in Model.Orders.Single(x => x.Side == AltBet.Exchange.Side.Buy).SummaryPositionPrice.Where(x => x.Quantity != 0).ToList())
                                 {
@@ -75,9 +95,18 @@ export default class ExchangeItem extends React.Component
                                     <span className="price empty">OFFER</span>
                                     <div className="symbolName" style="display: none">data.Symbol</div>
                                 </button>
-                            }*/}
+                            }*!/
                         </div>
-
+*/}
+                        <ButtonContainer actions={this.props.actions} data={{
+                            type: 'buy',
+                            side: 1,
+                            ismirror: false,
+                            symbolName: symbol,
+                            Orders: data.Orders,
+                            ...commProps
+                        }}/>
+{/*
                         <div className="buy button-container">
                             {
                                 (data.Orders.length && data.Orders.some((item) => item.Side == 1) ?
@@ -100,6 +129,7 @@ export default class ExchangeItem extends React.Component
                                 )
                             }
                         </div>
+*/}
 {/*
                         <div className="buy button-container">
                             @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Sell && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
@@ -137,11 +167,21 @@ export default class ExchangeItem extends React.Component
                     </h3>
 
                     <div className="container">
+                        <ButtonContainer actions={this.props.actions} data={{
+                            type: 'sell',
+                            side: 1,
+                            ismirror: true,
+                            symbolName: symbol,
+                            Orders: data.Orders,
+                            ...commProps
+                        }}/>
+
+{/*
                         <div className="sell button-container">
                             {
-                                data.Orders.length && data.Orders.some((item) => item.Side == 0) ?
+                                data.Orders.length && data.Orders.some((item) => item.Side == 1) ?
                                         data.Orders.map((item) =>
-                                            item.Side == 0 ?
+                                            item.Side == 1 ?
                                                     item.SummaryPositionPrice.map((item) =>
                                                         <button className="event animated sell mirror not-sort">
                                                             <span className="price">{(1-(ABpp.User.settings.basicMode ? item.Price : item.Price)).toFixed(2)}</span>
@@ -157,6 +197,7 @@ export default class ExchangeItem extends React.Component
                                         </button>
                             }
                         </div>
+*/}
 {/*
                         <div className="sell button-container">
                             @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Sell && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
@@ -179,11 +220,21 @@ export default class ExchangeItem extends React.Component
                             }
                         </div>
                         */}
+                        <ButtonContainer actions={this.props.actions} data={{
+                            type: 'buy',
+                            side: 0,
+                            ismirror: true,
+                            symbolName: symbol,
+                            Orders: data.Orders,
+                            ...commProps
+                        }}/>
+
+{/*
                         <div className="buy button-container">
                             {
-                                data.Orders.length && data.Orders.some((item) => item.Side == 1) ?
+                                data.Orders.length && data.Orders.some((item) => item.Side == 0) ?
                                         data.Orders.map((item) =>
-                                            item.Side == 1 ?
+                                            item.Side == 0 ?
                                                     item.SummaryPositionPrice.map((item) =>
                                                         <button className="event animated sell mirror not-sort">
                                                             <span className="price">{(1 - (ABpp.User.settings.basicMode ? item.Price : item.Price)).toFixed(2)}</span>
@@ -199,6 +250,7 @@ export default class ExchangeItem extends React.Component
                                         </button>
                             }
                         </div>
+*/}
 
                         {/*
                         <div className="buy button-container">

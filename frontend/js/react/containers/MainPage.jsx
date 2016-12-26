@@ -47,7 +47,7 @@ class MainPage extends React.Component implements BaseController
                     <div className="tab_content">
                         <div className="tab_item ui-sort">
                             {data.map((item, key) =>
-                                <ExchangeItem key={key} data={item} />
+                                <ExchangeItem key={key} data={item} actions={this.props.mainPageActions} />
                             )}
                         </div>
                     </div>

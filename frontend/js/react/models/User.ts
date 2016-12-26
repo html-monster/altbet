@@ -10,7 +10,7 @@ export class User
      */
     public id = '';
 
-    public settings = {
+    public settings : any = {
             basicMode: false,
             tradeOn: false,
             autoTradeOn: false,

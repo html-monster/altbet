@@ -1,2 +1,2 @@
-// export const ON_LOAD = 'ON_MAINPAGE_LOAD';
+export const ON_POS_PRICE_CLICK = 'ON_POS_PRICE_CLICK';
 export const ON_SOCKET_MESSAGE = 'ON_MAINPAGE_SOCKET_MESSAGE';

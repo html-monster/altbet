@@ -38,7 +38,7 @@ export class WebsocketModel
 
         //self.ws.
 
-        console.log('socket open');
+        console.log('socket open ts');
 
         //window.setInterval(function () {
             //console.log(ws.readyState);

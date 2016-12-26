@@ -6,7 +6,7 @@ declare var window : any;
 declare var dataController;
 declare var mainChartController;
 declare var globalData;
-declare var defaultMethods;
+// declare var defaultMethods;
 
 
 // interface globalData
@@ -14,6 +14,11 @@ declare var defaultMethods;
 //     myPosOn : any,
 //     myOrdersOn : any,
 // }
+
+interface Object
+{
+    assign(t1, t2?, t3?)
+}
 
 interface Window {
     ee: any

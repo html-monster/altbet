@@ -68,12 +68,12 @@ export class App
     private createUser()
     {
         this.User = new User();
-        this.User.settings = {
-            ...this.User.settings,
+        this.User.settings = Object.assign({}, this.User.settings, {
+            // ...this.User.settings,
             basicMode: globalData.basicMode,
             tradeOn: globalData.tradeOn,
             autoTradeOn: globalData.autoTradeOn,
-        };
+        });
     }
 }
 
