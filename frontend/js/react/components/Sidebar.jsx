@@ -16,6 +16,7 @@ class Sidebar extends React.Component
 	constructor(props)
 	{
 		super();
+		// __DEV__&&console.debug( 'props', props );
 
 		this.state = {globalData: globalData};
 	}

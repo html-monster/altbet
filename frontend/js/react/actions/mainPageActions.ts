@@ -4,6 +4,7 @@ import {
 } from '../constants/ActionTypesPageMain';
 import { WebsocketModel } from '../models/Websocket';
 import { Common } from '../common/Common';
+import { actionOnOrderCreate } from './Sidebar/defaultOrderActions.js';
 
 
 var __LDEV__ = true;
@@ -72,6 +73,8 @@ export function actionOnPosPriceClick(props)
         ]
     };
     __LDEV__&&console.debug( 'outStruc', props, outStruc );
+
+    actionOnOrderCreate(outStruc);
 
 
     return (dispatch, getState) =>
