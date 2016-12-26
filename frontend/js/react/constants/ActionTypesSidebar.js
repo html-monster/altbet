@@ -1,3 +1,3 @@
-export const ON_TRADER_ON = 1;
-export const ON_TAB_SWITCH = 2;
+export const ON_TRADER_ON = 'ON_TRADER_ON';
+export const ON_TAB_SWITCH = 'ON_TAB_SWITCH';
 

@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 
 import configureStore from './store/configureStore';
 import EventPage from './containers/EventPage';
-import Sidebar from './components/Sidebar.jsx';
+import Sidebar from './components/Sidebar';
 
 
 // Altbet App object
@@ -31,10 +31,7 @@ if(globalData.eventPageOn){
 if(!globalData.userPageOn){
 	ReactDOM.render(
 		<Provider store={store}>
-			<Sidebar
-				data={appData.yourOrders}
-				globalData={globalData}
-			/>
+			<Sidebar />
 		</Provider>,
 		document.getElementById('sidebar')
 	);

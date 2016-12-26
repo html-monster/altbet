@@ -1,4 +1,4 @@
-class activeTraderClass{
+	class activeTraderClass{
 	constructor(){
 		var content = $('.content');
 

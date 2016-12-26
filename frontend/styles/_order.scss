@@ -616,11 +616,12 @@
       h3, .current-order{  color: #ffffff;  }
       h3{  line-height: 20px;  }
       //strong.last-price{  margin-top: 0;  }
-      a.close{
+      .close{
         margin-right: 0;
         position: absolute;
         top: 4px;
         right: 1px;
+        cursor: pointer;
       }
     }
 		.basic_mode{
@@ -761,7 +762,7 @@
         right: 4px;
       }
     }
-    a.close{
+    .close{
       float: right;
       margin-top: 4px;
       margin-right: 2px;

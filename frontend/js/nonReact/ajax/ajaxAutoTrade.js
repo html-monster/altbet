@@ -10,7 +10,7 @@ var ajaxAutoTradeClass = new function () {
 		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 	}
 	this.sendOrder = function(context, modification, price){
-		var url,
+		let url,
 				data = {},
 				trader = $('.active_trader');
 
@@ -28,7 +28,7 @@ var ajaxAutoTradeClass = new function () {
 		else{
 			data.OrderType = 'true';
 			data.LimitPrice = price;
-			url = $('.template .order_content.new form').attr('data-ajax-url');
+			url = globalData.rootUrl + 'Order/Create';//$('.template .order_content.new form').attr('data-ajax-url')
 		}
 
 		if(modification == 'sell')
@@ -45,7 +45,7 @@ var ajaxAutoTradeClass = new function () {
 	};
 
 	this.sendSpreadOrder = function(buyPrice, sellPrice){
-		var url = $('.template .order_content.spread form').attr('data-ajax-url'),
+		let url = globalData.rootUrl + 'Order/Spreader',
 				data = {},
 				quantity = $('.active_trader .control .quantity.number').val(),
 				trader = $('.active_trader');

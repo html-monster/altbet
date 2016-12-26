@@ -1,3 +1,5 @@
+window.ee = new EventEmitter();
+
 $(document).ready(function () {
 	new defaultMethods();
 	// new inputValidationClass();

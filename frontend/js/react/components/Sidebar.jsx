@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import EventOrders from './sidebar/YourOrders.jsx';
-import NewOrder from './sidebar/order/NewOrder.jsx';
+// import NewOrder from './sidebar/order/NewOrder.jsx';
 // import ActiveTrader from './sidebar/ActiveTrader.jsx';
 import TradeSlip from './sidebar/TradeSlip.jsx';
-// import * as sidebarActions from '../actions/sidebarActions.js';
+// import {OddsConverter} from '../models/oddsConverter/oddsConverter.ts';
+import * as sidebarActions from '../actions/sidebarActions.js';
 
+// new OddsConverter('implied_probability');
 // export default
 class Sidebar extends React.Component
 {
@@ -15,11 +17,11 @@ class Sidebar extends React.Component
 	{
 		super();
 
-		this.state = {globalData: props.globalData};
+		this.state = {globalData: globalData};
 	}
+
 	render()
 	{
-		const sideBarData = this.props.data;
 		return <div className="left_order">
 			<div className="wrapper">
 				<div className="tabs">
@@ -65,10 +67,10 @@ class Sidebar extends React.Component
 				<div className="tab_content order-content">
 
 					{/* // BM: --------------------------------------------------- TRADE SLIP ---*/}
-					<TradeSlip actions={this.props.sidebarActions}/>
+					<TradeSlip/>
 
 					{/* // BM: --------------------------------------------------- YOUR ORDERS ---*/}
-					<EventOrders data={sideBarData}/>
+					<EventOrders/>
 				</div>
 
 			</div>
@@ -181,9 +183,8 @@ class Sidebar extends React.Component
 
 export default connect(state => ({
 		sidebar: state.sidebar,
-		// test: state.Ttest,
 	}),
 	dispatch => ({
-		// eventPageActions: bindActionCreators(sidebarActions, dispatch),
+		sidebarActions: bindActionCreators(sidebarActions, dispatch),
 	})
 )(Sidebar)

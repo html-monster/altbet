@@ -305,6 +305,21 @@ class TraderString extends React.Component {
 		super();
 	}
 
+	shouldComponentUpdate(nextProps){
+		let currentData = this.props.data;
+		let nextData = nextProps.data;
+
+		if(currentData.ClassName == nextData.ClassName &&
+			currentData.QuantityBuy == nextData.QuantityBuy &&
+			currentData.QuantitySell == nextData.QuantitySell &&
+			currentData.ParticularUserQuantityBuy == nextData.ParticularUserQuantityBuy &&
+			currentData.ParticularUserQuantitySell == nextData.ParticularUserQuantitySell &&
+			currentData.Bid == nextData.Bid &&
+			currentData.Ask == nextData.Ask) return false;
+
+		return true;
+	}
+
 	render()
 	{
 		let data = this.props.data;
@@ -324,8 +339,7 @@ class TraderString extends React.Component {
 				transitionLeaveTimeout={500}
 				data={data}
 		>
-		{/*<tr className="visible">*/}
-			<td className="my_offers my_size animated" data-verify="ParticularUserQuantityBuy">
+			<td className="my_offers my_size animated" data-verify={['ParticularUserQuantityBuy', 'ParticularUserQuantitySell']}>
 					<span className="value">
 						{
 							data.ParticularUserQuantityBuy || ''
@@ -362,7 +376,6 @@ class TraderString extends React.Component {
 				</span>
 			</td>
 			<td>{}</td>
-		{/*</tr>*/}
 		</AnimateOnUpdate>
 	}
 }

@@ -1,7 +1,11 @@
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import React from 'react';
-import OrderForm from './order/OrderForm.jsx';
 
-export default class EventOrders extends React.Component
+import OrderForm from './order/OrderForm.jsx';
+import * as yourOrdersActions from '../../actions/Sidebar/yourOrderActions.js';
+
+class EventOrders extends React.Component
 {
 	constructor(props)
 	{
@@ -12,27 +16,31 @@ export default class EventOrders extends React.Component
 
 	componentDidMount()
 	{
-		window.ee.addListener('yourOrders.update', (newData) =>
-		{
-			newData = Object.assign(this.state.data, newData);
-			this.setState({ data: newData });
-		});
+		// window.ee.addListener('yourOrders.update', (newData) =>
+		// {
+			// newData = Object.assign(this.state.data, newData);
+			// if(JSON.stringify(this.state.data) != JSON.stringify(newData)){
+			// 	this.setState({data: newData});
+			// 	console.log('re-render');
+			// }
+		// });
+		this.props.actions.actionOnSocketMessage();
 	}
 
-	handleOrderDelete(order, indexGr)
-	{
-		let orderId = order.ID;
-		let newData = this.state.data;
-
-		newData[indexGr].Orders = newData[indexGr].Orders.filter((order) => order.ID !== orderId );
-		if(!newData[indexGr].Orders.length) newData.splice(indexGr, 1);
-		this.setState({ data: newData });
-	}
+	// handleOrderDelete(order, indexGr)
+	// {
+		// let orderId = order.ID;
+		// let newData = this.state.data;
+		//
+		// newData[indexGr].Orders = newData[indexGr].Orders.filter((order) => order.ID !== orderId );
+		// if(!newData[indexGr].Orders.length) newData.splice(indexGr, 1);
+		// this.setState({ data: newData });
+	// }
 
 	render()
 	{
-		let yourOrdersData = this.state.data;
-				// console.log(yourOrdersData);
+		// let yourOrdersData = this.state.data;
+		let yourOrdersData = this.props.yourOrders.yourOrders;
 		return <div className="tab_item" id="current-orders">
 			{
 				yourOrdersData.map((item, index) =>
@@ -40,7 +48,8 @@ export default class EventOrders extends React.Component
 							key={item.ID}
 							indexGr={index}
 							data={item}
-							onOrderDelete={::this.handleOrderDelete}
+							onOrderDelete={::this.props.actions.actionOnYourOrderDelete}
+							actions={this.props.actions}
 					/>
 				)
 			}
@@ -75,6 +84,7 @@ class GroupingOrder extends React.Component
 									key={item.ID}
 									data={item}
 									onDelete={onOrderDelete.bind(null, item, this.props.indexGr)}
+									actions={this.props.actions}
 							/>
 						)
 				}
@@ -91,7 +101,12 @@ class GroupingOrder extends React.Component
 
 class OrderItem extends React.Component
 {
-	onSuccessAjax(data) {
+	BeforeAjax()
+	{
+		$(this.refs.deleteForm).find('.btn').attr('disabled', true);
+	}
+	onSuccessAjax(data)
+	{
 		data = data.split('_');
 		let id = '#' + data[0] + '__order';
 
@@ -102,24 +117,45 @@ class OrderItem extends React.Component
 		}
 		else{
 			console.log($(id).parents('.order_content').find('h3').text() + ' order isn\'t deleted');
+			$(this.refs.deleteForm).find('.btn').removeAttr('disabled');
 			defaultMethods.showError('Internal server error, try again later');
 		}
 	}
-	onErrorAjax(x, y) {
+	onErrorAjax(x, y)
+	{
 		console.log('XMLHTTPRequest object: ', x);
 		console.log('textStatus: ',  y);
 		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 	}
-	deleteOrderHandle(){
+	deleteOrderHandle()
+	{
 		defaultMethods.sendAjaxRequest({
 			httpMethod: 'POST',
 			callback: ::this.onSuccessAjax,
 			onError: ::this.onErrorAjax,
+			beforeSend: ::this.BeforeAjax,
 			url: '/AltBet/Order/Cancel',
 			context: $(this.refs.deleteForm)});
 	}
-	successHandler(serverData){
+	successHandler(serverData)
+	{
 		console.log(serverData);
+	}
+	showPopUp(){
+		$(this.refs.deletePopUp).fadeIn();
+	}
+	showForm(){
+		$(this.refs.formContainer).slideToggle(200);
+	}
+	hidePopUp(){
+		$(this.refs.deletePopUp).fadeOut();
+	}
+
+	shouldComponentUpdate(nextProps){
+		if(this.props.data.ID == nextProps.data.ID)
+			return false;
+
+		return true;
 	}
 
 	render()
@@ -147,32 +183,43 @@ class OrderItem extends React.Component
 						<span className="help_message"><strong>MM/DD/YYYY | HH:MM</strong></span>
 					</strong>
 					<div className="button_container">
-						<button className="edit" title="edit or change the order">{}</button>
-						<button className="delete">{}</button>
+						<button className="edit" title="edit or change the order" onClick={::this.showForm}>{}</button>
+						<button className="delete" onClick={::this.showPopUp}>{}</button>
 					</div>
 				</div>
 
-				<div className="pop_up">
+				<div className="pop_up" ref="deletePopUp">
 					<div className="confirmation">
 						<form action="/AltBet/eng/Order/Cancel" method="post"
 									noValidate="novalidate" onSubmit={::this.deleteOrderHandle} ref="deleteForm">
 							<input name="id" type="hidden" value={data.ID}/>
 							<button className="yes btn">Delete</button>
 						</form>
-						<button className="no btn">No</button>
+						<button className="no btn" onClick={::this.hidePopUp}>No</button>
 					</div>
 				</div>
 			</div>
-			<div className={`form-container ${className}-container`}>
+			<div className={`form-container ${className}-container`} ref="formContainer">
 				<OrderForm
 						data={data}
 						formData={formData}
 						onAjaxSuccess={::this.successHandler}
+						actions={this.props.actions}
 				/>
 			</div>
 		</div>
 	}
 }
+
+
+export default connect(state => ({
+		yourOrders: state.yourOrders,
+	}),
+	dispatch => ({
+		actions: bindActionCreators(yourOrdersActions, dispatch),
+	})
+)(EventOrders)
+
 {/*<form action="/AltBet/Home/Edit" autoComplete="off" className={className} data-ajax="true" data-ajax-begin="ajaxControllerClass.OnBeginJs"*/}
 			{/*data-ajax-failure="ajaxControllerClass.OnFailureJs" data-ajax-success="ajaxControllerClass.OnSuccessJs" data-ajax-url="/AltBet/Order/Edit"*/}
 			{/*method="post" noValidate="novalidate">*/}

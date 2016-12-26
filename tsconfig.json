@@ -10,8 +10,12 @@
     "removeComments": false,
     "sourceMap": false,
     "inlineSourceMap": true,
-    "noEmitHelpers": true,
-    "allowJs": true
+    "noEmitHelpers": false,
+    "allowJs": true,
+    "allowUnreachableCode": true,
+    "skipLibCheck": true,
+    "pretty": true
+
   },
   "exclude": [
     "node_modules",

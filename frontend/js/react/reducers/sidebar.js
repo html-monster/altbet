@@ -6,7 +6,7 @@ import {
 
 const initialState = {
     tab: 'tradeSlip',
-    traderOn: true
+    traderOn: true,
 };
 
 

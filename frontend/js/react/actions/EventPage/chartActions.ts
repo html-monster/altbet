@@ -1,5 +1,5 @@
 import { ON_CHART_MOUNT, ON_CHART_TYPE_CHANGE } from '../../constants/ActionTypesPageEvent.js';
-import { Chart } from "../../models/PageEvent/Chart";
+import { Chart } from "../../models/PageEvent/Chart.ts";
 
 declare let window;
 

@@ -14,34 +14,27 @@ export default class NewOrder extends React.Component{
 			url: '/AltBet/eng/Order/Create',
 			action: 'create'
 		};
+		// console.log(data);
 		return <div className="order_content new" > {/*style={{display: 'none'}}*/}
 			<div className="order-title">
 				<h3>{data.EventTitle}</h3>
-				<a href="#" className="close"><span>{}</span></a>
+				<span className="close" onClick={this.props.onDeleteOrderHandler}><span>{}</span></span>
 				<strong className="current-order up">pos: <span>{data.Positions}</span></strong>
 			</div>
 			{
-				data.Orders.map((item, index) =>
-					<div className={item.Side ? 'sell-container' : 'buy-container' + ' form_container'} key={index}>
+				data.Orders.map((item) =>
+					<div className={item.Side ? 'sell-container' : 'buy-container' + ' form_container'}
+						 key={`${item.Symbol.Exchange}_${item.Symbol.Name}_${item.Symbol.Currency}_${item.Side}`}>
 						<OrderForm
 							data={item}
+							containerData={data}
 							formData={formData}
+							onOrderDelete={this.props.onDeleteOrderHandler.bind(null, item)}
+							actions={this.props.actions}
 						/>
 					</div>
 				)
 			}
-			{/*<div className="buy-container form_container">*/}
-				{/*<OrderForm*/}
-					{/*data={data}*/}
-					{/*formData={formData}*/}
-				{/*/>*/}
-			{/*</div>*/}
-			{/*<div className="sell-container form_container">*/}
-				{/*<OrderForm*/}
-						{/*data={data}*/}
-						{/*formData={formData}*/}
-				{/*/>*/}
-			{/*</div>*/}
 		</div>
 	}
 }

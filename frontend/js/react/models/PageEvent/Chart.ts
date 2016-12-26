@@ -5,7 +5,7 @@
 
 /// <reference path="./../../../.d/common.d.ts" />
 
-import { Generator } from './Generator' ;
+import { Generator } from './Generator.ts' ;
 
 interface JQuery {
 // interface JQueryStatic {
