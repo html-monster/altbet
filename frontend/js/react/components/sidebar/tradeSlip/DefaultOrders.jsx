@@ -35,10 +35,10 @@ export default class DefaultOrders extends React.Component{
 	// 			},
 	// 		]
 	// 	};
-		// window.actions = this.props.actions.actionOnOrderCreate;
-		// setTimeout(() => {
-		// 	this.props.actions.actionOnOrderCreate(data);
-		// }, 2000);
+	// 	window.actions = this.props.actions.actionOnOrderCreate;
+	// 	setTimeout(() => {
+	// 		this.props.actions.actionOnOrderCreate(data);
+	// 	}, 2000);
 	// }
 
 	onDeleteOrderHandler(orderContainer, order)

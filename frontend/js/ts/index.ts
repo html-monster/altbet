@@ -25,6 +25,7 @@ export class ABpp
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
+    // application config
     public config = {
                 currentTheme: null,     // current theme
                 currentPage: null       // current page
@@ -42,6 +43,7 @@ export class ABpp
     {
         return this.instance ? this.instance : this.instance = new this;
     }
+
 
 
     private constructor()

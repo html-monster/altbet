@@ -9,11 +9,31 @@ import DefaultOrders from './tradeSlip/DefaultOrders.jsx';
 import ActiveTrader from './tradeSlip/ActiveTrader.jsx';
 import * as defaultOrderActions from '../../actions/Sidebar/defaultOrderActions.js';
 
-class TradeSlip extends React.Component{
-	constructor()
+class TradeSlip extends React.Component
+{
+	constructor(props)
 	{
-		super();
+		super(props);
+
+		// ABpp.addController('TradeSlip', this);
 	}
+
+
+	componentDidMount()
+	{
+		// __DEV__&&console.debug( 'TradeSlip.props', this.props, this );
+		this.props.defaultOrderActions.actionOnLoad(this);
+	}
+
+
+	/**
+	 * @public
+	 */
+	createNewOrder(inData)
+	{
+		this.props.defaultOrderActions.actionOnOrderCreate(inData);
+	}
+
 
 	render()
 	{
