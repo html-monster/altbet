@@ -9,6 +9,7 @@ import DefaultOrders from './tradeSlip/DefaultOrders.jsx';
 import ActiveTrader from './tradeSlip/ActiveTrader.jsx';
 import * as defaultOrderActions from '../../actions/Sidebar/defaultOrderActions.js';
 
+
 class TradeSlip extends React.Component{
 	constructor()
 	{

@@ -40,7 +40,6 @@ export default class ActiveTrader extends React.Component {
 				console.log('re-render');
 			}
 
-
 			activeTraderClass.scrollTo();
 			tbody.addClass('scroll_dis');
 			activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), true);
@@ -339,7 +338,7 @@ class TraderString extends React.Component {
 				transitionLeaveTimeout={500}
 				data={data}
 		>
-			<td className="my_offers my_size animated" data-verify={['ParticularUserQuantityBuy', 'ParticularUserQuantitySell']}>
+			<td className="my_offers my_size animated" data-verify={'ParticularUserQuantityBuy'}>
 					<span className="value">
 						{
 							data.ParticularUserQuantityBuy || ''

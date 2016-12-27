@@ -63,15 +63,15 @@ export default class OrderForm extends React.Component{
 		}
 	}
 
-	// shouldComponentUpdate(nextProps, nextState){
-	// 		console.log(this.props.data, nextProps.data);
-	// 	// if((JSON.stringify(this.props.data) == JSON.stringify(nextProps.data) &&
-	// 	// 	this.state == nextState)){
-	// 	// 	return false;
-	// 	// }
-	//
-	// 	return true;
-	// }
+	shouldComponentUpdate(nextProps, nextState){
+			// console.log(this.props.data, nextProps.data);
+		if((JSON.stringify(this.props.data) == JSON.stringify(nextProps.data) &&
+			this.state == nextState)){
+			return false;
+		}
+
+		return true;
+	}
 
 	componentFocus(){
 		let data = this.props.data;
@@ -98,7 +98,6 @@ export default class OrderForm extends React.Component{
 
 	render()
 	{
-		// console.log('asdas');
 		let data = this.props.data;
 		let formData = this.props.formData;
 		let className = data.Side ? 'sell' : 'buy';

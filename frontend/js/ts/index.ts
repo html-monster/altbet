@@ -10,7 +10,7 @@ import { WebsocketModel } from "../react/models/Websocket";
 // declare var WebsocketModel: WebsocketModel;
 
 // local dev option
-// window.__LDEV__ = true;
+// __LDEV__ = true;
 
 
 /**

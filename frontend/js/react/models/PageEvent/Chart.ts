@@ -18,7 +18,7 @@ declare var window;
 
 import { Generator } from './Generator' ;
 
-__LDEV__ = false;
+var __LDEV__ = false;
 
 
 /**

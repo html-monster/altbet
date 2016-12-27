@@ -170,8 +170,10 @@ i.wave{  display: inline-block;  font-style: normal; }
   position: relative;
 }
 
-label.checkbox{
-  user-select: none;
+label.checkbox{  user-select: none;  }
+label.disabled{
+  cursor: default !important;
+  & > span:before, & > span:after{  opacity: 0.5;  }
 }
 
 // Common horizontal check box

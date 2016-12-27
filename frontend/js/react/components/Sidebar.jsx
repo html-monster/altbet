@@ -23,17 +23,18 @@ class Sidebar extends React.Component
 
 	render()
 	{
+		let userIdentity = this.state.globalData.userIdentity;
 		return <div className="left_order">
 			<div className="wrapper">
 				<div className="tabs">
 						<span className="tab active">
 							Trade Slip
-							<label className="trader">
+							<label className={'trader ' + (userIdentity == 'True' ? '' : 'disabled')}>
 								{
 										(this.state.globalData.tradeOn) ?
 											<input type="checkbox" name="limit" className="limit" defaultChecked="true"/>
 										:
-											<input type="checkbox" name="limit" className="limit"/>
+											<input type="checkbox" name="limit" className="limit" disabled={userIdentity != 'True'}/>
 								}
 								<span>
 									Active bettor

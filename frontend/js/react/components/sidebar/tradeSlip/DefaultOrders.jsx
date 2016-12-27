@@ -21,6 +21,28 @@ export default class DefaultOrders extends React.Component{
 	// 		"Orders":[
 	// 			{
 	// 				"Category":"Society",
+	// 				"Price":0.4,
+	// 				"Side":0,
+	// 				"Symbol":{
+	// 					"Exchange":"NYG-WAS-12252016",
+	// 					"Name":"NYG-WAS",
+	// 					"Currency":"USD"
+	// 				},
+	// 				"Volume":155,
+	// 				"Limit":true,
+	// 				"NewOrder": true,
+	// 				"isMirror":1
+	// 			},
+	// 		]
+	// 	};
+	// 	let data2 = {
+	// 		"ID":"NYG-WAS-12252016_NYG-WAS_USD",
+	// 		"EventTitle":"Washington Redskins",
+	// 		"Positions":0,
+	// 		"isMirror":0,
+	// 		"Orders":[
+	// 			{
+	// 				"Category":"Society",
 	// 				"Price":0.3,
 	// 				"Side":0,
 	// 				"Symbol":{
@@ -29,16 +51,19 @@ export default class DefaultOrders extends React.Component{
 	// 					"Currency":"USD"
 	// 				},
 	// 				"Volume":155,
-	// 				"Limit":false,
+	// 				"Limit":true,
 	// 				"NewOrder": true,
 	// 				"isMirror":1
 	// 			},
 	// 		]
 	// 	};
-		// window.actions = this.props.actions.actionOnOrderCreate;
-		// setTimeout(() => {
-		// 	this.props.actions.actionOnOrderCreate(data);
-		// }, 2000);
+	// 	window.actions = this.props.actions.actionOnOrderCreate;
+	// 	setTimeout(() => {
+	// 		this.props.actions.actionOnOrderCreate(data);
+	// 	}, 2000);
+	// 	// setTimeout(() => {
+	// 	// 	this.props.actions.actionOnOrderCreate(data2);
+	// 	// }, 4000);
 	// }
 
 	onDeleteOrderHandler(orderContainer, order)

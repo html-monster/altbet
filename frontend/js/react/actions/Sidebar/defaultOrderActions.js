@@ -17,8 +17,8 @@ export function actionOnDeleteOrder(orderContainer, order)
 {
 	return (dispatch, getState) =>
 	{
-		console.log(orderContainer);
-		console.log(order);
+		// console.log(orderContainer);
+		// console.log(order);
 
 		let orderId;
 		if(order.Side !== undefined	)
@@ -54,34 +54,38 @@ export function actionOnOrderTypeChange(checkboxProp, formData)
 		let price = $(formData.refs.inputPrice);
 		let quantity = $(formData.refs.inputQuantity);
 		let orderID = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
+		let state = getState().tradeSlip.orderNewData;
 
-		getState().tradeSlip.orderNewData.forEach(function (thisItem) {
+		state.forEach(function (thisItem) {
 			if(orderID == thisItem.ID){
-				thisItem.Orders.map(function (item) {
+				thisItem.Orders.some(function (item, index, arr) {
 					if(item.Side == data.Side){
-						item.Limit = !checkboxProp;
+						let newObj = Object.assign({}, item);
+						newObj.Limit = !checkboxProp;
+						arr.splice(index, 1, newObj);
+						return true;
 					}
-					return item;
+					return false;
 				});
 			}
 		});
+		// console.log(state);
 		dispatch({
 			type: ON_DEFAULT_ORDER_TYPE_CHANGE,
-			payload: getState().tradeSlip.orderNewData
+			payload: state
 		});
 		if (!checkboxProp) {
 
 			setTimeout(function () {
-				price.focus();
-				price[0].selectionStart = 4;
+
 			}, 0);
+			price.focus();
+			price[0].selectionStart = 4;
 			OddsConverterObj.calculation(formData, 'price', !checkboxProp);
 		}
 		else {
-			setTimeout(function () {
-				quantity.focus();
-				quantity[0].selectionStart = quantity.val().length;
-			}, 0);
+			quantity.focus();
+			quantity[0].selectionStart = quantity.val().length;
 			OddsConverterObj.calculation(formData, 'quantity', !checkboxProp);
 		}
 	}
@@ -99,6 +103,7 @@ export function actionOnOrderCreate(newOrder)
 // console.log(state);
 // console.log(newOrder);
 		let removedChild;
+		// console.log(state);
 		state.some(function (thisItem, index) {
 			if(newOrder.ID == thisItem.ID){
 				thisItem.Positions = newOrder.Positions;
