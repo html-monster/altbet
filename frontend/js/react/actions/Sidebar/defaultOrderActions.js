@@ -13,6 +13,25 @@ import {OddsConverter} from '../../models/oddsConverter/oddsConverter.js';
 
 let OddsConverterObj = new OddsConverter('implied_probability');
 
+
+export function actionOnLoad(that)
+{
+	return (dispatch, getState) =>
+	{
+		// 0||console.debug( 'TSlp load', getState(), that );
+		// 0||console.debug( 'getState().App.instance.addController', getState().App.instance.addController );
+		getState().App.instance.addController('TradeSlip', that);
+		// ABpp.controllers.TradeSlip = this;
+
+		// dispatch({
+		// 	type: ON_DEFAULT_ORDER_DELETE,
+		// 	payload: newOrders
+		// });
+	};
+}
+
+
+
 export function actionOnDeleteOrder(orderContainer, order)
 {
 	return (dispatch, getState) =>

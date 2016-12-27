@@ -1,0 +1,2 @@
+export const SET_INSTANCE = 'SET_INSTANCE';
+export const ADD_CONTROLLER = 'ADD_CONTROLLER';

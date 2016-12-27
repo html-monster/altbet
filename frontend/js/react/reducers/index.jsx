@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import appState from './appReducer';
 import mainPage from './mainPageReducer';
 import eventPage from './eventPage.js';
 import sidebar from './sidebar.js';
@@ -9,6 +10,7 @@ import yourOrders from './sidebar/yourOrders.js';
 
 
 export default combineReducers({
+	'App': appState,
 	mainPage,
     eventPage,
 	sidebar,

@@ -74,12 +74,13 @@ export function actionOnPosPriceClick(props)
     };
     __LDEV__&&console.debug( 'outStruc', props, outStruc );
 
-    actionOnOrderCreate(outStruc);
+    // actionOnOrderCreate(outStruc);
 
 
     return (dispatch, getState) =>
     {
-        0||console.debug( 'getState()', getState() );
+        // 0||console.debug( 'getState()', getState() );
+        getState().App.controllers.TradeSlip.createNewOrder(outStruc);
         // dispatch({
         //     type: ON_POS_PRICE_CLICK,
         //     payload: {}

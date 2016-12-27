@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import {WebsocketModel} from '../models/Websocket';
 // import Page from '../components/Page'
-// import * as pageActions from '../actions/PageActions';
+import Actions from '../actions/appActions.ts';
 // import * as userActions from '../actions/UserActions';
 
 
@@ -14,6 +14,8 @@ class RApp extends React.Component
     {
         super(props, context);
 
+        props.actions.setInstance(this);
+
         // set base for link urls
         if( location.host == 'localhost' ) ABpp.baseUrl = "/AltBet"   ;
 
@@ -22,9 +24,15 @@ class RApp extends React.Component
         ABpp.Websocket = new WebsocketModel();
         ABpp.Websocket.connectSocketServer();
 
-        // 0||console.debug( 'constr', ABpp.User );
         // globalData.theme
     }
+
+
+    addController(name, that)
+    {
+        this.props.actions.addController(name, that);
+    }
+
 
 
     render() {
@@ -38,11 +46,9 @@ class RApp extends React.Component
 
 
 export default connect(state => ({
-    // user: state.user,
-    // page: state.page,
+    // RApp: state.appState,
 }),
 dispatch => ({
-    // pageActions: bindActionCreators(pageActions, dispatch),
-    // userActions: bindActionCreators(userActions, dispatch)
+    actions: bindActionCreators(Actions, dispatch)
 })
 )(RApp)
