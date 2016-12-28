@@ -7,7 +7,7 @@
 let configBundle = require('./webpackinc/webpack.bundle');
 let configBundleR = require('./webpackinc/webpack.config.redux');
 let configBundleM = require('./webpackinc/webpack.config.models');
-// let configAdmin = require('./webpackinc/webpack.config.admin');
+let configAdmin = require('./webpackinc/webpack.config.admin');
 
 
 
@@ -19,7 +19,7 @@ module.exports = [
     configBundle,
     configBundleR,
     configBundleM,
-    // configAdmin,
+    configAdmin,
     ];
 
 
