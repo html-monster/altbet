@@ -40,11 +40,12 @@ export function actionOnDeleteOrder(orderContainer, order)
 		// console.log(order);
 
 		let orderId;
-		if(order.Side !== undefined	)
+		if(order.Side !== undefined)
 			orderId = order.Side;
 		else
 			orderId = orderContainer.ID;
 
+		// debugger;
 		let newOrders = getState().tradeSlip.orderNewData.filter(function(itemContainer) {
 			if(order.Side !== undefined && itemContainer.ID === orderContainer.ID){
 				itemContainer.Orders = itemContainer.Orders.filter((item) => item.Side !== orderId);
@@ -54,7 +55,7 @@ export function actionOnDeleteOrder(orderContainer, order)
 					return false;
 			}
 			else
-				return itemContainer.ID !== orderId;
+				return itemContainer.ID !== orderId || itemContainer.isMirror !== orderContainer.isMirror;
 		});
 		// console.log(newOrders);
 
@@ -115,18 +116,13 @@ export function actionOnOrderCreate(newOrder)
 	return (dispatch, getState) =>
 	{
 
-		// let data = formData.props.data;
-		// let price = $(formData.refs.inputPrice);
-		// let quantity = $(formData.refs.inputQuantity);
 		let state = getState().tradeSlip.orderNewData;
-// console.log(state);
-// console.log(newOrder);
 		let removedChild;
+		// console.log(newOrder);
 		// console.log(state);
 		state.some(function (thisItem, index) {
-			if(newOrder.ID == thisItem.ID){
+			if(newOrder.ID == thisItem.ID && newOrder.isMirror == thisItem.isMirror){
 				thisItem.Positions = newOrder.Positions;
-				removedChild = state.splice(index, 1);
 				thisItem.Orders.some(function (item, childIndex, arr) {
 					// console.log(item.Side, newOrder.Orders[0].Side);
 					// console.log(state.splice(index, 1));
@@ -147,6 +143,7 @@ export function actionOnOrderCreate(newOrder)
 					}
 					// return item;
 				});
+				removedChild = state.splice(index, 1);
 				return true;
 			}
 			else if(index == state.length - 1){
@@ -154,7 +151,7 @@ export function actionOnOrderCreate(newOrder)
 			}
 		});
 
-		if(state.length == 0){
+		if(state.length == 0 && !removedChild){
 			state.unshift(newOrder);
 		}
 

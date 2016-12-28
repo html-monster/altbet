@@ -19,6 +19,7 @@ export function actionOnPosPriceClick(props)
     let flag = false;
     let qt : any = 0,
         bpr : any = props.type == 1 ? 0 : 99;
+    // debugger;
     if( props.isempty )
     {
         bpr = "0.";
@@ -48,7 +49,7 @@ export function actionOnPosPriceClick(props)
         } // endfor
     } // endif
 
-    props.ismirror && (bpr = Common.toFixed(1 - bpr, 2));
+    props.ismirror && !props.isempty && (bpr = Common.toFixed(1 - bpr, 2));
 
 
     let outStruc = {
@@ -66,7 +67,7 @@ export function actionOnPosPriceClick(props)
                     "Currency": props.data.exdata.Currency
                 },
                 "Volume": qt,
-                "Limit": props.isempty ? 'true' : 'false', // empty ? true : false
+                "Limit": !!props.isempty, // empty ? true : false
                 "NewOrder": true,
                 "isMirror": props.ismirror ? 1 : 0
             },

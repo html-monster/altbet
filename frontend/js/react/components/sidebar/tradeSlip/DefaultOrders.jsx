@@ -14,8 +14,8 @@ export default class DefaultOrders extends React.Component{
 
 	// componentDidMount(){
 	// 	let data = {
-	// 		"ID":"NYG-WAS-12252016_NYG-WAS_USD",
-	// 		"EventTitle":"Washington Redskins",
+	// 		"ID":"ARS-CHE-3122017_ARS-CHE_USD",
+	// 		"EventTitle":"Chelsea",
 	// 		"Positions":0,
 	// 		"isMirror":0,
 	// 		"Orders":[
@@ -24,8 +24,8 @@ export default class DefaultOrders extends React.Component{
 	// 				"Price":0.4,
 	// 				"Side":0,
 	// 				"Symbol":{
-	// 					"Exchange":"NYG-WAS-12252016",
-	// 					"Name":"NYG-WAS",
+	// 					"Exchange":"ARS-CHE-3122017",
+	// 					"Name":"ARS-CHE",
 	// 					"Currency":"USD"
 	// 				},
 	// 				"Volume":155,
@@ -61,9 +61,9 @@ export default class DefaultOrders extends React.Component{
 	// 	setTimeout(() => {
 	// 		this.props.actions.actionOnOrderCreate(data);
 	// 	}, 2000);
-	// 	// setTimeout(() => {
-	// 	// 	this.props.actions.actionOnOrderCreate(data2);
-	// 	// }, 4000);
+	// 	setTimeout(() => {
+	// 		this.props.actions.actionOnOrderCreate(data);
+	// 	}, 4000);
 	// }
 
 	onDeleteOrderHandler(orderContainer, order)
