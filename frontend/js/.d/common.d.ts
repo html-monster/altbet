@@ -9,6 +9,11 @@ declare var globalData;
 declare var defaultMethods;
 
 
+interface JQuery
+{
+    jstree(p1?)
+}
+
 // interface globalData
 // {
 //     myPosOn : any,

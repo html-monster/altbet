@@ -1,2 +1,26 @@
-.navbar-custom-menu { display: none; }
-.navbar-custom-menu { display: none; }
+@import "inc/functions";
+@import "inc/vars";
+@import "inc/default";
+
+
+section.sidebar { overflow: visible }
+.sidebar-menu { overflow: visible }
+
+.label.label-approved { background-color: #00a65a !important; }
+.label.label-new { background-color: #3c8dbc !important; }
+.label.label-completed { background-color: #f39c12  !important; color: #fff; }
+.label.label-settelment { background-color: #d2d6de !important; color: #fff; }
+
+#DiCatTree {
+  li { position: relative;
+    a:hover > .controls { @include block }
+    &.last-node {
+      .btn.del { @include iblock }
+      .controls { margin-right: -106px; }
+    }
+  }
+  .controls { @include box(n,a); margin-right: -80px; padding-left: 10px; right: 0; top: -2px; z-index: 1000;
+    span { @include iblock; margin: 0; padding: 0; width: 22px; height: 22px; }
+    .btn.del { @include nblock }
+  }
+}

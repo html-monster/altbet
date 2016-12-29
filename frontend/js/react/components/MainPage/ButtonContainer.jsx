@@ -45,7 +45,7 @@ export default class ButtonContainer extends React.Component
             {
                 (data.Orders.length && data.Orders.some((item) => item.Side == data.side) ?
                         data.Orders.map((item) =>
-                            (item.Side == data.side ?
+                            (item.Side == data.side && ((data.ismirror && item.SummaryPositionPrice.reverse())||true) ?
                                     item.SummaryPositionPrice.map((item2) =>
                                         <button className={`event animated ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this,
                                                 {

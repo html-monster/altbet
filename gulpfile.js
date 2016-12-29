@@ -30,6 +30,28 @@ const named = require('vinyl-named');
 
 const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV == 'development';
 
+
+function lazyRequire(taskName, inTaskName, path, options)
+{
+    options = options || {};
+    options.isDevelopment = isDevelopment;
+    options.taskName = taskName;
+    gulp.task(taskName, function (callback) {
+        var task = require(path)[inTaskName].call(this, options);
+
+        return task(callback);
+    });
+}
+
+
+// BMS: --- Tasks --------------------------------------------------------------------------------------
+// BM: ================================================================================================ ADMIN STYLES ===
+lazyRequire('styles-admin', 'def', './gulpinc/styles-admin', {
+    src: 'frontend/admin_styles/index-admin.scss',
+    dst: OPTIONS.path.dest_server_admin + '/Content',
+});
+
+
 gulp.task('fonts', function() {
   return gulp.src('frontend/fonts/**/*.*', {since: gulp.lastRun('fonts')})
              .pipe(gulp.dest('public/fonts'));
@@ -58,29 +80,6 @@ gulp.task('styles', function() {
 
 });
 
-
-// BM: ================================================================================================ ADMIN STYLES ===
-gulp.task('styles-admin', function()
-{
-  return gulp.src('frontend/admin_styles/index-admin.scss')
-      .pipe(plumber({
-        errorHandler: notify.onError(err => ({
-          title:   'Styles',
-          message: err.message
-        }))
-      }))
-      .pipe(gulpIf(isDevelopment, sourcemaps.init()))
-      .pipe(sass())
-      .pipe(autoprefixer({
-        browsers: ['last 4 versions']
-      }))
-      .pipe(gulpIf(isDevelopment, sourcemaps.write()))
-      // .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
-      // .pipe(gulp.dest('public/styles'))
-      .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Content'))
-      // .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))));
-
-});
 
 
 
@@ -169,7 +168,15 @@ gulp.task('clean', function() {
   return del(['public', 'manifest']);
 });
 
+
+// BM: ============================================================================================== ONE TIME BUILD ===
 gulp.task('build', gulp.series('clean', gulp.parallel('styles:assets', 'styles', 'js'), 'assets', 'fonts'));
+
+
+gulp.task('admin-watch', function () {
+    gulp.watch('frontend/admin_styles/**/*.*', gulp.series('styles-admin'));
+});
+
 
 gulp.task('serve', function() {
   browserSync.init({

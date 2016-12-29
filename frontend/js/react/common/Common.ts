@@ -137,4 +137,15 @@ export class Common
 
         return true;*/
     }
+
+
+    /**
+     * @param needle
+     * @param haystack
+     * @return {boolean}
+     */
+    public static inArray(needle, haystack) : boolean
+    {
+        return haystack.some(vv => vv == needle);
+    }
 }

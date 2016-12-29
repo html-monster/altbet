@@ -44,7 +44,7 @@ export default class ExchangeItem extends React.Component
                 <span className="symbol_name hidden">{symbol}</span>
             </div>
             <div className="table not-sort wave"> {/*id="exchange_table"*/}
-                <div className="event-content" data-symbol={symbol}>
+                <div className="event-content" data-symbol={symbol}> {/*onClick={}*/}
                     <h3 className="event-title">
                         <span className="title">{data.Symbol.HomeName}</span>
                         <span>{(data.Symbol.HomeHandicap != null ? (data.Symbol.HomeHandicap > 0 ? " +" + data.Symbol.HomeHandicap : " " + data.Symbol.HomeHandicap) : false)}</span>

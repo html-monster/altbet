@@ -1,0 +1,164 @@
+@mixin upper() { text-transform: uppercase; }
+@mixin nupper() { text-transform: none; }
+@mixin a-nou() { text-decoration: none; }
+@mixin black() { color: #000; }
+@mixin bold() { font-weight: bold }
+@mixin italic() { font-style: italic }
+@mixin fLeft() { float: left }
+@mixin fRight() { float: right }
+@mixin lFloat() { float: left }
+@mixin rFloat() { float: right }
+@mixin fNone() { float: none }
+//@mixin right() { text-align: right }
+//@mixin left() { text-align: left }
+//@mixin center() { text-align: center }
+@mixin ralign() { text-align: right }
+@mixin lalign() { text-align: left }
+@mixin calign() { text-align: center }
+@mixin jalign() { text-align: justify }
+@mixin bor() { border: 1px solid red; }
+@mixin openSans() { font-family: 'Open Sans', Verdana, Arial, sans-serif; }
+@mixin block() { display: block; }
+@mixin iblock() { display: inline-block; }
+@mixin nblock() { display: none; }
+
+@function black ($opacity: 1) { @return rgba(0,0,0,$opacity) }
+@function white ($opacity: 1) { @return rgba(255,255,255,$opacity) }
+
+
+@mixin size($width, $height: null) {
+  @if $height == null { font-size: $width }
+  @else { width: $width; height: $height; }
+}
+@mixin size2($props, $inHeight: null)
+{
+  $units: '';
+  @if length($props) > 2 { $units: nth($props, 3); }
+  $width: nth($props, 1);
+  $height: nth($props, 2);
+  width: $width#{$units}; height: $height#{$units};
+}
+@mixin square($size) {
+  @include size($size, $size);
+}
+
+@mixin box($block, $pos, $props: null) {
+  @if $block != '-' and $block != 0 {
+    @if $block == 'b' { $block: block; }
+    @else if $block == 'n' { $block: none; }
+    @else if $block == 'f' { $block: flex; }
+    @else if $block == 'c' { $block: table-cell; }
+    @else { $block: inline-block; }
+    display: $block;
+  }
+
+  @if $pos != '-' and $pos != 0 {
+    @if $pos == 'r' { $pos: relative; }
+    @else if $pos == 'a' { $pos: absolute; }
+    @else { $pos: fixed; }
+    position: $pos;
+  }
+
+  @if $props != null {
+    $units: '';
+    @if length($props) < 3 { $units: ''; }
+    @else { $units: nth($props, 3); }
+    $width: nth($props, 1);
+    $height: nth($props, 2);
+
+    @if $width != '-' { width: $width#{$units}; }
+    height: $height#{$units};
+  }
+}
+
+@mixin bg ($img, $prop: null, $bgcolor: null) {
+  @if $prop == null { $prop: 0 0 no-repeat }
+  @else {
+    @if length($prop) < 3 { $prop: append($prop, no-repeat, 'space') }
+  }
+  //$img: "#{$theme-path-pic}/#{$img}";
+  $img: $theme-path-pic+'/'+$img;
+  @if $bgcolor == null { $bgcolor: transparent }
+  background: $bgcolor url($img) $prop;
+}
+@mixin bgi ($img) {
+  $img: $theme-path-pic+'/'+$img;
+  background-image: url($img);
+}
+
+
+@mixin background-image($inDirection, $inColorGradBegin, $inColorGradBeginPer, $inColorGradEnd, $inColorGradEndPer ) {
+  background-image: -moz-linear-gradient($inDirection, $inColorGradBegin $inColorGradBeginPer, $inColorGradEnd $inColorGradEndPer);
+  background-image: -webkit-linear-gradient($inDirection, $inColorGradBegin $inColorGradBeginPer, $inColorGradEnd $inColorGradEndPer);
+  background-image: -o-linear-gradient($inDirection, $inColorGradBegin $inColorGradBeginPer, $inColorGradEnd $inColorGradEndPer);
+  background-image: -ms-linear-gradient($inDirection, $inColorGradBegin $inColorGradBeginPer ,$inColorGradEnd $inColorGradEndPer);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='${inColorGradBegin}', endColorstr='${inColorGradEnd}',GradientType=0 );
+}
+
+
+@mixin box-emboss ($opacity: 1, $opacity2: 1) {
+    box-shadow:white($opacity) 0 1px 0, inset black($opacity2) 0 1px 0;
+}
+
+@mixin letterpress($opacity){
+    text-shadow:white($opacity) 0 1px 0;
+}
+
+@mixin hide-text { display:block; text-indent:-9000px; overflow:hidden; }
+
+
+@mixin media-xs() {
+  @if( $allowMedia ) {
+    @media (max-width:350px) {
+      @content
+    }
+  }
+}
+
+
+@mixin media-max-sm() {
+  @if( $allowMedia ) {
+    @media (max-width:767px) {
+      @content
+    }
+  }
+}
+
+@mixin media-max-md() {
+  @if( $allowMedia ) {
+    @media (max-width:992px) {
+      @content
+    }
+  }
+}
+
+
+@mixin media-sm() {
+  @if( $allowMedia ) {
+    @media (min-width: 768px) {
+      @content
+    }
+  }
+}
+
+@mixin media-md() {
+  @if( $allowMedia ) {
+    @media (min-width: 992px) {
+      @content
+    }
+  }
+}
+
+@mixin media-lg() {
+  @if( $allowMedia ) {
+    @media (min-width: 1200px) {
+      @content
+    }
+  }
+}
+
+@mixin mobile() {
+  @if( $allowMobile ) {
+    @content
+  }
+}

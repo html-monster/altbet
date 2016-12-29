@@ -1,0 +1,28 @@
+$theme-path: '/theme';
+$theme-path-pic: #{$theme-path}/pic;
+$theme-path-fonts: #{$theme-path}/fonts;
+//$theme-path-fonts: fonts;
+
+$color1Green: #abb820;
+$color2Black: #212121;
+$color3Gray: #e3e3e3; // menu bg
+$color3GrayNew: #f2f2f2; // vac bg's
+$color4: #d0dc54; // menu hover
+$color5Orange: #ff6500;
+$color6Borders: #777; // borders
+$color7: #F7F7F7; // inputs
+$color8: #fff200; // progress
+$color9Red: #ff462d; // progress
+$colorB: lighten(silver, 10%);
+$color1Blue: #17365D;
+
+$font-Roboto-Regular: Roboto-Regular, verdana, arial;
+$font-RobotoCondensed-Regular: RobotoCondensed-Regular, verdana, arial;
+//$font-Roboto-LightItalic: Roboto-LightItalic;
+//$font-Roboto-Medium: Roboto-Medium;
+//$font-Roboto-Bold: Roboto-Bold;
+//$font-RobotoCondensed-Bold: RobotoCondensed-Bold;
+//$font-Myriad-Pro: Myriad Pro, verdana, arial;
+$font-Myriad-Pro: Myriad-Pro, verdana, arial;
+
+$font-size-base: 13px;

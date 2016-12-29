@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import BaseController from '../common/BaseController';
 import ExchangeItem from '../components/MainPage/ExchangeItem';
 // import * as mainPageActions from '../actions/mainPageActions';
-import * as mainPageActions from '../actions/MainPageActions.ts';
+import mainPageActions from '../actions/MainPageActions.ts';
 
 class MainPage extends React.Component implements BaseController
 {
