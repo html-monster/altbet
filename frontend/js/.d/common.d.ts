@@ -12,6 +12,9 @@ declare var defaultMethods;
 interface JQuery
 {
     jstree(p1?)
+    datepicker(p1?);
+    daterangepicker(p1?);
+    select2(p1?);
 }
 
 // interface globalData

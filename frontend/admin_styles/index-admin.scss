@@ -3,6 +3,8 @@
 @import "inc/default";
 
 
+.modal { overflow: auto }
+
 section.sidebar { overflow: visible }
 .sidebar-menu { overflow: visible }
 
@@ -15,12 +17,13 @@ section.sidebar { overflow: visible }
   li { position: relative;
     a:hover > .controls { @include block }
     &.last-node {
-      .btn.del { @include iblock }
+      .btn[data-type=del] { @include iblock }
       .controls { margin-right: -106px; }
     }
   }
   .controls { @include box(n,a); margin-right: -80px; padding-left: 10px; right: 0; top: -2px; z-index: 1000;
     span { @include iblock; margin: 0; padding: 0; width: 22px; height: 22px; }
-    .btn.del { @include nblock }
+    .btn[data-type=del] { @include nblock }
   }
 }
+
