@@ -31,6 +31,8 @@ export class ABpp
                 currentPage: null       // current page
             };
 
+    public actions : any = {};
+
     public User: User = null;           // user entity
     public Websocket: WebsocketModel = null; // websocket object
     public baseUrl: "";                 // add before urls
@@ -56,6 +58,12 @@ export class ABpp
 
         // create user
         this.createUser();
+    }
+
+
+    public registerAction(name, action)
+    {
+        this.actions[name] = action;
     }
 
 

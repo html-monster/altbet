@@ -12,6 +12,10 @@ var __LDEV__ = true;
 
 class Actions extends BaseActions
 {
+    private connectedActions : any = {};
+
+
+
     public actionOnLoad()
     {
         return (dispatch, getState) =>
@@ -122,33 +126,80 @@ class Actions extends BaseActions
 
 
 
-    public exchangeSideClick()
+    public exchangeSideClick(inProps)
     {
-        return (dispatch, getState) =>
+        let actionFunc = (dispatch, getState) =>
         {
-            // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
-/*
-            if (true || checkbox.prop('checked')) {
-                // var titles = $(this).parents('.content_bet').find('.event-title .title'),
-                //         symbol = $(this).attr('data-symbol');
-                //
-                // e.stopPropagation();
-                // tableLimitChangeData($(this), titles);
-                // $(this).parents('.content_bet').addClass('active');
-                // $('[data-symbol=' + symbol + ']').addClass('active');
-                // tabs.removeClass('active').eq($(this).index()).addClass('active');
+            console.debug( 'exchangeSideClick', getState());
 
-                // activeTraderClass.takeData($(this));
-                // activeTraderClass.spreaderClean(true);
-                // activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
-                // activeTraderClass.spreadVisability();
-            }
-*/
+            if( $('.left_order .tab input.limit').prop('checked') )
+            {
+                // remove after move react
+                $('.content_bet').removeClass('active');
+                $('.event-content').removeClass('active');
+
+                // set current tab
+                $('.active_trader .event_title .event_name').removeClass('active').eq(inProps.isMirror ? 1 : 0).addClass('active');
+
+                // todo: needs move to sidebar
+                // set new tabs titles
+                var tabs = $('.active_trader .event_title .event_name');
+                var ii = 0;
+                tabs.each(function () {
+                    $(this).text(inProps.title[ii++]);
+                });
+
+
+                // todo: needs move to activeTrader
+                // берет данные при смене события(название события, symbol и т.п.)
+                var activeTrader = $('.active_trader');
+                activeTrader.attr('id', 'trader_' + inProps.symbol);
+                activeTrader.find('table.limit tbody').removeClass('scroll_dis');
+
+                activeTraderClass.spreaderClean(true);
+                activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);
+            } // endif
+
+
+            dispatch({
+                type: ON_POS_PRICE_CLICK,
+                payload: [inProps.name, inProps.isMirror]
+            });
+        };
+
+        this.connectedActions['exchangeSideClick'] = actionFunc;
+
+        return actionFunc;
+    }
+
+
+
+    public firstExchangeActivate(inProps)
+    {
+        var $that = this;
+        let action = (dispatch, getState) =>
+        {
+            let data = getState().mainPage.marketsData["0"];
+            console.debug( 'firstExchangeActivate', $that.connectedActions, this.connectedActions['exchangeSideClick'], getState(), {name: data.Symbol.Exchange,
+                isMirror: false,
+                title: [data.Symbol.HomeName, data.Symbol.AwayName],
+                symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
+            });
+            $that.connectedActions.exchangeSideClick({name: data.Symbol.Exchange,
+                isMirror: false,
+                title: [data.Symbol.HomeName, data.Symbol.AwayName],
+                symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
+            });
+
             // dispatch({
             //     type: ON_POS_PRICE_CLICK,
-            //     payload: {}
+            //     payload: [inProps.name, inProps.isMirror]
             // });
-        }
+        };
+
+        this.connectedActions['firstExchangeActivate'] = action;
+
+        return action;
     }
 }
 

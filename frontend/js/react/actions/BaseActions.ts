@@ -13,8 +13,9 @@ export default class BaseActions
         {
             if (Common.inArray(ii, ['export', 'constructor'])) continue;
             let val : any = this[ii];
+
 // 0||console.debug( 'val', val );
-            methods[ii] = val.bind(this);
+            if (typeof val == 'function') methods[ii] = val.bind(this);
             // methods[ii] = val;
         } // endfor
 

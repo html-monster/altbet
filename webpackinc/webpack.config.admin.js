@@ -2,7 +2,7 @@ const path = require('path');
 const options = require('./pathes');
 const webpack = require('webpack');
 const WebpackNotifierPlugin = require('webpack-notifier');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+// var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // const loaders = require('./webpack/loaders');
 // const plugins = require('./webpack/plugins');
@@ -60,9 +60,9 @@ module.exports = {
 
     plugins: [
         new WebpackNotifierPlugin({title: 'bundle ADM.js', alwaysNotify: true}),
-        new ExtractTextPlugin('[name].css', {
-            allChunks: true
-        })
+        // new ExtractTextPlugin('[name].css', {
+        //     allChunks: true
+        // })
         // new webpack.DefinePlugin({
         //     __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
         //     __TEST__: JSON.stringify(process.env.TEST || false),
@@ -79,12 +79,14 @@ module.exports = {
                 loader: 'ts-loader',
                 exclude: /node_modules/,
             },
+/*
             {
                 test: /\.scss?$/,
                 loader: ExtractTextPlugin.extract('sass-loader?sourceMap')
                 // loader: ExtractTextPlugin.extract('style-loader', 'css-loader!resolve-url!sass-loader?sourceMap')
                 // loaders: ["sass-loader?sourceMap"]
             }
+*/
         ]
     },
 

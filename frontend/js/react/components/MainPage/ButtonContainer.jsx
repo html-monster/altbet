@@ -8,6 +8,7 @@ export default class ButtonContainer extends React.Component
 {
     render()
     {
+        let SummaryPositionPrice;
         let isBasicMode = ABpp.User.settings.basicMode;
         // let $DateLocalization = new DateLocalization();
         let data = this.props.data;
@@ -25,7 +26,6 @@ export default class ButtonContainer extends React.Component
             var mirrorClass = 'real';
             // var price = isBasicMode ? item.Price : item.Price;
         } // endif
-        // price = Common.toFixed(price, 2);
 
 
         if( data.type == 'sell' )
@@ -45,8 +45,8 @@ export default class ButtonContainer extends React.Component
             {
                 (data.Orders.length && data.Orders.some((item) => item.Side == data.side) ?
                         data.Orders.map((item) =>
-                            (item.Side == data.side && ((data.ismirror && item.SummaryPositionPrice.reverse())||true) ?
-                                    item.SummaryPositionPrice.map((item2) =>
+                            (item.Side == data.side && ((data.ismirror ? (SummaryPositionPrice = item.SummaryPositionPrice.slice().reverse()) : (SummaryPositionPrice = item.SummaryPositionPrice.slice()))||true) ?
+                                    SummaryPositionPrice.map((item2) =>
                                         <button className={`event animated ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this,
                                                 {
                                                     PosPrice: item.SummaryPositionPrice,

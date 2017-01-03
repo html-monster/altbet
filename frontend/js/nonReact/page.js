@@ -83,8 +83,9 @@ $(document).ready(function () {
 	// 	}
 	// })();
 
-	Waves.init();
-	Waves.attach('.wave:not([disabled])', ['waves-button']);
+	// BM: Waves
+	// Waves.init();
+	// Waves.attach('.wave:not([disabled])', ['waves-button']);
 
 	(function showPass () {
 		let input = $('.input__field');

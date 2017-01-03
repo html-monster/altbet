@@ -36,13 +36,16 @@
 				active_trader.fadeIn(200);
 				buttons.attr('disabled', true);
 				activeTraderClass.tbodyResize();
-				event_container.eq(0).find('.event-content').eq(0).addClass('active');
 				// activeTraderClass.spreadVisability();
 				if($('.wrapper_event_page').length)
 						executedOrders.find('td.clickable').removeClass('clickable');
 
-				if(symbol) $('[data-symbol=' + symbol + ']').addClass('active');
-				event_container.addClass('clickable').eq(0).addClass('active');
+				// === Vlasakh === 17-01-03 ===============================================
+                setTimeout(() => ABpp.actions['MainPage.firstExchangeActivate'](), 1000);
+				// event_container.eq(0).find('.event-content').eq(0).addClass('active');
+				// if(symbol) $('[data-symbol=' + symbol + ']').addClass('active');
+				// event_container.addClass('clickable').eq(0).addClass('active');
+				// === ==================== ===============================================
 				$('.active_trader .event_title .event_name').each(function () {
 					$(this).text(titles.eq(ii++).text());
 				});
@@ -84,11 +87,11 @@
 				}
 			});
 			event_content.click(function (e) {
+				return ; // added after move this to react
 				if (checkbox.prop('checked')) {
 					var titles = $(this).parents('.content_bet').find('.event-title .title'),
 							symbol = $(this).attr('data-symbol');
 
-					e.stopPropagation();
 					tableLimitChangeData($(this), titles);
 					$(this).parents('.content_bet').addClass('active');
 					$('[data-symbol=' + symbol + ']').addClass('active');
@@ -98,15 +101,17 @@
 					activeTraderClass.spreaderClean(true);
 					activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
 					// activeTraderClass.spreadVisability();
+
+					// e.stopPropagation();
 				}
 			});
 
 			function tableLimitChangeData(current, title) {
 				var ii = 0;
 
-				$(event_container).removeClass('active');
-				event_content.removeClass('active');
-				current.addClass('active');
+				// $(event_container).removeClass('active');
+				// event_content.removeClass('active');
+				// current.addClass('active');
 				tabs.each(function () {
 					$(this).text(title.eq(ii++).text());
 				});
@@ -908,16 +913,21 @@
 			}, 200);
 			activeTraderClass.tbodyResize();
 			buttons.attr('disabled', true);
-			if(event_container.hasClass('active')){
-				event_container.addClass('clickable');
-			} else {
-				if(symbol) $('[data-symbol=' + symbol + ']').addClass('active');
-				event_container.addClass('clickable').eq(0).addClass('active');
-				titles = $('.content_bet.active .event-title .title');
-				$('.active_trader .event_title .event_name').each(function () {
-					$(this).text(titles.eq(ii++).text());
-				});
-			}
+
+			// === Vlasakh === 17-01-03 ===============================================
+            ABpp.actions['MainPage.firstExchangeActivate']();
+			// if(event_container.hasClass('active')){
+			// 	event_container.addClass('clickable');
+			// } else {
+			// 	if(symbol) $('[data-symbol=' + symbol + ']').addClass('active');
+			// 	event_container.addClass('clickable').eq(0).addClass('active');
+			// 	titles = $('.content_bet.active .event-title .title');
+			// 	$('.active_trader .event_title .event_name').each(function () {
+			// 		$(this).text(titles.eq(ii++).text());
+			// 	});
+			// }
+			// === ==================== ===============================================
+
 			orderClass.tabReturn();
 			setTimeout(function () {
 				if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == ''){
