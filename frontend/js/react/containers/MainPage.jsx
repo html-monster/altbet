@@ -2,21 +2,21 @@ import React from 'react' ;
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import BaseController from '../common/BaseController';
+import BaseController from './BaseController';
 import ExchangeItem from '../components/MainPage/ExchangeItem';
-// import * as mainPageActions from '../actions/mainPageActions';
 import mainPageActions from '../actions/MainPageActions.ts';
 
-class MainPage extends React.Component implements BaseController
+
+// class MainPage extends React.Component
+class MainPage extends BaseController
 {
     constructor(props)
     {
-        super();
-
+        super(props);
         // ABpp.controllers.MainPage
 
-        0||console.debug( 'this.props'  , props );
-        // this.state = {data: props.mainPageData};
+        0||console.debug( 'this.props', props );
+
         props.actions.actionOnLoad();
     }
 
@@ -83,12 +83,13 @@ class MainPage extends React.Component implements BaseController
 
 // __DEV__&&console.debug( 'connect', connect );
 
-export default connect(state => ({
-    data: state.mainPage,
-    // test: state.Ttest,
-}),
-dispatch => ({
-    // actions: bindActionCreators(actions, dispatch),
-    actions: bindActionCreators(mainPageActions, dispatch),
-})
+export default connect(
+    state => ({
+        data: state.mainPage,
+        // test: state.Ttest,
+    }),
+    dispatch => ({
+        // actions: bindActionCreators(actions, dispatch),
+        actions: bindActionCreators(mainPageActions, dispatch),
+    })
 )(MainPage)

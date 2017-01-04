@@ -6,6 +6,29 @@ import { Common } from "../common/Common";
 
 export default class BaseActions
 {
+    protected connectedActions : any = {};
+
+
+    /**
+     * return Instance of the action object
+     * @return {BaseActions}
+     */
+    public getInstance()
+    {
+        return this;
+    }
+
+
+
+    public setConnectedActions(inObj)
+    {
+        return (dispatch, getState) => {
+            this.connectedActions = inObj;
+        }
+    }
+
+
+
     public export()
     {
         let methods : any = {};

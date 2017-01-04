@@ -5,12 +5,12 @@
 /// <reference path="./../js/.d/common.d.ts" />
 /// <reference path="./../js/.d/jquery.d.ts" />
 
-import { GroupsTree } from "./controllers/GroupsTree";
-import { AddExchangeForm } from "./controllers/AddExchangeForm";
+import App from "./ADpp";
 
+
+var ADpp = new App();
 
 $(document).ready(function()
 {
-    (new GroupsTree()).init();
-    (new AddExchangeForm()).init();
+    ADpp.ready();
 });

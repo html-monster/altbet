@@ -42,7 +42,7 @@ export class GroupsTree
     public onTreeControlClick(e, that)
     {
         var $that = $(that);
-        0||console.debug( '$that.data(url)', $that.data('url') );
+        // 0||console.debug( '$that.data(url)', $that.data('url') );
 
         if( $that.data('type') == 'del' )
         {

@@ -12,10 +12,6 @@ var __LDEV__ = true;
 
 class Actions extends BaseActions
 {
-    private connectedActions : any = {};
-
-
-
     public actionOnLoad()
     {
         return (dispatch, getState) =>
@@ -128,7 +124,7 @@ class Actions extends BaseActions
 
     public exchangeSideClick(inProps)
     {
-        let actionFunc = (dispatch, getState) =>
+        return (dispatch, getState) =>
         {
             console.debug( 'exchangeSideClick', getState());
 
@@ -166,26 +162,21 @@ class Actions extends BaseActions
                 payload: [inProps.name, inProps.isMirror]
             });
         };
-
-        this.connectedActions['exchangeSideClick'] = actionFunc;
-
-        return actionFunc;
     }
 
 
 
     public firstExchangeActivate(inProps)
     {
-        var $that = this;
-        let action = (dispatch, getState) =>
+        return (dispatch, getState) =>
         {
             let data = getState().mainPage.marketsData["0"];
-            console.debug( 'firstExchangeActivate', $that.connectedActions, this.connectedActions['exchangeSideClick'], getState(), {name: data.Symbol.Exchange,
+            console.debug( 'firstExchangeActivate', this.connectedActions, this.connectedActions['exchangeSideClick'], getState(), {name: data.Symbol.Exchange,
                 isMirror: false,
                 title: [data.Symbol.HomeName, data.Symbol.AwayName],
                 symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
             });
-            $that.connectedActions.exchangeSideClick({name: data.Symbol.Exchange,
+            this.connectedActions.exchangeSideClick({name: data.Symbol.Exchange,
                 isMirror: false,
                 title: [data.Symbol.HomeName, data.Symbol.AwayName],
                 symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
@@ -196,10 +187,6 @@ class Actions extends BaseActions
             //     payload: [inProps.name, inProps.isMirror]
             // });
         };
-
-        this.connectedActions['firstExchangeActivate'] = action;
-
-        return action;
     }
 }
 

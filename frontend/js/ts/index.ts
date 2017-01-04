@@ -26,6 +26,8 @@ export class ABpp
     public static THEME_LIGHT = 'light';
 
     // application config
+    // public controllers : any = {};
+
     public config = {
                 currentTheme: null,     // current theme
                 currentPage: null       // current page

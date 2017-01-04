@@ -5,9 +5,9 @@
 /// <reference path="../../js/.d/common.d.ts" />
 
 
-export class AddExchangeForm
+export default class Exchanges
 {
-    public init()
+    public actionView()
     {
         $('.js-dt-start-date, .js-dt-end-date').daterangepicker({
             "singleDatePicker": true,
