@@ -39,7 +39,18 @@ class MainPage extends BaseController
     firstExchangeActivate()
     {
         // 0||console.debug( 'firstExchangeActivate', this );
-        this.props.actions.firstExchangeActivate();
+        this.props.actions.firstExchangeActivate(this);
+    }
+
+
+
+    /**
+     * activates exchange click action
+     * @public
+     */
+    exchangeSideClick(inProps)
+    {
+        this.props.actions.exchangeSideClick(inProps);
     }
 
 

@@ -48,7 +48,7 @@ export default class ExchangeItem extends React.Component
                     {$DateLocalization.fromSharp(data.Symbol.StartDate, 0).unixToLocalDate()}
                     <span className="help_message"><span>MM/DD/YYYY</span></span>
                 </span>
-                {/*@*<i className="half_time">ht<span>half-time</span></i>*@*/}
+                {data.Symbol.Status == "completed" ? <i className="half_time" title={data.Symbol.Status}>ht<span>{data.Symbol.Status}</span></i> : ""}
             </div>
             <div className="content_title command">
                 <h2>{data.Symbol.HomeName} {(data.Symbol.HomePoints != null) ? <span>{data.Symbol.HomePoints}</span> : '' }</h2>

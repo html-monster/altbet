@@ -41,7 +41,7 @@
 						executedOrders.find('td.clickable').removeClass('clickable');
 
 				// === Vlasakh === 17-01-03 ===============================================
-                setTimeout(() => ABpp.actions['MainPage.firstExchangeActivate'](), 1000);
+                setTimeout(() => { if (ABpp.actions['MainPage.firstExchangeActivate']) ABpp.actions['MainPage.firstExchangeActivate']() }, 1000);
 				// event_container.eq(0).find('.event-content').eq(0).addClass('active');
 				// if(symbol) $('[data-symbol=' + symbol + ']').addClass('active');
 				// event_container.addClass('clickable').eq(0).addClass('active');

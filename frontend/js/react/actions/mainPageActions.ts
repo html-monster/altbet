@@ -23,7 +23,7 @@ class Actions extends BaseActions
 
                 if( JSON.stringify(inData) != JSON.stringify(state) )
                 {
-    // __DEV__&&console.debug( 'inData', inData, state );
+    __DEV__&&console.debug( 'inData', inData, state );
                     dispatch({
                         type: ON_SOCKET_MESSAGE,
                         payload: inData
@@ -126,14 +126,15 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            console.debug( 'exchangeSideClick', getState());
+            // console.debug( 'exchangeSideClick', getState());
 
             if( $('.left_order .tab input.limit').prop('checked') )
             {
                 // remove after move react
-                $('.content_bet').removeClass('active');
-                $('.event-content').removeClass('active');
+                // $('.content_bet').removeClass('active');
+                // $('.event-content').removeClass('active');
 
+                // todo: needs move to sidebar
                 // set current tab
                 $('.active_trader .event_title .event_name').removeClass('active').eq(inProps.isMirror ? 1 : 0).addClass('active');
 
@@ -166,26 +167,17 @@ class Actions extends BaseActions
 
 
 
-    public firstExchangeActivate(inProps)
+    public firstExchangeActivate(inController)
     {
         return (dispatch, getState) =>
         {
             let data = getState().mainPage.marketsData["0"];
-            console.debug( 'firstExchangeActivate', this.connectedActions, this.connectedActions['exchangeSideClick'], getState(), {name: data.Symbol.Exchange,
-                isMirror: false,
-                title: [data.Symbol.HomeName, data.Symbol.AwayName],
-                symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
-            });
-            this.connectedActions.exchangeSideClick({name: data.Symbol.Exchange,
-                isMirror: false,
-                title: [data.Symbol.HomeName, data.Symbol.AwayName],
-                symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
-            });
 
-            // dispatch({
-            //     type: ON_POS_PRICE_CLICK,
-            //     payload: [inProps.name, inProps.isMirror]
-            // });
+            inController.exchangeSideClick({name: data.Symbol.Exchange,
+                isMirror: false,
+                title: [data.Symbol.HomeName, data.Symbol.AwayName],
+                symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
+            });
         };
     }
 }

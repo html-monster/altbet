@@ -9,17 +9,6 @@ export default class BaseActions
     protected connectedActions : any = {};
 
 
-    /**
-     * return Instance of the action object
-     * @return {BaseActions}
-     */
-    public getInstance()
-    {
-        return this;
-    }
-
-
-
     public setConnectedActions(inObj)
     {
         return (dispatch, getState) => {

@@ -11,7 +11,24 @@ export default class BaseController extends React.Component
     {
         super(props);
 
+        /** @public */
+        this.actions = {};
+
+
+        this.init();
+    }
+
+
+
+    /**
+     * @private
+     */
+    init()
+    {
         // set connected actions for call action from action
-        props.actions.setConnectedActions(props.actions);
+        /// props.actions.setConnectedActions(props.actions);
+
+        // actions of the controller
+        /// if (this.props.actions) this.actions = this.props.actions;
     }
 }
