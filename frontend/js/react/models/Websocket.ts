@@ -14,6 +14,7 @@
 export class WebsocketModel
 {
     public static CALLBACK_MAINPAGE_EXCHANGES = "CMPE1";      // a main page recieve data callback
+    public static CALLBACK_EVENTPAGE_ORDERS = "CEPO2";      // a event page recieve data callback
 
     private noSupportMessage = "Your browser cannot support WebSocket!";
     private ws = null;
@@ -148,7 +149,10 @@ export class WebsocketModel
         if(globalData.tradeOn) window.ee.emit('activeOrders.update', data.ActiveOrders);//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
 
         if (data.ActiveOrders != null)
+        {
+            self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS] && self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS](data.ActiveOrders, data.Bars)
             dataController.updateEventData(data.ActiveOrders, data.Bars);
+        }
 
         if(data.Result != null && globalData.eventPageOn)
         {

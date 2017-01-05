@@ -4,8 +4,8 @@
   }
   .select2-results {
     li {
-      span.icon { @include box(b,r); height: 24px; padding-left: 30px;
-        &:before { content: ''; @include box(b,a,24 22 px); left: 0; top: 0; background: red url(../Images/sprite.svg) no-repeat; }
+      span.icon { @include box(b,r); height: 24px; padding-left: 30px; @include main_page_event_icon;
+        &:before { content: ''; @include box(b,a,24 22 px); left: 0; top: 0; background: url(../Images/sprite.svg) no-repeat; }
       }
     }
   }

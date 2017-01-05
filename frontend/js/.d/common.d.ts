@@ -2,7 +2,7 @@ declare let __DEV__;
 declare let ABpp;
 declare let __LDEV__;
 declare let moment;
-declare var window : any;
+// declare var window : any;
 declare var dataController;
 declare var mainChartController;
 declare var globalData;
@@ -17,6 +17,14 @@ interface JQuery
     daterangepicker(p1?);
     select2(p1?);
 }
+
+
+interface Window
+{
+    ADpp : any
+}
+
+
 
 // interface globalData
 // {

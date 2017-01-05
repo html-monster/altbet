@@ -29,6 +29,7 @@ export default class Chart extends React.Component
     {
         // const { openOrdersData, positionData, historyData } = this.state.data;
         let checked = this.state.checked;
+
         return <div>
                 <h2>{this.props.data.pageEventData.IsMirrorName}</h2>
                 <label className="chk-chart-type checkbox checkbox_horizontal green-brown label-left">

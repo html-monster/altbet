@@ -35,6 +35,8 @@ $main_page_pos_color: #bab500;
 $main_page_event_title: transparentize(#ffffff, 0.2);
 $main_page_event_chart_button: url(../Images/sprite.svg) no-repeat -224px -354px;
 @mixin main_page_event_bg{  background: linear-gradient(to bottom, #53515e, #292830);  }
+
+// при изменении поменять и в /frontend/admin_styles/inc/_vars.scss  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 @mixin main_page_event_icon{
 	&.sport:before{  background-position: -68px -276px;  }
 	&.e_sport:before{  background-position: -186px -276px;  }

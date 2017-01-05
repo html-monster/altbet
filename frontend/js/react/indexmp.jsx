@@ -53,7 +53,7 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_EVENT ) {
 		<Provider store={store}>
 			<EventPage />
 		</Provider>,
-	  document.getElementById('DiEventPage')
+	  document.getElementById('DiMPEventPage')
 	);
 }
 

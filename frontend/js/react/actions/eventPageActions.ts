@@ -1,22 +1,65 @@
-import { ON_TEST } from '../constants/ActionTypesPageEvent'
+import {
+    ON_SOCKET_MESSAGE,
+} from '../constants/ActionTypesPageEvent'
+
+import BaseActions from './BaseActions';
+import { WebsocketModel } from '../models/Websocket';
 
 
-export function actionTest()
+var __LDEV__ = true;
+
+class Actions extends BaseActions
 {
-// // 0||console.debug( 'ABpp.EventPage', ABpp.EventPage );
-//     var ChartObj = new ABpp.EventPage.Chart();
-//     // Listen for chart data
-//     window.ee.addListener('EventPage.Chart.setData', function (data)
-//     {
-//         // __DEV__&&console.warn( 'EventPage.Chart.setData listened', data );
-//         ChartObj.drawEventChart(data);
-//     });
-//
-//         __DEV__&&console.warn( 'this', this );
-//     return (dispatch) => {
-//         dispatch({
-//             type: ON_CHART_MOUNT,
-//             payload: {}
-//         });
-//     }
+    public actionOnLoad()
+    {
+        return (dispatch, getState) =>
+        {
+            ABpp.Websocket.subscribe((inActiveOrders, inBars) =>
+            {
+                // __DEV__&&console.debug( 'on load ok' , inActiveOrders, inBars, getState());
+                let activeOrders = getState().eventPage.socket.activeOrders;
+                let bars = getState().eventPage.socket.bars;
+
+                if( JSON.stringify(inActiveOrders) != JSON.stringify(activeOrders) ||
+                    JSON.stringify(inBars) != JSON.stringify(bars) )
+                {
+    // __DEV__&&console.debug( 'changed', inActiveOrders, inBars,  activeOrders, bars );
+                    dispatch({
+                        type: ON_SOCKET_MESSAGE,
+                        payload: { activeOrders: inActiveOrders, bars: inBars }
+                    });
+    //             }
+    //             else
+    //             {
+    // __DEV__&&console.debug('samedata');
+                } // endif
+
+            }, WebsocketModel.CALLBACK_EVENTPAGE_ORDERS);
+        }
+    }
+
+
+
+    /**
+     * Create bet form in side bar
+     * @param props
+     * @return {(dispatch:any, getState:any)=>undefined}
+     */
+    public actionOnPosPriceClick(props)
+    {
+
+
+        return (dispatch, getState) =>
+        {
+            // 0||console.debug( 'getState()', getState() );
+            // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+            // dispatch({
+            //     type: ON_POS_PRICE_CLICK,
+            //     payload: {}
+            // });
+        }
+    }
 }
+
+
+export default (new Actions()).export();

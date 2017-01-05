@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import appState from './appReducer';
 import mainPage from './mainPageReducer';
-import eventPage from './eventPage.js';
+import eventPage from './eventPageReducer.js';
 import sidebar from './sidebar.js';
 import tradeSlip from './sidebar/defaultOrders.js';
 import yourOrders from './sidebar/yourOrders.js';

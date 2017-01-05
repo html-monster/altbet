@@ -13,6 +13,13 @@ section.sidebar { overflow: visible }
 .label.label-completed { background-color: #f39c12  !important; color: #fff; }
 .label.label-settelment { background-color: #d2d6de !important; color: #fff; }
 
+
+#DiLoading { @include box(n,a); z-index: 9999;
+  &.wb-sq, &.wb { padding: 5px; background: #fff; border-radius: 5px; }
+  &.wb { padding: 5px 15px }
+}
+
+
 #DiCatTree {
   li { position: relative;
     a:hover > .controls { @include block }
