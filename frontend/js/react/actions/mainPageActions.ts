@@ -23,7 +23,7 @@ class Actions extends BaseActions
 
                 if( JSON.stringify(inData) != JSON.stringify(state) )
                 {
-    __DEV__&&console.debug( 'inData', inData, state );
+    // __DEV__&&console.debug( 'inData', inData, state );
                     dispatch({
                         type: ON_SOCKET_MESSAGE,
                         payload: inData
