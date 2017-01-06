@@ -92,6 +92,7 @@ class EventPage extends React.Component implements BaseController
                             </tr>
                         </thead>
                         <tbody>
+                           <tr class=""><td><span>alt.bet</span></td><td class="price buy animated"><span>$0.46</span></td><td class="volume buy animated"><span>12</span></td></tr>
                         </tbody>
                     </table>
                 </div>

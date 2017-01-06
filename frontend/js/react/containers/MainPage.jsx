@@ -15,7 +15,7 @@ class MainPage extends BaseController
         super(props);
         // ABpp.controllers.MainPage
 
-        // 0||console.debug( 'this.props', props );
+        0||console.debug( 'this.props', props );
 
         props.actions.actionOnLoad();
     }

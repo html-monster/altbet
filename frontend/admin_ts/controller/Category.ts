@@ -29,6 +29,12 @@ export default class Category extends BaseController
 
         (new CategoryEdit).beginSave();
 
-        (new CategoryModel).saveCategory($("#F1EditCat").serialize());
+        var form = $that.closest('form');
+        var formData = new FormData(<HTMLFormElement>form[0]);
+        // formData.set('op', '1');
+        (new CategoryModel).saveCategory(formData).then( result => {
+            0||console.debug( 'success' );
+        });
+        // (new CategoryModel).saveCategory($("#F1EditCat").serializeArray());
     }
 }

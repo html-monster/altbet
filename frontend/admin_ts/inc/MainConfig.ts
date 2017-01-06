@@ -11,5 +11,6 @@ export class MainConfig
 
     public static PATH_PIC = "Images";
 
-    public static AJAX_CATEGORY_EDIT = 'Category/EditCategory';
+    public static AJAX_TEST = 'Category/GetAjax';
+    public static AJAX_CATEGORY_EDIT = 'Category/ChangeCategory';
 }

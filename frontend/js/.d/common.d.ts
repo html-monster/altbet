@@ -8,6 +8,7 @@ declare var mainChartController;
 declare var globalData;
 declare var defaultMethods;
 declare var activeTraderClass;
+declare var Promise;
 
 
 interface JQuery
@@ -39,4 +40,8 @@ interface Object
 
 interface Window {
     ee: any
+}
+
+interface FormData {
+    set(p1, p2)
 }

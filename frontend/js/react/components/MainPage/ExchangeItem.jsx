@@ -43,7 +43,7 @@ export default class ExchangeItem extends React.Component
         return <div className={"content_bet clickable ui-sortable-handle" + (isBasicMode ? " basic_mode_js" : "") + " categoryFilterJs" + $classActive} id={symbol} style={{}}>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
             <input name={data.Symbol.Status} type="hidden" value="inprogress" />
 
-            <div className={"event_info " + appData.pageHomeDataIcons[data.CategoryList.split('/')[1].toUpperCase()]}> {/*@(eventClass.TryGetValue(new Guid(Model.CategoryList.Split('/')[1]), out value) ? value : "")*/}
+            <div className={"event_info " + data.CategoryIcon}>
                 <span className="date help">
                     {$DateLocalization.fromSharp(data.Symbol.StartDate, 0).unixToLocalDate()}
                     <span className="help_message"><span>MM/DD/YYYY</span></span>

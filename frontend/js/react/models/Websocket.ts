@@ -26,6 +26,8 @@ export class WebsocketModel
     {
         var self = this;
 
+        if( !this.SocketSubscribe ) this.SocketSubscribe = new SocketSubscribe();
+
         var support = "MozWebSocket" in window ? 'MozWebSocket' : ("WebSocket" in window ? 'WebSocket' : null);
 
         if (support == null) {
@@ -102,8 +104,6 @@ export class WebsocketModel
      */
     public sendSubscribe(inData, inType)
     {
-        if( !this.SocketSubscribe ) this.SocketSubscribe = new SocketSubscribe();
-
         let params = this.SocketSubscribe.subscribe(inData, inType);
 
         return params;
@@ -168,13 +168,14 @@ export class WebsocketModel
 
         if(globalData.tradeOn) window.ee.emit('activeOrders.update', data.ActiveOrders);//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
 
-        if (data.ActiveOrders != null)
+        if (data.ActiveOrders != null && self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS])
         {
             dataController.updateEventData(data.ActiveOrders, data.Bars);
 
+            // fix received data
             let ret = this.SocketSubscribe.receiveData({ActiveOrders: data.ActiveOrders, Bars: data.Bars}, SocketSubscribe.EP_ACTIVE_ORDER);
 
-            self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS] && self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS](ret.ActiveOrders, ret.Bars)
+            self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS](ret.ActiveOrders, ret.Bars)
         }
 
         if(data.Result != null && globalData.eventPageOn)
