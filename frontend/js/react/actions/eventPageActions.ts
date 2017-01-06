@@ -4,16 +4,21 @@ import {
 
 import BaseActions from './BaseActions';
 import { WebsocketModel } from '../models/Websocket';
+import { SocketSubscribe } from '../models/SocketSubscribe';
 
 
 var __LDEV__ = true;
 
 class Actions extends BaseActions
 {
-    public actionOnLoad()
+    public actionOnLoad(inProps)
     {
         return (dispatch, getState) =>
         {
+            // subscribe for data
+            ABpp.Websocket.sendSubscribe({exchange: inProps.exchange}, SocketSubscribe.EP_ACTIVE_ORDER);
+
+            // receive data
             ABpp.Websocket.subscribe((inActiveOrders, inBars) =>
             {
                 // __DEV__&&console.debug( 'on load ok' , inActiveOrders, inBars, getState());

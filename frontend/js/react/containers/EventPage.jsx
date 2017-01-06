@@ -17,7 +17,8 @@ class EventPage extends React.Component implements BaseController
 
         // this.state = {data: props.data};
         0||console.debug( 'this.props', props );
-        props.eventPageActions.actionOnLoad();
+
+        props.eventPageActions.actionOnLoad({exchange: appData.pageEventData.SymbolsAndOrders.Symbol.Exchange});
     }
 
     render()
@@ -25,7 +26,7 @@ class EventPage extends React.Component implements BaseController
         let data = this.props.eventPage.pageEventData;
         let symbol = `${data.SymbolsAndOrders.Symbol.Exchange}_${data.SymbolsAndOrders.Symbol.Name}_${data.SymbolsAndOrders.Symbol.Currency}`;
 
-
+0||console.debug( 'this.props', this.props );
 
         return <div className="wrapper_event_page" data-id={symbol}>
             <h1>{data.SymbolsAndOrders.Symbol.HomeName} VS {data.SymbolsAndOrders.Symbol.AwayName}</h1>

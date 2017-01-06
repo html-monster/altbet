@@ -6,19 +6,19 @@
 
 /// <reference path="./../../.d/common.d.ts" />
 
-// declare var window;
-// declare var globalData;
+import { SocketSubscribe } from "./SocketSubscribe";
 
 
 
 export class WebsocketModel
 {
-    public static CALLBACK_MAINPAGE_EXCHANGES = "CMPE1";      // a main page recieve data callback
-    public static CALLBACK_EVENTPAGE_ORDERS = "CEPO2";      // a event page recieve data callback
+    public static CALLBACK_MAINPAGE_EXCHANGES = "CMPE1";      // a main page receive data callback
+    public static CALLBACK_EVENTPAGE_ORDERS = "CEPO2";      // a event page receive data callback
 
     private noSupportMessage = "Your browser cannot support WebSocket!";
     private ws = null;
 
+    private SocketSubscribe = null;
     private callbacks = {};
 
 
@@ -85,8 +85,28 @@ export class WebsocketModel
 
 
 
+    /**
+     * subscribe for data recieving
+     * @param callback
+     * @param type
+     */
     public subscribe(callback, type) {
         this.callbacks[type] = callback;
+    };
+
+
+
+    /**
+     * send subscribe data for socket
+     * @param data Object
+     */
+    public sendSubscribe(inData, inType)
+    {
+        if( !this.SocketSubscribe ) this.SocketSubscribe = new SocketSubscribe();
+
+        let params = this.SocketSubscribe.subscribe(inData, inType);
+
+        return params;
     };
 
 
@@ -150,8 +170,11 @@ export class WebsocketModel
 
         if (data.ActiveOrders != null)
         {
-            self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS] && self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS](data.ActiveOrders, data.Bars)
             dataController.updateEventData(data.ActiveOrders, data.Bars);
+
+            let ret = this.SocketSubscribe.receiveData({ActiveOrders: data.ActiveOrders, Bars: data.Bars}, SocketSubscribe.EP_ACTIVE_ORDER);
+
+            self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS] && self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS](ret.ActiveOrders, ret.Bars)
         }
 
         if(data.Result != null && globalData.eventPageOn)
