@@ -5,6 +5,9 @@
 /// <reference path="../../js/.d/common.d.ts" />
 
 import Dialog from "../component/Dialog";
+import {IndexView} from "../view/IndexView";
+import CategoryModel from "../model/CategoryModel";
+import {InfoMessage} from "../component/InfoMessage";
 
 
 export class GroupsTree
@@ -44,11 +47,14 @@ export class GroupsTree
         var $that = $(that);
         // 0||console.debug( '$that.data(url)', $that.data('url') );
 
+        let indexView = new IndexView();
+
+        // if delete button clicked
         if( $that.data('type') == 'del' )
         {
             new Dialog({
                 TPLName: '#TPLmodalDialog',
-                target: '.js-dialog',
+                target: '.js-mp-dialog',
                 render: true,
                 vars: {
                     title: 'Warning',
@@ -57,7 +63,27 @@ export class GroupsTree
                     btnCancelTitle: 'Cancel',
                     type: 'modal-danger',
                 },
-                callbackOK: function() { alert('deleted') }
+                callbackCancel: function() { indexView.endDelete() },
+                callbackOK: function()
+                {
+                    indexView.beginDelete();
+
+                    // var formData = new FormData();
+                    // formData.set('url', '1');
+                    (new CategoryModel).deleteCategory({url: $that.attr('url'), name: $that.data('catname')}).then( result =>
+                    {
+                        window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
+                        location.href = result.url;
+                    },
+                    result => {
+                        window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_ALERT, header: "Fail"});
+                        indexView.setInfoMess();
+                        // categoryEdit.setErrors({code: reuslt.code, message: reuslt.message});
+                        indexView.endDelete();
+                    });
+
+                    return true;
+                }
             });
         }
         else

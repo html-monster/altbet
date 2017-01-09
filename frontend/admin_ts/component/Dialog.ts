@@ -36,11 +36,10 @@ export default class Dialog
         var template = Handlebars.compile(source);
         var html = template(this.vars);
 
-    // 0||console.debug( 'html', html );
 
         $(this.target).html(html);
         $("[data-js=cancel], [data-js=wrapper]", this.target).click(function(e) { self.onCloseClick() });
-        $("[data-js=ok]", this.target).click(function(e) { self.onOkClick() });
+        $("[data-js=ok]", this.target).click(function(e) { self.onOkClick(e, this) });
 
 
         $("[data-js=wrapper]", this.target).fadeIn(400);
@@ -67,9 +66,13 @@ export default class Dialog
 
 
 
-    private onOkClick()
+    private onOkClick(e, that)
     {
-        if (this.callbackOK) this.callbackOK();
-        $("[data-js=wrapper]", this.target).fadeOut(200);
+        e.stopPropagation();
+
+
+        if (this.callbackOK)
+            if (this.callbackOK())
+                $("[data-js=wrapper]", this.target).fadeOut(200);
     }
 }

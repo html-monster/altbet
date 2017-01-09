@@ -6,7 +6,7 @@ import BaseView from "./BaseView";
 import BodyView from "./BodyView";
 
 
-export default class CategoryEdit extends BaseView
+export default class CategoryNew extends BaseView
 {
     private T1errmess = null;
 
@@ -31,7 +31,7 @@ export default class CategoryEdit extends BaseView
                     var $state = $('<span class="icon ' + state.text + '">' + state.text + '</span>');
                     return $state;
                 }
-        }).val(globalData.currentIcon).trigger("change");
+        }).val(data[0].text).trigger("change");
     }
 
 
@@ -94,7 +94,7 @@ export default class CategoryEdit extends BaseView
 
 
         try {
-            element = $("[name=Name]", form);
+            element = $(".js-ed-name", form);
             var val = element.val();
             if( val == '' )
             {
@@ -102,7 +102,7 @@ export default class CategoryEdit extends BaseView
             } // endif
 
 
-            element = $("[name=Url]", form);
+            element = $(".js-ed-url", form);
             val = element.val();
             if( val == '' )
             {

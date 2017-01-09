@@ -1,0 +1,18 @@
+.page-Index {
+  .content-wrapper {
+    .box-body { overflow: visible }
+    .btn-filter { @include iblock; margin-right: 10px;
+      &.active { box-shadow: 0px 0px 15px 1px #666 }
+    }
+
+    .exchanges {
+      tr:hover .controls { opacity: 1; }
+      .controls { width: 80px; opacity: .3;
+        //&:not(:hover) span { background: gray; border: 1px solid gray; }
+        //span { width: 24px; height: 22px; padding: 0; }
+      }
+      //.btn-group { margin-bottom: 3px; }
+      .dropdown-menu { left: auto; right: 0; }
+    }
+  }
+}

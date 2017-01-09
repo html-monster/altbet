@@ -5,15 +5,19 @@
 /// <reference path="./../js/.d/common.d.ts" />
 
 
-import Category from "./controller/Category";
+import {CategoryController} from "./controller/CategoryController";
 import Exchanges from "./controller/Exchanges";
 import { GroupsTree } from "./controller/GroupsTree";
 import BodyView from "./view/BodyView";
 import { MainConfig } from "./inc/MainConfig";
+import {User} from "./model/User";
+import {IndexController} from "./controller/IndexController";
 
 
 export default class ADpp
 {
+    private User = null;
+
     private controllers = {};
     private currentController = null;
 
@@ -22,8 +26,9 @@ export default class ADpp
         window.ADpp = this;
 
         // application controllers
-        this.controllers['Category'] = Category;
+        this.controllers['Category'] = CategoryController;
         this.controllers['Exchanges'] = Exchanges;
+        this.controllers['Index'] = IndexController;
 
         if (location.host == 'localhost') MainConfig.BASE_URL = '/AltBet.Admin';
 
@@ -33,6 +38,10 @@ export default class ADpp
         {
             this.currentController = new this.controllers[globalData.controller.name]();
         } // endif;
+
+
+        // init user
+        this.User = new User();
     }
 
 

@@ -1,6 +1,7 @@
 @import "inc/functions";
 @import "inc/vars";
 @import "inc/default";
+@import "inc/common";
 
 
 .modal { overflow: auto }
@@ -8,6 +9,8 @@
 section.sidebar { overflow: visible }
 .sidebar-menu { overflow: visible }
 
+
+// for status column
 .label.label-approved { background-color: #00a65a !important; }
 .label.label-new { background-color: #3c8dbc !important; }
 .label.label-completed { background-color: #f39c12  !important; color: #fff; }
@@ -36,3 +39,4 @@ section.sidebar { overflow: visible }
 
 
 @import "inc/page-category";
+@import "inc/page-index";

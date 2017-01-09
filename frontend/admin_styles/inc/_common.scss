@@ -1,0 +1,8 @@
+.form-group {
+  .error-icon, .help-block { @include nblock }
+  &.has-error {
+    .error-icon, .help-block { @include iblock }
+  }
+}
+
+.alert-message { @include nblock }

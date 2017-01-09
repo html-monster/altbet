@@ -78,8 +78,8 @@ export default class BodyView extends BaseView
 
 
 
-    public hideLoading()
+    public hideLoading(inTime = 200)
     {
-        setTimeout(()=>{ $("#DiLoading").stop().fadeOut(400) }, 400);
+        setTimeout(()=>{ $("#DiLoading").stop().fadeOut(200) }, inTime);
     }
 }

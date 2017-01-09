@@ -71,6 +71,7 @@ export default class ExchangeItem extends React.Component
                     </h3>
 
                     <div className="container">
+
                         <ButtonContainer actions={this.props.actions} data={{
                             type: 'sell',
                             side: 0,

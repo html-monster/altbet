@@ -495,34 +495,26 @@
           //  display: inline-block;
           //}
           .buy{
-            button{
+            .button { margin-right: 3px;
               &:first-child{
-                background-image: linear-gradient(to bottom, #f88447, #ef4d22);
-                span{
-                  color: #fff;
-                  opacity: 0.8;
+                button { background-image: linear-gradient(to bottom, #f88447, #ef4d22);
+                  span{ color: #fff; opacity: 0.8; }
                 }
               }
-              @include md(1360){
-                &:nth-of-type(3){
-                  display: none;
-                }
+              @include md(1360) {
+                &:nth-of-type(3) { display: none; }
               }
             }
           }
-          .sell{
-            button{
+          .sell {
+            .button { margin-left: 3px;
               &:last-child{
-                background-image: linear-gradient(to bottom, #64c9ef, #3498da);
-                span{
-                  color: #fff;
-                  opacity: 0.8;
+                button { background-image: linear-gradient(to bottom, #64c9ef, #3498da);
+                  span{ color: #fff; opacity: 0.8; }
                 }
               }
-              @include md(1360){
-                &:nth-last-of-type(3){
-                  display: none;
-                }
+              @include md(1360) {
+                &:nth-last-of-type(3) { display: none; }
               }
             }
           }
