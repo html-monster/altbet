@@ -38,7 +38,8 @@ export default class Dialog
 
 
         $(this.target).html(html);
-        $("[data-js=cancel], [data-js=wrapper]", this.target).click(function(e) { self.onCloseClick() });
+        $("[data-js=cancel]", this.target).click(function(e) { self.onCloseClick(e, this) });
+        $("[data-js=wrapper]", this.target).click(function(e) { self.onWrapperClick(e, this) });
         $("[data-js=ok]", this.target).click(function(e) { self.onOkClick(e, this) });
 
 
@@ -58,10 +59,20 @@ export default class Dialog
 
 
 
-    private onCloseClick()
+    private onCloseClick(ee, that)
     {
         if (this.callbackCancel) this.callbackCancel();
         $("[data-js=wrapper]", this.target).fadeOut(200);
+    }
+
+
+
+    private onWrapperClick(ee, that)
+    {
+        if( $(ee.target).data('js') == 'wrapper' )
+        {
+            this.onCloseClick(ee, that);
+        } // endif
     }
 
 

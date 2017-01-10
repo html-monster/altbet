@@ -27,8 +27,17 @@ export default class ExchangeModel
                     // 0||console.debug( 'data AJAX', data );
                     // emulate
                     data.code = 200;
-                    data.name = inProps.name;
-                    data.url = "http://localhost/AltBet.Admin/?path=sport%2Famerican-football";
+                    data.data = {
+                            fullname: 'Buffalo Bills_vs_New England Patriots',
+                            sidename1: '',
+                            sidename2: '',
+                            sidealias1: '',
+                            sidealias2: '',
+                            sidehandicap1: '',
+                            sidehandicap2: '',
+                            startDate: '',
+                            endDate: '',
+                        };
 
                     var error;
                     try
@@ -52,6 +61,7 @@ export default class ExchangeModel
                         error < 0 && console.warn( 'E', error );
                         switch( error )
                         {
+                            case 100: break; // success
                             case -100: ; // some backend not controlled error
                             case -1000 : ; break;
                             default: error = -1001;
