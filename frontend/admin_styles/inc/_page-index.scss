@@ -1,3 +1,8 @@
+@keyframes fadeOut {
+	0% {  background-color: #f39c12;  }
+	100% {  background-color: transparent;  }
+}
+
 .page-Index {
   .content-wrapper {
     .box-body { overflow: visible }
@@ -6,11 +11,9 @@
     }
 
     .exchanges {
+      tr.changed td { animation: fadeOut 1s; }
       tr:hover .controls { opacity: 1; }
-      .controls { width: 80px; opacity: .3;
-        //&:not(:hover) span { background: gray; border: 1px solid gray; }
-        //span { width: 24px; height: 22px; padding: 0; }
-      }
+      .controls { width: 80px; opacity: .3; }
       //.btn-group { margin-bottom: 3px; }
       .dropdown-menu { left: auto; right: 0; }
     }

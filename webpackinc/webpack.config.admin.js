@@ -63,11 +63,11 @@ module.exports = {
         // new ExtractTextPlugin('[name].css', {
         //     allChunks: true
         // })
-        // new webpack.DefinePlugin({
-        //     __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
-        //     __TEST__: JSON.stringify(process.env.TEST || false),
-        //     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        // }),
+        new webpack.DefinePlugin({
+            __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
+            __TEST__: JSON.stringify(process.env.TEST || false),
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        }),
     ],
     // ].concat(sourceMap),
 

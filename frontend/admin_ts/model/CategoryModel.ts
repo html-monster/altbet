@@ -13,32 +13,34 @@ export default class CategoryModel
     {
         var self = this;
 
+        // 0||console.debug( 'inProps', inProps );
         var promise = new Promise((resolve, reject) =>
         {
             var message = 'Error while deleting category, please, try again';
             $.ajax({
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST, //AJAX_CATEGORY_EDIT,
-                // url: inProps.url, //AJAX_CATEGORY_EDIT,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST, //AJAX_CATEGORY_EDIT,
+                url: inProps.url,
                 type: 'POST',
                 success: function(data)
                 {
-                    // 0||console.debug( 'data AJAX', data );
-                    data.code = 200;
-                    data.name = inProps.name;
-                    data.url = "http://localhost/AltBet.Admin/?path=sport%2Famerican-football";
+                    0||console.debug( 'data AJAX', data );
+                    // data.code = 103;
+                    // data.url = "http://localhost/AltBet.Admin/?path=sport%2Famerican-football";
+                    // data.name = inProps.name;
 
                     var error;
                     try
                     {
                         // user defined error
-                        if( data.code > 100 && data.code < 200 )
+                        let code = parseInt(data.Error);
+                        if( code > 100 && code < 200 )
                         {
-                            error = -data.code;
+                            error = -code;
                             throw new Error(message);
 
 
                         // success
-                        } else if( data.code == 200 )
+                        } else if( code == 200 )
                         {
                             error = 100;
                             throw new Error("");
@@ -64,7 +66,7 @@ export default class CategoryModel
                         }
                     }
 
-                    error < 0 ? reject({code: error, message}) : resolve({code: error, message, url: data.url});
+                    error < 0 ? reject({code: error, message}) : resolve({code: error, message, url: data.Param1});
                 },
                 error: function() {
                     reject({code: -1002, message});
@@ -97,15 +99,15 @@ export default class CategoryModel
                 // 102 not unique url
             var message = 'Error while saving data, please, try again';
             $.ajax({
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST, //AJAX_CATEGORY_EDIT,
-                // url: inProps.url,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_EDIT,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 type: 'POST',
                 success: function(data)
                 {
                     0||console.debug( 'data AJAX', data );
-                    data.code = 200;
-                    data.name = inProps.name;
-                    data.url = "http://localhost/AltBet.Admin/?path=sport%2Famerican-football";
+                    // data.code = 200;
+                    // data.name = inProps.name;
+                    // data.url = "http://localhost/AltBet.Admin/?path=sport%2Famerican-football";
 
                     var error;
                     try
@@ -138,7 +140,7 @@ export default class CategoryModel
                         error < 0 && console.warn( 'E', error );
                         switch( error )
                         {
-                            case 100 : message = `Category “${data.name}” created successfully`; break;
+                            case 100 : message = `Category “${inProps.name}” created successfully`; break;
                             case -101 : message = "Category name is not unique"; break;
                             case -102 : message = "Category url is not unique"; break;
                             case -100: ; // some backend not controlled error
@@ -180,15 +182,15 @@ export default class CategoryModel
                 // 102 not unique url
             var message = 'Error while saving data, please, try again';
             $.ajax({
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST, //AJAX_CATEGORY_EDIT,
-                // url: inProps.url,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_EDIT,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 type: 'POST',
                 success: function(data)
                 {
-                    0||console.debug( 'data AJAX', data );
-                    data.code = 200;
-                    data.name = inProps.name;
-                    data.url = "http://localhost/AltBet.Admin/?path=sport%2Famerican-football";
+                    __DEV__&&console.debug( 'data AJAX', data, MainConfig.BASE_URL );
+                    // data.code = 101;
+                    // data.url = "http://localhost/AltBet.Admin/?path=sport%2Famerican-football";
+                    // data.name = inProps.name;
 
                     var error;
                     try
@@ -196,14 +198,15 @@ export default class CategoryModel
                         // data = JSON.parse(data);
 
                         // user defined error
-                        if( data.code > 100 && data.code < 200 )
+                        let code = parseInt(data.Error);
+                        if( code > 100 && code < 200 )
                         {
-                            error = -data.code;
+                            error = -code;
                             throw new Error(message);
 
 
                         // success
-                        } else if( data.code == 200 )
+                        } else if( code == 200 )
                         {
                             error = 100;
                             throw new Error("");
@@ -221,7 +224,7 @@ export default class CategoryModel
                         error < 0 && console.warn( 'E', error );
                         switch( error )
                         {
-                            case 100 : message = `Category “${data.name}” saved successfully`; break;
+                            case 100 : message = `Category “${inProps.name}” saved successfully`; break;
                             case -101 : message = "Category name is not unique"; break;
                             case -102 : message = "Category url is not unique"; break;
                             case -100: ; // some backend not controlled error
@@ -230,7 +233,8 @@ export default class CategoryModel
                         }
                     }
 
-                    error < 0 ? reject({code: error, message}) : resolve({code: error, message, url: data.url});
+                    let url = data.Param1; // redirect url
+                    error < 0 ? reject({code: error, message}) : resolve({code: error, message, url: url});
                 },
                 error: function() {
                     reject({code: -1002, message});

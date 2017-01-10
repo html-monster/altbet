@@ -70,13 +70,27 @@ export class IndexView extends BaseView
     }
 
 
-
+    /**
+     * Before delete category in the tree
+     */
     public beginDelete()
     {
         var self = this;
 
         this.closeInfoMess();
         (new BodyView).showLoading($('.js-dialog [data-js=ok]'), {pic: 4, outerAlign: BodyView.ALIGN_OUTER_LEFT, offsetX: -8});
+    }
+
+
+    /**
+     * Before save edit exchange
+     */
+    public beginSave()
+    {
+        var self = this;
+
+        this.closeInfoMess();
+        (new BodyView).showLoading($('.js-mp-dialog [data-js=ok]'), {pic: 2, outerAlign: BodyView.ALIGN_OUTER_LEFT, offsetX: -8});
     }
 
 

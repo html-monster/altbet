@@ -70,7 +70,7 @@ export class GroupsTree
 
                     // var formData = new FormData();
                     // formData.set('url', '1');
-                    (new CategoryModel).deleteCategory({url: $that.attr('url'), name: $that.data('catname')}).then( result =>
+                    (new CategoryModel).deleteCategory({url: $that.data('url'), name: $that.data('catname')}).then( result =>
                     {
                         window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
                         location.href = result.url;

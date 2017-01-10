@@ -29,7 +29,8 @@ export class IndexController extends BaseController
         var $that = $(that);
 
 
-        (new ExchangeModel).getExchange({id: $that.attr('id')}).then( result =>
+        let $ExchangeModel = (new ExchangeModel);
+        $ExchangeModel.getExchange({id: $that.attr('id')}).then(result =>
         {
             if( result.code < 0 )
             {
@@ -37,6 +38,7 @@ export class IndexController extends BaseController
             }
             else
             {
+                0||console.debug( 'result.fullname', result.fullname );
                 new Dialog({
                     TPLName: '#TPLeditExchangeDialog',
                     target: '.js-mp-dialog',
@@ -45,26 +47,28 @@ export class IndexController extends BaseController
                         title: `Edit exchange “${$that.data('name')}”`,
                         btnOkTitle: 'Save',
                         btnCancelTitle: 'Cancel',
+                        data: result.data,
                         // type: 'modal-default',
                     },
                     callbackCancel: function() { /*indexView.endDelete()*/ },
                     callbackOK: function()
                     {
-                        // indexView.beginDelete();
-                        //
-                        // // var formData = new FormData();
-                        // // formData.set('url', '1');
-                        // (new CategoryModel).deleteCategory({url: $that.attr('url'), name: $that.data('catname')}).then( result =>
-                        // {
-                        //     window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
-                        //     location.href = result.url;
-                        // },
-                        // result => {
-                        //     window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_ALERT, header: "Fail"});
-                        //     indexView.setInfoMess();
-                        //     // categoryEdit.setErrors({code: reuslt.code, message: reuslt.message});
-                        //     indexView.endDelete();
-                        // });
+                        let $IndexView = (new IndexView);
+                        $IndexView.beginSave();
+
+                        // var formData = new FormData();
+                        // formData.set('url', '1');
+                        $ExchangeModel.saveExchange({url: $that.attr('url'), name: $that.data('catname')}).then( result =>
+                        {
+                            // window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
+                            // location.href = result.url;
+                        },
+                        result => {
+                            // window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_ALERT, header: "Fail"});
+                            // $IndexView.setInfoMess();
+                            // // categoryEdit.setErrors({code: reuslt.code, message: reuslt.message});
+                            // $IndexView.endDelete();
+                        });
 
                         return true;
                     }

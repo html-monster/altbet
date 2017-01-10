@@ -64,7 +64,7 @@ export class InfoMessage
         mountPoint.fadeIn(400);
 
         clearTimeout(this.T1infoMess);
-        this.T1infoMess = setTimeout(() => mountPoint.children().fadeOut(200, function() { $(this).remove() }), 5000);
+        this.T1infoMess = setTimeout(() => mountPoint.children().fadeOut(200, function() { $(this).remove() }), 10000);
     }
 
 
