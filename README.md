@@ -16,3 +16,8 @@
 - Пагинация (https://github.com/AdeleD/react-paginate)
 - Observer (http://www.dofactory.com/javascript/observer-design-pattern)
 - DeepCompare (http://stackoverflow.com/questions/1068834/object-comparison-in-javascript)
+- Loaders (http://preloaders.net/en/free)
+
+
+## Plugins
+- Waves (http://fian.my.id/Waves/#start)

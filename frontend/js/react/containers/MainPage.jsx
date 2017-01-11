@@ -2,29 +2,63 @@ import React from 'react' ;
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import BaseController from '../common/BaseController';
+import BaseController from './BaseController';
 import ExchangeItem from '../components/MainPage/ExchangeItem';
-// import * as mainPageActions from '../actions/mainPageActions';
-import * as mainPageActions from '../actions/MainPageActions.ts';
+import mainPageActions from '../actions/MainPageActions.ts';
 
-class MainPage extends React.Component implements BaseController
+
+// class MainPage extends React.Component
+class MainPage extends BaseController
 {
     constructor(props)
     {
-        super();
-
+        super(props);
         // ABpp.controllers.MainPage
 
-        0||console.debug( 'this.props'  , props );
-        // this.state = {data: props.mainPageData};
-        props.mainPageActions.actionOnLoad();
+        0||console.debug( 'this.props', props );
+
+        props.actions.actionOnLoad();
     }
+
+
+    componentDidMount()
+    {
+        // register global action
+        ABpp.registerAction('MainPage.firstExchangeActivate', () => this.firstExchangeActivate());
+
+        Waves.init();
+	    Waves.attach('.wave:not([disabled])', ['waves-button']);
+    }
+
+
+
+    /**
+     * activates first exchange left side
+     * @public
+     */
+    firstExchangeActivate()
+    {
+        // 0||console.debug( 'firstExchangeActivate', this );
+        this.props.actions.firstExchangeActivate(this);
+    }
+
+
+
+    /**
+     * activates exchange click action
+     * @public
+     */
+    exchangeSideClick(inProps)
+    {
+        this.props.actions.exchangeSideClick(inProps);
+    }
+
 
 
     render()
     {
-        let isBasicMode = ABpp.User.settings.basicMode;
-        let data = this.props.mainPageData.marketsData;
+        let isBasicMode = ABpp.config.basicMode;
+        let data = this.props.data;
 
 
         return (
@@ -46,8 +80,8 @@ class MainPage extends React.Component implements BaseController
                     </div>
                     <div className="tab_content">
                         <div className="tab_item ui-sort">
-                            {data.map((item, key) =>
-                                <ExchangeItem key={key} data={item} actions={this.props.mainPageActions} />
+                            {data.marketsData.map((item, key) =>
+                                <ExchangeItem key={key} data={{...item, activeExchange: this.props.data.activeExchange}} actions={this.props.actions} />
                             )}
                         </div>
                     </div>
@@ -60,12 +94,13 @@ class MainPage extends React.Component implements BaseController
 
 // __DEV__&&console.debug( 'connect', connect );
 
-export default connect(state => ({
-    mainPageData: state.mainPage,
-    // test: state.Ttest,
-}),
-dispatch => ({
-    // mainPageActions: bindActionCreators(mainPageActions, dispatch),
-    mainPageActions: bindActionCreators(mainPageActions, dispatch),
-})
+export default connect(
+    state => ({
+        data: state.mainPage,
+        // test: state.Ttest,
+    }),
+    dispatch => ({
+        // actions: bindActionCreators(actions, dispatch),
+        actions: bindActionCreators(mainPageActions, dispatch),
+    })
 )(MainPage)

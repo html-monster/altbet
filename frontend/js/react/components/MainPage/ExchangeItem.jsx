@@ -9,10 +9,13 @@ export default class ExchangeItem extends React.Component
 {
     render()
     {
-        let isBasicMode = ABpp.User.settings.basicMode;
+        let isBasicMode = ABpp.config.basicMode;
         let $DateLocalization = new DateLocalization();
+        let activeExchange = this.props.data.activeExchange;
         let data = this.props.data;
         let symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
+
+        // common props for button container
         let commProps = {
             symbolName: symbol,
             Orders: data.Orders,
@@ -25,18 +28,27 @@ export default class ExchangeItem extends React.Component
                 Currency : data.Symbol.Currency,
             }
         };
-        // 0||console.debug( 'data', data );
+
+        // data.activeExchange.name == data.Symbol.Exchange&&console.debug( 'data.Symbol', data.activeExchange, data.Symbol.Exchange, data.activeExchange.name == data.Symbol.Exchange );
+        // activate current exchange
+        var $classActive = '', $classActiveNM = '', $classActiveM = '';
+        if( data.activeExchange.name == data.Symbol.Exchange )
+        {
+            $classActive = ' active';
+            if( !data.activeExchange.isMirror ) $classActiveNM = ' active';
+            else $classActiveM = ' active';
+        } // endif
 
 
-        return <div className={"content_bet " + (isBasicMode ? " basic_mode_js" : "") + " categoryFilterJs"} id={symbol} style={{}}>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
+        return <div className={"content_bet clickable ui-sortable-handle" + (isBasicMode ? " basic_mode_js" : "") + " categoryFilterJs" + $classActive} id={symbol} style={{}}>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
             <input name={data.Symbol.Status} type="hidden" value="inprogress" />
 
-            <div className={"event_info " + appData.pageHomeDataIcons[data.CategoryList.split('/')[1].toUpperCase()]}> {/*@(eventClass.TryGetValue(new Guid(Model.CategoryList.Split('/')[1]), out value) ? value : "")*/}
+            <div className={"event_info " + data.CategoryIcon}>
                 <span className="date help">
                     {$DateLocalization.fromSharp(data.Symbol.StartDate, 0).unixToLocalDate()}
                     <span className="help_message"><span>MM/DD/YYYY</span></span>
                 </span>
-                {/*@*<i className="half_time">ht<span>half-time</span></i>*@*/}
+                {data.Symbol.Status == "completed" ? <i className="half_time" title={data.Symbol.Status}>ht<span>{data.Symbol.Status}</span></i> : ""}
             </div>
             <div className="content_title command">
                 <h2>{data.Symbol.HomeName} {(data.Symbol.HomePoints != null) ? <span>{data.Symbol.HomePoints}</span> : '' }</h2>
@@ -44,7 +56,14 @@ export default class ExchangeItem extends React.Component
                 <span className="symbol_name hidden">{symbol}</span>
             </div>
             <div className="table not-sort wave"> {/*id="exchange_table"*/}
-                <div className="event-content" data-symbol={symbol}>
+                <div className={"event-content" + $classActiveNM} data-symbol={symbol}
+                    onClick={() => this.props.actions.exchangeSideClick({name: data.Symbol.Exchange,
+                        isMirror: false,
+                        title: [data.Symbol.HomeName, data.Symbol.AwayName],
+                        symbol: symbol,
+                    })}
+                >
+                {/*<div className="event-content" data-symbol={symbol} onClick={this._onEventContentClick.bind(this, data)}>*/}
                     <h3 className="event-title">
                         <span className="title">{data.Symbol.HomeName}</span>
                         <span>{(data.Symbol.HomeHandicap != null ? (data.Symbol.HomeHandicap > 0 ? " +" + data.Symbol.HomeHandicap : " " + data.Symbol.HomeHandicap) : false)}</span>
@@ -52,6 +71,7 @@ export default class ExchangeItem extends React.Component
                     </h3>
 
                     <div className="container">
+
                         <ButtonContainer actions={this.props.actions} data={{
                             type: 'sell',
                             side: 0,
@@ -161,7 +181,13 @@ export default class ExchangeItem extends React.Component
                 </div>
 
 
-                <div className="event-content revers" data-symbol={symbol + "_mirror"}>
+                <div className={"event-content revers" + $classActiveM} data-symbol={symbol + "_mirror"}
+                    onClick={() => this.props.actions.exchangeSideClick({name: data.Symbol.Exchange,
+                        isMirror: true,
+                        title: [data.Symbol.HomeName, data.Symbol.AwayName],
+                        symbol: symbol,
+                    })}
+                >
                     <h3 className="event-title">
                         <span className="title">{data.Symbol.AwayName}</span>
                         <span>{(data.Symbol.AwayHandicap != null ? (data.Symbol.AwayHandicap > 0 ? " +" + data.Symbol.AwayHandicap : " " + data.Symbol.AwayHandicap) : "")}</span>

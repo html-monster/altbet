@@ -2,10 +2,15 @@
  * Created by Vlasakh on 27.12.2016.
  */
 
-$(document).ready(function() {
-    0||console.debug( 'ready hello 2222222222222' );
+/// <reference path="./../js/.d/common.d.ts" />
+/// <reference path="./../js/.d/jquery.d.ts" />
+
+import App from "./ADpp";
 
 
-    $('#DiCatTree').jstree();
-//        $('#container23').jstree();
+var ADpp = new App();
+
+$(document).ready(function()
+{
+    ADpp.ready();
 });

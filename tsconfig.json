@@ -15,7 +15,6 @@
     "allowUnreachableCode": true,
     "skipLibCheck": true,
     "pretty": false
-
   },
   "exclude": [
     "node_modules",

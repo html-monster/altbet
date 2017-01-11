@@ -30,11 +30,15 @@ export class ABpp
 
     // application config
     public config = {
-                currentTheme: null,     // current theme
-                currentPage: null,       // current page
-                takerFees: null,       // taker fees
-                makerFees: null       // maker fees
-            };
+        currentTheme: null,   // current theme
+        currentPage: null,    // current page
+        takerFees: null,      // taker fees
+        makerFees: null       // maker fees
+        basicMode: true,      // play mode
+        tradeOn: false,       // active trader state
+    };
+
+    public actions : any = {};
 
     public User: User = null;           // user entity
     public Websocket: WebsocketModel = null; // websocket object
@@ -63,6 +67,12 @@ export class ABpp
 
         // create user
         this.createUser();
+    }
+
+
+    public registerAction(name, action)
+    {
+        this.actions[name] = action;
     }
 
 

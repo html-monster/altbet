@@ -6,24 +6,27 @@
 
 /// <reference path="./../../.d/common.d.ts" />
 
-// declare var window;
-// declare var globalData;
+import { SocketSubscribe } from "./SocketSubscribe";
 
 
 
 export class WebsocketModel
 {
-    public static CALLBACK_MAINPAGE_EXCHANGES = "CMPE1";      // a main page recieve data callback
+    public static CALLBACK_MAINPAGE_EXCHANGES = "CMPE1";      // a main page receive data callback
+    public static CALLBACK_EVENTPAGE_ORDERS = "CEPO2";      // a event page receive data callback
 
     private noSupportMessage = "Your browser cannot support WebSocket!";
     private ws = null;
 
+    private SocketSubscribe = null;
     private callbacks = {};
 
 
     public connectSocketServer()
     {
         var self = this;
+
+        if( !this.SocketSubscribe ) this.SocketSubscribe = new SocketSubscribe();
 
         var support = "MozWebSocket" in window ? 'MozWebSocket' : ("WebSocket" in window ? 'WebSocket' : null);
 
@@ -84,8 +87,26 @@ export class WebsocketModel
 
 
 
+    /**
+     * subscribe for data recieving
+     * @param callback
+     * @param type
+     */
     public subscribe(callback, type) {
         this.callbacks[type] = callback;
+    };
+
+
+
+    /**
+     * send subscribe data for socket
+     * @param data Object
+     */
+    public sendSubscribe(inData, inType)
+    {
+        let params = this.SocketSubscribe.subscribe(inData, inType);
+
+        return params;
     };
 
 
@@ -114,7 +135,7 @@ export class WebsocketModel
         var self = this;
 
         var data = JSON.parse(evt.data);
-        // console.log(data);
+// console.log(data);
         if (data.Result) defaultMethods.showWarning(data.Result);
         if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn)) window.ee.emit('yourOrders.update', data.CurrentOrders);//myOrdersControllerClass.updateData(data.CurrentOrders);
 
@@ -130,8 +151,9 @@ export class WebsocketModel
         if(globalData.mainPage && globalData.MainCharOn) mainChartController.drawMainCharts(data.Bars);
 
         // main page events data
-        if (data.SymbolsAndOrders != null) {
+        if (data.SymbolsAndOrders.Result.length) {
             if(self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]) {
+                // 0||console.debug( 'data.SymbolsAndOrders2', data.SymbolsAndOrders );
             // if(globalData.mainPage) {
                 // 0||console.debug( 'data.SymbolsAndOrders.Result', data.SymbolsAndOrders.Result );
                 // dataController.updateOrderData(data.SymbolsAndOrders.Result);
@@ -147,8 +169,15 @@ export class WebsocketModel
 
         if(globalData.tradeOn) window.ee.emit('activeOrders.update', data.ActiveOrders);//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
 
-        if (data.ActiveOrders != null)
+        if (data.ActiveOrders != null && self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS])
+        {
             dataController.updateEventData(data.ActiveOrders, data.Bars);
+
+            // fix received data
+            let ret = this.SocketSubscribe.receiveData({ActiveOrders: data.ActiveOrders, Bars: data.Bars}, SocketSubscribe.EP_ACTIVE_ORDER);
+
+            self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS](ret.ActiveOrders, ret.Bars)
+        }
 
         if(data.Result != null && globalData.eventPageOn)
         {

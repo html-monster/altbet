@@ -58,12 +58,14 @@ if(!globalData.userPageOn){
 }
 
 
+// для OLD поменять здесь MP и взять EventPage.jsx.old
 if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_EVENT ) {
 	ReactDOM.render(
 		<Provider store={store}>
 			<EventPage />
 		</Provider>,
-	  document.getElementById('DiEventPage')
+	  document.getElementById('DiMPEventPage')
+	  // document.getElementById('DiMPEventPageOld')
 	);
 }
 

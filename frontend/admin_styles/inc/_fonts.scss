@@ -1,0 +1,18 @@
+//@font-face {
+//  font-family: "Code-Light";
+//  src: url("../font/CODE_Light.eot?") format("eot"), url("../font/CODE_Light.woff") format("woff"), url("../font/CODE_Light.ttf") format("truetype"), url("../font/CODE_Light.svg#Code-Light") format("svg");
+//}
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url("#{$theme-path-fonts}/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "RobotoCondensed-Regular";
+  src: url("#{$theme-path-fonts}/RobotoCondensed-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Myriad-Pro";
+  src: url("#{$theme-path-fonts}/MyriadPro-Regular.otf") format("opentype");
+}
