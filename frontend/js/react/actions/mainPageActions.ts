@@ -51,7 +51,8 @@ class Actions extends BaseActions
         let flag = false;
         let qt : any = 0,
             bpr : any = props.type == 1 ? 0 : 99;
-        // debugger;
+        let isBasicMode = ABpp.config.basicMode;
+
         if( props.isempty )
         {
             bpr = "0.";
@@ -59,7 +60,7 @@ class Actions extends BaseActions
         }
         else
         {
-            if( ABpp.config.basicMode )
+            if( isBasicMode )
             {
                 qt = props.quantity;
                 bpr = props.price;
@@ -91,7 +92,7 @@ class Actions extends BaseActions
 
         props.ismirror && !props.isempty && (bpr = Common.toFixed(1 - bpr, 2));
 
-
+0||console.debug( '!!props.isempty', !!props.isempty );
         let outStruc = {
             "ID": `${props.data.exdata.Exchange}_${props.data.exdata.Name}_${props.data.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
             "EventTitle": props.ismirror ? props.data.exdata.AwayName : props.data.exdata.HomeName,
@@ -107,7 +108,7 @@ class Actions extends BaseActions
                         "Currency": props.data.exdata.Currency
                     },
                     "Volume": qt,
-                    "Limit": !!props.isempty, // empty ? true : false
+                    "Limit": isBasicMode ? true : !!props.isempty, // empty ? true : false
                     "NewOrder": true,
                     "isMirror": props.ismirror ? 1 : 0
                 },

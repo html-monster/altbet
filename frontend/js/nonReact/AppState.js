@@ -5,14 +5,17 @@ class AppStateClass{
 					traderCheckbox = $('.left_order .tab input.limit'),
 					autoTrade = $('.left_order .tab input.auto');
 
+0||console.debug( 'stateParams.Mode', stateParams.Mode );
 			if(stateParams.Mode && stateParams.Mode == 'basic'){
 				modeSwitch.prop('checked', false);
 				globalData.basicMode = true;
+				ABpp.config.basicMode = true;
 				modeSwitchClass.checkMode(modeSwitch);
 			}
 			else{
 				modeSwitch.prop('checked', true);
 				globalData.basicMode = false;
+				ABpp.config.basicMode = false;
 				modeSwitchClass.checkMode(modeSwitch);
 			}
 			if(stateParams.Theme && stateParams.Theme == 'dark')

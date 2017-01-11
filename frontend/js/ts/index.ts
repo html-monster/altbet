@@ -19,17 +19,23 @@ import { WebsocketModel } from "../react/models/Websocket";
  */
 export class ABpp
 {
+<<<<<<< Updated upstream
     public static PAGE_MAIN = 'PAGE_MAIN';
     public static PAGE_EVENT = 'PAGE_EVENT';
     public static PAGE_ACCOUNT = 'PAGE_ACCOUNT';
     public static TAKER_FEES = 0.0086;
     public static MAKER_FEES = 0.0026;
+=======
+    public static PAGE_MAIN = 1;
+    public static PAGE_EVENT = 2;
+>>>>>>> Stashed changes
 
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
     // application config
     public config = {
+<<<<<<< Updated upstream
         currentTheme: null,   // current theme
         currentPage: null,    // current page
         takerFees: null,      // taker fees
@@ -37,6 +43,13 @@ export class ABpp
         basicMode: true,      // play mode
         tradeOn: false,       // active trader state
     };
+=======
+                currentTheme: null,         // current theme
+                currentPage: null,          // current page
+                basicMode: true,            // play mode
+                tradeOn: false,             // active trader state
+            };
+>>>>>>> Stashed changes
 
     public actions : any = {};
 
@@ -62,11 +75,20 @@ export class ABpp
 
         // set current page from server
         this.config.currentPage = this.setCurrentPage();
+<<<<<<< Updated upstream
         this.config.takerFees = ABpp.TAKER_FEES;
         this.config.makerFees = ABpp.MAKER_FEES;;
 
         // create user
         this.createUser();
+=======
+
+        // create user
+        this.createUser();
+
+        // set basic mode from user settings
+        this.config.basicMode = this.User.settings.basicMode;
+>>>>>>> Stashed changes
     }
 
 
@@ -82,8 +104,11 @@ export class ABpp
             return ABpp.PAGE_MAIN;
         else if( globalData.eventPageOn )
             return ABpp.PAGE_EVENT;
+<<<<<<< Updated upstream
         else if( globalData.userPageOn )
             return ABpp.PAGE_ACCOUNT;
+=======
+>>>>>>> Stashed changes
     }
 
 
