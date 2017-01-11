@@ -1,7 +1,7 @@
 /**
  * Created by Htmlbook on 21.12.2016.
  */
-export class OddsConverter
+class OddsConverter
 {
     constructor(oddsSystem)
     {
@@ -9,7 +9,6 @@ export class OddsConverter
         const DECIMAL = 'decimal';
         const AMERICAN = 'american';
         const IMPLIED_PROBABILITY = 'implied_probability';
-        this.FEE = 0.0086;
 
         switch (oddsSystem){
             case FRACTION:
@@ -42,7 +41,7 @@ export class OddsConverter
             price,
             volume = +volumeInput.val(),
             sum = +sumInput.val(),
-            fee = Math.round10(this.FEE * volume, -2);
+            fee = Math.round10(ABpp.config.takerFees * volume, -2);
 
         if (checkboxProp) {
             if (priceInput.parents('.sell-container').length) {
@@ -108,6 +107,7 @@ export class OddsConverter
 	 */
     _impliedProbabilityCalcBeforeAdd(formData){
 		let volume = formData.props.data.Volume;
-		return Math.round10(this.FEE * volume, -2)
+		return Math.round10(ABpp.config.takerFees * volume, -2)
 	}
 }
+export let OddsConverterObj = new OddsConverter('implied_probability');

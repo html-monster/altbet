@@ -2,6 +2,7 @@ class inputNumber{
 	constructor(parent){
 		this.parent = $(parent);
 		this.INPUT = 'input.number';
+		let inputNum = $('input.number')
 
 		//oneStepValueChange()==============================================================================================
 		let flag, self = this;
@@ -30,29 +31,8 @@ class inputNumber{
 			}
 		}
 		
-		this.parent.on('keydown', this.INPUT, function (e) {
-			let input = $(this),
-					value = +input.val(),
-					code;
-
-			e = e || event;
-			code = e.which || e.charCode || e.keyCode;
-
-			(defaultMethods.isInteger(+input.attr('data-validation'))) ? flag = 1 : flag = 0.01;
-
-			if (limitInputData($(this), input, flag, code) === false)  return false;
-
-			if (code == 38) {
-				e.preventDefault();
-				input.val((flag == 1) ? value + flag : (value + flag).toFixed(2));
-				input[0].selectionStart = input.val().length;
-			}
-			else if (code == 40) {
-				e.preventDefault();
-				input.val((flag == 1) ? value - flag : (value - flag).toFixed(2));
-				input[0].selectionStart = input.val().length;
-			}
-		});
+		this.parent.on('keydown', this.INPUT, _incrementValue);
+		inputNum.keydown(_incrementValue);
 
 		this.parent.on('click', '.regulator span', function () {
 			let input = $(this).parents('.input').find('input.number'),
@@ -79,33 +59,17 @@ class inputNumber{
 		});
 
 		//numericalVerification()==========================================================================================
-		this.parent.on('keypress', this.INPUT, function (e) {
-			e = e || event;
-			let code = e.which || e.charCode || e.keyCode;
+		this.parent.on('keypress', this.INPUT, _checkInputNumber);
+		inputNum.keypress(_checkInputNumber);
 
-			if(code != 13){
-				if(!(code == 46 || code >= 48 && code <= 57 || code >= 8 && code <= 9
-						|| code == 27 || code == 37 || code == 39)){
-					return false;
-				}
-			}
-		});
-		this.parent.on('keydown', this.INPUT, function (e) {
-			e = e || event;
-			let code = e.which || e.charCode || e.keyCode;
-
-			if(e.ctrlKey && code == 86){
-				return false;
-			}
-		});
+		this.parent.on('keydown', this.INPUT, _pasteDine);
+		inputNum.keydown(_pasteDine);
 
 		this.parent.on('keyup', this.INPUT, function (e) {
 			inputNumber.clearInput($(this));
 		});
-		this.parent.on('contextmenu', this.INPUT, function (e) {
-			if(e.button == 2)
-				e.preventDefault();
-		});
+		this.parent.on('contextmenu', this.INPUT, _contextMenuDine);
+		inputNum.contextmenu(_contextMenuDine);
 
 
 		//clearInput=======================================================================================================
@@ -126,6 +90,7 @@ class inputNumber{
 				if(self.parents('.quantity').length) spreadClearBtn.hide();
 			}, 150);
 		});
+
 		// $(document).keyup(function (e) {
 		// 	e = e || event;
 		// 	if(e.keyCode == 27){
@@ -135,7 +100,54 @@ class inputNumber{
 		// 		}, 150);
 		// 	}
 		// });
+		function _checkInputNumber(e){
+			e = e || event;
+			let code = e.which || e.charCode || e.keyCode;
+
+			if(code != 13){
+				if(!(code == 46 || code >= 48 && code <= 57 || code >= 8 && code <= 9
+					|| code == 27 || code == 37 || code == 39)){
+					return false;
+				}
+			}
+		}
+		function _pasteDine(e) {
+			e = e || event;
+			let code = e.which || e.charCode || e.keyCode;
+
+			if(e.ctrlKey && code == 86){
+				return false;
+			}
+		}
+		function _contextMenuDine(e) {
+			if(e.button == 2)
+				e.preventDefault();
+		}
+		function _incrementValue(e) {
+			let input = $(this),
+				value = +input.val(),
+				code;
+
+			e = e || event;
+			code = e.which || e.charCode || e.keyCode;
+
+			(defaultMethods.isInteger(+input.attr('data-validation'))) ? flag = 1 : flag = 0.01;
+
+			if (limitInputData($(this), input, flag, code) === false)  return false;
+
+			if (code == 38) {
+				e.preventDefault();
+				input.val((flag == 1) ? value + flag : (value + flag).toFixed(2));
+				input[0].selectionStart = input.val().length;
+			}
+			else if (code == 40) {
+				e.preventDefault();
+				input.val((flag == 1) ? value - flag : (value - flag).toFixed(2));
+				input[0].selectionStart = input.val().length;
+			}
+		}
 	}
+
 	static clearInput(current) {
 		var clearBtn = current.parent().find('.clear'),
 				spreadClearBtn = $('.spread_container .clear');

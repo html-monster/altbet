@@ -130,7 +130,7 @@ class orderClass{
 				// if(code == 13)
 				// 	$(this).parents('form').submit();
 				if($(this).parents('.price').length || $(this).parents('.input').find('.spreader').length){
-					if((code	 < 46 || code	 > 57 || code	 == 47) && condition){
+					if((code < 46 || code > 57 || code == 47) && condition){
 						message.fadeIn(200);
 						return false;
 					}
@@ -179,7 +179,7 @@ class orderClass{
 				if($(this).parents('.obligations').length){
 					let val = $(this).val().split('.');
 
-					if((code	 < 46 || code	 > 57 || code	 == 47) && condition){
+					if((code < 46 || code > 57 || code == 47) && condition){
 						message.fadeIn(200);
 					}
 					else{
@@ -200,128 +200,128 @@ class orderClass{
 
 		//order edit ===================================================================================================
 		self.orderEdit = function () {
-			let container = $('.left_order'),
-					currentOrders = $('#current-orders'),
-					checkboxProp,
-					priceMarket = '';
-			container.on('change', 'label.checkbox input[type=checkbox]', function () {
-				let price = $(this).parents('form').find('.price'),
-						id,
-						items;
-				checkboxProp = $(this).parents('form').find('input[type=checkbox]').prop('checked');
-				// if ($(this).parents('#order').length) {
-				// 	if ($('.wrapper_event_page').length) {
-				// 		if ($(this).parents('.sell-container').length) {
-				// 			items = $('.executed_orders.sell .body tr');
-				// 			priceMarket = '0.' + items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
-				// 		}
-				// 		else {
-				// 			items = $('.executed_orders.buy .body tr');
-				// 			priceMarket = '0.' + items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
-				// 		}
-				// 	}
-				// 	else {
-				// 		id = $(this).parents('.order_content').attr('id').slice(0, -7);
-				// 		if ($(this).parents('.sell-container').length) {
-				// 			items = $('.event-content#' + id + ' .sell').children();
-				// 			priceMarket = items.eq(items.length - 1).find('.price').text().replace(/[^0-9.]+/g, "");
-				// 		}
-				// 		else {
-				// 			items = $('.event-content#' + id + ' .buy').children();
-				// 			priceMarket = items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
-				// 		}
-				// 	}
-				// }
-				// if (checkboxProp) {
-				// 	let html = $('.order_content.new .price').clone();
-				//
-				// 	$(this).parent().find('span').text('Limit');
-				// 	html.find('label').hide();
-				// 	html.find('.regulator').hide();
-				// 	$(this).parents('form').find('.obligations .regulator').fadeIn(200);
-				// 	price.html(html.html()).find('.regulator').fadeIn(200);
-				// 	price.find('label').fadeIn(200);
-				// 	price.find('input').val('0.').focus();
-				// 	price.find('input')[0].selectionStart = 4;
-				// 	price.parents('form').find('.obligations input').removeAttr('disabled');
-				// }
-				// else {
-				// 	let sum = $(this).parents('form').find('.obligations');
-				//
-				// 	$(this).parent().find('span').text('Market');
-				// 	price.find('label').text('Market price');
-				// 	price.find('input.number').attr('disabled', true).removeAttr('name').val('');
-				// 	price.find('.regulator').fadeOut(200);
-				// 	sum.find('input.number').attr('disabled', true);
-				// 	sum.find('.regulator').fadeOut(200);
-				// 	price.parents('form').find('.obligations input.number').val('');
-				// 	price.parents('form').find('.volume input').focus();
-				// }
-			});
-			function calculation(context) {
-				// let priceInput = context.parents('form').find('.price input'),
-				// 		volumeInput = context.parents('form').find('.volume input'),
-				// 		sumInput = context.parents('form').find('.obligations input'),
-				// 		feesInput = context.parents('form').find('.fees input'),
-				// 		riskInput = context.parents('form').find('.risk input'),
-				// 		profitInput = context.parents('form').find('.profit input'),
-				// 		price,
-				// 		volume = +volumeInput.val(),
-				// 		sum = +sumInput.val(),
-				// 		fee = Math.round10(0.0086 * volume, -2);
-				//
-				// if (checkboxProp) {
-				// 	if (context.parents('.sell-container').length) {
-				// 		price = 1 - priceInput.val();
-				// 	}
-				// 	else {
-				// 		price = priceInput.val();
-				// 	}
-				// 	if (context.parents('.price').length) {//(price * volume).toFixed(2)
-				// 		if (volume) {
-				// 			sum = Math.round10(price * volume, -2);
-				// 			sumInput.val(sum);
-				// 			feesInput.val(fee || '');
-				// 			riskInput.val(Math.round10(fee + sum, -2) || '');
-				// 			profitInput.val(Math.round10((1 - price) * ((volume == 'Infinity') ? '' : volume), -2) || '');
-				// 		}
-				// 	}
-				// 	if (context.parents('.volume').length) {
-				// 		if (price) {
-				// 			sum = Math.round10(price * volume, -2);
-				// 			sumInput.val(sum);
-				// 		}
-				// 		feesInput.val(fee || '');
-				// 		riskInput.val(Math.round10(fee + sum, -2) || '');
-				// 	}
-				// 	if (context.parents('.obligations').length) {
-				// 		if (price) {
-				// 			volume = Math.round10(sum / price) || '';
-				// 			volumeInput.val((volume == 'Infinity') ? '' : volume);
-				// 			fee = Math.round10(0.0086 * volume, -2);
-				// 			feesInput.val(fee || '');
-				// 			riskInput.val(Math.round10(fee + sum, -2) || '');
-				// 			profitInput.val(Math.round10((1 - price) * ((volume == 'Infinity') ? '' : volume), -2) || '');
-				// 		}
-				// 	}
-				// 	else{
-				// 		if(price && volume && sum)
-				// 			profitInput.val(Math.round10((1 - price) * volume, -2));
-				// 		else
-				// 			profitInput.val('');
-				// 	}
-				// }
-				// else {
-				// 	if (context.parents('.volume').length) {
-				// 		feesInput.val(fee || '');
-				// 		sumInput.val('');
-				// 	}
-				// 	if (context.parents('.obligations').length) {
-				// 		volumeInput.val('');
-				// 		feesInput.val('');
-				// 	}
-				// }
-			}
+			// let container = $('.left_order'),
+			// 		currentOrders = $('#current-orders'),
+			// 		checkboxProp,
+			// 		priceMarket = '';
+			// container.on('change', 'label.checkbox input[type=checkbox]', function () {
+			// 	let price = $(this).parents('form').find('.price'),
+			// 			id,
+			// 			items;
+			// 	checkboxProp = $(this).parents('form').find('input[type=checkbox]').prop('checked');
+			// 	if ($(this).parents('#order').length) {
+			// 		if ($('.wrapper_event_page').length) {
+			// 			if ($(this).parents('.sell-container').length) {
+			// 				items = $('.executed_orders.sell .body tr');
+			// 				priceMarket = '0.' + items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+			// 			}
+			// 			else {
+			// 				items = $('.executed_orders.buy .body tr');
+			// 				priceMarket = '0.' + items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+			// 			}
+			// 		}
+			// 		else {
+			// 			id = $(this).parents('.order_content').attr('id').slice(0, -7);
+			// 			if ($(this).parents('.sell-container').length) {
+			// 				items = $('.event-content#' + id + ' .sell').children();
+			// 				priceMarket = items.eq(items.length - 1).find('.price').text().replace(/[^0-9.]+/g, "");
+			// 			}
+			// 			else {
+			// 				items = $('.event-content#' + id + ' .buy').children();
+			// 				priceMarket = items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+			// 			}
+			// 		}
+			// 	}
+			// 	if (checkboxProp) {
+			// 		let html = $('.order_content.new .price').clone();
+			//
+			// 		$(this).parent().find('span').text('Limit');
+			// 		html.find('label').hide();
+			// 		html.find('.regulator').hide();
+			// 		$(this).parents('form').find('.obligations .regulator').fadeIn(200);
+			// 		price.html(html.html()).find('.regulator').fadeIn(200);
+			// 		price.find('label').fadeIn(200);
+			// 		price.find('input').val('0.').focus();
+			// 		price.find('input')[0].selectionStart = 4;
+			// 		price.parents('form').find('.obligations input').removeAttr('disabled');
+			// 	}
+			// 	else {
+			// 		let sum = $(this).parents('form').find('.obligations');
+			//
+			// 		$(this).parent().find('span').text('Market');
+			// 		price.find('label').text('Market price');
+			// 		price.find('input.number').attr('disabled', true).removeAttr('name').val('');
+			// 		price.find('.regulator').fadeOut(200);
+			// 		sum.find('input.number').attr('disabled', true);
+			// 		sum.find('.regulator').fadeOut(200);
+			// 		price.parents('form').find('.obligations input.number').val('');
+			// 		price.parents('form').find('.volume input').focus();
+			// 	}
+			// });
+			// function calculation(context) {
+			// 	let priceInput = context.parents('form').find('.price input'),
+			// 			volumeInput = context.parents('form').find('.volume input'),
+			// 			sumInput = context.parents('form').find('.obligations input'),
+			// 			feesInput = context.parents('form').find('.fees input'),
+			// 			riskInput = context.parents('form').find('.risk input'),
+			// 			profitInput = context.parents('form').find('.profit input'),
+			// 			price,
+			// 			volume = +volumeInput.val(),
+			// 			sum = +sumInput.val(),
+			// 			fee = Math.round10(0.0086 * volume, -2);
+			//
+			// 	if (checkboxProp) {
+			// 		if (context.parents('.sell-container').length) {
+			// 			price = 1 - priceInput.val();
+			// 		}
+			// 		else {
+			// 			price = priceInput.val();
+			// 		}
+			// 		if (context.parents('.price').length) {//(price * volume).toFixed(2)
+			// 			if (volume) {
+			// 				sum = Math.round10(price * volume, -2);
+			// 				sumInput.val(sum);
+			// 				feesInput.val(fee || '');
+			// 				riskInput.val(Math.round10(fee + sum, -2) || '');
+			// 				profitInput.val(Math.round10((1 - price) * ((volume == 'Infinity') ? '' : volume), -2) || '');
+			// 			}
+			// 		}
+			// 		if (context.parents('.volume').length) {
+			// 			if (price) {
+			// 				sum = Math.round10(price * volume, -2);
+			// 				sumInput.val(sum);
+			// 			}
+			// 			feesInput.val(fee || '');
+			// 			riskInput.val(Math.round10(fee + sum, -2) || '');
+			// 		}
+			// 		if (context.parents('.obligations').length) {
+			// 			if (price) {
+			// 				volume = Math.round10(sum / price) || '';
+			// 				volumeInput.val((volume == 'Infinity') ? '' : volume);
+			// 				fee = Math.round10(0.0086 * volume, -2);
+			// 				feesInput.val(fee || '');
+			// 				riskInput.val(Math.round10(fee + sum, -2) || '');
+			// 				profitInput.val(Math.round10((1 - price) * ((volume == 'Infinity') ? '' : volume), -2) || '');
+			// 			}
+			// 		}
+			// 		else{
+			// 			if(price && volume && sum)
+			// 				profitInput.val(Math.round10((1 - price) * volume, -2));
+			// 			else
+			// 				profitInput.val('');
+			// 		}
+			// 	}
+			// 	else {
+			// 		if (context.parents('.volume').length) {
+			// 			feesInput.val(fee || '');
+			// 			sumInput.val('');
+			// 		}
+			// 		if (context.parents('.obligations').length) {
+			// 			volumeInput.val('');
+			// 			feesInput.val('');
+			// 		}
+			// 	}
+			// }
 
 			// container.on('keyup', 'input.number', function () {
 			// 	// checkboxProp = $(this).parents('form').find('input[type=checkbox]').length ? $(this).parents('form').find('input[type=checkbox]').prop('checked') : 1;

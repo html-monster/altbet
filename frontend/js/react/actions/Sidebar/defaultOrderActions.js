@@ -8,10 +8,10 @@ import {
 	ON_DEFAULT_ORDER_CREATE,
 	ON_DEFAULT_ORDER_AJAX_SEND,
 } from "../../constants/ActionTypesDefaultOrders.js";
-import {OddsConverter} from '../../models/oddsConverter/oddsConverter.js';
+import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 
 
-let OddsConverterObj = new OddsConverter('implied_probability');
+// let OddsConverterObj = new OddsConverter('implied_probability');
 
 
 export function actionOnLoad(that)
@@ -47,7 +47,9 @@ export function actionOnDeleteOrder(orderContainer, order)
 
 		// debugger;
 		let newOrders = getState().tradeSlip.orderNewData.filter(function(itemContainer) {
-			if(order.Side !== undefined && itemContainer.ID === orderContainer.ID){
+			if(order.Side !== undefined && itemContainer.ID === orderContainer.ID &&
+				itemContainer.isMirror === orderContainer.isMirror){
+
 				itemContainer.Orders = itemContainer.Orders.filter((item) => item.Side !== orderId);
 				if(itemContainer.Orders.length)
 					return true;
@@ -81,8 +83,16 @@ export function actionOnOrderTypeChange(checkboxProp, formData)
 				thisItem.Orders.some(function (item, index, arr) {
 					if(item.Side == data.Side){
 						let newObj = Object.assign({}, item);
+
 						newObj.Limit = !checkboxProp;
+
+						if(checkboxProp && (newObj.Price == '0.' || price.val() == '0.'))
+							newObj.Price = '';
+						else if(price.val() == '')
+							newObj.Price = '0.';
+
 						arr.splice(index, 1, newObj);
+
 						return true;
 					}
 					return false;
@@ -166,7 +176,7 @@ export function actionOnOrderCreate(newOrder)
 
 export function actionOnAjaxSend(context, parentData, e)
 {
-	return (dispatch, getState) =>
+	return () =>
 	{
 		e.preventDefault();
 		let data = context.props.data;

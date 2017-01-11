@@ -115,7 +115,7 @@ export default class PageMyPos extends React.Component
 
 
                         {/* // BM: --------------------------------------------------- MY POSITIONS ---*/}
-                        <div className="tab_item">
+                        <div className="tab_item active">
                             <div className="my_position_tab">
                                 <div className="wrapper">
                                     <div className="filters">

@@ -145,22 +145,22 @@
         .left_column{  padding-right: 20px;  margin-bottom: 20px;  }
         .right_column{  padding-left: 20px;  margin-bottom: 20px; }
       //}
-      &.demo{
-        .container{  text-align: center;  }
-        .wave{  border-radius: 4px; }
-        input[type=submit]{
-          display: block;
-          width: 295px;
-          margin: 0 auto;
-        }
-      }
-      &.m_maker{
-        p{
-          margin-bottom: 15px;
-          font-size: 14px;
-          color: $reg_title;
-        }
-      }
+      //&.demo{
+      //  .container{  text-align: center;  }
+      //  .wave{  border-radius: 4px; }
+      //  input[type=submit]{
+      //    display: block;
+      //    width: 295px;
+      //    margin: 0 auto;
+      //  }
+      //}
+      //&.m_maker{
+      //  p{
+      //    margin-bottom: 15px;
+      //    font-size: 14px;
+      //    color: $reg_title;
+      //  }
+      //}
     }
     label{
       display: block;
@@ -178,37 +178,37 @@
       @include btn-shadow;
     }
 
-    .call_time{
-      padding-bottom: 10px;
-      .container{
-        display: flex;
-        align-items: center;
-        height: 39px;
-        label{
-          margin: 0;
-          margin-right: 30px;
-          position: relative;
-          @include radio_button;
-          &:after{
-            content: '';
-            display: block;
-            width: 17px;
-            height: 16px;
-            position: absolute;
-            top: 3px;
-            left: 0;
-            background: url("../Images/sprite.svg") no-repeat;
-          }
-          @include reg_contact_method;
-          span {  padding-left: 20px;
-            margin-left: 25px; }
-        }
-      }
-      label{
-        margin-bottom: 6px;
-        font-size: 14px;
-      }
-    }
+    //.call_time{
+    //  padding-bottom: 10px;
+    //  .container{
+    //    display: flex;
+    //    align-items: center;
+    //    height: 39px;
+    //    label{
+    //      margin: 0;
+    //      margin-right: 30px;
+    //      position: relative;
+    //      @include radio_button;
+    //      &:after{
+    //        content: '';
+    //        display: block;
+    //        width: 17px;
+    //        height: 16px;
+    //        position: absolute;
+    //        top: 3px;
+    //        left: 0;
+    //        background: url("../Images/sprite.svg") no-repeat;
+    //      }
+    //      @include reg_contact_method;
+    //      span {  padding-left: 20px;
+    //        margin-left: 25px; }
+    //    }
+    //  }
+    //  label{
+    //    margin-bottom: 6px;
+    //    font-size: 14px;
+    //  }
+    //}
 
     hr{
       clear: both;
@@ -408,7 +408,7 @@ textarea.input__field--yoshiko{
 .input__field--yoshiko:focus ~ .input__label--yoshiko,
 .input--filled .input__label--yoshiko {
   transform: translate3d(0, 0, 0);
-  padding-left: 0;
+  padding-left: 5px;
 }
 
 .input__field--yoshiko:focus ~ .input__label--yoshiko .input__label-content--yoshiko,

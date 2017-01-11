@@ -47,12 +47,12 @@
     "postcss-url": "^5.0.2",
     "react": "*",
     "react-addons-css-transition-group": "^15.4.1",
-    "react-animate-on-change": "^0.2.1",
     "react-dom": "*",
     "react-redux": "^4.0.6",
     "react-router": "^3.0.0",
     "react-tap-event-plugin": "^2.0.0",
     "redux": "^3.0.6",
+    "redux-form": "^6.4.3",
     "redux-thunk": "^2.1.0"
   },
   "devDependencies": {

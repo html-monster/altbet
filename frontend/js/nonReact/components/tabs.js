@@ -8,21 +8,29 @@ class tabsClass{
 						itemContainer = tabContainer.next();
 				if(!($(this).attr('data-disabled'))){
 					tabContainer.children('.tab').removeClass("active").eq($(this).index()).addClass("active");
-					itemContainer.children('.tab_item').hide().eq($(this).index()).fadeIn();
+					itemContainer.children('.tab_item').removeClass('active').hide().eq($(this).index()).fadeIn();
 				}
 			});
+			// tab.each(function () {
+			// 	let self = $(this);
+			// 	if(self.hasClass('active')){
+			// 		let index = self.index();
+			//
+			// 		self.parents('.tabs').next('.tab_content').children('.tab_item').hide().eq($(this).index()).show()
+			// 	}
+			// });
 			//tab.parent().find('.tab:first-child').addClass("active");
 		}();
 	}
-	static tabsChange(container, tab, tab_item) {
-		tab = tab || '.tab';
-		tab_item = tab_item || '.tab_item';
-		$(container).find(tab).click(function() {
-			if($(this).attr('data-disabled')) return false;
-			$(container).find(tab).removeClass("active").eq($(this).index()).addClass("active");
-			$(container).find(tab_item).hide().eq($(this).index()).fadeIn();
-		}).eq(0).addClass("active");
-	}
+	// static tabsChange(container, tab, tab_item) {
+	// 	tab = tab || '.tab';
+	// 	tab_item = tab_item || '.tab_item';
+	// 	$(container).find(tab).click(function() {
+	// 		if($(this).attr('data-disabled')) return false;
+	// 		$(container).find(tab).removeClass("active").eq($(this).index()).addClass("active");
+	// 		$(container).find(tab_item).hide().eq($(this).index()).fadeIn();
+	// 	}).eq(0).addClass("active");
+	// }
 	
 	static tabsChangeAnimate(container, animated_row){
 		$(container).find('.wrapper .tab').click(function () { //$(".nav_items .wrapper .tab")

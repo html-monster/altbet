@@ -6,7 +6,7 @@ import eventPage from './eventPage.js';
 import sidebar from './sidebar.js';
 import tradeSlip from './sidebar/defaultOrders.js';
 import yourOrders from './sidebar/yourOrders.js';
-// import test from './test'
+import deposit from './account/deposit.js';
 
 
 export default combineReducers({
@@ -16,4 +16,5 @@ export default combineReducers({
 	sidebar,
 	tradeSlip,
 	yourOrders,
+	deposit,
 });

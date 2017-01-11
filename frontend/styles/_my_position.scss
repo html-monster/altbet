@@ -24,10 +24,10 @@
 				@include my_pos_active_tab;
 			}
 		}
-		.tab_item {
-			display: none;
-			&:nth-child(2) {  display: block;  }
-		}
+		//.tab_item {
+		//	display: none;
+			//&:nth-child(2) {  display: block;  }
+		//}
 		.my_position_tab {
 			.filters {
 				margin: 20px 0;

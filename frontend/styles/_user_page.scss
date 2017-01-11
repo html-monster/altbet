@@ -67,9 +67,9 @@
     background-image: $sign_in_bg;
     //@include scroll;
     .tab_item {
-      display: none;
+      //display: none;
       position: relative;
-      &:first-child {  display: block;  }
+      //&:first-child {  display: block;  }
       .user_info {
         position: absolute;
         top: 11px;
@@ -141,7 +141,7 @@
         background: $main_page_tab_bg;
         color: $main_page_tab_color;
         font-weight: 600;
-        padding: 10px;
+        padding: 8px 15px;
         border-radius: 4px;
         &.active {
           color: #ffffff;
@@ -197,62 +197,250 @@
         @include user_balance_color;
       }
     }
-    /*.deposit_funds {
-      .table_responsive {
-        border: none;
-        form.deposit {
-          i {
-            font-style: normal;
-            font-size: 11px;
+    .deposit{
+      padding: 15px 0;
+      h3{
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
+      span.label{
+        display: block;
+        width: 51px;
+        height: 36px;
+        position: absolute;
+        bottom: 0;
+        line-height: 36px;
+        text-align: center;
+        border-radius: 0 0 0 4px;
+        border-right: 1px solid $main-bg;
+        box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
+      }
+      .account_balance{
+        position: absolute;
+        top: 15px;
+        right: 0;
+        font-size: 14px;
+        .value{  color: #1196d4;  }
+      }
+      .quantity_control{
+        position: relative;
+        strong{
+          display: block;
+          margin-bottom: 10px;
+        }
+        .btn{
+          width: 50px;
+          border-radius: 0;
+          border: 1px solid $main-bg;
+          border-right: none;
+          box-shadow: none;
+          background: $main-bg * 1.4;
+          color: #3498da;
+          &:first-of-type{  border-radius: 4px 0 0 0;  }
+          &:last-of-type{  border-radius: 0 4px 0 0; border-right: 1px solid $main-bg;  }
+        }
+        input{
+          display: block;
+          width: 300px;
+          margin-bottom: 10px;
+          padding: 5px 10px;
+          padding-left: 60px;
+          border: 1px solid $main-bg;
+          border-top: none;
+          border-radius: 0 0 4px 4px;
+        }
+      }
+      .recommended_block{
+        display: flex;
+        align-items: center;
+        margin: 25px 0;
+        h4{  margin-right: 15px;  }
+        button{   background: linear-gradient(to bottom, #64c9ef, #3498da);  }
+      }
+      .price_plan_form{
+        display: none;
+        h4{  margin: 15px 0 5px;  }
+        h5{  font-size: 12px;  }
+        h5+span{  font-size: 12px;  }
+        span.description{  opacity: .6;  }
+        .container{  align-items: flex-start; padding: 0;  }
+        .item{
+          width: 100%;
+          padding: 10px;
+          margin: 0;
+          border-radius: 8px;
+          border: 1px solid #000;
+          transition: 0.4s ease-out;
+          &.active{
+            box-shadow: 0 0 8px 0 #3498da;
+            border-color: #3498da;
           }
-          strong {
-            font-size: 14px;
-            color: #000;
+          &.active{  height: 100%;  }
+          &:hover{
+            height: auto;
+            position: absolute;
+            z-index: 10;
+            //ul.info{  height: 100px;  }
           }
-          input {
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding-left: 10px;
-            margin-bottom: 10px;
-            font-size: 12px;
-            height: 31px;
+        }
+        .item_container{
+          //width: calc(25% - 13px);
+          width: 210px;
+          margin: 30px 10px;
+          //padding: 10px;
+          position: relative;
+          border-radius: 6px;
+          transition: 0.4s ease;
+          cursor: pointer;
+          text-align: center;
+          background: $main-bg;
+          &:first-child{
+            margin-left: 0;
           }
-          .wrapper_funds {
-            height: 80px;
-            position: relative;
-            .select_funds {
-              position: absolute;
-              width: 20%;
-              margin-right: 10px;
-              &:nth-child(2) {
-                margin-left: 200px;
-              }
-              &:nth-child(3) {
-                margin-left: 400px;
-              }
-              select {
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                padding: 0 10px;
-                width: 158px;
-                height: 31px;
-              }
+          &:nth-child(2) {
+            h4{  color: #cd7f32;  }
+            strong.price{  color: #cd7f32;  }
+            .time .price{
+              color: #cd7f32;
             }
-            .funds_margin {
-              margin-top: 24px;
+          }
+          &:nth-child(3) {
+            h4{  color: #8e8d8d;  }
+            strong.price{  color: #8e8d8d;  }
+            .time .price{
+              color: #8e8d8d;
             }
           }
-          input[id='submit_deposit_funds'] {
-            padding: 5px 15px;
-            background: linear-gradient(#249fed, #116b95);
-            color: #fff;
-            font-weight: bold;
-            border: 1px solid #249fed;
-
+          &:nth-child(4) {
+            margin-right: 0;
+            h4{  color: #d3af37;  }
+            strong.price{
+              color: #d3af37;
+              span{  left: 0;  }
+            }
+            .time .price{  color: #d3af37;  }
+          }
+          &:nth-child(2), &:nth-child(3){
+            strong.price span{  left: 25px;  }
+          }
+          h4{
+            margin: 0;
+            font-size: 18px;
+          }
+        }
+        ul.info{  display: none;  }
+        .period{
+          margin-bottom: 25px;
+          button{
+            width: 140px;
+            height: auto;
+            margin: 0 10px;
+            padding: 7px 15px;
+            border-radius: 20px;
+            background: $bg_color;
+            &.active{
+              background: linear-gradient(to bottom, #64c9ef, #3498da);
+            }
           }
         }
       }
-    }*/
+      .total_container{
+        display: none;
+        margin-bottom: 25px;
+        padding: 15px 0;
+        border-top: 1px solid $main_color;
+        border-bottom: 1px solid $main_color;
+        & > span{
+          display: block;
+          &:last-of-type{   font-family: 'open_sans_bold', sans-serif;  }
+        }
+        span.value{  color: #3498da;  }
+      }
+      .payment_container{
+        .tabs{
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 15px;
+        }
+        .tab{
+          width: 210px;
+          height: 50px;
+          padding-right: 10px;
+          text-align: center;
+          position: relative;
+          @include user_tab_border;
+          &.active{  background: $main_page_tab_bg; border: 1px solid $color-max; }
+          span{
+            display: block;
+            width: 100%;
+            height: 30px;
+            background: url("../Images/logos_sprite.svg");
+            background-size: 420px;
+          }
+          &.Skrill span{  background-position: 24px -65px;  }
+          &.Neteller span{  background-position: -6px -15px;  }
+          &.Ecopayz span{  background-position: 10px -123px;  }
+          &.VisaMC span{  background-position: 21px -165px;  }
+          //span{
+          //  display: block;
+          //  width: 16px;
+          //  height: 16px;
+          //  position: absolute;
+          //  top: calc(50% - 8px);
+          //  right: 10px;
+          //  //border: 1px solid $main-bg;
+          //  border-radius: 4px;
+          //  background: $checkbox_bg;
+          //  &:after{
+          //    content: '';
+          //    width: 12px;
+          //    height: 12px;
+          //    position: absolute;
+          //    top: 2px;
+          //    left: 2px;
+          //    border-radius: 4px;
+          //    box-shadow: inset 0 2px 3px 0 rgba(0, 0, 0, 0.5);
+          //  }
+          //}
+        }
+        .container{  float: left; width: 50%;  }
+        .input--yoshiko{  display: block; max-width: 440px; padding: 1.6em 0 10px;  }
+        .input_animate.static{      padding: 1.6em 0 10px;  }
+        .exp_date{  width: 50px;  }
+        .cvv{  width: 65px;  }
+        //.total:focus ~ label, .input--filled .total ~ label{  padding-left: 5px;  }
+        [type=submit]{
+          width: calc(100% - 10px);
+          height: 38.33px;
+          margin-top: 27px;
+        }
+        label{
+          display: block;
+          margin-bottom: 7px;
+          padding-left: 5px;
+          color: #8b8c8b;
+          font-size: 14px;
+          font-family: "open_sans_bold", sans-serif;
+        }
+        .static{
+          padding-top: 10px;
+          .validation-summary-errors{
+            top: inherit;
+            right: inherit;
+            left: 0;
+            bottom: -10px;
+          }
+        }
+        span.label{  height: 36px;  bottom: 13px;  }
+        .total{  padding-left: 55px;  }
+        .total ~ label span{  padding-left: 50px;  }
+        .valid{
+          color: inherit;
+          border-color: $color-max;
+          @include payment_input_shadow;
+        }
+      }
+    }
   }
   .preferences {
       //.mode_switch {

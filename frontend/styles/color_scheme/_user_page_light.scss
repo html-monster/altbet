@@ -1,4 +1,8 @@
 $user_page_balance: #dce1e6;
+@mixin payment_input_shadow{
+	box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.2);
+}
+@mixin user_tab_border{  border: 1px solid $default-button-bg * 0.84;  }
 @mixin user_validation_params{
 	.invalidJs{
 		color: #ff3905;

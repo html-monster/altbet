@@ -4,27 +4,27 @@
 import {
     ON_KEY_UP
 } from "../../constants/ActionTypesOrderForm.js";
-import {OddsConverter} from '../../models/oddsConverter/oddsConverter.js';
+// import {OddsConverter} from '../../models/oddsConverter/oddsConverter.js';
 
 
 //not use!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-const PRICE = 'price';
-const QUANTITY = 'quantity';
-const SUM = 'sum';
-let OddsConverterObj = new OddsConverter('implied_probability');
+// const PRICE = 'price';
+// const QUANTITY = 'quantity';
+// const SUM = 'sum';
+// let OddsConverterObj = new OddsConverter('implied_probability');
 export function actionOnKeyUp(form, input)
 {
     return (dispatch, getState) =>
     {
         // console.log('ON_DEFAULT_ORDER_DELETE', ON_DEFAULT_ORDER_DELETE, getState());
-        switch (input){
-            case (PRICE):
-            case (QUANTITY):
-            case (SUM):
-        }
-        console.log(form, input);
+        // switch (input){
+        //     case (PRICE):
+        //     case (QUANTITY):
+        //     case (SUM):
+        // }
+        // console.log(form, input);
 // console.log(OddsConverterObj.calculation);
 //         let newOrderData = OddsConverterObj.calculation(getState().orderForm.orderData);
         // let orderId;

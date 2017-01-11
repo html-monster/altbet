@@ -9,6 +9,7 @@ import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
 import EventPage from './containers/EventPage';
 import Sidebar from './components/Sidebar.jsx';
+import Deposit from './components/userPage/deposit.jsx';
 
 
 // Altbet App object
@@ -32,6 +33,15 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MAIN ) {
 			<MainPage />
 		</Provider>,
 	  document.getElementById('DiMPMainpage')
+	);
+}
+
+if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
+	ReactDOM.render(
+		<Provider store={store}>
+			<Deposit />
+		</Provider>,
+		document.getElementById('deposit')
 	);
 }
 

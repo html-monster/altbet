@@ -19,8 +19,11 @@ import { WebsocketModel } from "../react/models/Websocket";
  */
 export class ABpp
 {
-    public static PAGE_MAIN = 1;
-    public static PAGE_EVENT = 2;
+    public static PAGE_MAIN = 'PAGE_MAIN';
+    public static PAGE_EVENT = 'PAGE_EVENT';
+    public static PAGE_ACCOUNT = 'PAGE_ACCOUNT';
+    public static TAKER_FEES = 0.0086;
+    public static MAKER_FEES = 0.0026;
 
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
@@ -28,7 +31,9 @@ export class ABpp
     // application config
     public config = {
                 currentTheme: null,     // current theme
-                currentPage: null       // current page
+                currentPage: null,       // current page
+                takerFees: null,       // taker fees
+                makerFees: null       // maker fees
             };
 
     public User: User = null;           // user entity
@@ -53,6 +58,8 @@ export class ABpp
 
         // set current page from server
         this.config.currentPage = this.setCurrentPage();
+        this.config.takerFees = ABpp.TAKER_FEES;
+        this.config.makerFees = ABpp.MAKER_FEES;;
 
         // create user
         this.createUser();
@@ -65,6 +72,8 @@ export class ABpp
             return ABpp.PAGE_MAIN;
         else if( globalData.eventPageOn )
             return ABpp.PAGE_EVENT;
+        else if( globalData.userPageOn )
+            return ABpp.PAGE_ACCOUNT;
     }
 
 

@@ -605,6 +605,13 @@
           right: 1px;
         }
       }
+      .basic_mode{
+        .switch{  display: none;  }
+        input[type=submit]{
+          width: 100%;
+          border-right: none;
+        }
+      }
     }
   }
   .default_orders{

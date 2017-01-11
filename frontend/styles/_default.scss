@@ -91,6 +91,7 @@ body > .wrapper{
   &:not([disabled]):active {
     box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);
   }
+  &.color{  color: $main-color;  }
 }
 i.btn [type=submit], [type=submit]{
   cursor: pointer;
@@ -104,10 +105,16 @@ input, select, button, a {
     outline: none;
   }
 }
-input[type="text"], input[type="email"], input[type="password"], input[type="tel"], textarea {
-  box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.2);
-  &:-webkit-autofill{  -webkit-box-shadow: inset 0 0 0 50px #fff !important;  }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
+input::-ms-clear {  display: none;  }
+//input[type="text"], input[type="email"], input[type="password"], input[type="tel"], textarea {
+//  box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.2);
+//  &:-webkit-autofill{  -webkit-box-shadow: inset 0 0 0 50px #fff !important;  }
+//}
 input.datePickerJs:not([disabled]){  cursor: pointer;  }
 .clear{
   display: none;
@@ -504,7 +511,7 @@ label.disabled{
 }
 .tab_item{
   display: none;
-  &:first-child{  display: block;  }
+  &.active{  display: block;  }
 }
 
 .pop_up{
@@ -619,7 +626,6 @@ label.disabled{
 .input__field {
   position: relative;
   display: block;
-  float: right;
   padding: 0.8em;
   width: 100%;
   border: none;

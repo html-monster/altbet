@@ -1,11 +1,13 @@
 import ReactCSSTransitionGroupChild from 'react/lib/ReactCSSTransitionGroupChild';
 
 export default class AnimateOnUpdateChild extends ReactCSSTransitionGroupChild{
-	getClass(obj){
+	getClass(obj)
+	{
 		return {}.toString.call(obj).slice(8, -1);
 	}
 
-	shouldComponentUpdate(nextProps){
+	shouldComponentUpdate(nextProps)
+	{
 		let key = nextProps.children.props['data-verify'];
 
 		if(this.getClass(key) == 'Array'){

@@ -60,27 +60,27 @@ gulp.task('styles', function() {
 
 
 // BM: ================================================================================================ ADMIN STYLES ===
-gulp.task('styles-admin', function()
-{
-  return gulp.src('frontend/admin_styles/index-admin.scss')
-      .pipe(plumber({
-        errorHandler: notify.onError(err => ({
-          title:   'Styles',
-          message: err.message
-        }))
-      }))
-      .pipe(gulpIf(isDevelopment, sourcemaps.init()))
-      .pipe(sass())
-      .pipe(autoprefixer({
-        browsers: ['last 4 versions']
-      }))
-      .pipe(gulpIf(isDevelopment, sourcemaps.write()))
-      // .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
-      // .pipe(gulp.dest('public/styles'))
-      .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Content'))
-      // .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))));
-
-});
+// gulp.task('styles-admin', function()
+// {
+//   return gulp.src('frontend/admin_styles/index-admin.scss')
+//       .pipe(plumber({
+//         errorHandler: notify.onError(err => ({
+//           title:   'Styles',
+//           message: err.message
+//         }))
+//       }))
+//       .pipe(gulpIf(isDevelopment, sourcemaps.init()))
+//       .pipe(sass())
+//       .pipe(autoprefixer({
+//         browsers: ['last 4 versions']
+//       }))
+//       .pipe(gulpIf(isDevelopment, sourcemaps.write()))
+//       // .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
+//       // .pipe(gulp.dest('public/styles'))
+//       .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Content'))
+//       // .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))));
+//
+// });
 
 
 

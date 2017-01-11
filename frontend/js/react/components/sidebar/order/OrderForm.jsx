@@ -2,9 +2,9 @@ import React from 'react';
 // import { bindActionCreators } from 'redux';
 // import { connect } from 'react-redux';
 // import * as orderFormActions from '../../../actions/order/orderFormActions.ts';
-import {OddsConverter} from '../../../models/oddsConverter/oddsConverter.js';
+import {OddsConverterObj} from '../../../models/oddsConverter/oddsConverter.js';
 
-let OddsConverterObj = new OddsConverter('implied_probability');
+// let OddsConverterObj = new OddsConverter('implied_probability');
 
 export default class OrderForm extends React.Component{
 	constructor()
@@ -126,7 +126,7 @@ export default class OrderForm extends React.Component{
 		//
 		// </div>;
 		return (
-			<form action={formData.url} className={className} autoComplete="off" onSubmit={this.props.actions.actionOnAjaxSend.bind(null, this, this.props.containerData)} method="post"
+			<form action={formData.url} className={className + ABpp.config.basicMode ? ' basic_mode' : ''} autoComplete="off" onSubmit={this.props.actions.actionOnAjaxSend.bind(null, this, this.props.containerData)} method="post"
 				  noValidate="novalidate" ref="orderForm">
 				<div className="container">
 					<div className="price">
@@ -139,7 +139,7 @@ export default class OrderForm extends React.Component{
 							}
 						</label>
 						<div className="input">
-							<input type="text" id={`${orderId}_price`} className="number" data-validation="0.33"
+							<input type="tel" id={`${orderId}_price`} className="number" data-validation="0.33"
 								   maxLength="4" name="LimitPrice" autoComplete="off" defaultValue={data.Price} key={data.Price + 'price'}
 								   onKeyUp={OddsConverterObj.calculation.bind(null, this, 'price', checkboxProp)}
 								   disabled={!(checkboxProp)} ref="inputPrice"/>
@@ -157,7 +157,7 @@ export default class OrderForm extends React.Component{
 					<div className="volume">
 						<label htmlFor={`${orderId}_quantity`}>Quantity</label>
 						<div className="input">
-							<input type="text" id={`${orderId}_quantity`} className="number" data-validation="123"
+							<input type="tel" id={`${orderId}_quantity`} className="number" data-validation="123"
 								   maxLength="7" name="Quantity" autoComplete="off" defaultValue={data.Volume} key={data.Volume + 'volume'}
 								   onKeyUp={OddsConverterObj.calculation.bind(null, this, 'quantity', checkboxProp)}
 								   ref="inputQuantity"/>
@@ -175,7 +175,7 @@ export default class OrderForm extends React.Component{
 					<div className="obligations">
 						<label htmlFor={`${orderId}_sum`}>Sum</label>
 						<div className="input">
-							<input type="text" id={`${orderId}_sum`} className="number" data-validation="40.59"
+							<input type="tel" id={`${orderId}_sum`} className="number" data-validation="40.59"
 								   maxLength="7" autoComplete="off" disabled={!(checkboxProp)}
 								   onKeyUp={OddsConverterObj.calculation.bind(null, this, 'sum', checkboxProp)}
 								   ref="inputSum"/>
@@ -243,7 +243,7 @@ export default class OrderForm extends React.Component{
 						data.NewOrder ?
 							<span className="delete" onClick={this.props.onOrderDelete}>{}</span>
 							:
-							'	'
+							''
 					}
 				</div>
 				<div className="error_pop_up">

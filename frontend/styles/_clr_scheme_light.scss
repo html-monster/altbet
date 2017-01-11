@@ -67,6 +67,13 @@ $breadcrumbs-color: transparentize(#000000, 0.5);
 	}
 }
 
+input[type="text"], input[type="email"], input[type="password"], input[type="tel"], textarea {
+	box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.2);
+	&:-webkit-autofill{
+		-webkit-box-shadow: inset 0 0 0 50px #fff * 0.9 !important;
+		border: 1px solid #fff;
+	}
+}
 
 @import "color_scheme/main_page_light";
 @import "color_scheme/order_sidebar_light";
