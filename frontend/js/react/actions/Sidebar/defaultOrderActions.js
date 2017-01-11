@@ -179,6 +179,9 @@ export function actionOnAjaxSend(context, parentData, e)
 	return () =>
 	{
 		e.preventDefault();
+
+		if(!ABpp.User.userIdentity) return false;
+
 		let data = context.props.data;
 		// console.log(parentData, context.props.data);
 		function OnBeginAjax()

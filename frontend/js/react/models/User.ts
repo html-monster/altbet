@@ -5,6 +5,8 @@
 
 export class User
 {
+    public userIdentity = globalData.userIdentity == 'True';
+
     /**
      * account settings
      */
