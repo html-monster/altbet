@@ -7,7 +7,8 @@ import { Common } from '../common/Common';
 import BaseActions from './BaseActions';
 
 
-var __LDEV__ = true;
+// var __LDEV__ = true;
+var __LDEV__ = false;
 
 
 class Actions extends BaseActions
@@ -58,26 +59,34 @@ class Actions extends BaseActions
         }
         else
         {
-            for( let val of props.PosPrice )
+            if( ABpp.config.basicMode )
             {
-                if (!flag && val.Price == props.price) flag = true;
-                if( props.type == 1 )
+                qt = props.quantity;
+                bpr = props.price;
+            }
+            else
+            {
+                for( let val of props.PosPrice )
                 {
-                    if( flag )
+                    if (!flag && val.Price == props.price) flag = true;
+                    if( props.type == 1 )
                     {
-                        qt += val.Quantity;
-                        bpr < val.Price && (bpr = val.Price);
-                    } // endif
-                }
-                else
-                {
-                    if( !flag || val.Price == props.price )
+                        if( flag )
+                        {
+                            qt += val.Quantity;
+                            bpr < val.Price && (bpr = val.Price);
+                        } // endif
+                    }
+                    else
                     {
-                        qt += val.Quantity;
-                        bpr > val.Price && (bpr = val.Price);
+                        if( !flag || val.Price == props.price )
+                        {
+                            qt += val.Quantity;
+                            bpr > val.Price && (bpr = val.Price);
+                        } // endif
                     } // endif
-                } // endif
-            } // endfor
+                } // endfor
+            } // endif
         } // endif
 
         props.ismirror && !props.isempty && (bpr = Common.toFixed(1 - bpr, 2));

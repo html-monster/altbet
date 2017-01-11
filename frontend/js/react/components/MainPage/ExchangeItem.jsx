@@ -9,7 +9,7 @@ export default class ExchangeItem extends React.Component
 {
     render()
     {
-        let isBasicMode = ABpp.User.settings.basicMode;
+        let isBasicMode = ABpp.config.basicMode;
         let $DateLocalization = new DateLocalization();
         let activeExchange = this.props.data.activeExchange;
         let data = this.props.data;

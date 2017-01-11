@@ -45,25 +45,44 @@ class Actions extends BaseActions
 
 
 
-    /**
-     * Create bet form in side bar
-     * @param props
-     * @return {(dispatch:any, getState:any)=>undefined}
-     */
-    public actionOnPosPriceClick(props)
+    public activeTraiderActivate(data)
     {
-
-
         return (dispatch, getState) =>
         {
-            // 0||console.debug( 'getState()', getState() );
-            // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
-            // dispatch({
-            //     type: ON_POS_PRICE_CLICK,
-            //     payload: {}
-            // });
-        }
+            // let data = getState().mainPage.marketsData["0"];
+// 0||console.debug( 'data', data );
+
+            if( $('.left_order .tab input.limit').prop('checked') )
+            {
+                // remove after move react
+                // $('.content_bet').removeClass('active');
+                // $('.event-content').removeClass('active');
+
+                // todo: needs move to sidebar
+                // set current tab
+                $('.active_trader .event_title .event_name').removeClass('active').eq(data.isMirror ? 1 : 0).addClass('active');
+
+                // todo: needs move to sidebar
+                // set new tabs titles
+                // var tabs = $('.active_trader .event_title .event_name');
+                // var ii = 0;
+                // tabs.each(function () {
+                //     $(this).text(inProps.title[ii++]);
+                // });
+
+
+                // todo: needs move to activeTrader
+                // берет данные при смене события(название события, symbol и т.п.)
+                var activeTrader = $('.active_trader');
+                activeTrader.attr('id', 'trader_' + `${data.SymbolsAndOrders.Symbol.Exchange}_${data.SymbolsAndOrders.Symbol.Name}_${data.SymbolsAndOrders.Symbol.Currency}`);
+                activeTrader.find('table.limit tbody').removeClass('scroll_dis');
+
+                activeTraderClass.spreaderClean(true);
+                activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);
+            } // endif
+        };
     }
+
 }
 
 

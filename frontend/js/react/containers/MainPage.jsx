@@ -57,7 +57,7 @@ class MainPage extends BaseController
 
     render()
     {
-        let isBasicMode = ABpp.User.settings.basicMode;
+        let isBasicMode = ABpp.config.basicMode;
         let data = this.props.data;
 
 

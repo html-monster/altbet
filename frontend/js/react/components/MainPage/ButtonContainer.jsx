@@ -10,7 +10,7 @@ export default class ButtonContainer extends React.Component
     render()
     {
         let SummaryPositionPrice;
-        let isBasicMode = ABpp.User.settings.basicMode;
+        let isBasicMode = ABpp.config.basicMode;
         // let $DateLocalization = new DateLocalization();
         let data = this.props.data;
     // console.log(data);
@@ -68,6 +68,7 @@ export default class ButtonContainer extends React.Component
                                                         PosPrice: item.SummaryPositionPrice,
                                                         ismirror: data.ismirror,
                                                         price: (price = isBasicMode ? item2.Price : item2.Price),
+                                                        quantity: item2.Quantity,
                                                         type: data.type == "sell" ? 1 : 2,
                                                         data: data,
                                                     })}

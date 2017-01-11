@@ -21,12 +21,56 @@ class EventPage extends React.Component implements BaseController
         props.eventPageActions.actionOnLoad({exchange: appData.pageEventData.SymbolsAndOrders.Symbol.Exchange});
     }
 
+
+    componentDidMount()
+    {
+        // register global action
+        ABpp.registerAction('EventPage.activeTraiderActivate', () => this.activeTraiderActivate());
+    }
+
+
+
+    /**
+     * activates first exchange left side
+     * @public
+     */
+    activeTraiderActivate()
+    {
+        // 0||console.debug( 'firstExchangeActivate', this );
+        this.props.eventPageActions.activeTraiderActivate(this.props.eventPage.pageEventData);
+    }
+
+
+
     render()
     {
         let data = this.props.eventPage.pageEventData;
         let symbol = `${data.SymbolsAndOrders.Symbol.Exchange}_${data.SymbolsAndOrders.Symbol.Name}_${data.SymbolsAndOrders.Symbol.Currency}`;
 
-0||console.debug( 'this.props', this.props );
+        var classClickable = !ABpp.config.tradeOn ? 'clickable' : '';
+
+// 0||console.debug( 'this.props', ABpp.config.tradeOn, classClickable, this.props );
+            // if (isMirror == 'True' && side == 'sell') data.SummaryPositionPrice.reverse();
+            // if (isMirror == 'False' && side == 'buy') data.SummaryPositionPrice.reverse();
+
+            // if (children < objLength) {
+            //     for (var ii = children; ii < objLength; ii++) {
+            //         table.append('<tr><td><span>alt.bet</span></td><td class="' + className + ' price ' + side +
+            //             ' animated"><span></span></td><td class="' + className + ' volume ' + side + ' animated"><span></span></td></tr>');
+            //     }
+            // }
+            // $(data.SummaryPositionPrice).each(function () {
+            //     var self = this;
+            //     var tr = table.find('tr').eq(flag++);
+            //
+            //     self.Price = (isMirror == "True") ? (1 - self.Price) : self.Price;
+            //
+            //     //if (self.Price > maxPrice) maxPrice = self.Price;
+            //     //if (self.Price < minPrice) minPrice = self.Price;
+            //
+            //     tr.find('.price span').text('$' + self.Price.toFixed(2));
+            //     tr.find('.volume span').text(self.Quantity);
+            // });
 
         return <div className="wrapper_event_page" data-id={symbol}>
             <h1>{data.SymbolsAndOrders.Symbol.HomeName} VS {data.SymbolsAndOrders.Symbol.AwayName}</h1>
@@ -92,7 +136,7 @@ class EventPage extends React.Component implements BaseController
                             </tr>
                         </thead>
                         <tbody>
-                           <tr class=""><td><span>alt.bet</span></td><td class="price buy animated"><span>$0.46</span></td><td class="volume buy animated"><span>12</span></td></tr>
+                           <tr className=""><td><span>alt.bet</span></td><td className="price buy animated"><span>$0.46</span></td><td className="volume buy animated"><span>12</span></td></tr>
                         </tbody>
                     </table>
                 </div>

@@ -30,6 +30,8 @@ class modeSwitchClass{
 				$(this).find('.price:not(.empty)').text(price.replace('$', ''));
 			});
 			globalData.basicMode = false;
+
+			ABpp && (ABpp.config.basicMode = false);
 			// localStorage.setItem('tradingMode', 'expert');
 		}
 		else{
@@ -41,6 +43,8 @@ class modeSwitchClass{
 				$(this).find('.price:not(.empty)').text('$' + price);
 			});
 			globalData.basicMode = true;
+
+			ABpp && (ABpp.config.basicMode = true);
 			// localStorage.setItem('tradingMode', 'basic');
 		}
 	}

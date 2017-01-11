@@ -135,7 +135,7 @@ export class WebsocketModel
         var self = this;
 
         var data = JSON.parse(evt.data);
-console.log(data);
+// console.log(data);
         if (data.Result) defaultMethods.showWarning(data.Result);
         if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn)) window.ee.emit('yourOrders.update', data.CurrentOrders);//myOrdersControllerClass.updateData(data.CurrentOrders);
 
@@ -153,7 +153,7 @@ console.log(data);
         // main page events data
         if (data.SymbolsAndOrders.Result.length) {
             if(self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]) {
-                0||console.debug( 'data.SymbolsAndOrders2', data.SymbolsAndOrders );
+                // 0||console.debug( 'data.SymbolsAndOrders2', data.SymbolsAndOrders );
             // if(globalData.mainPage) {
                 // 0||console.debug( 'data.SymbolsAndOrders.Result', data.SymbolsAndOrders.Result );
                 // dataController.updateOrderData(data.SymbolsAndOrders.Result);

@@ -27,8 +27,10 @@ export class ABpp
 
     // application config
     public config = {
-                currentTheme: null,     // current theme
-                currentPage: null       // current page
+                currentTheme: null,         // current theme
+                currentPage: null,          // current page
+                basicMode: true,            // play mode
+                tradeOn: false,             // active trader state
             };
 
     public actions : any = {};

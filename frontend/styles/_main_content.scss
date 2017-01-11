@@ -169,8 +169,8 @@
                 }
               }
             }
-            .buy button:not(:first-child){  display: none;  }
-            .sell button:not(:last-child){  display: none;  }
+            .buy .button:not(:first-child), .buy button:not(:first-child){  display: none;  }
+            .sell .button:not(:last-child), .sell button:not(:last-child){  display: none;  }
             button.event{
               //width: 56px;
               //height: 38px;
