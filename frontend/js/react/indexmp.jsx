@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
+
 import configureStore from './store/configureStore';
 import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
@@ -12,10 +13,13 @@ import Sidebar from './components/Sidebar.jsx';
 import Deposit from './components/userPage/deposit.jsx';
 
 
+
 // Altbet App object
 let constants = ABpp.ABpp;
 ABpp = ABpp.ABpp.getInstance();
 ABpp.CONSTS = constants;
+
+
 
 const store = configureStore();
 

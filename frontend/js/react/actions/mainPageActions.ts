@@ -17,7 +17,6 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            // __DEV__&&console.debug( 'on load ok' , this, getState());
             ABpp.Websocket.subscribe((inData) =>
             {
                 let state = getState().mainPage.marketsData;

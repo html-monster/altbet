@@ -28,6 +28,7 @@ class ajaxLoginControllerClass{
 			$('.left_order .tab input.limit').removeAttr('disabled');
 			popUpClass.removeEventPopUp('header .deposit, header .my_order');
 			globalData.userIdentity = 'True';
+0||console.debug( 'here' );
 			if(!globalData.landingPage) AppStateClass.updateAppState(e);
 			if(!globalData.landingPage) ABpp.Websocket.changeUser(e.UserName);
 			// if(!globalData.landingPage) wsActiveBettor.changeUser(e.UserName);

@@ -6,6 +6,7 @@
 
 import { MainConfig, DS } from "../inc/MainConfig";
 
+var __LDEV__ = true;
 
 export default class CategoryModel
 {
@@ -23,7 +24,7 @@ export default class CategoryModel
                 type: 'POST',
                 success: function(data)
                 {
-                    0||console.debug( 'data AJAX', data );
+                    __LDEV__&&console.debug( 'data AJAX', data );
                     // data.code = 103;
                     // data.url = "http://localhost/AltBet.Admin/?path=sport%2Famerican-football";
                     // data.name = inProps.name;
@@ -58,7 +59,7 @@ export default class CategoryModel
                         error < 0 && console.warn( 'E', error );
                         switch( error )
                         {
-                            case 100 : message = `Category “${data.name}” deleted successfully`; break;
+                            case 100 : message = `Category “${data.Param2}” deleted successfully`; break;
                             case -103 : message = "Category has exchanges, deletion denied"; break;
                             case -100: ; // some backend not controlled error
                             case -1000 : ; break;
@@ -99,12 +100,12 @@ export default class CategoryModel
                 // 102 not unique url
             var message = 'Error while saving data, please, try again';
             $.ajax({
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_EDIT,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_ADD,
                 // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 type: 'POST',
                 success: function(data)
                 {
-                    0||console.debug( 'data AJAX', data );
+                    __LDEV__&&console.debug( 'data AJAX', data );
                     // data.code = 200;
                     // data.name = inProps.name;
                     // data.url = "http://localhost/AltBet.Admin/?path=sport%2Famerican-football";

@@ -98,11 +98,11 @@ export default class ExchangeModel
 
         var promise = new Promise((resolve, reject) =>
         {
-            var message = 'Error while getting exchange info, please, try again';
+            var message = 'Error while saving exchange info, please, try again';
             $.ajax({
                 url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST, //AJAX_CATEGORY_EDIT,
                 // url: inProps.url, //AJAX_CATEGORY_EDIT,
-                type: 'GET',
+                type: 'POST',
                 success: function(data)
                 {
                     // 0||console.debug( 'data AJAX', data );
