@@ -3,12 +3,12 @@ declare let ABpp;
 declare let __LDEV__;
 declare let moment;
 // declare var window : any;
-declare var dataController;
-declare var mainChartController;
-declare var globalData;
-declare var defaultMethods;
-declare var activeTraderClass;
-declare var Promise;
+declare let dataController;
+declare let mainChartController;
+declare let globalData;
+declare let defaultMethods;
+declare let activeTraderClass;
+declare let Promise;
 
 
 interface JQuery

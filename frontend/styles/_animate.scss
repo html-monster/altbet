@@ -1,6 +1,14 @@
-@keyframes fadeOut {
+@keyframes animateUpdating {
 	0% {  background-color: orange;  }
 	100% {  background-color: transparent;  }
+}
+@keyframes fadeIn {
+	0% {  opacity: 0;  }
+	100% {  opacity: 1;  }
+}
+@keyframes fadeOut {
+	0% {  opacity: 0;  }
+	100% {  opacity: 1;  }
 }
 @keyframes fadeColorOutSell {
 	0% {  color: #ef4d22;  }
@@ -59,9 +67,11 @@
 .bounceInRight {  animation-name: bounceInRight;  }
 .bounceOutRight {  animation-name: bounceOutRight;  }
 .fadeInLeft {  animation-name: fadeInLeft;  }
+.fadeInAnimation {  animation-name: fadeIn;  }
+.fadeOutAnimation {  animation-name: fadeOut;  }
 .shake {  animation-name: shake;  }
-.fadeOut span:after {  animation-name: fadeOut;  }
-.fadeOut:before {  animation-name: fadeOut;  }
+.fadeOut span:after {  animation-name: animateUpdating;  }
+.fadeOut:before {  animation-name: animateUpdating;  }
 .rubberBand {  animation-name: rubberBand;  }
 .animated{
 	animation-duration: 1s;

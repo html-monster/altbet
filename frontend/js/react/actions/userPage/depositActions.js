@@ -5,7 +5,8 @@
 import {
 	DEPOSIT_QUANTITY_CHANGE,
 	DEPOSIT_PRICE_PLAN_CHANGE,
-	DEPOSIT_PERIOD_CHANGE
+	DEPOSIT_PERIOD_CHANGE,
+	DEPOSIT_FORM_SUBMIT
 } from "../../constants/ActionTypesDeposit.js";
 
 
@@ -67,6 +68,23 @@ export function actionOnButtonQuantityClick(event)
 		dispatch({
 			type: DEPOSIT_QUANTITY_CHANGE,
 			payload: +getState().deposit.depositQuantity + +event.target.textContent
+		});
+	}
+}
+
+export function actionOnFormSubmit(values)
+{
+	return (dispatch) =>
+	{
+		new Promise(resolve => {
+			setTimeout(() => {  // simulate server latency
+				window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+				resolve()
+			}, 500)
+		});
+		dispatch({
+			type: DEPOSIT_FORM_SUBMIT,
+			payload: values.sum ? null : 'invalidJs'
 		});
 	}
 }

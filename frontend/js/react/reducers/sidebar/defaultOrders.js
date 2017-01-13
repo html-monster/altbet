@@ -7,8 +7,9 @@ import {
 	ON_DEFAULT_ORDER_CREATE,
 	ON_DEFAULT_ORDER_AJAX_SEND,
 } from '../../constants/ActionTypesDefaultOrders.js';
+// console.log(ABpp);
 
-
+	// mode: ABpp.config.basicMode,
 const initialState = {
 	orderNewData: [
 		// {

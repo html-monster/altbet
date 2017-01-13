@@ -40,6 +40,14 @@ class Deposit extends React.Component{
 			this.setState({toggle: 'Hide'});
 	}
 
+	// showResults = values =>
+	// new Promise(resolve => {
+	// 	setTimeout(() => {  // simulate server latency
+	// 		window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+	// 		resolve()
+	// 	}, 500)
+	// });
+
 	render()
 	{
 		let data = this.props.deposit.data;
@@ -48,6 +56,9 @@ class Deposit extends React.Component{
 		let depositQuantity = this.props.deposit.depositQuantity == '' ? '' : +this.props.deposit.depositQuantity;
 		let pricePlan = +this.props.deposit.pricePlan;
 		let actions = this.props.actions;
+
+		// data.clientId = data.UserInfo.Email;
+		// data.sum = depositQuantity || pricePlan ? depositQuantity + pricePlan : '';
 
 		return <div className="deposit_container">
 			<h3>Add funds</h3>
@@ -60,7 +71,7 @@ class Deposit extends React.Component{
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>100</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>250</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>500</button>
-				<input type="tel" className="number" value={depositQuantity} onChange={actions.actionOnInputQuantityChange} autoFocus/>
+				<input type="tel" className={`number ${this.props.deposit.sumValidation}`} value={depositQuantity} onChange={actions.actionOnInputQuantityChange} autoFocus/>
 				<span className="label">$</span>
 			</div>
 			<div className="recommended_block" onClick={::this.plansToggle}>
@@ -255,20 +266,24 @@ class Deposit extends React.Component{
 								{/*</span>*/}
 							{/*</div>*/}
 							{/*<div className="container">*/}
-								{/*<span className={'input_animate input--yoshiko ' + (depositQuantity || pricePlan ? 'input--filled' : '')}>*/}
-									{/*<input className="input__field input__field--yoshiko total number" id="neteller_total" type="tel"*/}
-										   {/*value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''} onChange={actions.actionOnInputQuantityChange} disabled={true} />*/}
-									{/*<label className="input__label input__label--yoshiko" htmlFor="neteller_total">*/}
-										{/*<span className="input__label-content input__label-content--yoshiko" data-content="Deposit amount">Deposit amount</span>*/}
-									{/*</label>*/}
-									{/*<span className="label">$</span>*/}
-									{/*<span className="validation-summary-errors">{}</span>*/}
-								{/*</span>*/}
+									{/*<span className={'input_animate input--yoshiko ' + (depositQuantity || pricePlan ? 'input--filled' : '')}>*/}
+										{/*<input className="input__field input__field--yoshiko total number" id="neteller_total" type="tel"*/}
+											   {/*value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''} onChange={actions.actionOnInputQuantityChange} disabled={true} />*/}
+										{/*<label className="input__label input__label--yoshiko" htmlFor="neteller_total">*/}
+											{/*<span className="input__label-content input__label-content--yoshiko" data-content="Deposit amount">Deposit amount</span>*/}
+										{/*</label>*/}
+										{/*<span className="label">$</span>*/}
+										{/*<span className="validation-summary-errors">{}</span>*/}
+									{/*</span>*/}
 								{/*<input type="submit" defaultValue={'Submit'} />*/}
 							{/*</div>*/}
 							{/*<input type="hidden" name="plan" value={plan}/>*/}
 						{/*</form>*/}
-						<NetellerForm data={data} plan={plan} pricePlan={pricePlan} depositQuantity={depositQuantity} actions={actions} />
+						<NetellerForm onSubmit={actions.actionOnFormSubmit} data={data} plan={plan} pricePlan={pricePlan} depositQuantity={depositQuantity} actions={actions}
+									  initialValues={{
+									  	  clientId: data.UserInfo.Email,
+										  sum: depositQuantity || pricePlan ? depositQuantity + pricePlan : '',
+									  }}/>
 					</div>
 					<div className="tab_item payment_tab"><p>lalalaa</p></div>
 				</div>

@@ -10,7 +10,7 @@ import BaseActions from './BaseActions';
 // var __LDEV__ = true;
 var __LDEV__ = false;
 
-
+console.log(ABpp);
 class Actions extends BaseActions
 {
     public actionOnLoad()

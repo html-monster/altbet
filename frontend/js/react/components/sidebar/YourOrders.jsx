@@ -40,13 +40,14 @@ class EventOrders extends React.Component
 	render()
 	{
 		// let yourOrdersData = this.state.data;
-		let yourOrdersData = this.props.yourOrders.yourOrders;
+		let yourOrdersData = this.props.yourOrders;
 		return <div className="tab_item" id="current-orders">
 			{
-				yourOrdersData.map((item, index) =>
+				yourOrdersData.yourOrders.map((item, index) =>
 					<GroupingOrder
 							key={item.ID}
 							indexGr={index}
+							allData={yourOrdersData}
 							data={item}
 							onOrderDelete={::this.props.actions.actionOnYourOrderDelete}
 							actions={this.props.actions}
@@ -82,6 +83,7 @@ class GroupingOrder extends React.Component
 						data.Orders.map((item) =>
 							<OrderItem
 									key={item.ID}
+									allData={data}
 									data={item}
 									onDelete={onOrderDelete.bind(null, item, this.props.indexGr)}
 									actions={this.props.actions}
@@ -161,6 +163,7 @@ class OrderItem extends React.Component
 	render()
 	{
 		let data = this.props.data;
+		let allData = this.props.allData;
 		let date = new Date(+data.Time.slice(6).slice(0, -2));
 		let formData = {
 			url: '/AltBet/eng/Order/Edit',
@@ -201,6 +204,7 @@ class OrderItem extends React.Component
 			</div>
 			<div className={`form-container ${className}-container`} ref="formContainer">
 				<OrderForm
+						allData={allData}
 						data={data}
 						formData={formData}
 						onAjaxSuccess={::this.successHandler}

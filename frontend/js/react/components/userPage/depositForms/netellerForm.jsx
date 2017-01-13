@@ -7,39 +7,44 @@ import { Field, reduxForm } from 'redux-form'
 import validate from './validation'
 // import asyncValidate from './asyncValidate'
 
-const renderField = ({ input, id, filled, type, label, inputLabel, meta: { asyncValidating, touched, error }, ...rest }) => (
-	<span className={'input_animate input--yoshiko' + (filled ? ' input--filled' : '')}>
-		<input id={id} type={type} name={input.name} {...rest}/>
+const renderField = ({ input, id, className, filled, type, label, val, inputLabel, meta, ...rest }) => {
+	if(!meta.dirty && val) input.value = val;
+	console.log(meta);
+	return <span className={'input_animate input--yoshiko animated' + (filled ? ' input--filled' : '') + (meta.touched && meta.error ? ' shake' : '')}>
+		<input id={id} className={`${className} ${(!inputLabel && meta.touched && (meta.error ? ' invalidJs' : ' validJs'))}`} type={type}
+			    {...input} {...rest}/>
 		<label className="input__label input__label--yoshiko" htmlFor={id}>
 			<span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
 		</label>
 		{inputLabel && <span className="label">$</span>}
-		{touched && error && <span className="validation-summary-errors">{error}</span>}
+		{meta.touched && meta.error && <span className="validation-summary-errors">{meta.error}</span>}
 	</span>
-);
+};
 
 const NetellerForm = (props) => {
-	const { handleSubmit, data, plan, pricePlan, depositQuantity, actions } = props;
+	const { handleSubmit, plan, data, pricePlan, depositQuantity, actions } = props;
 	return (
-		<form>
+		<form onSubmit={handleSubmit} autoComplete="false">
 			<div className="container">
-				<Field name="netellerId" component={renderField} id="neteller_id" type="text" filled={data.UserInfo.Email}
-					   label="Neteller ID or e-mail" defaultValue={data.UserInfo.Email} className="input__field input__field--yoshiko" />
-				<Field name="secureCode" component={renderField} id="ntl_sec_id" type="password"
+			<input type="text" style={{display: 'none'}}/>
+			<input type="password" style={{display: 'none'}}/>
+				<Field name="clientId" component={renderField} id="neteller_id" type="text" filled={data.UserInfo.Email}
+					   label="Neteller ID or e-mail" val={data.UserInfo.Email} className="input__field input__field--yoshiko"  />
+				<Field name="secureId" component={renderField} id="ntl_sec_id" type="password"
 					   label="Secure ID or Authentication Code" className="input__field input__field--yoshiko" />
 			</div>
 			<div className="container">
-				<span className={'input_animate input--yoshiko ' + (depositQuantity || pricePlan ? 'input--filled' : '')}>
-					<input className="input__field input__field--yoshiko total number" id="neteller_total" type="tel"
-						   value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''} onChange={actions.actionOnInputQuantityChange} disabled={true} />
-					<label className="input__label input__label--yoshiko" htmlFor="neteller_total">
-						<span className="input__label-content input__label-content--yoshiko" data-content="Deposit amount">Deposit amount</span>
-					</label>
-					<span className="label">$</span>
-				</span>
-				{/*<Field name="total" component={renderField} id="neteller_total" type="tel" filled={depositQuantity || pricePlan}*/}
-					   {/*label="Deposit amount" inputLabel={true} value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}*/}
-					   {/*onChange={actions.actionOnInputQuantityChange} className="input__field input__field--yoshiko total number" disabled={true} />*/}
+				{/*<span className={'input_animate input--yoshiko ' + (depositQuantity || pricePlan ? 'input--filled' : '')}>*/}
+					{/*<input className="input__field input__field--yoshiko total number" id="neteller_total" type="tel" name="sum"*/}
+						   {/*value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''} onChange={actions.actionOnInputQuantityChange} disabled={true} />*/}
+					{/*<label className="input__label input__label--yoshiko" htmlFor="neteller_total">*/}
+						{/*<span className="input__label-content input__label-content--yoshiko" data-content="Deposit amount">Deposit amount</span>*/}
+					{/*</label>*/}
+					{/*<span className="label">$</span>*/}
+				{/*</span>*/}
+				<Field name="sum" component={renderField} id="neteller_total" type="tel" filled={depositQuantity || pricePlan}
+					   label="Deposit amount" inputLabel={true} val={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
+					   onChange={actions.actionOnInputQuantityChange} className="input__field input__field--yoshiko total number" disabled={true} />
 
 				<input type="submit" defaultValue={'Submit'} />
 			</div>
@@ -54,10 +59,11 @@ const NetellerForm = (props) => {
 		// 	</div>
 		// </form>
 	)
-}
+};
 
 export default reduxForm({
 	form: 'netellerForm', // a unique identifier for this form
+	enableReinitialize: false,
 	validate,
 })(NetellerForm)
 

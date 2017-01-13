@@ -7,7 +7,7 @@ import sidebar from './sidebar.js';
 import tradeSlip from './sidebar/defaultOrders.js';
 import yourOrders from './sidebar/yourOrders.js';
 import deposit from './account/deposit.js';
-
+import { reducer as reduxFormReducer } from 'redux-form';
 
 export default combineReducers({
 	'App': appState,
@@ -17,4 +17,5 @@ export default combineReducers({
 	tradeSlip,
 	yourOrders,
 	deposit,
+	form: reduxFormReducer
 });

@@ -4,7 +4,8 @@
 import {
 	DEPOSIT_QUANTITY_CHANGE,
 	DEPOSIT_PRICE_PLAN_CHANGE,
-	DEPOSIT_PERIOD_CHANGE
+	DEPOSIT_PERIOD_CHANGE,
+	DEPOSIT_FORM_SUBMIT
 } from "../../constants/ActionTypesDeposit.js";
 
 
@@ -17,7 +18,8 @@ const initialState = {
 		monthly: 0,
 		yearly: 0
 	},
-	payYearly: false
+	payYearly: false,
+	sumValidation: null
 };
 
 export default function yourOrders(state = initialState, action)
@@ -32,6 +34,9 @@ export default function yourOrders(state = initialState, action)
 
 		case DEPOSIT_PERIOD_CHANGE:
 			return {...state, payYearly : action.payload};
+
+		case DEPOSIT_FORM_SUBMIT:
+			return {...state, sumValidation : action.payload};
 
 		default:
 			return state

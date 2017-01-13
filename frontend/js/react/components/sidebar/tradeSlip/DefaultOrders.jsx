@@ -5,6 +5,8 @@
 import React from 'react';
 import NewOrder from '../order/NewOrder.jsx'
 
+import AnimateOnUpdate from '../../Animation.jsx';
+
 export default class DefaultOrders extends React.Component{
 	constructor(props)
 	{
@@ -91,21 +93,34 @@ export default class DefaultOrders extends React.Component{
 	render()
 	{
 		let data = this.props.data;
-		return <div className="default_orders">
-			{
-				(data && data.length == 0) ?
-						<p id="default_order_info">MAKE YOUR SELECTION(S) ON THE LEFT BY CLICKING ON THE PRICES. OR TURN ON ACTIVE BETTOR ABOVE.</p>
-					:
+		return <AnimateOnUpdate
+				component="div"
+				className="default_orders"
+				transitionName={{
+					appear: 'fadeInAnimation',
+					enter: 'fadeInAnimation'
+				}}
+				transitionAppear={true}
+				transitionLeave={false}
+				transitionAppearTimeout={500}
+				transitionEnterTimeout={500}
+				data={data}
+			>
+				{
+					(data && data.length == 0) ?
+						<p id="default_order_info" className="animated">MAKE YOUR SELECTION(S) ON THE LEFT BY CLICKING ON THE PRICES. OR TURN ON ACTIVE BETTOR ABOVE.</p>
+						:
 						/* // BM: --------------------------------------------------- NEW ORDER ---*/
 						data.map((item) =>
 							<NewOrder
+								allData={data}
 								data={item}
 								key={`${item.ID}-${item.isMirror}`}
 								onDeleteOrderHandler={this.props.actions.actionOnDeleteOrder.bind(this, item)}
 								actions={this.props.actions}
 							/>
 						)
-			}
-		</div>
+				}
+			</AnimateOnUpdate>
 	}
 }

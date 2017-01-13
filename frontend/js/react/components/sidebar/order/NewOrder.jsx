@@ -1,6 +1,8 @@
 import React from 'react';
 import OrderForm from './OrderForm.jsx';
 
+import AnimateOnUpdate from '../../Animation.jsx';
+
 export default class NewOrder extends React.Component{
 	constructor()
 	{
@@ -14,8 +16,7 @@ export default class NewOrder extends React.Component{
 			url: '/AltBet/eng/Order/Create',
 			action: 'create'
 		};
-		// console.log(data);
-		return <div className="order_content new" > {/*style={{display: 'none'}}*/}
+		return <div className="order_content new animated">
 			<div className="order-title">
 				<h3>{data.EventTitle}</h3>
 				<span className="close" onClick={this.props.onDeleteOrderHandler}><span>{}</span></span>
@@ -23,16 +24,29 @@ export default class NewOrder extends React.Component{
 			</div>
 			{
 				data.Orders.map((item) =>
-					<div className={item.Side ? 'sell-container' : 'buy-container' + ' form_container'}
-						 key={`${item.Symbol.Exchange}_${item.Symbol.Name}_${item.Symbol.Currency}_${item.Side}`}>
+					<AnimateOnUpdate
+						component="div"
+						className={item.Side ? 'sell-container' : 'buy-container' + ' form_container'}
+						key={`${item.Symbol.Exchange}_${item.Symbol.Name}_${item.Symbol.Currency}_${item.Side}`}
+						transitionName={{
+							appear: 'fadeInAnimation',
+							enter: 'fadeInAnimation'
+						}}
+						transitionAppear={true}
+						transitionLeave={false}
+						transitionAppearTimeout={500}
+						transitionEnterTimeout={500}
+						data={item}
+					>
 						<OrderForm
 							data={item}
 							containerData={data}
 							formData={formData}
 							onOrderDelete={this.props.onDeleteOrderHandler.bind(null, item)}
 							actions={this.props.actions}
+							data-verify={['Price', 'Volume']}
 						/>
-					</div>
+					</AnimateOnUpdate>
 				)
 			}
 		</div>

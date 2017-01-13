@@ -24,11 +24,11 @@ export class WebsocketModel
 
     public connectSocketServer()
     {
-        var self = this;
+        let self = this;
 
         if( !this.SocketSubscribe ) this.SocketSubscribe = new SocketSubscribe();
 
-        var support = "MozWebSocket" in window ? 'MozWebSocket' : ("WebSocket" in window ? 'WebSocket' : null);
+        let support = "MozWebSocket" in window ? 'MozWebSocket' : ("WebSocket" in window ? 'WebSocket' : null);
 
         if (support == null) {
             //appendMessage("* " + noSupportMessage + "<br/>");
@@ -66,10 +66,10 @@ export class WebsocketModel
 
     public sendMessage()
     {
-        var self = this;
+        let self = this;
 
         if (self.ws) {
-            var messageBox = '{"MessageID":"e50e9ee3-0315-4f01-9316-335b19bd5d59","MessageType":"SubscribeRequest","Currency":"USD","Subscribe":true,"Symbol":{"Currency":"USD","Exchange":"FIRST","Name":"UAH\/USD"},"UserName":"testing@test.ua"}'; //document.getElementById('messageInput');
+            let messageBox = '{"MessageID":"e50e9ee3-0315-4f01-9316-335b19bd5d59","MessageType":"SubscribeRequest","Currency":"USD","Subscribe":true,"Symbol":{"Currency":"USD","Exchange":"FIRST","Name":"UAH\/USD"},"UserName":"testing@test.ua"}'; //document.getElementById('messageInput');
             // self.ws.send(messageBox.value);
             // messageBox.value = "";
         }
@@ -113,7 +113,7 @@ export class WebsocketModel
 
     private disconnectWebSocket()
     {
-        var self = this;
+        let self = this;
 
         if (self.ws) {
             self.ws.close();
@@ -132,9 +132,9 @@ export class WebsocketModel
 
     private onMessage(evt)
     {
-        var self = this;
+        let self = this;
 
-        var data = JSON.parse(evt.data);
+        let data = JSON.parse(evt.data);
 // console.log(data);
         if (data.Result) defaultMethods.showWarning(data.Result);
         if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn)) window.ee.emit('yourOrders.update', data.CurrentOrders);//myOrdersControllerClass.updateData(data.CurrentOrders);
@@ -151,7 +151,7 @@ export class WebsocketModel
         if(globalData.mainPage && globalData.MainCharOn) mainChartController.drawMainCharts(data.Bars);
 
         // main page events data
-        if (data.SymbolsAndOrders.Result.length) {
+        if (data.SymbolsAndOrders && data.SymbolsAndOrders.Result.length) {
             if(self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]) {
                 // 0||console.debug( 'data.SymbolsAndOrders2', data.SymbolsAndOrders );
             // if(globalData.mainPage) {
@@ -191,7 +191,7 @@ export class WebsocketModel
 
     private onOpen()
     {
-        var self = this;
+        let self = this;
 
         self.ws.send($('span.user-name').text());
         //appendMessage('* Connection open<br/>');

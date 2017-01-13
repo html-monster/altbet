@@ -121,13 +121,9 @@ export default class OrderForm extends React.Component{
  			orderId = data.Symbol ? `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}_${data.Side}_${data.isMirror}` : ''
 		}
 
-		// console.log(checkboxProp);
-		{/*let html = <div>*/}
-		//
-		// </div>;
 		return (
-			<form action={formData.url} className={className + ABpp.config.basicMode ? ' basic_mode' : ''} autoComplete="off" onSubmit={this.props.actions.actionOnAjaxSend.bind(null, this, this.props.containerData)} method="post"
-				  noValidate="novalidate" ref="orderForm">
+			<form action={formData.url} className={className + (ABpp.config.basicMode ? ' basic_mode' : '') + ' animated'} autoComplete="off" onSubmit={this.props.actions.actionOnAjaxSend.bind(null, this, this.props.containerData)} method="post"
+				  noValidate="novalidate" ref="orderForm" data-verify={['Price', 'Volume']}>
 				<div className="container">
 					<div className="price">
 						<label htmlFor={`${orderId}_price`}>

@@ -7,6 +7,7 @@ import {
 } from '../../constants/ActionTypesYourOrders.js';
 
 
+	// mode: ABpp.config.basicMode,
 const initialState = {
 	yourOrders: appData.yourOrders
 };
