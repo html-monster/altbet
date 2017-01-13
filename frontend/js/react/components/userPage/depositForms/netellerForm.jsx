@@ -24,7 +24,7 @@ const renderField = ({ input, id, className, filled, type, label, val, inputLabe
 const NetellerForm = (props) => {
 	const { handleSubmit, plan, data, pricePlan, depositQuantity, actions } = props;
 	return (
-		<form onSubmit={handleSubmit} autoComplete="false">
+		<form onSubmit={handleSubmit} autoComplete="off">
 			<div className="container">
 			<input type="text" style={{display: 'none'}}/>
 			<input type="password" style={{display: 'none'}}/>

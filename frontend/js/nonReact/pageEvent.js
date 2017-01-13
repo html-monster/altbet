@@ -24,14 +24,14 @@ class eventPageClass{
 		}();
 
 		self.addOrder = function () {
-			let order = $('#order .default_orders'), data;
-
-			data = {
-				title: $('.wrapper_event_page .current_price h2').text(),
-				price: '0.',
-				priceMarket: '0.',
-				volume: ''
-			};
+			// let order = $('#order .default_orders'), data;
+			//
+			// data = {
+			// 	title: $('.wrapper_event_page .current_price h2').text(),
+			// 	price: '0.',
+			// 	priceMarket: '0.',
+			// 	volume: ''
+			// };
 
 			/*function createOrderForm(context, orderDirection, modification, data) {
 				let html = $('.order_content.new').clone();
@@ -92,131 +92,131 @@ class eventPageClass{
 				return html;
 			}*/
 
-			$('.executed_orders.order_create').on('click', 'td.clickable', function () {
-				let html, inputFocus, self = $(this), currentId, ordersArr = [], limit;
-
-				data.buySum = '';
-				data.sellSum = '';
-
-				// data.title = $('.wrapper_event_page .current_price h2').text();
-				if($(this).hasClass('volume')){
-					limit = false;
-					data.priceMarket = self.parents('tbody').find('tr').eq(0).find('td.price span').text().replace(/[^0-9.]+/g, "");
-					data.volume = 0;
-					data.sellSum = 0;
-					data.buySum = 0;
-					for(let ii = 0; ii <= self.parent().index() ; ii++){
-						data.price = +self.parents('tbody').find('tr').eq(ii).find('td.data.price span').text().replace(/[^0-9.]+/g, "");
-						data.volume += +self.parents('tbody').find('tr').eq(ii).find('td.volume span').text();
-						if(self.parents('.sell').length){
-							data.sellSum += (1 - data.price / 100) * +self.parents('tbody').find('tr').eq(ii).find('td.volume span').text();
-						}
-						else{
-							data.buySum += data.price / 100 * +self.parents('tbody').find('tr').eq(ii).find('td.volume span').text();
-						}
-					}
-					data.sellSum = data.sellSum.toFixed(2);
-					data.buySum = data.buySum.toFixed(2);
-				}
-				else{
-					limit = true;
-					data.price = '0.'
-				}
-
-				let direction;
-				currentId = $(this).parents('.event-content').attr('id') ? $(this).parents('.event-content').attr('id')
-						: $(this).parents('.event-content').attr('data-symbol');
-				ordersArr.push(currentId, data.title);
-				id.push(ordersArr);
-				let focus = (limit) ? '.price' : '.volume';
-				if(!(order.children().length > 1)){
-					if (self.parents('.sell').length) {
-						direction = self.hasClass('price') ? 'buy' : 'sell';
-						html = orderClass.createOrderForm(direction, 'full', limit, self, data);//self, direction, 'full', data
-						order.append(html);
-						inputFocus = $(`.${direction}-container ${focus} input`);
-					}
-					else{
-						direction = self.hasClass('price') ? 'sell' : 'buy';
-						html = orderClass.createOrderForm(direction, 'full', limit, self, data);//self, direction, 'full', data
-						order.append(html);
-						inputFocus = $(`.${direction}-container ${focus} input`);
-					}
-				}
-				else{
-					if (self.parents('.sell').length) {
-						direction = self.hasClass('price') ? 'buy' : 'sell';
-						html = orderClass.createOrderForm(direction, null, limit, self, data);//self, direction, null, data
-						$('.default_orders .'+ direction +'-container').html(html);
-						$('.order_content form').fadeIn(400);
-						inputFocus = $(`.${direction}-container ${focus} input`);
-					}
-					else{
-						direction = self.hasClass('price') ? 'sell' : 'buy';
-						html = orderClass.createOrderForm(direction, null, limit, self, data);//self, direction, null, data
-						$('.default_orders .'+ direction +'-container').html(html);
-						$('.order_content form').fadeIn(400);
-						inputFocus = $(`.${direction}-container ${focus} input`);
-					}
-				}
-
-
-				$('.order_content').fadeIn(400);
-
-				inputFocus.focus();
-				inputFocus[0].selectionStart = inputFocus.val().length;
-
-				orderClass.tabReturn();
-				orderClass.showInfo();
-			});
-
-			$('.ord_crt_cont .btn').click(function () {
-				let html, inputFocus, self = $(this), ordersArr = [], currentId;
-
-				data.price = '0.';
-				data.volume = '';
-
-				currentId = $(this).parents('.event-content').attr('id') ? $(this).parents('.event-content').attr('id')
-						: $(this).parents('.event-content').attr('data-symbol');
-				ordersArr.push(currentId, data.title);
-				id.push(ordersArr);
-				if(!(order.children().length > 1)){
-					if (self.hasClass('sell')) {
-						html = orderClass.createOrderForm('sell', 'full', 'limit', self, data);//self, 'sell', 'full'
-						order.append(html);
-						inputFocus = $('.sell-container .price input');
-					}
-					else{
-						html = orderClass.createOrderForm('buy', 'full', 'limit', self, data);//self, 'buy', 'full'
-						order.append(html);
-						inputFocus = $('.buy-container .price input');
-					}
-				}
-				else{
-					if (self.hasClass('sell')) {
-						html = orderClass.createOrderForm('sell', null, 'limit', self, data);//self, 'sell'
-						$('.default_orders .sell-container').html(html);
-						$('.order_content form').fadeIn(400);
-						inputFocus = $('.sell-container .price input');
-					}
-					else{
-						html = orderClass.createOrderForm('buy', null, 'limit', self, data);//self, 'buy'
-						$('.default_orders .buy-container').html(html);
-						$('.order_content form').fadeIn(400);
-						inputFocus = $('.buy-container .price input');
-					}
-				}
-
-				setTimeout(function () {
-					inputFocus.focus();
-					inputFocus[0].selectionStart = inputFocus.val().length;
-				}, 0);
-
-				$('.order_content').fadeIn(400);
-
-				orderClass.tabReturn();
-				orderClass.showInfo();
-			});
+			// $('.executed_orders.order_create').on('click', 'td.clickable', function () {
+			// 	let html, inputFocus, self = $(this), currentId, ordersArr = [], limit;
+			//
+			// 	data.buySum = '';
+			// 	data.sellSum = '';
+			//
+			// 	// data.title = $('.wrapper_event_page .current_price h2').text();
+			// 	if($(this).hasClass('volume')){
+			// 		limit = false;
+			// 		data.priceMarket = self.parents('tbody').find('tr').eq(0).find('td.price span').text().replace(/[^0-9.]+/g, "");
+			// 		data.volume = 0;
+			// 		data.sellSum = 0;
+			// 		data.buySum = 0;
+			// 		for(let ii = 0; ii <= self.parent().index() ; ii++){
+			// 			data.price = +self.parents('tbody').find('tr').eq(ii).find('td.data.price span').text().replace(/[^0-9.]+/g, "");
+			// 			data.volume += +self.parents('tbody').find('tr').eq(ii).find('td.volume span').text();
+			// 			if(self.parents('.sell').length){
+			// 				data.sellSum += (1 - data.price / 100) * +self.parents('tbody').find('tr').eq(ii).find('td.volume span').text();
+			// 			}
+			// 			else{
+			// 				data.buySum += data.price / 100 * +self.parents('tbody').find('tr').eq(ii).find('td.volume span').text();
+			// 			}
+			// 		}
+			// 		data.sellSum = data.sellSum.toFixed(2);
+			// 		data.buySum = data.buySum.toFixed(2);
+			// 	}
+			// 	else{
+			// 		limit = true;
+			// 		data.price = '0.'
+			// 	}
+			//
+			// 	let direction;
+			// 	currentId = $(this).parents('.event-content').attr('id') ? $(this).parents('.event-content').attr('id')
+			// 			: $(this).parents('.event-content').attr('data-symbol');
+			// 	ordersArr.push(currentId, data.title);
+			// 	id.push(ordersArr);
+			// 	let focus = (limit) ? '.price' : '.volume';
+			// 	if(!(order.children().length > 1)){
+			// 		if (self.parents('.sell').length) {
+			// 			direction = self.hasClass('price') ? 'buy' : 'sell';
+			// 			html = orderClass.createOrderForm(direction, 'full', limit, self, data);//self, direction, 'full', data
+			// 			order.append(html);
+			// 			inputFocus = $(`.${direction}-container ${focus} input`);
+			// 		}
+			// 		else{
+			// 			direction = self.hasClass('price') ? 'sell' : 'buy';
+			// 			html = orderClass.createOrderForm(direction, 'full', limit, self, data);//self, direction, 'full', data
+			// 			order.append(html);
+			// 			inputFocus = $(`.${direction}-container ${focus} input`);
+			// 		}
+			// 	}
+			// 	else{
+			// 		if (self.parents('.sell').length) {
+			// 			direction = self.hasClass('price') ? 'buy' : 'sell';
+			// 			html = orderClass.createOrderForm(direction, null, limit, self, data);//self, direction, null, data
+			// 			$('.default_orders .'+ direction +'-container').html(html);
+			// 			$('.order_content form').fadeIn(400);
+			// 			inputFocus = $(`.${direction}-container ${focus} input`);
+			// 		}
+			// 		else{
+			// 			direction = self.hasClass('price') ? 'sell' : 'buy';
+			// 			html = orderClass.createOrderForm(direction, null, limit, self, data);//self, direction, null, data
+			// 			$('.default_orders .'+ direction +'-container').html(html);
+			// 			$('.order_content form').fadeIn(400);
+			// 			inputFocus = $(`.${direction}-container ${focus} input`);
+			// 		}
+			// 	}
+			//
+			//
+			// 	$('.order_content').fadeIn(400);
+			//
+			// 	inputFocus.focus();
+			// 	inputFocus[0].selectionStart = inputFocus.val().length;
+			//
+			// 	orderClass.tabReturn();
+			// 	orderClass.showInfo();
+			// });
+			//
+			// $('.ord_crt_cont .btn').click(function () {
+			// 	let html, inputFocus, self = $(this), ordersArr = [], currentId;
+			//
+			// 	data.price = '0.';
+			// 	data.volume = '';
+			//
+			// 	currentId = $(this).parents('.event-content').attr('id') ? $(this).parents('.event-content').attr('id')
+			// 			: $(this).parents('.event-content').attr('data-symbol');
+			// 	ordersArr.push(currentId, data.title);
+			// 	id.push(ordersArr);
+			// 	if(!(order.children().length > 1)){
+			// 		if (self.hasClass('sell')) {
+			// 			html = orderClass.createOrderForm('sell', 'full', 'limit', self, data);//self, 'sell', 'full'
+			// 			order.append(html);
+			// 			inputFocus = $('.sell-container .price input');
+			// 		}
+			// 		else{
+			// 			html = orderClass.createOrderForm('buy', 'full', 'limit', self, data);//self, 'buy', 'full'
+			// 			order.append(html);
+			// 			inputFocus = $('.buy-container .price input');
+			// 		}
+			// 	}
+			// 	else{
+			// 		if (self.hasClass('sell')) {
+			// 			html = orderClass.createOrderForm('sell', null, 'limit', self, data);//self, 'sell'
+			// 			$('.default_orders .sell-container').html(html);
+			// 			$('.order_content form').fadeIn(400);
+			// 			inputFocus = $('.sell-container .price input');
+			// 		}
+			// 		else{
+			// 			html = orderClass.createOrderForm('buy', null, 'limit', self, data);//self, 'buy'
+			// 			$('.default_orders .buy-container').html(html);
+			// 			$('.order_content form').fadeIn(400);
+			// 			inputFocus = $('.buy-container .price input');
+			// 		}
+			// 	}
+			//
+			// 	setTimeout(function () {
+			// 		inputFocus.focus();
+			// 		inputFocus[0].selectionStart = inputFocus.val().length;
+			// 	}, 0);
+			//
+			// 	$('.order_content').fadeIn(400);
+			//
+			// 	orderClass.tabReturn();
+			// 	orderClass.showInfo();
+			// });
 		}();
 	}
 }

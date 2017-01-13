@@ -128,8 +128,8 @@ export function actionOnOrderCreate(newOrder)
 
 		let state = getState().tradeSlip.orderNewData;
 		let removedChild;
-		// console.log(newOrder);
-		// console.log(state);
+		console.log('newOrder', newOrder);
+		// console.log('state', state);
 		state.some(function (thisItem, index) {
 			if(newOrder.ID == thisItem.ID && newOrder.isMirror == thisItem.isMirror){
 				thisItem.Positions = newOrder.Positions;

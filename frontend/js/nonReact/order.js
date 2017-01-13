@@ -356,22 +356,23 @@ class orderClass{
 
 		//order delete =====================================================================================================
 		self.orderDelete = function () {
-			let order_tab = $('#order');
-			// order_tab.on('click', '.delete', function (e) {
-			// 	e.preventDefault();
-			// 	$('.active_trader .spread_confim').remove();
-			// 	let form = $(this).parents('form'),
-			// 			order = $(this).parents('.order_content');
-			// 	if(order.find('form').length <= 1){
-			// 		if($(this).parents('.default_orders').length && id.length)
-			// 			id.splice(defaultMethods.searchValue(id, order.attr('id').slice(0, -7)), 1);
-			// 		order.remove();
-			// 	}
-			// 	else{
-			// 		form.remove();
-			// 	}
-			// 	orderClass.showInfo();
-			// });
+			// let order_tab = $('#order');
+			let order_tab = $('.active_trader');
+			order_tab.on('click', '.delete', function (e) {
+				e.preventDefault();
+				$('.active_trader .spread_confim').remove();
+				let form = $(this).parents('form'),
+						order = $(this).parents('.order_content');
+				if(order.find('form').length <= 1){
+					if($(this).parents('.default_orders').length && id.length)
+						id.splice(defaultMethods.searchValue(id, order.attr('id').slice(0, -7)), 1);
+					order.remove();
+				}
+				else{
+					form.remove();
+				}
+				orderClass.showInfo();
+			});
 			// order_tab.on('click', '.order-title .close', function (e) {
 			// 	e.preventDefault();
 			// 	let order = $(this).parents('.order_content');
