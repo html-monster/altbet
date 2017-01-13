@@ -9,14 +9,16 @@ export default class ExchangeItem extends React.Component
 {
     render()
     {
-        let isBasicMode = ABpp.config.basicMode;
+        // let  = ABpp.config.basicMode;
+        // let isTradeOn = ABpp.config.tradeOn;
         let $DateLocalization = new DateLocalization();
-        let activeExchange = this.props.data.activeExchange;
+        let {activeExchange, isBasicMode} = this.props.data;
         let data = this.props.data;
         let symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
 
         // common props for button container
         let commProps = {
+            isBasicMode: isBasicMode,
             symbolName: symbol,
             Orders: data.Orders,
             exdata: {
@@ -57,11 +59,11 @@ export default class ExchangeItem extends React.Component
             </div>
             <div className="table not-sort wave"> {/*id="exchange_table"*/}
                 <div className={"event-content" + $classActiveNM} data-symbol={symbol}
-                    onClick={() => this.props.actions.exchangeSideClick({name: data.Symbol.Exchange,
+                    onClick={() => {ABpp.config.tradeOn && this.props.actions.exchangeSideClick({name: data.Symbol.Exchange,
                         isMirror: false,
                         title: [data.Symbol.HomeName, data.Symbol.AwayName],
                         symbol: symbol,
-                    })}
+                    })}}
                 >
                 {/*<div className="event-content" data-symbol={symbol} onClick={this._onEventContentClick.bind(this, data)}>*/}
                     <h3 className="event-title">
@@ -78,48 +80,6 @@ export default class ExchangeItem extends React.Component
                             ismirror: false,
                             ...commProps
                         }}/>
-{/*
-                        <div className="sell button-container">
-                            {
-                                (data.Orders.length && data.Orders.some((item) => item.Side == 0) ?
-                                        data.Orders.map((item) =>
-                                            (item.Side == 0 ?
-                                                    item.SummaryPositionPrice.map((item) =>
-                                                        <button className="event animated sell real not-sort">
-                                                            <span className="price">{Common.toFixed(ABpp.User.settings.basicMode ? item.Price : item.Price, 2)}</span>
-                                                            <span className="volume">{item.Quantity}</span>
-                                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
-                                                        </button>
-                                                    )
-                                                : ""
-                                            )
-                                        )
-                                    :   <button className="event animated empty sell real not-sort">
-                                            <span className="price empty">OFFER</span>
-                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
-                                        </button>
-                                )
-                            }
-/!*                                @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Buy && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
-                            {
-                                foreach (var spsItem in Model.Orders.Single(x => x.Side == AltBet.Exchange.Side.Buy).SummaryPositionPrice.Where(x => x.Quantity != 0).ToList())
-                                {
-                                    <button className="event animated sell real not-sort">
-                                        <span className="price">@((Session["Mode"] != null) ? ((bool)Session["Mode"]) ? string.Format("${0}", spsItem.Price.ToString("0.00")) : spsItem.Price.ToString("0.00") : string.Format("${0}", spsItem.Price.ToString("0.00")))</span>
-                                        <span className="volume">@spsItem.Quantity</span>
-                                        <div className="symbolName" style="display: none">data.Symbol</div>
-                                    </button>
-                                }
-                            }
-                            else
-                            {
-                                <button className="event animated empty sell real not-sort">
-                                    <span className="price empty">OFFER</span>
-                                    <div className="symbolName" style="display: none">data.Symbol</div>
-                                </button>
-                            }*!/
-                        </div>
-*/}
                         <ButtonContainer actions={this.props.actions} data={{
                             type: 'buy',
                             side: 1,
@@ -128,52 +88,6 @@ export default class ExchangeItem extends React.Component
                             Orders: data.Orders,
                             ...commProps
                         }}/>
-{/*
-                        <div className="buy button-container">
-                            {
-                                (data.Orders.length && data.Orders.some((item) => item.Side == 1) ?
-                                        data.Orders.map((item) =>
-                                            (item.Side == 1 ?
-                                                    item.SummaryPositionPrice.map((item) =>
-                                                        <button className="event animated buy real not-sort">
-                                                            <span className="price">{Common.toFixed(ABpp.User.settings.basicMode ? item.Price : item.Price, 2)}</span>
-                                                            <span className="volume">{item.Quantity}</span>
-                                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
-                                                        </button>
-                                                    )
-                                                : false
-                                            )
-                                        )
-                                    :   <button className="event animated empty buy real not-sort">
-                                            <span className="price empty">BID</span>
-                                            <div className="symbolName" style={{display: 'none'}}>data.Symbol</div>
-                                        </button>
-                                )
-                            }
-                        </div>
-*/}
-{/*
-                        <div className="buy button-container">
-                            @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Sell && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
-                            {
-                                foreach (var spsItem in Model.Orders.Single(x => x.Side == AltBet.Exchange.Side.Sell).SummaryPositionPrice.Where(x => x.Quantity != 0).ToList())
-                                {
-                                    <button className="event animated buy real not-sort">
-                                        <span className="price">@((Session["Mode"] != null) ? ((bool)Session["Mode"]) ? string.Format("${0}", spsItem.Price.ToString("0.00")) : spsItem.Price.ToString("0.00") : string.Format("${0}", spsItem.Price.ToString("0.00")))</span>
-                                        <span className="volume">@spsItem.Quantity</span>
-                                        <div className="symbolName" style="display: none">data.Symbol</div>
-                                    </button>
-                                }
-                            }
-                            else
-                            {
-                                <button className="event animated empty buy real not-sort">
-                                    <span className="price empty">BID</span>
-                                    <div className="symbolName" style="display: none">data.Symbol</div>
-                                </button>
-                            }
-                        </div>
-*/}
                         <div className="pl mode_info_js">
                             <strong>P/L: <span></span></strong>
                         </div>
@@ -182,11 +96,11 @@ export default class ExchangeItem extends React.Component
 
 
                 <div className={"event-content revers" + $classActiveM} data-symbol={symbol + "_mirror"}
-                    onClick={() => this.props.actions.exchangeSideClick({name: data.Symbol.Exchange,
+                    onClick={() => {ABpp.config.tradeOn && this.props.actions.exchangeSideClick({name: data.Symbol.Exchange,
                         isMirror: true,
                         title: [data.Symbol.HomeName, data.Symbol.AwayName],
                         symbol: symbol,
-                    })}
+                    })}}
                 >
                     <h3 className="event-title">
                         <span className="title">{data.Symbol.AwayName}</span>

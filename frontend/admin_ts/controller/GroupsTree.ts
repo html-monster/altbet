@@ -8,6 +8,7 @@ import Dialog from "../component/Dialog";
 import {IndexView} from "../view/IndexView";
 import CategoryModel from "../model/CategoryModel";
 import {InfoMessage} from "../component/InfoMessage";
+import {MainConfig} from "../inc/MainConfig";
 
 
 export class GroupsTree
@@ -52,7 +53,7 @@ export class GroupsTree
         // if delete button clicked
         if( $that.data('type') == 'del' )
         {
-            new Dialog({
+            var $Dialog = new Dialog({
                 TPLName: '#TPLmodalDialog',
                 target: '.js-mp-dialog',
                 render: true,
@@ -73,16 +74,18 @@ export class GroupsTree
                     (new CategoryModel).deleteCategory({url: $that.data('url'), name: $that.data('catname')}).then( result =>
                     {
                         window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
-                        location.href = result.url;
+                        indexView.endDelete();
+                        location.href = MainConfig  .BASE_URL + result.url;
                     },
                     result => {
                         window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_ALERT, header: "Fail"});
                         indexView.setInfoMess();
                         // categoryEdit.setErrors({code: reuslt.code, message: reuslt.message});
-                        indexView.endDelete();
+                        // indexView.endDelete();
+                        $Dialog.close();
                     });
 
-                    return true;
+                    return false;
                 }
             });
         }

@@ -28,7 +28,9 @@ export class IndexController extends BaseController
     {
         var $that = $(that);
 
+        e.preventDefault();
 
+        let $IndexView = (new IndexView);
         let $ExchangeModel = (new ExchangeModel);
         $ExchangeModel.getExchange({id: $that.attr('id')}).then(result =>
         {
@@ -39,25 +41,13 @@ export class IndexController extends BaseController
             else
             {
                 0||console.debug( 'result.fullname', result.fullname );
-                new Dialog({
-                    TPLName: '#TPLeditExchangeDialog',
-                    target: '.js-mp-dialog',
-                    render: true,
-                    vars: {
-                        title: `Edit exchange “${$that.data('name')}”`,
-                        btnOkTitle: 'Save',
-                        btnCancelTitle: 'Cancel',
-                        data: result.data,
-                        // type: 'modal-default',
-                    },
-                    callbackCancel: function() { /*indexView.endDelete()*/ },
-                    callbackOK: function()
+                $IndexView.renderEditForm({data: result, name: $that.data('name')}, function()
                     {
-                        let $IndexView = (new IndexView);
                         $IndexView.beginSave();
 
-                        // var formData = new FormData();
-                        // formData.set('url', '1');
+                        var form = $that.closest('form');
+                        var formData = new FormData(<HTMLFormElement>form[0]);
+
                         $ExchangeModel.saveExchange({url: $that.attr('url'), name: $that.data('catname')}).then( result =>
                         {
                             // window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
@@ -72,7 +62,7 @@ export class IndexController extends BaseController
 
                         return true;
                     }
-                })
+                );
             } // endif
         },
         result => {

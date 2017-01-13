@@ -157,35 +157,15 @@
 
             .button-container{
               &:first-child{
-                //padding-right: 15px;
-                button.event{
-                  transform: scaleX(1.21) scaleY(1.19) translateX(-15px);
-                }
+                button.event{ transform: scaleX(1.21) scaleY(1.19) translateX(-15px); }
               }
               &:last-child{
-                //padding-left: 15px;
-                button.event{
-                  transform: scaleX(1.21) scaleY(1.19) translateX(15px);
-                }
+                button.event{ transform: scaleX(1.21) scaleY(1.19) translateX(15px); }
               }
             }
             .buy .button:not(:first-child), .buy button:not(:first-child){  display: none;  }
             .sell .button:not(:last-child), .sell button:not(:last-child){  display: none;  }
-            button.event{
-              //width: 56px;
-              //height: 38px;
-              //transform: scaleX(1.75);
-              transform: scaleX(1.21) scaleY(1.19);
-              //&.empty{
-              //  width: 60px;
-              //  transform: scaleX(1.22) scaleY(1.19);
-              //}
-              //span{
-              //  line-height: 16px;
-              //  &.price{  font-size: 15px;  }
-              //  &.volume{  font-size: 12px;  }
-              //}
-            }
+            button.event{ transform: scaleX(1.21) scaleY(1.19); }
           }
         }
       }
@@ -285,16 +265,8 @@
 					}
           &.time{  color: $main-color-darker;  }
         }
-        i{
-          float: right;
-          line-height: 12px;
-          padding: 3px 7px;
-          color: #ffffff;
-          border-radius: 4px;
-          font-style: normal;
-          font-weight: 700;
-          font-size: 12px;
-          vertical-align: top;
+        i { float: right; padding: 3px 7px; line-height: 12px; color: #ffffff; border-radius: 4px; font-style: normal; font-weight: 700;
+            font-size: 12px; vertical-align: top;
           &.live{  background-image: linear-gradient(to bottom, #84d65b, #4dac2e);  }
           &.half_time{  color: transparent; background-image: linear-gradient(to bottom, $clr1Status, $clr1Status * 0.9); }
           &.end{   background-image: linear-gradient(to bottom, #646470, #34343d);  }
@@ -495,6 +467,7 @@
           //  display: inline-block;
           //}
           .buy{
+              &>button:first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
             .button { margin-right: 3px;
               &:first-child{
                 button { background-image: linear-gradient(to bottom, #f88447, #ef4d22);
@@ -507,6 +480,7 @@
             }
           }
           .sell {
+            &>button:last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
             .button { margin-left: 3px;
               &:last-child{
                 button { background-image: linear-gradient(to bottom, #64c9ef, #3498da);

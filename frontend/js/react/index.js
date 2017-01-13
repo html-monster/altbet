@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PageMyPos from './components/PageMyPos.jsx';
 
 
+
 window.ee = new EventEmitter();
 
 if(globalData.myPosOn) {

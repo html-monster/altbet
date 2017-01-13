@@ -2,39 +2,45 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react' ;
 
-import BaseController from '../common/BaseController';
+import BaseController from './BaseController';
 import Chart from '../components/EventPage/Chart';
+import {BetsTable} from '../components/EventPage/BetsTable';
 import * as chartActions from '../actions/EventPage/chartActions.ts';
 import eventPageActions from '../actions/eventPageActions.ts';
 
-class EventPage extends React.Component implements BaseController
+
+class EventPage extends BaseController
 {
     constructor(props)
     {
-        super();
+        super(props);
 
         // ABpp.controllers.EventPage
 
         // this.state = {data: props.data};
         0||console.debug( 'this.props', props );
 
-        props.eventPageActions.actionOnLoad({exchange: appData.pageEventData.SymbolsAndOrders.Symbol.Exchange});
+        this.actions = props.eventPageActions;
+        this.actions.actionOnLoad({exchange: appData.pageEventData.SymbolsAndOrders.Symbol.Exchange});
     }
 
 
     componentDidMount()
     {
         // register global action
-        ABpp.registerAction('EventPage.activeTraiderActivate', () => this.activeTraiderActivate());
+        // ABpp.registerAction('EventPage.activeTraiderActivate', () => this.activeTraiderActivate());
+
+        // subscribe on tader on/off
+        /** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_TRADER_ON, () => this._activeTraiderActivate());
     }
 
 
 
     /**
      * activates first exchange left side
-     * @public
+     * @private
      */
-    activeTraiderActivate()
+    _activeTraiderActivate()
     {
         // 0||console.debug( 'firstExchangeActivate', this );
         this.props.eventPageActions.activeTraiderActivate(this.props.eventPage.pageEventData);
@@ -44,33 +50,26 @@ class EventPage extends React.Component implements BaseController
 
     render()
     {
-        let data = this.props.eventPage.pageEventData;
+        let {pageEventData: data, socket, isTraiderOn} = this.props.eventPage;
         let symbol = `${data.SymbolsAndOrders.Symbol.Exchange}_${data.SymbolsAndOrders.Symbol.Name}_${data.SymbolsAndOrders.Symbol.Currency}`;
 
-        var classClickable = !ABpp.config.tradeOn ? 'clickable' : '';
-
-// 0||console.debug( 'this.props', ABpp.config.tradeOn, classClickable, this.props );
-            // if (isMirror == 'True' && side == 'sell') data.SummaryPositionPrice.reverse();
-            // if (isMirror == 'False' && side == 'buy') data.SummaryPositionPrice.reverse();
-
-            // if (children < objLength) {
-            //     for (var ii = children; ii < objLength; ii++) {
-            //         table.append('<tr><td><span>alt.bet</span></td><td class="' + className + ' price ' + side +
-            //             ' animated"><span></span></td><td class="' + className + ' volume ' + side + ' animated"><span></span></td></tr>');
-            //     }
-            // }
-            // $(data.SummaryPositionPrice).each(function () {
-            //     var self = this;
-            //     var tr = table.find('tr').eq(flag++);
-            //
-            //     self.Price = (isMirror == "True") ? (1 - self.Price) : self.Price;
-            //
-            //     //if (self.Price > maxPrice) maxPrice = self.Price;
-            //     //if (self.Price < minPrice) minPrice = self.Price;
-            //
-            //     tr.find('.price span').text('$' + self.Price.toFixed(2));
-            //     tr.find('.volume span').text(self.Quantity);
-            // });
+        var buyIndex = 0;
+        var sellIndex = 1;
+        var bidData = [];
+        var askData = [];
+        if( socket.activeOrders )
+        {
+            if( socket.activeOrders.Orders[0].Side == 1 )
+            {
+                buyIndex = 1;
+                sellIndex = 0;
+            } // endif
+            bidData = socket.activeOrders.Orders[buyIndex].SummaryPositionPrice;
+            askData = socket.activeOrders.Orders[sellIndex].SummaryPositionPrice;
+        } // endif
+// 0||console.debug( 'socket', socket, bidData, askData );
+            // if (appData.pageEventData.IsMirror && side == 'sell') data.SummaryPositionPrice.reverse();
+            // if (!appData.pageEventData.IsMirror && side == 'buy') data.SummaryPositionPrice.reverse();
 
         return <div className="wrapper_event_page" data-id={symbol}>
             <h1>{data.SymbolsAndOrders.Symbol.HomeName} VS {data.SymbolsAndOrders.Symbol.AwayName}</h1>
@@ -127,31 +126,10 @@ class EventPage extends React.Component implements BaseController
             </div>
             <div id="mainController" className="executed">
                 <div className="executed_orders sell order_create event-content" data-symbol={symbol}>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th><span>ID</span></th>
-                                <th><span>Bid</span></th>
-                                <th><span>Quantity</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           <tr className=""><td><span>alt.bet</span></td><td className="price buy animated"><span>$0.46</span></td><td className="volume buy animated"><span>12</span></td></tr>
-                        </tbody>
-                    </table>
+                    <BetsTable data={{data: bidData, typeb: BetsTable.TYPE_BID, isTraiderOn}} actions={this.actions} />
                 </div>
                 <div className="executed_orders buy order_create event-content" data-symbol={symbol}>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th><span>ID</span></th>
-                                <th><span>Ask</span></th>
-                                <th><span>Quantity</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <BetsTable data={{data: askData, typeb: BetsTable.TYPE_ASK, isTraiderOn}} actions={this.actions} />
                 </div>
                 <div className="executed_orders">
                     <table>

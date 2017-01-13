@@ -12,7 +12,7 @@ export default class BaseController extends React.Component
         super(props);
 
         /** @public */
-        this.actions = {};
+        this.actions = props.actions ? props.actions : {};
 
 
         this.init();

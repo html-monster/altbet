@@ -38,6 +38,7 @@ export class CategoryController extends BaseController
         $(".js-btn-cancel").click(function (e) { history.back(); });
         $("#F1EditCat").submit(function (e) { self.onCreateClick(e, this); });
 
+        0||console.debug( 'globalData.iconClasses', globalData.iconClasses );
         (new CategoryNew).initCBIcon(globalData.iconClasses);
 
         setTimeout(() => $(".js-ed-name").focus(), 500);
@@ -63,7 +64,7 @@ export class CategoryController extends BaseController
             (new CategoryModel).addCategory({url: $that.attr('url'), name: $(".js-ed-name").val(), formData}).then( result =>
             {
                 window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
-                // location.href = result.url;
+                location.href = MainConfig.BASE_URL + result.url;
             },
             reuslt => {
                 // 0||console.debug( 'reuslt', reuslt );
@@ -76,7 +77,6 @@ export class CategoryController extends BaseController
         {
             categoryNew.endSave();
         } // endif
-
     }
 
 

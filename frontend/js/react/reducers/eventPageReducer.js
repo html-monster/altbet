@@ -2,12 +2,14 @@ import {
     ON_CHART_MOUNT,
     ON_CHART_TYPE_CHANGE,
     ON_SOCKET_MESSAGE,
+    ON_TRADE_ONOFF,
 } from '../constants/ActionTypesPageEvent';
 
 
 const initialState = {
     pageEventData: appData.pageEventData,
     socket: { activeOrders: null, bars: null },
+    isTraiderOn: false,
     Chart: {
             ChartObj: null,
             types: null,
@@ -26,14 +28,16 @@ export default function eventPage(state = initialState, action)
         case ON_CHART_TYPE_CHANGE:
             return {...state, name: action.payload, error: ''};
 
+        case ON_TRADE_ONOFF:
+            return {...state, isTraiderOn: action.payload};
+
         case ON_SOCKET_MESSAGE:
-            // 0||console.debug( 'state', state );
-            // 0||console.debug( 'newVar', newVar );
                 let newVar = {...state, socket: { activeOrders: action.payload.activeOrders, bars: action.payload.bars }};
+                // 0||console.debug( 'newVar', newVar );
             return newVar;
 
         default:
-            return state
+            return state;
     }
 
 }

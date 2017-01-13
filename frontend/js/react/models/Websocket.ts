@@ -150,7 +150,8 @@ export class WebsocketModel
         // main page charts
         if(globalData.mainPage && globalData.MainCharOn) mainChartController.drawMainCharts(data.Bars);
 
-        // main page events data
+        // BM: main page events data
+// 0||console.debug( 'data.SymbolsAndOrders', data.SymbolsAndOrders );
         if (data.SymbolsAndOrders && data.SymbolsAndOrders.Result.length) {
             if(self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]) {
                 // 0||console.debug( 'data.SymbolsAndOrders2', data.SymbolsAndOrders );
