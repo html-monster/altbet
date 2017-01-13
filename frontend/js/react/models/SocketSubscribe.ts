@@ -69,7 +69,7 @@ export class SocketSubscribe
             if( val.Symbol.Exchange == params.exchange ) activeOrders = val;
         } // endfor
 
-        // 0||console.debug( 'receiveActiveOrderFixData', inData, params );
+        // 0||console.debug( 'receiveActiveOrderFixData', inData, params, activeOrders );
 
 
         return {ActiveOrders: activeOrders, Bars: inData.Bars};

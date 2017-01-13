@@ -13,23 +13,12 @@ class MainPage extends BaseController
     constructor(props)
     {
         super(props);
-        // ABpp.controllers.MainPage
+        var self = this;
 
         0||console.debug( 'this.props', props );
 
         props.actions.actionOnLoad();
     }
-
-
-    componentDidMount()
-    {
-        // register global action
-        ABpp.registerAction('MainPage.firstExchangeActivate', () => this.firstExchangeActivate());
-
-        Waves.init();
-	    Waves.attach('.wave:not([disabled])', ['waves-button']);
-    }
-
 
 
     /**
@@ -38,7 +27,6 @@ class MainPage extends BaseController
      */
     firstExchangeActivate()
     {
-        // 0||console.debug( 'firstExchangeActivate', this );
         this.props.actions.firstExchangeActivate(this);
     }
 
@@ -54,11 +42,34 @@ class MainPage extends BaseController
     }
 
 
+    componentDidMount()
+    {
+        // register global action
+        ABpp.registerAction('MainPage.firstExchangeActivate', () => this.firstExchangeActivate());
+
+        // subscribe on tader on/off
+        /** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, function() {self._OnOffBasicMode()});
+
+
+        // Waves.init();
+	    Waves.attach('.wave:not([disabled])', ['waves-button']);
+    }
+
+
+    /**
+     * @private
+     */
+    _OnOffBasicMode()
+    {
+        this.props.actions.OnOffBasicMode(ABpp.config.basicMode);
+    }
+
 
     render()
     {
-        let isBasicMode = ABpp.config.basicMode;
+        // let isBasicMode = ABpp.config.basicMode;
         let data = this.props.data;
+        let {activeExchange, isBasicMode} = this.props.data;
 
 
         return (
@@ -81,7 +92,7 @@ class MainPage extends BaseController
                     <div className="tab_content">
                         <div className="tab_item ui-sort">
                             {data.marketsData.map((item, key) =>
-                                <ExchangeItem key={key} data={{...item, activeExchange: this.props.data.activeExchange}} actions={this.props.actions} />
+                                <ExchangeItem key={key} data={{...item, activeExchange, isBasicMode}} actions={this.props.actions} />
                             )}
                         </div>
                     </div>

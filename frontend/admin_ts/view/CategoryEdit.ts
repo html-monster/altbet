@@ -19,6 +19,7 @@ export default class CategoryEdit extends BaseView
             let val = inClasses[ii];
             data.push({id: ii, text: ii});
         } // endfor
+        data.unshift({id: '-100', text: '- noicon -'});
 
         // var tmpl = function
 
@@ -31,7 +32,7 @@ export default class CategoryEdit extends BaseView
                     var $state = $('<span class="icon ' + state.text + '">' + state.text + '</span>');
                     return $state;
                 }
-        }).val(globalData.currentIcon).trigger("change");
+        }).val(globalData.currentIcon ? globalData.currentIcon : "-100").trigger("change");
     }
 
 

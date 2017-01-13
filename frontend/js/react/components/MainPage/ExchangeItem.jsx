@@ -9,15 +9,16 @@ export default class ExchangeItem extends React.Component
 {
     render()
     {
-        let isBasicMode = ABpp.config.basicMode;
+        // let  = ABpp.config.basicMode;
         // let isTradeOn = ABpp.config.tradeOn;
         let $DateLocalization = new DateLocalization();
-        let activeExchange = this.props.data.activeExchange;
+        let {activeExchange, isBasicMode} = this.props.data;
         let data = this.props.data;
         let symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
 
         // common props for button container
         let commProps = {
+            isBasicMode: isBasicMode,
             symbolName: symbol,
             Orders: data.Orders,
             exdata: {

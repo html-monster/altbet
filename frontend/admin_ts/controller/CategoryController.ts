@@ -64,7 +64,7 @@ export class CategoryController extends BaseController
             (new CategoryModel).addCategory({url: $that.attr('url'), name: $(".js-ed-name").val(), formData}).then( result =>
             {
                 window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
-                // location.href = result.url;
+                location.href = MainConfig.BASE_URL + result.url;
             },
             reuslt => {
                 // 0||console.debug( 'reuslt', reuslt );
@@ -77,7 +77,6 @@ export class CategoryController extends BaseController
         {
             categoryNew.endSave();
         } // endif
-
     }
 
 

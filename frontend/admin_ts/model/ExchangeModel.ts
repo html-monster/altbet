@@ -13,14 +13,14 @@ export default class ExchangeModel
     {
         var self = this;
         let data = new FormData();
-        data.set('id', inProps.id);
+        data.set('exchange', inProps.id);
 
         var promise = new Promise((resolve, reject) =>
         {
             var message = 'Error while getting exchange info, please, try again';
             $.ajax({
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST, //AJAX_CATEGORY_EDIT,
-                // url: inProps.url, //AJAX_CATEGORY_EDIT,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_EDIT,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 type: 'GET',
                 success: function(data)
                 {

@@ -30,6 +30,7 @@ export default function eventPage(state = initialState, action)
             // 0||console.debug( 'state', state );
             // 0||console.debug( 'newVar', newVar );
                 let newVar = {...state, socket: { activeOrders: action.payload.activeOrders, bars: action.payload.bars }};
+                // 0||console.debug( 'newVar', newVar );
             return newVar;
 
         default:

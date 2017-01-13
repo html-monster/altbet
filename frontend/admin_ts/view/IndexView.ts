@@ -7,6 +7,7 @@
 import BaseView from "./BaseView";
 import {InfoMessage} from "../component/InfoMessage";
 import BodyView from "./BodyView";
+import Dialog from "../component/Dialog";
 
 
 export class IndexView extends BaseView
@@ -98,6 +99,41 @@ export class IndexView extends BaseView
     public endDelete()
     {
         (new BodyView).hideLoading(100);
+    }
+
+
+
+    public renderEditForm(data, callbackOk)
+    {
+        new Dialog({
+            TPLName: '#TPLeditExchangeDialog',
+            target: '.js-mp-dialog',
+            render: true,
+            vars: {
+                title: `Edit exchange “${data.name}”`,
+                btnOkTitle: 'Save',
+                btnCancelTitle: 'Cancel',
+                data: data.data,
+                // type: 'modal-default',
+            },
+            afterInit: (dialogContext, wrapper) =>
+            {
+                $('[data-js=StartDate], [data-js=StartDate]', wrapper).daterangepicker({
+                    "singleDatePicker": true,
+                    "showDropdowns": true,
+                    "showWeekNumbers": true,
+                    "timePicker": true,
+                    "timePicker24Hour": true,
+                    timePickerIncrement: 5,
+                    "opens": "left",
+                    locale: {
+                        format: 'MM/DD/YYYY H:mm'
+                    }
+                });
+            },
+            callbackCancel: function() { /*indexView.endDelete()*/ },
+            callbackOK: callbackOk
+        });
     }
 
 

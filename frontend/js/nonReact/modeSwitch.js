@@ -25,26 +25,35 @@ class modeSwitchClass{
 			$(context).parent().find('span').text('Expert Mode');
 			$('.content_bet').removeClass('basic_mode_js');
 			// $('.mode_info_js').hide();
-			$('.content_bet button').each(function () {
-				var price = $(this).find('.price:not(.empty)').text();
-				$(this).find('.price:not(.empty)').text(price.replace('$', ''));
-			});
+			// $('.content_bet button').each(function () {
+			// 	var price = $(this).find('.price:not(.empty)').text();
+			// 	$(this).find('.price:not(.empty)').text(price.replace('$', ''));
+			// });
 			globalData.basicMode = false;
 
-			ABpp && (ABpp.config.basicMode = false);
+			if( ABpp )
+			{
+				ABpp.config.basicMode = false;
+				ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
+			} // endif
+
 			// localStorage.setItem('tradingMode', 'expert');
 		}
 		else{
 			$(context).parent().find('span').text('Basic Mode');
 			$('.content_bet').addClass('basic_mode_js');
 			// $('.mode_info_js').show();
-			$('.content_bet button').each(function () {
-				var price = $(this).find('.price:not(.empty)').text().replace('$', '');
-				$(this).find('.price:not(.empty)').text('$' + price);
-			});
+			// $('.content_bet button').each(function () {
+			// 	var price = $(this).find('.price:not(.empty)').text().replace('$', '');
+			// 	$(this).find('.price:not(.empty)').text('$' + price);
+			// });
 			globalData.basicMode = true;
 
-			ABpp && (ABpp.config.basicMode = true);
+			if( ABpp )
+			{
+				ABpp.config.basicMode = true;
+				ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
+			} // endif
 			// localStorage.setItem('tradingMode', 'basic');
 		}
 	}

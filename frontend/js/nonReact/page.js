@@ -84,7 +84,7 @@ $(document).ready(function () {
 	// })();
 
 	// BM: Waves
-	// Waves.init();
+	Waves.init();
 	// Waves.attach('.wave:not([disabled])', ['waves-button']);
 
 	(function showPass () {

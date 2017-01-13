@@ -10,7 +10,7 @@ export default class ButtonContainer extends React.Component
     render()
     {
         let SummaryPositionPrice;
-        let isBasicMode = ABpp.config.basicMode;
+        let {isBasicMode} = this.props.data;
         // let $DateLocalization = new DateLocalization();
         let data = this.props.data;
     // console.log(data);
@@ -73,7 +73,7 @@ export default class ButtonContainer extends React.Component
                                                         data: data,
                                                     })}
                                                     data-verify="Quantity">
-                                                <span className="price">{(Common.toFixed(data.ismirror ? 1 - price : price, 2))}</span>
+                                                <span className="price">{((price = Common.toFixed(data.ismirror ? 1 - price : price, 2))||true) && isBasicMode  ? '$' + price : price}</span>
                                                 <span className="volume">{item2.Quantity}</span>
                                                 <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
                                             </button>

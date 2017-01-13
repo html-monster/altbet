@@ -1,5 +1,6 @@
 /// <reference path="./../.d/common.d.ts" />
 /// <reference path="./../.d/jquery.d.ts" />
+import {SysEvents} from "../react/models/SysEvents";
 declare let globalData : any;
 declare let window : any;
 
@@ -38,12 +39,14 @@ export class ABpp
         basicMode: true,      // play mode
         tradeOn: false,       // active trader state
     };
+    public baseUrl: "";                 // add before urls
+
 
     public actions : any = {};
 
-    public User: User = null;           // user entity
-    public Websocket: WebsocketModel = null; // websocket object
-    public baseUrl: "";                 // add before urls
+    public User: User = null;                   // user entity
+    public Websocket: WebsocketModel = null;    // websocket object
+    public SysEvents: SysEvents = null;         // system events
 
 
     private static instance = null;
@@ -64,7 +67,10 @@ export class ABpp
         // set current page from server
         this.config.currentPage = this.setCurrentPage();
         this.config.takerFees = ABpp.TAKER_FEES;
-        this.config.makerFees = ABpp.MAKER_FEES;;
+        this.config.makerFees = ABpp.MAKER_FEES;
+
+        // init system events
+        this.SysEvents = new SysEvents();
 
         // create user
         this.createUser();

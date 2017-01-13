@@ -25,8 +25,8 @@ class Actions extends BaseActions
                 let activeOrders = getState().eventPage.socket.activeOrders;
                 let bars = getState().eventPage.socket.bars;
 
-                if( JSON.stringify(inActiveOrders) != JSON.stringify(activeOrders) ||
-                    JSON.stringify(inBars) != JSON.stringify(bars) )
+                if( !activeOrders || JSON.stringify(inActiveOrders.Symbol) != JSON.stringify(activeOrders.Symbol) || false
+                    /*JSON.stringify(inBars) != JSON.stringify(bars)*/ )
                 {
     // __DEV__&&console.debug( 'changed', inActiveOrders, inBars,  activeOrders, bars );
                     dispatch({

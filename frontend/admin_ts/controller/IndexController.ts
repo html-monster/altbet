@@ -30,6 +30,7 @@ export class IndexController extends BaseController
 
         e.preventDefault();
 
+        let $IndexView = (new IndexView);
         let $ExchangeModel = (new ExchangeModel);
         $ExchangeModel.getExchange({id: $that.attr('id')}).then(result =>
         {
@@ -40,21 +41,8 @@ export class IndexController extends BaseController
             else
             {
                 0||console.debug( 'result.fullname', result.fullname );
-                new Dialog({
-                    TPLName: '#TPLeditExchangeDialog',
-                    target: '.js-mp-dialog',
-                    render: true,
-                    vars: {
-                        title: `Edit exchange “${$that.data('name')}”`,
-                        btnOkTitle: 'Save',
-                        btnCancelTitle: 'Cancel',
-                        data: result.data,
-                        // type: 'modal-default',
-                    },
-                    callbackCancel: function() { /*indexView.endDelete()*/ },
-                    callbackOK: function()
+                $IndexView.renderEditForm({data: result, name: $that.data('name')}, function()
                     {
-                        let $IndexView = (new IndexView);
                         $IndexView.beginSave();
 
                         var form = $that.closest('form');
@@ -74,7 +62,7 @@ export class IndexController extends BaseController
 
                         return true;
                     }
-                })
+                );
             } // endif
         },
         result => {

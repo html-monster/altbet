@@ -42,8 +42,6 @@
 
 				// === Vlasakh === 17-01-03 ===============================================
                 setTimeout(() => { if (ABpp.actions['MainPage.firstExchangeActivate']) ABpp.actions['MainPage.firstExchangeActivate']() }, 1000);
-                setTimeout(() => { if (ABpp.actions['EventPage.activeTraiderActivate']) ABpp.actions['EventPage.activeTraiderActivate']() }, 1000);
-                ABpp.config.tradeOn = true;
 				// event_container.eq(0).find('.event-content').eq(0).addClass('active');
 				// if(symbol) $('[data-symbol=' + symbol + ']').addClass('active');
 				// event_container.addClass('clickable').eq(0).addClass('active');
@@ -58,6 +56,10 @@
 						activeTraderClass.takeData($('.wrapper_event_page'));
 				}, 400);
 				globalData.tradeOn = true;
+				// === Vlasakh === 17-01-12 ===============================================
+                ABpp.config.tradeOn = true;
+                setTimeout(() => { /** @var ABpp ABpp */ ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, true); }, 1000);
+				// === ==================== ===============================================
 			}
 			checkbox.change(function () {
 				activeTraderClass.traderOnCheck($(this));
@@ -918,7 +920,7 @@
 
 			// === Vlasakh === 17-01-03 ===============================================
             ABpp.actions['MainPage.firstExchangeActivate'] && ABpp.actions['MainPage.firstExchangeActivate']();
-            ABpp.actions['EventPage.activeTraiderActivate'] && ABpp.actions['EventPage.activeTraiderActivate']();
+            // ABpp.actions['EventPage.activeTraiderActivate'] && ABpp.actions['EventPage.activeTraiderActivate']();
 
 			// if(event_container.hasClass('active')){
 			// 	event_container.addClass('clickable');
@@ -945,7 +947,10 @@
 				executedOrders.find('td.clickable').removeClass('clickable');
 
 			globalData.tradeOn = true;
+			// === Vlasakh === 17-01-12 ===============================================
 			ABpp.config.tradeOn = true;
+			/** @var ABpp ABpp */ ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, true);
+			// === ==================== ===============================================
 		}
 		else{
 			autoTrade.parent().fadeOut(200);
@@ -960,7 +965,10 @@
 				executedOrders.find('td.clickable').addClass('clickable');
 
 			globalData.tradeOn = false;
+			// === Vlasakh === 17-01-12 ===============================================
 			ABpp.config.tradeOn = false;
+			/** @var ABpp ABpp */ ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, false);
+			// === ==================== ===============================================
 		}
 	}
 }

@@ -10,6 +10,7 @@ export default class Dialog
     private vars;
     private TPLName;
     private target;
+    private afterInit;
     private callbackOK;
     private callbackCancel;
 
@@ -44,6 +45,16 @@ export default class Dialog
 
 
         $("[data-js=wrapper]", this.target).fadeIn(400);
+
+        this.afterInit && this.afterInit(this, this.target);
+    }
+
+
+
+    public close()
+    {
+        if (this.callbackCancel) this.callbackCancel();
+        $("[data-js=wrapper]", this.target).fadeOut(200);
     }
 
 
@@ -61,8 +72,7 @@ export default class Dialog
 
     private onCloseClick(ee, that)
     {
-        if (this.callbackCancel) this.callbackCancel();
-        $("[data-js=wrapper]", this.target).fadeOut(200);
+        this.close();
     }
 
 

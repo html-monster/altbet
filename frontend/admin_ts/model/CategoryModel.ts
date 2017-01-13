@@ -19,13 +19,13 @@ export default class CategoryModel
         {
             var message = 'Error while deleting category, please, try again';
             $.ajax({
-                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST, //AJAX_CATEGORY_EDIT,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 url: inProps.url,
                 type: 'POST',
                 success: function(data)
                 {
                     __LDEV__&&console.debug( 'data AJAX', data );
-                    // data.code = 103;
+                    // data.Error = 200;
                     // data.url = "http://localhost/AltBet.Admin/?path=sport%2Famerican-football";
                     // data.name = inProps.name;
 
@@ -98,6 +98,9 @@ export default class CategoryModel
         {
                 // 101 not unique name
                 // 102 not unique url
+            // for no icon option
+            if (inProps.formData.get("Icon") == '-100') inProps.formData.set("Icon", "");
+
             var message = 'Error while saving data, please, try again';
             $.ajax({
                 url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_ADD,
@@ -116,14 +119,14 @@ export default class CategoryModel
                         // data = JSON.parse(data);
 
                         // user defined error
-                        if( data.code > 100 && data.code < 200 )
+                        if( data.Error > 100 && data.Error < 200 )
                         {
-                            error = -data.code;
+                            error = -data.Error;
                             throw new Error(message);
 
 
                         // success
-                        } else if( data.code == 200 )
+                        } else if( data.Error == 200 )
                         {
                             error = 100;
                             throw new Error("");
@@ -150,7 +153,7 @@ export default class CategoryModel
                         }
                     }
 
-                    error < 0 ? reject({code: error, message}) : resolve({code: error, message, url: data.url});
+                    error < 0 ? reject({code: error, message}) : resolve({code: error, message, url: data.Param1});
                 },
                 error: function() {
                     reject({code: -1002, message});
@@ -181,6 +184,9 @@ export default class CategoryModel
         {
                 // 101 not unique name
                 // 102 not unique url
+            // for no icon option
+            if (inProps.formData.get("Icon") == '-100') inProps.formData.set("Icon", "");
+
             var message = 'Error while saving data, please, try again';
             $.ajax({
                 url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_EDIT,
@@ -189,7 +195,7 @@ export default class CategoryModel
                 success: function(data)
                 {
                     __DEV__&&console.debug( 'data AJAX', data, MainConfig.BASE_URL );
-                    // data.code = 101;
+                    // data.Error = 101;
                     // data.url = "http://localhost/AltBet.Admin/?path=sport%2Famerican-football";
                     // data.name = inProps.name;
 

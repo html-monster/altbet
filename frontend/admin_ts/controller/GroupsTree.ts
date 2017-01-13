@@ -53,7 +53,7 @@ export class GroupsTree
         // if delete button clicked
         if( $that.data('type') == 'del' )
         {
-            new Dialog({
+            var $Dialog = new Dialog({
                 TPLName: '#TPLmodalDialog',
                 target: '.js-mp-dialog',
                 render: true,
@@ -81,7 +81,8 @@ export class GroupsTree
                         window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_ALERT, header: "Fail"});
                         indexView.setInfoMess();
                         // categoryEdit.setErrors({code: reuslt.code, message: reuslt.message});
-                        indexView.endDelete();
+                        // indexView.endDelete();
+                        $Dialog.close();
                     });
 
                     return false;
