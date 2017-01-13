@@ -18,7 +18,7 @@ class EventPage extends BaseController
         // ABpp.controllers.EventPage
 
         // this.state = {data: props.data};
-        0||console.debug( 'this.props', props );
+        __DEV__&&console.debug( 'this.props', props );
 
         this.actions = props.eventPageActions;
         this.actions.actionOnLoad({exchange: appData.pageEventData.SymbolsAndOrders.Symbol.Exchange});
@@ -126,10 +126,10 @@ class EventPage extends BaseController
             </div>
             <div id="mainController" className="executed">
                 <div className="executed_orders sell order_create event-content" data-symbol={symbol}>
-                    <BetsTable data={{data: bidData, typeb: BetsTable.TYPE_BID, isTraiderOn}} actions={this.actions} />
+                    <BetsTable data={{data: bidData, typeb: BetsTable.TYPE_BID, isTraiderOn, exdata: data}} actions={this.actions} />
                 </div>
                 <div className="executed_orders buy order_create event-content" data-symbol={symbol}>
-                    <BetsTable data={{data: askData, typeb: BetsTable.TYPE_ASK, isTraiderOn}} actions={this.actions} />
+                    <BetsTable data={{data: askData, typeb: BetsTable.TYPE_ASK, isTraiderOn, exdata: data}} actions={this.actions} />
                 </div>
                 <div className="executed_orders">
                     <table>

@@ -7,7 +7,7 @@ import {
 
 const initialState = {
     marketsData: appData.pageHomeData,
-    isBasicMode: false,
+    isBasicMode: globalData.basicMode,
     activeExchange: {name: '', // exchange unique name
         isMirror: false},
 };

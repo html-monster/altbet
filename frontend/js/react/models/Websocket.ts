@@ -144,7 +144,7 @@ export class WebsocketModel
             window.ee.emit('myOpenOrder.update', data.OrdersPositionsHistory.OrdersOrPositions);
             window.ee.emit('myOrderHistory.update', data.OrdersPositionsHistory.HistoryTradeItems);
         }
-        if(data.AccountData) dataController.updateHeaderData(data.AccountData);
+        if(data.AccountData) dataController && dataController.updateHeaderData(data.AccountData);
 
 
         // main page charts

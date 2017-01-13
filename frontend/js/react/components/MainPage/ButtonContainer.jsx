@@ -11,6 +11,7 @@ export default class ButtonContainer extends React.Component
     {
         let SummaryPositionPrice;
         let {isBasicMode} = this.props.data;
+
         // let $DateLocalization = new DateLocalization();
         let data = this.props.data;
     // console.log(data);

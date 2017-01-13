@@ -14,20 +14,36 @@ export class BetsTable extends React.Component
     render ()
     {
         var self = this;
-        var {data, typeb, isTraiderOn} = this.props.data;
+        var {data, typeb, isTraiderOn, exdata} = this.props.data;
         var $fieldName;
         var $class = !isTraiderOn ? " clickable" : '';
+        var $type;
 
         if( typeb == BetsTable.TYPE_BID )
         {
             $class += ' buy';
             $fieldName = 'Bid';
+            $type = 0;
         }
         else
         {
             $class += ' sell';
             $fieldName = 'Ask';
+            $type = 1;
         } // endif
+
+
+        let commProps = {
+            isMirror: exdata.IsMirror,
+            // symbolName: symbol,
+            // Orders: data.Orders,
+            HomeName : exdata.SymbolsAndOrders.Symbol.HomeName,
+            AwayName : exdata.SymbolsAndOrders.Symbol.AwayName,
+            Positions : exdata.SymbolsAndOrders.Positions,
+            Exchange : exdata.SymbolsAndOrders.Symbol.Exchange,
+            Name : exdata.SymbolsAndOrders.Symbol.Name,
+            Currency : exdata.SymbolsAndOrders.Symbol.Currency,
+        };
 
         return <table>
             <thead>
@@ -46,7 +62,9 @@ export class BetsTable extends React.Component
                             <td className={`volume ${$class} animated`} onClick={() => self.props.actions.onQuantityClick({
                                    Price: val.Price,
                                    Quantity: val.Quantity,
-                                   data: data,
+                                   type: $type,
+                                   data: data, // orders
+                                   exdata: commProps, // for trader object
                                 })}
                             >
                                 <span>{val.Quantity}</span>

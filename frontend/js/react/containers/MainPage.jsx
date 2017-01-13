@@ -15,7 +15,7 @@ class MainPage extends BaseController
         super(props);
         var self = this;
 
-        0||console.debug( 'this.props', props );
+        __DEV__&&console.debug( 'this.props', props );
 
         props.actions.actionOnLoad();
     }
@@ -44,24 +44,17 @@ class MainPage extends BaseController
 
     componentDidMount()
     {
+        var self = this;
+
         // register global action
         ABpp.registerAction('MainPage.firstExchangeActivate', () => this.firstExchangeActivate());
 
         // subscribe on tader on/off
-        /** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, function() {self._OnOffBasicMode()});
+        /** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, function() {self.props.actions.OnOffBasicMode(ABpp.config.basicMode)});
 
 
         // Waves.init();
 	    Waves.attach('.wave:not([disabled])', ['waves-button']);
-    }
-
-
-    /**
-     * @private
-     */
-    _OnOffBasicMode()
-    {
-        this.props.actions.OnOffBasicMode(ABpp.config.basicMode);
     }
 
 
