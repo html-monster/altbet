@@ -76,7 +76,8 @@ export class ABpp
         this.createUser();
 
         // set basic mode from user settings
-        this.config.basicMode = this.User.settings.basicMode
+        this.config.basicMode = this.User.settings.basicMode;
+        this.config.tradeOn = this.User.settings.tradeOn;
     }
 
 

@@ -13,17 +13,19 @@ export class BetsTable extends React.Component
 
     render ()
     {
-        var {data, typeb} = this.props.data;
-        var $class, $fieldName;
+        var self = this;
+        var {data, typeb, isTraiderOn} = this.props.data;
+        var $fieldName;
+        var $class = !isTraiderOn ? " clickable" : '';
 
         if( typeb == BetsTable.TYPE_BID )
         {
-            $class = 'buy';
+            $class += ' buy';
             $fieldName = 'Bid';
         }
         else
         {
-            $class = 'sell';
+            $class += ' sell';
             $fieldName = 'Ask';
         } // endif
 
@@ -38,10 +40,17 @@ export class BetsTable extends React.Component
             <tbody>
                 {
                     data.map((val, key) => {
-                        return <tr className="old" key={key}>
+                        return <tr className="" key={key}>
                             <td><span>alt.bet</span></td>
                             <td className={`price ${$class} animated`}><span>${Common.toFixed(val.Price, 2)}</span></td>
-                            <td className={`volume ${$class} animated`}><span>{val.Quantity}</span></td>
+                            <td className={`volume ${$class} animated`} onClick={() => self.props.actions.onQuantityClick({
+                                   Price: val.Price,
+                                   Quantity: val.Quantity,
+                                   data: data,
+                                })}
+                            >
+                                <span>{val.Quantity}</span>
+                            </td>
                         </tr>;
                 })}
                 {/*// if (children < objLength) {

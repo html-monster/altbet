@@ -20,7 +20,8 @@ class EventPage extends BaseController
         // this.state = {data: props.data};
         0||console.debug( 'this.props', props );
 
-        props.eventPageActions.actionOnLoad({exchange: appData.pageEventData.SymbolsAndOrders.Symbol.Exchange});
+        this.actions = props.eventPageActions;
+        this.actions.actionOnLoad({exchange: appData.pageEventData.SymbolsAndOrders.Symbol.Exchange});
     }
 
 
@@ -49,16 +50,13 @@ class EventPage extends BaseController
 
     render()
     {
-        let {pageEventData: data, socket} = this.props.eventPage;
+        let {pageEventData: data, socket, isTraiderOn} = this.props.eventPage;
         let symbol = `${data.SymbolsAndOrders.Symbol.Exchange}_${data.SymbolsAndOrders.Symbol.Name}_${data.SymbolsAndOrders.Symbol.Currency}`;
-
-        var classClickable = !ABpp.config.tradeOn ? 'clickable' : '';
 
         var buyIndex = 0;
         var sellIndex = 1;
         var bidData = [];
         var askData = [];
-// 0||console.debug( 'socket', socket );
         if( socket.activeOrders )
         {
             if( socket.activeOrders.Orders[0].Side == 1 )
@@ -69,7 +67,7 @@ class EventPage extends BaseController
             bidData = socket.activeOrders.Orders[buyIndex].SummaryPositionPrice;
             askData = socket.activeOrders.Orders[sellIndex].SummaryPositionPrice;
         } // endif
-0||console.debug( 'socket', socket, bidData, askData );
+// 0||console.debug( 'socket', socket, bidData, askData );
             // if (appData.pageEventData.IsMirror && side == 'sell') data.SummaryPositionPrice.reverse();
             // if (!appData.pageEventData.IsMirror && side == 'buy') data.SummaryPositionPrice.reverse();
 
@@ -128,10 +126,10 @@ class EventPage extends BaseController
             </div>
             <div id="mainController" className="executed">
                 <div className="executed_orders sell order_create event-content" data-symbol={symbol}>
-                    <BetsTable data={{data: bidData, typeb: BetsTable.TYPE_BID}} />
+                    <BetsTable data={{data: bidData, typeb: BetsTable.TYPE_BID, isTraiderOn}} actions={this.actions} />
                 </div>
                 <div className="executed_orders buy order_create event-content" data-symbol={symbol}>
-                    <BetsTable data={{data: askData, typeb: BetsTable.TYPE_ASK}} />
+                    <BetsTable data={{data: askData, typeb: BetsTable.TYPE_ASK, isTraiderOn}} actions={this.actions} />
                 </div>
                 <div className="executed_orders">
                     <table>
