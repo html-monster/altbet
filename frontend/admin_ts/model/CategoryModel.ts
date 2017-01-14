@@ -147,6 +147,7 @@ export default class CategoryModel
                             case 100 : message = `Category “${inProps.name}” created successfully`; break;
                             case -101 : message = "Category name is not unique"; break;
                             case -102 : message = "Category url is not unique"; break;
+                            case -103 : message = "Category can not be deleted because of the exchanges"; break;
                             case -100: ; // some backend not controlled error
                             case -1000 : ; break;
                             default: error = -1001;

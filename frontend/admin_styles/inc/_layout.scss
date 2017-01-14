@@ -1,0 +1,30 @@
+.wrapper-logo {
+	a { @include box(b,r); margin-bottom: -20px; padding: 20px 40px; background-color: #3a3943; }
+	img { width: 100%; }
+}
+
+
+.main-sidebar { padding-top: 0; } // убрать если будет полоса заголовка
+section.sidebar { overflow: visible }
+.sidebar-menu { overflow: visible }
+
+
+#DiLoading { @include box(n,a); z-index: 9999;
+  &.wb-sq, &.wb { padding: 5px; background: #fff; border-radius: 5px; }
+  &.wb { padding: 5px 15px }
+}
+
+
+#DiCatTree {
+  li { position: relative;
+    a:hover > .controls { @include block }
+    &.last-node {
+      .btn[data-type=del] { @include iblock }
+      .controls { margin-right: -106px; }
+    }
+  }
+  .controls { @include box(n,a); margin-right: -80px; padding-left: 10px; right: 0; top: -2px; z-index: 1000;
+    span { @include iblock; margin: 0; padding: 0; width: 22px; height: 22px; }
+    .btn[data-type=del] { @include nblock }
+  }
+}

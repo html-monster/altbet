@@ -12,6 +12,7 @@ import BodyView from "./view/BodyView";
 import { MainConfig } from "./inc/MainConfig";
 import {User} from "./model/User";
 import {IndexController} from "./controller/IndexController";
+import {RadioBtns} from "./component/RadioBtns";
 
 
 export default class ADpp
@@ -52,6 +53,11 @@ export default class ADpp
     public ready()
     {
         (new GroupsTree()).init();
+        (new RadioBtns({
+            // callbacks: [],
+            activeClass: "btn-success",
+        })).apply();
+
 
         // call current action
         if (this.currentController) {

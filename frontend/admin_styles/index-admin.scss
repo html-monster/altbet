@@ -1,42 +1,10 @@
 @import "inc/functions";
 @import "inc/vars";
 @import "inc/default";
+
 @import "inc/common";
 
 
-.modal { overflow: auto }
-
-section.sidebar { overflow: visible }
-.sidebar-menu { overflow: visible }
-
-
-// for status column
-.label.label-approved { background-color: #00a65a !important; }
-.label.label-new { background-color: #3c8dbc !important; }
-.label.label-completed { background-color: #f39c12  !important; color: #fff; }
-.label.label-settelment { background-color: #d2d6de !important; color: #fff; }
-
-
-#DiLoading { @include box(n,a); z-index: 9999;
-  &.wb-sq, &.wb { padding: 5px; background: #fff; border-radius: 5px; }
-  &.wb { padding: 5px 15px }
-}
-
-
-#DiCatTree {
-  li { position: relative;
-    a:hover > .controls { @include block }
-    &.last-node {
-      .btn[data-type=del] { @include iblock }
-      .controls { margin-right: -106px; }
-    }
-  }
-  .controls { @include box(n,a); margin-right: -80px; padding-left: 10px; right: 0; top: -2px; z-index: 1000;
-    span { @include iblock; margin: 0; padding: 0; width: 22px; height: 22px; }
-    .btn[data-type=del] { @include nblock }
-  }
-}
-
-
+@import "inc/layout";
 @import "inc/page-category";
 @import "inc/page-index";

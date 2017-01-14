@@ -44,13 +44,7 @@ export default class ButtonContainer extends React.Component
         // 0||console.debug( 'data', data );
 
 
-        return <div className={`${className} button-container`}>
-            {
-                (data.Orders.length && data.Orders.some((item) => item.Side == data.side) ?
-                        data.Orders.map((item) =>
-                            (item.Side == data.side && ((data.ismirror ? (SummaryPositionPrice = item.SummaryPositionPrice.slice().reverse()) : (SummaryPositionPrice = item.SummaryPositionPrice.slice()))||true) ?
-                                    SummaryPositionPrice.map((item2) =>
-                                        <AnimateOnUpdate
+                                        /*<AnimateOnUpdate
                                             component="div"
                                             className="button"
                                             transitionName={{
@@ -64,6 +58,14 @@ export default class ButtonContainer extends React.Component
                                             transitionLeaveTimeout={500}
                                             data={item2}
                                         >
+                                        </AnimateOnUpdate>*/
+        return <div className={`${className} button-container`}>
+            {
+                (data.Orders.length && data.Orders.some((item) => item.Side == data.side) ?
+                        data.Orders.map((item) =>
+                            (item.Side == data.side && ((data.ismirror ? (SummaryPositionPrice = item.SummaryPositionPrice.slice().reverse()) : (SummaryPositionPrice = item.SummaryPositionPrice.slice()))||true) ?
+                                    SummaryPositionPrice.map((item2) =>
+                                        <div className="button">
                                             <button className={`event animated ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this,
                                                     {
                                                         PosPrice: item.SummaryPositionPrice,
@@ -73,12 +75,13 @@ export default class ButtonContainer extends React.Component
                                                         type: data.type == "sell" ? 1 : 2,
                                                         data: data,
                                                     })}
-                                                    data-verify="Quantity">
+                                                data-verify="Quantity"
+                                            >
                                                 <span className="price">{((price = Common.toFixed(data.ismirror ? 1 - price : price, 2))||true) && isBasicMode  ? '$' + price : price}</span>
                                                 <span className="volume">{item2.Quantity}</span>
                                                 <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
                                             </button>
-                                        </AnimateOnUpdate>
+                                        </div>
                                     )
                                 : ""
                             )

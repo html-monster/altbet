@@ -40,8 +40,8 @@ export class IndexController extends BaseController
             }
             else
             {
-                0||console.debug( 'result.fullname', result.fullname );
-                $IndexView.renderEditForm({data: result, name: $that.data('name')}, function()
+                0||console.debug( 'result.fullname', result );
+                $IndexView.renderEditForm({data: result.data, name: $that.data('name')}, function()
                     {
                         $IndexView.beginSave();
 

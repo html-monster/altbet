@@ -135,6 +135,7 @@ export class WebsocketModel
         let self = this;
 
         let data = JSON.parse(evt.data);
+        globalData.socketData = data;
 // console.log(data);
         if (data.Result) defaultMethods.showWarning(data.Result);
         if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn)) window.ee.emit('yourOrders.update', data.CurrentOrders);//myOrdersControllerClass.updateData(data.CurrentOrders);

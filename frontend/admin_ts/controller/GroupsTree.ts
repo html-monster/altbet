@@ -19,6 +19,9 @@ export class GroupsTree
 
         $('#DiCatTree').jstree(
         {
+            "conditionalselect": function (node, event) {
+                return false;
+            },
             "types": {
                 "fa-folder-o": {
                     "icon": "fa fa-folder-o"
@@ -27,7 +30,7 @@ export class GroupsTree
                 //     "icon": "glyphicon glyphicon-ok"
                 // }
             },
-            "plugins": ["types"]
+            "plugins": ["types", "conditionalselect"]
         });
 
         // 0||console.debug( '$(".sidebar-menu .js-treeview.active")', $(".sidebar-menu .treeview.active") );
