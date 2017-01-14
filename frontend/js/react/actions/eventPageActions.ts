@@ -107,6 +107,64 @@ class Actions extends BaseActions
 
 
 
+    public onPriceClick(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            // 0||console.log( 'inProps', inProps );
+
+            if( !ABpp.config.tradeOn )
+            {
+                let props = inProps;
+                let flag = false;
+                let qt : any = 0,
+                    bpr = "0.";
+                let isBasicMode = ABpp.config.basicMode;
+
+
+                for( let val of props.data )
+                {
+                    qt += val.Quantity;
+                } // endfor
+
+        // 0||console.debug( 'bpr', bpr, qt);
+
+                // return;
+                let outStruc = {
+                    "ID": `${props.exdata.Exchange}_${props.exdata.Name}_${props.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
+                    "EventTitle": props.exdata.isMirror ? props.exdata.AwayName : props.exdata.HomeName,
+                    "Positions": props.exdata.Positions,
+                    "isMirror": props.exdata.isMirror ? 1 : 0,
+                    "Orders": [
+                        {
+                            "Price": bpr,
+                            "Side": props.type == 0 ? 0 : 1, // sell/buy
+                            "Symbol": {
+                                "Exchange": props.exdata.Exchange,
+                                "Name": props.exdata.Name,
+                                "Currency": props.exdata.Currency
+                            },
+                            "Volume": qt,
+                            "Limit": true,
+                            "NewOrder": true,
+                            "isMirror": props.exdata.isMirror ? 1 : 0
+                        },
+                    ]
+                };
+                __LDEV__&&console.debug( 'outStruc', props, outStruc );
+
+                getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+
+                // dispatch({
+                //     type: ON_SOCKET_MESSAGE,
+                //     payload: { activeOrders: inActiveOrders, bars: inBars }
+                // });
+            } // endif
+        }
+    }
+
+
+
     public activeTraiderActivate(data)
     {
         return (dispatch, getState) =>

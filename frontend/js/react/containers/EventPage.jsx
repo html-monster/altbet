@@ -52,11 +52,13 @@ class EventPage extends BaseController
     {
         let {pageEventData: data, socket, isTraiderOn} = this.props.eventPage;
         let symbol = `${data.SymbolsAndOrders.Symbol.Exchange}_${data.SymbolsAndOrders.Symbol.Name}_${data.SymbolsAndOrders.Symbol.Currency}`;
+        var isMirror = data.IsMirror;
 
         var buyIndex = 0;
         var sellIndex = 1;
         var bidData = [];
         var askData = [];
+        var ticks = [];
         if( socket.activeOrders )
         {
             if( socket.activeOrders.Orders[0].Side == 1 )
@@ -67,7 +69,11 @@ class EventPage extends BaseController
             bidData = socket.activeOrders.Orders[buyIndex].SummaryPositionPrice;
             askData = socket.activeOrders.Orders[sellIndex].SummaryPositionPrice;
         } // endif
-// 0||console.debug( 'socket', socket, bidData, askData );
+
+
+        var maxPrice, minPrice;
+        if (socket.bars) ticks = socket.bars.Ticks.slice().reverse();
+// 0||console.debug( 'socket', socket, bidData, askData, ticks );
             // if (appData.pageEventData.IsMirror && side == 'sell') data.SummaryPositionPrice.reverse();
             // if (!appData.pageEventData.IsMirror && side == 'buy') data.SummaryPositionPrice.reverse();
 
@@ -141,6 +147,24 @@ class EventPage extends BaseController
                             </tr>
                         </thead>
                         <tbody>
+                        {
+                            ticks.map((item, key) => {
+                                var date = new Date(item.Time.replace('/Date(', '').replace(')/', '') * 1);
+                                date = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() +
+                                    ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':' +
+                                    (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+
+                                var side = item.Side ? 'sell' : 'buy';
+
+                                var price = ((isMirror == 'True') ? (1 - item.Open).toFixed(2) : item.Open.toFixed(2));
+
+                                if (price > maxPrice) maxPrice = price;
+                                if (price < minPrice) minPrice = price;
+
+                                return <tr key={key}><td><span>{date}</span></td><td className={`price ${side}`}><span>${price}</span></td><td className={`volume ${side}`}><span>{item.Volume}</span></td></tr>
+                            }
+                            )
+                        }
                         </tbody>
                     </table>
                 </div>

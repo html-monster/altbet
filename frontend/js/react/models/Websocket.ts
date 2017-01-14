@@ -135,8 +135,9 @@ export class WebsocketModel
         let self = this;
 
         let data = JSON.parse(evt.data);
-        globalData.socketData = data;
+        globalData.socketData = data; // for debug only
 // console.log(data);
+
         if (data.Result) defaultMethods.showWarning(data.Result);
         if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn)) window.ee.emit('yourOrders.update', data.CurrentOrders);//myOrdersControllerClass.updateData(data.CurrentOrders);
 
@@ -171,6 +172,7 @@ export class WebsocketModel
 
         if(globalData.tradeOn) window.ee.emit('activeOrders.update', data.ActiveOrders);//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
 
+        // BM: event page data
         if (data.ActiveOrders != null && self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS])
         {
             dataController.updateEventData(data.ActiveOrders, data.Bars);

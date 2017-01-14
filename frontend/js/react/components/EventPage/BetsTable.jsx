@@ -4,6 +4,8 @@
 
 import React from 'react' ;
 import {Common} from '../../common/Common.ts' ;
+import AnimateOnUpdate from '../Animation';
+import {TestCm} from './TestCm';
 
 
 export class BetsTable extends React.Component
@@ -21,6 +23,7 @@ export class BetsTable extends React.Component
 
         if( typeb == BetsTable.TYPE_BID )
         {
+            data = data.slice().reverse();
             $class += ' buy';
             $fieldName = 'Bid';
             $type = 0;
@@ -58,7 +61,31 @@ export class BetsTable extends React.Component
                     data.map((val, key) => {
                         return <tr className="" key={key}>
                             <td><span>alt.bet</span></td>
-                            <td className={`price ${$class} animated`}><span>${Common.toFixed(val.Price, 2)}</span></td>
+                            <td className={`price ${$class} animated`} onClick={() => self.props.actions.onPriceClick({
+                                   Price: val.Price,
+                                   Quantity: val.Quantity,
+                                   type: $type,
+                                   data: data, // orders
+                                   exdata: commProps, // for trader object
+                                })}
+                            >
+                                    {/*component="div"
+                                    className="button" */}
+                                <AnimateOnUpdate
+                                    transitionName={{
+                                        enter: 'fadeOut',
+                                        leave: 'fadeOut',
+                                        appear: 'fadeOut'
+                                    }}
+                                    transitionAppear={true}
+                                    transitionAppearTimeout={800}
+                                    transitionEnterTimeout={800}
+                                    transitionLeaveTimeout={500}
+                                    data={val.Price}
+                                >
+                                    <span>${Common.toFixed(val.Price, 2)}</span>
+                                </AnimateOnUpdate>
+                            </td>
                             <td className={`volume ${$class} animated`} onClick={() => self.props.actions.onQuantityClick({
                                    Price: val.Price,
                                    Quantity: val.Quantity,

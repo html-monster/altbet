@@ -16,7 +16,7 @@ export default class AnimateOnUpdate extends ReactCSSTransitionGroup
 				appearTimeout: this.props.transitionAppearTimeout,
 				enterTimeout: this.props.transitionEnterTimeout,
 				leaveTimeout: this.props.transitionLeaveTimeout,
-				data: this.props.data
+				data: this.props.data,
 			},
 			child
 		);
