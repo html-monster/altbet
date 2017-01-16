@@ -49,8 +49,9 @@ class MainPage extends BaseController
         // register global action
         ABpp.registerAction('MainPage.firstExchangeActivate', () => this.firstExchangeActivate());
 
-        // subscribe on tader on/off
+        // subscribe on basic mode on/off
         /** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, function() {self.props.actions.OnOffBasicMode(ABpp.config.basicMode)});
+        // subscribe on tader on/off
         ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_TRADER_ON, function() {self.props.actions.OnOffTraider(ABpp.config.tradeOn)});
 
 
