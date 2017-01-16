@@ -30,6 +30,9 @@ export class ABpp
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
+    public ver = 0.1;
+
+
     // application config
     public config = {
         currentTheme: null,   // current theme
@@ -66,6 +69,8 @@ export class ABpp
 
         // set current page from server
         this.config.currentPage = this.setCurrentPage();
+
+        // set fees
         this.config.takerFees = ABpp.TAKER_FEES;
         this.config.makerFees = ABpp.MAKER_FEES;
 
@@ -76,9 +81,12 @@ export class ABpp
         this.createUser();
 
         // set basic mode from user settings
-        0||console.log( 'this.User.settings.basicMode', this.User.settings.basicMode );
         this.config.basicMode = this.User.settings.basicMode;
         this.config.tradeOn = this.User.settings.tradeOn;
+
+        // set curr ver
+        globalData.AppVersion = this.ver; // for debug only
+        this.baseUrl = globalData.rootUrl.slice(0, -1);
     }
 
 

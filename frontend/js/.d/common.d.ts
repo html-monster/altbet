@@ -7,9 +7,9 @@ declare let moment;
 // declare var window : any;
 declare let dataController;
 declare let mainChartController;
-declare let globalData;
-declare let defaultMethods;
-declare let activeTraderClass;
+// declare let globalData;
+// declare let defaultMethods;
+// declare let activeTraderClass;
 declare let Promise;
 
 

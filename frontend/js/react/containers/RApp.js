@@ -17,7 +17,8 @@ class RApp extends React.Component
         props.actions.setInstance(this);
 
         // set base for link urls
-        if( location.host == 'localhost' ) ABpp.baseUrl = "/AltBet";
+        // ABpp.baseUrl = location.host == 'localhost' ? "/AltBet" : "/";
+        // ABpp.baseUrl = globalData.rootUrl;
 
 
         // activate websocket

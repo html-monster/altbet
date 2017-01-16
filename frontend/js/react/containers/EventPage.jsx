@@ -59,6 +59,8 @@ class EventPage extends BaseController
         var bidData = [];
         var askData = [];
         var ticks = [];
+
+        // form ask and bid orders
         if( socket.activeOrders )
         {
             if( socket.activeOrders.Orders[0].Side == 1 )
@@ -69,13 +71,48 @@ class EventPage extends BaseController
             bidData = socket.activeOrders.Orders[buyIndex].SummaryPositionPrice;
             askData = socket.activeOrders.Orders[sellIndex].SummaryPositionPrice;
         } // endif
-
-
-        var maxPrice, minPrice;
-        if (socket.bars) ticks = socket.bars.Ticks.slice().reverse();
-// 0||console.debug( 'socket', socket, bidData, askData, ticks );
             // if (appData.pageEventData.IsMirror && side == 'sell') data.SummaryPositionPrice.reverse();
             // if (!appData.pageEventData.IsMirror && side == 'buy') data.SummaryPositionPrice.reverse();
+
+// 0||console.debug( 'socket', socket, bidData, askData, ticks );
+
+        // form tick html and High/Low prices
+        var maxPrice = 0, minPrice = 100, lastPrice;
+        if (socket.bars && socket.bars.Ticks.length)
+        {
+            ticks = socket.bars.Ticks.slice().reverse();
+            lastPrice = " " + ticks[0].Open;
+        }
+        var ticksHmtl = ticks.map((item, key) => {
+                var date = new Date(item.Time.replace('/Date(', '').replace(')/', '') * 1);
+                date = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() +
+                    ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':' +
+                    (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+
+                var side = item.Side ? 'sell' : 'buy';
+
+                var price = ((isMirror == 'True') ? (1 - item.Open).toFixed(2) : item.Open.toFixed(2));
+
+                if (price > maxPrice) maxPrice = price;
+                if (price < minPrice) minPrice = price;
+                // 0||console.debug( 'price, minPrice', price, minPrice );
+
+                return <tr key={key}><td><span>{date}</span></td><td className={`price ${side}`}><span>${price}</span></td><td className={`volume ${side}`}><span>{item.Volume}</span></td></tr>
+            });
+
+
+        let commProps = {
+            isMirror: data.IsMirror,
+            // symbolName: symbol,
+            // Orders: data.Orders,
+            HomeName : data.SymbolsAndOrders.Symbol.HomeName,
+            AwayName : data.SymbolsAndOrders.Symbol.AwayName,
+            Positions : data.SymbolsAndOrders.Positions,
+            Exchange : data.SymbolsAndOrders.Symbol.Exchange,
+            Name : data.SymbolsAndOrders.Symbol.Name,
+            Currency : data.SymbolsAndOrders.Symbol.Currency,
+        };
+
 
         return <div className="wrapper_event_page" data-id={symbol}>
             <h1>{data.SymbolsAndOrders.Symbol.HomeName} VS {data.SymbolsAndOrders.Symbol.AwayName}</h1>
@@ -89,17 +126,17 @@ class EventPage extends BaseController
                             <h2>{data.IsMirrorName}</h2>
                             <div className="current_price">
                                 <span className="title">Last Price:</span>
-                                <span className="value">{/*@string.Format("{0:0.0#}",Model.SymbolsAndOrders.Symbol.LastPrice)*/}</span>
+                                <span className="value">{lastPrice}</span>
                             </div>
                         </div>
                         <div className="price_scope">
                             <div className="high container">
                                 <span className="title">High</span>
-                                <span className="current"></span>
+                                <span className="current">{maxPrice > 0 && maxPrice}</span>
                             </div>
                             <div className="low container">
                                 <span className="title">Low</span>
-                                <span className="current"></span>
+                                <span className="current">{minPrice != 100 && minPrice}</span>
                             </div>
                         </div>
                     </div>
@@ -125,8 +162,18 @@ class EventPage extends BaseController
                         </table>
                     </div>
                     <div className="ord_crt_cont event-content" data-symbol={symbol}>
-                        <button className="btn buy price event">Buy</button>
-                        <button className="btn sell price event">Sell</button>
+                        <button className="btn buy price event" disabled={isTraiderOn ? "disabled" : ''}
+                            onClick={() => this.actions.onSellBuyClick({
+                                   type: 0,
+                                   //data: data, // orders
+                                   exdata: commProps, // for trader object
+                        })}>Buy</button>
+                        <button className="btn sell price event" disabled={isTraiderOn ? "disabled" : ''}
+                            onClick={() => this.actions.onSellBuyClick({
+                                   type: 1,
+                                   //data: data, // orders
+                                   exdata: commProps, // for trader object
+                        })}>Sell </button>
                     </div>
                 </div>
             </div>
@@ -146,26 +193,7 @@ class EventPage extends BaseController
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                        {
-                            ticks.map((item, key) => {
-                                var date = new Date(item.Time.replace('/Date(', '').replace(')/', '') * 1);
-                                date = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() +
-                                    ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':' +
-                                    (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
-
-                                var side = item.Side ? 'sell' : 'buy';
-
-                                var price = ((isMirror == 'True') ? (1 - item.Open).toFixed(2) : item.Open.toFixed(2));
-
-                                if (price > maxPrice) maxPrice = price;
-                                if (price < minPrice) minPrice = price;
-
-                                return <tr key={key}><td><span>{date}</span></td><td className={`price ${side}`}><span>${price}</span></td><td className={`volume ${side}`}><span>{item.Volume}</span></td></tr>
-                            }
-                            )
-                        }
-                        </tbody>
+                        <tbody>{ticksHmtl}</tbody>
                     </table>
                 </div>
             </div>

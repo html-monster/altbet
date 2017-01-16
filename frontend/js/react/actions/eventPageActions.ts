@@ -165,6 +165,51 @@ class Actions extends BaseActions
 
 
 
+    public onSellBuyClick(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            // 0||console.log( 'inProps', inProps );
+
+            if( !ABpp.config.tradeOn )
+            {
+                let props = inProps;
+
+                let outStruc = {
+                    "ID": `${props.exdata.Exchange}_${props.exdata.Name}_${props.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
+                    "EventTitle": props.exdata.isMirror ? props.exdata.AwayName : props.exdata.HomeName,
+                    "Positions": props.exdata.Positions,
+                    "isMirror": props.exdata.isMirror ? 1 : 0,
+                    "Orders": [
+                        {
+                            "Price": "0.",
+                            "Side": props.type == 0 ? 0 : 1, // sell/buy
+                            "Symbol": {
+                                "Exchange": props.exdata.Exchange,
+                                "Name": props.exdata.Name,
+                                "Currency": props.exdata.Currency
+                            },
+                            "Volume": "",
+                            "Limit": true,
+                            "NewOrder": true,
+                            "isMirror": props.exdata.isMirror ? 1 : 0
+                        },
+                    ]
+                };
+                __LDEV__&&console.debug( 'outStruc', props, outStruc );
+
+                getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+
+                // dispatch({
+                //     type: ON_SOCKET_MESSAGE,
+                //     payload: { activeOrders: inActiveOrders, bars: inBars }
+                // });
+            } // endif
+        }
+    }
+
+
+
     public activeTraiderActivate(data)
     {
         return (dispatch, getState) =>

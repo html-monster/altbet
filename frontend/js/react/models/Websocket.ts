@@ -7,6 +7,7 @@
 /// <reference path="./../../.d/common.d.ts" />
 
 import { SocketSubscribe } from "./SocketSubscribe";
+// import {globalData} from "../../ts/index";
 
 
 
@@ -16,10 +17,13 @@ export class WebsocketModel
     public static CALLBACK_EVENTPAGE_ORDERS = "CEPO2";      // a event page receive data callback
 
     private noSupportMessage = "Your browser cannot support WebSocket!";
-    private ws = null;
+    private connectionString = "ws://localhost:2001/";
+    // private connectionString = "ws://54.171.212.235:2001/";    // IP
 
+    private ws = null;
     private SocketSubscribe = null;
     private callbacks = {};
+    public socketData: any; // must be private, only for debug !!!!!!!!!!!!!
 
 
     public connectSocketServer()
@@ -37,7 +41,7 @@ export class WebsocketModel
 
         //appendMessage("* Connecting to server ..<br/>");
         // create a new websocket and connect
-        self.ws = new WebSocket('ws://localhost:2001/');
+        self.ws = new WebSocket(this.connectionString);
 
         //self.ws.
 
@@ -135,7 +139,7 @@ export class WebsocketModel
         let self = this;
 
         let data = JSON.parse(evt.data);
-        globalData.socketData = data; // for debug only
+        this.socketData = data; // for debug only
 // console.log(data);
 
         if (data.Result) defaultMethods.showWarning(data.Result);

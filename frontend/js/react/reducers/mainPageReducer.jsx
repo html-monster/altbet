@@ -2,12 +2,14 @@ import {
     ON_POS_PRICE_CLICK,
     ON_SOCKET_MESSAGE,
     ON_BASIC_MODE_CH,
+    TRAIDER_MODE_CH,
 } from '../constants/ActionTypesPageMain';
 
 
 const initialState = {
     marketsData: appData.pageHomeData,
     isBasicMode: globalData.basicMode,
+    isTraiderOn: globalData.autoTradeOn,
     activeExchange: {name: '', // exchange unique name
         isMirror: false},
 };
@@ -28,6 +30,9 @@ export default function mainPage(state = initialState, action)
 
         case ON_BASIC_MODE_CH:
             return {...state, isBasicMode: action.payload};
+
+        case TRAIDER_MODE_CH:
+            return {...state, isTraiderOn: action.payload};
 
         default:
             return state

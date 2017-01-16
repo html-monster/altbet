@@ -51,10 +51,11 @@ class MainPage extends BaseController
 
         // subscribe on tader on/off
         /** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, function() {self.props.actions.OnOffBasicMode(ABpp.config.basicMode)});
+        ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_TRADER_ON, function() {self.props.actions.OnOffTraider(ABpp.config.tradeOn)});
 
 
         // Waves.init();
-	    Waves.attach('.wave:not([disabled])', ['waves-button']);
+        // Waves.attach('.wave:not([disabled])', ['waves-button']);
     }
 
 
@@ -62,7 +63,7 @@ class MainPage extends BaseController
     {
         // let isBasicMode = ABpp.config.basicMode;
         let data = this.props.data;
-        let {activeExchange, isBasicMode} = this.props.data;
+        let {activeExchange, isBasicMode, isTraiderOn} = this.props.data;
 
 
         return (
@@ -85,7 +86,7 @@ class MainPage extends BaseController
                     <div className="tab_content">
                         <div className="tab_item ui-sort">
                             {data.marketsData.map((item, key) =>
-                                <ExchangeItem key={key} data={{...item, activeExchange, isBasicMode}} actions={this.props.actions} />
+                                <ExchangeItem key={key} data={{...item, activeExchange, isBasicMode, isTraiderOn}} actions={this.props.actions} />
                             )}
                         </div>
                     </div>
