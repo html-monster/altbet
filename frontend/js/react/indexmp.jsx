@@ -11,6 +11,7 @@ import MainPage from './containers/MainPage';
 import EventPage from './containers/EventPage';
 import Sidebar from './components/Sidebar.jsx';
 import Deposit from './components/userPage/deposit.jsx';
+import PageMyPos from './components/PageMyPos.jsx';
 
 
 
@@ -22,6 +23,7 @@ ABpp.CONSTS = constants;
 
 
 const store = configureStore();
+0||console.log( 'store', store );
 
 ReactDOM.render(
     <Provider store={store}>
@@ -70,6 +72,18 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_EVENT ) {
 		</Provider>,
 	  document.getElementById('DiMPEventPage')
 	  // document.getElementById('DiMPEventPageOld')
+	);
+}
+
+
+
+// рендерим PageMyPos
+if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MYPOSITIONS ) {
+	ReactDOM.render(
+            <Provider store={store}>
+			    <PageMyPos />
+            </Provider>,
+        document.getElementById('DiPageMyAssets')
 	);
 }
 

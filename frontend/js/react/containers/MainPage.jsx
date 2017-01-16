@@ -55,7 +55,7 @@ class MainPage extends BaseController
         ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_TRADER_ON, function() {self.props.actions.OnOffTraider(ABpp.config.tradeOn)});
 
 
-        // Waves.init();
+        // Waves.init()
         // Waves.attach('.wave:not([disabled])', ['waves-button']);
     }
 

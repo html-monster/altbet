@@ -2,20 +2,24 @@
  * Created by Vlasakh on 20.11.16.
  */
 
-// import React, {PropTypes, Component} from 'react'
 import React from 'react';
-import MyPosTabData from './pageMyPos/myPosTabData.jsx';
-import MyOpenOrdersTabData from './pageMyPos/myOpenOrdersTabData.jsx';
-import MyOrderHistoryTabData from './pageMyPos/myOrderHistoryTabData.jsx';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+import MyPosTabData from './pageMyPos/myPosTabData';
+import MyOpenOrdersTabData from './pageMyPos/myOpenOrdersTabData';
+import {MyOrderHistoryTabData} from './pageMyPos/myOrderHistoryTabData';
+import BaseController from '../containers/BaseController';
 
 
-export default class PageMyPos extends React.Component
+class PageMyPos extends BaseController //React.Component
 {
     constructor(props)
     {
-        super();
+        super(props);
 
         this.state = {data: props.data};
+        0||console.log( 'openOrdersData, positionData, historyData', openOrdersData, positionData, historyData );
     }
 
     componentDidMount()
@@ -185,12 +189,14 @@ export default class PageMyPos extends React.Component
     }
 }
 
-// if( __DEV__ )
-// {
-//     PageMyPos.propTypes = {
-//         data: React.PropTypes.shape({
-//             positionData: PropTypes.number.isRequired,
-//             historyData: PropTypes.array.isRequired,
-//         })
-//     };
-// } // endif
+
+export default connect(
+    state => ({
+        data: state.mainPage,
+        // test: state.Ttest,
+    }),
+    dispatch => ({
+        // actions: bindActionCreators(actions, dispatch),
+        // actions: bindActionCreators(mainPageActions, dispatch),
+    })
+)(PageMyPos)
