@@ -96,7 +96,7 @@ export class BetsTable extends React.Component
                                    exdata: commProps, // for trader object
                                 })}
                             >
-                                <AnimateOnUpdate
+                                {/*<AnimateOnUpdate
                                     transitionName={{
                                         enter: 'cm-test',
                                         leave: 'cm-test',
@@ -110,8 +110,8 @@ export class BetsTable extends React.Component
                                     transitionLeaveTimeout={500}
                                     data={val}
                                 >
+                                </AnimateOnUpdate>*/}
                                     <span data-verify="Quantity">{val.Quantity}</span>
-                                </AnimateOnUpdate>
                             </td>
                         </tr>;
                 })}

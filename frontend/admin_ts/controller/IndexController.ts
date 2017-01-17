@@ -37,24 +37,24 @@ export class IndexController extends BaseController
 
         if( $IndexView.checkFields() )
         {
-            var form = $that.closest('form');
-            var formData = new FormData(<HTMLFormElement>form[0]);
-            // formData.set('op', '1');
-            (new CategoryModel).addCategory({url: $that.attr('url'), name: $(".js-ed-name").val(), formData}).then( result =>
-            {
-                window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
-                location.href = MainConfig.BASE_URL + result.url;
-            },
-            reuslt => {
-                // 0||console.debug( 'reuslt', reuslt );
-                $IndexView.setErrors({code: reuslt.code, message: reuslt.message});
-                $IndexView.endSave();
-            });
+            // var form = $that.closest('form');
+            // var formData = new FormData(<HTMLFormElement>form[0]);
+            // // formData.set('op', '1');
+            // (new CategoryModel).addCategory({url: $that.attr('url'), name: $(".js-ed-name").val(), formData}).then( result =>
+            // {
+            //     window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
+            //     location.href = MainConfig.BASE_URL + result.url;
+            // },
+            // reuslt => {
+            //     // 0||console.debug( 'reuslt', reuslt );
+            //     $IndexView.setErrors({code: reuslt.code, message: reuslt.message});
+            //     $IndexView.endSave();
+            // });
             // (new CategoryModel).saveCategory($("#F1EditCat").serializeArray());
         }
         else
         {
-            $IndexView.endSave();
+            // $IndexView.endSave();
         } // endif
     }
 
