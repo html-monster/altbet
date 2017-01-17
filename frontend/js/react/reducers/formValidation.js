@@ -5,10 +5,13 @@ import {
 	VALIDATION_ON_INPUT_CHANGE,
 	VALIDATION_ON_INITIAL_VALUES,
 	VALIDATION_ON_INPUT_VALIDATION,
+	VALIDATION_ON_FORM_SUBMIT,
+	VALIDATION_ON_FORM_INITIAL
 	// VALIDATION_ON_CHECK_INPUT
 } from "../constants/ActionTypesFormValidation";
 
 const initialState = {
+
 	// values: {},
 	// validation: {},
 };
@@ -26,6 +29,21 @@ export default function formValidation(state = initialState, action)
 
 		case VALIDATION_ON_INPUT_VALIDATION:
 			return {...state, [action.payload[0]]: {validation: action.payload[1]}};
+
+		case VALIDATION_ON_FORM_SUBMIT:
+			return {...state, [action.payload[0]]: {validation: action.payload[1]}};
+
+		case VALIDATION_ON_FORM_INITIAL:
+			console.log({...state, [action.payload]:{
+				submit: false,
+				values: {},
+				validation: {}
+			}});
+			return {...state, [action.payload]:{
+				submit: false,
+				values: {},
+				validation: {}
+			}};
 
 		// case VALIDATION_ON_CHECK_INPUT:
 		// 	return {...state, invalid: action.payload};

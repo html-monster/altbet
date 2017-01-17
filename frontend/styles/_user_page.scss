@@ -208,6 +208,7 @@
         width: 51px;
         height: 34px;
         position: absolute;
+        left: 1px;
         bottom: 1px;
         line-height: 36px;
         text-align: center;
@@ -431,7 +432,7 @@
             bottom: -10px;
           }
         }
-        span.label{  height: 36px;  bottom: 13px;  }
+        span.label{  height: 37px;  bottom: 11px;  }
         .total{  padding-left: 55px;  }
         .total ~ label span{  padding-left: 50px;  }
         .valid{

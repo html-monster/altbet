@@ -11,9 +11,10 @@ export default class NewOrder extends React.Component{
 
 	render()
 	{
+		console.log(ABpp);
 		let data = this.props.data;
 		let formData = {
-			url: '/AltBet/eng/Order/Create',
+			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
 		};
 		return <div className="order_content new animated">

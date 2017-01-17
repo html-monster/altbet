@@ -107,7 +107,7 @@ export default class ActiveTrader extends React.Component {
 				}
 				if(this.Bid) className = 'bid';
 			}
-			if(!data.Symbol) {className = 'mid'; }
+			if(data && !data.Symbol) {className = 'mid'; }
 			this.ClassName = className;
 			if(this.Ask){
 				if(data.Symbol.LastAsk && data.Symbol.LastBid)
@@ -127,10 +127,12 @@ export default class ActiveTrader extends React.Component {
 		let isMirror = this.state.isMirror;
 		let className = '';
 
-		if(data.GainLoss < 0)
-			className = 'loss';
-		else if(data.GainLoss > 0)
-			className = 'profit';
+		if(data){
+			if(data.GainLoss < 0)
+				className = 'loss';
+			else if(data.GainLoss > 0)
+				className = 'profit';
+		}
 
 		let stringHtmlData = this.objectConstructor(data, isMirror);
 

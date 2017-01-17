@@ -3,7 +3,6 @@
  */
 export const mailValidation = (value) => {
 	let errors;
-	// console.log(value);
 
 	if (!value)
 		errors = 'Required';
@@ -12,4 +11,25 @@ export const mailValidation = (value) => {
 
 	return errors
 };
+
+export const emptyValidation = (value) => {
+	let errors;
+
+	if (!value)
+		errors = 'Required';
+
+	return errors
+};
+
+export const minLengthValidation = (value) => {
+	let errors;
+
+	if (value.length < 6)
+		errors = 'Min length 6';
+
+	return errors
+};
+
+
+
 

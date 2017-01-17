@@ -6,7 +6,7 @@ import React from 'react';
 
 import FormValidation from '../../FormValidation';
 import InputValidation from '../../formValidation/InputValidation';
-import {mailValidation} from '../../formValidation/validation';
+import {mailValidation, emptyValidation, minLengthValidation} from '../../formValidation/validation';
 
 export default class EcoPayzForm extends React.Component{
 	constructor()
@@ -28,19 +28,19 @@ export default class EcoPayzForm extends React.Component{
 					{ dirty && error && <span className="validation-summary-errors">{error}</span> }
 				</span>
 		};
-		const formContent = ({ data:{ data, plan, depositQuantity, pricePlan }, handleSubmit}) => {
-			// console.log(depositQuantity || pricePlan ? depositQuantity + pricePlan : '');
+		const formContent = ({ input, data:{ data, plan, depositQuantity, pricePlan }, handleSubmit }) => {
 			return <form autoComplete="off" onSubmit={handleSubmit}>
 				<div className="container">
 					{/* костыль для отмены браузерного автозаполнение полей */}
 					{/*<input type="text" style={{display: 'none'}}/>*/}
 					{/*<input type="password" style={{display: 'none'}}/>*/}
 					{/* =================================================== */}
-									 {/*initialValue={data.UserInfo.Email}*/}
 					<InputValidation renderContent={inputRender} id={'skrill_id'} name="clientId"
 									 className={'input__field input__field--yoshiko'}
+									 initialValue={data.UserInfo.Email}
 									 label={'From Address'} type={'text'} filled={data.UserInfo.Email}
-									 validate={mailValidation}/>
+									 validate={[minLengthValidation, mailValidation]} input={input}
+									 maxLength="50"/>
 
 
 					<InputValidation renderContent={inputRender} id={'skrill_total'}
@@ -48,19 +48,64 @@ export default class EcoPayzForm extends React.Component{
 									 label={'Deposit amount'} type={'tel'} filled={depositQuantity || pricePlan}
 									 inputLabel={true} name="sum"
 									 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
-									 disabled={true}/>
+									 disabled={true} input={input}/>
 
 					<input type="submit" defaultValue={'Submit'}/>
 				</div>
 				<input type="hidden" name="plan" value={plan}/>
 			</form>
 		};
+			// formId="EcoPayzForm"
 		return <FormValidation
-			formId="EcoPayzForm"
 			data={this.props.data}
 			renderContent={formContent}
 			handleSubmit={this.props.onSubmit}
 		/>;
 	}
 }
+
+// const inputRender = ({ id, className, label, filled, inputLabel, type, meta: { error, dirty }, ...input }) => {
+// 	// console.log(input);
+// 	return <span className={'1input_animate input--yoshiko ' + (filled ? 'input--filled' : '')}>
+// 					<input className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id} type={type} {...input}/>
+// 					<label className="input__label input__label--yoshiko" htmlFor={id}>
+// 						<span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
+// 					</label>
+// 		{ inputLabel && <span className="label">$</span> }
+// 		{ dirty && error && <span className="validation-summary-errors">{error}</span> }
+// 				</span>
+// };
+// const formContent = ({ data:{ data, plan, depositQuantity, pricePlan }, handleSubmit}) => {
+// 	// console.log(depositQuantity || pricePlan ? depositQuantity + pricePlan : '');
+// 	return <form autoComplete="off" onSubmit={handleSubmit}>
+// 		<div className="container">
+// 			{/* костыль для отмены браузерного автозаполнение полей */}
+// 			{/*<input type="text" style={{display: 'none'}}/>*/}
+// 			{/*<input type="password" style={{display: 'none'}}/>*/}
+// 			{/* =================================================== */}
+// 			{/*initialValue={data.UserInfo.Email}*/}
+// 			<InputValidation renderContent={inputRender} id={'skrill_id'} name="clientId"
+// 							 className={'input__field input__field--yoshiko'}
+// 							 label={'From Address'} type={'text'} filled={data.UserInfo.Email}
+// 							 validate={mailValidation}/>
+//
+//
+// 			<InputValidation renderContent={inputRender} id={'skrill_total'}
+// 							 className={'input__field input__field--yoshiko total number'}
+// 							 label={'Deposit amount'} type={'tel'} filled={depositQuantity || pricePlan}
+// 							 inputLabel={true} name="sum"
+// 							 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
+// 							 disabled={true}/>
+//
+// 			<input type="submit" defaultValue={'Submit'}/>
+// 		</div>
+// 		<input type="hidden" name="plan" value={plan}/>
+// 	</form>
+// };
+//
+// export default FormValidation({
+// 	formId: "EcoPayzForm",
+// 	renderContent: formContent,
+// 	// handleSubmit: this.props.onSubmit
+// });
 

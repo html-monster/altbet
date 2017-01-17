@@ -3,22 +3,19 @@
  */
 
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import { connect } from 'react-redux';
+//
+// import * as actions from '../../actions/formValidation';
 
-import * as actions from '../../actions/formValidation';
-
-class InputValidation extends React.Component{
+export default class InputValidation extends React.Component{
 	constructor(props)
 	{
 		super();
 
-		// const {renderContent, actions, ...rest} = props;
 		this.state = {
-			// renderContent: renderContent,
-			// actions: actions,
-			// data: rest
 			meta: {
+				inputId: 'input' + (new Date).getTime(),
 				error: '',
 				dirty: false, // true когда поле было измененно или получило фокус или при submit
 				touched: false, // true если поле потеряло фокус
@@ -30,44 +27,16 @@ class InputValidation extends React.Component{
 			value: props.initialValue || props.value || ''
 		};
 		this.validate(props, this.state.value);
-		if(props.name) props.actions.actionOnInitialValues(props.formId, {[props.name]: props.initialValue || props.value});
-		// console.log({[props.name]: props.initialValue || props.value});
-		// console.log(props.label, props.initialValue || props.value);
 	}
 
-	// componentDidMount(){
-	// 	this.validate(this.props.initialValue || this.props.value);
-	// }
-	// componentWillMount()
-	// {
-		// let state = this.state;
-		// let meta = {
-		// 	error: '',
-		// 	dirty: false, // true когда поле было измененно или получило фокус или при submit
-		// 	touched: false // true если поле потеряло фокус
-		// };
-		//
-		// Object.assign(state.data, {
-		// 	meta: meta,
-		// 	onFocus: ::this.onFocus,
-		// 	onBlur: ::this.onBlur,
-		// 	onChange: ::this.onChange,
-		// });
-		// if(!state.data.defaultValue){
-		// 	Object.assign(state.data, {
-		// 		onChange: ::this.onChange,
-		// 	});
-		// }
-	// }
-
 	shouldComponentUpdate(nextProps){
-		// console.log(this.props.label, this.state.value);
-		// console.log(nextProps.label, nextProps.value);
-		if(nextProps.value) this.state.value = nextProps.value;
-		if(nextProps.meta.submit) {
+		if(nextProps.value != undefined){
+			this.state.value = nextProps.value;
+			if(nextProps.name) nextProps.input.setValues({[nextProps.name]: nextProps.value || ''});
+		}
+		if(this.props.validate && nextProps.input.submited) {
 			this.validate(this.state.value);
-
-
+			this.state.meta.dirty = true;
 		}
 
 		return true;
@@ -99,42 +68,43 @@ class InputValidation extends React.Component{
 		state.value = event.target.value;
 		this.validate(this.props, state.value);
 		this.setState(state);
-		console.log(props);
-		if(props.name) props.actions.actionOnInputChange(props.formId, {[props.name]: state.value});
+		if(props.name) props.input.setValues({[props.name]: state.value});
 	}
 
-	validate(props, value, setState)
+	validate(props, value)
 	{
+		if(props.name) props.input.setValues({[props.name]: value});
 		if(props.validate) {
 			let state = this.state;
-			let error = props.validate(value);
-			// let invalid = state.meta.invalid;
 
-			state.meta.error = error;
-			// state.meta.dirty = true;
+			if(typeof props.validate == 'function')
+				check(props.validate);
+			else
+				props.validate.some((item)=>{
+					return !!check(item);
+				});
 
-			if(error) state.meta.invalid = true;
-			else state.meta.invalid = false;
+			function check(validate) {
+				let error = validate(value);
 
-			// if(state.meta.invalid) {
-			props.actions.actionOnInputValidation(props.formId, state.meta.invalid);
-			console.log(state.meta.invalid);
-			// }
-		// if(setState) this.setState(state)
+				state.meta.error = error;
+
+				if(error) state.meta.invalid = true;
+				else state.meta.invalid = false;
+
+				props.input.setErrors({[state.meta.inputId]: error});
+
+				return error;
+			}
 		}
 	}
 
-	// formSubmit()
-	// {
-	// 	console.log('submit');
-	// }
-
 	render()
 	{
-		const {renderContent, initialValue, validate, actions: {...actions}, meta: {...metaProps}, ...rest} = this.props;
+		const {renderContent, input, initialValue, validate, actions: {...actions}, meta: {...metaProps}, ...rest} = this.props;
 		const {meta: {...metaState}, ...state} = this.state;
 		// const {value, ...state} = this.state;
-		// console.log(metaState);
+		// console.log(rest);
 		// console.log({meta: {...metaProps, ...metaState}, ...rest, ...state});
 		// console.log({...actions, ...rest});
 		// console.log(this.props);
@@ -146,17 +116,17 @@ class InputValidation extends React.Component{
 	}
 }
 
+	// validate: React.PropTypes.func,
 InputValidation.propTypes = {
 	renderContent: React.PropTypes.any.isRequired,
-	validate: React.PropTypes.func,
 };
 
-export default connect(
-	state => ({
-		meta: state.inputValidation
-	}),
-	dispatch => ({
-		actions: bindActionCreators(actions, dispatch),
-	})
-)(InputValidation)
+// export default connect(
+// 	state => ({
+// 		// meta: state.inputValidation
+// 	}),
+// 	dispatch => ({
+// 		actions: bindActionCreators(actions, dispatch),
+// 	})
+// )(InputValidation)
 

@@ -103,7 +103,7 @@ export function actionOnFormSubmit2(values)
 		});
 		dispatch({
 			type: DEPOSIT_FORM_SUBMIT,
-			payload: 'invalidJs'
+			payload: values.sum ? null : 'invalidJs'
 		});
 	}
 }
