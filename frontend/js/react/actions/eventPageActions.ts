@@ -87,7 +87,7 @@ class Actions extends BaseActions
                                 "Currency": props.exdata.Currency
                             },
                             "Volume": qt,
-                            "Limit": false,// props.type == 1 ? true : false,
+                            "Limit": ABpp.config.basicMode ? true : false,
                             "NewOrder": true,
                             "isMirror": props.exdata.isMirror ? 1 : 0
                         },
@@ -95,6 +95,8 @@ class Actions extends BaseActions
                 };
                 __LDEV__&&console.debug( 'outStruc', props, outStruc );
 
+
+                // call trade slip action
                 getState().App.controllers.TradeSlip.createNewOrder(outStruc);
 
                 // dispatch({
@@ -128,6 +130,7 @@ class Actions extends BaseActions
                 } // endfor
 
         // 0||console.debug( 'bpr', bpr, qt);
+                bpr = props.Price;
 
                 // return;
                 let outStruc = {
@@ -144,7 +147,7 @@ class Actions extends BaseActions
                                 "Name": props.exdata.Name,
                                 "Currency": props.exdata.Currency
                             },
-                            "Volume": qt,
+                            "Volume": '',
                             "Limit": true,
                             "NewOrder": true,
                             "isMirror": props.exdata.isMirror ? 1 : 0

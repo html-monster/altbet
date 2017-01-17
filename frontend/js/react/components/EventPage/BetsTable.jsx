@@ -71,7 +71,7 @@ export class BetsTable extends React.Component
                             >
                                     {/*component="div"
                                     className="button" */}
-                                <AnimateOnUpdate
+                                {/*<AnimateOnUpdate
                                     transitionName={{
                                         enter: 'fadeOut',
                                         leave: 'fadeOut',
@@ -83,8 +83,8 @@ export class BetsTable extends React.Component
                                     transitionLeaveTimeout={500}
                                     data={val.Price}
                                 >
-                                    <span>${Common.toFixed(val.Price, 2)}</span>
-                                </AnimateOnUpdate>
+                                </AnimateOnUpdate>*/}
+                                <span>${Common.toFixed(val.Price, 2)}</span>
                             </td>
                             <td className={`volume ${$class} animated`} onClick={() => self.props.actions.onQuantityClick({
                                    Price: val.Price,

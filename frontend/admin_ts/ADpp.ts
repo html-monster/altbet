@@ -52,12 +52,12 @@ export default class ADpp
      */
     public ready()
     {
-        (new GroupsTree()).init();
-        (new RadioBtns({
-            // callbacks: [],
-            activeClass: "btn-success",
-        })).apply();
+        Handlebars.registerHelper('iif', function(test, yes, no) {
+            return test ? yes : no;
+        });
 
+
+        (new GroupsTree()).init();
 
         // call current action
         if (this.currentController) {

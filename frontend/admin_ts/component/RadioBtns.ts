@@ -5,17 +5,17 @@
 
 export class RadioBtns
 {
-    public options = {};
+    public options : any = {
+            activeClass: "btn-info",
+            defaultClass: "btn-default",
+            defaultIndex: 0, // default btn active
+            target: null,
+            callbacks: [],
+        };
 
 
     constructor(props?)
     {
-        this.options = {
-            callbacks: [],
-            activeClass: "btn-info",
-            defaultIndex: 0, // default btn active
-        };
-
         if( props )
         {
             Object.assign(this.options, props, this.options);
@@ -27,14 +27,18 @@ export class RadioBtns
     {
         var self = this;
 
-        $("[data-js=radio-btn]:not(.js-rb-applied)").each(function()
+        var $target = this.options.target || "[data-js=radio-btn]";
+
+        $(`${$target}:not(.js-rb-applied)`).each(function()
         {
             let $wrapper = $(this);
 
             let $buttons = $wrapper.find('button');
             $buttons.each(function(key)
             {
-                $(this).attr("data-id", key);
+                let $that = $(this);
+                $that.attr("data-id", key);
+                if (self.options.defaultIndex == key) $that.removeClass(self.options.defaultClass).addClass("active " + self.options.activeClass);
             });
 
 
@@ -53,14 +57,22 @@ export class RadioBtns
 
     private onClick(e, that, meta)
     {
-        let activeClass = this.activeClass;
+        let activeClass = this.options.activeClass;
 
-        meta.valueStor.val($(that).data("rval"));
+        let $that = $(that);
+        meta.valueStor.val($that.data("rval"));
 
         for( let ii = 0, countii = meta.buttons.length; ii < countii; ii++ )
         {
-            $(meta.buttons[ii]).removeClass("active").removeClass(activeClass).addClass("btn-default");
+            $(meta.buttons[ii]).removeClass("active").removeClass(activeClass).addClass(this.options.defaultClass);
         } // endfor
-        $(that).addClass(`active ${activeClass}`).removeClass("btn-default");
+        $that.removeClass(this.options.defaultClass).addClass(`active ${activeClass}`);
+
+
+        let callbacks = this.options.callbacks;
+        if( callbacks )
+        {
+            typeof callbacks[$that.data('id')] == "function" && callbacks[$that.data('id')]();
+        } // endif
     }
 }

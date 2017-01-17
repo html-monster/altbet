@@ -8,6 +8,7 @@ import BaseView from "./BaseView";
 import {InfoMessage} from "../component/InfoMessage";
 import BodyView from "./BodyView";
 import Dialog from "../component/Dialog";
+import {RadioBtns} from "../component/RadioBtns";
 
 
 export class IndexView extends BaseView
@@ -53,6 +54,14 @@ export class IndexView extends BaseView
     {
         var self = this;
 
+        // data-js="EdFullname"
+        (new RadioBtns({
+            activeClass: "btn-success",
+            target: "[data-js=radio-btn]",
+            callbacks: [() => $("[data-js=EdFullname]").slideUp(200), () => $("[data-js=EdFullname]").slideDown(400)],
+        })).apply();
+
+
         $('.js-dt-start-date, .js-dt-end-date').daterangepicker({
             "singleDatePicker": true,
             "showDropdowns": true,
@@ -66,8 +75,11 @@ export class IndexView extends BaseView
             }
         });
 
-        // $(".js-cb-ddlstatus").select2();
-        // });
+
+        $("[data-js=ChkStartDate]").click(function () { $(this).find("input").click(); });
+        $("[data-js=ChkStartDate] input").click(function(e) { $(".js-dt-start-date").prop('disabled', !$(this).prop('checked')); e.stopPropagation(); });
+        $("[data-js=ChkEndDate]").click(function () { $(this).find("input").click(); });
+        $("[data-js=ChkEndDate] input").click(function(e) { $(".js-dt-end-date").prop('disabled', !$(this).prop('checked')); e.stopPropagation(); });
     }
 
 
@@ -103,6 +115,59 @@ export class IndexView extends BaseView
 
 
 
+    public beginAddExch()
+    {
+        var self = this;
+
+        // this.closeAlert();
+        (new BodyView).showLoading($('.js-btn-cancel'), {pic: 2, outerAlign: BodyView.ALIGN_OUTER_RIGHT, offsetX: 4});
+    }
+
+
+
+    public checkFields()
+    {
+        let error = false;
+        let message = '';
+        let element;
+        let form = $(".F1addExch");
+
+
+        try {
+            element = $(".js-ed-fullname", form);
+            var val = element.val();
+            if( val == '' )
+            {
+                throw Error("Field “Name” is empty");
+            } // endif
+
+
+            element = $(".js-ed-url", form);
+            val = element.val();
+            if( val == '' )
+            {
+                throw Error("Field “Url” is empty");
+            } // endif
+        } catch (e) {
+            error = true;
+            message = e.message;
+        }
+
+
+
+        if( error )
+        {
+            this.setErrorOnField({element, message});
+            return false;
+        }
+        else
+        {
+            return true;
+        } // endif
+    }
+
+
+
     public renderEditForm(data, callbackOk)
     {
         new Dialog({
@@ -118,7 +183,14 @@ export class IndexView extends BaseView
             },
             afterInit: (dialogContext, wrapper) =>
             {
-                $('[data-js=StartDate], [data-js=StartDate]', wrapper).daterangepicker({
+                (new RadioBtns({
+                    activeClass: "btn-success",
+                    target: "[data-js=radio-btn]",
+                    callbacks: [() => $("[data-js=EdFullname]", wrapper).slideUp(200), () => $("[data-js=EdFullname]", wrapper).slideDown(400)],
+                })).apply();
+
+
+                $('[data-js=StartDate], [data-js=EndDate]', wrapper).daterangepicker({
                     "singleDatePicker": true,
                     "showDropdowns": true,
                     "showWeekNumbers": true,
@@ -130,6 +202,13 @@ export class IndexView extends BaseView
                         format: 'MM/DD/YYYY H:mm'
                     }
                 });
+
+
+
+                $("[data-js=ChkStartDate]", wrapper).click(function () { $(this).find("input").click(); });
+                $("[data-js=ChkStartDate] input", wrapper).click(function(e) { $(".js-dt-start-date", wrapper).prop('disabled', !$(this).prop('checked')); e.stopPropagation(); });
+                $("[data-js=ChkEndDate]", wrapper).click(function () { $(this).find("input").click(); });
+                $("[data-js=ChkEndDate] input", wrapper).click(function(e) { $(".js-dt-end-date", wrapper).prop('disabled', !$(this).prop('checked')); e.stopPropagation(); });
             },
             callbackCancel: function() { /*indexView.endDelete()*/ },
             callbackOK: callbackOk
