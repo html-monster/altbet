@@ -107,7 +107,7 @@ export default class ActiveTrader extends React.Component {
 				}
 				if(this.Bid) className = 'bid';
 			}
-			if(data && !data.Symbol) {className = 'mid'; }
+			if(!data.Symbol) {className = 'mid'; }
 			this.ClassName = className;
 			if(this.Ask){
 				if(data.Symbol.LastAsk && data.Symbol.LastBid)
@@ -127,12 +127,13 @@ export default class ActiveTrader extends React.Component {
 		let isMirror = this.state.isMirror;
 		let className = '';
 
-		if(data){
-			if(data.GainLoss < 0)
-				className = 'loss';
-			else if(data.GainLoss > 0)
-				className = 'profit';
-		}
+        let gainLoss = data && data.GainLoss ? data.GainLoss : '';
+        if (data) {
+            if (gainLoss < 0)
+                className = 'loss';
+            else if (gainLoss > 0)
+                className = 'profit';
+        }
 
 		let stringHtmlData = this.objectConstructor(data, isMirror);
 
@@ -147,8 +148,8 @@ export default class ActiveTrader extends React.Component {
 					<td className="open_pnl trader_info">
 						<a href="#">
 							P/L
-							<span className={'quantity ' + className}>{data.GainLoss < 0 ? `($${(data.GainLoss).toString().slice(1)})` :
-							'$' + (data.GainLoss || '')}</span>
+							<span className={'quantity ' + className}>{gainLoss && gainLoss < 0 ? `($${(gainLoss).toString().slice(1)})` :
+							'$' + (gainLoss || '')}</span>
 							<span className="help"><span className="help_message right"><strong>Profit in this event</strong></span></span>
 						</a>
 					</td>

@@ -82,7 +82,7 @@ class Sidebar extends React.Component
 
 				<div className="order_content default" style={{position: 'absolute', left: 0, zIndex: 10, opacity: 0, marginTop: 5}}>
 					<div className="sell-container">
-						<form action="/AltBet/Home/Index?Length=4" autoComplete="off" data-ajax="true" data-ajax-begin="ajaxControllerClass.OnBeginJs" data-ajax-failure="ajaxControllerClass.OnFailureJs" data-ajax-success="ajaxControllerClass.OnSuccessJs" data-ajax-url={Abpp.baseUrl + '/Order/Create'} method="post" noValidate="novalidate">
+						<form action="/AltBet/Home/Index?Length=4" autoComplete="off" data-ajax="true" data-ajax-begin="ajaxControllerClass.OnBeginJs" data-ajax-failure="ajaxControllerClass.OnFailureJs" data-ajax-success="ajaxControllerClass.OnSuccessJs" data-ajax-url={ABpp.baseUrl + '/Order/Create'} method="post" noValidate="novalidate">
 							<div className="container">
 								<div className="price ">
 									<label>Price</label>
@@ -126,7 +126,7 @@ class Sidebar extends React.Component
 				</div>
 				<div className="order_content spread" style={{position: 'absolute', left: 0, zIndex: 10, opacity: 0, marginTop: 5}}>
 					<div className="sell-buy-container">
-						<form action="/AltBet/Home/Index" data-ajax="true" data-ajax-begin="ajaxControllerClass.OnBeginJs" data-ajax-failure="ajaxControllerClass.OnFailureJs" data-ajax-success="ajaxControllerClass.OnSuccessJs" data-ajax-url={Abpp.baseUrl + '/Order/Spreader'} method="post" noValidate="novalidate">
+						<form action="/AltBet/Home/Index" data-ajax="true" data-ajax-begin="ajaxControllerClass.OnBeginJs" data-ajax-failure="ajaxControllerClass.OnFailureJs" data-ajax-success="ajaxControllerClass.OnSuccessJs" data-ajax-url={ABpp.baseUrl + '/Order/Spreader'} method="post" noValidate="novalidate">
 							<div className="container">
 								<div className="price sell">
 									<label>Selling price</label>

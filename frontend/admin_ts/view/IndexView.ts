@@ -9,11 +9,22 @@ import {InfoMessage} from "../component/InfoMessage";
 import BodyView from "./BodyView";
 import Dialog from "../component/Dialog";
 import {RadioBtns} from "../component/RadioBtns";
+import {Loading} from "../component/Loading";
 
 
 export class IndexView extends BaseView
 {
     private InfoMessage = null;
+    private Loading: Loading = null;
+    private T1errmess = null;
+
+
+    constructor()
+    {
+        super();
+
+        this.Loading = new Loading();
+    }
 
 
     /**
@@ -120,50 +131,13 @@ export class IndexView extends BaseView
         var self = this;
 
         // this.closeAlert();
-        (new BodyView).showLoading($('.js-btn-cancel'), {pic: 2, outerAlign: BodyView.ALIGN_OUTER_RIGHT, offsetX: 4});
+        this.Loading.showLoading({targetElm: '[data-js=loading]', element: "[data-js=btn-create]", pic: 2, outerAlign: Loading.ALIGN_OUTER_RIGHT, offsetX: 4, position: Loading.POS_INLINE});
     }
 
 
-
-    public checkFields()
+    public endAddExch()
     {
-/*        let error = false;
-        let message = '';
-        let element;
-        let form = $(".F1addExch");
-
-
-        try {
-            element = $(".js-ed-fullname", form);
-            var val = element.val();
-            if( val == '' )
-            {
-                throw Error("Field “Name” is empty");
-            } // endif
-
-
-            element = $(".js-ed-url", form);
-            val = element.val();
-            if( val == '' )
-            {
-                throw Error("Field “Url” is empty");
-            } // endif
-        } catch (e) {
-            error = true;
-            message = e.message;
-        }
-
-
-
-        if( error )
-        {
-            this.setErrorOnField({element, message});
-            return false;
-        }
-        else
-        {
-            return true;
-        } // endif*/
+        this.Loading.hideLoading();
     }
 
 
@@ -217,8 +191,73 @@ export class IndexView extends BaseView
 
 
 
+    public setErrors(inProps)
+    {
+        var self = this;
+        var message;
+
+        if( inProps.code < -100 && inProps.code > -200)
+        {
+            // controlled messages need switch and focus
+            message = inProps.message;
+        }
+        else
+        {
+            message = inProps.message;
+        } // endif
+
+        // let alert = $(".js-alert", inProps.form);
+        let alert = $('.F1addExch .js-info-mess');
+        alert.hide();
+
+        // alert.find('.js-text').text(message);
+
+        self.InfoMessage = new InfoMessage({
+            TPLName: '#TPLinfoMessage',
+            target: '.F1addExch .js-info-mess',
+            render: true,
+            vars: {
+                header: "Alert",
+                text: message,
+                type: InfoMessage.TYPE_ALERT,
+            }
+        });
+
+        alert.fadeIn(400, () => $('body').animate({scrollTop: 0 }, 500));
+
+
+
+        clearTimeout(this.T1errmess);
+        this.T1errmess = setTimeout(() => { alert.fadeOut(200); }, 10000);
+    }
+
+
+
     private closeInfoMess()
     {
         InfoMessage.prevInfoMessage && InfoMessage.prevInfoMessage.close();
+    }
+
+
+
+    private setErrorOnField(inProps)
+    {
+        let form = inProps.element.closest('form');
+        form.find('.js-form-group').removeClass('has-error');
+        // form.find('.js-error-icon').hide();
+        // form.find('.js-message').hide();
+
+        let fieldWrapp = inProps.element.closest('.js-form-group');
+        fieldWrapp.addClass('has-error');
+        fieldWrapp.find('.js-message').text(inProps.message);
+        inProps.element.focus();
+
+        inProps.element.on('blur', function()
+        {
+            $(this).off('blur');
+            // clearTimeout(self.T1wait);
+            $(this).closest('.js-form-group').removeClass('has-error');
+        });
+        // fieldWrapp.find('.js-error-icon').show();
     }
 }
