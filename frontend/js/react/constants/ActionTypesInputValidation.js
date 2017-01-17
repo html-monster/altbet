@@ -1,0 +1,6 @@
+/**
+ * Created by Htmlbook on 14.01.2017.
+ */
+// export const VALIDATION_ON_FOCUS = 'VALIDATION_ON_FOCUS';
+// export const VALIDATION_ON_BLUR = 'VALIDATION_ON_BLUR';
+export const INPUT_VALIDATION_ON_FORM_SUBMIT = 'INPUT_VALIDATION_ON_FORM_SUBMIT';

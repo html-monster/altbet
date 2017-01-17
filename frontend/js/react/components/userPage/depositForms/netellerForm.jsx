@@ -8,8 +8,8 @@ import validate from './validation'
 // import asyncValidate from './asyncValidate'
 
 const renderField = ({ input, id, className, filled, type, label, val, inputLabel, meta, ...rest }) => {
+	// console.log(input);
 	if(!meta.dirty && val) input.value = val;
-	console.log(meta);
 	return <span className={'input_animate input--yoshiko animated' + (filled ? ' input--filled' : '') + (meta.touched && meta.error ? ' shake' : '')}>
 		<input id={id} className={`${className} ${(!inputLabel && meta.touched && (meta.error ? ' invalidJs' : ' validJs'))}`} type={type}
 			    {...input} {...rest}/>
@@ -26,8 +26,10 @@ const NetellerForm = (props) => {
 	return (
 		<form onSubmit={handleSubmit} autoComplete="off">
 			<div className="container">
-			<input type="text" style={{display: 'none'}}/>
-			<input type="password" style={{display: 'none'}}/>
+				{/* костыль для отмены браузерного автозаполнение полей */}
+				<input type="text" style={{display: 'none'}}/>
+				<input type="password" style={{display: 'none'}}/>
+				{/* =================================================== */}
 				<Field name="clientId" component={renderField} id="neteller_id" type="text" filled={data.UserInfo.Email}
 					   label="Neteller ID or e-mail" val={data.UserInfo.Email} className="input__field input__field--yoshiko"  />
 				<Field name="secureId" component={renderField} id="ntl_sec_id" type="password"

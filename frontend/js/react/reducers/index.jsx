@@ -2,11 +2,13 @@ import { combineReducers } from 'redux';
 
 import appState from './appReducer';
 import mainPage from './mainPageReducer';
-import eventPage from './eventPageReducer.js';
-import sidebar from './sidebar.js';
-import tradeSlip from './sidebar/defaultOrders.js';
-import yourOrders from './sidebar/yourOrders.js';
-import deposit from './account/deposit.js';
+import eventPage from './eventPageReducer';
+import sidebar from './sidebar';
+import tradeSlip from './sidebar/defaultOrders';
+import yourOrders from './sidebar/yourOrders';
+import deposit from './account/deposit';
+import inputValidation from './formValidation/inputValidation';
+import formValidation from './formValidation';
 import { reducer as reduxFormReducer } from 'redux-form';
 
 export default combineReducers({
@@ -17,5 +19,7 @@ export default combineReducers({
 	tradeSlip,
 	yourOrders,
 	deposit,
-	form: reduxFormReducer
+	form: reduxFormReducer,
+	inputValidation,
+	formValidation
 });

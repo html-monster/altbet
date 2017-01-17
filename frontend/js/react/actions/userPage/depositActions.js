@@ -76,6 +76,7 @@ export function actionOnFormSubmit(values)
 {
 	return (dispatch) =>
 	{
+		// console.log(values, e);
 		new Promise(resolve => {
 			setTimeout(() => {  // simulate server latency
 				window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
@@ -85,6 +86,24 @@ export function actionOnFormSubmit(values)
 		dispatch({
 			type: DEPOSIT_FORM_SUBMIT,
 			payload: values.sum ? null : 'invalidJs'
+		});
+	}
+}
+
+export function actionOnFormSubmit2(values)
+{
+	return (dispatch) =>
+	{
+		console.log(values);
+		new Promise(resolve => {
+			setTimeout(() => {  // simulate server latency
+				window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+				resolve()
+			}, 500)
+		});
+		dispatch({
+			type: DEPOSIT_FORM_SUBMIT,
+			payload: 'invalidJs'
 		});
 	}
 }

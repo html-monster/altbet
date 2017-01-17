@@ -92,7 +92,7 @@ class Actions extends BaseActions
                         },
                     ]
                 };
-                __LDEV__&&console.debug( 'outStruc', props, outStruc );
+                // __LDEV__&&console.debug( 'outStruc', props, outStruc );
 
                 getState().App.controllers.TradeSlip.createNewOrder(outStruc);
 
