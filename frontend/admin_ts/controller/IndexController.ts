@@ -6,10 +6,25 @@ import BaseController from "./BaseController";
 import {IndexView} from "../view/IndexView";
 import Dialog from "../component/Dialog";
 import ExchangeModel from "../model/ExchangeModel";
+import {FormCheckers} from "../component/FormCheckers";
+import {MainConfig} from "../inc/MainConfig";
+import {InfoMessage} from "../component/InfoMessage";
 
 
 export class IndexController extends BaseController
 {
+    private FormChecker : FormCheckers;
+    private IndexView : IndexView;
+
+    constructor()
+    {
+        super();
+
+        this.FormChecker = new FormCheckers();
+        this.IndexView = (new IndexView());
+    }
+
+
     public actionView()
     {
         var self = this;
@@ -19,7 +34,7 @@ export class IndexController extends BaseController
         indexView.initAddForm();
 
 
-        $('.F1addExch').on('submit', function (e) { self.onEditControlClick(e, this); });
+        $('.F1addExch').on('submit', function (e) { self.onAddExchSubmit(e, this); });
         $('.exchanges').on('click', '.js-btn-crud[data-type=edit]', function (e) { self.onEditControlClick(e, this); });
     }
 
@@ -32,29 +47,36 @@ export class IndexController extends BaseController
 
         e.preventDefault();
 
-        let $IndexView = (new IndexView());
-        $IndexView.beginAddExch();
+        let $IndexView = this.IndexView;
 
-        if( $IndexView.checkFields() )
+        var ret = this.FormChecker.FormSubmit({ event: e,
+            form: $that.closest('form'),
+            justReturn: 1,
+            beforeSubmit: () => $IndexView.beginAddExch(),
+        });
+
+// 0||console.log( 'ret', ret );
+        if( ret )
         {
-            // var form = $that.closest('form');
-            // var formData = new FormData(<HTMLFormElement>form[0]);
-            // // formData.set('op', '1');
-            // (new CategoryModel).addCategory({url: $that.attr('url'), name: $(".js-ed-name").val(), formData}).then( result =>
-            // {
-            //     window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
-            //     location.href = MainConfig.BASE_URL + result.url;
-            // },
-            // reuslt => {
-            //     // 0||console.debug( 'reuslt', reuslt );
-            //     $IndexView.setErrors({code: reuslt.code, message: reuslt.message});
-            //     $IndexView.endSave();
-            // });
+            var form = $that.closest('form');
+            var formData = new FormData(<HTMLFormElement>form[0]);
+            // formData.set('op', '1');
+            (new ExchangeModel).addExch({url: $that.attr('url'), name: $(".js-ed-name").val(), formData}).then( result =>
+            {
+                0||console.log( 'result', result );
+                window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
+                location.href = MainConfig.BASE_URL + result.url;
+            },
+            reuslt => {
+                // 0||console.debug( 'reuslt', reuslt );
+                $IndexView.setErrors({form: form, ...reuslt});
+                $IndexView.endAddExch();
+            });
             // (new CategoryModel).saveCategory($("#F1EditCat").serializeArray());
         }
         else
         {
-            // $IndexView.endSave();
+            $IndexView.endAddExch();
         } // endif
     }
 

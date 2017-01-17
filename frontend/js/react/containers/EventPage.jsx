@@ -61,7 +61,7 @@ class EventPage extends BaseController
         var ticks = [];
 
         // form ask and bid orders
-0||console.debug( 'socket', socket );
+// 0||console.debug( 'socket', socket );
         if( socket.activeOrders && socket.activeOrders.Orders )
         {
             if( socket.activeOrders.Orders[0].Side == 1 )

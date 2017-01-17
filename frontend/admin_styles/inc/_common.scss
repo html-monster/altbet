@@ -10,9 +10,11 @@
 
 .form-group {
   .error-icon, .help-block { @include nblock }
+  .help-block { font-size: 13px; }
   &.has-error {
     .error-icon, .help-block { @include iblock }
   }
 }
+.loading-inline { @include iblock; }
 
 .alert-message { @include nblock }

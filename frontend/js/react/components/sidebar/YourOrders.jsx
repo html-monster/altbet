@@ -166,7 +166,7 @@ class OrderItem extends React.Component
 		let allData = this.props.allData;
 		let date = new Date(+data.Time.slice(6).slice(0, -2));
 		let formData = {
-			url: '/AltBet/eng/Order/Edit',
+			url: ABpp.baseUrl + '/Order/Edit',
 			action: 'edit'
 		};
 		let className = (data.isMirror) ?
