@@ -29,7 +29,8 @@ class InputValidation extends React.Component{
 			onChange: ::this.onChange,
 			value: props.initialValue || props.value || ''
 		};
-		// if(props.name) props.actions.actionOnInitialValues({[props.name]: props.initialValue || props.value});
+		this.validate(props, this.state.value);
+		if(props.name) props.actions.actionOnInitialValues(props.formId, {[props.name]: props.initialValue || props.value});
 		// console.log({[props.name]: props.initialValue || props.value});
 		// console.log(props.label, props.initialValue || props.value);
 	}
@@ -66,11 +67,7 @@ class InputValidation extends React.Component{
 		if(nextProps.meta.submit) {
 			this.validate(this.state.value);
 
-			let invalid = this.state.meta.invalid;
-			if(invalid) {
-				this.props.actions.actionOnFormSubmit(invalid);
-				console.log(invalid);
-			}
+
 		}
 
 		return true;
@@ -100,24 +97,29 @@ class InputValidation extends React.Component{
 
 		state.meta.dirty = true;
 		state.value = event.target.value;
-		this.validate(state.value);
+		this.validate(this.props, state.value);
 		this.setState(state);
-		if(props.name) props.actions.actionOnInputChange({[props.name]: state.value});
+		console.log(props);
+		if(props.name) props.actions.actionOnInputChange(props.formId, {[props.name]: state.value});
 	}
 
-	validate(value, setState)
+	validate(props, value, setState)
 	{
-		if(this.props.validate) {
+		if(props.validate) {
 			let state = this.state;
-			let error = this.props.validate(value);
+			let error = props.validate(value);
+			// let invalid = state.meta.invalid;
 
 			state.meta.error = error;
-			state.meta.dirty = true;
+			// state.meta.dirty = true;
 
 			if(error) state.meta.invalid = true;
 			else state.meta.invalid = false;
 
-
+			// if(state.meta.invalid) {
+			props.actions.actionOnInputValidation(props.formId, state.meta.invalid);
+			console.log(state.meta.invalid);
+			// }
 		// if(setState) this.setState(state)
 		}
 	}
@@ -143,6 +145,11 @@ class InputValidation extends React.Component{
 		);
 	}
 }
+
+InputValidation.propTypes = {
+	renderContent: React.PropTypes.any.isRequired,
+	validate: React.PropTypes.func,
+};
 
 export default connect(
 	state => ({

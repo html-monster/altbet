@@ -25,7 +25,7 @@ export default class EcoPayzForm extends React.Component{
 						<span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
 					</label>
 					{ inputLabel && <span className="label">$</span> }
-					{ error && <span className="validation-summary-errors">{error}</span> }
+					{ dirty && error && <span className="validation-summary-errors">{error}</span> }
 				</span>
 		};
 		const formContent = ({ data:{ data, plan, depositQuantity, pricePlan }, handleSubmit}) => {
@@ -37,7 +37,7 @@ export default class EcoPayzForm extends React.Component{
 					{/*<input type="password" style={{display: 'none'}}/>*/}
 					{/* =================================================== */}
 									 {/*initialValue={data.UserInfo.Email}*/}
-					<InputValidation renderContent={inputRender} id={'skrill_id'}
+					<InputValidation renderContent={inputRender} id={'skrill_id'} name="clientId"
 									 className={'input__field input__field--yoshiko'}
 									 label={'From Address'} type={'text'} filled={data.UserInfo.Email}
 									 validate={mailValidation}/>
@@ -56,6 +56,7 @@ export default class EcoPayzForm extends React.Component{
 			</form>
 		};
 		return <FormValidation
+			formId="EcoPayzForm"
 			data={this.props.data}
 			renderContent={formContent}
 			handleSubmit={this.props.onSubmit}

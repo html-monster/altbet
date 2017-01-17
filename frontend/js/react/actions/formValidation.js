@@ -4,39 +4,39 @@
 import {
 	VALIDATION_ON_INPUT_CHANGE,
 	VALIDATION_ON_INITIAL_VALUES,
-	VALIDATION_ON_FORM_SUBMIT,
-	VALIDATION_ON_CHECK_INPUT
+	VALIDATION_ON_INPUT_VALIDATION,
+	// VALIDATION_ON_CHECK_INPUT
 } from "../constants/ActionTypesFormValidation";
 
-export function actionOnInputChange(value)
+export function actionOnInputChange(formId, value)
 {
 	return (dispatch) =>
 	{
 		dispatch({
 			type: VALIDATION_ON_INPUT_CHANGE,
-			payload: value
+			payload: [formId, value]
 		});
 	};
 }
 
-// export function actionOnInitialValues(value)
-// {
-// 	return (dispatch) =>
-// 	{
-// 		dispatch({
-// 			type: VALIDATION_ON_INITIAL_VALUES,
-// 			payload: value
-// 		});
-// 	};
-// }
-
-export function actionOnFormSubmit(value)
+export function actionOnInitialValues(formId, value)
 {
 	return (dispatch) =>
 	{
 		dispatch({
-			type: VALIDATION_ON_FORM_SUBMIT,
-			payload: value
+			type: VALIDATION_ON_INITIAL_VALUES,
+			payload: [formId, value]
+		});
+	};
+}
+
+export function actionOnInputValidation(formId, value)
+{
+	return (dispatch) =>
+	{
+		dispatch({
+			type: VALIDATION_ON_INPUT_VALIDATION,
+			payload: [formId, value]
 		});
 	};
 }

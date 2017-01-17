@@ -28,18 +28,18 @@ class FormValidation extends React.Component{
 	onSubmit(e)
 	{
 		e.preventDefault();
-		console.log(this);
-		this.props.formActions.actionOnFormSubmit(false);
-		this.props.inputActions.actionOnFormSubmit();
-		console.log(this.props.formValidation);
-		setTimeout(()=>{console.log(this.props.formValidation)}, 500)
-		this.props.handleSubmit(this.props.values);
+		let props = this.props;
+		// this.props.formActions.actionOnFormSubmit(false);
+		// this.props.inputActions.actionOnFormSubmit();
+		console.log(props);
+		// setTimeout(()=>{console.log(props.formValidation)}, 500)
+		props.handleSubmit(props[props.formId].values);
 	}
 
 	render()
 	{
 		const {renderContent, ...rest} = this.props;
-		// console.log(rest);
+		console.log(rest);
 		return(
 			// this.state.renderContent(this.state.data)
 			renderContent({...rest, handleSubmit: this.onSubmit.bind(this)})
@@ -47,7 +47,11 @@ class FormValidation extends React.Component{
 	}
 }
 
-
+FormValidation.propTypes = {
+	formId: React.PropTypes.string.isRequired,
+	renderContent: React.PropTypes.any.isRequired,
+	handleSubmit: React.PropTypes.func,
+};
 
 export default connect(state => ({
 		formValidation: state.formValidation,
