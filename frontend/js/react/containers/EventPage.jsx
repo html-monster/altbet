@@ -61,15 +61,16 @@ class EventPage extends BaseController
         var ticks = [];
 
         // form ask and bid orders
-        if( socket.activeOrders )
+0||console.debug( 'socket', socket );
+        if( socket.activeOrders && socket.activeOrders.Orders )
         {
             if( socket.activeOrders.Orders[0].Side == 1 )
             {
                 buyIndex = 1;
                 sellIndex = 0;
             } // endif
-            bidData = socket.activeOrders.Orders[buyIndex].SummaryPositionPrice;
-            askData = socket.activeOrders.Orders[sellIndex].SummaryPositionPrice;
+            if (socket.activeOrders.Orders[buyIndex]) bidData = socket.activeOrders.Orders[buyIndex].SummaryPositionPrice;
+            if (socket.activeOrders.Orders[sellIndex]) askData = socket.activeOrders.Orders[sellIndex].SummaryPositionPrice;
         } // endif
             // if (appData.pageEventData.IsMirror && side == 'sell') data.SummaryPositionPrice.reverse();
             // if (!appData.pageEventData.IsMirror && side == 'buy') data.SummaryPositionPrice.reverse();

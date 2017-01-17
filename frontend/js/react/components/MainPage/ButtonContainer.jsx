@@ -9,7 +9,6 @@ export default class ButtonContainer extends React.Component
 {
     render()
     {
-        let SummaryPositionPrice;
         let {isBasicMode} = this.props.data;
 
         // let $DateLocalization = new DateLocalization();
@@ -48,45 +47,52 @@ export default class ButtonContainer extends React.Component
             {
                 (data.Orders.length && data.Orders.some((item) => item.Side == data.side) ?
                         data.Orders.map((item) =>
-                            (item.Side == data.side && ((data.ismirror ? (SummaryPositionPrice = item.SummaryPositionPrice.slice().reverse()) : (SummaryPositionPrice = item.SummaryPositionPrice.slice()))||true) ?
-                                    SummaryPositionPrice.map((item2) =>
-                                        <div className="button">
-                                        {/*<AnimateOnUpdate
-                                            component="div"
-                                            className="button"
-                                            transitionName={{
-                                                enter: 'fadeOut',
-                                                leave: 'fadeOut',
-                                                appear: 'fadeOut'
-                                            }}
-                                            transitionAppear={true}
-                                            transitionAppearTimeout={800}
-                                            transitionEnterTimeout={800}
-                                            transitionLeaveTimeout={500}
-                                            data={item2}
-                                        >*/}
-                                            <button className={`event animated ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this,
-                                                    {
-                                                        PosPrice: item.SummaryPositionPrice,
-                                                        ismirror: data.ismirror,
-                                                        price: (price = isBasicMode ? item2.Price : item2.Price),
-                                                        quantity: item2.Quantity,
-                                                        type: data.type == "sell" ? 1 : 2,
-                                                        data: data,
-                                                    })}
-                                                data-verify="Quantity"
-                                            >
-                                                <span className="price">{((price = Common.toFixed(data.ismirror ? 1 - price : price, 2))||true) && isBasicMode  ? '$' + price : price}</span>
-                                                <span className="volume">{item2.Quantity}</span>
-                                                <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
-                                            </button>
-                                        {/*</AnimateOnUpdate>*/}
-                                        </div>
-                                    )
-                                : ""
-                            )
-                        )
-                    : <div className="button">
+                        {
+                            let SummaryPositionPrice = item.SummaryPositionPrice.slice();
+                            data.ismirror && SummaryPositionPrice.reverse();
+
+                            let html = [];
+                            if( item.Side == data.side )
+                            {
+                                html = SummaryPositionPrice.map((item2) =>
+                                    <AnimateOnUpdate key={item2.Price}
+                                        component="div"
+                                        className="button"
+                                        transitionName={{
+                                            enter: 'fadeOut',
+                                            leave: 'fadeOut',
+                                            appear: 'fadeOut'
+                                        }}
+                                        transitionAppear={true}
+                                        transitionAppearTimeout={800}
+                                        transitionEnterTimeout={800}
+                                        transitionLeaveTimeout={500}
+                                        data={item2}
+                                    >
+                                    {/*<div className="button">*/}
+                                        <button className={`event animated ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this,
+                                                {
+                                                    PosPrice: item.SummaryPositionPrice,
+                                                    ismirror: data.ismirror,
+                                                    price: (price = isBasicMode ? item2.Price : item2.Price),
+                                                    quantity: item2.Quantity,
+                                                    type: data.type == "sell" ? 1 : 2,
+                                                    data: data,
+                                                })}
+                                            data-verify="Quantity"
+                                        >
+                                            <span className="price">{((price = Common.toFixed(data.ismirror ? 1 - price : price, 2))||true) && isBasicMode  ? '$' + price : price}</span>
+                                            <span className="volume">{item2.Quantity}</span>
+                                            <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
+                                        </button>
+                                    {/*</div>*/}
+                                    </AnimateOnUpdate>
+                                );
+                            }
+                            else html = '';
+                            return html;
+                        })
+                        : <div className="button">
                         <button className={`event animated empty ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this,
                                 {
                                     isempty: true,
