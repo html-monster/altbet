@@ -127,7 +127,7 @@ export class IndexView extends BaseView
 
     public checkFields()
     {
-        let error = false;
+/*        let error = false;
         let message = '';
         let element;
         let form = $(".F1addExch");
@@ -163,7 +163,7 @@ export class IndexView extends BaseView
         else
         {
             return true;
-        } // endif
+        } // endif*/
     }
 
 

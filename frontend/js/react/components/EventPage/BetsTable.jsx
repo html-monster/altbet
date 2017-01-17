@@ -13,6 +13,21 @@ export class BetsTable extends React.Component
     static TYPE_BID = '1';
     static TYPE_ASK = '2';
 
+
+    constructor()
+    {
+        super();
+
+        this.loading = true;
+    }
+
+
+    componentDidMount()
+    {
+        this.loading = false;
+    }
+
+
     render ()
     {
         var self = this;
@@ -59,7 +74,7 @@ export class BetsTable extends React.Component
             <tbody>
                 {
                     data.map((val, key) => {
-                        return <tr className="" key={key}>
+                        return <tr className="" key={val.Price}>
                             <td><span>alt.bet</span></td>
                             <td className={`price ${$class} animated`} onClick={() => self.props.actions.onPriceClick({
                                    Price: val.Price,
@@ -71,19 +86,6 @@ export class BetsTable extends React.Component
                             >
                                     {/*component="div"
                                     className="button" */}
-                                {/*<AnimateOnUpdate
-                                    transitionName={{
-                                        enter: 'fadeOut',
-                                        leave: 'fadeOut',
-                                        appear: 'fadeOut'
-                                    }}
-                                    transitionAppear={true}
-                                    transitionAppearTimeout={800}
-                                    transitionEnterTimeout={800}
-                                    transitionLeaveTimeout={500}
-                                    data={val.Price}
-                                >
-                                </AnimateOnUpdate>*/}
                                 <span>${Common.toFixed(val.Price, 2)}</span>
                             </td>
                             <td className={`volume ${$class} animated`} onClick={() => self.props.actions.onQuantityClick({
@@ -94,7 +96,21 @@ export class BetsTable extends React.Component
                                    exdata: commProps, // for trader object
                                 })}
                             >
-                                <span>{val.Quantity}</span>
+                                <TestCm
+                                    transitionName={{
+                                        enter: 'cm-test',
+                                        leave: 'cm-test',
+                                        appear: 'cm-test'
+                                    }}
+                                    transitionLoading={!this.loading}
+                                    transitionAppear={true}
+                                    transitionAppearTimeout={800}
+                                    transitionEnterTimeout={800}
+                                    transitionLeaveTimeout={500}
+                                    data={val.Quantity}
+                                >
+                                    <span>{val.Quantity}</span>
+                                </TestCm>
                             </td>
                         </tr>;
                 })}
