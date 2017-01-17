@@ -10,11 +10,11 @@ export default class ExchangeItem extends React.Component
     render()
     {
         // let  = ABpp.config.basicMode;
-        // let isTradeOn = ABpp.config.tradeOn;
         let $DateLocalization = new DateLocalization();
-        let {activeExchange, isBasicMode} = this.props.data;
+        let {activeExchange, isBasicMode, isTraiderOn} = this.props.data;
         let data = this.props.data;
         let symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
+        let date;
 
         // common props for button container
         let commProps = {
@@ -47,7 +47,7 @@ export default class ExchangeItem extends React.Component
 
             <div className={"event_info " + data.CategoryIcon}>
                 <span className="date help">
-                    {$DateLocalization.fromSharp(data.Symbol.StartDate, 0).unixToLocalDate()}
+                    {(date = $DateLocalization.fromSharp(data.Symbol.StartDate, 0).unixToLocalDate()) ? date : ''}
                     <span className="help_message"><span>MM/DD/YYYY</span></span>
                 </span>
                 {data.Symbol.Status == "completed" ? <i className="half_time" title={data.Symbol.Status}>ht<span>{data.Symbol.Status}</span></i> : ""}
@@ -57,7 +57,7 @@ export default class ExchangeItem extends React.Component
                 <h2>{data.Symbol.AwayName} {(data.Symbol.AwayPoints != null) ? <span>{data.Symbol.AwayPoints}</span> : ''}</h2>
                 <span className="symbol_name hidden">{symbol}</span>
             </div>
-            <div className="table not-sort wave"> {/*id="exchange_table"*/}
+            <div className={"table not-sort" + (isTraiderOn ? " wave waves-effect waves-button" : "")}> {/*id="exchange_table"*/}
                 <div className={"event-content" + $classActiveNM} data-symbol={symbol}
                     onClick={() => {ABpp.config.tradeOn && this.props.actions.exchangeSideClick({name: data.Symbol.Exchange,
                         isMirror: false,

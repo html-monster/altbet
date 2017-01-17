@@ -36,7 +36,7 @@ export default class ExchangeModel
                             sidehandicap1: '',
                             sidehandicap2: '',
                             startDate: '',
-                            endDate: '',
+                            endDate: '1/4/17 13:30',
                         };
 
                     var error;

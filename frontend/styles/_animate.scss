@@ -62,6 +62,17 @@
 	100% {  opacity: 0;  transform: translate3d(0, 2000px, 0);  }
 }
 
+@keyframes testAnim {
+	0% {  background-color: orange;  }
+	100% {  background-color: transparent;  }
+}
+@keyframes testAnim2 {
+	0% {  background-color: orange;  }
+	100% {  background-color: transparent;  }
+}
+.cm-test { animation: testAnim 1s; }
+.cm-test2 { animation: testAnim2 1s; }
+
 .bounceInUp {  animation-name: bounceInUp;  }
 .bounceOutDown {  animation-name: bounceOutDown;  }
 .bounceInRight {  animation-name: bounceInRight;  }
@@ -79,3 +90,5 @@
 	&:before{  animation-duration: 1s;  animation-fill-mode: both;  }
 	span:after {  animation-duration: 1s;  animation-fill-mode: both;  }
 }
+
+

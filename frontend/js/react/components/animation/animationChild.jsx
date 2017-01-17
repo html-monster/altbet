@@ -1,4 +1,6 @@
 import ReactCSSTransitionGroupChild from 'react/lib/ReactCSSTransitionGroupChild';
+import React from 'react';
+
 
 export default class AnimateOnUpdateChild extends ReactCSSTransitionGroupChild{
 	getClass(obj)
@@ -34,4 +36,16 @@ export default class AnimateOnUpdateChild extends ReactCSSTransitionGroupChild{
 		}
 		return true;
 	}
+
+/*    render() {
+		0||console.log( 'this.props.children', this.props.children );
+		if( this.props.options && this.props.options.nowrapp )
+		{
+        	return <div className="here">{this.props.children}</div>;
+		}
+		else
+		{
+        	return this.props.children;
+		} // endif
+    }*/
 }

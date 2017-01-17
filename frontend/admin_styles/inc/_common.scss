@@ -1,3 +1,13 @@
+.modal { overflow: auto }
+
+
+// for status column
+.label.label-approved { background-color: #00a65a !important; }
+.label.label-new { background-color: #3c8dbc !important; }
+.label.label-completed { background-color: #f39c12  !important; color: #fff; }
+.label.label-settelment { background-color: #d2d6de !important; color: #fff; }
+
+
 .form-group {
   .error-icon, .help-block { @include nblock }
   &.has-error {

@@ -16,7 +16,9 @@ export class DateLocalization
     {
         let retval ;
         try {
-            retval = this.currentTimestamp = inDate.replace('/Date(', '').replace(')/', '') * 1 - (new Date()).getTimezoneOffset() * 60 * 1000;
+            // "/Date(1489287600000+0000)/"
+            retval = this.currentTimestamp = inDate.match(/(\d+)/i)[1] * 1 - (new Date()).getTimezoneOffset() * 60 * 1000;
+            // retval = this.currentTimestamp = inDate.replace('/Date(', '').replace(')/', '') * 1 - (new Date()).getTimezoneOffset() * 60 * 1000;
         } catch (e) {
             retval = undefined;
         }
@@ -32,6 +34,6 @@ export class DateLocalization
     public unixToLocalDate(inTimeStamp : any = '')
     {
         if (!inTimeStamp) inTimeStamp = this.currentTimestamp;
-        return inTimeStamp > 0 ? moment.unix(inTimeStamp/1000).format('MM/DD/Y') : 'undefined';
+        return inTimeStamp > 0 ? moment.unix(inTimeStamp/1000).format('MM/DD/Y') : undefined;
     }
 }

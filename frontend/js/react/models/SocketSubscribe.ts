@@ -66,12 +66,19 @@ export class SocketSubscribe
         let activeOrders = null;
         for( let val of inData.ActiveOrders )
         {
-            if( val.Symbol.Exchange == params.exchange ) activeOrders = val;
+            if( val.Symbol.Exchange == params.exchange ) {activeOrders = val; break;}
+        } // endfor
+
+
+        let bars = null;
+        for( let val of inData.Bars )
+        {
+            if( val.Symbol.Exchange == params.exchange ) bars = val;
         } // endfor
 
         // 0||console.debug( 'receiveActiveOrderFixData', inData, params, activeOrders );
 
 
-        return {ActiveOrders: activeOrders, Bars: inData.Bars};
+        return {ActiveOrders: activeOrders, Bars: bars};
     }
 }

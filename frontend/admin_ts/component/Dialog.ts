@@ -2,17 +2,28 @@
  * Created by Vlasakh on 30.12.2016.
  */
 
-declare var Handlebars;
+/// <reference path="../../js/.d/common.d.ts" />
+
 
 
 export default class Dialog
 {
-    private vars;
-    private TPLName;
-    private target;
-    private afterInit;
-    private callbackOK;
-    private callbackCancel;
+    // private vars;
+    // private TPLName;
+    // private target;
+    // private afterInit;
+    // private callbackOK;
+    // private callbackCancel;
+
+    private options = {
+            TPLName: '',
+            target: '',
+            render: false,
+            vars: null,
+            afterInit: null,
+            callbackCancel: null,
+            callbackOK: null,
+        };
 
 
     constructor(props?)
@@ -33,39 +44,42 @@ export default class Dialog
         if( inProps ) this.saveProps(inProps);
 
 
-        var source = $(this.TPLName).html();
+        var source = $(this.options.TPLName).html();
         var template = Handlebars.compile(source);
-        var html = template(this.vars);
+        var html = template(this.options.vars);
 
 
-        $(this.target).html(html);
-        $("[data-js=cancel]", this.target).click(function(e) { self.onCloseClick(e, this) });
-        $("[data-js=wrapper]", this.target).click(function(e) { self.onWrapperClick(e, this) });
-        $("[data-js=ok]", this.target).click(function(e) { self.onOkClick(e, this) });
+        $(this.options.target).html(html);
+        $("[data-js=cancel]", this.options.target).click(function(e) { self.onCloseClick(e, this) });
+        $("[data-js=wrapper]", this.options.target).click(function(e) { self.onWrapperClick(e, this) });
+        $("[data-js=ok]", this.options.target).click(function(e) { self.onOkClick(e, this) });
 
 
-        $("[data-js=wrapper]", this.target).fadeIn(400);
+        $("[data-js=wrapper]", this.options.target).fadeIn(400);
 
-        this.afterInit && this.afterInit(this, this.target);
+        0||console.log( 'this.options.afterInit', this.options.afterInit );
+        this.options.afterInit && this.options.afterInit(this, this.options.target);
     }
 
 
 
     public close()
     {
-        if (this.callbackCancel) this.callbackCancel();
-        $("[data-js=wrapper]", this.target).fadeOut(200);
+        if (this.options.callbackCancel) this.options.callbackCancel();
+        $("[data-js=wrapper]", this.options.target).fadeOut(200);
     }
 
 
 
     private saveProps(inProps)
     {
-        if (inProps.TPLName) this.TPLName = inProps.TPLName;
-        if (inProps.target) this.target = inProps.target;
-        if (inProps.vars) this.vars = inProps.vars;
-        if (inProps.callbackOK) this.callbackOK = inProps.callbackOK;
-        if (inProps.callbackCancel) this.callbackCancel = inProps.callbackCancel;
+        this.options = Object.assign({}, this.options, inProps);
+
+        // if (inProps.TPLName) this.options.TPLName = inProps.TPLName;
+        // if (inProps.target) this.options.target = inProps.target;
+        // if (inProps.vars) this.options.vars = inProps.vars;
+        // if (inProps.callbackOK) this.options.callbackOK = inProps.callbackOK;
+        // if (inProps.callbackCancel) this.options.callbackCancel = inProps.callbackCancel;
     }
 
 
@@ -92,8 +106,8 @@ export default class Dialog
         e.stopPropagation();
 
 
-        if (this.callbackOK)
-            if (this.callbackOK())
-                $("[data-js=wrapper]", this.target).fadeOut(200);
+        if (this.options.callbackOK)
+            if (this.options.callbackOK())
+                $("[data-js=wrapper]", this.options.target).fadeOut(200);
     }
 }

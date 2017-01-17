@@ -2,6 +2,7 @@ import {
     ON_POS_PRICE_CLICK,
     ON_SOCKET_MESSAGE,
     ON_BASIC_MODE_CH,
+    TRAIDER_MODE_CH,
 } from '../constants/ActionTypesPageMain';
 import { WebsocketModel } from '../models/Websocket';
 import { Common } from '../common/Common';
@@ -11,7 +12,7 @@ import BaseActions from './BaseActions';
 // var __LDEV__ = true;
 var __LDEV__ = false;
 
-console.log(ABpp);
+
 class Actions extends BaseActions
 {
     public actionOnLoad()
@@ -199,6 +200,19 @@ class Actions extends BaseActions
         {
             dispatch({
                 type: ON_BASIC_MODE_CH,
+                payload: inMode
+            });
+        };
+    }
+
+
+
+    public OnOffTraider(inMode)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: TRAIDER_MODE_CH,
                 payload: inMode
             });
         };

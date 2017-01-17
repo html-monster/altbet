@@ -26,10 +26,11 @@ class Actions extends BaseActions
                 let activeOrders = getState().eventPage.socket.activeOrders;
                 let bars = getState().eventPage.socket.bars;
 
-                if( !activeOrders || JSON.stringify(inActiveOrders.Symbol) != JSON.stringify(activeOrders.Symbol) || false
+                // if( !activeOrders || JSON.stringify(inActiveOrders.Orders) != JSON.stringify(activeOrders.Orders) || false
+                if( !activeOrders || JSON.stringify(inActiveOrders) != JSON.stringify(activeOrders) || false
                     /*JSON.stringify(inBars) != JSON.stringify(bars)*/ )
+    __DEV__&&console.debug( 'changed 11111', inActiveOrders, inBars,  activeOrders, bars );
                 {
-    // __DEV__&&console.debug( 'changed', inActiveOrders, inBars,  activeOrders, bars );
                     dispatch({
                         type: ON_SOCKET_MESSAGE,
                         payload: { activeOrders: inActiveOrders, bars: inBars }
@@ -86,7 +87,113 @@ class Actions extends BaseActions
                                 "Currency": props.exdata.Currency
                             },
                             "Volume": qt,
-                            "Limit": false,// props.type == 1 ? true : false,
+                            "Limit": ABpp.config.basicMode ? true : false,
+                            "NewOrder": true,
+                            "isMirror": props.exdata.isMirror ? 1 : 0
+                        },
+                    ]
+                };
+                __LDEV__&&console.debug( 'outStruc', props, outStruc );
+
+
+                // call trade slip action
+                getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+
+                // dispatch({
+                //     type: ON_SOCKET_MESSAGE,
+                //     payload: { activeOrders: inActiveOrders, bars: inBars }
+                // });
+            } // endif
+        }
+    }
+
+
+
+    public onPriceClick(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            // 0||console.log( 'inProps', inProps );
+
+            if( !ABpp.config.tradeOn )
+            {
+                let props = inProps;
+                let flag = false;
+                let qt : any = 0,
+                    bpr = "0.";
+                let isBasicMode = ABpp.config.basicMode;
+
+
+                for( let val of props.data )
+                {
+                    qt += val.Quantity;
+                } // endfor
+
+        // 0||console.debug( 'bpr', bpr, qt);
+                bpr = props.Price;
+
+                // return;
+                let outStruc = {
+                    "ID": `${props.exdata.Exchange}_${props.exdata.Name}_${props.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
+                    "EventTitle": props.exdata.isMirror ? props.exdata.AwayName : props.exdata.HomeName,
+                    "Positions": props.exdata.Positions,
+                    "isMirror": props.exdata.isMirror ? 1 : 0,
+                    "Orders": [
+                        {
+                            "Price": bpr,
+                            "Side": props.type == 0 ? 0 : 1, // sell/buy
+                            "Symbol": {
+                                "Exchange": props.exdata.Exchange,
+                                "Name": props.exdata.Name,
+                                "Currency": props.exdata.Currency
+                            },
+                            "Volume": '',
+                            "Limit": true,
+                            "NewOrder": true,
+                            "isMirror": props.exdata.isMirror ? 1 : 0
+                        },
+                    ]
+                };
+                __LDEV__&&console.debug( 'outStruc', props, outStruc );
+
+                getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+
+                // dispatch({
+                //     type: ON_SOCKET_MESSAGE,
+                //     payload: { activeOrders: inActiveOrders, bars: inBars }
+                // });
+            } // endif
+        }
+    }
+
+
+
+    public onSellBuyClick(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            // 0||console.log( 'inProps', inProps );
+
+            if( !ABpp.config.tradeOn )
+            {
+                let props = inProps;
+
+                let outStruc = {
+                    "ID": `${props.exdata.Exchange}_${props.exdata.Name}_${props.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
+                    "EventTitle": props.exdata.isMirror ? props.exdata.AwayName : props.exdata.HomeName,
+                    "Positions": props.exdata.Positions,
+                    "isMirror": props.exdata.isMirror ? 1 : 0,
+                    "Orders": [
+                        {
+                            "Price": "0.",
+                            "Side": props.type == 0 ? 0 : 1, // sell/buy
+                            "Symbol": {
+                                "Exchange": props.exdata.Exchange,
+                                "Name": props.exdata.Name,
+                                "Currency": props.exdata.Currency
+                            },
+                            "Volume": "",
+                            "Limit": true,
                             "NewOrder": true,
                             "isMirror": props.exdata.isMirror ? 1 : 0
                         },

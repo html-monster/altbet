@@ -12,6 +12,7 @@ import BodyView from "./view/BodyView";
 import { MainConfig } from "./inc/MainConfig";
 import {User} from "./model/User";
 import {IndexController} from "./controller/IndexController";
+import {RadioBtns} from "./component/RadioBtns";
 
 
 export default class ADpp
@@ -51,6 +52,11 @@ export default class ADpp
      */
     public ready()
     {
+        Handlebars.registerHelper('iif', function(test, yes, no) {
+            return test ? yes : no;
+        });
+
+
         (new GroupsTree()).init();
 
         // call current action

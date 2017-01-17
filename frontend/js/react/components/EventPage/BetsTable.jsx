@@ -4,12 +4,29 @@
 
 import React from 'react' ;
 import {Common} from '../../common/Common.ts' ;
+import AnimateOnUpdate from '../Animation';
+import {TestCm} from './TestCm';
 
 
 export class BetsTable extends React.Component
 {
     static TYPE_BID = '1';
     static TYPE_ASK = '2';
+
+
+    constructor()
+    {
+        super();
+
+        this.loading = true;
+    }
+
+
+    componentDidMount()
+    {
+        this.loading = false;
+    }
+
 
     render ()
     {
@@ -21,6 +38,7 @@ export class BetsTable extends React.Component
 
         if( typeb == BetsTable.TYPE_BID )
         {
+            data = data.slice().reverse();
             $class += ' buy';
             $fieldName = 'Bid';
             $type = 0;
@@ -56,9 +74,20 @@ export class BetsTable extends React.Component
             <tbody>
                 {
                     data.map((val, key) => {
-                        return <tr className="" key={key}>
+                        return <tr className="" key={val.Price}>
                             <td><span>alt.bet</span></td>
-                            <td className={`price ${$class} animated`}><span>${Common.toFixed(val.Price, 2)}</span></td>
+                            <td className={`price ${$class} animated`} onClick={() => self.props.actions.onPriceClick({
+                                   Price: val.Price,
+                                   Quantity: val.Quantity,
+                                   type: $type,
+                                   data: data, // orders
+                                   exdata: commProps, // for trader object
+                                })}
+                            >
+                                    {/*component="div"
+                                    className="button" */}
+                                <span>${Common.toFixed(val.Price, 2)}</span>
+                            </td>
                             <td className={`volume ${$class} animated`} onClick={() => self.props.actions.onQuantityClick({
                                    Price: val.Price,
                                    Quantity: val.Quantity,
@@ -67,7 +96,22 @@ export class BetsTable extends React.Component
                                    exdata: commProps, // for trader object
                                 })}
                             >
-                                <span>{val.Quantity}</span>
+                                <AnimateOnUpdate
+                                    transitionName={{
+                                        enter: 'cm-test',
+                                        leave: 'cm-test',
+                                        appear: 'cm-test'
+                                    }}
+                                    transitionLoading={!this.loading}
+
+                                    transitionAppear={true}
+                                    transitionAppearTimeout={800}
+                                    transitionEnterTimeout={800}
+                                    transitionLeaveTimeout={500}
+                                    data={val}
+                                >
+                                    <span data-verify="Quantity">{val.Quantity}</span>
+                                </AnimateOnUpdate>
                             </td>
                         </tr>;
                 })}

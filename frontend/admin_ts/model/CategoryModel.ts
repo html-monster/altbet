@@ -147,6 +147,7 @@ export default class CategoryModel
                             case 100 : message = `Category “${inProps.name}” created successfully`; break;
                             case -101 : message = "Category name is not unique"; break;
                             case -102 : message = "Category url is not unique"; break;
+                            case -103 : message = "You cannot add subcategory because parent is not empty"; break;
                             case -100: ; // some backend not controlled error
                             case -1000 : ; break;
                             default: error = -1001;
