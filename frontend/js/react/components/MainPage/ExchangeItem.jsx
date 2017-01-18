@@ -46,9 +46,8 @@ export default class ExchangeItem extends React.Component
             <input name={data.Symbol.Status} type="hidden" value="inprogress" />
 
             <div className={"event_info " + data.CategoryIcon}>
-                <span className="date help">
-                    {(date = $DateLocalization.fromSharp(data.Symbol.StartDate, 0).unixToLocalDate()) ? date : ''}
-                    <span className="help_message"><span>MM/DD/YYYY</span></span>
+                <span className="date">
+                    {(date = $DateLocalization.fromSharp(data.Symbol.StartDate, 0).unixToLocalDate({format: 'DD MMM Y'})) ? date : ''}
                 </span>
                 {data.Symbol.Status == "completed" ? <i className="half_time" title={data.Symbol.Status}>ht<span>{data.Symbol.Status}</span></i> : ""}
             </div>

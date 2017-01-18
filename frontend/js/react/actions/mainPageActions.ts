@@ -178,7 +178,7 @@ class Actions extends BaseActions
 
 
 
-    public firstExchangeActivate(inController)
+    public lastExchangeActivate(inController)
     {
         return (dispatch, getState) =>
         {

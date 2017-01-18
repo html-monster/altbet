@@ -25,9 +25,9 @@ class MainPage extends BaseController
      * activates first exchange left side
      * @public
      */
-    firstExchangeActivate()
+    lastExchangeActivate()
     {
-        this.props.actions.firstExchangeActivate(this);
+        this.props.actions.lastExchangeActivate(this);
     }
 
 
@@ -47,7 +47,7 @@ class MainPage extends BaseController
         var self = this;
 
         // register global action
-        ABpp.registerAction('MainPage.firstExchangeActivate', () => this.firstExchangeActivate());
+        // ABpp.registerAction('MainPage.firstExchangeActivate', () => this.lastExchangeActivate());
 
         // subscribe on tader on/off
         /** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, function() {self.props.actions.OnOffBasicMode(ABpp.config.basicMode)});
