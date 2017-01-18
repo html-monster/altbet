@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import NetellerForm from './depositForms/netellerForm';
-import EcoPayzForm from './depositForms/ecoPayzForm';
+import EcoPayzForm from './depositForms/ecoPayzForm.jsx';
 import * as actions from '../../actions/userPage/depositActions.js';
 
 class Deposit extends React.Component{
