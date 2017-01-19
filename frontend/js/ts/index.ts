@@ -50,6 +50,7 @@ export class ABpp
     public User: User = null;                   // user entity
     public Websocket: WebsocketModel = null;    // websocket object
     public SysEvents: SysEvents = null;         // system events
+    public Store = null;                        // redux store
 
 
     private static instance = null;

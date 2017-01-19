@@ -6,5 +6,5 @@ declare var Promise;
 
 export default class Common
 {
-    public static sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+    public static sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 }

@@ -9,7 +9,7 @@ export default class ButtonContainer extends React.Component
 {
     render()
     {
-        let {isBasicMode} = this.props.data;
+        let {isBasicMode, isTraiderOn} = this.props.data;
 
         // let $DateLocalization = new DateLocalization();
         let data = this.props.data;
@@ -80,6 +80,7 @@ export default class ButtonContainer extends React.Component
                                                     data: data,
                                                 })}
                                             data-verify="Quantity"
+                                            disabled={isTraiderOn}
                                         >
                                             <span className="price">{((price = Common.toFixed(data.ismirror ? 1 - price : price, 2))||true) && isBasicMode  ? '$' + price : price}</span>
                                             <span className="volume">{item2.Quantity}</span>
@@ -101,7 +102,9 @@ export default class ButtonContainer extends React.Component
                                     price: 0,
                                     type: data.type == "sell" ? 1 : 2,
                                     data: data,
-                                })}>
+                                })}
+                            disabled={isTraiderOn}
+                        >
                             <span className="price empty">{emptBtnName}</span>
                             <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
                         </button>

@@ -20,8 +20,10 @@ export class IndexController extends BaseController
     {
         super();
 
-        this.FormChecker = new FormCheckers();
         this.IndexView = (new IndexView());
+        this.FormChecker = new FormCheckers();
+        this.FormChecker.addCheckerCustom('handicap', (props) => this.IndexView.onCheckHandicap(props) );
+        this.FormChecker.addCheckerCustom('datechk', (props) => this.IndexView.onCheckDateFields(props) );
     }
 
 
@@ -32,6 +34,10 @@ export class IndexController extends BaseController
         let indexView = (new IndexView);
         indexView.setInfoMess();
         indexView.initAddForm();
+
+        // if success addition
+        let data = window.ADpp.User.getFlash('AddExchSucc');
+        data && indexView.highlightAddedExch(data.id);
 
 
         $('.F1addExch').on('submit', function (e) { self.onAddExchSubmit(e, this); });
@@ -53,6 +59,10 @@ export class IndexController extends BaseController
             form: $that.closest('form'),
             justReturn: 1,
             beforeSubmit: () => $IndexView.beginAddExch(),
+            onError: [
+                (props) => $IndexView.setErrorOnField(props, 0),
+                (props) => $IndexView.setErrorOnField(props, 1),
+            ],
         });
 
 // 0||console.log( 'ret', ret );
@@ -60,11 +70,15 @@ export class IndexController extends BaseController
         {
             var form = $that.closest('form');
             var formData = new FormData(<HTMLFormElement>form[0]);
+            0||console.log( 'inProps.formData', JSON.stringify(form.serializeArray()) );
+
             // formData.set('op', '1');
             (new ExchangeModel).addExch({url: $that.attr('url'), name: $(".js-ed-name").val(), formData}).then( result =>
             {
                 0||console.log( 'result', result );
                 window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
+                window.ADpp.User.setFlash({id: result.id}, 'AddExchSucc');
+                // 0||console.log( 'str', localStorage.getItem('AddExchSucc') );
                 location.href = MainConfig.BASE_URL + result.url;
             },
             reuslt => {

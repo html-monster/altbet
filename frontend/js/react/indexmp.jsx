@@ -23,6 +23,8 @@ ABpp.CONSTS = constants;
 
 
 const store = configureStore();
+ABpp.Store = store;
+
 
 ReactDOM.render(
     <Provider store={store}>

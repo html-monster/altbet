@@ -9,6 +9,7 @@ export class FormCheckers
     private errBoxObj = 0;
     private addErrClass = '';
     private waitTimeErrorMess = 0;
+    private prevItem = null;
     private customCheckers : any = {};
     private options : any = {};
     private filters : any = {};
@@ -16,7 +17,8 @@ export class FormCheckers
         event: null,
         form: null,
         justReturn: 1,
-        beforeSubmit: null, //startCallback
+        beforeSubmit: null,     //startCallback
+        onError: [],          //errorCallback funcs 0 - error set, 1 - error timeout
     };
 
     private T1wait = 0;
@@ -30,7 +32,7 @@ export class FormCheckers
             'name': '',         // name of the label (needs for auto error message)
             'elem': false,      // element for attach error message
             'message': '',      // element for attach error message
-            'wait': 0,          // delay before error message hint close
+            'wait': 10000,          // delay before error message hint close
         };
 
         self.filters = [
@@ -74,7 +76,7 @@ export class FormCheckers
     public FormSubmit(props)
     {
         var self = this;
-        self.FLAG_STOP = 1;
+        // self.FLAG_STOP = 1;
         clearTimeout(self.T1wait);
 
         props = {...this.settings, ...props};
@@ -110,6 +112,7 @@ export class FormCheckers
         var actionItem;     // item for error hint attach
 
         props.beforeSubmit && props.beforeSubmit();
+
 
         $(frmObj).find("[data-field-check]:not(.nocheck)").each(function()
         {
@@ -164,23 +167,10 @@ export class FormCheckers
                 // item.addClass('field--warning');
                 // item.focus();
 
+                $(self.prevItem).off('blur');
+                self.prevItem = item;
+                props.onError[0] && props.onError[0]({...self.options});
 
-                let form = item.closest('form');
-                let frmgrp = item.closest('.js-form-group');
-                frmgrp.removeClass('has-error');
-                frmgrp.find('.js-error-icon').fadeIn(200);
-                frmgrp.find('.js-message').fadeIn(200);
-
-                let fieldWrapp = item.closest('.js-form-group');
-                fieldWrapp.addClass('has-error');
-                fieldWrapp.find('.js-message').text(self.options.message);
-                item.focus();
-
-                let customBlur = () => {
-                    item.closest('.js-form-group').removeClass('has-error');
-                    frmgrp.find('.js-error-icon').fadeOut(200);
-                    frmgrp.find('.js-message').fadeOut(200);
-                };
 
                 // inProps.element.on('blur', function()
                 // {
@@ -194,10 +184,10 @@ export class FormCheckers
                 // remove error mess after delay
                 if( self.options.wait > 0 || item.hasClass('multiple') )
                 {
-                    var delay = self.options.wait ? self.options.wait : 3000;
+                    var delay = self.options.wait ? self.options.wait : 5000;
                     self.T1wait = setTimeout(function() {
                         // msgBox.fadeOut(200);
-                        customBlur();
+                        props.onError[1] && props.onError[1]({...self.options});
                     }, delay);
                 } // endif
 
@@ -207,7 +197,7 @@ export class FormCheckers
                     $(this).off('blur');
                     clearTimeout(self.T1wait);
                     // self.FLAG_STOP || msgBox.fadeOut(200);
-                    customBlur();
+                    props.onError[1] && props.onError[1]({...self.options});
                     $(this).off('blur');
                 });
                 self.FLAG_STOP = 0;
@@ -351,6 +341,15 @@ export class FormCheckers
     private filterCustom(inProps)
     {
         var self = this;
-        return self.customCheckers[inProps.filterVal]({value: inProps.itemVal});
+        let ret = self.customCheckers[inProps.filterVal]({item: inProps.item, value: inProps.itemVal, fieldname: self.options.name});
+
+        if( ret )
+        {
+            self.options.message = ret.message;
+            if (ret.item) self.options.elem = ret.item;
+            return true;
+        }
+
+        return false;
     }
 }

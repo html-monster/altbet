@@ -31,9 +31,10 @@ export class DateLocalization
      * @param inTimeStamp
      * @return {string}
      */
-    public unixToLocalDate(inTimeStamp : any = '')
+    public unixToLocalDate(inProps = {timestamp: '', format: 'MM/DD/Y'})
     {
-        if (!inTimeStamp) inTimeStamp = this.currentTimestamp;
-        return inTimeStamp > 0 ? moment.unix(inTimeStamp/1000).format('MM/DD/Y') : undefined;
+        let ts : any = inProps.timestamp;
+        if (!ts) ts = this.currentTimestamp;
+        return ts > 0 ? moment.unix(ts/1000).format(inProps.format) : undefined;
     }
 }

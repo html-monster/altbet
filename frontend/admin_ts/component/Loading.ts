@@ -57,7 +57,7 @@ export class Loading
         var $css = {};
 
         // delete old loading view
-        0||console.log( 'this.loadingObj', this.loadingObj );
+        // 0||console.log( 'this.loadingObj', this.loadingObj );
         this.loadingObj && this.loadingObj.remove();
 
         inProps = {...this.props, ...inProps};
@@ -65,7 +65,6 @@ export class Loading
         var DiLoading = $(inProps.tmplElm).clone();
         var inElm = $(inProps.element);
         this.loadingObj = DiLoading;
-        0||console.log( 'DiLoading', DiLoading );
 
         //G_VARS.App.showLoading($("#DiMessages"), 0, {align: 'center', pic: 1, variant: 2});
 
