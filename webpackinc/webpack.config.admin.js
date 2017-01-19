@@ -54,6 +54,7 @@ module.exports = {
         extensions: [
             '',
             '.ts',
+            '.js',
             '.scss',
         ],
     },
@@ -79,14 +80,14 @@ module.exports = {
                 loader: 'ts-loader',
                 exclude: /node_modules/,
             },
-/*
             {
-                test: /\.scss?$/,
-                loader: ExtractTextPlugin.extract('sass-loader?sourceMap')
-                // loader: ExtractTextPlugin.extract('style-loader', 'css-loader!resolve-url!sass-loader?sourceMap')
-                // loaders: ["sass-loader?sourceMap"]
-            }
-*/
+                test: /\.js$/,
+                loader: "babel-loader",
+                exclude: [/node_modules/, /public/],
+                query: {
+                    presets: ['es2015', 'stage-0', 'react'],
+                  }
+            },
         ]
     },
 

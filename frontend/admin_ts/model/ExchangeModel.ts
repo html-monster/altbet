@@ -186,17 +186,19 @@ export default class ExchangeModel
             // for no icon option
             if (inProps.formData.get("Icon") == '-100') inProps.formData.set("Icon", "");
 
+
             var message = 'Error while saving data, please, try again';
             $.ajax({
-                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_ADD,
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_ADD,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 type: 'POST',
                 success: function(data)
                 {
                     __LDEV__&&console.debug( 'data AJAX', data );
-                    data.Error = 101;
-                    data.Param2 = inProps.name;
-                    data.Param1 = "http://localhost/AltBet.Admin/?path=sport%2Famerican-football";
+                    // data.Error = 200;
+                    // data.Param1 = "?path=sport%2Famerican-football";
+                    // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                    // data.Param3 = "BUB-NEP-3312017"; // id
 
                     var error;
                     try
@@ -225,7 +227,7 @@ export default class ExchangeModel
                         } // endif
 
 
-                    } catch (e) {
+                    } catch (ee) {
                         error < 0 && console.warn( 'E', error );
                         switch( error )
                         {
@@ -239,7 +241,7 @@ export default class ExchangeModel
                         }
                     }
 
-                    error < 0 ? reject({code: error, message}) : resolve({code: error, message, url: data.Param1});
+                    error < 0 ? reject({code: error, message}) : resolve({code: error, message, url: data.Param1, id: data.Param3});
                 },
                 error: function() {
                     reject({code: -1002, message});

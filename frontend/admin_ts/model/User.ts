@@ -9,9 +9,9 @@ export class User
      * @param inName
      * @param inVal
      */
-    public setFlash(inVal)
+    public setFlash(inVal, inName = 'UserFlash')
     {
-        localStorage.setItem('UserFlash', JSON.stringify(inVal))
+        localStorage.setItem(inName, JSON.stringify(inVal))
     }
 
 
@@ -21,17 +21,17 @@ export class User
      * @param inName
      * @param inVal
      */
-    public getFlash()
+    public getFlash(inName = 'UserFlash')
     {
         var data;
-        if( (data = localStorage.getItem('UserFlash')) == '' )
+        if( (data = localStorage.getItem(inName)) == '' )
         {
             data = false;
         }
         else
         {
             data = JSON.parse(data);
-            localStorage.removeItem('UserFlash');
+            localStorage.removeItem(inName);
         } // endif
 
         return data;

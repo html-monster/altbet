@@ -141,10 +141,6 @@ class Actions extends BaseActions
 
             if( $('.left_order .tab input.limit').prop('checked') )
             {
-                // remove after move react
-                // $('.content_bet').removeClass('active');
-                // $('.event-content').removeClass('active');
-
                 // todo: needs move to sidebar
                 // set current tab
                 $('.active_trader .event_title .event_name').removeClass('active').eq(inProps.isMirror ? 1 : 0).addClass('active');
@@ -182,13 +178,17 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            let data = getState().mainPage.marketsData["0"];
+            let state = getState().mainPage;
+            if (state.activeExchange.name == '')
+            {
+                let data = state.marketsData["0"];
 
-            inController.exchangeSideClick({name: data.Symbol.Exchange,
-                isMirror: false,
-                title: [data.Symbol.HomeName, data.Symbol.AwayName],
-                symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
-            });
+                inController.exchangeSideClick({name: data.Symbol.Exchange,
+                    isMirror: false,
+                    title: [data.Symbol.HomeName, data.Symbol.AwayName],
+                    symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
+                });
+            }
         };
     }
 
@@ -207,10 +207,12 @@ class Actions extends BaseActions
 
 
 
-    public OnOffTraider(inMode)
+    public OnOffTraider(inMode, context)
     {
         return (dispatch, getState) =>
         {
+            inMode && context.lastExchangeActivate();
+
             dispatch({
                 type: TRAIDER_MODE_CH,
                 payload: inMode

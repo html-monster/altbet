@@ -29,7 +29,7 @@ export class RadioBtns
 
         var $target = this.options.target || "[data-js=radio-btn]";
 
-        $(`${$target}:not(.js-rb-applied)`).each(function()
+        $($target).filter(":not(.js-rb-applied)").each(function()
         {
             let $wrapper = $(this);
 

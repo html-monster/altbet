@@ -17,6 +17,7 @@
 - Observer (http://www.dofactory.com/javascript/observer-design-pattern)
 - DeepCompare (http://stackoverflow.com/questions/1068834/object-comparison-in-javascript)
 - Loaders (http://preloaders.net/en/free)
+- Translit (https://github.com/xguest/iso_9_js)
 
 
 ## Plugins

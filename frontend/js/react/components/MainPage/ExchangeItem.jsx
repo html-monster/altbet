@@ -18,6 +18,7 @@ export default class ExchangeItem extends React.Component
 
         // common props for button container
         let commProps = {
+            isTraiderOn: isTraiderOn,
             isBasicMode: isBasicMode,
             symbolName: symbol,
             Orders: data.Orders,
@@ -42,7 +43,7 @@ export default class ExchangeItem extends React.Component
         } // endif
 
 
-        return <div className={"content_bet clickable ui-sortable-handle" + (isBasicMode ? " basic_mode_js" : "") + " categoryFilterJs" + $classActive} id={symbol} style={{}}>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
+        return <div className={"content_bet ui-sortable-handle categoryFilterJs" + (isBasicMode ? " basic_mode_js" : "") + $classActive + (isTraiderOn ? " clickable" : "")} id={symbol}>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
             <input name={data.Symbol.Status} type="hidden" value="inprogress" />
 
             <div className={"event_info " + data.CategoryIcon}>
@@ -56,7 +57,7 @@ export default class ExchangeItem extends React.Component
                 <h2>{data.Symbol.AwayName} {(data.Symbol.AwayPoints != null) ? <span>{data.Symbol.AwayPoints}</span> : ''}</h2>
                 <span className="symbol_name hidden">{symbol}</span>
             </div>
-            <div className={"table not-sort" + (isTraiderOn ? " wave waves-effect waves-button" : "")}> {/*id="exchange_table"*/}
+            <div className="table not-sort wave waves-effect waves-button"> {/*id="exchange_table"*/}
                 <div className={"event-content" + $classActiveNM} data-symbol={symbol}
                     onClick={() => {ABpp.config.tradeOn && this.props.actions.exchangeSideClick({name: data.Symbol.Exchange,
                         isMirror: false,

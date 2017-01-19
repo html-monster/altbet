@@ -76,6 +76,8 @@
 					tabs = $('.active_trader .event_title .event_name');
 
 			tabs.eq(0).addClass('active');
+
+			// BM: tab_item onClick
 			$('.tab_item').on('click', 'event_container', function () {
 				if (checkbox.prop('checked')) {
 					var titles = $(this).find('.event-title .title');
@@ -87,10 +89,10 @@
 					activeTraderClass.takeData($(this));
 					activeTraderClass.spreaderClean(true);
 					activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
-					// activeTraderClass.spreadVisability();
 				}
 			});
-			event_content.click(function (e) {
+			// Removed after EventPage on react
+			/*event_content.click(function (e) {
 				return ; // added after move this to react
 				if (checkbox.prop('checked')) {
 					var titles = $(this).parents('.content_bet').find('.event-title .title'),
@@ -108,7 +110,7 @@
 
 					// e.stopPropagation();
 				}
-			});
+			});*/
 
 			function tableLimitChangeData(current, title) {
 				var ii = 0;
@@ -916,7 +918,7 @@
 				active_trader.fadeIn(200);
 			}, 200);
 			activeTraderClass.tbodyResize();
-			buttons.attr('disabled', true);
+			// buttons.attr('disabled', true);
 
 			// === Vlasakh === 17-01-03 ===============================================
             // ABpp.actions['MainPage.firstExchangeActivate'] && ABpp.actions['MainPage.firstExchangeActivate']();

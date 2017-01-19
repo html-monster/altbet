@@ -1,6 +1,10 @@
+@keyframes fadeIn {
+	0% {  background-color: transparent; color: #000; }
+	100% {  background-color: $color1Green; color: #fff; }
+}
 @keyframes fadeOut {
-	0% {  background-color: #f39c12;  }
-	100% {  background-color: transparent;  }
+	0% {  background-color: $color1Green; color: #fff; }
+	100% {  background-color: transparent; color: #000; }
 }
 
 .page-Index {
@@ -8,14 +12,17 @@
     .box-body { overflow: visible }
     .btn-filter { @include iblock; margin-right: 10px;
       &.active.btn-primary { box-shadow: 0px 0px 2px 3px #3c8dbc }
-      &.active.btn-success { box-shadow: 0px 0px 2px 3px #449d44 }
+      &.active.btn-success { box-shadow: 0px 0px 2px 3px $color1Green }
       &.active.btn-warning { box-shadow: 0px 0px 2px 3px #f39c12 }
       &.active.btn-default { box-shadow: 0px 0px 2px 3px darken(#e6e6e6, 5%) }
       //&.active.btn-default { box-shadow: 0px 0px 2px 3px #666 }
     }
 
     .exchanges {
-      tr.changed td { animation: fadeOut 1s; }
+      tr.added td { position: relative; animation: fadeIn 1s; background-color: $color1Green; color: #fff;
+        //&:first-child::after { content: 'added'; position: absolute; left: 1px; bottom: 1px; font-size: 10px; color: #fff; }
+      }
+      tr.added.animated td { animation: fadeOut 1s; background-color: transparent; color: #000; }
       tr:hover .controls { opacity: 1; }
       .controls { width: 80px; opacity: .3; }
       //.btn-group { margin-bottom: 3px; }

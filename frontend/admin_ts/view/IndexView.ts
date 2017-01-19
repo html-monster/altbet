@@ -10,6 +10,8 @@ import BodyView from "./BodyView";
 import Dialog from "../component/Dialog";
 import {RadioBtns} from "../component/RadioBtns";
 import {Loading} from "../component/Loading";
+import {translit} from "../component/translit.js";
+// import Common from "../inc/Common";
 
 
 export class IndexView extends BaseView
@@ -65,15 +67,27 @@ export class IndexView extends BaseView
     {
         var self = this;
 
+        let form = $('.F1addExch');
+
+
         // data-js="EdFullname"
         (new RadioBtns({
             activeClass: "btn-success",
-            target: "[data-js=radio-btn]",
+            target: $("[data-js=radio-btn]", form),
             callbacks: [() => $("[data-js=EdFullname]").slideUp(200), () => $("[data-js=EdFullname]").slideDown(400)],
         })).apply();
 
 
-        $('.js-dt-start-date, .js-dt-end-date').daterangepicker({
+        // auto fill url
+        let $EdNames = $("[data-js=EdHomeName], [data-js=AwayName]", form);
+        $EdNames.blur((ee) => this.onNamesBlur(ee, {names: $EdNames, form: form}));
+        $("[data-js=FullName]", form).blur((ee) => this.onFullNameBlur(ee, {form: form}));
+
+
+        $("[data-js=HomeHandicap], [data-js=AwayHandicap]", form).keypress((ee) => this.onlyDigits(ee));
+
+
+        $('.js-dt-start-date, .js-dt-end-date', form).daterangepicker({
             "singleDatePicker": true,
             "showDropdowns": true,
             "showWeekNumbers": true,
@@ -87,10 +101,13 @@ export class IndexView extends BaseView
         });
 
 
-        $("[data-js=ChkStartDate]").click(function () { $(this).find("input").click(); });
-        $("[data-js=ChkStartDate] input").click(function(e) { $(".js-dt-start-date").prop('disabled', !$(this).prop('checked')); e.stopPropagation(); });
-        $("[data-js=ChkEndDate]").click(function () { $(this).find("input").click(); });
-        $("[data-js=ChkEndDate] input").click(function(e) { $(".js-dt-end-date").prop('disabled', !$(this).prop('checked')); e.stopPropagation(); });
+        // disable/enable on date
+        let $ChkStartDate = $("[data-js=ChkStartDate]", form);
+        let $ChkEndDate = $("[data-js=ChkEndDate]", form);
+        $ChkStartDate.click(function () { $(this).find("input").click(); });
+        $("input", $ChkStartDate).click(function(e) { $(".js-dt-start-date", form).prop('disabled', !$(this).prop('checked')); e.stopPropagation(); });
+        $ChkEndDate.click(function () { $(this).find("input").click(); });
+        $("input", $ChkEndDate).click(function(e) { $(".js-dt-end-date", form).prop('disabled', !$(this).prop('checked')); e.stopPropagation(); });
     }
 
 
@@ -131,6 +148,13 @@ export class IndexView extends BaseView
         var self = this;
 
         // this.closeAlert();
+        let items = $('.js-message');
+        for(let ii = 0, countii = items.length; ii < countii; ii++ )
+        {
+            self.setErrorOnField({elem: $(items[ii])}, 1);
+        } // endfor
+
+
         this.Loading.showLoading({targetElm: '[data-js=loading]', element: "[data-js=btn-create]", pic: 2, outerAlign: Loading.ALIGN_OUTER_RIGHT, offsetX: 4, position: Loading.POS_INLINE});
     }
 
@@ -233,6 +257,95 @@ export class IndexView extends BaseView
 
 
 
+    public highlightAddedExch(id)
+    {
+        let tr = $("[data-js=tabl-exch] " + `[data-id=${id}]`);
+        tr.addClass('added').attr('title', 'added');
+        setTimeout(() => tr.addClass('animated').attr('title', ''), 5000);
+    }
+
+
+
+    public onCheckHandicap(props)
+    {
+        let ret : any = {message: ''};
+        try {
+            if( props.value != '' )
+            {
+                if( props.value < -999.9 || props.value > 999.9 )
+                {
+                    throw new Error("Field must contain number between -999.9 and 999.9");
+                }
+                else
+                {
+                    let form = $(props.item).closest('form');
+                    let item1 = $("[data-js=HomeHandicap]", form);
+                    let item2 = $("[data-js=AwayHandicap]", form);
+
+
+                    if( item1.val() == '' && item2.val() != '' ) {ret.item = item1; throw new Error("Set first handicap")};
+                    if( item1.val() != '' && item2.val() == '' ) {ret.item = item2; throw new Error("Set second handicap"); }
+                } // endif
+            } // endif
+            // (props) => $IndexView.setErrorOnField(props, 0),
+        } catch (e) {
+            return {...ret, message: e.message};
+        }
+
+        return false;
+    }
+
+
+
+    public onCheckDateFields(props)
+    {
+        let ret : any = {message: ''};
+        try {
+            let form = $(props.item).closest('form');
+            let item1 = $("[data-js=ChkStartDate] input", form);
+            let item2 = $("[data-js=ChkEndDate] input", form);
+            let item3 = $("[data-js=StartDate]", form);
+
+            0||console.log( 'item1.val()', item2.prop('checked'), item2.val() );
+
+            if( !item1.prop('checked') && !item2.prop('checked') ) {ret.item = item3; throw new Error("Set start date or end date")};
+
+        } catch (e) {
+            return {...ret, message: e.message};
+        }
+
+        return false;
+    }
+
+
+
+    public setErrorOnField(inProps, isRemove)
+    {
+        if( isRemove )
+        {
+            let frmgrp = inProps.elem.closest('.js-form-group');
+            frmgrp.removeClass('has-error');
+            frmgrp.find('.js-error-icon').fadeOut(200);
+            frmgrp.find('.js-message').fadeOut(200);
+        }
+        else
+        {
+            let item = inProps.elem;
+            let form = item.closest('form');
+            let frmgrp = item.closest('.js-form-group');
+            frmgrp.removeClass('has-error');
+            frmgrp.find('.js-error-icon').fadeIn(200);
+            frmgrp.find('.js-message').fadeIn(200);
+
+            let fieldWrapp = item.closest('.js-form-group');
+            fieldWrapp.addClass('has-error');
+            fieldWrapp.find('.js-message').text(inProps.message);
+            item.focus();
+        } // endif
+    }
+
+
+
     private closeInfoMess()
     {
         InfoMessage.prevInfoMessage && InfoMessage.prevInfoMessage.close();
@@ -240,24 +353,43 @@ export class IndexView extends BaseView
 
 
 
-    private setErrorOnField(inProps)
+    private onNamesBlur(ee, inProps)
     {
-        let form = inProps.element.closest('form');
-        form.find('.js-form-group').removeClass('has-error');
-        // form.find('.js-error-icon').hide();
-        // form.find('.js-message').hide();
+        var $that = $(ee.target)
 
-        let fieldWrapp = inProps.element.closest('.js-form-group');
-        fieldWrapp.addClass('has-error');
-        fieldWrapp.find('.js-message').text(inProps.message);
-        inProps.element.focus();
-
-        inProps.element.on('blur', function()
+        let name1 = translit(inProps.names[0].value, 5);
+        let name2 = translit(inProps.names[1].value, 5);
+        if( name1 != '' && name2 != '' )
         {
-            $(this).off('blur');
-            // clearTimeout(self.T1wait);
-            $(this).closest('.js-form-group').removeClass('has-error');
-        });
-        // fieldWrapp.find('.js-error-icon').show();
+            if( $("[data-js=valueStor]", inProps.form).val() == 1 )
+            {
+                $("[data-js=Url]", inProps.form).val(name1.replace(" ", "-") + "-vs-" + name2.replace(" ", "-"));
+            } // endif
+        } // endif
+    }
+
+
+
+    private onFullNameBlur(ee, inProps)
+    {
+        var $that = $(ee.target)
+
+        let name = translit($that.val(), 5);
+        if( name != '' )
+        {
+            if( $("[data-js=valueStor]", inProps.form).val() == 2 )
+            {
+                $("[data-js=Url]", inProps.form).val(name.replace(" ", "-"));
+            } // endif
+        } // endif
+    }
+
+
+
+    private onlyDigits(ee)
+    {
+        var $that = $(ee.target);
+
+        if (!(ee.which==8 || ee.which==44 ||ee.which==45 ||ee.which==46 ||(ee.which>47 && ee.which<58))) return false;
     }
 }
