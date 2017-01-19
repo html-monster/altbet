@@ -77,9 +77,10 @@
 
 			tabs.eq(0).addClass('active');
 
-			// BM: tab_item onClick
+			// BM: tab_item onClick TODEL
 			$('.tab_item').on('click', 'event_container', function () {
 				if (checkbox.prop('checked')) {
+					0||console.log( '.tab_item .event_container click' );
 					var titles = $(this).find('.event-title .title');
 
 					tableLimitChangeData($(this), titles);
@@ -125,14 +126,14 @@
 			}
 			tabs.click(function () {
 				if (checkbox.prop('checked')) {
-					event_content.removeClass('active');
+					0||console.log( 'tabs.click()' );
+
+					// event_content.removeClass('active');
 					tabs.removeClass('active');
 					$(this).addClass('active');
-					// if($('.content_bet.active').length)
-						activeTraderClass.takeData($('.content_bet.active .event-content').eq($(this).index()));
-					// else
-					// 	activeTraderClass.takeData($('.wrapper_event_page'));
+					activeTraderClass.takeData($('.content_bet.active .event-content').eq($(this).index()));
 					activeTraderClass.spreaderClean(true);
+					ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: $('.active_trader').attr('id'), isMirror: $(this).index()})
 				}
 			});
 
