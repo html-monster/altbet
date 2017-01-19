@@ -10,7 +10,7 @@ import { SocketSubscribe } from "./SocketSubscribe";
 // import {globalData} from "../../ts/index";
 
 
-
+// старт подписок
 export class WebsocketModel
 {
     public static CALLBACK_MAINPAGE_EXCHANGES = "CMPE1";      // a main page receive data callback
