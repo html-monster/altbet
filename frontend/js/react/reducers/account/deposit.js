@@ -5,7 +5,8 @@ import {
 	DEPOSIT_QUANTITY_CHANGE,
 	DEPOSIT_PRICE_PLAN_CHANGE,
 	DEPOSIT_PERIOD_CHANGE,
-	DEPOSIT_FORM_SUBMIT
+	DEPOSIT_QUANTITY_VALIDATE,
+	DEPOSIT_SOCKET_MESSAGE
 } from "../../constants/ActionTypesDeposit.js";
 
 
@@ -35,8 +36,12 @@ export default function yourOrders(state = initialState, action)
 		case DEPOSIT_PERIOD_CHANGE:
 			return {...state, payYearly : action.payload};
 
-		case DEPOSIT_FORM_SUBMIT:
+		case DEPOSIT_QUANTITY_VALIDATE:
 			return {...state, sumValidation : action.payload};
+
+		case DEPOSIT_SOCKET_MESSAGE:
+			state.data.UserAssets.CurrentBalance = action.payload;
+			return {...state};
 
 		default:
 			return state

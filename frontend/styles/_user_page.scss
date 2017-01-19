@@ -57,6 +57,7 @@
   }
   .answer_message{
     font-size: 12px;
+    border: none !important;
     &.validation-summary-errors{  position: static;  }
   }
   .input--yoshiko .validation-summary-errors{  max-width: 265px;  }
@@ -197,7 +198,7 @@
         @include user_balance_color;
       }
     }
-    .deposit{
+    .funds{
       padding: 15px 0;
       h3{
         font-size: 20px;
@@ -205,11 +206,11 @@
       }
       span.label{
         display: block;
-        width: 51px;
-        height: 34px;
+        width: 50px;
+        height: 35px;
         position: absolute;
         left: 1px;
-        bottom: 1px;
+        top: 64px;
         line-height: 36px;
         text-align: center;
         border-radius: 0 0 0 4px;
@@ -243,7 +244,6 @@
         input{
           display: block;
           width: 300px;
-          margin-bottom: 10px;
           padding: 5px 10px;
           padding-left: 60px;
           border: 1px solid $main-bg;
@@ -432,7 +432,7 @@
             bottom: -10px;
           }
         }
-        span.label{  height: 37px;  bottom: 11px;  }
+        span.label{  height: 36px;  top: inherit;  bottom: 11px;  }
         .total{  padding-left: 55px;  }
         .total ~ label span{  padding-left: 50px;  }
         .valid{
