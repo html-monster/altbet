@@ -9,8 +9,9 @@ import configureStore from './store/configureStore';
 import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
 import EventPage from './containers/EventPage';
-import Sidebar from './components/Sidebar.jsx';
-import Deposit from './components/userPage/deposit.jsx';
+import Sidebar from './components/Sidebar';
+import Deposit from './components/userPage/Deposit';
+import Withdraw from './components/userPage/Withdraw';
 
 
 
@@ -48,6 +49,12 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
 			<Deposit />
 		</Provider>,
 		document.getElementById('deposit')
+	);
+	ReactDOM.render(
+		<Provider store={store}>
+			<Withdraw />
+		</Provider>,
+		document.getElementById('withdraw')
 	);
 }
 
