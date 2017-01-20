@@ -68,14 +68,12 @@ export class WebsocketModel
     };
 
 
-    public sendMessage()
+    public sendMessage(props)
     {
         let self = this;
-
+        0 || console.log('socket send props', props);
         if (self.ws) {
-            let messageBox = '{"MessageID":"e50e9ee3-0315-4f01-9316-335b19bd5d59","MessageType":"SubscribeRequest","Currency":"USD","Subscribe":true,"Symbol":{"Currency":"USD","Exchange":"FIRST","Name":"UAH\/USD"},"UserName":"testing@test.ua"}'; //document.getElementById('messageInput');
-            // self.ws.send(messageBox.value);
-            // messageBox.value = "";
+            self.ws.send(props);
         }
     }
 
@@ -225,3 +223,148 @@ export class WebsocketModel
         //$('#disconnectButton').attr("disabled", "disabled");
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$("#mp00").click(function (e) {
+    var obj : any = new Object();
+    obj.User = $('span.user-name').text();
+    obj.PageName = "MainPage";
+    obj.ExchangeName = $(".search #search").val();
+    obj.ActiveTrader = "0";
+    obj.CurrentOrders = "0";
+    var jsonString = JSON.stringify(obj);
+    ABpp.Websocket.sendMessage(jsonString);
+});
+
+$("#mp01").click(function (e) {
+    var obj : any = new Object();
+    obj.User = $('span.user-name').text();
+    obj.PageName = "MainPage";
+    obj.ExchangeName = $(".search #search").val();
+    obj.ActiveTrader = "0";
+    obj.CurrentOrders = "1";
+    var jsonString = JSON.stringify(obj);
+    ABpp.Websocket.sendMessage(jsonString);
+});
+
+$("#mp10").click(function (e) {
+    var obj : any = new Object();
+    obj.User = $('span.user-name').text();
+    obj.PageName = "MainPage";
+    obj.ExchangeName = $(".search #search").val();
+    obj.ActiveTrader = "1";
+    obj.CurrentOrders = "0";
+    var jsonString = JSON.stringify(obj);
+    ABpp.Websocket.sendMessage(jsonString);
+});
+
+$("#mp11").click(function (e) {
+    var obj : any = new Object();
+    obj.User = $('span.user-name').text();
+    obj.PageName = "MainPage";
+    obj.ExchangeName = $(".search #search").val();
+    obj.ActiveTrader = "1";
+    obj.CurrentOrders = "1";
+    var jsonString = JSON.stringify(obj);
+    ABpp.Websocket.sendMessage(jsonString);
+});
+//----------------------------------------------------------------------------
+$("#ep00").click(function (e) {
+    var obj : any = new Object();
+    obj.User = $('span.user-name').text();
+    obj.PageName = "EventPage";
+    obj.ExchangeName = $(".search #search").val();
+    obj.ActiveTrader = "0";
+    obj.CurrentOrders = "0";
+    var jsonString = JSON.stringify(obj);
+    ABpp.Websocket.sendMessage(jsonString);
+});
+
+$("#ep01").click(function (e) {
+    var obj : any = new Object();
+    obj.User = $('span.user-name').text();
+    obj.PageName = "EventPage";
+    obj.ExchangeName = $(".search #search").val();
+    obj.ActiveTrader = "0";
+    obj.CurrentOrders = "1";
+    var jsonString = JSON.stringify(obj);
+    ABpp.Websocket.sendMessage(jsonString);
+});
+
+$("#ep10").click(function (e) {
+    var obj : any = new Object();
+    obj.User = $('span.user-name').text();
+    obj.PageName = "EventPage";
+    obj.ExchangeName = $(".search #search").val();
+    obj.ActiveTrader = "1";
+    obj.CurrentOrders = "0";
+    var jsonString = JSON.stringify(obj);
+    ABpp.Websocket.sendMessage(jsonString);
+});
+
+$("#ep11").click(function (e) {
+    var obj : any = new Object();
+    obj.User = $('span.user-name').text();
+    obj.PageName = "EventPage";
+    obj.ExchangeName = $(".search #search").val();
+    obj.ActiveTrader = "1";
+    obj.CurrentOrders = "1";
+    var jsonString = JSON.stringify(obj);
+    ABpp.Websocket.sendMessage(jsonString);
+});
+//--------------------------------------------------------------------
+$("#op00").click(function (e) {
+    var obj : any = new Object();
+    obj.User = $('span.user-name').text();
+    obj.PageName = "OrderPage";
+    obj.ExchangeName = $(".search #search").val();
+    obj.ActiveTrader = "0";
+    obj.CurrentOrders = "0";
+    var jsonString = JSON.stringify(obj);
+    ABpp.Websocket.sendMessage(jsonString);
+});
+
+$("#op01").click(function (e) {
+    var obj : any = new Object();
+    obj.User = $('span.user-name').text();
+    obj.PageName = "OrderPage";
+    obj.ExchangeName = $(".search #search").val();
+    obj.ActiveTrader = "0";
+    obj.CurrentOrders = "1";
+    var jsonString = JSON.stringify(obj);
+    ABpp.Websocket.sendMessage(jsonString);
+});
+
+$("#op10").click(function (e) {
+    var obj : any = new Object();
+    obj.User = $('span.user-name').text();
+    obj.PageName = "OrderPage";
+    obj.ExchangeName = $(".search #search").val();
+    obj.ActiveTrader = "1";
+    obj.CurrentOrders = "0";
+    var jsonString = JSON.stringify(obj);
+    ABpp.Websocket.sendMessage(jsonString);
+});
+
+$("#op11").click(function (e) {
+    var obj : any = new Object();
+    obj.User = $('span.user-name').text();
+    obj.PageName = "OrderPage";
+    obj.ExchangeName = $(".search #search").val();
+    obj.ActiveTrader = "1";
+    obj.CurrentOrders = "1";
+    var jsonString = JSON.stringify(obj);
+    ABpp.Websocket.sendMessage(jsonString);
+});
