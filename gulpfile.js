@@ -188,8 +188,13 @@ gulp.task('clean', function() {
 gulp.task('build', gulp.series('clean', gulp.parallel('styles:assets', 'styles', 'js'), 'assets', 'fonts'));
 
 
-gulp.task('admin-watch', function () {
+gulp.task('watch-admin', function () {
     gulp.watch('frontend/admin_styles/**/*.*', gulp.series('styles-admin'));
+});
+
+gulp.task('watch-js-styles', function () {
+    gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
+    gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));
 });
 
 

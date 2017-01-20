@@ -44,13 +44,26 @@ export class SocketSubscribe
 
     /**
      * set active order for event page
-     * @param data
+     * @param props
      */
-    private setActiveOrder(data)
+    private setActiveOrder(props)
     {
-        this.subscribeParams[SocketSubscribe.EP_ACTIVE_ORDER] = { params: data };
+        this.subscribeParams[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
 
-        return {someparams: null};
+        props = {
+            User: ABpp.User.login,
+            PageName: 'EventPage',
+            ExchangeName: props.exchange,
+            ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
+            CurrentOrders: "0",
+        };
+        return JSON.stringify(props);
+        // obj.PageName = "OrderPage";
+        // obj.ExchangeName = $(".search #search").val();
+        // obj.ActiveTrader = "0";
+        // obj.CurrentOrders = "0";
+        // var jsonString = JSON.stringify(obj);
+        // ABpp.Websocket.sendMessage(jsonString);
     }
 
 
@@ -63,6 +76,8 @@ export class SocketSubscribe
     {
         let params = this.subscribeParams[SocketSubscribe.EP_ACTIVE_ORDER].params;
 
+
+        // filter right data for orders
         let activeOrders = null;
         for( let val of inData.ActiveOrders )
         {
@@ -70,6 +85,7 @@ export class SocketSubscribe
         } // endfor
 
 
+        // filter right data for ticks
         let bars = null;
         for( let val of inData.Bars )
         {
@@ -77,8 +93,6 @@ export class SocketSubscribe
         } // endfor
 
         // 0||console.debug( 'receiveActiveOrderFixData', inData, params, activeOrders );
-
-
         return {ActiveOrders: activeOrders, Bars: bars};
     }
 }

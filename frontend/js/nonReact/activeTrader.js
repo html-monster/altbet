@@ -122,8 +122,8 @@
 				tabs.each(function () {
 					$(this).text(title.eq(ii++).text());
 				});
-
 			}
+
 			tabs.click(function () {
 				if (checkbox.prop('checked')) {
 					0||console.log( 'tabs.click()' );
