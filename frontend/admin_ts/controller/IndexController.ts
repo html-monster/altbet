@@ -39,7 +39,9 @@ export class IndexController extends BaseController
         $('[data-js=btn-create]').click(e => $('.F1addExch').submit());
         $('.F1addExch').on('submit', function (e) { self.onAddExchSubmit(e, this); });
         $('[data-js=tabl-exch]').on('click', '.js-btn-crud[data-type=edit]', function (e) { self.onEditControlClick(e, this); });
-        $('[data-js=BtnDefAction]').on('click', function (e) { self.onEditControlClick(e, this); });
+        $('[data-js=tabl-exch]').on('click', '.js-btn-crud[data-type=del]', e => self.onDelControlClick(e));
+        // debug
+        // $('[data-js=BtnDefAction]').on('click', function (e) { self.onEditControlClick(e, this); });
     }
 
 
@@ -155,5 +157,50 @@ export class IndexController extends BaseController
         result => {
             messageBox({message: result.message, title: 'Warning', type: AlertBox.TYPE_WARN});
         });
+    }
+
+
+
+    private onDelControlClick(ee)
+    {
+        var $that = $(ee.target);
+        var $IndexView = this.IndexView;
+
+        var $Dialog = new Dialog({
+            TPLName: '#TPLmodalDialog',
+            target: '.js-mp-dialog',
+            render: true,
+            vars: {
+                title: 'Warning',
+                modalBody: 'Delete category “' + $that.data('name') + '” ?',
+                btnOkTitle: 'Delete',
+                btnCancelTitle: 'Cancel',
+                type: 'modal-danger',
+            },
+            callbackCancel: function() { $IndexView.endDeleteExch() },
+            callbackOK: function()
+            {
+                $IndexView.beginDeleteExch();
+
+                // var formData = new FormData();
+                // formData.set('url', '1');
+                // (new ExchangeModel).deleteCategory({url: $that.data('url'), name: $that.data('catname')}).then( result =>
+                // {
+                //     window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
+                //     $IndexView.endDelete();
+                //     location.href = MainConfig  .BASE_URL + result.url;
+                // },
+                // result => {
+                //     window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_ALERT, header: "Fail"});
+                //     $IndexView.setInfoMess();
+                //     // categoryEdit.setErrors({code: reuslt.code, message: reuslt.message});
+                //     // indexView.endDelete();
+                //     $Dialog.close();
+                // });
+
+                return false;
+            }
+        });
+
     }
 }

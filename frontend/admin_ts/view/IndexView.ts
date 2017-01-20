@@ -140,6 +140,16 @@ export class IndexView extends BaseView
     }
 
 
+
+    /**
+     * Before delete exch
+     */
+    public beginDeleteExch()
+    {
+        this.beginDelete();
+    }
+
+
     /**
      * Before save edit exchange
      */
@@ -163,6 +173,13 @@ export class IndexView extends BaseView
 
 
     public endDelete()
+    {
+        (new BodyView).hideLoading(100);
+    }
+
+
+
+    public endDeleteExch()
     {
         (new BodyView).hideLoading(100);
     }
