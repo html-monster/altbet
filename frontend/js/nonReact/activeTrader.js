@@ -133,7 +133,9 @@
 					$(this).addClass('active');
 					activeTraderClass.takeData($('.content_bet.active .event-content').eq($(this).index()));
 					activeTraderClass.spreaderClean(true);
-					ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: $('.active_trader').attr('id'), isMirror: $(this).index()})
+
+					let id = $('.active_trader').attr('id').replace("trader_", "");
+					ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: id, isMirror: $(this).index()})
 				}
 			});
 

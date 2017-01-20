@@ -6,24 +6,25 @@
 
 
 
-export default class Dialog
+export class AlertBox
 {
-    // private vars;
-    // private TPLName;
-    // private target;
-    // private afterInit;
-    // private callbackOK;
-    // private callbackCancel;
+    public static TYPE_WARN = 'modal-warning';
+    public static TYPE_INFO = 'modal-default';
 
     private options = {
-            TPLName: '',
-            target: '',
-            render: false,
-            vars: null,
+            TPLName: '#TPLmodalDialog',
+            target: '.js-mp-dialog',
+            render: true,
+            vars: {
+                title: 'Info',
+                btnOkTitle: 'OK',
+                noCancel: true,
+            },
             afterInit: null,
             callbackCancel: null,
             callbackOK: null,
         };
+
 
 
     constructor(props?)
@@ -31,7 +32,7 @@ export default class Dialog
         if( props )
         {
             this.saveProps(props);
-            if (props.render) this.render();
+            if (this.options.render) this.render();
         } // endif
     }
 
@@ -50,9 +51,9 @@ export default class Dialog
 
 
         $(this.options.target).html(html);
-        $("[data-js=cancel], [data-js=BtnClose]", this.options.target).click(function(e) { self.onCloseClick(e, this) });
+        // $("[data-js=cancel]", this.options.target).click(function(e) { self.onCloseClick(e, this) });
         $("[data-js=wrapper]", this.options.target).click(function(e) { self.onWrapperClick(e, this) });
-        $("[data-js=ok]", this.options.target).click(function(e) { self.onOkClick(e, this) });
+        $("[data-js=ok], [data-js=BtnClose]", this.options.target).click(function(e) { self.onOkClick(e, this) });
 
 
         $("[data-js=wrapper]", this.options.target).fadeIn(400);
@@ -72,13 +73,8 @@ export default class Dialog
 
     private saveProps(inProps)
     {
-        this.options = Object.assign({}, this.options, inProps);
-
-        // if (inProps.TPLName) this.options.TPLName = inProps.TPLName;
-        // if (inProps.target) this.options.target = inProps.target;
-        // if (inProps.vars) this.options.vars = inProps.vars;
-        // if (inProps.callbackOK) this.options.callbackOK = inProps.callbackOK;
-        // if (inProps.callbackCancel) this.options.callbackCancel = inProps.callbackCancel;
+        let vars = {...this.options.vars, ...inProps.vars};
+        this.options = {...this.options, ...inProps, ...{vars: vars}};
     }
 
 
@@ -104,9 +100,22 @@ export default class Dialog
     {
         e.stopPropagation();
 
+        let flag = true;
+        this.options.callbackOK && (flag = this.options.callbackOK());
 
-        if (this.options.callbackOK)
-            if (this.options.callbackOK(event))
-                $("[data-js=wrapper]", this.options.target).fadeOut(200);
+        flag && $("[data-js=wrapper]", this.options.target).fadeOut(200);
     }
+}
+
+
+
+export function messageBox({message, title = 'Info', type = AlertBox.TYPE_INFO})
+{
+    let vars : any = {
+        title: title && 'Info',
+        modalBody: message,
+        type: type,
+    };
+
+    (new AlertBox({vars: vars}));
 }

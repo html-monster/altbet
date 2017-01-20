@@ -18,6 +18,14 @@ export class InfoMessage
     private callbackOK;
     private callbackCancel;
 
+    private options = {
+        TPLName: '#TPLinfoMessage',
+        target: '.js-infomessage',
+        vars: null,
+        callbackOK: null,
+        callbackCancel: null,
+    };
+
     private T1infoMess;
 
 
@@ -41,24 +49,24 @@ export class InfoMessage
 
         if( inProps ) this.saveProps(inProps);
 
-        switch( this.vars.type )
+        switch( this.options.vars.type )
         {
-            case InfoMessage.TYPE_SUCCESS : this.vars.icon = "fa-check";
-                this.vars.alertType = "alert-success";
+            case InfoMessage.TYPE_SUCCESS : this.options.vars.icon = "fa-check";
+                this.options.vars.alertType = "alert-success";
                 break;
-            case InfoMessage.TYPE_ALERT : this.vars.icon = "fa-warning";
-                this.vars.alertType = "alert-warning";
+            case InfoMessage.TYPE_ALERT : this.options.vars.icon = "fa-warning";
+                this.options.vars.alertType = "alert-warning";
                 break;
-            default: this.vars.icon = "fa-info";
+            default: this.options.vars.icon = "fa-info";
         }
 
 
-        var source = $(this.TPLName).html();
+        var source = $(this.options.TPLName).html();
         var template = Handlebars.compile(source);
-        var html = template(this.vars);
+        var html = template(this.options.vars);
 
 
-        let mountPoint = $(this.target);
+        let mountPoint = $(this.options.target);
         mountPoint.hide();
         mountPoint.html(html);
         mountPoint.fadeIn(400);
@@ -72,17 +80,13 @@ export class InfoMessage
     public close()
     {
         clearTimeout(this.T1infoMess);
-        $(this.target).children().fadeOut(200);
+        $(this.options.target).children().fadeOut(200);
     }
 
 
 
     private saveProps(inProps)
     {
-        if (inProps.TPLName) this.TPLName = inProps.TPLName;
-        if (inProps.target) this.target = inProps.target;
-        if (inProps.vars) this.vars = inProps.vars;
-        if (inProps.callbackOK) this.callbackOK = inProps.callbackOK;
-        if (inProps.callbackCancel) this.callbackCancel = inProps.callbackCancel;
+        this.options = {...this.options, ...inProps, vars: inProps.vars};
     }
 }

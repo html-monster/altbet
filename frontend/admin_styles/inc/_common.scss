@@ -18,3 +18,5 @@
 .loading-inline { @include iblock; }
 
 .alert-message { @include nblock }
+
+.info-mess-abs { position: fixed; right: 5px; top: 5px; z-index: 1; }

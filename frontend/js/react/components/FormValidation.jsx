@@ -14,36 +14,16 @@ export default class FormValidation extends React.Component{
 	{
 		super();
 
-
-		// const {renderContent, ...rest} = props;
 		this.state = {
 			submited: false,
 			values: {},
-			errors: {}
+			errors: {},
+			inputErrors: {},
+			errorMessage: '',
+			successMessage: ''
 		};
-		// console.log(this);
-		// props.formActions.actionOnFormInitial(props.formId);
 	}
-	// componentDidMount(){
-	// 	console.log(this.props);
-	// }
-	// componentWillMount(){
-	// 	this.props.formActions.actionOnFormInitial(this.props.formId)
-	// }
-	//
-	// shouldComponentUpdate(){
-	// 	console.log(this.props.formActions[this.props.formId]);
-	// 	if(!this.props.formActions[this.props.formId])
-	// 		return false;
-	//
-	// 	return true;
-	// }
 
-	// componentDidMount(){
-	// 	setTimeout(() => {
-	// 		console.log(this.props);
-	// 	}, 500)
-	// }
 	setValues(value)
 	{
 		let state = this.state;
@@ -58,40 +38,58 @@ export default class FormValidation extends React.Component{
 		state.errors = {...state.errors, ...value}
 	}
 
-	onSubmit(e)
+	serverValidation(data)
+	{
+		const {error, message, ...rest} = data;
+		let state = this.state;
+		if(error){
+			state.errorMessage = error;
+			this.setState(state);
+		}
+		if(message){
+			state.successMessage = message;
+			this.setState(state);
+		}
+		if(JSON.stringify(rest) != '{}'){
+			state.inputErrors = rest;
+			this.setState(state);
+		}
+		// console.log(JSON.stringify(rest));
+	}
+
+	onSubmit(serverValidation, e)
 	{
 		e.preventDefault();
 		let props = this.props;
 		let state = this.state;
 
 		state.submited = true;
+		state.errorMessage = '';
+		state.successMessage = '';
 		this.setState(state);
 		for (let elem in state.errors) {
 			if(state.errors[elem]) return false;
 		}
-		// setTimeout(()=>{console.log(props.formValidation)}, 500)
-		props.handleSubmit(this.state.values);
+		props.handleSubmit(this.state.values, serverValidation || null);
 	}
 
 	render()
 	{
+		const state = this.state;
+		const {renderContent, ...rest} = this.props;
+		const onSubmit = this.props.serverValidation ? this.onSubmit.bind(this, ::this.serverValidation) : ::this.onSubmit;
 		const input = {
-			submited: this.state.submited,
+			submited: state.submited,
+			errors: state.inputErrors,
 			setValues: ::this.setValues,
 			setErrors: ::this.setErrors,
 		};
-		const {renderContent, ...rest} = this.props;
-		// console.log(this.props);
-		// console.log(rest);
 		return(
-			// this.state.renderContent(this.state.data)
-			// handleSubmit: this.onSubmit.bind(this)
-			renderContent({...rest, input: input, handleSubmit: ::this.onSubmit})
+			renderContent({...rest, input: input, handleSubmit: onSubmit, error: state.errorMessage, successMessage: state.successMessage})
 		);
 	}
 }
 
-	// formId: React.PropTypes.string.isRequired,
 FormValidation.propTypes = {
 	renderContent: React.PropTypes.any.isRequired,
 	handleSubmit: React.PropTypes.func,

@@ -111,7 +111,7 @@ export class FormCheckers
         var actionMessage;  // mess from item
         var actionItem;     // item for error hint attach
 
-        props.beforeSubmit && props.beforeSubmit();
+        props.beforeSubmit && props.beforeSubmit(props);
 
 
         $(frmObj).find("[data-field-check]:not(.nocheck)").each(function()

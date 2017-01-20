@@ -12,12 +12,13 @@ export class DateLocalization
      * @param inDate String
      * @return unixtimestamp
      */
-    public fromSharp(inDate, inReturn = 1)
+    public fromSharp(inDate, inReturn = 1, props = {TZOffset: true})
     {
         let retval ;
         try {
             // "/Date(1489287600000+0000)/"
-            retval = this.currentTimestamp = inDate.match(/(\d+)/i)[1] * 1 - (new Date()).getTimezoneOffset() * 60 * 1000;
+            retval = this.currentTimestamp = inDate.match(/(\d+)/i)[1] * 1;
+            if (props.TZOffset) retval -= (new Date()).getTimezoneOffset() * 60 * 1000;
             // retval = this.currentTimestamp = inDate.replace('/Date(', '').replace(')/', '') * 1 - (new Date()).getTimezoneOffset() * 60 * 1000;
         } catch (e) {
             retval = undefined;

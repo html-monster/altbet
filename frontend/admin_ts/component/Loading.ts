@@ -73,31 +73,33 @@ export class Loading
 
         DiLoading.find('img').attr('src', src).one('load', function()
         {
-            // align outer left
-            if( inProps.outerAlign == Loading.ALIGN_OUTER_LEFT ) left = inElm.offset().left - DiLoading.width() + inProps.offsetX;
-            // align outer right
-            else if( inProps.outerAlign == Loading.ALIGN_OUTER_RIGHT ) left = inElm.offset().left + inElm.outerWidth() + inProps.offsetX + 2;
-
-            // align right
-            else if( inProps.align == Loading.ALIGN_RIGHT ) left = inElm.offset().left + inElm.outerWidth() - DiLoading.width() + inProps.offsetX;
-            // align center
-            else if( inProps.align == Loading.ALIGN_CENTER ) left = inElm.offset().left + (inElm.outerWidth() - DiLoading.outerWidth()) / 2;
-            // align left
-            else if( inProps.align == Loading.ALIGN_LEFT ) left = inElm.offset().left + inProps.offsetX;
-
-
-            // vertical align
-            if( inProps.valign == 'top' ) top = inElm.offset().top + inProps.offsetY;
-            else if( inProps.valign == 'middle' ) top = inElm.offset().top + ((inElm.outerHeight() - DiLoading.height()) / 2);
-
             if( inProps.position == Loading.POS_ABSOLUTE )
             {
+                // align outer left
+                if( inProps.outerAlign == Loading.ALIGN_OUTER_LEFT ) left = inElm.offset().left - DiLoading.width() + inProps.offsetX;
+                // align outer right
+                else if( inProps.outerAlign == Loading.ALIGN_OUTER_RIGHT ) left = inElm.offset().left + inElm.outerWidth() + inProps.offsetX + 2;
+
+                // align right
+                else if( inProps.align == Loading.ALIGN_RIGHT ) left = inElm.offset().left + inElm.outerWidth() - DiLoading.width() + inProps.offsetX;
+                // align center
+                else if( inProps.align == Loading.ALIGN_CENTER ) left = inElm.offset().left + (inElm.outerWidth() - DiLoading.outerWidth()) / 2;
+                // align left
+                else if( inProps.align == Loading.ALIGN_LEFT ) left = inElm.offset().left + inProps.offsetX;
+
+
+                // vertical align
+                if( inProps.valign == 'top' ) top = inElm.offset().top + inProps.offsetY;
+                else if( inProps.valign == 'middle' ) top = inElm.offset().top + ((inElm.outerHeight() - DiLoading.height()) / 2);
+
                 DiLoading.css({left: left, top: top});
 
             // position inline
             } else {
                 // align outer right
                 if( inProps.outerAlign == Loading.ALIGN_OUTER_RIGHT && inProps.offsetX ) $css = {marginLeft: inProps.offsetX};
+                // align outer left
+                else if( inProps.outerAlign == Loading.ALIGN_OUTER_LEFT && inProps.offsetX ) $css = {marginRight: inProps.offsetX};
                 else ;
 
 

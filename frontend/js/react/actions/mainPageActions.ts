@@ -232,8 +232,6 @@ class Actions extends BaseActions
         {
             let state = getState().mainPage;
 
-            inProps.id = inProps.id.replace("trader_", "");
-
             for( var val of state.marketsData )
             {
                 if( inProps.id == `${val.Symbol.Exchange}_${val.Symbol.Name}_${val.Symbol.Currency}` ) break;
