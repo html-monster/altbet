@@ -24,7 +24,8 @@ export class WebsocketModel
     private SocketSubscribe = null;
     private callbacks = {};
     public socketData: any; // must be private, only for debug !!!!!!!!!!!!!
-    private lastSendObj = null; // save send object if socket not connected
+    private lastErrorSendObj = null;    // save send object if socket not connected
+    private lastSendObj = null;         // save send last object
 
 
     public connectSocketServer()
@@ -75,10 +76,26 @@ export class WebsocketModel
     public sendMessage(props)
     {
         let self = this;
-        0 || console.log('socket send props', props);
+
+        if( props.sendLastObj )
+        {
+            props = {...this.lastSendObj, ...props};
+        } // endif
+
+        if(__DEV__)
+        {
+            console.groupCollapsed("Socket send props");
+            console.info(props);
+            console.groupEnd();
+        }
+
         if (self.ws) {
-            // self.ws.send(JSON.stringify(props));
-            self.ws.send(props);
+            try {
+                self.ws.send(JSON.stringify(props));
+                this.lastSendObj = props;
+            } catch (e) {
+                this.lastErrorSendObj = props;
+            }
         }
     }
 
@@ -144,7 +161,7 @@ export class WebsocketModel
 
         let data = JSON.parse(evt.data);
         this.socketData = data; // for debug only
-console.log(data);
+// console.log(data);
 
         if (data.Result) defaultMethods.showWarning(data.Result);
         if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn)) window.ee.emit('yourOrders.update', data.CurrentOrders);//myOrdersControllerClass.updateData(data.CurrentOrders);
@@ -206,7 +223,15 @@ console.log(data);
         let self = this;
         console.log('socket open ts');
 
-        self.ws.send($('span.user-name').text());
+        // self.ws.send($('span.user-name').text());
+        // if was a failed requests before open
+        if( this.lastErrorSendObj )
+        {
+            self.ws.send(JSON.stringify(this.lastErrorSendObj));
+            this.lastErrorSendObj = null;
+        } // endif
+
+
         //appendMessage('* Connection open<br/>');
         //$('#messageInput').attr("disabled", "");
         //$('#sendButton').attr("disabled", "");

@@ -5,7 +5,8 @@
 
 export class SocketSubscribe
 {
-    public static EP_ACTIVE_ORDER = 'EP_ACTIVE_ORDER';
+    public static EP_ACTIVE_ORDER = '1';
+    public static TRADER_ON = '2';
 
     private subscribeParams = {};
 
@@ -20,6 +21,7 @@ export class SocketSubscribe
         switch( inType )
         {
             case SocketSubscribe.EP_ACTIVE_ORDER : return this.setActiveOrder(inData);
+            case SocketSubscribe.TRADER_ON : return this.setTraderOn(inData);
             default: return ;
         }
     }
@@ -57,13 +59,24 @@ export class SocketSubscribe
             ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
             CurrentOrders: "0",
         };
-        return JSON.stringify(props);
-        // obj.PageName = "OrderPage";
-        // obj.ExchangeName = $(".search #search").val();
-        // obj.ActiveTrader = "0";
-        // obj.CurrentOrders = "0";
-        // var jsonString = JSON.stringify(obj);
-        // ABpp.Websocket.sendMessage(jsonString);
+        return props;
+    }
+
+
+
+    /**
+     * set active trader on/off
+     * @param props
+     */
+    private setTraderOn(props)
+    {
+        // this.subscribeParams[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
+
+        props = {
+            ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
+            sendLastObj: true,
+        };
+        return props;
     }
 
 
