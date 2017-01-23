@@ -122,21 +122,14 @@ export default class ActiveTrader extends React.Component {
 
 	render()
 	{
-		var {activeTabMirror} = this.props.cmpData;
+		var {activeTabMirror, activeExchange} = this.props.cmpData;
+		// 0||console.log( 'activeExchange', activeExchange );
 		let data = this.state.data;
 		let copyData = $.extend(true, {}, data);
 		let isMirror = this.state.isMirror;
-		let className = '';
-		if( activeTabMirror == 1 )
-		{
-			var active =  'active';
-			var activeM =  '';
-		}
-		else
-		{
-			var active =  '';
-			var activeM =  'active';
-		} // endif
+		let className, $active, $activeM;
+		className = $active = $activeM = '';
+		( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
 
         let gainLoss = data && data.GainLoss ? data.GainLoss : '';
         if (data) {
@@ -150,8 +143,8 @@ export default class ActiveTrader extends React.Component {
 
 		return <div className="active_trader" style={{display: 'none'}}>
 			<div className="event_title">
-				<div className="event_name" onClick={() => this.props.actions.actionOnTabMirrorClick(false)}></div>
-				<div className="event_name reverse" onClick={() => this.props.actions.actionOnTabMirrorClick(true)}></div>
+				<div className={$active + " event_name"} onClick={() => this.props.actions.actionOnTabMirrorClick(false)}></div>
+				<div className={$activeM + " event_name reverse"} onClick={() => this.props.actions.actionOnTabMirrorClick(true)}></div>
 			</div>
 			<table className="info">
 				<tbody>

@@ -188,6 +188,7 @@ class Actions extends BaseActions
                 activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);
             } // endif
 
+            0||console.log( 'inProps, val.Symbol.Exchange', inProps, inProps.name, inProps.isMirror );
 
             dispatch({
                 type: ON_POS_PRICE_CLICK,
@@ -252,8 +253,8 @@ class Actions extends BaseActions
      */
     public actionOnActiveSymbolChanged(inProps, context)
     {
-        return (dispatch, getState) =>
-        {
+        // return (dispatch, getState) =>
+        // {
             let state = getState().mainPage;
 
             for( var val of state.marketsData )
@@ -262,15 +263,12 @@ class Actions extends BaseActions
                 if( inProps.id == val.Symbol.Exchange ) break;
             } // endfor
 
-            0||console.log( 'inProps, val.Symbol.Exchange', inProps, val.Symbol.Exchange );
-
-
-            this.exchangeSide({name: val.Symbol.Exchange,
+        return this.exchangeSide({name: val.Symbol.Exchange,
                 isMirror: inProps.isMirror,
                 title: [val.Symbol.HomeName, val.Symbol.AwayName],
                 symbol: `${val.Symbol.Exchange}_${val.Symbol.Name}_${val.Symbol.Currency}`,
             });
-        };
+        // };
     }
 }
 

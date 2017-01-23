@@ -84,7 +84,7 @@ class Sidebar extends React.Component
 				<div className="tab_content order-content">
 
 					{/* // BM: --------------------------------------------------- TRADE SLIP ---*/}
-					<TradeSlip/>
+					<TradeSlip data={this.props.sidebar} />
 
 					{/* // BM: --------------------------------------------------- YOUR ORDERS ---*/}
 					<EventOrders/>
