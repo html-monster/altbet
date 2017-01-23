@@ -33,13 +33,14 @@ export default class ExchangeModel
                     try
                     {
                         // emulate
-                        data[0].Symbol.TypeEvent = 2;
+                        // data[0].Symbol.TypeEvent = 2;
                         // -------
 
 
                         // prepate struct
-                        data = self.prepareEditData(data);
                         __LDEV__&&console.debug( 'data AJAX', data );
+                        data = self.prepareEditData(data);
+                        __LDEV__&&console.debug( 'prepareEditData', data );
 
 
                         //         fullname: 'Buffalo Bills_vs_New England Patriots',
@@ -321,7 +322,8 @@ export default class ExchangeModel
 
 
         // status
-        if( data.data.Symbol.Status.toLowerCase() == 'new' )
+        // if( data.data.Symbol.Status.toLowerCase() == 'new' )
+        if( data.data.Symbol.Status == 0 )
         {
             data.data.Symbol.isUrlShow = true;
         }
