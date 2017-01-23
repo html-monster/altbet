@@ -20,31 +20,33 @@ class Sidebar extends React.Component
 		this.state = {globalData: globalData};
 	}
 
+
 	render()
 	{
 		let userIdentity = this.state.globalData.userIdentity;
 		return <div className="left_order">
 			<div className="wrapper">
 				<div className="tabs">
-						<span className="tab active">
-							Trade Slip
-							<label className={'trader ' + (userIdentity == 'True' ? '' : 'disabled')}>
-								{
-										(this.state.globalData.tradeOn) ?
-											<input type="checkbox" name="limit" className="limit" defaultChecked="true"/>
-										:
-											<input type="checkbox" name="limit" className="limit" disabled={userIdentity != 'True'}/>
-								}
-								<span>
-									Active bettor
-									<span className="help">
-										<span className="help_message">
-											<strong>The Active Bettor interface offers some slick, highly sophisticated, super user friendly, never offered before in the betting world, functionalities, so fasten your seatbelts and off you go to the market - fast!</strong>
-										</span>
-									</span>
-								</span>
-							</label>
-						</span>
+                    <span className="tab active">
+                        Trade Slip
+                        <label className={'trader ' + (userIdentity == 'True' ? '' : 'disabled')}>
+                            {
+                                    (this.state.globalData.tradeOn) ?
+                                        <input type="checkbox" name="limit" className="limit" defaultChecked="true"/>
+                                    :
+                                        <input type="checkbox" name="limit" className="limit" disabled={userIdentity != 'True'}/>
+                            }
+                            <span>
+                                Active bettor
+                                <span className="help">
+                                    <span className="help_message">
+                                        <strong>The Active Bettor interface offers some slick, highly sophisticated, super user friendly, never offered before in the betting world, functionalities, so fasten your seatbelts and off you go to the market - fast!</strong>
+                                    </span>
+                                </span>
+                            </span>
+                        </label>
+                    </span>
+
 					<span className="tab">
 							Your Orders
 							<label className="auto_trade">

@@ -77,11 +77,6 @@ export class WebsocketModel
     {
         let self = this;
 
-        if( props.sendLastObj )
-        {
-            props = {...this.lastSendObj, ...props};
-        } // endif
-
         if(__DEV__)
         {
             console.groupCollapsed("Socket send props");
@@ -128,7 +123,7 @@ export class WebsocketModel
      */
     public sendSubscribe(inData, inType)
     {
-        let params = this.SocketSubscribe.subscribe(inData, inType);
+        let params = this.SocketSubscribe.subscribe({data: inData, type: inType, lastObj: this.lastSendObj});
         this.sendMessage(params);
 
         return params;

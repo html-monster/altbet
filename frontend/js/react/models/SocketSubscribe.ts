@@ -5,6 +5,7 @@
 
 export class SocketSubscribe
 {
+    public static MP_SYMBOLS_AND_ORDERS = '3';
     public static EP_ACTIVE_ORDER = '1';
     public static TRADER_ON = '2';
 
@@ -12,16 +13,15 @@ export class SocketSubscribe
 
 
     /**
-     *
-     * @param inData
-     * @param inType
+     * Set socket subscribe params
      */
-    public subscribe(inData, inType)
+    public subscribe({data, type, lastObj = null})
     {
-        switch( inType )
+        switch( type )
         {
-            case SocketSubscribe.EP_ACTIVE_ORDER : return this.setActiveOrder(inData);
-            case SocketSubscribe.TRADER_ON : return this.setTraderOn(inData);
+            case SocketSubscribe.MP_SYMBOLS_AND_ORDERS : return this.setSymbolsAndOrders(data);
+            case SocketSubscribe.EP_ACTIVE_ORDER : return this.setActiveOrder(data);
+            case SocketSubscribe.TRADER_ON : return this.setTraderOn(lastObj);
             default: return ;
         }
     }
@@ -45,6 +45,26 @@ export class SocketSubscribe
 
 
     /**
+     * set SymbolsAndOrders for main page
+     * @param props
+     */
+    private setSymbolsAndOrders(props)
+    {
+        this.subscribeParams[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
+
+        props = {
+            User: ABpp.User.login,
+            PageName: 'MainPage',
+            ExchangeName: props.exchange,
+            ActiveTrader: "0", //ABpp.config.tradeOn ? "1" : "0",
+            CurrentOrders: "0",
+        };
+        return props;
+    }
+
+
+
+    /**
      * set active order for event page
      * @param props
      */
@@ -56,7 +76,7 @@ export class SocketSubscribe
             User: ABpp.User.login,
             PageName: 'EventPage',
             ExchangeName: props.exchange,
-            ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
+            ActiveTrader: "0", //ABpp.config.tradeOn ? "1" : "0",
             CurrentOrders: "0",
         };
         return props;
@@ -70,11 +90,12 @@ export class SocketSubscribe
      */
     private setTraderOn(props)
     {
+        // todo: доделать exchange
         // this.subscribeParams[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
 
-        props = {
+        props = { ...props,
+            ExchangeName: props.exchange,
             ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
-            sendLastObj: true,
         };
         return props;
     }

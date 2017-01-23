@@ -7,6 +7,7 @@ import {
 import { WebsocketModel } from '../models/Websocket';
 import { Common } from '../common/Common';
 import BaseActions from './BaseActions';
+import {SocketSubscribe} from "../models/SocketSubscribe";
 
 
 // var __LDEV__ = true;
@@ -19,6 +20,8 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
+            ABpp.Websocket.sendSubscribe({exchange: null}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
+
             ABpp.Websocket.subscribe((inData) =>
             {
                 let state = getState().mainPage.marketsData;
