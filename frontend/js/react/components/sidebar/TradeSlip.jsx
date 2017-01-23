@@ -14,9 +14,8 @@ class TradeSlip extends React.Component
 	constructor(props)
 	{
 		super(props);
+		// 0||console.log( 'TradeSlip props', props );
 
-		0||console.log( 'TradeSlip props', props );
-		// ABpp.addController('TradeSlip', this);
 		this.actions = props.defaultOrderActions;
 	}
 

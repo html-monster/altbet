@@ -23,6 +23,7 @@ class Actions extends BaseActions
             let data = getState().mainPage.marketsData["0"];
 
             ABpp.Websocket.sendSubscribe({exchange: data.Symbol.Exchange}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
+            // ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, isMirror: false});
             setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, isMirror: false}), 700);
 
             ABpp.Websocket.subscribe((inData) =>
@@ -147,20 +148,28 @@ class Actions extends BaseActions
 
     public exchangeSideClick(inProps)
     {
-        // set init
-        ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror});
-        ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
+        return (dispatch, getState) =>
+        {
+            // set init
+            ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror});
+            ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
 
-        // call common part
-        return this.exchangeSide(inProps);
+            // call common part
+            let ret = this.exchangeSide(inProps);
+            dispatch({
+                type: ret.type,
+                payload: ret.data,
+            });
+        };
     }
 
 
 
     private exchangeSide(inProps)
     {
-        return (dispatch, getState) =>
-        {
+        // return (dispatch, getState) =>
+        // {
+        // };
             // console.debug( 'exchangeSideClick', getState());
 
             if( $('.left_order .tab input.limit').prop('checked') )
@@ -188,13 +197,16 @@ class Actions extends BaseActions
                 activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);
             } // endif
 
-            0||console.log( 'inProps, val.Symbol.Exchange', inProps, inProps.name, inProps.isMirror );
+            // 0||console.log( 'inProps, val.Symbol.Exchange', inProps, inProps.name, inProps.isMirror );
 
-            dispatch({
+            // dispatch({
+            //     type: ON_POS_PRICE_CLICK,
+            //     payload: [inProps.name, inProps.isMirror]
+            // });
+            return {
                 type: ON_POS_PRICE_CLICK,
-                payload: [inProps.name, inProps.isMirror]
-            });
-        };
+                data: [inProps.name, inProps.isMirror]
+            };
     }
 
 
@@ -208,10 +220,15 @@ class Actions extends BaseActions
             {
                 let data = state.marketsData["0"];
 
-                this.exchangeSide({name: data.Symbol.Exchange,
+                let ret = this.exchangeSide({name: data.Symbol.Exchange,
                     isMirror: false,
                     title: [data.Symbol.HomeName, data.Symbol.AwayName],
                     symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
+                });
+
+                dispatch({
+                    type: ret.type,
+                    payload: ret.data,
                 });
             }
         };
@@ -253,8 +270,8 @@ class Actions extends BaseActions
      */
     public actionOnActiveSymbolChanged(inProps, context)
     {
-        // return (dispatch, getState) =>
-        // {
+        return (dispatch, getState) =>
+        {
             let state = getState().mainPage;
 
             for( var val of state.marketsData )
@@ -263,12 +280,18 @@ class Actions extends BaseActions
                 if( inProps.id == val.Symbol.Exchange ) break;
             } // endfor
 
-        return this.exchangeSide({name: val.Symbol.Exchange,
+            let ret = this.exchangeSide({name: val.Symbol.Exchange,
                 isMirror: inProps.isMirror,
                 title: [val.Symbol.HomeName, val.Symbol.AwayName],
                 symbol: `${val.Symbol.Exchange}_${val.Symbol.Name}_${val.Symbol.Currency}`,
             });
-        // };
+
+
+            dispatch({
+                type: ret.type,
+                payload: ret.data,
+            });
+        };
     }
 }
 
