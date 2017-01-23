@@ -36,9 +36,19 @@ class MainPage extends BaseController
      * activates exchange click action
      * @public
      */
-    exchangeSideClick(inProps)
+    // exchangeSideClick(inProps)
+    // {
+    //     this.props.actions.exchangeSideClick(inProps);
+    // }
+
+
+    /**
+     * get current exchange
+     * @public
+     */
+    getExchange()
     {
-        this.props.actions.exchangeSideClick(inProps);
+        0||console.log( 'getExchange this.props', this.props );
     }
 
 
@@ -47,7 +57,7 @@ class MainPage extends BaseController
         var self = this;
 
         // register global action
-        // ABpp.registerAction('MainPage.firstExchangeActivate', () => this.lastExchangeActivate());
+        ABpp.registerAction('MainPage.getExchange', () => this.getExchange());
 
         // subscribe on tader on/off
         /** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, function() {self.props.actions.OnOffBasicMode(ABpp.config.basicMode)});

@@ -58,7 +58,7 @@ export default class ExchangeItem extends React.Component
                 <span className="symbol_name hidden">{symbol}</span>
             </div>
             <div className="table not-sort wave waves-effect waves-button"> {/*id="exchange_table"*/}
-                <div className={"event-content" + $classActiveNM} data-symbol={symbol}
+                <div className={"event-content" + $classActiveNM} data-symbol={symbol} data-id={data.Symbol.Exchange} data-mirror="0"
                     onClick={() => {ABpp.config.tradeOn && this.props.actions.exchangeSideClick({name: data.Symbol.Exchange,
                         isMirror: false,
                         title: [data.Symbol.HomeName, data.Symbol.AwayName],
@@ -95,7 +95,7 @@ export default class ExchangeItem extends React.Component
                 </div>
 
 
-                <div className={"event-content revers" + $classActiveM} data-symbol={symbol + "_mirror"}
+                <div className={"event-content revers" + $classActiveM} data-symbol={symbol + "_mirror"} data-id={data.Symbol.Exchange} data-mirror="1"
                     onClick={() => {ABpp.config.tradeOn && this.props.actions.exchangeSideClick({name: data.Symbol.Exchange,
                         isMirror: true,
                         title: [data.Symbol.HomeName, data.Symbol.AwayName],

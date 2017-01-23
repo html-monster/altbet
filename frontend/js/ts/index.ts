@@ -45,7 +45,9 @@ export class ABpp
     public baseUrl: "";                 // add before urls
 
 
+    // action from components
     public actions : any = {};
+
 
     public User: User = null;                   // user entity
     public Websocket: WebsocketModel = null;    // websocket object

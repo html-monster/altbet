@@ -9,7 +9,24 @@ export class SocketSubscribe
     public static EP_ACTIVE_ORDER = '1';
     public static TRADER_ON = '2';
 
-    private subscribeParams = {};
+    private subscribeParams = {
+            User: "",
+            PageName: '',
+            ExchangeName: "",
+            ActiveTrader: "0", //ABpp.config.tradeOn ? "1" : "0",
+            CurrentOrders: "0",
+        };
+    private subscribeData = {};     // data from subscribers
+
+
+
+    constructor()
+    {
+        // init subscribe data
+        this.subscribeParams.User = ABpp.User.login;
+        this.subscribeParams.PageName = ABpp.config.currentPage;
+    }
+
 
 
     /**
