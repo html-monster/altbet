@@ -3,6 +3,19 @@
 	img { width: 100%; }
 }
 
+.main-header {
+	a.link-logo { @include box(b,0); float: left; width: 230px; height: 50px; padding: 5px 0; background-color: $color3Brown; @include calign;
+	  img { height: 100%; }
+	}
+	.navbar { background-color: $color3Brown;
+      a { color: #fff;  }
+      .user-menu a { transition: background-color .5s }
+      .btn { @include box(i,r); margin: -9px 0 -5px 5px; width: auto; }
+	}
+}
+
+.navbar-nav>.user-menu .user-image { font-size: 24px; }
+
 
 .main-sidebar { padding-top: 0; } // убрать если будет полоса заголовка
 section.sidebar { overflow: visible }
@@ -22,6 +35,9 @@ section.sidebar { overflow: visible }
       .btn[data-type=del] { @include iblock }
       .controls { margin-right: -106px; }
     }
+  }
+  .category-icon:not(.noicon) { position: relative; @include main_page_event_icon;
+    &:before { content: ''; @include box(b,a,24 22 px); margin-top: 3px; background: url(../Images/sprite.svg) no-repeat; }
   }
   .controls { @include box(n,a); margin-right: -80px; padding-left: 10px; right: 0; top: -2px; z-index: 1000;
     span { @include iblock; margin: 0; padding: 0; width: 22px; height: 22px; }

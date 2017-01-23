@@ -15,5 +15,6 @@ export class MainConfig
     public static AJAX_CATEGORY_ADD = 'Category/AddCategory';
     public static AJAX_CATEGORY_EDIT = 'Category/ChangeCategory';
     public static AJAX_EXCH_ADD = 'Home/CreateExchange';
-    public static AJAX_EXCH_EDIT = 'Home/EditExchange';
+    public static AJAX_EXCH_GET = 'Home/EditExchange';
+    public static AJAX_EXCH_EDIT = 'Home/ChangeExchange';
 }

@@ -17,8 +17,12 @@ import {translit} from "../component/translit.js";
 export class IndexView extends BaseView
 {
     private InfoMessage = null;
+    private InfoMessageAbs = null;
     private Loading: Loading = null;
     private T1errmess = null;
+    private T2esm = null; // edit success unhighlight
+    private esmTr = null; // edit success tr
+    private DialogEdit = null; // edit form dialog
 
 
     constructor()
@@ -27,6 +31,19 @@ export class IndexView extends BaseView
 
         this.Loading = new Loading();
     }
+
+
+
+    public init()
+    {
+        this.setInfoMess();
+        this.initAddForm();
+
+        // if success addition
+        let data = window.ADpp.User.getFlash('AddExchSucc');
+        data && this.highlightAddedExch(data);
+    }
+
 
 
     /**
@@ -123,20 +140,46 @@ export class IndexView extends BaseView
     }
 
 
+
+    /**
+     * Before delete exch
+     */
+    public beginDeleteExch()
+    {
+        this.beginDelete();
+    }
+
+
     /**
      * Before save edit exchange
      */
-    public beginSave()
+    public beginSave(props)
     {
-        var self = this;
+       var self = this;
 
-        this.closeInfoMess();
-        (new BodyView).showLoading($('.js-mp-dialog [data-js=ok]'), {pic: 2, outerAlign: BodyView.ALIGN_OUTER_LEFT, offsetX: -8});
+        let items = $('.js-message');
+        for(let ii = 0, countii = items.length; ii < countii; ii++ )
+        {
+            self.setErrorOnField({elem: $(items[ii])}, 1);
+        } // endfor
+
+
+        0||console.log( 'props', props );
+        let form = props.form;
+
+        this.Loading.showLoading({targetElm: $('[data-js=loading]', form), element: $("[data-js=btn-create]", form), pic: 2, outerAlign: Loading.ALIGN_OUTER_LEFT, offsetX: 4, position: Loading.POS_INLINE});
     }
 
 
 
     public endDelete()
+    {
+        (new BodyView).hideLoading(100);
+    }
+
+
+
+    public endDeleteExch()
     {
         (new BodyView).hideLoading(100);
     }
@@ -159,7 +202,15 @@ export class IndexView extends BaseView
     }
 
 
+
     public endAddExch()
+    {
+        this.Loading.hideLoading();
+    }
+
+
+
+    public endEditExch()
     {
         this.Loading.hideLoading();
     }
@@ -168,7 +219,7 @@ export class IndexView extends BaseView
 
     public renderEditForm(data, callbackOk)
     {
-        new Dialog({
+        this.DialogEdit = new Dialog({
             TPLName: '#TPLeditExchangeDialog',
             target: '.js-mp-dialog',
             render: true,
@@ -176,7 +227,7 @@ export class IndexView extends BaseView
                 title: `Edit exchange “${data.name}”`,
                 btnOkTitle: 'Save',
                 btnCancelTitle: 'Cancel',
-                data: data.data,
+                data: data.data.Symbol,
                 // type: 'modal-default',
             },
             afterInit: (dialogContext, wrapper) =>
@@ -184,6 +235,7 @@ export class IndexView extends BaseView
                 (new RadioBtns({
                     activeClass: "btn-success",
                     target: "[data-js=radio-btn]",
+                    defaultIndex: data.data.Symbol.TypeEvent == 1 ? 0 : 1,
                     callbacks: [() => $("[data-js=EdFullname]", wrapper).slideUp(200), () => $("[data-js=EdFullname]", wrapper).slideDown(400)],
                 })).apply();
 
@@ -211,6 +263,11 @@ export class IndexView extends BaseView
             callbackCancel: function() { /*indexView.endDelete()*/ },
             callbackOK: callbackOk
         });
+
+
+        // clear highlights
+        $("[data-js=tabl-exch] tr").removeClass("added edited animated");
+        clearTimeout(this.T2esm);
     }
 
 
@@ -230,15 +287,15 @@ export class IndexView extends BaseView
             message = inProps.message;
         } // endif
 
-        // let alert = $(".js-alert", inProps.form);
-        let alert = $('.F1addExch .js-info-mess');
+        0||console.log( 'inProps', inProps );
+        let alert = $('.js-info-mess', inProps.form);
         alert.hide();
 
         // alert.find('.js-text').text(message);
 
         self.InfoMessage = new InfoMessage({
             TPLName: '#TPLinfoMessage',
-            target: '.F1addExch .js-info-mess',
+            target: $('.js-info-mess', inProps.form),
             render: true,
             vars: {
                 header: "Alert",
@@ -247,7 +304,7 @@ export class IndexView extends BaseView
             }
         });
 
-        alert.fadeIn(400, () => $('body').animate({scrollTop: 0 }, 500));
+        if (!inProps.noScroll) alert.fadeIn(400, () => $('body').animate({scrollTop: 0 }, 500));
 
 
 
@@ -257,11 +314,24 @@ export class IndexView extends BaseView
 
 
 
-    public highlightAddedExch(id)
+    public highlightAddedExch(data)
     {
-        let tr = $("[data-js=tabl-exch] " + `[data-id=${id}]`);
-        tr.addClass('added').attr('title', 'added');
-        setTimeout(() => tr.addClass('animated').attr('title', ''), 5000);
+        this.InfoMessage = new InfoMessage({
+            TPLName: '#TPLinfoMessageAbs',
+            target: "[data-js=DiInfoMP]",
+            render: true,
+            vars: {
+                header: "Info",
+                text: data.message,
+                type: InfoMessage.TYPE_SUCCESS,
+            }
+        });
+
+        let $tr = $("[data-js=tabl-exch] " + `[data-id=${data.id}]`);
+        $tr.addClass('added').attr('title', 'added');
+        setTimeout(() => $tr.addClass('animated').attr('title', ''), 5000);
+
+        if( $tr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: $tr.offset().top - 50 }, 500);
     }
 
 
@@ -342,6 +412,46 @@ export class IndexView extends BaseView
             fieldWrapp.find('.js-message').text(inProps.message);
             item.focus();
         } // endif
+    }
+
+
+
+    public setEditSuccess(inProps)
+    {
+        0||console.log( 'inProps inProps', inProps );
+
+        this.InfoMessage = new InfoMessage({
+            TPLName: '#TPLinfoMessageAbs',
+            target: "[data-js=DiInfoMP]",
+            render: true,
+            vars: {
+                header: "Info",
+                text: inProps.message,
+                type: InfoMessage.TYPE_SUCCESS,
+            }
+        });
+
+
+        let $table = $("[data-js=tabl-exch]");
+        let $tr = $(`[data-id=${inProps.Exchange}]`, $table);
+        $("[data-js=TD-FullName]", $tr).text(inProps.FullName);
+        $("[data-js=TD-HomeName]", $tr).text(inProps.HomeName);
+        $("[data-js=TD-HomeHandicap]", $tr).text(inProps.HomeHandicap);
+        $("[data-js=TD-AwayName]", $tr).text(inProps.AwayName);
+        $("[data-js=TD-AwayHandicap]", $tr).text(inProps.AwayHandicap);
+        $("[data-js=TD-StartDate]", $tr).text(inProps.StartDate);
+        $("[data-js=TD-EndDate]", $tr).text(inProps.EndDate);
+        $("[data-js=TD-UrlExchange]", $tr).text(inProps.UrlExchange);
+
+        this.DialogEdit.close();
+
+        this.esmTr = $tr;
+        $tr.addClass('edited');
+        clearTimeout(this.T2esm);
+        this.T2esm = setTimeout(() => $tr.addClass('animated'), 4000);
+
+
+        if( $tr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: $tr.offset().top - 50 }, 500);
     }
 
 
