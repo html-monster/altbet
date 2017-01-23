@@ -67,15 +67,17 @@ export class SocketSubscribe
      */
     private setSymbolsAndOrders(props)
     {
-        this.subscribeParams[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
+        this.subscribeData[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
 
         props = {
             User: ABpp.User.login,
             PageName: 'MainPage',
             ExchangeName: props.exchange,
-            ActiveTrader: "0", //ABpp.config.tradeOn ? "1" : "0",
+            ActiveTrader: "1", //ABpp.config.tradeOn ? "1" : "0",
             CurrentOrders: "0",
         };
+
+        this.subscribeParams = props;
         return props;
     }
 
@@ -87,7 +89,7 @@ export class SocketSubscribe
      */
     private setActiveOrder(props)
     {
-        this.subscribeParams[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
+        this.subscribeData[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
 
         props = {
             User: ABpp.User.login,
@@ -96,6 +98,8 @@ export class SocketSubscribe
             ActiveTrader: "0", //ABpp.config.tradeOn ? "1" : "0",
             CurrentOrders: "0",
         };
+
+        this.subscribeParams = props;
         return props;
     }
 
@@ -108,12 +112,14 @@ export class SocketSubscribe
     private setTraderOn(props)
     {
         // todo: доделать exchange
-        // this.subscribeParams[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
+        // this.subscribeData[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
 
         props = { ...props,
             ExchangeName: props.exchange,
             ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
         };
+
+        this.subscribeParams = props;
         return props;
     }
 
@@ -125,7 +131,7 @@ export class SocketSubscribe
      */
     private receiveActiveOrderFixData(inData)
     {
-        let params = this.subscribeParams[SocketSubscribe.EP_ACTIVE_ORDER].params;
+        let params = this.subscribeData[SocketSubscribe.EP_ACTIVE_ORDER].params;
 
 
         // filter right data for orders

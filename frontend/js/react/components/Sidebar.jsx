@@ -7,7 +7,7 @@ import EventOrders from './sidebar/YourOrders.jsx';
 // import ActiveTrader from './sidebar/ActiveTrader.jsx';
 import TradeSlip from './sidebar/TradeSlip.jsx';
 // import {OddsConverter} from '../models/oddsConverter/oddsConverter.ts';
-import * as sidebarActions from '../actions/sidebarActions.js';
+import sidebarActions from '../actions/sidebarActions.ts';
 
 // new OddsConverter('implied_probability');
 // export default
@@ -16,26 +16,40 @@ class Sidebar extends React.Component
 	constructor(props)
 	{
 		super();
+		0||console.log( 'this.props.sidebar', props );
 
 		this.state = {globalData: globalData};
+        // props.actions.actionOnLoad();
+        this.FLAG_LOAD = true;
 	}
+
+
+	componentDidMount()
+    {
+        ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, (props) => this.props.actions.actionOnActiveSymbolChanged(props));
+        0||console.log( 'ABpp.User.settings.tradeOn', ABpp.User.settings.tradeOn );
+        this.props.actions.actionOnTraderOnChange(ABpp.User.settings.tradeOn);
+    }
 
 
 	render()
 	{
 		let userIdentity = this.state.globalData.userIdentity;
+        var {traderOn} = this.props.sidebar;
+        if( this.FLAG_LOAD  )
+        {
+            traderOn = ABpp.User.settings.tradeOn;
+            this.FLAG_LOAD = false;
+        } // endif
+
+
 		return <div className="left_order">
 			<div className="wrapper">
 				<div className="tabs">
                     <span className="tab active">
                         Trade Slip
-                        <label className={'trader ' + (userIdentity == 'True' ? '' : 'disabled')}>
-                            {
-                                    (this.state.globalData.tradeOn) ?
-                                        <input type="checkbox" name="limit" className="limit" defaultChecked="true"/>
-                                    :
-                                        <input type="checkbox" name="limit" className="limit" disabled={userIdentity != 'True'}/>
-                            }
+                        <label htmlFor="ChkLimit" className={'trader ' + (userIdentity == 'True' ? '' : 'disabled')}>
+                            <input type="checkbox" id="ChkLimit" name="limit" className="limit" ref="chkTraderOn" checked={traderOn} onChange={(ee) => this.props.actions.actionOnTraderOnChange(ee.target.checked)} disabled={userIdentity != 'True'}/>
                             <span>
                                 Active bettor
                                 <span className="help">
@@ -188,6 +202,6 @@ export default connect(state => ({
 		sidebar: state.sidebar,
 	}),
 	dispatch => ({
-		sidebarActions: bindActionCreators(sidebarActions, dispatch),
+		actions: bindActionCreators(sidebarActions, dispatch),
 	})
 )(Sidebar)

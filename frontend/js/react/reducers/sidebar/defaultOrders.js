@@ -5,12 +5,14 @@ import {
 	ON_DEFAULT_ORDER_DELETE,
 	ON_DEFAULT_ORDER_TYPE_CHANGE,
 	ON_DEFAULT_ORDER_CREATE,
-	ON_DEFAULT_ORDER_AJAX_SEND,
+	// ON_DEFAULT_ORDER_AJAX_SEND,
+	ON_TAB_MIRROR_CHANGE,
 } from '../../constants/ActionTypesDefaultOrders.js';
 // console.log(ABpp);
 
 	// mode: ABpp.config.basicMode,
 const initialState = {
+	activeTabMirror: 1,
 	orderNewData: [
 		// {
 		// 	"ID":"BBB-NNN-12312016_BBB-NNN_USD",
@@ -133,6 +135,10 @@ export default function tradeSlip(state = initialState, action)
 
 		case ON_DEFAULT_ORDER_CREATE:
 			return {...state, orderNewData: action.payload};
+
+		case ON_TAB_MIRROR_CHANGE:
+		0||console.log( 'isMirror', action.payload );
+			return {...state, activeTabMirror: action.payload.isMirror ? 2 : 1};
 
 		default:
 			return state

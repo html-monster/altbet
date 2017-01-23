@@ -23,6 +23,7 @@ class Actions extends BaseActions
             let data = getState().mainPage.marketsData["0"];
 
             ABpp.Websocket.sendSubscribe({exchange: data.Symbol.Exchange}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
+            setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, isMirror: false}), 700);
 
             ABpp.Websocket.subscribe((inData) =>
             {
@@ -148,6 +149,7 @@ class Actions extends BaseActions
     {
         // set init
         ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror});
+        ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
 
         // call common part
         return this.exchangeSide(inProps);
@@ -229,7 +231,7 @@ class Actions extends BaseActions
 
 
 
-    public OnOffTraider(inMode, context)
+    public actionOnTraiderOnChanged(inMode, context)
     {
         return (dispatch, getState) =>
         {
@@ -248,7 +250,7 @@ class Actions extends BaseActions
      * @param inProps
      * @param context
      */
-    public setActiveSymbol(inProps, context)
+    public actionOnActiveSymbolChanged(inProps, context)
     {
         return (dispatch, getState) =>
         {
@@ -256,8 +258,11 @@ class Actions extends BaseActions
 
             for( var val of state.marketsData )
             {
-                if( inProps.id == `${val.Symbol.Exchange}_${val.Symbol.Name}_${val.Symbol.Currency}` ) break;
+                // if( inProps.id == `${val.Symbol.Exchange}_${val.Symbol.Name}_${val.Symbol.Currency}` ) break;
+                if( inProps.id == val.Symbol.Exchange ) break;
             } // endfor
+
+            0||console.log( 'inProps, val.Symbol.Exchange', inProps, val.Symbol.Exchange );
 
 
             this.exchangeSide({name: val.Symbol.Exchange,
