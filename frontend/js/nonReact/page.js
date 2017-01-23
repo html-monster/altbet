@@ -90,6 +90,10 @@ $(document).ready(function () {
 	(function showPass () {
 		let input = $('.input__field');
 
+		input.each(function () {
+			if($(this).val()) $(this).parent().addClass('input--filled');
+		});
+
 		input.change(function () {
 			if($(this).val() == '') $(this).parent().removeClass('input--filled');
 			else $(this).parent().addClass('input--filled');

@@ -3,10 +3,6 @@
  */
 
 import React from 'react';
-// import { bindActionCreators } from 'redux';
-// import { connect } from 'react-redux';
-//
-// import * as actions from '../../actions/formValidation';
 
 export default class InputValidation extends React.Component{
 	constructor(props)
@@ -45,7 +41,7 @@ export default class InputValidation extends React.Component{
 			state.meta.error = error;
 			props.input.setErrors({[state.meta.inputId]: error});
 		}
-		console.log(nextProps.input.errors);
+		// console.log(nextProps.input.errors);
 		return true;
 	}
 
@@ -128,12 +124,4 @@ InputValidation.propTypes = {
 	renderContent: React.PropTypes.any.isRequired,
 };
 
-// export default connect(
-// 	state => ({
-// 		// meta: state.inputValidation
-// 	}),
-// 	dispatch => ({
-// 		actions: bindActionCreators(actions, dispatch),
-// 	})
-// )(InputValidation)
 

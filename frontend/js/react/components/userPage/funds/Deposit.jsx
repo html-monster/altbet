@@ -6,9 +6,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 
-import NetellerForm from './depositForms/NetellerForm';
-import EcoPayzForm from './depositForms/EcoPayzForm';
-import * as actions from '../../actions/userPage/depositActions.js';
+import NetellerForm from './transactionForms/NetellerForm';
+import EcoPayzForm from './transactionForms/EcoPayzForm';
+import * as actions from '../../../actions/userPage/depositActions';
 
 class Deposit extends React.Component{
 	constructor()
@@ -46,20 +46,12 @@ class Deposit extends React.Component{
 			this.setState({toggle: 'Hide'});
 	}
 
-	// showResults = values =>
-	// new Promise(resolve => {
-	// 	setTimeout(() => {  // simulate server latency
-	// 		window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
-	// 		resolve()
-	// 	}, 500)
-	// });
-
 	render()
 	{
 		const { data, plan, payYearly, depositQuantity, pricePlan, sumValidation } = this.props.deposit;
 		const actions = this.props.actions;
 
-		return <div className="deposit_container">
+		return <div className="tab_item funds">
 			<h3>Add funds</h3>
 			<span className="account_balance">You currently have <span className="value">${Math.round10(data.UserAssets.CurrentBalance, -2)}</span> in your account</span>
 			<div className="quantity_control">
@@ -220,7 +212,7 @@ class Deposit extends React.Component{
 									{/*<input className="input__field--yoshiko number cvv" id="cvv" type="tel" maxLength="4"/>*/}
 									{/*<span className="validation-summary-errors">{}</span>*/}
 								</span>
-								<input type="submit" defaultValue={'Submit'}/>
+								<input type="submit" className="wave btn" defaultValue={'Submit'}/>
 							</div>
 						</form>
 					</div>
@@ -243,7 +235,7 @@ class Deposit extends React.Component{
 									<span className="label">$</span>
 									<span className="validation-summary-errors">{}</span>
 								</span>
-								<input type="submit" defaultValue={'Submit'} />
+								<input type="submit" className="wave btn" defaultValue={'Submit'} />
 							</div>
 							<input type="hidden" name="plan" value={plan}/>
 						</form>
