@@ -9,7 +9,7 @@ export class SocketSubscribe
     public static EP_ACTIVE_ORDER = '1';
     public static TRADER_ON = '2';
 
-    private subscribeParams = {
+    private subscribeParams = { // last subscribe params
             User: "",
             PageName: '',
             ExchangeName: "",
@@ -34,13 +34,15 @@ export class SocketSubscribe
      */
     public subscribe({data, type, lastObj = null})
     {
+        let ret;
         switch( type )
         {
-            case SocketSubscribe.MP_SYMBOLS_AND_ORDERS : return this.setSymbolsAndOrders(data);
-            case SocketSubscribe.EP_ACTIVE_ORDER : return this.setActiveOrder(data);
-            case SocketSubscribe.TRADER_ON : return this.setTraderOn(lastObj);
+            case SocketSubscribe.MP_SYMBOLS_AND_ORDERS : ret = this.setSymbolsAndOrders(data); break;
+            case SocketSubscribe.EP_ACTIVE_ORDER : ret = this.setActiveOrder(data); break;
+            case SocketSubscribe.TRADER_ON : ret = this.setTraderOn(data); break;
             default: return ;
         }
+        return this.subscribeParams = ret;
     }
 
 
@@ -67,17 +69,16 @@ export class SocketSubscribe
      */
     private setSymbolsAndOrders(props)
     {
-        this.subscribeData[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
+        this.subscribeData[SocketSubscribe.MP_SYMBOLS_AND_ORDERS] = { params: props };
 
-        props = {
+        props = { ...this.subscribeParams,
             User: ABpp.User.login,
             PageName: 'MainPage',
             ExchangeName: props.exchange,
-            ActiveTrader: "1", //ABpp.config.tradeOn ? "1" : "0",
-            CurrentOrders: "0",
+            ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
+            // CurrentOrders: "0",
         };
 
-        this.subscribeParams = props;
         return props;
     }
 
@@ -91,15 +92,14 @@ export class SocketSubscribe
     {
         this.subscribeData[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
 
-        props = {
+        props = { ...this.subscribeParams,
             User: ABpp.User.login,
             PageName: 'EventPage',
             ExchangeName: props.exchange,
-            ActiveTrader: "0", //ABpp.config.tradeOn ? "1" : "0",
-            CurrentOrders: "0",
+            ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
+            // CurrentOrders: "0",
         };
 
-        this.subscribeParams = props;
         return props;
     }
 
@@ -114,12 +114,11 @@ export class SocketSubscribe
         // todo: доделать exchange
         // this.subscribeData[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
 
-        props = { ...props,
-            ExchangeName: props.exchange,
-            ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
+        props = { ...this.subscribeParams,
+            ExchangeName: props.exchange ? props.exchange : this.subscribeParams.ExchangeName,
+            ActiveTrader: props.tradeOn ? "1" : "0",
         };
 
-        this.subscribeParams = props;
         return props;
     }
 

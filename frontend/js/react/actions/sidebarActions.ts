@@ -44,9 +44,9 @@ class Actions extends BaseActions
 					titles = event_container.eq(0).find('.event-title .title'),
 					executedOrders = $('.wrapper_event_page .executed_orders');
 
-			// ABpp.Websocket.sendSubscribe({exchange: data.Symbol.Exchange}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
-			0||console.log( 'getState().sidebar.activeExchange', getState().sidebar.activeExchange );
-                
+			ABpp.Websocket.sendSubscribe({tradeOn: isChecked}, SocketSubscribe.TRADER_ON);
+			// 0||console.log( 'getState().sidebar.activeExchange', getState().sidebar.activeExchange );
+
 			if( isChecked )
 			{
 

@@ -42,14 +42,14 @@ class MainPage extends BaseController
     // }
 
 
-    /**
-     * get current exchange
-     * @public
-     */
-    getExchange()
-    {
-        0||console.log( 'getExchange this.props', this.props );
-    }
+    // /**
+    //  * get current exchange
+    //  * @public
+    //  */
+    // getExchange()
+    // {
+    //     0||console.log( 'getExchange this.props', this.props );
+    // }
 
 
     componentDidMount()
@@ -57,7 +57,7 @@ class MainPage extends BaseController
         var self = this;
 
         // register global action
-        ABpp.registerAction('MainPage.getExchange', () => this.getExchange());
+        // ABpp.registerAction('MainPage.getExchange', () => this.getExchange());
 
         // subscribe on tader on/off
         /** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, function() {self.props.actions.OnOffBasicMode(ABpp.config.basicMode)});

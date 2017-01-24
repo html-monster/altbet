@@ -30,7 +30,8 @@ export default class PageMyPos extends React.Component
         });
 
         window.ee.addListener('myPosOrder.update', (newData) =>
-				{
+        {
+            0||console.log( 'newData', newData );
           newData = Object.assign(this.state.data, {positionData: newData});
           this.setState(newData);
         });

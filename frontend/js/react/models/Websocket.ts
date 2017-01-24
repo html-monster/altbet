@@ -23,7 +23,7 @@ export class WebsocketModel
     private ws = null;
     private SocketSubscribe = null;
     private callbacks = {};
-    public socketData: any; // must be private, only for debug !!!!!!!!!!!!!
+    private socketData: any = null;
     private lastErrorSendObj = null;    // save send object if socket not connected
     private lastSendObj = null;         // save send last object
 
@@ -86,8 +86,8 @@ export class WebsocketModel
 
         if (self.ws) {
             try {
-                self.ws.send(JSON.stringify(props));
                 this.lastSendObj = props;
+                self.ws.send(JSON.stringify(props));
             } catch (e) {
                 this.lastErrorSendObj = props;
             }

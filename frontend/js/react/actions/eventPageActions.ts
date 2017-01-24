@@ -29,7 +29,7 @@ class Actions extends BaseActions
                 // if( !activeOrders || JSON.stringify(inActiveOrders.Orders) != JSON.stringify(activeOrders.Orders) || false
                 if( !activeOrders || JSON.stringify(inActiveOrders) != JSON.stringify(activeOrders) || false
                     /*JSON.stringify(inBars) != JSON.stringify(bars)*/ )
-    __DEV__&&console.debug( 'changed 11111', inActiveOrders, inBars,  activeOrders, bars );
+    __DEV__&&console.debug( 'changed socket', inActiveOrders, inBars,  activeOrders, bars );
                 {
                     dispatch({
                         type: ON_SOCKET_MESSAGE,

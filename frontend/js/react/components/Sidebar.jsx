@@ -16,18 +16,30 @@ class Sidebar extends React.Component
 	constructor(props)
 	{
 		super();
-		0||console.log( 'this.props.sidebar', props );
+		// 0||console.log( 'this.props.sidebar', props );
 
 		this.state = {globalData: globalData};
         // props.actions.actionOnLoad();
         this.FLAG_LOAD = true;
+
+
+        // allow AT
+        if( ABpp.config.currentPage != ABpp.CONSTS.PAGE_MYPOS )
+        {
+            this.isAllowAT = true;
+        }
+        else
+        {
+            this.isAllowAT = false;
+            ABpp.config.tradeOn = false;
+        } // endif
 	}
 
 
 	componentDidMount()
     {
         ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, (props) => this.props.actions.actionOnActiveSymbolChanged(props));
-        0||console.log( 'ABpp.User.settings.tradeOn', ABpp.User.settings.tradeOn );
+        // 0||console.log( 'ABpp.User.settings.tradeOn', ABpp.User.settings.tradeOn );
         this.props.actions.actionOnTraderOnChange(ABpp.User.settings.tradeOn);
     }
 
@@ -38,8 +50,9 @@ class Sidebar extends React.Component
         var {traderOn} = this.props.sidebar;
         if( this.FLAG_LOAD  )
         {
-            traderOn = ABpp.User.settings.tradeOn;
+            traderOn = this.isAllowAT ? ABpp.User.settings.tradeOn : false;
             this.FLAG_LOAD = false;
+            0||console.log( 'traderOn, ABpp.config.tradeOn', traderOn, ABpp.config.tradeOn );
         } // endif
 
 
@@ -48,17 +61,19 @@ class Sidebar extends React.Component
 				<div className="tabs">
                     <span className="tab active">
                         Trade Slip
-                        <label htmlFor="ChkLimit" className={'trader ' + (userIdentity == 'True' ? '' : 'disabled')}>
-                            <input type="checkbox" id="ChkLimit" name="limit" className="limit" ref="chkTraderOn" checked={traderOn} onChange={(ee) => this.props.actions.actionOnTraderOnChange(ee.target.checked)} disabled={userIdentity != 'True'}/>
-                            <span>
-                                Active bettor
-                                <span className="help">
-                                    <span className="help_message">
-                                        <strong>The Active Bettor interface offers some slick, highly sophisticated, super user friendly, never offered before in the betting world, functionalities, so fasten your seatbelts and off you go to the market - fast!</strong>
+                        { this.isAllowAT &&
+                            <label htmlFor="ChkLimit" className={'trader ' + (userIdentity == 'True' ? '' : 'disabled')}>
+                                <input type="checkbox" id="ChkLimit" name="limit" className="limit" ref="chkTraderOn" checked={traderOn} onChange={(ee) => this.props.actions.actionOnTraderOnChange(ee.target.checked)} disabled={userIdentity != 'True'}/>
+                                <span>
+                                    Active bettor
+                                    <span className="help">
+                                        <span className="help_message">
+                                            <strong>The Active Bettor interface offers some slick, highly sophisticated, super user friendly, never offered before in the betting world, functionalities, so fasten your seatbelts and off you go to the market - fast!</strong>
+                                        </span>
                                     </span>
                                 </span>
-                            </span>
-                        </label>
+                            </label>
+                        }
                     </span>
 
 					<span className="tab">
@@ -84,7 +99,7 @@ class Sidebar extends React.Component
 				<div className="tab_content order-content">
 
 					{/* // BM: --------------------------------------------------- TRADE SLIP ---*/}
-					<TradeSlip data={this.props.sidebar} />
+					<TradeSlip data={{...this.props.sidebar, isAllowAT: this.isAllowAT}} />
 
 					{/* // BM: --------------------------------------------------- YOUR ORDERS ---*/}
 					<EventOrders/>
