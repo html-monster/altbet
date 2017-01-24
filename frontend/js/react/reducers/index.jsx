@@ -7,7 +7,7 @@ import sidebar from './sidebarReducer';
 import tradeSlip from './sidebar/defaultOrders';
 import yourOrders from './sidebar/yourOrders';
 import deposit from './account/deposit';
-import inputValidation from './formValidation/inputValidation';
+// import inputValidation from './formValidation/inputValidation';
 import formValidation from './formValidation';
 import { reducer as reduxFormReducer } from 'redux-form';
 
@@ -20,6 +20,6 @@ export default combineReducers({
 	yourOrders,
 	deposit,
 	form: reduxFormReducer,
-	inputValidation,
+	// inputValidation,
 	formValidation
 });
