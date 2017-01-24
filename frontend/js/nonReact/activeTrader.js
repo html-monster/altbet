@@ -2,9 +2,9 @@
 	constructor(){
 		var content = $('.content');
 
-		// $('.left_order .tab label').click(function (e) {
-		// 	e.stopPropagation();
-		// });
+		$('.left_order .tab.js-tab2 label').click(function (e) {
+            e.stopPropagation();
+		});
 		if($('.wrapper_event_page').length || $('.my_position_tab').length)
 			$('.active_trader .event_title').hide();
 

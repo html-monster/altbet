@@ -40,7 +40,7 @@ class Sidebar extends React.Component
     {
         ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, (props) => this.props.actions.actionOnActiveSymbolChanged(props));
         // 0||console.log( 'ABpp.User.settings.tradeOn', ABpp.User.settings.tradeOn );
-        this.props.actions.actionOnTraderOnChange(ABpp.User.settings.tradeOn);
+        this.props.actions.actionOnTraderOnChange(this.isAllowAT ? ABpp.User.settings.tradeOn : false);
     }
 
 
@@ -52,7 +52,6 @@ class Sidebar extends React.Component
         {
             traderOn = this.isAllowAT ? ABpp.User.settings.tradeOn : false;
             this.FLAG_LOAD = false;
-            0||console.log( 'traderOn, ABpp.config.tradeOn', traderOn, ABpp.config.tradeOn );
         } // endif
 
 
@@ -76,7 +75,7 @@ class Sidebar extends React.Component
                         }
                     </span>
 
-					<span className="tab">
+					<span className="tab js-tab2">
 							Your Orders
 							<label className="auto_trade">
 								{

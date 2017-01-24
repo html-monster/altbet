@@ -620,10 +620,10 @@ class orderClass{
 	 * скрывает и показывает информацию при отсутсвие ордеров в сайдбаре
 	 */
 	static showInfo () {
-		if($('#order .default_orders').children().length > 1)
-			$('#default_order_info').hide();
-		else
-			$('#default_order_info').show();
+		// if($('#order .default_orders').children().length > 1)
+		// 	$('#default_order_info').hide();
+		// else
+		// 	$('#default_order_info').show();
 	}
 
 	/**

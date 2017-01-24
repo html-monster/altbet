@@ -93,7 +93,7 @@ export default class DefaultOrders extends React.Component{
 	render()
 	{
 		let data = this.props.data;
-		0||console.log( 'data', data );
+
 		return <AnimateOnUpdate
 				component="div"
 				className="default_orders"
