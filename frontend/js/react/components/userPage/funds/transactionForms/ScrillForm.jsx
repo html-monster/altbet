@@ -2,7 +2,7 @@
  * Created by Htmlbook on 13.01.2017.
  */
 
-import FormValidation from '../../formValidation';
+import FormValidation from '../../../formValidation';
 
 const ScrillForm = <form>
 	<div className="container">

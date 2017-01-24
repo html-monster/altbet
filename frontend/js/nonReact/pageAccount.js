@@ -136,86 +136,87 @@ class accountClass{
 		}();
 
         // BM: balanceAnimation
-		this.balanceAnimation = function () {
-			let element = $('.balance span'),
-					elementVal = $('.balance strong'),
-					elementMapVal = $('.color_map span'),
-					value = [],
-					data = {},
-					profitPositive;
+		accountClass.balanceAnimation();
+	}
+	static balanceAnimation() {
+		let element = $('.balance span'),
+			elementVal = $('.balance strong'),
+			elementMapVal = $('.color_map span'),
+			value = [],
+			data = {},
+			profitPositive;
 
-			let animate = function (options) {
-				var start = Date.now(); // сохранить время начала
+		let animate = function (options) {
+			var start = Date.now(); // сохранить время начала
 
-				requestAnimationFrame(function tick() {
-					var timePassed = Date.now() - start;
-					var progress = timePassed / options.duration;
-					var timeFunction = options.timeFunction || function (progress) {
-								return progress;
-							};
-					progress = progress > 1 ? 1 : progress;
+			requestAnimationFrame(function tick() {
+				var timePassed = Date.now() - start;
+				var progress = timePassed / options.duration;
+				var timeFunction = options.timeFunction || function (progress) {
+						return progress;
+					};
+				progress = progress > 1 ? 1 : progress;
 
-					options.step(timeFunction(progress));
+				options.step(timeFunction(progress));
 
-					if (progress === 1) {
-						options.complete();
-					} else {
-						requestAnimationFrame(tick);
-					}
+				if (progress === 1) {
+					options.complete();
+				} else {
+					requestAnimationFrame(tick);
+				}
 
-				});
-			};
-
-			elementVal.each(function () {
-				value.push(+$(this).attr('data-content'));
 			});
+		};
 
-			data.all = value[0] + value[1] + value[2];
-			if(value[0] >= 0){
-				data.pl = ((value[0] / data.all) * 100);
-				data.inv = ((value[1] / data.all) * 100);
-				data.av = ((value[2] / data.all) * 100);
-				$('.balance .pl').removeClass('neg').addClass('pos');
-				$('.balance .inv').removeClass('neg');
-				$('.color_map .pl').removeClass('neg');
-				profitPositive = true;
-			}
-			else{
-				data.inv = ((value[1] / (value[1] + value[2])) * 100);
-				data.pl = (data.inv - ((value[1] + value[0]) / (value[1] + value[2])) * 100);
-				data.av = ((value[2] / (value[1] + value[2])) * 100);
-				$('.balance .pl').removeClass('pos').addClass('neg');
-				$('.balance .inv').addClass('neg');
-				$('.color_map .pl').addClass('neg');
-				profitPositive = false;
-			}
+		elementVal.each(function () {
+			value.push(+$(this).attr('data-content'));
+		});
 
-			setTimeout(function () {
-				animate({
-					duration: 1000,
-					step    : function (progress) {
-						// if(profitPositive) elementVal.eq(0).text('$' + Math.round10((value[0] * progress), -2));
-						// else elementVal.eq(0).text('($' + (Math.round10((value[0] * progress), -2)).toString().slice(1) + ')');
-						// elementVal.eq(1).text('$' + Math.round10((value[1] * progress), -2));
-						// elementVal.eq(2).text('$' + Math.round10((value[2] * progress), -2));
-						if(profitPositive) elementMapVal.eq(0).text('$' + Math.round10((value[0] * progress), -2));
-						else elementMapVal.eq(0).text('($' + (Math.round10((value[0] * progress), -2)).toString().slice(1) + ')');
-						elementMapVal.eq(1).text('$' + Math.round10((value[1] * progress), -2));
-						elementMapVal.eq(2).text('$' + Math.round10((value[2] * progress), -2));
-					},
-					complete: function () {}
-				});
-				animate({
-					duration: 10,
-					step: function (progress) {
-						element.eq(0).css('width', data.pl * progress + '%');
-						element.eq(1).css('width', data.inv * progress + '%');
-						element.eq(2).css('width', data.av * progress + '%');
-					},
-					easing: 'swing',
-					complete: function () {}
-				});
-			}, 500);
-		}();
+		data.all = value[0] + value[1] + value[2];
+		if(value[0] >= 0){
+			data.pl = ((value[0] / data.all) * 100);
+			data.inv = ((value[1] / data.all) * 100);
+			data.av = ((value[2] / data.all) * 100);
+			$('.balance .pl').removeClass('neg').addClass('pos');
+			$('.balance .inv').removeClass('neg');
+			$('.color_map .pl').removeClass('neg');
+			profitPositive = true;
+		}
+		else{
+			data.inv = ((value[1] / (value[1] + value[2])) * 100);
+			data.pl = (data.inv - ((value[1] + value[0]) / (value[1] + value[2])) * 100);
+			data.av = ((value[2] / (value[1] + value[2])) * 100);
+			$('.balance .pl').removeClass('pos').addClass('neg');
+			$('.balance .inv').addClass('neg');
+			$('.color_map .pl').addClass('neg');
+			profitPositive = false;
+		}
+
+		setTimeout(function () {
+			animate({
+				duration: 1000,
+				step    : function (progress) {
+					// if(profitPositive) elementVal.eq(0).text('$' + Math.round10((value[0] * progress), -2));
+					// else elementVal.eq(0).text('($' + (Math.round10((value[0] * progress), -2)).toString().slice(1) + ')');
+					// elementVal.eq(1).text('$' + Math.round10((value[1] * progress), -2));
+					// elementVal.eq(2).text('$' + Math.round10((value[2] * progress), -2));
+					if(profitPositive) elementMapVal.eq(0).text('$' + Math.round10((value[0] * progress), -2));
+					else elementMapVal.eq(0).text('($' + (Math.round10((value[0] * progress), -2)).toString().slice(1) + ')');
+					elementMapVal.eq(1).text('$' + Math.round10((value[1] * progress), -2));
+					elementMapVal.eq(2).text('$' + Math.round10((value[2] * progress), -2));
+				},
+				complete: function () {}
+			});
+			animate({
+				duration: 10,
+				step: function (progress) {
+					element.eq(0).css('width', data.pl * progress + '%');
+					element.eq(1).css('width', data.inv * progress + '%');
+					element.eq(2).css('width', data.av * progress + '%');
+				},
+				easing: 'swing',
+				complete: function () {}
+			});
+		}, 500);
 	}
 }

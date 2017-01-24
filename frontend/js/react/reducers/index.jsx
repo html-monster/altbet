@@ -6,7 +6,8 @@ import eventPage from './eventPageReducer';
 import sidebar from './sidebar';
 import tradeSlip from './sidebar/defaultOrders';
 import yourOrders from './sidebar/yourOrders';
-import deposit from './account/deposit';
+import deposit from './userPage/deposit';
+import transHistory from './userPage/transHistory';
 
 export default combineReducers({
 	'App': appState,
@@ -15,5 +16,6 @@ export default combineReducers({
 	sidebar,
 	tradeSlip,
 	yourOrders,
-	deposit
+	deposit,
+	transHistory
 });

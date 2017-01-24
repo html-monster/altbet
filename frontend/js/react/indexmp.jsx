@@ -10,8 +10,7 @@ import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
 import EventPage from './containers/EventPage';
 import Sidebar from './components/Sidebar';
-import Deposit from './components/userPage/Deposit';
-import Withdraw from './components/userPage/Withdraw';
+import Funds from './components/userPage/Funds';
 
 
 
@@ -46,15 +45,9 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MAIN ) {
 if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
 	ReactDOM.render(
 		<Provider store={store}>
-			<Deposit />
+			<Funds />
 		</Provider>,
-		document.getElementById('deposit')
-	);
-	ReactDOM.render(
-		<Provider store={store}>
-			<Withdraw />
-		</Provider>,
-		document.getElementById('withdraw')
+		document.getElementById('funds')
 	);
 }
 

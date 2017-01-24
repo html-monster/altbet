@@ -48,3 +48,14 @@ $user_page_balance: #dce1e6;
 	&.inv {  background: transparentize(#ef8022, 0.8);  }
 	&.ava {  background: transparentize(#1196d4, 0.8);  }
 }
+$user_page_tr_separate: #afb5bb;
+$user_page_payment_list_bg: linear-gradient(to top, #bdc0cd, #ffffff);
+$user_page_arrow: -228px -212px;
+@mixin user_page_separate{
+	border-bottom: 1px solid #bdc0cd;
+	border-top: 1px solid #fff;
+}
+@mixin user_page_li_action{
+	&:hover{  background: #bdc0cd;  }
+	&:active{  background: #bdc0cd * 0.9;  }
+}

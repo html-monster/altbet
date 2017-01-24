@@ -4,9 +4,9 @@
 
 import React from 'react';
 
-import FormValidation from '../../FormValidation';
-import InputValidation from '../../formValidation/InputValidation';
-import {mailValidation} from '../../formValidation/validation';
+import FormValidation from '../../../FormValidation';
+import InputValidation from '../../../formValidation/InputValidation';
+import {mailValidation} from '../../../formValidation/validation';
 
 export default class EcoPayzForm extends React.Component{
 	constructor()
@@ -46,7 +46,7 @@ export default class EcoPayzForm extends React.Component{
 									 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
 									 disabled={true} input={input}/>
 
-					<input type="submit" defaultValue={'Submit'}/>
+					<input type="submit" className="wave btn" defaultValue={'Submit'} disabled={input.sending}/>
 					<span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
 					<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
 				</div>
