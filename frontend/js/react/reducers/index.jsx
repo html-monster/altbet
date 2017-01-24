@@ -3,11 +3,13 @@ import { combineReducers } from 'redux';
 import appState from './appReducer';
 import mainPage from './mainPageReducer';
 import eventPage from './eventPageReducer';
-import sidebar from './sidebar';
+import sidebar from './sidebarReducer';
 import tradeSlip from './sidebar/defaultOrders';
 import yourOrders from './sidebar/yourOrders';
-import deposit from './userPage/deposit';
-import transHistory from './userPage/transHistory';
+import deposit from './account/deposit';
+import inputValidation from './formValidation/inputValidation';
+import formValidation from './formValidation';
+import { reducer as reduxFormReducer } from 'redux-form';
 
 export default combineReducers({
 	'App': appState,
@@ -17,5 +19,7 @@ export default combineReducers({
 	tradeSlip,
 	yourOrders,
 	deposit,
-	transHistory
+	form: reduxFormReducer,
+	inputValidation,
+	formValidation
 });

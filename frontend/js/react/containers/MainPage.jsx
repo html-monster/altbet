@@ -36,10 +36,20 @@ class MainPage extends BaseController
      * activates exchange click action
      * @public
      */
-    exchangeSideClick(inProps)
-    {
-        this.props.actions.exchangeSideClick(inProps);
-    }
+    // exchangeSideClick(inProps)
+    // {
+    //     this.props.actions.exchangeSideClick(inProps);
+    // }
+
+
+    // /**
+    //  * get current exchange
+    //  * @public
+    //  */
+    // getExchange()
+    // {
+    //     0||console.log( 'getExchange this.props', this.props );
+    // }
 
 
     componentDidMount()
@@ -47,12 +57,12 @@ class MainPage extends BaseController
         var self = this;
 
         // register global action
-        // ABpp.registerAction('MainPage.firstExchangeActivate', () => this.lastExchangeActivate());
+        // ABpp.registerAction('MainPage.getExchange', () => this.getExchange());
 
         // subscribe on tader on/off
         /** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, function() {self.props.actions.OnOffBasicMode(ABpp.config.basicMode)});
-        ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_TRADER_ON, function() {self.props.actions.OnOffTraider(ABpp.config.tradeOn, self)});
-        ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, function(props) {self.props.actions.setActiveSymbol(props, self)});
+        ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_TRADER_ON, function() {self.props.actions.actionOnTraiderOnChanged(ABpp.config.tradeOn, self)});
+        ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, function(props) {self.props.actions.actionOnActiveSymbolChanged(props, self)});
 
 
         // Waves.init();
@@ -85,10 +95,12 @@ class MainPage extends BaseController
                         </div>
                     </div>
                     <div className="tab_content">
-                        <div className="tab_item ui-sort">
-                            {data.marketsData.map((item, key) =>
-                                <ExchangeItem key={key} data={{...item, activeExchange, isBasicMode, isTraiderOn}} actions={this.props.actions} />
-                            )}
+                        <div className="tab_item">
+                            <div className="mp-exchanges">
+                                {data.marketsData.map((item, key) =>
+                                    <ExchangeItem key={key} data={{...item, activeExchange, isBasicMode, isTraiderOn}} actions={this.props.actions} />
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -6,8 +6,10 @@ import {
 	ON_DEFAULT_ORDER_DELETE,
 	ON_DEFAULT_ORDER_TYPE_CHANGE,
 	ON_DEFAULT_ORDER_CREATE,
-	ON_DEFAULT_ORDER_AJAX_SEND,
+	// ON_DEFAULT_ORDER_AJAX_SEND,
+	ON_TAB_MIRROR_CHANGE,
 } from "../../constants/ActionTypesDefaultOrders.js";
+import { ON_ACTIVE_SYMBOL_CHANGED } from '../../constants/ActionTypesSidebar.js';
 import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 
 
@@ -219,4 +221,27 @@ export function actionOnAjaxSend(context, parentData, e)
 
 
 
+export function actionOnTabMirrorClick(isMirror)
+{
+	// $('.active_trader .event_title .event_name').removeClass('active');
+	// $(this).addClass('active');
+	activeTraderClass.takeData($('.content_bet.active .event-content').eq(isMirror ? 1 : 0));
+	activeTraderClass.spreaderClean(true);
 
+	// let id = $('.active_trader').attr('id').replace("trader_", "");
+
+
+	// dispatch({
+	// 	type: ON_ACTIVE_SYMBOL_CHANGED,
+	// 	payload: {isMirror: isMirror}
+	// });
+	return (dispatch, getState) =>
+	{
+		ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: getState().sidebar.activeExchange.name, isMirror: isMirror});
+		dispatch({
+			// type: ON_TAB_MIRROR_CHANGE,
+			type: ON_ACTIVE_SYMBOL_CHANGED,
+			payload: {isMirror: isMirror}
+		});
+	};
+}

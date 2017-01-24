@@ -2,14 +2,14 @@
 	constructor(){
 		var content = $('.content');
 
-		$('.left_order .tab label').click(function (e) {
-			e.stopPropagation();
+		$('.left_order .tab.js-tab2 label').click(function (e) {
+            e.stopPropagation();
 		});
 		if($('.wrapper_event_page').length || $('.my_position_tab').length)
 			$('.active_trader .event_title').hide();
 
 
-		// trader On/Off
+		// BM: init trader On/Off
 		this.tradeOn = function () {
 			var checkbox = $('.left_order .tab input.limit'),
 					autoTrade = $('.left_order .tab input.auto'),
@@ -27,7 +27,7 @@
 			// if(autoTrade.prop('checked')) globalData.autoTradeOn = true;
 			// globalData.tradeOn = false;
 			if(checkbox.prop('checked')){
-				var ii = 0,
+				/*var ii = 0, // commented 23-1-17
 						symbol = event_container.eq(0).attr('data-symbol');
 
 				order.css('overflow-y', 'hidden');
@@ -58,14 +58,11 @@
 				globalData.tradeOn = true;
 				// === Vlasakh === 17-01-12 ===============================================
                 ABpp.config.tradeOn = true;
-                setTimeout(() => { /** @var ABpp ABpp */ ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, true); }, 1000);
-				// === ==================== ===============================================
+                setTimeout(() => { /!** @var ABpp ABpp *!/ ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, true); }, 1000);
+				// === ==================== ===============================================*/
 			}
-			checkbox.change(function () {
-				activeTraderClass.traderOnCheck($(this));
-			});
-			// $('.left_order .active_trader a').click(function (e) {
-			// 	e.preventDefault();
+			// checkbox.change(function () {
+			// 	activeTraderClass.traderOnCheck($(this));
 			// });
 		}();
 
@@ -122,8 +119,10 @@
 				tabs.each(function () {
 					$(this).text(title.eq(ii++).text());
 				});
-
 			}
+
+			// BM: tabs click TODEL
+/*
 			tabs.click(function () {
 				if (checkbox.prop('checked')) {
 					0||console.log( 'tabs.click()' );
@@ -134,10 +133,11 @@
 					activeTraderClass.takeData($('.content_bet.active .event-content').eq($(this).index()));
 					activeTraderClass.spreaderClean(true);
 
-					let id = $('.active_trader').attr('id').replace("trader_", "");
-					ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: id, isMirror: $(this).index()})
+                    let id = $('.active_trader').attr('id').replace("trader_", "");
+                    ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: id, isMirror: $(this).index()})
 				}
 			});
+*/
 
 		}();
 
@@ -897,10 +897,11 @@
 	};
 
 	/**
-	 * BM: включает и отключает трейдер
+	 * BM: включает и отключает трейдер TODEL (после переноса тредера в R)
 	 * @param context дом узел чекбокса трейдера
 	 */
-	static traderOnCheck(context){
+	static traderOnCheck(context)
+	{
 		let ii = 0;
 		let autoTrade = $('.left_order .tab input.auto'),
 				order = $('#order'),
@@ -947,14 +948,26 @@
 					else
 						activeTraderClass.takeData($('.wrapper_event_page'));
 				}
+				// === Vlasakh === 17-01-12 ===============================================
+				// ABpp.Websocket.sendSubscribe({exchange: data.Symbol.Exchange}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
+				let id = $('.active_trader').attr('id').replace("trader_", "");
+				ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: id, isMirror: $(this).index()});
+				ABpp.actions['MainPage.getExchange'] && ABpp.actions['MainPage.getExchange']();
+				// === ==================== ===============================================
 			}, 700);
 			if($('.wrapper_event_page').length)
 				executedOrders.find('td.clickable').removeClass('clickable');
 
 			globalData.tradeOn = true;
-			// === Vlasakh === 17-01-12 ===============================================
+			// === Vlasakh === 23-01-12 ===============================================
 			ABpp.config.tradeOn = true;
 			/** @var ABpp ABpp */ ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, true);
+
+			// let id = $('.active_trader').attr('id').replace("trader_", "");
+			// ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: id, isMirror: $(this).index()});
+
+
+		// ABpp.Websocket.sendSubscribe({exchange: null}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
 			// === ==================== ===============================================
 		}
 		else{

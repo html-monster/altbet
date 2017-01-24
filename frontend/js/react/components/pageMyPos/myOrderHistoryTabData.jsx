@@ -37,7 +37,7 @@ import React from 'react';
 	}
 });*/
 
-const MyOrderHistoryTabData = React.createClass({
+export const MyOrderHistoryTabData = React.createClass({
 	getInitialState: function() {
 		return {
 			data: this.props.data
@@ -98,5 +98,3 @@ const MyOrderHistoryTabData = React.createClass({
 		);
 	}
 });
-
-module.exports = MyOrderHistoryTabData;

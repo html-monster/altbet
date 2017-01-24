@@ -7,6 +7,7 @@ import {
 import { WebsocketModel } from '../models/Websocket';
 import { Common } from '../common/Common';
 import BaseActions from './BaseActions';
+import {SocketSubscribe} from "../models/SocketSubscribe";
 
 
 // var __LDEV__ = true;
@@ -19,6 +20,12 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
+            let data = getState().mainPage.marketsData["0"];
+
+            ABpp.Websocket.sendSubscribe({exchange: data.Symbol.Exchange}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
+            // ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, isMirror: false});
+            setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, isMirror: false}), 700);
+
             ABpp.Websocket.subscribe((inData) =>
             {
                 let state = getState().mainPage.marketsData;
@@ -37,6 +44,12 @@ class Actions extends BaseActions
                 } // endif
 
             }, WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES);
+
+
+            dispatch({
+                type: ON_POS_PRICE_CLICK,
+                payload: [data.Symbol.Exchange, false]
+            });
         }
     }
 
@@ -137,6 +150,26 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
+            // set init
+            ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror});
+            ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
+
+            // call common part
+            let ret = this.exchangeSide(inProps);
+            dispatch({
+                type: ret.type,
+                payload: ret.data,
+            });
+        };
+    }
+
+
+
+    private exchangeSide(inProps)
+    {
+        // return (dispatch, getState) =>
+        // {
+        // };
             // console.debug( 'exchangeSideClick', getState());
 
             if( $('.left_order .tab input.limit').prop('checked') )
@@ -164,12 +197,16 @@ class Actions extends BaseActions
                 activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);
             } // endif
 
+            // 0||console.log( 'inProps, val.Symbol.Exchange', inProps, inProps.name, inProps.isMirror );
 
-            dispatch({
+            // dispatch({
+            //     type: ON_POS_PRICE_CLICK,
+            //     payload: [inProps.name, inProps.isMirror]
+            // });
+            return {
                 type: ON_POS_PRICE_CLICK,
-                payload: [inProps.name, inProps.isMirror]
-            });
-        };
+                data: [inProps.name, inProps.isMirror]
+            };
     }
 
 
@@ -183,10 +220,15 @@ class Actions extends BaseActions
             {
                 let data = state.marketsData["0"];
 
-                inController.exchangeSideClick({name: data.Symbol.Exchange,
+                let ret = this.exchangeSide({name: data.Symbol.Exchange,
                     isMirror: false,
                     title: [data.Symbol.HomeName, data.Symbol.AwayName],
                     symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
+                });
+
+                dispatch({
+                    type: ret.type,
+                    payload: ret.data,
                 });
             }
         };
@@ -207,7 +249,7 @@ class Actions extends BaseActions
 
 
 
-    public OnOffTraider(inMode, context)
+    public actionOnTraiderOnChanged(inMode, context)
     {
         return (dispatch, getState) =>
         {
@@ -226,7 +268,7 @@ class Actions extends BaseActions
      * @param inProps
      * @param context
      */
-    public setActiveSymbol(inProps, context)
+    public actionOnActiveSymbolChanged(inProps, context)
     {
         return (dispatch, getState) =>
         {
@@ -234,14 +276,20 @@ class Actions extends BaseActions
 
             for( var val of state.marketsData )
             {
-                if( inProps.id == `${val.Symbol.Exchange}_${val.Symbol.Name}_${val.Symbol.Currency}` ) break;
+                // if( inProps.id == `${val.Symbol.Exchange}_${val.Symbol.Name}_${val.Symbol.Currency}` ) break;
+                if( inProps.id == val.Symbol.Exchange ) break;
             } // endfor
 
-
-            context.exchangeSideClick({name: val.Symbol.Exchange,
+            let ret = this.exchangeSide({name: val.Symbol.Exchange,
                 isMirror: inProps.isMirror,
                 title: [val.Symbol.HomeName, val.Symbol.AwayName],
                 symbol: `${val.Symbol.Exchange}_${val.Symbol.Name}_${val.Symbol.Currency}`,
+            });
+
+
+            dispatch({
+                type: ret.type,
+                payload: ret.data,
             });
         };
     }

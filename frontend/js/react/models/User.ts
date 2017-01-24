@@ -10,13 +10,20 @@ export class User
     /**
      * account settings
      */
-    public id = '';
+    // public id = '';
+    public login = '';
 
     public settings : any = {
             basicMode: false,
             tradeOn: false,
             autoTradeOn: false,
         };
+
+
+    constructor()
+    {
+        this.login = globalData.userLogin;
+    }
 
 
 
@@ -26,6 +33,6 @@ export class User
      */
     public isAuthorized()
     {
-        return this.id != '' ? this.id : false;
+        return this.login != '';
     }
 }

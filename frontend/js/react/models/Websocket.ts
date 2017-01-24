@@ -10,7 +10,7 @@ import { SocketSubscribe } from "./SocketSubscribe";
 // import {globalData} from "../../ts/index";
 
 
-
+// старт подписок
 export class WebsocketModel
 {
     public static CALLBACK_MAINPAGE_EXCHANGES = "CMPE1";      // a main page receive data callback
@@ -23,7 +23,9 @@ export class WebsocketModel
     private ws = null;
     private SocketSubscribe = null;
     private callbacks = {};
-    public socketData: any; // must be private, only for debug !!!!!!!!!!!!!
+    private socketData: any = null;
+    private lastErrorSendObj = null;    // save send object if socket not connected
+    private lastSendObj = null;         // save send last object
 
 
     public connectSocketServer()
@@ -44,8 +46,6 @@ export class WebsocketModel
         self.ws = new WebSocket(this.connectionString);
 
         //self.ws.
-
-        console.log('socket open ts');
 
         //window.setInterval(function () {
             //console.log(ws.readyState);
@@ -68,12 +68,29 @@ export class WebsocketModel
     };
 
 
+    /**
+     * Public debug only !!!!!!!!!!!!!!!
+     * @private
+     * @param props
+     */
     public sendMessage(props)
     {
         let self = this;
-        0 || console.log('socket send props', props);
+
+        if(__DEV__)
+        {
+            console.groupCollapsed("Socket send props");
+            console.info(props);
+            console.groupEnd();
+        }
+
         if (self.ws) {
-            self.ws.send(props);
+            try {
+                this.lastSendObj = props;
+                self.ws.send(JSON.stringify(props));
+            } catch (e) {
+                this.lastErrorSendObj = props;
+            }
         }
     }
 
@@ -106,7 +123,8 @@ export class WebsocketModel
      */
     public sendSubscribe(inData, inType)
     {
-        let params = this.SocketSubscribe.subscribe(inData, inType);
+        let params = this.SocketSubscribe.subscribe({data: inData, type: inType, lastObj: this.lastSendObj});
+        this.sendMessage(params);
 
         return params;
     };
@@ -201,8 +219,17 @@ export class WebsocketModel
     private onOpen()
     {
         let self = this;
+        console.log('socket open ts');
 
-        self.ws.send($('span.user-name').text());
+        // self.ws.send($('span.user-name').text());
+        // if was a failed requests before open
+        if( this.lastErrorSendObj )
+        {
+            self.ws.send(JSON.stringify(this.lastErrorSendObj));
+            this.lastErrorSendObj = null;
+        } // endif
+
+
         //appendMessage('* Connection open<br/>');
         //$('#messageInput').attr("disabled", "");
         //$('#sendButton').attr("disabled", "");
@@ -223,148 +250,3 @@ export class WebsocketModel
         //$('#disconnectButton').attr("disabled", "disabled");
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$("#mp00").click(function (e) {
-    var obj : any = new Object();
-    obj.User = $('span.user-name').text();
-    obj.PageName = "MainPage";
-    obj.ExchangeName = $(".search #search").val();
-    obj.ActiveTrader = "0";
-    obj.CurrentOrders = "0";
-    var jsonString = JSON.stringify(obj);
-    ABpp.Websocket.sendMessage(jsonString);
-});
-
-$("#mp01").click(function (e) {
-    var obj : any = new Object();
-    obj.User = $('span.user-name').text();
-    obj.PageName = "MainPage";
-    obj.ExchangeName = $(".search #search").val();
-    obj.ActiveTrader = "0";
-    obj.CurrentOrders = "1";
-    var jsonString = JSON.stringify(obj);
-    ABpp.Websocket.sendMessage(jsonString);
-});
-
-$("#mp10").click(function (e) {
-    var obj : any = new Object();
-    obj.User = $('span.user-name').text();
-    obj.PageName = "MainPage";
-    obj.ExchangeName = $(".search #search").val();
-    obj.ActiveTrader = "1";
-    obj.CurrentOrders = "0";
-    var jsonString = JSON.stringify(obj);
-    ABpp.Websocket.sendMessage(jsonString);
-});
-
-$("#mp11").click(function (e) {
-    var obj : any = new Object();
-    obj.User = $('span.user-name').text();
-    obj.PageName = "MainPage";
-    obj.ExchangeName = $(".search #search").val();
-    obj.ActiveTrader = "1";
-    obj.CurrentOrders = "1";
-    var jsonString = JSON.stringify(obj);
-    ABpp.Websocket.sendMessage(jsonString);
-});
-//----------------------------------------------------------------------------
-$("#ep00").click(function (e) {
-    var obj : any = new Object();
-    obj.User = $('span.user-name').text();
-    obj.PageName = "EventPage";
-    obj.ExchangeName = $(".search #search").val();
-    obj.ActiveTrader = "0";
-    obj.CurrentOrders = "0";
-    var jsonString = JSON.stringify(obj);
-    ABpp.Websocket.sendMessage(jsonString);
-});
-
-$("#ep01").click(function (e) {
-    var obj : any = new Object();
-    obj.User = $('span.user-name').text();
-    obj.PageName = "EventPage";
-    obj.ExchangeName = $(".search #search").val();
-    obj.ActiveTrader = "0";
-    obj.CurrentOrders = "1";
-    var jsonString = JSON.stringify(obj);
-    ABpp.Websocket.sendMessage(jsonString);
-});
-
-$("#ep10").click(function (e) {
-    var obj : any = new Object();
-    obj.User = $('span.user-name').text();
-    obj.PageName = "EventPage";
-    obj.ExchangeName = $(".search #search").val();
-    obj.ActiveTrader = "1";
-    obj.CurrentOrders = "0";
-    var jsonString = JSON.stringify(obj);
-    ABpp.Websocket.sendMessage(jsonString);
-});
-
-$("#ep11").click(function (e) {
-    var obj : any = new Object();
-    obj.User = $('span.user-name').text();
-    obj.PageName = "EventPage";
-    obj.ExchangeName = $(".search #search").val();
-    obj.ActiveTrader = "1";
-    obj.CurrentOrders = "1";
-    var jsonString = JSON.stringify(obj);
-    ABpp.Websocket.sendMessage(jsonString);
-});
-//--------------------------------------------------------------------
-$("#op00").click(function (e) {
-    var obj : any = new Object();
-    obj.User = $('span.user-name').text();
-    obj.PageName = "OrderPage";
-    obj.ExchangeName = $(".search #search").val();
-    obj.ActiveTrader = "0";
-    obj.CurrentOrders = "0";
-    var jsonString = JSON.stringify(obj);
-    ABpp.Websocket.sendMessage(jsonString);
-});
-
-$("#op01").click(function (e) {
-    var obj : any = new Object();
-    obj.User = $('span.user-name').text();
-    obj.PageName = "OrderPage";
-    obj.ExchangeName = $(".search #search").val();
-    obj.ActiveTrader = "0";
-    obj.CurrentOrders = "1";
-    var jsonString = JSON.stringify(obj);
-    ABpp.Websocket.sendMessage(jsonString);
-});
-
-$("#op10").click(function (e) {
-    var obj : any = new Object();
-    obj.User = $('span.user-name').text();
-    obj.PageName = "OrderPage";
-    obj.ExchangeName = $(".search #search").val();
-    obj.ActiveTrader = "1";
-    obj.CurrentOrders = "0";
-    var jsonString = JSON.stringify(obj);
-    ABpp.Websocket.sendMessage(jsonString);
-});
-
-$("#op11").click(function (e) {
-    var obj : any = new Object();
-    obj.User = $('span.user-name').text();
-    obj.PageName = "OrderPage";
-    obj.ExchangeName = $(".search #search").val();
-    obj.ActiveTrader = "1";
-    obj.CurrentOrders = "1";
-    var jsonString = JSON.stringify(obj);
-    ABpp.Websocket.sendMessage(jsonString);
-});

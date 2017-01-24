@@ -9,7 +9,10 @@ import configureStore from './store/configureStore';
 import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
 import EventPage from './containers/EventPage';
-import Sidebar from './components/Sidebar';
+import PageMyPos from './components/PageMyPos.jsx';
+import Sidebar from './components/Sidebar.jsx';
+import Deposit from './components/userPage/Deposit';
+import Withdraw from './components/userPage/Withdraw';
 import Funds from './components/userPage/Funds';
 
 
@@ -49,7 +52,25 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
 		</Provider>,
 		document.getElementById('funds')
 	);
+	ReactDOM.render(
+		<Provider store={store}>
+			<Withdraw />
+		</Provider>,
+		document.getElementById('withdraw')
+	);
 }
+
+
+if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MYPOS ) {
+	// рендерим PageMyPos
+	ReactDOM.render(
+		<Provider store={store}>
+			<PageMyPos />
+		</Provider>,
+        document.getElementById('DiPageMyAssets')
+	);
+}
+
 
 if(!globalData.userPageOn){
 	ReactDOM.render(

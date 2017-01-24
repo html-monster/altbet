@@ -3,16 +3,19 @@
  */
 
 import React from 'react';
+// import { bindActionCreators } from 'redux';
+// import { connect } from 'react-redux';
+//
+// import * as formActions from '../actions/formValidation';
+// import * as inputActions from '../actions/formValidation/inputValidation';
 
 export default class FormValidation extends React.Component{
-	constructor()
+	constructor(props)
 	{
 		super();
 
 		this.state = {
 			submited: false,
-			sending: false,
-			// invalid: false,
 			values: {},
 			errors: {},
 			inputErrors: {},
@@ -32,18 +35,14 @@ export default class FormValidation extends React.Component{
 	{
 		let state = this.state;
 
-		state.errors = {...state.errors, ...value};
+		state.errors = {...state.errors, ...value}
 	}
 
 	serverValidation(data)
 	{
 		const {error, message, ...rest} = data;
 		let state = this.state;
-		console.log(2);
-		state.submited = false;
-		state.sending = false;
 		if(error){
-			// state.invalid = true;
 			state.errorMessage = error;
 			this.setState(state);
 		}
@@ -69,16 +68,8 @@ export default class FormValidation extends React.Component{
 		state.successMessage = '';
 		this.setState(state);
 		for (let elem in state.errors) {
-			if(state.errors[elem]){
-				// state.invalid = true;
-				// this.setState(state);
-				return false;
-			}
+			if(state.errors[elem]) return false;
 		}
-		// state.invalid = false;
-		console.log(1);
-		state.sending = true;
-		this.setState(state);
 		props.handleSubmit(this.state.values, serverValidation || null);
 	}
 
@@ -89,13 +80,10 @@ export default class FormValidation extends React.Component{
 		const onSubmit = this.props.serverValidation ? this.onSubmit.bind(this, ::this.serverValidation) : ::this.onSubmit;
 		const input = {
 			submited: state.submited,
-			sending: state.sending,
-			// invalid: state.invalid,
 			errors: state.inputErrors,
 			setValues: ::this.setValues,
 			setErrors: ::this.setErrors,
 		};
-		// console.log(input.sending);
 		return(
 			renderContent({...rest, input: input, handleSubmit: onSubmit, error: state.errorMessage, successMessage: state.successMessage})
 		);
@@ -106,5 +94,14 @@ FormValidation.propTypes = {
 	renderContent: React.PropTypes.any.isRequired,
 	handleSubmit: React.PropTypes.func,
 };
+
+// export default connect(state => ({
+// 		formValidation: state.formValidation,
+// 	}),
+// 	dispatch => ({
+// 		formActions: bindActionCreators(formActions, dispatch),
+// 		inputActions: bindActionCreators(inputActions, dispatch)
+// 	})
+// )(FormValidation)
 
 

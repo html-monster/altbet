@@ -14,8 +14,9 @@ class TradeSlip extends React.Component
 	constructor(props)
 	{
 		super(props);
+		// 0||console.log( 'TradeSlip props', props );
 
-		// ABpp.addController('TradeSlip', this);
+		this.actions = props.defaultOrderActions;
 	}
 
 
@@ -37,12 +38,14 @@ class TradeSlip extends React.Component
 
 	render()
 	{
-		return <div className="tab_item" id="order">
+        // 0||console.log( 'this.props.data.isAllowAT', this.props.data.isAllowAT );
+        return <div className="tab_item" id="order">
 
 			<DefaultOrders data={this.props.tradeSlip.orderNewData} actions={this.props.defaultOrderActions}/>
 
 			{/* // BM: --------------------------------------------------- ACTIVE TRADER ---*/}
-			<ActiveTrader data={{}}/>
+			{ this.props.data.isAllowAT && <ActiveTrader data={{}} cmpData={{...this.props.tradeSlip, activeExchange: this.props.data.activeExchange}} actions={this.actions}/>
+			}
 
 		</div>
 	}
