@@ -15,6 +15,8 @@ export class SocketSubscribe
             ExchangeName: "",
             ActiveTrader: "0", //ABpp.config.tradeOn ? "1" : "0",
             CurrentOrders: "0",
+            PaginationNumber: '0',
+            CategoryPath: '', //sport/american-football
         };
     private subscribeData = {};     // data from subscribers
 

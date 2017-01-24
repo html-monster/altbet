@@ -38,6 +38,7 @@ class TradeSlip extends React.Component
 
 	render()
 	{
+        // 0||console.log( 'this.props.data.isAllowAT', this.props.data.isAllowAT );
         return <div className="tab_item" id="order">
 
 			<DefaultOrders data={this.props.tradeSlip.orderNewData} actions={this.props.defaultOrderActions}/>

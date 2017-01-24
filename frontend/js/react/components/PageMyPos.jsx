@@ -10,6 +10,7 @@ import MyPosTabData from './pageMyPos/myPosTabData';
 import MyOpenOrdersTabData from './pageMyPos/myOpenOrdersTabData';
 import {MyOrderHistoryTabData} from './pageMyPos/myOrderHistoryTabData';
 import BaseController from '../containers/BaseController';
+import myPosReduce from '../reducers/MyPosReducer';
 
 
 class PageMyPos extends BaseController //React.Component
@@ -18,7 +19,9 @@ class PageMyPos extends BaseController //React.Component
     {
         super(props);
 
-        this.state = {data: props.data};
+        0||console.log( 'props', props );
+        let {openOrdersData, positionData, historyData} = props.data;
+        this.state = {data: {openOrdersData, positionData, historyData}};
         0||console.log( 'openOrdersData, positionData, historyData', openOrdersData, positionData, historyData );
     }
 
@@ -35,6 +38,7 @@ class PageMyPos extends BaseController //React.Component
 
         window.ee.addListener('myPosOrder.update', (newData) =>
 				{
+            0||console.log( 'newData', newData );
           newData = Object.assign(this.state.data, {positionData: newData});
           this.setState(newData);
         });
@@ -192,7 +196,7 @@ class PageMyPos extends BaseController //React.Component
 
 export default connect(
     state => ({
-        data: state.mainPage,
+        data: state.myPosReduce,
         // test: state.Ttest,
     }),
     dispatch => ({

@@ -8,11 +8,13 @@ import {
 
 
 const initialState = {
-    activeExchange: null,
+    openOrdersData: appData.openOrdersData,
+    positionData: appData.positionData,
+    historyData: appData.historyData,
 };
 
 
-export default function mainPage(state = initialState, action)
+export default function myPosReduce(state = initialState, action)
 {
     switch (action.type)
     {

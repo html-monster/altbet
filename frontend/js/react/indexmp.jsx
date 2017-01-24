@@ -12,7 +12,6 @@ import EventPage from './containers/EventPage';
 import PageMyPos from './components/PageMyPos.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Deposit from './components/userPage/deposit.jsx';
-import PageMyPos from './components/PageMyPos.jsx';
 
 
 
@@ -24,12 +23,8 @@ ABpp.CONSTS = constants;
 
 
 const store = configureStore();
-<<<<<<< HEAD
 ABpp.Store = store;
 
-=======
-0||console.log( 'store', store );
->>>>>>> MyPositions
 
 ReactDOM.render(
     <Provider store={store}>
@@ -61,8 +56,9 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
 if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MYPOS ) {
 	// рендерим PageMyPos
 	ReactDOM.render(
-        <PageMyPos data={{openOrdersData, positionData, historyData}}/>
-        ,
+		<Provider store={store}>
+			<PageMyPos />
+		</Provider>,
         document.getElementById('DiPageMyAssets')
 	);
 }
@@ -95,14 +91,14 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_EVENT ) {
 
 
 // рендерим PageMyPos
-if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MYPOSITIONS ) {
-	ReactDOM.render(
-            <Provider store={store}>
-			    <PageMyPos />
-            </Provider>,
-        document.getElementById('DiPageMyAssets')
-	);
-}
+// if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MYPOSITIONS ) {
+// 	ReactDOM.render(
+//             <Provider store={store}>
+// 			    <PageMyPos />
+//             </Provider>,
+//         document.getElementById('DiPageMyAssets')
+// 	);
+// }
 
 
 

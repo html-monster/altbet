@@ -20,10 +20,10 @@ import { WebsocketModel } from "../react/models/Websocket";
  */
 export class ABpp
 {
-    public static PAGE_MAIN = 'PM1';
-    public static PAGE_EVENT = 'PE2';
-    public static PAGE_ACCOUNT = 'PA3';
-    public static PAGE_MYPOSITIONS = 'PMP4';
+    public static PAGE_MAIN = '1';
+    public static PAGE_EVENT = '2';
+    public static PAGE_ACCOUNT = '3';
+    public static PAGE_MYPOS = '4';
     public static TAKER_FEES = 0.0086;
     public static MAKER_FEES = 0.0026;
 
@@ -46,11 +46,13 @@ export class ABpp
     public baseUrl: "";                 // add before urls
 
 
+    // action from components
     public actions : any = {};
 
     public User: User = null;                   // user entity
     public Websocket: WebsocketModel = null;    // websocket object
     public SysEvents: SysEvents = null;         // system events
+    public Store = null;                        // redux store
 
 
     private static instance = null;
@@ -106,7 +108,7 @@ export class ABpp
         else if( globalData.userPageOn )
             return ABpp.PAGE_ACCOUNT;
         else if( globalData.myPosOn )
-            return ABpp.PAGE_MYPOSITIONS;
+            return ABpp.PAGE_MYPOS;
     }
 
 

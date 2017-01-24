@@ -24,6 +24,7 @@ class Sidebar extends React.Component
 
 
         // allow AT
+        // 0||console.log( 'ABpp.config.currentPage, ABpp.PAGE_MYPOS', ABpp.config.currentPage, ABpp.PAGE_MYPOS );
         if( ABpp.config.currentPage != ABpp.CONSTS.PAGE_MYPOS )
         {
             this.isAllowAT = true;
