@@ -604,5 +604,51 @@
   }
   i.btn{  width: 100%;  }
   .settings .column {  width: 100%;  }
+  .message{
+    //display: block;
+    color: $main-color-darker;
+    z-index: 999;
+    .pop_up_content{
+      display: block;
+      width: 300px;
+      padding: 10px;
+      background: $main-bg;
+      border-radius: 4px;
+      border: 1px solid #000;
+      text-align: center;
+      position: relative;
+      &:before{
+        content: '';
+        display: block;
+        width: 320px;
+        height: calc(100% + 20px);
+        background: linear-gradient(to bottom, #53515e, #292830);
+        box-shadow: 0 0 20px -1px rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        z-index: -1;
+      }
+    }
+    span{
+      display: block;
+      &.amount{  color: $link-color;  }
+    }
+    a{
+      display: inline-block;
+      margin-top: 15px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: linear-gradient(to bottom, #64c9ef, #3498da);
+      color: #ffffff;
+    }
+    button{
+      display: block;
+      margin: 0 auto;
+      width: 150px;
+      background-image: linear-gradient(to bottom, #84d65b, #4dac2e);
+    }
+  }
 }
 

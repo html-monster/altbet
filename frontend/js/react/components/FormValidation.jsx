@@ -39,7 +39,7 @@ export default class FormValidation extends React.Component{
 	{
 		const {error, message, ...rest} = data;
 		let state = this.state;
-		console.log(2);
+
 		state.submited = false;
 		state.sending = false;
 		if(error){
@@ -76,7 +76,7 @@ export default class FormValidation extends React.Component{
 			}
 		}
 		// state.invalid = false;
-		console.log(1);
+
 		state.sending = true;
 		this.setState(state);
 		props.handleSubmit(this.state.values, serverValidation || null);
