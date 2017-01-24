@@ -6,10 +6,8 @@ import eventPage from './eventPageReducer';
 import sidebar from './sidebarReducer';
 import tradeSlip from './sidebar/defaultOrders';
 import yourOrders from './sidebar/yourOrders';
-import deposit from './account/deposit';
-// import inputValidation from './formValidation/inputValidation';
-import formValidation from './formValidation';
-import { reducer as reduxFormReducer } from 'redux-form';
+import deposit from './userPage/deposit';
+import transHistory from './userPage/transHistory';
 
 export default combineReducers({
 	'App': appState,
@@ -19,7 +17,5 @@ export default combineReducers({
 	tradeSlip,
 	yourOrders,
 	deposit,
-	form: reduxFormReducer,
-	// inputValidation,
-	formValidation
+	transHistory
 });

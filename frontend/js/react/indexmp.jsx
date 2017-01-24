@@ -11,8 +11,6 @@ import MainPage from './containers/MainPage';
 import EventPage from './containers/EventPage';
 import PageMyPos from './components/PageMyPos.jsx';
 import Sidebar from './components/Sidebar.jsx';
-import Deposit from './components/userPage/Deposit';
-import Withdraw from './components/userPage/Withdraw';
 import Funds from './components/userPage/Funds';
 
 
@@ -52,12 +50,12 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
 		</Provider>,
 		document.getElementById('funds')
 	);
-	ReactDOM.render(
-		<Provider store={store}>
-			<Withdraw />
-		</Provider>,
-		document.getElementById('withdraw')
-	);
+	// ReactDOM.render(
+	// 	<Provider store={store}>
+	// 		<Withdraw />
+	// 	</Provider>,
+	// 	document.getElementById('withdraw')
+	// );
 }
 
 
