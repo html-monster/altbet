@@ -535,11 +535,17 @@ label.disabled{
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  .pop_up_container{
-    display: flex;
-    height: 100%;
-    .pop_up_content{  margin: auto;  }
-  }
+}
+.pop_up_container{
+  display: flex;
+  height: 100%;
+}
+
+.pop_up_content {
+  padding: 15px;
+  background: $bg_color;
+  border-radius: 6px;
+  margin: auto;
 }
 
 .valid input{  border: 1px solid #a3d39c !important;  color: #a3d39c !important;  }

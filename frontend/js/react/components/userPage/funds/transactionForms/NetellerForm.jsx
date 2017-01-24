@@ -31,8 +31,8 @@ export default class NetellerForm extends React.Component{
 			return <form action={`${ABpp.baseUrl}/Payment/${format ? 'NetellerOut' : 'NetellerIn'}`}  autoComplete="off" onSubmit={handleSubmit}>
 				<div className="container">
 					{/* костыль для отмены браузерного автозаполнение полей */}
-					<input type="text" style={{display: 'none'}}/>
-					<input type="password" style={{display: 'none'}}/>
+					{/*<input type="text" style={{display: 'none'}}/>*/}
+					{/*<input type="password" style={{display: 'none'}}/>*/}
 					{/* =================================================== */}
 					<InputValidation renderContent={inputRender} id={'neteller_id'} name="clientId"
 									 className={'input__field input__field--yoshiko'}

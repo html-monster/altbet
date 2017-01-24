@@ -51,7 +51,7 @@ class TransHistory extends React.Component{
 		const { data, actions } = this.props;
 		// const actions = this.props.actions;
 
-		return <div className="tab_item history active" onClick={this.listSlide.bind(this, false)}>
+		return <div className="tab_item history" onClick={this.listSlide.bind(this, false)}>
 			<div className="filter">
 				<span className="input_animate input--yoshiko">
 					<input className="input__field input__field--yoshiko datePickerJs hasDatepicker" id="payment_range" name="DateOfBirth" type="text" ref={'datePicker'} />

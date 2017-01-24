@@ -6,9 +6,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 
-import NetellerForm from './depositForms/NetellerForm';
-import EcoPayzForm from './depositForms/EcoPayzForm';
-import * as actions from '../../actions/userPage/depositActions.js';
+import NetellerForm from './transactionForms/NetellerForm';
+import EcoPayzForm from './transactionForms/EcoPayzForm';
+import * as actions from '../../../actions/userPage/depositActions';
 
 class Deposit extends React.Component{
 	constructor()
@@ -46,20 +46,12 @@ class Deposit extends React.Component{
 			this.setState({toggle: 'Hide'});
 	}
 
-	// showResults = values =>
-	// new Promise(resolve => {
-	// 	setTimeout(() => {  // simulate server latency
-	// 		window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
-	// 		resolve()
-	// 	}, 500)
-	// });
-
 	render()
 	{
 		const { data, plan, payYearly, depositQuantity, pricePlan, sumValidation } = this.props.deposit;
 		const actions = this.props.actions;
 
-		return <div className="deposit_container">
+		return <div className="tab_item funds active">
 			<h3>Add funds</h3>
 			<span className="account_balance">You currently have <span className="value">${Math.round10(data.UserAssets.CurrentBalance, -2)}</span> in your account</span>
 			<div className="quantity_control">
@@ -188,8 +180,8 @@ class Deposit extends React.Component{
 				<div className="tabs">
 					<span className="tab btn wave VisaMC" onClick={this.scrollBottom}><span>{}</span></span>
 					<span className="tab btn wave Skrill" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Neteller" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Ecopayz active" onClick={this.scrollBottom}><span>{}</span></span>
+					<span className="tab btn wave Neteller active" onClick={this.scrollBottom}><span>{}</span></span>
+					<span className="tab btn wave Ecopayz" onClick={this.scrollBottom}><span>{}</span></span>
 				</div>
 				<div className="tab_content">
 					<div className="tab_item payment_tab">
@@ -220,7 +212,7 @@ class Deposit extends React.Component{
 									{/*<input className="input__field--yoshiko number cvv" id="cvv" type="tel" maxLength="4"/>*/}
 									{/*<span className="validation-summary-errors">{}</span>*/}
 								</span>
-								<input type="submit" defaultValue={'Submit'}/>
+								<input type="submit" className="wave btn" defaultValue={'Submit'}/>
 							</div>
 						</form>
 					</div>
@@ -243,12 +235,12 @@ class Deposit extends React.Component{
 									<span className="label">$</span>
 									<span className="validation-summary-errors">{}</span>
 								</span>
-								<input type="submit" defaultValue={'Submit'} />
+								<input type="submit" className="wave btn" defaultValue={'Submit'} />
 							</div>
 							<input type="hidden" name="plan" value={plan}/>
 						</form>
 					</div>
-					<div className="tab_item payment_tab">
+					<div className="tab_item payment_tab active">
 						{/*<form>*/}
 							{/*<div className="container">*/}
 								{/*<span className={'input_animate input--yoshiko ' + (data.UserInfo.Email ? 'input--filled' : '')}>*/}
@@ -280,11 +272,20 @@ class Deposit extends React.Component{
 							{/*</div>*/}
 							{/*<input type="hidden" name="plan" value={plan}/>*/}
 						{/*</form>*/}
-						<NetellerForm data={this.props.deposit} onSubmit={actions.actionOnAjaxSend} />
+						<NetellerForm data={this.props.deposit} onSubmit={actions.actionOnAjaxSend.bind(null, this)} />
 					</div>
-					<div className="tab_item payment_tab active">
+					<div className="tab_item payment_tab">
 						<EcoPayzForm data={this.props.deposit} onSubmit={actions.actionOnAjaxSend} />
 					</div>
+				</div>
+			</div>
+			<div className="message pop_up">
+				<div className="pop_up_container">
+                    <div className="pop_up_content">
+                        <span>Your account balance is refilled with <span className="amount">$100</span></span>
+						<a href={ABpp.baseUrl + '/eng'} className="btn">Trade Now</a>
+                        {/*<button className="btn">Ok</button>*/}
+                    </div>
 				</div>
 			</div>
 		</div>

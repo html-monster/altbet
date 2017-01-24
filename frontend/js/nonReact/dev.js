@@ -98,13 +98,13 @@ $(document).ready(function () {
 		$(this).toggleClass('active');
 	});
 
-	new teamClass();
+	// new teamClass();
 });
 if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){
 	var globalData;
 	globalData.userIdentity = 'True';
 }
-class teamClass{
+/*class teamClass{
 	constructor(){
 
 
@@ -252,4 +252,4 @@ class teamClass{
 			});
 		});
 	}
-}
+}*/

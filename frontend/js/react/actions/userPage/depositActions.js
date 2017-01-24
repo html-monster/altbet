@@ -102,11 +102,12 @@ export function actionOnQuantityValidate(values)
 	}
 }
 
-export function actionOnAjaxSend(values, serverValidation)
+export function actionOnAjaxSend(context, values, serverValidation)
 {
 	return (dispatch) =>
 	{
-		// console.log(values, serverValidation);
+		console.log(context);
+		console.log(values, serverValidation);
 		if(values.sum){
 			new Promise(resolve => {
 				setTimeout(() => {  // simulate server latency
