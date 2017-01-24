@@ -30,15 +30,22 @@ export default class InputValidation extends React.Component{
 	}
 
 	shouldComponentUpdate(nextProps){
+		let state = this.state;
+		const props = this.props;
+		const error = nextProps.input.errors[props.name];
 		if(nextProps.value != undefined){
-			this.state.value = nextProps.value;
+			state.value = nextProps.value;
 			if(nextProps.name) nextProps.input.setValues({[nextProps.name]: nextProps.value || ''});
 		}
-		if(this.props.validate && nextProps.input.submited) {
-			this.validate(this.state.value);
-			this.state.meta.dirty = true;
+		if(props.validate && nextProps.input.submited) {
+			this.validate(state.value);
+			state.meta.dirty = true;
 		}
-
+		if(props.name && error){
+			state.meta.error = error;
+			props.input.setErrors({[state.meta.inputId]: error});
+		}
+		console.log(nextProps.input.errors);
 		return true;
 	}
 
@@ -80,19 +87,19 @@ export default class InputValidation extends React.Component{
 			if(typeof props.validate == 'function')
 				check(props.validate);
 			else
-				props.validate.some((item)=>{
-					return !!check(item);
-				});
+				props.validate.some((item) => !!check(item));
 
 			function check(validate) {
-				let error = validate(value);
+				const error = validate(value);
+				let errors = props.input.errors;
+				delete errors[props.name];
 
 				state.meta.error = error;
 
 				if(error) state.meta.invalid = true;
 				else state.meta.invalid = false;
 
-				props.input.setErrors({[state.meta.inputId]: error});
+				props.input.setErrors({[state.meta.inputId]: error}, errors);
 
 				return error;
 			}

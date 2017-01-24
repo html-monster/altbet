@@ -30,6 +30,16 @@ export const minLengthValidation = (value) => {
 	return errors
 };
 
+export const netellerSecureId = (value) => {
+	let errors;
+
+	if (value.length != 6)
+		errors = 'Secure ID must be 6 digits';
+
+	return errors
+};
+
+
 
 
 

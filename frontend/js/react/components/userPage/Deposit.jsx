@@ -6,8 +6,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 
-import NetellerForm from './depositForms/netellerForm';
-import EcoPayzForm from './depositForms/ecoPayzForm.jsx';
+import NetellerForm from './depositForms/NetellerForm';
+import EcoPayzForm from './depositForms/EcoPayzForm';
 import * as actions from '../../actions/userPage/depositActions.js';
 
 class Deposit extends React.Component{
@@ -15,6 +15,11 @@ class Deposit extends React.Component{
 	{
 		super();
 		this.state = {toggle: 'Show'};
+	}
+
+	componentDidMount()
+	{
+		this.props.actions.actionOnSocketMessage();
 	}
 
 	pricePlanHover(mouseLocation, event)
@@ -51,28 +56,23 @@ class Deposit extends React.Component{
 
 	render()
 	{
-		let data = this.props.deposit.data;
-		let plan = this.props.deposit.plan;
-		let payYearly = this.props.deposit.payYearly;
-		let depositQuantity = this.props.deposit.depositQuantity == '' ? '' : +this.props.deposit.depositQuantity;
-		let pricePlan = +this.props.deposit.pricePlan;
-		let actions = this.props.actions;
-
-		// data.clientId = data.UserInfo.Email;
-		// data.sum = depositQuantity || pricePlan ? depositQuantity + pricePlan : '';
+		const { data, plan, payYearly, depositQuantity, pricePlan, sumValidation } = this.props.deposit;
+		const actions = this.props.actions;
 
 		return <div className="deposit_container">
 			<h3>Add funds</h3>
 			<span className="account_balance">You currently have <span className="value">${Math.round10(data.UserAssets.CurrentBalance, -2)}</span> in your account</span>
 			<div className="quantity_control">
 				<strong>Select deposit amount</strong>
-				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>10</button>
-				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>25</button>
-				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>50</button>
-				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>100</button>
-				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>250</button>
-				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>500</button>
-				<input type="tel" className={`number ${this.props.deposit.sumValidation}`} value={depositQuantity} onChange={actions.actionOnInputQuantityChange} autoFocus/>
+				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>10</button>
+				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>25</button>
+				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>50</button>
+				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>100</button>
+				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>250</button>
+				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>500</button>
+				<input type="tel" className={`number ${sumValidation}`} value={depositQuantity}
+					   onChange={actions.actionOnInputQuantityChange.bind(null, actions)} maxLength="7" autoFocus/>
+				<span className="validation-summary-errors">{sumValidation && 'Required'}</span>
 				<span className="label">$</span>
 			</div>
 			<div className="recommended_block" onClick={::this.plansToggle}>
@@ -196,7 +196,7 @@ class Deposit extends React.Component{
 						<form>
 							<div className="container">
 								<span className={'input_animate input--yoshiko'}>
-									<input className="input__field input__field--yoshiko number" id="card_number" type="tel"/>
+									<input className="input__field input__field--yoshiko number" id="card_number" type="tel" maxLength="19"/>
 									<label className="input__label input__label--yoshiko" htmlFor="card_number">
 										<span className="input__label-content input__label-content--yoshiko"
 										  data-content="Card Number">Card Number</span>
@@ -210,7 +210,7 @@ class Deposit extends React.Component{
 										<span className="validation-summary-errors">{}</span>
 								</span>
 								<span className={'input_animate input--yoshiko static'}>
-									<input className="input__field input__field--yoshiko number cvv" id="card_number" type="tel" maxLength="4"/>
+									<input className="input__field input__field--yoshiko number cvv" id="card_number" type="tel" maxLength="3"/>
 									<label className="input__label input__label--yoshiko" htmlFor="card_number">
 										<span className="input__label-content input__label-content--yoshiko" data-content="CVV">CVV</span>
 									</label>
@@ -280,14 +280,10 @@ class Deposit extends React.Component{
 							{/*</div>*/}
 							{/*<input type="hidden" name="plan" value={plan}/>*/}
 						{/*</form>*/}
-						<NetellerForm onSubmit={actions.actionOnFormSubmit} data={data} plan={plan} pricePlan={pricePlan} depositQuantity={depositQuantity} actions={actions}
-									  initialValues={{
-									  	  clientId: data.UserInfo.Email,
-										  sum: depositQuantity || pricePlan ? depositQuantity + pricePlan : '',
-									  }}/>
+						<NetellerForm data={this.props.deposit} onSubmit={actions.actionOnAjaxSend} />
 					</div>
 					<div className="tab_item payment_tab active">
-						<EcoPayzForm data={this.props.deposit} onSubmit={actions.actionOnFormSubmit2}/>
+						<EcoPayzForm data={this.props.deposit} onSubmit={actions.actionOnAjaxSend} />
 					</div>
 				</div>
 			</div>

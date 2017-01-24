@@ -5,6 +5,7 @@
 /// <reference path="./../../js/.d/common.d.ts" />
 
 import { MainConfig, DS } from "../inc/MainConfig";
+import {DateLocalization} from "../../js/react/models/DateLocalization";
 
 
 var __LDEV__ = true;
@@ -17,34 +18,42 @@ export default class ExchangeModel
         var self = this;
         let data = new FormData();
         data.set('exchange', inProps.id);
+        // 0||console.log( 'inProps.id', inProps.id );
 
         var promise = new Promise((resolve, reject) =>
         {
             var message = 'Error while getting exchange info, please, try again';
             $.ajax({
-                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_EDIT,
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
-                type: 'GET',
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_GET,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                type: 'POST',
                 success: function(data)
                 {
-                    // 0||console.debug( 'data AJAX', data );
-                    // emulate
-                    data.code = 200;
-                    data.data = {
-                            fullname: 'Buffalo Bills_vs_New England Patriots',
-                            sidename1: 'Buffalo Bills',
-                            sidename2: 'New England Patriots',
-                            sidealias1: '',
-                            sidealias2: '',
-                            sidehandicap1: '',
-                            sidehandicap2: '',
-                            startDate: '',
-                            endDate: '1/4/17 13:30',
-                        };
-
                     var error;
                     try
                     {
+                        // emulate
+                        // data[0].Symbol.TypeEvent = 2;
+                        // -------
+
+
+                        // prepate struct
+                        __LDEV__&&console.debug( 'data AJAX', data );
+                        data = self.prepareEditData(data);
+                        __LDEV__&&console.debug( 'prepareEditData', data );
+
+
+                        //         fullname: 'Buffalo Bills_vs_New England Patriots',
+                        //         sidename1: 'Buffalo Bills',
+                        //         sidename2: 'New England Patriots',
+                        //         sidealias1: '',
+                        //         sidealias2: '',
+                        //         sidehandicap1: '',
+                        //         sidehandicap2: '',
+                        //         startDate: '',
+                        //         endDate: '1/4/17 13:30',
+                        //     };
+
                         // success
                         if( data.code == 200 )
                         {
@@ -103,37 +112,47 @@ export default class ExchangeModel
         {
             var message = 'Error while saving exchange info, please, try again';
             $.ajax({
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST, //AJAX_CATEGORY_EDIT,
-                // url: inProps.url, //AJAX_CATEGORY_EDIT,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_EDIT,
                 type: 'POST',
                 success: function(data)
                 {
-                    // 0||console.debug( 'data AJAX', data );
+                    __LDEV__&&console.debug( 'data AJAX', data );
                     // emulate
-                    data.code = 200;
-                    data.data = {
-                            fullname: 'Buffalo Bills_vs_New England Patriots',
-                            sidename1: 'Buffalo Bills',
-                            sidename2: 'New England Patriots',
-                            sidealias1: '',
-                            sidealias2: '',
-                            sidehandicap1: '',
-                            sidehandicap2: '',
-                            startDate: '',
-                            endDate: '',
-                        };
+                    // data.Error = 200;
+                    // data.Param1 = {
+                    //     Symbol: {
+                    //         FullName: 'Buffalo Bills_vs_New England Patriots 22222222222222',
+                    //         HomeName: 'Buffalo Bill2 22222',
+                    //         AwayName: 'New England Patriots 22222',
+                    //         sidealias1: '',
+                    //         sidealias2: '',
+                    //         sidehandicap1: '',
+                    //         sidehandicap2: '',
+                    //         startDate: '',
+                    //         endDate: '',
+                    //         Exchange: 'WAS-MIA-322017',
+                    //     }
+                    // };
 
                     var error;
                     try
                     {
+                        // user defined error
+                        if( data.Error > 100 && data.Error < 200 )
+                        {
+                            error = -data.Error;
+                            throw new Error(message);
+
+
                         // success
-                        if( data.code == 200 )
+                        } else if( data.Error == 200 )
                         {
                             error = 100;
                             throw new Error("");
 
 
-                        // undefined error
+                        // undefinded error
                         } else
                         {
                             error = -1000;
@@ -145,14 +164,15 @@ export default class ExchangeModel
                         error < 0 && console.warn( 'E', error );
                         switch( error )
                         {
-                            case 100: break; // success
+                            case 100: message = `Exchange “${data.Param1.Symbol.FullName}” saved successfully`; break; // success
+                            case -102 : message = "Url is not unique"; break;
                             case -100: ; // some backend not controlled error
                             case -1000 : ; break;
                             default: error = -1001;
                         }
                     }
 
-                    error < 0 ? reject({code: error, message}) : resolve({code: error, message, data: data.data});
+                    error < 0 ? reject({code: error, message}) : resolve({code: error, message, data: data.Param1.Symbol});
                 },
                 error: function() {
                     reject({code: -1002, message});
@@ -196,9 +216,10 @@ export default class ExchangeModel
                 {
                     __LDEV__&&console.debug( 'data AJAX', data );
                     // data.Error = 200;
-                    // data.Param1 = "?path=sport%2Famerican-football";
+                    // data.Param1 = "?path=sport&status=approved";
                     // data.Param2 = "Buffalo Bills_vs_New England Patriots";
-                    // data.Param3 = "BUB-NEP-3312017"; // id
+                    // // data.Param3 = "BBB-NNN-3312017"; // id
+                    // data.Param3 = "WAS-MIA-322017"; // id
 
                     var error;
                     try
@@ -259,5 +280,58 @@ export default class ExchangeModel
         });
 
         return promise;
+    }
+
+
+
+    private prepareEditData(data)
+    {
+        data = {
+            code: 200,
+            data: {...data[0]},
+        } ;
+        data.Symbol = {
+            ChkStartDate: false,
+            ChkEndDate: false,
+            ...data.Symbol,
+        };
+
+
+        if (data.data.Symbol.StartDate)
+        {
+            data.data.Symbol.ChkStartDate = true;
+            data.data.Symbol.StartDate = (new DateLocalization).fromSharp(data.data.Symbol.StartDate, 0, {TZOffset: false}).unixToLocalDate({format: 'MM/DD/Y h:mm'});
+        }
+
+        if (data.data.Symbol.EndDate)
+        {
+            data.data.Symbol.ChkEndDate = true;
+            data.data.Symbol.EndDate = (new DateLocalization).fromSharp(data.data.Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'MM/DD/Y h:mm'});
+        }
+
+
+        // fullname type
+        if( data.data.Symbol.TypeEvent == 2 )
+        {
+            data.data.Symbol.FullNameShow = '';
+
+        // vs type
+        } else {
+            data.data.Symbol.FullNameShow = 'display: none';
+        } // endif
+
+
+        // status
+        // if( data.data.Symbol.Status.toLowerCase() == 'new' )
+        if( data.data.Symbol.Status == 0 )
+        {
+            data.data.Symbol.isUrlShow = true;
+        }
+        else
+        {
+            data.data.Symbol.isUrlShow = false;
+        } // endif
+
+        return data;
     }
 }
