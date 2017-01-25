@@ -105,36 +105,48 @@ export default class ExchangeModel
     public saveExchange(inProps)
     {
         var self = this;
-        let data = new FormData();
-        data.set('Exchange', inProps.id);
-        0||console.log( 'inProps.id', inProps.id, inProps );
+        var data = inProps.data;
+// 0||console.log( 'data', data );
+
 
         var promise = new Promise((resolve, reject) =>
         {
             var message = 'Error while saving exchange info, please, try again';
             $.ajax({
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
-                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_EDIT,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_EDIT,
                 type: 'POST',
                 success: function(data)
                 {
                     __LDEV__&&console.debug( 'data AJAX', data );
+
                     // emulate
-                    data = {Error: 200};
                     data.Param1 = {
                         Symbol: {
-                            FullName: 'Buffalo Bills_vs_New England Patriots 22222222222222',
-                            HomeName: 'Buffalo Bill2 22222',
-                            AwayName: 'New England Patriots 22222',
-                            sidealias1: '',
-                            sidealias2: '',
-                            sidehandicap1: '',
-                            sidehandicap2: '',
-                            startDate: '',
-                            endDate: '',
-                            Exchange: 'TOR-CLE-3292017',
+                            FullName: data.Param2,
+                            Exchange: data.Param3,
                         }
                     };
+                    // data = {Error: 200};
+                    // data.Param1 = Url
+                    // data.Param2 = FullName
+                    // data.Param3 = Exchange
+                    // data.Param1 = {
+                    //     Symbol: {
+                    //         FullName: 'Buffalo Bills_vs_New England Patriots 22222222222222',
+                    //         HomeName: 'Buffalo Bill2 22222',
+                    //         AwayName: 'New England Patriots 22222',
+                    //         sidealias1: '',
+                    //         sidealias2: '',
+                    //         sidehandicap1: '',
+                    //         sidehandicap2: '',
+                    //         startDate: '',
+                    //         endDate: '',
+                    //         Exchange: 'TOR-CLE-3292017',
+                    //     }
+                    // };
+
+                    var fullName = data.Param1.Symbol.FullName;
 
                     var error;
                     try
@@ -165,7 +177,8 @@ export default class ExchangeModel
                         error < 0 && console.warn( 'E', error );
                         switch( error )
                         {
-                            case 100: message = `Exchange “${data.Param1.Symbol.FullName}” saved successfully`; break; // success
+                            case 100:
+                                message = `Exchange “${fullName}” saved successfully`; break; // success
                             case -102 : message = "Url is not unique"; break;
                             case -100: ; // some backend not controlled error
                             case -1000 : ; break;
