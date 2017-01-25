@@ -87,8 +87,9 @@ export class SocketSubscribe
             ExchangeName: props.exchange,
             ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
             // CurrentOrders: "0",
-            PaginationNumber: appData.pageNum,
+            PaginationNumber: appData.pageNum || "1",
             CategoryPath: path, //sport/american-football
+            // CategoryPath: '',
         };
 
         return props;
