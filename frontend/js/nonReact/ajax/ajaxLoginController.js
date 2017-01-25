@@ -17,7 +17,7 @@ class ajaxLoginControllerClass{
 
 	static OnSuccessJs(e){
 		if (!e.Error && e.UserName) {
-			popUpClass.closePopUp('.sign_in_form');
+			popUpClass.nativePopUpClose('.sign_in_form');
 			console.log('Welcome to hell }:-)');
 			$('#submit_sign_in').removeAttr('disabled');
 			$('header .log_out').removeClass('active');
