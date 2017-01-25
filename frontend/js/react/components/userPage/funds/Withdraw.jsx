@@ -41,9 +41,9 @@ class Withdraw extends React.Component{
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>100</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>250</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>500</button>
-				<input type="tel" className={`number ${sumValidation}`} value={depositQuantity}
+				<input type="tel" className={`number ${sumValidation ? 'invalidJs' : ''}`} value={depositQuantity}
 					   onChange={actions.actionOnInputQuantityChange.bind(null, actions)} maxLength="7" autoFocus/>
-				<span className="validation-summary-errors">{sumValidation && 'Required'}</span>
+				<span className="validation-summary-errors">{sumValidation}</span>
 				<span className="label">$</span>
 			</div>
 			<div className="payment_container">

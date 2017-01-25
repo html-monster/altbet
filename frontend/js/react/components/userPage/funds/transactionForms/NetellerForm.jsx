@@ -5,7 +5,7 @@ import React from 'react';
 
 import FormValidation from '../../../FormValidation';
 import InputValidation from '../../../formValidation/InputValidation';
-import {mailValidation, netellerSecureId} from '../../../formValidation/validation';
+import {minLengthValidation, mailValidation, netellerSecureId} from '../../../formValidation/validation';
 
 export default class NetellerForm extends React.Component{
 	constructor()
@@ -15,12 +15,13 @@ export default class NetellerForm extends React.Component{
 	render()
 	{
 		const inputRender = ({ id, className, label, filled, inputLabel, type, meta: { error, dirty }, ...input }) => {
-			return <span className={'1input_animate input--yoshiko ' + (filled ? 'input--filled' : '')}>
+			return <span className={'input_animate input--yoshiko ' + ((inputLabel == 'password') ? 'pass_container ' : '') + (filled ? 'input--filled' : '')}>
 					<input className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id} type={type} {...input}/>
+					{ inputLabel == 'password' && <span className="show_password">{}</span> }
 					<label className="input__label input__label--yoshiko" htmlFor={id}>
 						<span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
 					</label>
-				{ inputLabel && <span className="label">$</span> }
+				{ inputLabel == 'total' && <span className="label">$</span> }
 				{ dirty && error && <span className="validation-summary-errors">{error}</span> }
 				</span>
 		};
@@ -34,18 +35,31 @@ export default class NetellerForm extends React.Component{
 					{/*<input type="text" style={{display: 'none'}}/>*/}
 					{/*<input type="password" style={{display: 'none'}}/>*/}
 					{/* =================================================== */}
-					<InputValidation renderContent={inputRender} id={'neteller_id'} name="clientId"
-									 className={'input__field input__field--yoshiko'}
-									 initialValue={data.UserInfo.Email}
-									 label={'Neteller ID or e-mail'} type={'text'} filled={data.UserInfo.Email}
-									 validate={mailValidation} input={input}
-									 maxLength="50"/>
+					{
+						format ?
+							<InputValidation renderContent={inputRender} id={'neteller_id'} name="clientId"
+											 className={'input__field input__field--yoshiko'}
+											 initialValue={data.UserInfo.Email}
+											 label={'Neteller ID or e-mail'} type={'text'} filled={data.UserInfo.Email}
+											 validate={mailValidation} input={input}
+											 maxLength="50"/>
+						:
+							<InputValidation renderContent={inputRender} id={'neteller_id'} name="clientId"
+											 className={'input__field input__field--yoshiko'}
+											 initialValue={'netellertest_USD@neteller.com'}
+											 label={'Neteller ID or e-mail'} type={'text'} filled={data.UserInfo.Email}
+											 validate={minLengthValidation} input={input}
+											 maxLength="50"/>
+					}
+
 
 					{
 						!format &&
 						<InputValidation renderContent={inputRender} id={'ntl_sec_id'} name="secureId"
 										 className={'input__field input__field--yoshiko'}
 										 label={'Secure ID or Authentication Code'} type={'password'}
+										 inputLabel={'password'}
+										 initialValue={'270955'}
 										 validate={netellerSecureId} input={input}
 										 maxLength="50"/>
 					}
@@ -54,7 +68,7 @@ export default class NetellerForm extends React.Component{
 						<InputValidation renderContent={inputRender} id={'neteller_total'}
 										 className={'input__field input__field--yoshiko total number'}
 										 label={'Deposit amount'} type={'tel'} filled={depositQuantity || pricePlan}
-										 inputLabel={true} name="sum"
+										 inputLabel={'total'} name="sum"
 										 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
 										 disabled={true} input={input}/>
 					}
@@ -68,7 +82,7 @@ export default class NetellerForm extends React.Component{
 						<InputValidation renderContent={inputRender} id={'neteller_total'}
 										 className={'input__field input__field--yoshiko total number'}
 										 label={'Deposit amount'} type={'tel'} filled={depositQuantity || pricePlan}
-										 inputLabel={true} name="sum"
+										 inputLabel={'total'} name="sum"
 										 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
 										 disabled={true} input={input}/>
 
