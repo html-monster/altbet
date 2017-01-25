@@ -58,7 +58,7 @@ export default class NetellerForm extends React.Component{
 										 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
 										 disabled={true} input={input}/>
 					}
-					{format && <input type="submit" className="wave btn" defaultValue={'Submit'} disabled={input.sending}/>}
+					{format && <input type="submit" className="wave btn" defaultValue={'Submit'} />}
 					{format && <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>}
 					{format && <span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>}
 				</div>
@@ -72,7 +72,7 @@ export default class NetellerForm extends React.Component{
 										 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
 										 disabled={true} input={input}/>
 
-						<input type="submit" className="wave btn" defaultValue={'Submit'} disabled={input.sending} />
+						<input type="submit" className="wave btn" defaultValue={'Submit'}  />
 						<span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
 						<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
 					</div>

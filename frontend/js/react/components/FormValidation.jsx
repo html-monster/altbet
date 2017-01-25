@@ -79,7 +79,7 @@ export default class FormValidation extends React.Component{
 
 		state.sending = true;
 		this.setState(state);
-		props.handleSubmit(this.state.values, serverValidation || null);
+		props.handleSubmit(this.state.values, serverValidation || e, (serverValidation) ? e : null);
 	}
 
 	render()
