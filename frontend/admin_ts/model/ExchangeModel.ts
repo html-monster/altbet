@@ -112,14 +112,14 @@ export default class ExchangeModel
         {
             var message = 'Error while saving exchange info, please, try again';
             $.ajax({
-                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_EDIT,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_EDIT,
                 type: 'POST',
                 success: function(data)
                 {
                     __LDEV__&&console.debug( 'data AJAX', data );
                     // emulate
-                    // data.Error = 200;
+                    // data = {Error: 200};
                     // data.Param1 = {
                     //     Symbol: {
                     //         FullName: 'Buffalo Bills_vs_New England Patriots 22222222222222',
@@ -131,7 +131,7 @@ export default class ExchangeModel
                     //         sidehandicap2: '',
                     //         startDate: '',
                     //         endDate: '',
-                    //         Exchange: 'WAS-MIA-322017',
+                    //         Exchange: 'TOR-CLE-3292017',
                     //     }
                     // };
 
@@ -209,17 +209,19 @@ export default class ExchangeModel
 
             var message = 'Error while saving data, please, try again';
             $.ajax({
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_ADD,
-                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_ADD,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 type: 'POST',
                 success: function(data)
                 {
                     __LDEV__&&console.debug( 'data AJAX', data );
-                    // data.Error = 200;
+                    // emulate
+                    data = {Error: 200};
                     // data.Param1 = "?path=sport&status=approved";
-                    // data.Param2 = "Buffalo Bills_vs_New England Patriots";
-                    // // data.Param3 = "BBB-NNN-3312017"; // id
-                    // data.Param3 = "WAS-MIA-322017"; // id
+                    data.Param1 = "?status=New";
+                    data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                    // data.Param3 = "BBB-NNN-3312017"; // id
+                    data.Param3 = "TOR-PHI-3152017"; // id
 
                     var error;
                     try
