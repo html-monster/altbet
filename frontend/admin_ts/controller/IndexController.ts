@@ -116,43 +116,43 @@ export class IndexController extends BaseController
             {
                 // 0||console.debug( 'result.fullname', result );
                 $IndexView.renderEditForm({data: result.data, name: $that.data('name')}, function(event)
+                {
+                    var form = $(event.target).closest('form');
+                    // 0||console.log( 'event.target.closest()', event.target, form );
+                    var ret = self.FormChecker.FormSubmit({ event: e,
+                        form: form,
+                        justReturn: 1,
+                        beforeSubmit: (props) => $IndexView.beginSave(props),
+                        onError: [
+                            (props) => $IndexView.setErrorOnField(props, 0),
+                            (props) => $IndexView.setErrorOnField(props, 1),
+                        ],
+                    });
+
+                    if( ret )
                     {
-                        let form = $(event.target).closest('form');
-                        // 0||console.log( 'event.target.closest()', event.target, form );
-                        var ret = self.FormChecker.FormSubmit({ event: e,
-                            form: form,
-                            justReturn: 1,
-                            beforeSubmit: (props) => $IndexView.beginSave(props),
-                            onError: [
-                                (props) => $IndexView.setErrorOnField(props, 0),
-                                (props) => $IndexView.setErrorOnField(props, 1),
-                            ],
+                        var formData = new FormData(<HTMLFormElement>form[0]);
+                        formData.set('Exchange', $id);
+// 0||console.log( 'form', form, formData.get('HomeName'), formData.get('Exchange') );
+                        $ExchangeModel.saveExchange({data: formData}).then( result =>
+                        {
+                            0||console.log( 'result', result );
+                            $IndexView.setEditSuccess({...result, ...result.data});
+                            // window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
+                            // location.href = result.url;
+                        },
+                        result => {
+                            0||console.log( 'result', result );
+                            $IndexView.setErrors({form: form, ...result, noScroll: true});
+                            $IndexView.endEditExch();
                         });
 
-                        if( ret )
-                        {
-                            // var formData = new FormData(<HTMLFormElement>form[0]);
+                    } else {
+                        $IndexView.endEditExch();
+                    } // endif
 
-                            $ExchangeModel.saveExchange({id: $id}).then( result =>
-                            {
-                                0||console.log( 'result', result );
-                                $IndexView.setEditSuccess({...result, ...result.data});
-                                // window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
-                                // location.href = result.url;
-                            },
-                            result => {
-                                0||console.log( 'result', result );
-                                $IndexView.setErrors({form: form, ...result, noScroll: true});
-                                $IndexView.endEditExch();
-                            });
-
-                        } else {
-                            $IndexView.endEditExch();
-                        } // endif
-
-                        return false;
-                    }
-                );
+                    return false;
+                });
             } // endif
         },
         result => {
