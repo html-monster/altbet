@@ -284,7 +284,7 @@ class Deposit extends React.Component{
                     <div className="pop_up_content">
                         <span>Your account balance is refilled with <span className="amount">$100</span></span>
 						<a href={ABpp.baseUrl + '/eng'} className="btn">Trade Now</a>
-                        {/*<button className="btn">Ok</button>*/}
+                        <button className="btn">Ok</button>
                     </div>
 				</div>
 			</div>

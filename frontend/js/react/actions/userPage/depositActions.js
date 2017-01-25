@@ -106,8 +106,9 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 {
 	return (dispatch) =>
 	{
-		console.log(event.target);
-		console.log(values, serverValidation);
+		let submit = $(event.target).find('[type=submit]');
+		// console.log(event.target);
+		// console.log(values, serverValidation);
 		// if(values.sum){
 		// 	new Promise(resolve => {
 		// 		setTimeout(() => {  // simulate server latency
@@ -117,12 +118,12 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 		// 	});
 		// }
 
-		const obj = {
-			clientId: 'Wrong client ID',
-			secureId: 'Wrong secure ID',
-			error: 'Server error',
-			// message: 'all fine'
-		};
+		// const obj = {
+		// 	clientId: 'Wrong client ID',
+		// 	secureId: 'Wrong secure ID',
+		// 	error: 'Server error',
+		// 	message: 'all fine'
+		// };
 		// setTimeout(() => {
 		// 	serverValidation(obj);
 		// }, 2000);
@@ -130,21 +131,23 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 		// console.log(parentData, context.props.data);
 		function OnBeginAjax()
 		{
-			console.log('begin');
-			// $(context.refs.orderForm).find('[type=submit]').attr('disabled', true);
+			submit.attr('disabled', true);
 		}
 
-		function onSuccessAjax()
+		function onSuccessAjax(data)
 		{
-			serverValidation(obj);
+			console.log(data);
+			// serverValidation(obj);
 			// context.props.actions.actionOnDeleteOrder(parentData, context.props.data);
 			// console.log(`Order sending finished: ${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`);
 		}
 
 		function onErrorAjax()
 		{
-			console.error('error');
-			// $(context.refs.orderForm).find('[type=submit]').removeAttr('disabled');
+			let data = {};
+			data.error = 'The payment failed. Please check your internet connection or reload the page or try again later.';
+			submit.removeAttr('disabled');
+			serverValidation(data);
 			// defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 		}
 

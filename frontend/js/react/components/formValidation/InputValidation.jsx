@@ -45,7 +45,7 @@ export default class InputValidation extends React.Component{
 			state.meta.error = error;
 			props.input.setErrors({[state.meta.inputId]: error});
 		}
-		console.log(nextProps.input.errors);
+		// console.log(nextProps.input.errors);
 		return true;
 	}
 

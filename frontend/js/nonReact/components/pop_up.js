@@ -80,9 +80,16 @@ class popUpClass{
 		}
 	}
 
-	static closePopUp(popUp){
+	static nativePopUpClose(popUp){
 		$(popUp).removeClass('active').fadeOut(400);
 		$('body>.wrapper').removeClass('blur');
+	}
+
+	static nativePopUpOpen(popUp){
+		let browser = $.browser.chrome && ($.browser.version.slice(0, 2) > 50) || $.browser.mozilla;
+		$(popUp).addClass('active').fadeIn(200);
+		if (browser)
+			$('body>.wrapper').addClass('blur');
 	}
 
 	static removeEventPopUp(element){
