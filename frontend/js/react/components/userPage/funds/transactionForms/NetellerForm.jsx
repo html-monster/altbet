@@ -37,10 +37,10 @@ export default class NetellerForm extends React.Component{
 					{/* =================================================== */}
 					{
 						format ?
-							<InputValidation renderContent={inputRender} id={'neteller_id'} name="clientId"
+							<InputValidation renderContent={inputRender} id={'neteller_id'} name="email"
 											 className={'input__field input__field--yoshiko'}
-											 initialValue={data.UserInfo.Email}
-											 label={'Neteller ID or e-mail'} type={'text'} filled={data.UserInfo.Email}
+											 initialValue={'netellertest_USD@neteller.com'}
+											 label={'E-mail'} type={'text'} filled={data.UserInfo.Email}
 											 validate={mailValidation} input={input}
 											 maxLength="50"/>
 						:

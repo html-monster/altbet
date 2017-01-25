@@ -88,11 +88,11 @@ class TransHistory extends React.Component{
 										data.transHistory.map((item, index) =>
 											(data.rangeFilter.from <= item.date && data.rangeFilter.to >= item.date) &&
 											(data.paymentFilter == item.system || data.paymentFilter == 'All') &&
-											<tr className={item.transaction} key={`${item.system}_${item.date}_${item.amount}_${index}`}>
-												<td>{item.transaction}</td>
+											<tr className={item.direction} key={`${item.system}_${item.date}_${item.amount}_${index}`}>
+												<td>{item.direction}</td>
 												<td>{moment(item.date).format('MM/DD/YYYY')}</td>
 												<td><span className={(item.system == 'Visa MC' ? 'VisaMC' : item.system)}>{}</span></td>
-												<td className="amount">{item.amount}</td>
+												<td className="amount">${item.amount}</td>
 											</tr>
 										)
 									:
@@ -101,7 +101,7 @@ class TransHistory extends React.Component{
 					</tbody>
 				</table>
 			</div>
-			<a href="#" className="csv link download">Download CSV</a>
+			<a href={`${ABpp.baseUrl}/payment/export2csv`} className="csv link download" target="_blank">Download CSV</a>
 		</div>
 	}
 }

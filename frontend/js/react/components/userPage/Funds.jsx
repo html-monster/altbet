@@ -38,8 +38,8 @@ export default class Funds extends React.Component{
 				<div className="wrapper_user">
 					<div className="tabs">
 						<span className="tab btn wave">Account Balance</span>
-						<span className="tab btn wave active">Deposit Funds</span>
-						<span className="tab btn wave">Withdraw Funds</span>
+						<span className="tab btn wave">Deposit Funds</span>
+						<span className="tab btn wave active">Withdraw Funds</span>
 						<span className="tab btn wave">Transaction History</span>
 					</div>
 					<div className="tab_content">
