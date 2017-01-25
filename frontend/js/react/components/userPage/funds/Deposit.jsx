@@ -62,9 +62,9 @@ class Deposit extends React.Component{
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>100</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>250</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>500</button>
-				<input type="tel" className={`number ${sumValidation}`} value={depositQuantity}
+				<input type="tel" className={`number ${sumValidation ? 'invalidJs' : ''}`} value={depositQuantity}
 					   onChange={actions.actionOnInputQuantityChange.bind(null, actions)} maxLength="7" autoFocus/>
-				<span className="validation-summary-errors">{sumValidation && 'Required'}</span>
+				<span className="validation-summary-errors">{sumValidation}</span>
 				<span className="label">$</span>
 			</div>
 			<div className="recommended_block" onClick={::this.plansToggle}>
@@ -279,12 +279,12 @@ class Deposit extends React.Component{
 					</div>
 				</div>
 			</div>
-			<div className="message pop_up">
+			<div className="payment_message pop_up" ref="paymentMessage">
 				<div className="pop_up_container">
                     <div className="pop_up_content">
                         <span>Your account balance is refilled with <span className="amount">$100</span></span>
 						<a href={ABpp.baseUrl + '/eng'} className="btn">Trade Now</a>
-                        <button className="btn">Ok</button>
+                        {/*<button className="btn">Ok</button>*/}
                     </div>
 				</div>
 			</div>

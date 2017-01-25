@@ -44,7 +44,12 @@ html{
 }
 body>.wrapper{
   background: $main-bg -50px;
-  &.blur{  filter: url('../Images/blur.svg#blur') blur(5px);  }
+  //&.blur{  filter: url('../Images/blur.svg#blur') blur(5px);  }
+}
+.blur{
+  *:not(.pop_up){
+    filter: url('../Images/blur.svg#blur') blur(5px);
+  }
 }
 
 a, span{  transition: 0.4s ease-out;  }

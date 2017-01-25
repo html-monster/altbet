@@ -24,8 +24,8 @@ export const emptyValidation = (value) => {
 export const minLengthValidation = (value) => {
 	let errors;
 
-	if (value.length < 6)
-		errors = 'Min length 6';
+	if (value.length <= 6)
+		errors = 'Min length of ID is 6';
 
 	return errors
 };

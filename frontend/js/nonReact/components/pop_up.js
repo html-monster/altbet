@@ -29,7 +29,7 @@ class popUpClass{
 				$(item).fadeOut(200).removeClass('active'); //.sign_in_form
 			});
 			if (!$('.pop_up').hasClass('active'))
-				$('body>.wrapper').removeClass('blur');
+				$('.blur').removeClass('blur');
 		}
 	}
 
@@ -86,10 +86,14 @@ class popUpClass{
 	}
 
 	static nativePopUpOpen(popUp){
-		let browser = $.browser.chrome && ($.browser.version.slice(0, 2) > 50) || $.browser.mozilla;
+		// let browser = $.browser.chrome && ($.browser.version.slice(0, 2) > 50) || $.browser.mozilla;
 		$(popUp).addClass('active').fadeIn(200);
-		if (browser)
-			$('body>.wrapper').addClass('blur');
+		// if (browser){
+		// 	$('header').addClass('blur');
+		// 	$('footer').addClass('blur');
+		// 	$('.main_menu').addClass('blur');
+		// 	$('.order_slide').addClass('blur');
+		// }
 	}
 
 	static removeEventPopUp(element){
