@@ -2,8 +2,12 @@
 	constructor(){
 		var content = $('.content');
 
+        // BM: переключатель табов EP здесь -> orderClass
+
+
+
 		$('.left_order .tab.js-tab2 label').click(function (e) {
-            e.stopPropagation();
+                e.stopPropagation();
 		});
 		if($('.wrapper_event_page').length || $('.my_position_tab').length)
 			$('.active_trader .event_title').hide();

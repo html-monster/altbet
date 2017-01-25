@@ -9,7 +9,9 @@ export class SocketSubscribe
 {
     public static MP_SYMBOLS_AND_ORDERS = '3';
     public static EP_ACTIVE_ORDER = '1';
+    public static MYP_ORDERS_POSITIONS_HISTORY= '5';
     public static TRADER_ON = '2';
+    public static CURRENT_ORDERS = '4';
 
     private subscribeParams = { // last subscribe params
             User: "",
@@ -43,7 +45,9 @@ export class SocketSubscribe
         {
             case SocketSubscribe.MP_SYMBOLS_AND_ORDERS : ret = this.setSymbolsAndOrders(data); break;
             case SocketSubscribe.EP_ACTIVE_ORDER : ret = this.setActiveOrder(data); break;
+            case SocketSubscribe.MYP_ORDERS_POSITIONS_HISTORY : ret = this.setOrdersPositionsHistory(data); break;
             case SocketSubscribe.TRADER_ON : ret = this.setTraderOn(data); break;
+            case SocketSubscribe.CURRENT_ORDERS : ret = this.setCurrentOrders(data); break;
             default: return ;
         }
         return this.subscribeParams = ret;
@@ -87,8 +91,9 @@ export class SocketSubscribe
             ExchangeName: props.exchange,
             ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
             // CurrentOrders: "0",
-            PaginationNumber: appData.pageNum,
+            PaginationNumber: appData.pageNum || "1",
             CategoryPath: path, //sport/american-football
+            // CategoryPath: '',
         };
 
         return props;
@@ -118,17 +123,45 @@ export class SocketSubscribe
 
 
     /**
+     * set active order for event page
+     * @param props
+     */
+    private setOrdersPositionsHistory(props)
+    {
+        props = { ...this.subscribeParams,
+            User: ABpp.User.login,
+            PageName: 'OrderPage',
+        };
+
+        return props;
+    }
+
+
+
+    /**
      * set active trader on/off
      * @param props
      */
     private setTraderOn(props)
     {
-        // todo: доделать exchange
-        // this.subscribeData[SocketSubscribe.EP_ACTIVE_ORDER] = { params: props };
-
         props = { ...this.subscribeParams,
             ExchangeName: props.exchange ? props.exchange : this.subscribeParams.ExchangeName,
             ActiveTrader: props.tradeOn ? "1" : "0",
+        };
+
+        return props;
+    }
+
+
+
+    /**
+     * set current orders on/off
+     * @param props
+     */
+    private setCurrentOrders(props)
+    {
+        props = { ...this.subscribeParams,
+            CurrentOrders: props ? "1" : "0",
         };
 
         return props;
@@ -164,3 +197,5 @@ export class SocketSubscribe
         return {ActiveOrders: activeOrders, Bars: bars};
     }
 }
+
+window.SocketSubscribe = SocketSubscribe;

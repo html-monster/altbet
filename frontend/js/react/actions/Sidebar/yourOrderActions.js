@@ -27,7 +27,7 @@ export function actionOnSocketMessage()
 					type: ON_YOUR_ORDER_SOCKET_MESSAGE,
 					payload: newData
 				});
-				console.log('re-render');
+				// console.log('re-render');
 			}
 		});
 	}

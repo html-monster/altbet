@@ -16,15 +16,13 @@ class Sidebar extends React.Component
 	constructor(props)
 	{
 		super();
-		// 0||console.log( 'this.props.sidebar', props );
 
 		this.state = {globalData: globalData};
-        // props.actions.actionOnLoad();
         this.FLAG_LOAD = true;
+        // 0||console.log( 'this.props.sidebar', props.sidebar );
 
 
         // allow AT
-        // 0||console.log( 'ABpp.config.currentPage, ABpp.PAGE_MYPOS', ABpp.config.currentPage, ABpp.PAGE_MYPOS );
         if( ABpp.config.currentPage != ABpp.CONSTS.PAGE_MYPOS )
         {
             this.isAllowAT = true;
@@ -34,7 +32,9 @@ class Sidebar extends React.Component
             this.isAllowAT = false;
             ABpp.config.tradeOn = false;
         } // endif
+        props.actions.actionChangeAllowAt(this.isAllowAT);
 	}
+
 
 
 	componentDidMount()

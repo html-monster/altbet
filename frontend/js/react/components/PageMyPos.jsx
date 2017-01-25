@@ -10,7 +10,8 @@ import MyPosTabData from './pageMyPos/myPosTabData';
 import MyOpenOrdersTabData from './pageMyPos/myOpenOrdersTabData';
 import {MyOrderHistoryTabData} from './pageMyPos/myOrderHistoryTabData';
 import BaseController from '../containers/BaseController';
-import myPosReduce from '../reducers/MyPosReducer';
+import actions from '../actions/ordersPageActions';
+import {Common} from '../common/Common';
 
 
 class PageMyPos extends BaseController //React.Component
@@ -18,35 +19,39 @@ class PageMyPos extends BaseController //React.Component
     constructor(props)
     {
         super(props);
+        __DEV__ && console.log( 'PageMyPos props', props );
 
-        0||console.log( 'props', props );
+        props.actions.actionOnLoad();
+
         let {openOrdersData, positionData, historyData} = props.data;
         this.state = {data: {openOrdersData, positionData, historyData}};
-        0||console.log( 'openOrdersData, positionData, historyData', openOrdersData, positionData, historyData );
     }
+
+
 
     componentDidMount()
     {
         window.ee.addListener('myOpenOrder.update', (newData) =>
         {
-          // __DEV__&&console.debug( 'newData', newData );
-                // let prevData = self.state.data;
-                // newData = newData && newData.length ? positionControllerClass.filterData(newData, self.props.id) : [];
+            // __DEV__ && console.debug('newData 1111', this.state.data.openOrdersData, newData);
+            // let prevData = self.state.data;
+            // newData = newData && newData.length ? positionControllerClass.filterData(newData, self.props.id) : [];
+            if (JSON.stringify(this.state.data.openOrdersData) != JSON.stringify(newData))
+            {
                 newData = Object.assign(this.state.data, {openOrdersData: newData});
                 this.setState(newData);
+            } // endif
         });
 
         window.ee.addListener('myPosOrder.update', (newData) =>
-				{
-            0||console.log( 'newData', newData );
-          newData = Object.assign(this.state.data, {positionData: newData});
-          this.setState(newData);
+        {
+            // 0||console.log( 'newData', newData );
+            newData = Object.assign(this.state.data, {positionData: newData});
+            this.setState(newData);
         });
-	  }
+    }
 
-    // onYearBtnClick(e) {
-    //     // this.props.actions.getPhotos(+e.target.getAttribute('data-year'));
-    // }
+
 
     render()
     {
@@ -200,7 +205,6 @@ export default connect(
         // test: state.Ttest,
     }),
     dispatch => ({
-        // actions: bindActionCreators(actions, dispatch),
-        // actions: bindActionCreators(mainPageActions, dispatch),
+        actions: bindActionCreators(actions, dispatch),
     })
 )(PageMyPos)

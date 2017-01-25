@@ -105,7 +105,8 @@ export class IndexController extends BaseController
         let $IndexView = (new IndexView);
         let $ExchangeModel = (new ExchangeModel);
         // 0||console.log( '$that.attr(),', $that.data('id'), $that );
-        $ExchangeModel.getExchange({id: $that.data('id')}).then(result =>
+        var $id = $that.data('id');
+        $ExchangeModel.getExchange({id: $id}).then(result =>
         {
             if( result.code < 0 )
             {
@@ -130,9 +131,9 @@ export class IndexController extends BaseController
 
                         if( ret )
                         {
-                            var formData = new FormData(<HTMLFormElement>form[0]);
+                            // var formData = new FormData(<HTMLFormElement>form[0]);
 
-                            $ExchangeModel.saveExchange({url: $that.attr('url'), name: $that.data('catname')}).then( result =>
+                            $ExchangeModel.saveExchange({id: $id}).then( result =>
                             {
                                 0||console.log( 'result', result );
                                 $IndexView.setEditSuccess({...result, ...result.data});

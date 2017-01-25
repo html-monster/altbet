@@ -77,7 +77,7 @@ class MainPage extends BaseController
         let {activeExchange, isBasicMode, isTraiderOn} = this.props.data;
         var $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
-        var urlBase = "/AltBetSubscr/eng";
+        var urlBase = appData.baseUrl.MainPage;
 let nb = "&nbsp;";
 
         return (
@@ -107,11 +107,11 @@ let nb = "&nbsp;";
                             { $Pagination && $Pagination.LastPage > 1 &&
                                 <div className="pagination">
                                     <ul className="pagination_list">
-                                        {$Pagination.Pages.map((item, key) =>
-                                            <li key={key} className={(item.Disabled ? "disabled " : "") + (item.IsCurrenPage ? "active" : "")}>
-                                                <a href={urlBase + `/${item.RouteValues.controller}/${item.RouteValues.action[0] == '/' ? item.RouteValues.action.slice(1) : item.RouteValues.action}?Page=${item.RouteValues.Page}`} dangerouslySetInnerHTML={{__html: item.Caption}}></a>
+                                        {$Pagination.Pages.map((item, key) => {
+                                            return <li key={key} className={(item.Disabled ? "disabled " : "") + (item.IsCurrenPage ? "active" : "")}>
+                                                <a href={urlBase + `/${item.RouteValues.action[0] == '/' ? item.RouteValues.action.slice(1) : item.RouteValues.action}?Page=${item.RouteValues.Page}`} dangerouslySetInnerHTML={{__html: item.Caption}}></a>
                                             </li>
-                                        )}
+                                        })}
                                     </ul>
                                 </div>
                             }
