@@ -102,20 +102,20 @@ export function actionOnQuantityValidate(values)
 	}
 }
 
-export function actionOnAjaxSend(context, values, serverValidation)
+export function actionOnAjaxSend(context, values, serverValidation, event)
 {
 	return (dispatch) =>
 	{
-		console.log(context);
+		console.log(event.target);
 		console.log(values, serverValidation);
-		if(values.sum){
-			new Promise(resolve => {
-				setTimeout(() => {  // simulate server latency
-					window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
-					resolve()
-				}, 500)
-			});
-		}
+		// if(values.sum){
+		// 	new Promise(resolve => {
+		// 		setTimeout(() => {  // simulate server latency
+		// 			window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+		// 			resolve()
+		// 		}, 500)
+		// 	});
+		// }
 
 		const obj = {
 			clientId: 'Wrong client ID',
@@ -123,36 +123,42 @@ export function actionOnAjaxSend(context, values, serverValidation)
 			error: 'Server error',
 			// message: 'all fine'
 		};
-		setTimeout(() => {
-			serverValidation(obj);
-		}, 2000);
+		// setTimeout(() => {
+		// 	serverValidation(obj);
+		// }, 2000);
 		// let data = context.props.data;
 		// console.log(parentData, context.props.data);
 		function OnBeginAjax()
 		{
+			console.log('begin');
 			// $(context.refs.orderForm).find('[type=submit]').attr('disabled', true);
 		}
 
 		function onSuccessAjax()
 		{
+			serverValidation(obj);
 			// context.props.actions.actionOnDeleteOrder(parentData, context.props.data);
 			// console.log(`Order sending finished: ${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`);
 		}
 
 		function onErrorAjax()
 		{
+			console.error('error');
 			// $(context.refs.orderForm).find('[type=submit]').removeAttr('disabled');
 			// defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 		}
 
-		// defaultMethods.sendAjaxRequest({
-		// 	httpMethod: 'POST',
-		// 	url: context.props.formData.url,
-		// 	callback: onSuccessAjax,
-		// 	onError: onErrorAjax,
-		// 	beforeSend: OnBeginAjax,
-		// 	context: $(context.refs.orderForm)
-		// });
+		if(values.sum){
+			defaultMethods.sendAjaxRequest({
+				httpMethod: 'POST',
+				url: $(event.target).attr('action'),
+				data: values,
+				callback: onSuccessAjax,
+				onError: onErrorAjax,
+				beforeSend: OnBeginAjax,
+			});
+		}
+
 
 		dispatch({
 			type: DEPOSIT_QUANTITY_VALIDATE,
