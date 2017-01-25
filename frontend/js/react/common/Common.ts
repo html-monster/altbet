@@ -24,7 +24,7 @@ export class Common
      */
     public static deepCompare()
     {
-    /*    var i, l, leftChain, rightChain;
+        var i, l, leftChain, rightChain;
 
         function compare2Objects(x, y) {
             var p;
@@ -135,7 +135,7 @@ export class Common
             }
         }
 
-        return true;*/
+        return true;
     }
 
 

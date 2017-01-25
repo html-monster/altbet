@@ -172,7 +172,7 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            // 0||console.log( 'inProps', inProps );
+            0||console.log( 'inProps', inProps, ABpp.config.tradeOn );
 
             if( !ABpp.config.tradeOn )
             {

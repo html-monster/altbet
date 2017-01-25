@@ -8,11 +8,13 @@ import tradeSlip from './sidebar/defaultOrders';
 import yourOrders from './sidebar/yourOrders';
 import deposit from './userPage/deposit';
 import transHistory from './userPage/transHistory';
+import myPosReduce from './MyPosReducer';
 
 export default combineReducers({
 	'App': appState,
 	mainPage,
     eventPage,
+	myPosReduce,
 	sidebar,
 	tradeSlip,
 	yourOrders,

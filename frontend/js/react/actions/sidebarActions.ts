@@ -1,6 +1,6 @@
 import {
     ON_TRADER_ON,
-	// ON_TAB_SWITCH,
+	ALLOW_AT_CH,
 	ON_ACTIVE_SYMBOL_CHANGED,
 } from '../constants/ActionTypesSidebar.js';
 import { WebsocketModel } from '../models/Websocket';
@@ -17,17 +17,16 @@ declare var orderClass;
 
 class Actions extends BaseActions
 {
-    // public actionOnLoad()
-    // {
-    //     return (dispatch, getState) =>
-    //     {
-    //
-    //         dispatch({
-    //             type: ON_TRADER_ON,
-    //             payload: ABpp.User.settings.tradeOn,
-    //         });
-    //     }
-    // }
+    public actionChangeAllowAt(isAllowAT)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ALLOW_AT_CH,
+                payload: isAllowAT,
+            });
+        }
+    }
 
 
     public actionOnTraderOnChange(isChecked)
@@ -44,7 +43,9 @@ class Actions extends BaseActions
 					titles = event_container.eq(0).find('.event-title .title'),
 					executedOrders = $('.wrapper_event_page .executed_orders');
 
-			ABpp.Websocket.sendSubscribe({tradeOn: isChecked}, SocketSubscribe.TRADER_ON);
+
+            // call socket if allow active trader
+			getState().sidebar.isAllowAT && ABpp.Websocket.sendSubscribe({tradeOn: isChecked}, SocketSubscribe.TRADER_ON);
 			// 0||console.log( 'getState().sidebar.activeExchange', getState().sidebar.activeExchange );
 
 			if( isChecked )

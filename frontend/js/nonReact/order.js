@@ -19,7 +19,14 @@ class orderClass{
 					tab_content = $('.tab_content'),
 					checkbox = $('.left_order .tab input[type=checkbox]');
 
-			$(".left_order .wrapper .tab").click(function () {
+
+			// BM: переключатель табов в EP
+			$(".left_order .wrapper .tab").click(function ()
+			{
+				let flagCO = $(this).index() == 1;
+				ABpp.Websocket.sendSubscribe(flagCO, window.SocketSubscribe.CURRENT_ORDERS);
+
+
 				let tab = $(".left_order .wrapper .tab");
 
 				if($(this).attr('data-disabled')) return false;
@@ -617,7 +624,7 @@ class orderClass{
 	}
 
 	/**
-	 * скрывает и показывает информацию при отсутсвие ордеров в сайдбаре
+	 * BM: скрывает и показывает информацию при отсутсвие ордеров в сайдбаре
 	 */
 	static showInfo () {
 		if($('#order .default_orders').children().length > 1)

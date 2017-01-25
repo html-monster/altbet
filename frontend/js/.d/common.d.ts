@@ -39,6 +39,7 @@ interface JQuery
 interface Window
 {
     ADpp : any
+    SocketSubscribe : any
 }
 
 

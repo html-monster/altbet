@@ -37,7 +37,7 @@ export default class ActiveTrader extends React.Component {
 			}
 			if(JSON.stringify(this.state.data) != JSON.stringify(newData) || this.state.isMirror != isMirror){
 				this.setState({data: newData, isMirror: isMirror});
-				console.log('re-render');
+				// console.log('re-render');
 			}
 
 			activeTraderClass.scrollTo();

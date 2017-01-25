@@ -29,6 +29,7 @@ export default function eventPage(state = initialState, action)
             return {...state, name: action.payload, error: ''};
 
         case ON_TRADE_ONOFF:
+            // 0||console.log( 'action.payload', action.payload );
             return {...state, isTraiderOn: action.payload};
 
         case ON_SOCKET_MESSAGE:
