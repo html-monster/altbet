@@ -200,7 +200,7 @@
         a.jump{  top: 12px;  }
       }
     }
-    .sub-menu_1{
+    .lv0{
       background: rgba(33, 30, 37, 0.4);//292830
       span{  padding: 5px 8px 5px 40px;  }
       span, a.event{
@@ -220,10 +220,22 @@
         &:hover:after{  opacity: 0.1;  }
       }
     }
-    .sub-menu_2{
+    .lv1{
       background: rgba(33, 30, 37, 0.6);//222125
     }
-    .sub-menu_3{
+    .lv2{
+      background: rgba(70, 56, 60, 0.2);//222125
+
+    }
+    .lv3{
+      background: rgba(70, 56, 60, 0.4);//222125
+
+    }
+    .lv4{
+      background: rgba(70, 56, 60, 0.6);//222125
+    }
+
+    .lv-last{
       background: rgba(33, 30, 37, 0.8);//201f27
       opacity: 0.8;
       li:after{

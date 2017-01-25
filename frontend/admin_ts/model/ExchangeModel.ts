@@ -107,14 +107,14 @@ export default class ExchangeModel
         var self = this;
         let data = new FormData();
         data.set('Exchange', inProps.id);
-        0||console.log( 'inProps.id', inProps.id, inProps );
+
 
         var promise = new Promise((resolve, reject) =>
         {
             var message = 'Error while saving exchange info, please, try again';
             $.ajax({
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
-                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_EDIT,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_EDIT,
                 type: 'POST',
                 success: function(data)
                 {
