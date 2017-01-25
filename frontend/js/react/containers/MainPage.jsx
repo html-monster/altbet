@@ -75,7 +75,10 @@ class MainPage extends BaseController
         // let isBasicMode = ABpp.config.basicMode;
         let data = this.props.data;
         let {activeExchange, isBasicMode, isTraiderOn} = this.props.data;
-
+        var $Pagination;
+        if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
+        var urlBase = "/AltBetSubscr/eng";
+let nb = "&nbsp;";
 
         return (
             <div className="nav_items">
@@ -101,6 +104,17 @@ class MainPage extends BaseController
                                     <ExchangeItem key={key} data={{...item, activeExchange, isBasicMode, isTraiderOn}} actions={this.props.actions} />
                                 )}
                             </div>
+                            { $Pagination && $Pagination.LastPage > 1 &&
+                                <div className="pagination">
+                                    <ul className="pagination_list">
+                                        {$Pagination.Pages.map((item, key) =>
+                                            <li key={key} className={(item.Disabled ? "disabled " : "") + (item.IsCurrenPage ? "active" : "")}>
+                                                <a href={urlBase + `/${item.RouteValues.controller}/${item.RouteValues.action[0] == '/' ? item.RouteValues.action.slice(1) : item.RouteValues.action}?Page=${item.RouteValues.Page}`} dangerouslySetInnerHTML={{__html: item.Caption}}></a>
+                                            </li>
+                                        )}
+                                    </ul>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

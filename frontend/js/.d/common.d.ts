@@ -4,6 +4,7 @@ declare let __DEV__;
 declare let ABpp;
 declare let __LDEV__;
 declare let moment;
+declare let appData;
 // declare var window : any;
 declare let dataController;
 declare let mainChartController;

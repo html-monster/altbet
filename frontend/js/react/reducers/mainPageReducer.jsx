@@ -7,7 +7,7 @@ import {
 
 
 const initialState = {
-    marketsData: appData.pageHomeData.Data,
+    marketsData: appData.pageHomeData ? appData.pageHomeData.Data : null,
     isBasicMode: globalData.basicMode,
     isTraiderOn: globalData.autoTradeOn,
     activeExchange: {name: '', // exchange unique name

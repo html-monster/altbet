@@ -2,6 +2,8 @@
  * Created by tianna on 06.01.17.
  */
 
+/// <reference path="../../.d/common.d.ts" />
+
 
 export class SocketSubscribe
 {
@@ -15,7 +17,7 @@ export class SocketSubscribe
             ExchangeName: "",
             ActiveTrader: "0", //ABpp.config.tradeOn ? "1" : "0",
             CurrentOrders: "0",
-            PaginationNumber: '0',
+            PaginationNumber: '1',
             CategoryPath: '', //sport/american-football
         };
     private subscribeData = {};     // data from subscribers
@@ -73,12 +75,20 @@ export class SocketSubscribe
     {
         this.subscribeData[SocketSubscribe.MP_SYMBOLS_AND_ORDERS] = { params: props };
 
+        var path;
+        try {
+            path = appData.pageHomeData.Pagination.RouteParams.path;
+        } catch (e) {
+        }
+
         props = { ...this.subscribeParams,
             User: ABpp.User.login,
             PageName: 'MainPage',
             ExchangeName: props.exchange,
             ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
             // CurrentOrders: "0",
+            PaginationNumber: appData.pageNum,
+            CategoryPath: path, //sport/american-football
         };
 
         return props;
