@@ -109,6 +109,8 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 {
 	return (dispatch) =>
 	{
+		const netellerOut = $(event.target).attr('action').indexOf('NetellerOut') != -1;
+		console.log(values);
 		let submit = $(event.target).find('[type=submit]');
 		let error = null;
 		if(!values.sum)
@@ -153,7 +155,8 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 				case '200':{
 					const { transaction: { amount = null, fees = null } } = data;
 					popUpClass.nativePopUpOpen('.wrapper_user_page .payment_message');
-					$(context.refs.paymentMessage).find('.amount').text('$' + ((amount - fees[0].feeAmount) / 100));
+
+					$(context.refs.paymentMessage).find('.amount').text('$' + (netellerOut ? amount / 100 : (amount - fees[0].feeAmount) / 100));
 					serverValidation({message: 'The payment is successful'});
 					break;}
 				case '555':{
@@ -165,8 +168,11 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 				case '20001':{
 					serverValidation({error: 'The account is closed'});
 					break;}
-				case '20007' || '20008':{
-					serverValidation({error: 'The Neteller ID or e-mail is invalid or the Secure ID or Authentication Code is invalid', clientId: ' ', secureId: ' '});
+				case '20007':{
+					serverValidation({error: `The ${netellerOut ? '' : 'Neteller ID / '}e-mail is invalid or the Secure ID / Authentication Code is invalid`, clientId: ' ', secureId: ' '});
+					break;}
+				case '20008':{
+					serverValidation({error: `The ${netellerOut ? '' : 'Neteller ID / '}e-mail is invalid or the Secure ID / Authentication Code is invalid`, clientId: ' ', secureId: ' '});
 					break;}
 				case '20011':{
 					serverValidation({error: 'You are residing in a NETELLER blocked country/state/region'});
@@ -176,6 +182,11 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 					break;}
 				case '20020':{
 					serverValidation({error: 'Insufficient balance to complete the transaction'});
+					error = ' ';
+					dispatch({
+						type: DEPOSIT_QUANTITY_VALIDATE,
+						payload: error
+					});
 					break;}
 				case '20021':{
 					serverValidation({error: 'The specified amount is below defined minimum transfer limits'});

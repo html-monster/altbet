@@ -47,7 +47,7 @@ $(document).ready(function () {
 
 	popUpClass.popUpClose('.sign_in_form a.register', '.sign_in_form');
 	popUpClass.popUpClose('.sign_in_form .close', '.sign_in_form'); // pop-up login
-	// popUpClass.popUpClose('.wrapper_user_page .payment_message button', '.wrapper_user_page .payment_message'); //payment message
+	popUpClass.popUpClose('.wrapper_user_page .payment_message button', '.wrapper_user_page .payment_message'); //payment message
 	// popUpClass.popUpClose('.sign_up_form .confirm .btn', '.sign_up_form', '.sign_up_form .confirm'); // pop-up login
 
 	popUpClass.globalPopUpClose('.warning'); // all warning message

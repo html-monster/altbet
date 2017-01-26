@@ -21,6 +21,7 @@ export function actionSetDateFilter(from, to)
 {
 	return (dispatch) =>
 	{
+		console.log( {from: +from.format('x'), to: +to.format('x')});
 		dispatch({
 			type   : TRANS_HISTORY_SET_DATE_FILTER,
 			payload: {from: +from.format('x'), to: +to.format('x')}

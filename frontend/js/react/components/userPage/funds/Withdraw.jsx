@@ -30,7 +30,7 @@ class Withdraw extends React.Component{
 		const { data, plan, payYearly, depositQuantity, pricePlan, sumValidation } = this.props.withdraw;
 		const actions = this.props.actions;
 
-		return <div className="tab_item funds">
+		return <div className="tab_item funds active">
 			<h3>Add funds</h3>
 			<span className="account_balance">You currently have <span className="value">${Math.round10(data.UserAssets.CurrentBalance, -2)}</span> in your account</span>
 			<div className="quantity_control">
@@ -50,8 +50,8 @@ class Withdraw extends React.Component{
 				<div className="tabs">
 					<span className="tab btn wave VisaMC" onClick={this.scrollBottom}><span>{}</span></span>
 					<span className="tab btn wave Skrill" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Neteller" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Ecopayz active" onClick={this.scrollBottom}><span>{}</span></span>
+					<span className="tab btn wave Neteller active" onClick={this.scrollBottom}><span>{}</span></span>
+					<span className="tab btn wave Ecopayz" onClick={this.scrollBottom}><span>{}</span></span>
 				</div>
 				<div className="tab_content">
 					<div className="tab_item payment_tab">
@@ -110,7 +110,7 @@ class Withdraw extends React.Component{
 							<input type="hidden" name="plan" value={plan}/>
 						</form>
 					</div>
-					<div className="tab_item payment_tab">
+					<div className="tab_item payment_tab active">
 						{/*<form>*/}
 						{/*<div className="container">*/}
 						{/*<span className={'input_animate input--yoshiko ' + (data.UserInfo.Email ? 'input--filled' : '')}>*/}
@@ -142,10 +142,19 @@ class Withdraw extends React.Component{
 						{/*</div>*/}
 						{/*<input type="hidden" name="plan" value={plan}/>*/}
 						{/*</form>*/}
-						<NetellerForm data={this.props.withdraw} format={'withdraw'} onSubmit={actions.actionOnAjaxSend} />
+						<NetellerForm data={this.props.withdraw} format={'withdraw'} onSubmit={actions.actionOnAjaxSend.bind(null, this)} />
 					</div>
-					<div className="tab_item payment_tab active">
-						<EcoPayzForm data={this.props.withdraw} format={'withdraw'} onSubmit={actions.actionOnAjaxSend} />
+					<div className="tab_item payment_tab">
+						<EcoPayzForm data={this.props.withdraw} format={'withdraw'} onSubmit={actions.actionOnAjaxSend.bind(null, this)} />
+					</div>
+				</div>
+			</div>
+			<div className="payment_message pop_up" ref="paymentMessage">
+				<div className="pop_up_container">
+					<div className="pop_up_content">
+						<span>Your account balance is refilled with <span className="amount">$100</span></span>
+						{/*<a href={ABpp.baseUrl + '/eng'} className="btn">Trade Now</a>*/}
+						<button className="btn">Ok</button>
 					</div>
 				</div>
 			</div>
