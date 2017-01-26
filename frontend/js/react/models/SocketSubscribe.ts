@@ -113,7 +113,7 @@ export class SocketSubscribe
             User: ABpp.User.login,
             PageName: 'EventPage',
             ExchangeName: props.exchange,
-            ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
+            ActiveTrader: "1",
             // CurrentOrders: "0",
         };
 

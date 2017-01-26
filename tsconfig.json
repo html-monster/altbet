@@ -17,6 +17,7 @@
     "pretty": false
   },
   "exclude": [
+    "admin_ts",
     "node_modules",
     "dist",
     "backup"

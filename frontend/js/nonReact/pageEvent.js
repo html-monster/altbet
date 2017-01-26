@@ -9,19 +9,20 @@ class eventPageClass{
 				$('.executed_orders td').addClass('clickable');
 		});
 
-		self.tabularMarking = function () {
-			let executedOrders = $('.wrapper_event_page .executed_orders');
-
-			executedOrders.on('mouseenter', 'td.volume.clickable', function () {
-				$(this).parents('.executed_orders').find('tr').removeClass('active');
-				for(let ii = 0; ii <= $(this).parent().index(); ii++){
-					$(this).parents('.executed_orders').find('tr').eq(ii).addClass('active');
-				}
-			});
-			executedOrders.on('mouseleave', 'td.clickable', function () {
-				$(this).parents('.executed_orders').find('tr').removeClass('active');
-			});
-		}();
+		// self.tabularMarking = function () {
+		// 	let executedOrders = $('.wrapper_event_page .executed_orders');
+        //
+		// 	executedOrders.on('mouseenter', 'td.volume.clickable', function () {
+		// 		0||console.debug( 'here' );
+		// 		$(this).parents('.executed_orders').find('tr').removeClass('active');
+		// 		for(let ii = 0; ii <= $(this).parent().index(); ii++){
+		// 			$(this).parents('.executed_orders').find('tr').eq(ii).addClass('active');
+		// 		}
+		// 	});
+		// 	executedOrders.on('mouseleave', 'td.clickable', function () {
+		// 		$(this).parents('.executed_orders').find('tr').removeClass('active');
+		// 	});
+		// }();
 
 		self.addOrder = function () {
 			// let order = $('#order .default_orders'), data;

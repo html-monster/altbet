@@ -16,8 +16,10 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
+            ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.exchange, isMirror: appData.pageEventData.IsMirror});
             // subscribe for data
             ABpp.Websocket.sendSubscribe({exchange: inProps.exchange}, SocketSubscribe.EP_ACTIVE_ORDER);
+
 
             // receive data
             ABpp.Websocket.subscribe((inActiveOrders, inBars) =>

@@ -21,8 +21,14 @@ class EventPage extends BaseController
         __DEV__&&console.debug( 'this.props', props );
 
         this.actions = props.eventPageActions;
+    }
+
+
+    componentWillMount()
+    {
         this.actions.actionOnLoad({exchange: appData.pageEventData.SymbolsAndOrders.Symbol.Exchange});
     }
+
 
 
     componentDidMount()
@@ -32,6 +38,22 @@ class EventPage extends BaseController
 
         // subscribe on tader on/off
         /** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_TRADER_ON, () => this._activeTraiderActivate());
+        let data = ABpp.SysEvents.getLastNotifyData(ABpp.SysEvents.EVENT_TURN_TRADER_ON);
+        data && this._activeTraiderActivate();
+
+
+		// BetsTable tabularMarking
+        let executedOrders = $('.wrapper_event_page .executed_orders');
+
+        executedOrders.on('mouseenter', 'td.volume.clickable', function () {
+            $(this).parents('.executed_orders').find('tr').removeClass('active');
+            for(let ii = 0; ii <= $(this).parent().index(); ii++){
+                $(this).parents('.executed_orders').find('tr').eq(ii).addClass('active');
+            }
+        });
+        executedOrders.on('mouseleave', 'td.clickable', function () {
+            $(this).parents('.executed_orders').find('tr').removeClass('active');
+        });
     }
 
 
