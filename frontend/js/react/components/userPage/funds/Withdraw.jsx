@@ -7,7 +7,7 @@ import React from 'react';
 
 import NetellerForm from './transactionForms/NetellerForm';
 import EcoPayzForm from './transactionForms/EcoPayzForm';
-import * as actions from '../../../actions/userPage/depositActions.js';
+import * as actions from '../../../actions/userPage/withdrawActions';
 
 class Withdraw extends React.Component{
 	constructor()
@@ -27,10 +27,10 @@ class Withdraw extends React.Component{
 
 	render()
 	{
-		const { data, plan, payYearly, depositQuantity, pricePlan, sumValidation } = this.props.withdraw;
+		const { data, depositQuantity,sumValidation } = this.props.withdraw;
 		const actions = this.props.actions;
 
-		return <div className="tab_item funds active">
+		return <div className="tab_item funds">
 			<h3>Add funds</h3>
 			<span className="account_balance">You currently have <span className="value">${Math.round10(data.UserAssets.CurrentBalance, -2)}</span> in your account</span>
 			<div className="quantity_control">
@@ -96,9 +96,9 @@ class Withdraw extends React.Component{
 									</label>
 									<span className="validation-summary-errors">{}</span>
 								</span>
-								<span className={'input_animate input--yoshiko ' + (depositQuantity || pricePlan ? 'input--filled' : '')}>
+								<span className={'input_animate input--yoshiko ' + (depositQuantity ? 'input--filled' : '')}>
 									<input className="input__field input__field--yoshiko total number" id="skrill_total" type="tel"
-										   value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''} onChange={actions.actionOnInputQuantityChange} disabled={true}/>
+										   value={depositQuantity ? depositQuantity : ''} onChange={actions.actionOnInputQuantityChange} disabled={true}/>
 									<label className="input__label input__label--yoshiko" htmlFor="skrill_total">
 										<span className="input__label-content input__label-content--yoshiko" data-content="Deposit amount">Deposit amount</span>
 									</label>
@@ -107,7 +107,6 @@ class Withdraw extends React.Component{
 								</span>
 								<input type="submit" className="wave btn" defaultValue={'Submit'} />
 							</div>
-							<input type="hidden" name="plan" value={plan}/>
 						</form>
 					</div>
 					<div className="tab_item payment_tab active">
@@ -149,10 +148,10 @@ class Withdraw extends React.Component{
 					</div>
 				</div>
 			</div>
-			<div className="payment_message pop_up" ref="paymentMessage">
+			<div className="payment_message withdraw_message pop_up" ref="paymentMessage">
 				<div className="pop_up_container">
 					<div className="pop_up_content">
-						<span>Your account balance is refilled with <span className="amount">$100</span></span>
+						<span><span className="amount">$100</span> are withdrawn from your account</span>
 						{/*<a href={ABpp.baseUrl + '/eng'} className="btn">Trade Now</a>*/}
 						<button className="btn">Ok</button>
 					</div>
@@ -163,7 +162,7 @@ class Withdraw extends React.Component{
 }
 
 export default connect(state => ({
-		withdraw: state.deposit,
+		withdraw: state.withdraw,
 	}),
 	dispatch => ({
 		actions: bindActionCreators(actions, dispatch),

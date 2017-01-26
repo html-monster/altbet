@@ -39,14 +39,14 @@ export default class NetellerForm extends React.Component{
 						format ?
 							<InputValidation renderContent={inputRender} id={'neteller_id'} name="email"
 											 className={'input__field input__field--yoshiko'}
-											 initialValue={'netellertest_USD@neteller.com'}
+											 initialValue={data.UserInfo.Email}
 											 label={'E-mail'} type={'text'} filled={data.UserInfo.Email}
 											 validate={mailValidation} input={input}
 											 maxLength="50"/>
 						:
 							<InputValidation renderContent={inputRender} id={'neteller_id'} name="clientId"
 											 className={'input__field input__field--yoshiko'}
-											 initialValue={'netellertest_USD@neteller.com'}
+											 initialValue={data.UserInfo.Email}
 											 label={'Neteller ID or e-mail'} type={'text'} filled={data.UserInfo.Email}
 											 validate={minLengthValidation} input={input}
 											 maxLength="50"/>
@@ -59,7 +59,6 @@ export default class NetellerForm extends React.Component{
 										 className={'input__field input__field--yoshiko'}
 										 label={'Secure ID or Authentication Code'} type={'password'}
 										 inputLabel={'password'}
-										 initialValue={'270955'}
 										 validate={netellerSecureId} input={input}
 										 maxLength="50"/>
 					}
@@ -67,9 +66,9 @@ export default class NetellerForm extends React.Component{
 						format &&
 						<InputValidation renderContent={inputRender} id={'neteller_total'}
 										 className={'input__field input__field--yoshiko total number'}
-										 label={'Deposit amount'} type={'tel'} filled={depositQuantity || pricePlan}
+										 label={'Deposit amount'} type={'tel'} filled={depositQuantity}
 										 inputLabel={'total'} name="sum"
-										 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
+										 value={depositQuantity || ''}
 										 disabled={true} input={input}/>
 					}
 					{format && <input type="submit" className="wave btn" defaultValue={'Submit'} />}

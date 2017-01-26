@@ -12,6 +12,7 @@ export class SocketSubscribe
     public static MYP_ORDERS_POSITIONS_HISTORY= '5';
     public static TRADER_ON = '2';
     public static CURRENT_ORDERS = '4';
+    public static AP_ACCOUNT_DATA = '6';
 
     private subscribeParams = { // last subscribe params
             User: "",
@@ -44,6 +45,7 @@ export class SocketSubscribe
         switch( type )
         {
             case SocketSubscribe.MP_SYMBOLS_AND_ORDERS : ret = this.setSymbolsAndOrders(data); break;
+            case SocketSubscribe.AP_ACCOUNT_DATA : ret = this.setAccountData(data); break;
             case SocketSubscribe.EP_ACTIVE_ORDER : ret = this.setActiveOrder(data); break;
             case SocketSubscribe.MYP_ORDERS_POSITIONS_HISTORY : ret = this.setOrdersPositionsHistory(data); break;
             case SocketSubscribe.TRADER_ON : ret = this.setTraderOn(data); break;
@@ -94,6 +96,22 @@ export class SocketSubscribe
             PaginationNumber: appData.pageNum || "1",
             CategoryPath: path, //sport/american-football
             // CategoryPath: '',
+        };
+
+        return props;
+    }
+
+
+    /**
+     * set AccountData for account page
+     * @param props
+     */
+    private setAccountData(props)
+    {
+
+        props = { ...this.subscribeParams,
+            User: ABpp.User.login,
+            PageName: 'MainPage',
         };
 
         return props;

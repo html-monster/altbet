@@ -3,25 +3,23 @@
  */
 
 import {
-	DEPOSIT_QUANTITY_CHANGE,
-	DEPOSIT_PRICE_PLAN_CHANGE,
-	DEPOSIT_PERIOD_CHANGE,
-	DEPOSIT_QUANTITY_VALIDATE,
-	DEPOSIT_SOCKET_MESSAGE
-} from "../../constants/ActionTypesDeposit";
+	WITHDRAW_QUANTITY_CHANGE,
+	WITHDRAW_QUANTITY_VALIDATE,
+	WITHDRAW_SOCKET_MESSAGE
+} from "../../constants/ActionTypesWithdraw";
 
 export function actionOnSocketMessage()
 {
 	return (dispatch, getState) =>
 	{
-		let data = getState().deposit.data.UserAssets.CurrentBalance;
-		ABpp.Websocket.sendSubscribe({}, SocketSubscribe.AP_ACCOUNT_DATA);
+		let data = getState().withdraw.data.UserAssets.CurrentBalance;
+
 		window.ee.addListener('accountData.update', (newData) =>
 		{
 			if(data != newData.Available){
 				data = newData.Available;
 				dispatch({
-					type: DEPOSIT_SOCKET_MESSAGE,
+					type: WITHDRAW_SOCKET_MESSAGE,
 					payload: newData.Available
 				});
 				console.log('re-render');
@@ -30,52 +28,13 @@ export function actionOnSocketMessage()
 	}
 }
 
-export function actionOnPeriodChange(context, payYearly)
-{
-	return (dispatch, getState) =>
-	{
-		let state = getState().deposit;
-
-		context.props.actions.actionOnPricePlanChange(state.plan, state.pricePlanInfo.monthly, state.pricePlanInfo.yearly, payYearly);
-
-		dispatch({
-			type: DEPOSIT_PERIOD_CHANGE,
-			payload: payYearly
-		});
-	}
-}
-
-export function actionOnPricePlanChange(plan, monthQuantity, yearQuantity, payYearly)
-{
-    return (dispatch, getState) =>
-	{
-		let state = getState().deposit;
-		payYearly = typeof payYearly == "boolean" ? payYearly : state.payYearly;
-		let quantity = payYearly ? yearQuantity : monthQuantity;
-
-		$('html, body').animate({scrollTop: $('.quantity_control').offset().top - $('header').outerHeight(true)}, 800);
-
-        dispatch({
-            type: DEPOSIT_PRICE_PLAN_CHANGE,
-            payload: {
-            	plan: plan,
-				quantity: quantity,
-				pricePlanInfo: {
-					monthly: monthQuantity,
-					yearly: yearQuantity,
-				}
-			}
-        });
-    }
-}
-
 export function actionOnInputQuantityChange(actions, event)
 {
 	return (dispatch) =>
 	{
 		actions.actionOnQuantityValidate(event.target.value);
 		dispatch({
-			type: DEPOSIT_QUANTITY_CHANGE,
+			type: WITHDRAW_QUANTITY_CHANGE,
 			payload: event.target.value
 		});
 	}
@@ -85,10 +44,10 @@ export function actionOnButtonQuantityClick(actions, event)
 {
 	return (dispatch, getState) =>
 	{
-		let summary = +getState().deposit.depositQuantity + +event.target.textContent;
+		let summary = +getState().withdraw.depositQuantity + +event.target.textContent;
 		actions.actionOnQuantityValidate(summary);
 		dispatch({
-			type: DEPOSIT_QUANTITY_CHANGE,
+			type: WITHDRAW_QUANTITY_CHANGE,
 			payload: summary
 		});
 	}
@@ -102,7 +61,7 @@ export function actionOnQuantityValidate(values)
 		if(!values) error = 'Required';
 		// if(values && values < 5) error = 'Required';
 		dispatch({
-			type: DEPOSIT_QUANTITY_VALIDATE,
+			type: WITHDRAW_QUANTITY_VALIDATE,
 			payload: error
 		});
 	}
@@ -120,26 +79,8 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 			error = 'Required';
 
 		if(values.sum && values.sum < 5)
-			error = 'Minimum deposit is $5';
+			error = 'Minimum withdraw is $5';
 
-		// if(values.sum){
-		// 	new Promise(resolve => {
-		// 		setTimeout(() => {  // simulate server latency
-		// 			window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
-		// 			resolve()
-		// 		}, 500)
-		// 	});
-		// }
-
-		// const obj = {
-		// 	clientId: 'Wrong client ID',
-		// 	secureId: 'Wrong secure ID',
-		// 	error: 'Server error',
-		// 	message: 'all fine'
-		// };
-		// setTimeout(() => {
-		// 	serverValidation(obj);
-		// }, 2000);
 		function OnBeginAjax()
 		{
 			submit.attr('disabled', true);
@@ -154,13 +95,21 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 			switch (code) {
 				case '200':{
 					const { transaction: { amount = null, fees = null } } = data;
-					popUpClass.nativePopUpOpen('.wrapper_user_page .deposit_message');
+					popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw_message');
 
-					$(context.refs.paymentMessage).find('.amount').text('$' + ((amount - fees[0].feeAmount) / 100));
+					$(context.refs.paymentMessage).find('.amount').text('$' + (amount / 100));
 					serverValidation({message: 'The payment is successful'});
 					break;}
 				case '555':{
 					serverValidation({error: 'The payment failed. Please reload the page or try again later'});
+					break;}
+				case '556':{
+					serverValidation({error: 'You don`t have enough money in your Alt.bet account'});
+					error = ' ';
+					dispatch({
+						type: WITHDRAW_QUANTITY_VALIDATE,
+						payload: error
+					});
 					break;}
 				case 'Account disabled':{
 					serverValidation({error: 'The account you provided is disabled'});
@@ -169,10 +118,10 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 					serverValidation({error: 'The account is closed'});
 					break;}
 				case '20007':{
-					serverValidation({error: `The Neteller ID / e-mail is invalid or the Secure ID / Authentication Code is invalid`, clientId: ' ', secureId: ' '});
+					serverValidation({error: `The e-mail is invalid or the Secure ID / Authentication Code is invalid`, clientId: ' ', secureId: ' '});
 					break;}
 				case '20008':{
-					serverValidation({error: `The Neteller ID / e-mail is invalid or the Secure ID / Authentication Code is invalid`, clientId: ' ', secureId: ' '});
+					serverValidation({error: `The e-mail is invalid or the Secure ID / Authentication Code is invalid`, clientId: ' ', secureId: ' '});
 					break;}
 				case '20011':{
 					serverValidation({error: 'You are residing in a NETELLER blocked country/state/region'});
@@ -184,7 +133,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 					serverValidation({error: 'Insufficient balance to complete the transaction'});
 					error = ' ';
 					dispatch({
-						type: DEPOSIT_QUANTITY_VALIDATE,
+						type: WITHDRAW_QUANTITY_VALIDATE,
 						payload: error
 					});
 					break;}
@@ -206,10 +155,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 				default:{
 					serverValidation({error: 'The payment failed. Try again later'});
 				}
-			}//20008, 20011, 20015, 20020, 20021, 20022, 20031, 20035, 20301
-				// // case 20003:
-				// // 	serverValidation({error: 'Your NETELLER Merchant Account does not support this currency.'});
-				// // 	break;?????????????????????????????????????????????????????
+			}
 			submit.removeAttr('disabled');
 			form.removeClass('loading');
 		}
@@ -236,7 +182,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 		}
 
 		dispatch({
-			type: DEPOSIT_QUANTITY_VALIDATE,
+			type: WITHDRAW_QUANTITY_VALIDATE,
 			payload: error
 		});
 	}
