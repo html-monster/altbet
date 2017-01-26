@@ -36,10 +36,16 @@ class Sidebar extends React.Component
 	}
 
 
+	componentWillMount()
+    {
+        let data = ABpp.SysEvents.getLastNotifyData(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL);
+        data && this.props.actions.actionOnActiveSymbolChanged(data);
+		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, (props) => this.props.actions.actionOnActiveSymbolChanged(props));
+    }
+
 
 	componentDidMount()
     {
-        ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, (props) => this.props.actions.actionOnActiveSymbolChanged(props));
         // 0||console.log( 'ABpp.User.settings.tradeOn', ABpp.User.settings.tradeOn );
         this.props.actions.actionOnTraderOnChange(this.isAllowAT ? ABpp.User.settings.tradeOn : false);
     }

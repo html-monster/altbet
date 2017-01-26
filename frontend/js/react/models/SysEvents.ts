@@ -10,6 +10,7 @@ export class SysEvents
     public EVENT_CHANGE_ACTIVE_SYMBOL  = '3';   // turn active trader on/off (true/false)
 
     private observers = {};
+    private eventsDatas = {};   // save last notify params
 
 
     public subscribe(that, eventType, callback)
@@ -21,12 +22,27 @@ export class SysEvents
     }
 
 
-
+    /**
+     * Notify subscribers
+     * @param type
+     * @param params
+     */
     public notify(type, params?)
     {
+        if (params) this.eventsDatas[type] = params;
         for( let ii in this.observers[type] )
         {
             this.observers[type][ii](params);
         } // endfor
+    }
+
+
+    /**
+     * @param type
+     * @param params
+     */
+    public getLastNotifyData(type)
+    {
+        return this.eventsDatas[type];
     }
 }

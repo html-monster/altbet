@@ -14,30 +14,37 @@ export default class ActiveTrader extends React.Component {
 		let isMirror;
 
 		window.ee.addListener('activeOrders.update', (newData) => {
-			if($('#IsMirror').length)
-				isMirror = $('#IsMirror').val() == 'False' ? 0 : 1;
-			else
-				isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
-			let symbol = $('.active_trader').attr('id');
-			if(!symbol) return;
-			symbol = symbol.slice(7);
+			// if($('#IsMirror').length)
+			// 	isMirror = $('#IsMirror').val() == 'False' ? 0 : 1;
+			// else
+			// 	isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
+			isMirror = !this.props.cmpData.activeExchange.isMirror ? 0 : 1;
+
+			// let symbol = $('.active_trader').attr('id');
+			// if(!symbol) return;
+			// symbol = symbol.slice(7);
+			let symbol = this.props.cmpData.activeExchange.name;
+
+			let currSymbData;
 			$(newData).each(function(){
-				let currentSymbol = `${this.Symbol.Exchange}_${this.Symbol.Name}_${this.Symbol.Currency}`;
+				// let currentSymbol = `${this.Symbol.Exchange}_${this.Symbol.Name}_${this.Symbol.Currency}`;
+				let currentSymbol = this.Symbol.Exchange;
 				if(symbol == currentSymbol) {
-					newData = this;
+					currSymbData = this;
 					return false;
 				}
 				else
-					newData = {};
+					currSymbData = {};
 			});
+
 			// newData = Object.assign({}, this.state.data, newData);
-			if(newData && newData.Symbol){
-				if(newData.Symbol.LastAsk == 1) newData.Symbol.LastAsk = null;
-				if(newData.Symbol.LastBid == 0) newData.Symbol.LastBid = null;
+			if(currSymbData && currSymbData.Symbol){
+				if(currSymbData.Symbol.LastAsk == 1) currSymbData.Symbol.LastAsk = null;
+				if(currSymbData.Symbol.LastBid == 0) currSymbData.Symbol.LastBid = null;
 			}
-			if(JSON.stringify(this.state.data) != JSON.stringify(newData) || this.state.isMirror != isMirror){
-				this.setState({data: newData, isMirror: isMirror});
-				// console.log('re-render');
+			if(JSON.stringify(this.state.data) != JSON.stringify(currSymbData) || this.state.isMirror != isMirror){
+				this.setState({data: currSymbData, isMirror: isMirror});
+// 0||console.debug( 're-render', currSymbData, newData, symbol );
 			}
 
 			activeTraderClass.scrollTo();
@@ -122,7 +129,7 @@ export default class ActiveTrader extends React.Component {
 
 	render()
 	{
-		var {activeTabMirror, activeExchange} = this.props.cmpData;
+		var {activeExchange} = this.props.cmpData;
 		// 0||console.log( 'activeExchange', activeExchange );
 		let data = this.state.data;
 		let copyData = $.extend(true, {}, data);
