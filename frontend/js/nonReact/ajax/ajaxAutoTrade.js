@@ -16,7 +16,6 @@ var ajaxAutoTradeClass = new function () {
 				data = {},
 				trader = $('.active_trader');
 
-// 0||console.log( 'here', 0 );
 		data.Symbol = trader.attr('id').slice(7);
 		data.Quantity = $('.active_trader .control .quantity.number').val();
 		if($('#IsMirror').length)
