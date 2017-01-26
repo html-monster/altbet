@@ -20,8 +20,6 @@ let constants = ABpp.ABpp;
 ABpp = ABpp.ABpp.getInstance();
 ABpp.CONSTS = constants;
 
-
-
 const store = configureStore();
 ABpp.Store = store;
 
@@ -42,7 +40,6 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MAIN ) {
 	  document.getElementById('DiMPMainpage')
 	);
 }
-
 if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
 	ReactDOM.render(
 		<Provider store={store}>

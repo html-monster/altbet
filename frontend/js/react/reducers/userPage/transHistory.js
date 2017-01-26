@@ -7,13 +7,15 @@ import {
 } from "../../constants/ActionTypesTransHistory";
 import {DateLocalization} from '../../models/DateLocalization';
 
+const data = appData.pageAccountData ? appData.pageAccountData.PaymentsHistory : [];
+
 const initialState = {
 	paymentFilter: 'All',
 	rangeFilter: {
 		from: +moment().subtract(30, 'days').format('x'),
 		to: +moment().endOf('day').format('x')
 	},
-	transHistory: appData.pageAccountData.PaymentsHistory
+	transHistory: data
 	// 	[
 	// 	{
 	// 		transaction: 'Deposit',
