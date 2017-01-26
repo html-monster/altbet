@@ -13,7 +13,7 @@ import {
 const initialState = {
 	data: appData.pageAccountData,
 	plan: 'free',
-	depositQuantity: 15,
+	depositQuantity: '',
 	pricePlan: '',
 	pricePlanInfo: {
 		monthly: 0,

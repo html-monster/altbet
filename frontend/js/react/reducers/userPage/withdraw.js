@@ -10,7 +10,7 @@ import {
 
 const initialState = {
 	data: appData.pageAccountData,
-	depositQuantity: 25,
+	depositQuantity: '',
 	sumValidation: null
 };
 
