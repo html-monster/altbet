@@ -7,7 +7,7 @@ import {
 	DEPOSIT_PERIOD_CHANGE,
 	DEPOSIT_QUANTITY_VALIDATE,
 	DEPOSIT_SOCKET_MESSAGE
-} from "../../constants/ActionTypesDeposit.js";
+} from "../../constants/ActionTypesDeposit";
 
 
 const initialState = {
@@ -23,7 +23,7 @@ const initialState = {
 	sumValidation: null
 };
 
-export default function yourOrders(state = initialState, action)
+export default function deposit(state = initialState, action)
 {
 	switch (action.type)
 	{

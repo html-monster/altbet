@@ -16,9 +16,9 @@ import Funds from './components/userPage/Funds';
 
 
 // Altbet App object
-let constants = ABpp.ABpp;
-ABpp = ABpp.ABpp.getInstance();
-ABpp.CONSTS = constants;
+// let constants = ABpp.ABpp;
+// ABpp = ABpp.ABpp.getInstance();
+// ABpp.CONSTS = constants;
 
 const store = configureStore();
 ABpp.Store = store;
@@ -54,6 +54,17 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
 	// 	document.getElementById('withdraw')
 	// );
 }
+else{
+	ReactDOM.render(
+		<Provider store={store}>
+			<Sidebar
+				data={appData.yourOrders}
+				globalData={globalData}
+			/>
+		</Provider>,
+		document.getElementById('sidebar')
+	);
+}
 
 
 if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MYPOS ) {
@@ -67,17 +78,17 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MYPOS ) {
 }
 
 
-if(!globalData.userPageOn){
-	ReactDOM.render(
-		<Provider store={store}>
-			<Sidebar
-				data={appData.yourOrders}
-				globalData={globalData}
-			/>
-		</Provider>,
-		document.getElementById('sidebar')
-	);
-}
+// if(!globalData.userPageOn){
+// 	ReactDOM.render(
+// 		<Provider store={store}>
+// 			<Sidebar
+// 				data={appData.yourOrders}
+// 				globalData={globalData}
+// 			/>
+// 		</Provider>,
+// 		document.getElementById('sidebar')
+// 	);
+// }
 
 
 // для OLD поменять здесь MP и взять EventPage.jsx.old

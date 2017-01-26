@@ -38,13 +38,22 @@ export default class EcoPayzForm extends React.Component{
 									 validate={mailValidation} input={input}
 									 maxLength="50"/>
 
-
-					<InputValidation renderContent={inputRender} id={'skrill_total'}
-									 className={'input__field input__field--yoshiko total number'}
-									 label={'Deposit amount'} type={'tel'} filled={depositQuantity || pricePlan}
-									 inputLabel={true} name="sum"
-									 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
-									 disabled={true} input={input}/>
+					{
+						format ?
+							<InputValidation renderContent={inputRender} id={'skrill_total'}
+											 className={'input__field input__field--yoshiko total number'}
+											 label={'Deposit amount'} type={'tel'} filled={depositQuantity}
+											 inputLabel={true} name="sum"
+											 value={depositQuantity || ''}
+											 disabled={true} input={input}/>
+							:
+							<InputValidation renderContent={inputRender} id={'skrill_total'}
+											 className={'input__field input__field--yoshiko total number'}
+											 label={'Deposit amount'} type={'tel'} filled={depositQuantity || pricePlan}
+											 inputLabel={true} name="sum"
+											 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
+											 disabled={true} input={input}/>
+					}
 
 					<input type="submit" className="wave btn" defaultValue={'Submit'} disabled={input.sending}/>
 					<span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>

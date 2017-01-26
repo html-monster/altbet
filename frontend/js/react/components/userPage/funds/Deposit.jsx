@@ -279,7 +279,7 @@ class Deposit extends React.Component{
 					</div>
 				</div>
 			</div>
-			<div className="payment_message pop_up" ref="paymentMessage">
+			<div className="payment_message deposit_message pop_up" ref="paymentMessage">
 				<div className="pop_up_container">
                     <div className="pop_up_content">
                         <span>Your account balance is refilled with <span className="amount">$100</span></span>
