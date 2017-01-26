@@ -29,7 +29,7 @@ export default class ActiveTrader extends React.Component {
 			$(newData).each(function(){
 				// let currentSymbol = `${this.Symbol.Exchange}_${this.Symbol.Name}_${this.Symbol.Currency}`;
 				let currentSymbol = this.Symbol.Exchange;
-				console.log(symbol == currentSymbol);
+				// console.log(symbol == currentSymbol);
 				if(symbol == currentSymbol) {
 					currSymbData = this;
 					return false;

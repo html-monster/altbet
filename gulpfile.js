@@ -113,24 +113,39 @@ gulp.task('assets', function() {
 
 
 gulp.task('js',function(){
-  return combine(
-    gulp.src(['frontend/js/nonReact/**/*.js',  '!frontend/js/nonReact/browserCheck.js','!frontend/js/nonReact/test.js',
-      '!frontend/js/nonReact/access.js', '!frontend/js/nonReact/pageFirst.js']),
-    babel({
+    return gulp.src(['frontend/js/nonReact/**/*.js',  '!frontend/js/nonReact/browserCheck.js','!frontend/js/nonReact/test.js',
+      '!frontend/js/nonReact/access.js', '!frontend/js/nonReact/pageFirst.js'])
+    .pipe(sourcemaps.init())
+    .pipe(babel({
       presets: ['es2015']
-    }),
-    $.concat('all.js'),
-    sourcemaps.init(),
+    }))
+    .pipe($.concat('all.js'))
     // $.uglify(),
-    gulp.dest('./public/js'),
-    gulp.dest(OPTIONS.path.dest_server + '/Scripts')
-
-  ).on('error', $.notify.onError(function (err) {
-    return {
-      title: 'JS',
-      message: err.message
-    }
-  }));
+    .pipe(sourcemaps.write())
+    .pipe($.notify(function (file) {
+        var options = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
+        return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options);
+    }))
+    .pipe(gulp.dest('./public/js'))
+    .pipe(gulp.dest(OPTIONS.path.dest_server + '/Scripts'));
+  // return combine(
+  //   gulp.src(['frontend/js/nonReact/**/*.js',  '!frontend/js/nonReact/browserCheck.js','!frontend/js/nonReact/test.js',
+  //     '!frontend/js/nonReact/access.js', '!frontend/js/nonReact/pageFirst.js']),
+  //   babel({
+  //     presets: ['es2015']
+  //   }),
+  //   $.concat('all.js'),
+  //   sourcemaps.init(),
+  //   // $.uglify(),
+  //   gulp.dest('./public/js'),
+  //   gulp.dest(OPTIONS.path.dest_server + '/Scripts')
+  //
+  // ).on('error', $.notify.onError(function (err) {
+  //   return {
+  //     title: 'JS',
+  //     message: err.message
+  //   }
+  // }));
 });
 
 

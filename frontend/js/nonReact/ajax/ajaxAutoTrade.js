@@ -9,11 +9,14 @@ var ajaxAutoTradeClass = new function () {
 		console.log('textStatus: ',  y);
 		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 	}
+
+	// BM: делаем ставку
 	this.sendOrder = function(context, modification, price){
 		let url,
 				data = {},
 				trader = $('.active_trader');
 
+// 0||console.log( 'here', 0 );
 		data.Symbol = trader.attr('id').slice(7);
 		data.Quantity = $('.active_trader .control .quantity.number').val();
 		if($('#IsMirror').length)
