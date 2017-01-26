@@ -14,7 +14,7 @@ export default class ActiveTrader extends React.Component {
 		let isMirror;
 
 		window.ee.addListener('activeOrders.update', (newData) => {
-			// if($('#IsMirror').length)
+			// if($('#IsMir	ror').length)
 			// 	isMirror = $('#IsMirror').val() == 'False' ? 0 : 1;
 			// else
 			// 	isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
@@ -25,16 +25,15 @@ export default class ActiveTrader extends React.Component {
 			// symbol = symbol.slice(7);
 			let symbol = this.props.cmpData.activeExchange.name;
 
-			let currSymbData;
+			let currSymbData = {};
 			$(newData).each(function(){
 				// let currentSymbol = `${this.Symbol.Exchange}_${this.Symbol.Name}_${this.Symbol.Currency}`;
 				let currentSymbol = this.Symbol.Exchange;
+				console.log(symbol == currentSymbol);
 				if(symbol == currentSymbol) {
 					currSymbData = this;
 					return false;
 				}
-				else
-					currSymbData = {};
 			});
 
 			// newData = Object.assign({}, this.state.data, newData);
