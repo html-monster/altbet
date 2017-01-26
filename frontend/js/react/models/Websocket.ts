@@ -158,7 +158,11 @@ export class WebsocketModel
         this.socketData = data; // for debug only
 // console.log(data);
 
-        if (data.Result) defaultMethods.showWarning(data.Result);
+        if (data.Result) {
+            // defaultMethods.showWarning(data.Result);
+            __DEV__&&console.log( data.Result );
+        }
+
         if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn)) window.ee.emit('yourOrders.update', data.CurrentOrders);//myOrdersControllerClass.updateData(data.CurrentOrders);
 
         if(data.OrdersPositionsHistory && globalData.myPosOn){

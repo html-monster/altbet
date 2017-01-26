@@ -180,6 +180,7 @@
 				}
 			});
 
+			// BM: делаем ставку в трейдере
 			trader.on('click', '.confim.clickable', function(e){
 				var	price;
 

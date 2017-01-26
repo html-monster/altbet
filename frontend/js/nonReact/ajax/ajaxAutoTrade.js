@@ -9,6 +9,8 @@ var ajaxAutoTradeClass = new function () {
 		console.log('textStatus: ',  y);
 		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 	}
+
+	// BM: делаем ставку
 	this.sendOrder = function(context, modification, price){
 		let url,
 				data = {},
