@@ -22,6 +22,12 @@ class Deposit extends React.Component{
 		this.props.actions.actionOnSocketMessage();
 	}
 
+	shouldComponentUpdate(nextProps)
+	{
+		// console.log(this.props.deposit.data.UserAssets.CurrentBalance, nextProps.deposit.data.UserAssets.CurrentBalance);
+		return true;
+	}
+
 	pricePlanHover(mouseLocation, event)
 	{
 		if(mouseLocation == 'enter')

@@ -12,9 +12,12 @@ export function actionOnSocketMessage()
 {
 	return (dispatch, getState) =>
 	{
+		let data = getState().withdraw.data.UserAssets.CurrentBalance;
+
 		window.ee.addListener('accountData.update', (newData) =>
 		{
-			if(getState().withdraw.data.UserAssets.CurrentBalance != newData.Available){
+			if(data != newData.Available){
+				data = newData.Available;
 				dispatch({
 					type: WITHDRAW_SOCKET_MESSAGE,
 					payload: newData.Available

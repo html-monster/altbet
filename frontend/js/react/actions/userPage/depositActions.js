@@ -14,9 +14,12 @@ export function actionOnSocketMessage()
 {
 	return (dispatch, getState) =>
 	{
+		let data = getState().deposit.data.UserAssets.CurrentBalance;
+		ABpp.Websocket.sendSubscribe({}, SocketSubscribe.AP_ACCOUNT_DATA);
 		window.ee.addListener('accountData.update', (newData) =>
 		{
-			if(getState().deposit.data.UserAssets.CurrentBalance != newData.Available){
+			if(data != newData.Available){
+				data = newData.Available;
 				dispatch({
 					type: DEPOSIT_SOCKET_MESSAGE,
 					payload: newData.Available

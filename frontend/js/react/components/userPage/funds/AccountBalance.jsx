@@ -31,7 +31,7 @@ export default class AccountBalance extends React.Component{
 				|| Invested != newData.Exposure
 				|| GainLost != newData.Profitlost){
 				this.setState(this.state);
-				accountClass.balanceAnimation()
+				accountClass.balanceAnimation();
 				console.log('re-render');
 			}
 		});
