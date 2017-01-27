@@ -4,6 +4,7 @@
 
 import BaseView from "./BaseView";
 import BodyView from "./BodyView";
+import Common from "../inc/Common";
 
 
 export default class CategoryEdit extends BaseView
@@ -17,7 +18,7 @@ export default class CategoryEdit extends BaseView
         for( let ii in inClasses )
         {
             let val = inClasses[ii];
-            data.push({id: ii, text: ii});
+            data.push({id: ii, text: val.alias});
         } // endfor
         data.unshift({id: '-100', text: '- noicon -'});
 
@@ -29,7 +30,8 @@ export default class CategoryEdit extends BaseView
                     if (!state.id) {
                         return state.text;
                     }
-                    var $state = $('<span class="icon ' + state.text + '">' + state.text + '</span>');
+                    var $state = $('<span class="icon ' + state.id + '">' + state.text + '</span>');
+                    if (state.id < 0) var $state = $('<span class="icon noicon">' + state.text + '</span>');
                     return $state;
                 }
         }).val(globalData.currentIcon ? globalData.currentIcon : "-100").trigger("change");
@@ -43,6 +45,20 @@ export default class CategoryEdit extends BaseView
 
         this.closeAlert();
         (new BodyView).showLoading($('.js-btn-cancel'), {pic: 2, outerAlign: BodyView.ALIGN_OUTER_RIGHT, offsetX: 4});
+    }
+
+
+    public prepareForm(props)
+    {
+        var self = this;
+
+        this.initCBIcon(props.icons);
+        $(".js-ed-name", props.form).blur((e) => {
+            var $that = $(e.target);
+            $(".js-ed-url").val(Common.createUrlAlias($that.val()));
+        });
+
+        setTimeout(() => $("[name=Name]").focus(), 500);
     }
 
 

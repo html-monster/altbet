@@ -21,6 +21,7 @@ export class InfoMessage
     private options = {
         TPLName: '#TPLinfoMessage',
         target: '.js-infomessage',
+        timeout: 10000,
         vars: null,
         callbackOK: null,
         callbackCancel: null,
@@ -72,7 +73,7 @@ export class InfoMessage
         mountPoint.fadeIn(400);
 
         clearTimeout(this.T1infoMess);
-        this.T1infoMess = setTimeout(() => mountPoint.children().fadeOut(200, function() { $(this).remove() }), 10000);
+        this.T1infoMess = setTimeout(() => mountPoint.children().fadeOut(200, function() { $(this).remove() }), this.options.timeout);
     }
 
 

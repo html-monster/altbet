@@ -155,7 +155,7 @@ class ActiveTrader extends React.Component {
 
 		let stringHtmlData = this.objectConstructor(data, isMirror);
 
-		return <div className="active_trader" style={{display: 'none'}}>
+		return <div className="active_trader" style={{display: 'none'}} id={"trader_" + activeExchange.symbol}>
 			<div className="event_title">
 				<div className={$active + " event_name"} onClick={() => this.props.defaultOrderActions.actionOnTabMirrorClick(false)}></div>
 				<div className={$activeM + " event_name reverse"} onClick={() => this.props.defaultOrderActions.actionOnTabMirrorClick(true)}></div>

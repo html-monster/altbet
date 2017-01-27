@@ -7,7 +7,7 @@
       span.icon { @include box(b,r); height: 24px; padding-left: 30px; @include main_page_event_icon;
         &:before { content: ''; @include box(b,a,24 22 px); left: 0; top: 0; background: url(../Images/sprite.svg) no-repeat; }
       }
-      span.icon.noicon:before { @include nblock; }
+      span.icon.noicon:before { background: transparent }
     }
   }
 }
