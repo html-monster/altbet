@@ -54,22 +54,21 @@ export default class ButtonContainer extends React.Component
                             let html = [];
                             if( item.Side == data.side )
                             {
+                                    {/*<div className="button">*/}
                                 html = SummaryPositionPrice.map((item2) =>
-                                    <div className="button">
-                                    {/*<AnimateOnUpdate key={item2.Price}
+                                    <AnimateOnUpdate key={item2.Price}
                                         component="div"
                                         className="button"
                                         transitionName={{
                                             enter: 'fadeOut',
-                                            leave: 'fadeOut',
                                             appear: 'fadeOut'
                                         }}
                                         transitionAppear={true}
+                                        transitionLeave={false}
                                         transitionAppearTimeout={800}
                                         transitionEnterTimeout={800}
-                                        transitionLeaveTimeout={500}
                                         data={item2}
-                                    >*/}
+                                    >
                                         <button className={`event animated ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this,
                                                 {
                                                     PosPrice: item.SummaryPositionPrice,
@@ -86,9 +85,9 @@ export default class ButtonContainer extends React.Component
                                             <span className="volume">{item2.Quantity}</span>
                                             {/*<div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>*/}
                                         </button>
-                                    {/*</AnimateOnUpdate>*/}
-                                    </div>
+                                    </AnimateOnUpdate>
                                 );
+                                    {/*</div>*/}
                             }
                             else html = '';
                             return html;

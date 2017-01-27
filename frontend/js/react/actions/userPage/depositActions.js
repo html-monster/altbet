@@ -24,7 +24,7 @@ export function actionOnSocketMessage()
 					type: DEPOSIT_SOCKET_MESSAGE,
 					payload: newData.Available
 				});
-				console.log('re-render');
+				__DEV__ && console.log('re-render');
 			}
 		});
 	}
@@ -73,7 +73,7 @@ export function actionOnInputQuantityChange(actions, event)
 {
 	return (dispatch) =>
 	{
-		actions.actionOnQuantityValidate(event.target.value);
+		// actions.actionOnQuantityValidate(event.target.value);
 		dispatch({
 			type: DEPOSIT_QUANTITY_CHANGE,
 			payload: event.target.value
@@ -85,11 +85,11 @@ export function actionOnButtonQuantityClick(actions, event)
 {
 	return (dispatch, getState) =>
 	{
-		let summary = +getState().deposit.depositQuantity + +event.target.textContent;
-		actions.actionOnQuantityValidate(summary);
+		// let summary = +getState().deposit.depositQuantity + +event.target.textContent;
+		actions.actionOnQuantityValidate(event.target.textContent);
 		dispatch({
 			type: DEPOSIT_QUANTITY_CHANGE,
-			payload: summary
+			payload: +event.target.textContent
 		});
 	}
 }
@@ -112,7 +112,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 {
 	return (dispatch) =>
 	{
-		console.log(values);
+		__DEV__ && console.log(values);
 		let form = $(event.target);
 		let submit = $(event.target).find('[type=submit]');
 		let error = null;
@@ -148,7 +148,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 
 		function onSuccessAjax(data)
 		{
-			console.log(data);
+			__DEV__ && console.log(data);
 			const {Answer: { code }} = data;
 			// serverValidation(obj);
 			switch (code) {
