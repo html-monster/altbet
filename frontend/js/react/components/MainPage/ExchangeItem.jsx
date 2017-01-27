@@ -50,7 +50,7 @@ export default class ExchangeItem extends React.Component
                 <span className="date">
                     {(date = $DateLocalization.fromSharp(data.Symbol.StartDate, 0).unixToLocalDate({format: 'DD MMM Y'})) ? date : ''}
                 </span>
-                {data.Symbol.Status == "completed" ? <i className="half_time" title={data.Symbol.Status}>ht<span>{data.Symbol.Status}</span></i> : ""}
+                {data.Symbol.Status == 2 ? <i className="half_time" title="Completed">ht<span>Completed</span></i> : ""}
             </div>
             <div className="content_title command">
                 <h2>{data.Symbol.HomeName} {(data.Symbol.HomePoints != null) ? <span>{data.Symbol.HomePoints}</span> : '' }</h2>

@@ -26,7 +26,10 @@ class EventPage extends BaseController
 
     componentWillMount()
     {
-        this.actions.actionOnLoad({exchange: appData.pageEventData.SymbolsAndOrders.Symbol.Exchange});
+        let symbol = appData.pageEventData.SymbolsAndOrders.Symbol;
+        let exchange = symbol.Exchange;
+        symbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
+        this.actions.actionOnLoad({exchange, symbol});
     }
 
 
