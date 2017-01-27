@@ -72,49 +72,54 @@ export class BetsTable extends React.Component
                 </tr>
             </thead>
             <tbody>
+                        {/*return <tr className="" key={val.Price}>*/}
+                            {/*transitionLoading={!this.loading}*/}
                 {
-                    data.map((val, key) => {
-                        return <tr className="" key={val.Price}>
+                    data.map((val, key) =>
+                        <AnimateOnUpdate
+                            component="tr"
+                            key={val.Price}
+                            transitionName={{
+								enter : 'fadeColorOut',
+								leave : 'fadeColorOut',
+								appear: 'fadeColorOut'
+							}}
+                            transitionAppear={true}
+                            transitionLeave={false}
+                            transitionAppearTimeout={1600}
+                            transitionEnterTimeout={800}
+                            transitionLeaveTimeout={500}
+                            data={val}
+                        >
                             <td><span>alt.bet</span></td>
-                            <td className={`price ${$class} animated`} onClick={() => self.props.actions.onPriceClick({
-                                   Price: val.Price,
-                                   Quantity: val.Quantity,
-                                   type: $type,
-                                   data: data, // orders
-                                   exdata: commProps, // for trader object
-                                })}
+                            <td className={`price ${$class} animated`} data-verify="Quantity"
+                                onClick={() => self.props.actions.onPriceClick({
+								Price   : val.Price,
+								Quantity: val.Quantity,
+								type    : $type,
+								data    : data, // orders
+								exdata  : commProps, // for trader object
+							})}
                             >
-                                    {/*component="div"
-                                    className="button" */}
+								{/*component="div"
+                                 className="button" */}
                                 <span>${Common.toFixed(val.Price, 2)}</span>
                             </td>
-                            <td className={`volume ${$class} animated`} onClick={() => self.props.actions.onQuantityClick({
-                                   Price: val.Price,
-                                   Quantity: val.Quantity,
-                                   type: $type,
-                                   data: data, // orders
-                                   exdata: commProps, // for trader object
-                                })}
+                            <td className={`volume ${$class} animated`}
+                                data-verify="Quantity"
+                                onClick={() => self.props.actions.onQuantityClick({
+									Price   : val.Price,
+									Quantity: val.Quantity,
+									type    : $type,
+									data    : data, // orders
+									exdata  : commProps, // for trader object
+								})}
                             >
-                                {/*<AnimateOnUpdate
-                                    transitionName={{
-                                        enter: 'cm-test',
-                                        leave: 'cm-test',
-                                        appear: 'cm-test'
-                                    }}
-                                    transitionLoading={!this.loading}
-
-                                    transitionAppear={true}
-                                    transitionAppearTimeout={800}
-                                    transitionEnterTimeout={800}
-                                    transitionLeaveTimeout={500}
-                                    data={val}
-                                >
-                                </AnimateOnUpdate>*/}
-                                    <span data-verify="Quantity">{val.Quantity}</span>
+                                <span>{val.Quantity}</span>
                             </td>
-                        </tr>;
-                })}
+                        </AnimateOnUpdate>
+                )}
+                        {/*</tr>;*/}
                 {/*// if (children < objLength) {
 //     for (var ii = children; ii < objLength; ii++) {
 //         table.append('<tr><td><span>alt.bet</span></td><td class="' + className + ' price ' + side +
