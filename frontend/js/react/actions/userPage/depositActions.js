@@ -89,7 +89,7 @@ export function actionOnButtonQuantityClick(actions, event)
 		actions.actionOnQuantityValidate(event.target.textContent);
 		dispatch({
 			type: DEPOSIT_QUANTITY_CHANGE,
-			payload: event.target.textContent
+			payload: +event.target.textContent
 		});
 	}
 }
