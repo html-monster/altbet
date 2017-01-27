@@ -6,6 +6,7 @@
 
 import { MainConfig, DS } from "../inc/MainConfig";
 import {DateLocalization} from "../../js/react/models/DateLocalization";
+import {AjaxSend} from "../component/AjaxSend";
 
 
 var __LDEV__ = true;
@@ -296,6 +297,66 @@ export default class ExchangeModel
         });
 
         return promise;
+    }
+
+
+
+    public delExch(inProps)
+    {
+        var self = this;
+
+        // 0||console.debug( 'data', data, data.getAll('op') );
+        var ajaxPromise = (new AjaxSend()).send({
+                formData: inProps.formData,
+                message: `Error while deleting exchange “${inProps.name}”, please, try again`,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                respCodes: [
+                    {code: 100, message: `Exchange “${inProps.name}” deleted successfully`},
+                    // {code: -101, message: "Some custom error"},
+                ],
+                beforeChkResponse: (data) =>
+                {
+                    // emulate
+                    data = {Error: 200};
+                    // data.Param1 = "?path=sport&status=approved";
+                    data.Param1 = "?status=New";
+                    data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                    data.Param3 = "TOR-PHI-3152017"; // id
+                    return data;
+                },
+            });
+
+        return ajaxPromise;
+    }
+
+
+
+    public setExchStatus(inProps)
+    {
+        var self = this;
+
+        // 0||console.debug( 'data', data, data.getAll('op') );
+        var ajaxPromise = (new AjaxSend()).send({
+                formData: inProps.formData,
+                message: `Error while changing status for exchange “${inProps.name}”, please, try again`,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                respCodes: [
+                    {code: 100, message: `Status <b>${inProps.statusName}</b> was set successfully for exchange “${inProps.name}”`},
+                    // {code: -101, message: "Some custom error"},
+                ],
+                beforeChkResponse: (data) =>
+                {
+                    // emulate
+                    data = {Error: 200};
+                    // data.Param1 = "?path=sport&status=approved";
+                    data.Param1 = "?status=New";
+                    data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                    data.Param3 = "TOR-PHI-3152017"; // id
+                    return data;
+                },
+            });
+
+        return ajaxPromise;
     }
 
 

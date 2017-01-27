@@ -18,13 +18,13 @@ export class CategoryController extends BaseController
     public actionEdit()
     {
         var self = this;
+        var form = $("#F1EditCat");
 
         $(".js-btn-cancel").click(function (e) { history.back(); });
-        $("#F1EditCat").submit(function (e) { self.onSaveClick(e, this); });
+        form.submit(function (e) { self.onSaveClick(e, this); });
 
-        (new CategoryEdit).initCBIcon(globalData.iconClasses);
 
-        setTimeout(() => $("[name=Name]").focus(), 500);
+        (new CategoryEdit).prepareForm({icons: globalData.iconClasses, form});
     }
 
 
@@ -34,14 +34,12 @@ export class CategoryController extends BaseController
     public actionNew()
     {
         var self = this;
+        var form = $("#F1EditCat");
 
         $(".js-btn-cancel").click(function (e) { history.back(); });
-        $("#F1EditCat").submit(function (e) { self.onCreateClick(e, this); });
+        form.submit(function (e) { self.onCreateClick(e, this); });
 
-        0||console.debug( 'globalData.iconClasses', globalData.iconClasses );
-        (new CategoryNew).initCBIcon(globalData.iconClasses);
-
-        setTimeout(() => $(".js-ed-name").focus(), 500);
+        (new CategoryNew).prepareForm({icons: globalData.iconClasses, form});
     }
 
 

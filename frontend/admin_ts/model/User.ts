@@ -4,6 +4,9 @@
 
 export class User
 {
+    public static MESSAGE_TYPE_ABS = 1;
+
+
     /**
      * set user data to use after page reload
      * @param inName

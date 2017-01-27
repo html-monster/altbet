@@ -11,6 +11,7 @@ import Dialog from "../component/Dialog";
 import {RadioBtns} from "../component/RadioBtns";
 import {Loading} from "../component/Loading";
 import {translit} from "../component/translit.js";
+import {User} from "../model/User";
 // import Common from "../inc/Common";
 
 
@@ -42,6 +43,18 @@ export class IndexView extends BaseView
         // if success addition
         let data = window.ADpp.User.getFlash('AddExchSucc');
         data && this.highlightAddedExch(data);
+
+        // if success ch status
+        data = window.ADpp.User.getFlash('ChangedStatusExchId');
+        0||console.log( 'data', data );
+        if( data )
+        {
+            let $tr = $("[data-js=tabl-exch] " + `[data-id=${data.id}]`);
+            $tr.addClass('added').attr('title', 'added');
+            setTimeout(() => $tr.addClass('animated').attr('title', ''), 5000);
+
+            if( $tr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: $tr.offset().top - 50 }, 500);
+        } // endif
     }
 
 
@@ -61,9 +74,21 @@ export class IndexView extends BaseView
             {
                 InfoMessage.prevInfoMessage && InfoMessage.prevInfoMessage.close();
 
+                if( flash.messageType == User.MESSAGE_TYPE_ABS )
+                {
+                    var tplName = '#TPLinfoMessageAbs';
+                    var target = "[data-js=DiInfoMP]";
+                }
+                else
+                {
+                    var tplName = '#TPLinfoMessage';
+                    var target = '.js-infomessage';
+                } // endif
+
+
                 self.InfoMessage = new InfoMessage({
-                    TPLName: '#TPLinfoMessage',
-                    target: '.js-infomessage',
+                    TPLName: tplName,
+                    target: target,
                     render: true,
                     vars: {
                         header: flash.header,
@@ -164,7 +189,7 @@ export class IndexView extends BaseView
         } // endfor
 
 
-        0||console.log( 'props', props );
+        // 0||console.log( 'props', props );
         let form = props.form;
 
         this.Loading.showLoading({targetElm: $('[data-js=loading]', form), element: $("[data-js=btn-create]", form), pic: 2, outerAlign: Loading.ALIGN_OUTER_LEFT, offsetX: 4, position: Loading.POS_INLINE});
@@ -176,7 +201,6 @@ export class IndexView extends BaseView
     {
         (new BodyView).hideLoading(100);
     }
-
 
 
     public endDeleteExch()
@@ -467,8 +491,10 @@ export class IndexView extends BaseView
     {
         var $that = $(ee.target)
 
-        let name1 = translit(inProps.names[0].value, 5);
-        let name2 = translit(inProps.names[1].value, 5);
+        let name1 = inProps.names[0].value;
+        let name2 = inProps.names[1].value;
+        // let name1 = translit(inProps.names[0].value, 5);
+        // let name2 = translit(inProps.names[1].value, 5);
         if( name1 != '' && name2 != '' )
         {
             if( $("[data-js=valueStor]", inProps.form).val() == 1 )
@@ -484,7 +510,8 @@ export class IndexView extends BaseView
     {
         var $that = $(ee.target)
 
-        let name = translit($that.val(), 5);
+        let name = $that.val();
+        // let name = translit($that.val(), 5);
         if( name != '' )
         {
             if( $("[data-js=valueStor]", inProps.form).val() == 2 )

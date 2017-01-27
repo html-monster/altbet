@@ -10,12 +10,14 @@ import {FormCheckers} from "../component/FormCheckers";
 import {MainConfig} from "../inc/MainConfig";
 import {InfoMessage} from "../component/InfoMessage";
 import {messageBox, AlertBox} from "../component/AlertBox";
+import {User} from "../model/User";
 
 
 export class IndexController extends BaseController
 {
     private FormChecker : FormCheckers;
     private IndexView : IndexView;
+    private InfoMessage : InfoMessage;
 
     constructor()
     {
@@ -23,6 +25,11 @@ export class IndexController extends BaseController
 
         this.IndexView = (new IndexView());
         this.FormChecker = new FormCheckers();
+        this.InfoMessage = new InfoMessage({
+            TPLName: '#TPLinfoMessageAbs',
+            target: "[data-js=DiInfoMP]",
+            timeout: 5000,
+        });
         this.FormChecker.addCheckerCustom('handicap', (props) => this.IndexView.onCheckHandicap(props) );
         this.FormChecker.addCheckerCustom('datechk', (props) => this.IndexView.onCheckDateFields(props) );
     }
@@ -36,12 +43,15 @@ export class IndexController extends BaseController
         indexView.init();
 
 
+        // add submit click
         $('[data-js=btn-create]').click(e => $('.F1addExch').submit());
         $('.F1addExch').on('submit', function (e) { self.onAddExchSubmit(e, this); });
+        // edit click
         $('[data-js=tabl-exch]').on('click', '.js-btn-crud[data-type=edit]', function (e) { self.onEditControlClick(e, this); });
+        // delete click
         $('[data-js=tabl-exch]').on('click', '.js-btn-crud[data-type=del]', e => self.onDelControlClick(e));
-        // debug
-        // $('[data-js=BtnDefAction]').on('click', function (e) { self.onEditControlClick(e, this); });
+        // set approve status
+        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=approve]', e => self.onSetApproveStatusClick(e));
     }
 
 
@@ -164,6 +174,7 @@ export class IndexController extends BaseController
 
     private onDelControlClick(ee)
     {
+        var self = this;
         var $that = $(ee.target);
         var $IndexView = this.IndexView;
 
@@ -183,21 +194,80 @@ export class IndexController extends BaseController
             {
                 $IndexView.beginDeleteExch();
 
-                // var formData = new FormData();
-                // formData.set('url', '1');
-                // (new ExchangeModel).deleteCategory({url: $that.data('url'), name: $that.data('catname')}).then( result =>
-                // {
-                //     window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
-                //     $IndexView.endDelete();
-                //     location.href = MainConfig  .BASE_URL + result.url;
-                // },
-                // result => {
-                //     window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_ALERT, header: "Fail"});
-                //     $IndexView.setInfoMess();
-                //     // categoryEdit.setErrors({code: reuslt.code, message: reuslt.message});
-                //     // indexView.endDelete();
-                //     $Dialog.close();
-                // });
+                var formData = new FormData();
+                formData.set('id', $that.data('id'));
+                (new ExchangeModel).delExch({formData, name: $that.data('name')}).then( result =>
+                {
+                    window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
+                    location.href = MainConfig.BASE_URL + result.data.Param1;
+                },
+                result => {
+                    self.InfoMessage.render({
+                        vars: {
+                            header: "Info",
+                            text: result.message,
+                            type: InfoMessage.TYPE_ALERT,
+                        }
+                    });
+
+                    $Dialog.close();
+                    $IndexView.endDeleteExch();
+                });
+
+                return false;
+            }
+        });
+
+    }
+
+
+
+    private onSetApproveStatusClick(ee)
+    {
+        var self = this;
+        var $that = $(ee.target);
+        var $IndexView = this.IndexView;
+
+        var $Dialog = new Dialog({
+            TPLName: '#TPLmodalDialog',
+            target: '.js-mp-dialog',
+            render: true,
+            vars: {
+                title: 'Question',
+                modalBody: 'Set status <b>Approved</b> for “' + $that.data('name') + '” ?',
+                btnOkTitle: 'OK',
+                btnCancelTitle: 'Cancel',
+                loading: true,
+                // type: 'modal-default',
+            },
+            callbackCancel: function() { $IndexView.endDeleteExch() },
+            callbackOK: () =>
+            {
+                // $IndexView.beginDeleteExch();
+
+                var formData = new FormData();
+                formData.set('id', $that.data('id'));
+                formData.set('status', 2);
+                (new ExchangeModel).setExchStatus({formData, name: $that.data('name'), statusName: "Approved"}).then( result =>
+                {
+                    0||console.log( 'result', result );
+                    window.ADpp.User.setFlash({message: result.message, messageType: User.MESSAGE_TYPE_ABS, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
+                    window.ADpp.User.setFlash({id: result.data.Param3}, 'ChangedStatusExchId');
+                    location.href = MainConfig.BASE_URL + result.data.Param1;
+                },
+                result => {
+                    0||console.log( 'result', result );
+                    self.InfoMessage.render({
+                        vars: {
+                            header: "Info",
+                            text: result.message,
+                            type: InfoMessage.TYPE_ALERT,
+                        }
+                    });
+
+                    $Dialog.close();
+                    // $IndexView.endDeleteExch();
+                });
 
                 return false;
             }
