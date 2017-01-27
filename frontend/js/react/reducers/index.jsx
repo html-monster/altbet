@@ -5,6 +5,7 @@ import mainPage from './mainPageReducer';
 import eventPage from './eventPageReducer';
 import sidebar from './sidebarReducer';
 import tradeSlip from './sidebar/defaultOrders';
+import activeTrader from './sidebar/activeTrader';
 import yourOrders from './sidebar/yourOrders';
 import deposit from './userPage/deposit';
 import withdraw from './userPage/withdraw';
@@ -36,6 +37,7 @@ switch (ABpp.config.currentPage){
 			myPosReduce,
 			sidebar,
 			tradeSlip,
+			activeTrader,
 			yourOrders
 		};
 		break;
@@ -46,6 +48,7 @@ switch (ABpp.config.currentPage){
 			eventPage,
 			sidebar,
 			tradeSlip,
+			activeTrader,
 			yourOrders
 		};
 		break;
@@ -65,6 +68,7 @@ switch (ABpp.config.currentPage){
 			myPosReduce,
 			sidebar,
 			tradeSlip,
+			activeTrader,
 			yourOrders
 		};
 		break;

@@ -7,7 +7,7 @@ import React from 'react';
 
 import DefaultOrders from './tradeSlip/DefaultOrders.jsx';
 import ActiveTrader from './tradeSlip/ActiveTrader.jsx';
-import * as defaultOrderActions from '../../actions/Sidebar/defaultOrderActions.js';
+import * as defaultOrderActions from '../../actions/Sidebar/defaultOrderActions';
 
 class TradeSlip extends React.Component
 {
@@ -44,7 +44,8 @@ class TradeSlip extends React.Component
 			<DefaultOrders data={this.props.tradeSlip.orderNewData} actions={this.props.defaultOrderActions}/>
 
 			{/* // BM: --------------------------------------------------- ACTIVE TRADER ---*/}
-			{ this.props.data.isAllowAT && <ActiveTrader data={{}} cmpData={{...this.props.tradeSlip, activeExchange: this.props.data.activeExchange}} actions={this.actions}/>
+			{
+				this.props.data.isAllowAT && <ActiveTrader cmpData={{...this.props.tradeSlip, activeExchange: this.props.data.activeExchange}}/>
 			}
 
 		</div>

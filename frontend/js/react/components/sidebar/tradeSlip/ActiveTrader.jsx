@@ -1,11 +1,17 @@
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import React from 'react';
-import AnimateOnUpdate from '../../Animation.jsx';
 
-export default class ActiveTrader extends React.Component {
+import AnimateOnUpdate from '../../Animation.jsx';
+import * as traderActions from '../../../actions/Sidebar/traderActions';
+import * as defaultOrderActions from '../../../actions/Sidebar/defaultOrderActions';
+
+class ActiveTrader extends React.Component {
 	constructor(props) {
 		super();
 
 		this.state = {data: props.data};
+		console.log(props);
 	}
 
 	componentDidMount() {
@@ -151,8 +157,8 @@ export default class ActiveTrader extends React.Component {
 
 		return <div className="active_trader" style={{display: 'none'}}>
 			<div className="event_title">
-				<div className={$active + " event_name"} onClick={() => this.props.actions.actionOnTabMirrorClick(false)}></div>
-				<div className={$activeM + " event_name reverse"} onClick={() => this.props.actions.actionOnTabMirrorClick(true)}></div>
+				<div className={$active + " event_name"} onClick={() => this.props.defaultOrderActions.actionOnTabMirrorClick(false)}></div>
+				<div className={$activeM + " event_name reverse"} onClick={() => this.props.defaultOrderActions.actionOnTabMirrorClick(true)}></div>
 			</div>
 			<table className="info">
 				<tbody>
@@ -390,3 +396,12 @@ class TraderString extends React.Component {
 		</AnimateOnUpdate>
 	}
 }
+
+export default connect(state => ({
+		data: state.activeTrader,
+	}),
+	dispatch => ({
+		traderActions: bindActionCreators(traderActions, dispatch),
+		defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
+	})
+)(ActiveTrader)
