@@ -44,11 +44,11 @@ export function actionOnButtonQuantityClick(actions, event)
 {
 	return (dispatch, getState) =>
 	{
-		let summary = +getState().withdraw.depositQuantity + +event.target.textContent;
-		actions.actionOnQuantityValidate(summary);
+		// let summary = +getState().withdraw.depositQuantity + +event.target.textContent;
+		actions.actionOnQuantityValidate(event.target.textContent);
 		dispatch({
 			type: WITHDRAW_QUANTITY_CHANGE,
-			payload: summary
+			payload: event.target.textContent
 		});
 	}
 }

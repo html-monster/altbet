@@ -41,10 +41,10 @@ export default class ActiveTrader extends React.Component {
 				if(currSymbData.Symbol.LastAsk == 1) currSymbData.Symbol.LastAsk = null;
 				if(currSymbData.Symbol.LastBid == 0) currSymbData.Symbol.LastBid = null;
 			}
-			if(JSON.stringify(this.state.data) != JSON.stringify(currSymbData) || this.state.isMirror != isMirror){
+			// if(JSON.stringify(this.state.data) != JSON.stringify(currSymbData) || this.state.isMirror != isMirror){
 				this.setState({data: currSymbData, isMirror: isMirror});
 // 0||console.debug( 're-render', currSymbData, newData, symbol );
-			}
+// 			}
 
 			activeTraderClass.scrollTo();
 			tbody.addClass('scroll_dis');
@@ -103,6 +103,7 @@ export default class ActiveTrader extends React.Component {
 					this.ParticularUserQuantityBuy = backendData[price].ParticularUserQuantity;
 					this.QuantityBuy = backendData[price].Quantity;
 				}
+
 				if(isMirror){
 					if(data.Symbol && price == Math.round10(1 - data.Symbol.LastAsk, -2)) this.Bid = Math.round10(1 - data.Symbol.LastAsk, -2);
 					if(data.Symbol && price == Math.round10(1 - data.Symbol.LastBid, -2)) this.Ask = Math.round10(1 - data.Symbol.LastBid, -2);
@@ -342,13 +343,10 @@ class TraderString extends React.Component {
 				className="visible"
 				transitionName={{
 					enter: 'fadeOut',
-					leave: 'fadeOut',
-					appear: 'fadeOut'
 				}}
 				transitionAppear={false}
-				transitionAppearTimeout={1500}
+				transitionLeave={false}
 				transitionEnterTimeout={800}
-				transitionLeaveTimeout={500}
 				data={data}
 		>
 			<td className="my_offers my_size animated" data-verify={'ParticularUserQuantityBuy'}>
