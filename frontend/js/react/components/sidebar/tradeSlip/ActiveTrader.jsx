@@ -41,10 +41,11 @@ export default class ActiveTrader extends React.Component {
 				if(currSymbData.Symbol.LastAsk == 1) currSymbData.Symbol.LastAsk = null;
 				if(currSymbData.Symbol.LastBid == 0) currSymbData.Symbol.LastBid = null;
 			}
-			// if(JSON.stringify(this.state.data) != JSON.stringify(currSymbData) || this.state.isMirror != isMirror){
+			if(JSON.stringify(this.state.data) != JSON.stringify(currSymbData) || this.state.isMirror != isMirror){
 				this.setState({data: currSymbData, isMirror: isMirror});
+			__DEV__ && console.log('re-render');
 // 0||console.debug( 're-render', currSymbData, newData, symbol );
-// 			}
+			}
 
 			activeTraderClass.scrollTo();
 			tbody.addClass('scroll_dis');

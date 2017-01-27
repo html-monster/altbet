@@ -22,7 +22,7 @@ export function actionOnSocketMessage()
 					type: WITHDRAW_SOCKET_MESSAGE,
 					payload: newData.Available
 				});
-				console.log('re-render');
+				__DEV__ && console.log('re-render');
 			}
 		});
 	}
@@ -71,7 +71,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 {
 	return (dispatch) =>
 	{
-		console.log(values);
+		__DEV__ && console.log(values);
 		let form = $(event.target);
 		let submit = $(event.target).find('[type=submit]');
 		let error = null;
@@ -89,7 +89,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 
 		function onSuccessAjax(data)
 		{
-			console.log(data);
+			__DEV__ && console.log(data);
 			const {Answer: { code }} = data;
 			// serverValidation(obj);
 			switch (code) {
