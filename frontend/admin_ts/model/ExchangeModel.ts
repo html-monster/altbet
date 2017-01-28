@@ -15,6 +15,8 @@ var __LDEV__ = true;
 export default class ExchangeModel
 {
     public static STATUS_APPROVE = 1 ;
+    public static STATUS_COMPLETE = 2 ;
+    public static STATUS_UNCOMPLETE = 22 ;
     public static STATUS_SETTLEMENT = 3 ;
 
     public getExchange(inProps)

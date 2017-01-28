@@ -52,6 +52,9 @@ export class IndexController extends BaseController
         $('[data-js=tabl-exch]').on('click', '.js-btn-crud[data-type=del]', e => self.onDelControlClick(e));
         // set approve status
         $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=approve]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_APPROVE));
+        // set complete status
+        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=complete]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_COMPLETE));
+        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=uncomplete]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_UNCOMPLETE));
         // set settlement status
         $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=settlement]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_SETTLEMENT));
     }
@@ -230,21 +233,27 @@ export class IndexController extends BaseController
         var $that = $(ee.target);
         var $IndexView = this.IndexView;
         var $question, statusName;
+        var tplName = 'TPLmodalDialog';
 
 
         switch( type )
         {
-            // case ExchangeModel.STATUS_SETTLEMENT :
+            case ExchangeModel.STATUS_COMPLETE : tplName = 'TPLcompleteStatus'; break;
+
             case ExchangeModel.STATUS_SETTLEMENT : $question = 'Set status <span class="label label-default">Settlement</span> for “' + $that.data('name') + '” ?';
                 statusName = "Settlement";
+                break;
+            case ExchangeModel.STATUS_UNCOMPLETE : $question = 'Return to <span class="label label-success">Approved</span> status for “' + $that.data('name') + '” ?';
+                statusName = "Approved";
                 break;
             default: $question = 'Set status <span class="label label-success">Approved</span> for “' + $that.data('name') + '” ?';
                 statusName = "Approved";
         }
+0||console.log( 'tplName', tplName );
 
 
         var $Dialog = new Dialog({
-            TPLName: '#TPLmodalDialog',
+            TPLName: '#' + tplName,
             target: '.js-mp-dialog',
             render: true,
             vars: {
