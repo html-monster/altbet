@@ -11,9 +11,10 @@ import {
 
 
 const initialState = {
+	approved: false,
 	data: appData.pageAccountData,
-	plan: 'free',
 	depositQuantity: '',
+	plan: 'free',
 	pricePlan: '',
 	pricePlanInfo: {
 		monthly: 0,

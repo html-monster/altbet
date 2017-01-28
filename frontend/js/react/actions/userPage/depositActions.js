@@ -100,7 +100,7 @@ export function actionOnQuantityValidate(values)
 	{
 		let error = null;
 		if(!values) error = 'Required';
-		// if(values && values < 5) error = 'Required';
+		// if(values && values < 10) error = 'Required';
 		dispatch({
 			type: DEPOSIT_QUANTITY_VALIDATE,
 			payload: error
@@ -119,8 +119,8 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 		if(!values.sum)
 			error = 'Required';
 
-		if(values.sum && values.sum < 5)
-			error = 'Minimum deposit is $5';
+		if(values.sum && values.sum < 10)
+			error = 'Minimum deposit is $10';
 
 		// if(values.sum){
 		// 	new Promise(resolve => {
@@ -224,7 +224,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 			// defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 		}
 
-		if(values.sum && values.sum >= 5){
+		if(values.sum && values.sum >= 10){
 			defaultMethods.sendAjaxRequest({
 				httpMethod: 'POST',
 				url: $(event.target).attr('action'),

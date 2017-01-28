@@ -25,16 +25,21 @@ class Withdraw extends React.Component{
 		$('html, body').animate({scrollTop: $(document).outerHeight(true)}, 800);
 	}
 
+	lalal()
+	{
+		popUpClass.nativePopUpOpen('.wrapper_user_page .payment_message.approve')
+	}
+
 	render()
 	{
-		const { data, depositQuantity,sumValidation } = this.props.withdraw;
+		const { approved, data, depositQuantity, sumValidation } = this.props.withdraw;
 		const actions = this.props.actions;
 
 		return <div className="tab_item funds">
-			<h3>Add funds</h3>
+			<h3>Withdraw funds</h3>
 			<span className="account_balance">You currently have <span className="value">${Math.round10(data.UserAssets.CurrentBalance, -2)}</span> in your account</span>
 			<div className="quantity_control">
-				<strong>Select deposit amount</strong>
+				<strong>Select withdrawal amount</strong>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>10</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>25</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>50</button>
@@ -100,7 +105,7 @@ class Withdraw extends React.Component{
 									<input className="input__field input__field--yoshiko total number" id="skrill_total" type="tel"
 										   value={depositQuantity ? depositQuantity : ''} onChange={actions.actionOnInputQuantityChange} disabled={true}/>
 									<label className="input__label input__label--yoshiko" htmlFor="skrill_total">
-										<span className="input__label-content input__label-content--yoshiko" data-content="Deposit amount">Deposit amount</span>
+										<span className="input__label-content input__label-content--yoshiko" data-content="Withdrawal amount">Withdrawal amount</span>
 									</label>
 									<span className="label">$</span>
 									<span className="validation-summary-errors">{}</span>
@@ -142,18 +147,19 @@ class Withdraw extends React.Component{
 						{/*<input type="hidden" name="plan" value={plan}/>*/}
 						{/*</form>*/}
 						<NetellerForm data={this.props.withdraw} format={'withdraw'} onSubmit={actions.actionOnAjaxSend.bind(null, this)} />
+						{/*<button className="btn wave approve" onClick={this.lalal}>{'Submit'}</button>*/}
 					</div>
 					<div className="tab_item payment_tab">
 						<EcoPayzForm data={this.props.withdraw} format={'withdraw'} onSubmit={actions.actionOnAjaxSend.bind(null, this)} />
 					</div>
 				</div>
 			</div>
-			<div className="payment_message withdraw_message pop_up" ref="paymentMessage">
+			<div className="payment_message message pop_up" ref="paymentMessage">
 				<div className="pop_up_container">
 					<div className="pop_up_content">
-						<span><span className="amount">$100</span> are withdrawn from your account</span>
+						<span><span className="amount">{}</span> are withdrawn from your account</span>
 						{/*<a href={ABpp.baseUrl + '/eng'} className="btn">Trade Now</a>*/}
-						<button className="btn">Ok</button>
+						<button className="btn hide">Ok</button>
 					</div>
 				</div>
 			</div>

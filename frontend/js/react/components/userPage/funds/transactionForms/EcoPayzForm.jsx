@@ -31,7 +31,7 @@ export default class EcoPayzForm extends React.Component{
 		const formContent = ({ input, error, successMessage, format, data:{ data, plan, depositQuantity, pricePlan }, handleSubmit }) => {
 			return <form autoComplete="off" onSubmit={handleSubmit}>
 				<div className="container">
-					<InputValidation renderContent={inputRender} id={'skrill_id'} name="clientId"
+					<InputValidation renderContent={inputRender} id={'ecoPayz_id'} name="clientId"
 									 className={'input__field input__field--yoshiko'}
 									 initialValue={data.UserInfo.Email}
 									 label={'From Address'} type={'text'} filled={data.UserInfo.Email}
@@ -40,14 +40,14 @@ export default class EcoPayzForm extends React.Component{
 
 					{
 						format ?
-							<InputValidation renderContent={inputRender} id={'skrill_total'}
+							<InputValidation renderContent={inputRender} id={'ecoPayz_total'}
 											 className={'input__field input__field--yoshiko total number'}
-											 label={'Deposit amount'} type={'tel'} filled={depositQuantity}
+											 label={'Withdrawal amount'} type={'tel'} filled={depositQuantity}
 											 inputLabel={true} name="sum"
 											 value={depositQuantity || ''}
 											 disabled={true} input={input}/>
 							:
-							<InputValidation renderContent={inputRender} id={'skrill_total'}
+							<InputValidation renderContent={inputRender} id={'ecoPayz_total'}
 											 className={'input__field input__field--yoshiko total number'}
 											 label={'Deposit amount'} type={'tel'} filled={depositQuantity || pricePlan}
 											 inputLabel={true} name="sum"

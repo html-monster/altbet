@@ -66,7 +66,7 @@ export default class NetellerForm extends React.Component{
 						format &&
 						<InputValidation renderContent={inputRender} id={'neteller_total'}
 										 className={'input__field input__field--yoshiko total number'}
-										 label={'Deposit amount'} type={'tel'} filled={depositQuantity}
+										 label={'Withdrawal amount'} type={'tel'} filled={depositQuantity}
 										 inputLabel={'total'} name="sum"
 										 value={depositQuantity || ''}
 										 disabled={true} input={input}/>
@@ -91,6 +91,15 @@ export default class NetellerForm extends React.Component{
 					</div>
 				}
 				{!format && <InputValidation renderContent={inputHidden} type={'hidden'} name="plan" value={plan} input={input}/>}
+				{/*<div className="payment_message approve pop_up" ref="paymentMessage">
+					<div className="pop_up_container">
+						<div className="pop_up_content">
+							<span>Are you sure?</span>
+							<button className="btn">Yes</button>
+							<span className="btn no hide">No</span>
+						</div>
+					</div>
+				</div>*/}
 			</form>
 		};
 		return <FormValidation

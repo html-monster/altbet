@@ -27,7 +27,7 @@ export default class Funds extends React.Component{
 		const staticData = appData.pageAccountData;
 
 		return <div className="funds">
-			<h2>Account</h2>
+			<h2>Funds</h2>
 			<div className="user_info">
 				<div className="personal_info">
 					<h3 className="mail">{staticData.UserInfo.Email}</h3>

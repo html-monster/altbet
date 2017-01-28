@@ -5,7 +5,8 @@
 import {
 	WITHDRAW_QUANTITY_CHANGE,
 	WITHDRAW_QUANTITY_VALIDATE,
-	WITHDRAW_SOCKET_MESSAGE
+	WITHDRAW_SOCKET_MESSAGE,
+	// WITHDRAW_APPROVE
 } from "../../constants/ActionTypesWithdraw";
 
 export function actionOnSocketMessage()
@@ -59,7 +60,7 @@ export function actionOnQuantityValidate(values)
 	{
 		let error = null;
 		if(!values) error = 'Required';
-		// if(values && values < 5) error = 'Required';
+		// if(values && values < 10) error = 'Required';
 		dispatch({
 			type: WITHDRAW_QUANTITY_VALIDATE,
 			payload: error
@@ -67,19 +68,34 @@ export function actionOnQuantityValidate(values)
 	}
 }
 
+// export function actionOnApprove()
+// {
+// 	return (dispatch, getState) =>
+// 	{
+// 		getState().withdraw.approved = true;
+// 		console.log(getState().withdraw.form);
+// 		$(getState().withdraw.form).submit();
+// 		// dispatch({
+// 		// 	type: WITHDRAW_APPROVE,
+// 		// 	payload: true
+// 		// });
+// 	}
+// }
+
 export function actionOnAjaxSend(context, values, serverValidation, event)
 {
-	return (dispatch) =>
+	return (dispatch, getState) =>
 	{
 		__DEV__ && console.log(values);
+		// getState().withdraw.form = event.target;
 		let form = $(event.target);
 		let submit = $(event.target).find('[type=submit]');
 		let error = null;
 		if(!values.sum)
 			error = 'Required';
 
-		if(values.sum && values.sum < 5)
-			error = 'Minimum withdraw is $5';
+		if(values.sum && values.sum < 10)
+			error = 'Minimum withdraw is $10';
 
 		function OnBeginAjax()
 		{
@@ -95,7 +111,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 			switch (code) {
 				case '200':{
 					const { transaction: { amount = null, fees = null } } = data;
-					popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw_message');
+					popUpClass.nativePopUpOpen('.wrapper_user_page .message');
 
 					$(context.refs.paymentMessage).find('.amount').text('$' + (amount / 100));
 					serverValidation({message: 'The payment is successful'});
@@ -158,6 +174,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 			}
 			submit.removeAttr('disabled');
 			form.removeClass('loading');
+			// getState().withdraw.approved = false;
 		}
 
 		function onErrorAjax()
@@ -167,10 +184,15 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 			submit.removeAttr('disabled');
 			form.removeClass('loading');
 			serverValidation(data);
+			// getState().withdraw.approved = false;
 			// defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 		}
 
-		if(values.sum && values.sum >= 5){
+		// if(!error) popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw_message');
+
+		// if($(event.target).hasClass('btn')) getState().withdraw.approved = true;
+
+		if(getState().withdraw.approved && values.sum && values.sum >= 10){
 			defaultMethods.sendAjaxRequest({
 				httpMethod: 'POST',
 				url: $(event.target).attr('action'),
