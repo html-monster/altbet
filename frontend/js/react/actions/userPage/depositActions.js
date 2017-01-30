@@ -77,7 +77,7 @@ export function actionOnInputQuantityChange(actions, event)
 		// actions.actionOnQuantityValidate(event.target.value);
 		dispatch({
 			type: DEPOSIT_QUANTITY_CHANGE,
-			payload: event.target.value
+			payload: +event.target.value
 		});
 	}
 }
