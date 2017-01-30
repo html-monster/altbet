@@ -18,6 +18,7 @@ export class MainConfig
     public static AJAX_EXCH_ADD = 'Home/CreateExchange';
     public static AJAX_EXCH_GET = 'Home/EditExchange';
     public static AJAX_EXCH_EDIT = 'Home/ChangeExchange';
+    public static AJAX_GET_DETAILS = 'Home/Details';
 
     public static AJAX_EXCH_SET_STATUS_COMPLETED = 'Home/Completed';
 }

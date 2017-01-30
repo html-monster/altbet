@@ -336,6 +336,32 @@ export default class ExchangeModel
 
 
 
+    public getDetails(inProps)
+    {
+        var ajaxPromise = (new AjaxSend()).send({
+                formData: inProps.formData,
+                message: "Cannot get details",
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_GET_DETAILS,
+                respCodes: [
+                    {code: 100, message: ""},
+                ],
+                beforeChkResponse: (data) =>
+                {
+                    // emulate
+                    data.Error = 200;
+                    // // data.Param1 = "?path=sport&status=approved";
+                    // data.Param1 = "?status=New";
+                    // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                    // data.Param3 = "TOR-PHI-3152017"; // id
+                    return data;
+                },
+            });
+
+        return ajaxPromise;
+    }
+
+
+
     public setExchStatus(inProps)
     {
         var self = this;

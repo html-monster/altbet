@@ -27,6 +27,9 @@
     }
 
     .exchanges {
+      tr.details td { padding: 0; line-height: 1px; border-top: 0;
+        .details { display: none; line-height: 18px; padding: 8px; }
+      }
       tr.added td, tr.edited td { position: relative; animation: fadeInGreen 1s; background-color: $color1Green; color: #fff; }
       tr.edited td { animation: fadeInBlue 1s; background-color: $color2Blue;
         //&:first-child::after { content: 'added'; position: absolute; left: 1px; bottom: 1px; font-size: 10px; color: #fff; }

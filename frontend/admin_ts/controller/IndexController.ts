@@ -57,6 +57,9 @@ export class IndexController extends BaseController
         $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=uncomplete]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_UNCOMPLETE));
         // set settlement status
         $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=settlement]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_SETTLEMENT));
+
+        // get exchange details
+        $('[data-js-btn-def-action]').on('click', e => self.onDetailControlClick(e));
     }
 
 
@@ -168,6 +171,39 @@ export class IndexController extends BaseController
 
                     return false;
                 });
+            } // endif
+        },
+        result => {
+            messageBox({message: result.message, title: 'Warning', type: AlertBox.TYPE_WARN});
+        });
+    }
+
+
+
+    private onDetailControlClick(ee)
+    {
+        var self = this;
+        var $that = $(ee.target);
+
+        let $IndexView = (new IndexView);
+        let $ExchangeModel = (new ExchangeModel);
+        // 0||console.log( '$that.attr(),', $that.data('id'), $that );
+        var $id = $that.data('id');
+        $ExchangeModel.getDetails({id: $id}).then(result =>
+        {
+            if( result.code < 0 )
+            {
+                messageBox({message: result.message, title: 'Warning', type: AlertBox.TYPE_WARN});
+            }
+            else
+            {
+                0||console.debug( 'get details', result );
+                var template = Handlebars.compile($("#TPLexchDetails").html());
+                var html = template(result.data);
+
+                var $td = $that.closest("tr").next().children();
+                $td.html(html);
+                $td.children().slideDown(400);
             } // endif
         },
         result => {
