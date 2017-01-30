@@ -5,12 +5,12 @@
 import BaseController from "./BaseController";
 import {IndexView} from "../view/IndexView";
 import Dialog from "../component/Dialog";
-import ExchangeModel from "../model/ExchangeModel";
 import {FormCheckers} from "../component/FormCheckers";
 import {MainConfig} from "../inc/MainConfig";
 import {InfoMessage} from "../component/InfoMessage";
 import {messageBox, AlertBox} from "../component/AlertBox";
 import {User} from "../model/User";
+import ExchangeModel from "../model/ExchangeModel";
 
 
 export class IndexController extends BaseController
@@ -51,7 +51,12 @@ export class IndexController extends BaseController
         // delete click
         $('[data-js=tabl-exch]').on('click', '.js-btn-crud[data-type=del]', e => self.onDelControlClick(e));
         // set approve status
-        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=approve]', e => self.onSetApproveStatusClick(e));
+        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=approve]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_APPROVE));
+        // set complete status
+        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=complete]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_COMPLETE));
+        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=uncomplete]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_UNCOMPLETE));
+        // set settlement status
+        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=settlement]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_SETTLEMENT));
     }
 
 
@@ -222,33 +227,67 @@ export class IndexController extends BaseController
 
 
 
-    private onSetApproveStatusClick(ee)
+    private onSetApproveStatusClick(ee, type)
     {
         var self = this;
         var $that = $(ee.target);
         var $IndexView = this.IndexView;
+        var $question, statusName;
+        var tplName = 'TPLmodalDialog';
+        var afterInit = null;
+        var vars : any = {};
+        var url;
+
+
+        switch( type )
+        {
+            case ExchangeModel.STATUS_SETTLEMENT : tplName = 'TPLcompleteStatus';
+                afterInit = (that, target) => $IndexView.onCompleteDialogInit(that, target);
+                statusName = "Settlement";
+                vars = {
+                    exchName: $that.data('name'),
+                    homeName: $that.data('homename'),
+                    awayName: $that.data('awayname'),
+                };
+                url = MainConfig.AJAX_TEST;
+                break;
+
+            case ExchangeModel.STATUS_COMPLETE : $question = 'Set status <span class="label label-warning">Completed</span> for “' + $that.data('name') + '” ?';
+                statusName = "Completed";
+                url = MainConfig.AJAX_TEST;
+                break;
+            case ExchangeModel.STATUS_UNCOMPLETE : $question = 'Return to <span class="label label-success">Approved</span> status for “' + $that.data('name') + '” ?';
+                statusName = "Approved";
+                url = MainConfig.AJAX_TEST;
+                break;
+            default: $question = 'Set status <span class="label label-success">Approved</span> for “' + $that.data('name') + '” ?';
+                statusName = "Approved";
+                url = MainConfig.AJAX_TEST;
+        }
+
 
         var $Dialog = new Dialog({
-            TPLName: '#TPLmodalDialog',
+            TPLName: '#' + tplName,
             target: '.js-mp-dialog',
             render: true,
+            afterInit: afterInit,
             vars: {
                 title: 'Question',
-                modalBody: 'Set status <b>Approved</b> for “' + $that.data('name') + '” ?',
+                modalBody: $question,
                 btnOkTitle: 'OK',
                 btnCancelTitle: 'Cancel',
                 loading: true,
-                // type: 'modal-default',
+                ...vars,
             },
-            callbackCancel: function() { $IndexView.endDeleteExch() },
-            callbackOK: () =>
+            // callbackCancel: function() { $IndexView.endDeleteExch() },
+            callbackOK: (ee) =>
             {
                 // $IndexView.beginDeleteExch();
-
-                var formData = new FormData();
-                formData.set('id', $that.data('id'));
-                formData.set('status', 2);
-                (new ExchangeModel).setExchStatus({formData, name: $that.data('name'), statusName: "Approved"}).then( result =>
+                var formData = new FormData(<HTMLFormElement>$(ee.target).closest('form')[0]);
+                formData.set('exchange', $that.data('id'));
+                // formData.set('status', 2);
+                // formData.set('result', $('[name=result]').val());
+                (new ExchangeModel).setExchStatus({formData, name: $that.data('name'), statusName, url}).then( result =>
                 {
                     0||console.log( 'result', result );
                     window.ADpp.User.setFlash({message: result.message, messageType: User.MESSAGE_TYPE_ABS, type: InfoMessage.TYPE_SUCCESS, header: "Success"});

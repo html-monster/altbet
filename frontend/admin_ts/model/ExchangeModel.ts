@@ -14,6 +14,11 @@ var __LDEV__ = true;
 
 export default class ExchangeModel
 {
+    public static STATUS_APPROVE = 1 ;
+    public static STATUS_COMPLETE = 2 ;
+    public static STATUS_UNCOMPLETE = 22 ;
+    public static STATUS_SETTLEMENT = 3 ;
+
     public getExchange(inProps)
     {
         var self = this;
@@ -339,7 +344,8 @@ export default class ExchangeModel
         var ajaxPromise = (new AjaxSend()).send({
                 formData: inProps.formData,
                 message: `Error while changing status for exchange “${inProps.name}”, please, try again`,
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                url: MainConfig.BASE_URL + DS + inProps.url,
                 respCodes: [
                     {code: 100, message: `Status <b>${inProps.statusName}</b> was set successfully for exchange “${inProps.name}”`},
                     // {code: -101, message: "Some custom error"},

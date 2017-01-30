@@ -46,7 +46,6 @@ export class IndexView extends BaseView
 
         // if success ch status
         data = window.ADpp.User.getFlash('ChangedStatusExchId');
-        0||console.log( 'data', data );
         if( data )
         {
             let $tr = $("[data-js=tabl-exch] " + `[data-id=${data.id}]`);
@@ -476,6 +475,21 @@ export class IndexView extends BaseView
 
 
         if( $tr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: $tr.offset().top - 50 }, 500);
+    }
+
+
+
+    public onCompleteDialogInit(that, target)
+    {
+        var $that = $(target);
+        var $buttons = $("[data-js-btn-side]", $that);
+        $buttons.click((ee) =>
+        {
+            $buttons.removeClass().addClass("btn btn-default");
+            var $this = $(ee.target);
+            $this.removeClass("btn-default").addClass($this.data("class") + ' active');
+            $("[data-js-wintype]", $that).val($this.data("id"));
+        })
     }
 
 
