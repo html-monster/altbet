@@ -59,7 +59,7 @@ export class IndexController extends BaseController
         $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=settlement]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_SETTLEMENT));
 
         // get exchange details
-        $('[data-js-btn-detail]').on('click', e => self.onDetailControlClick(e)); //[data-js-btn-def-action]
+        $('[data-js-btn-def-action], [data-js-btn-detail]').on('click', e => self.onDetailControlClick(e)); //[data-js-btn-def-action]
     }
 
 
@@ -188,7 +188,7 @@ export class IndexController extends BaseController
         let $ExchangeModel = (new ExchangeModel);
         let $details = $("[data-js-details]");
         var $tr = $that.closest("tr").next();
-        var isOpened = $tr.hasClass('js-opened');
+        var isOpened = $tr.parent().hasClass('js-opened');
 
         $tr.closest('table').find(".js-opened").removeClass('js-opened');
         if( isOpened )
@@ -214,7 +214,7 @@ export class IndexController extends BaseController
 
                     var $td = $tr.children();
                     $td.html(html);
-                    $tr.addClass('js-opened');
+                    $tr.parent().addClass('js-opened');
                     $td.children().stop().slideDown(400);
                 } // endif
             },

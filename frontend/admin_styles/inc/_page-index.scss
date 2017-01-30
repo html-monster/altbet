@@ -22,7 +22,7 @@
       &.active.btn-primary { box-shadow: 0px 0px 2px 3px $color2Blue }
       &.active.btn-success { box-shadow: 0px 0px 2px 3px $color1Green }
       &.active.btn-warning { box-shadow: 0px 0px 2px 3px #f39c12 }
-      &.active.btn-default { box-shadow: 0px 0px 2px 3px darken(#e6e6e6, 5%) }
+      &.active.btn-default { box-shadow: 0px 0px 2px 3px $color4Def }
       //&.active.btn-default { box-shadow: 0px 0px 2px 3px #666 }
     }
 
@@ -30,11 +30,17 @@
       & > tbody + tbody {
           border-top: 0;
       }
-      tbody:hover {
-        td { background-color: #f5f5f5; }
+      tbody {
+        &.js-opened {
+          tr.exch-row td
+          { background: rgba(60, 141, 188, 0.26) }
+          tr.details td
+          { background: rgba(60, 141, 188, 0.15) }
+        }
+        &:hover td { background-color: #f5f5f5; }
       }
-      tr.details td { padding: 0; line-height: 1px; border-top: 0;
-        .details { display: none; line-height: 18px; padding: 8px; }
+      tr.details td { padding: 0; line-height: 1px; border-top: 0; background: #F2F2F2;
+        div.details { display: none; line-height: 18px; padding: 8px; }
       }
       tr.added td, tr.edited td { position: relative; animation: fadeInGreen 1s; background-color: $color1Green; color: #fff; }
       tr.edited td { animation: fadeInBlue 1s; background-color: $color2Blue;
@@ -49,3 +55,4 @@
     }
   }
 }
+
