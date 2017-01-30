@@ -19,14 +19,21 @@ class popUpClass{
 		});
 		console.log("browser version: " + $.browser.version.slice(0, 2)); // EDGE В ВЕРСИИ 50 МОГУТ ПОЛЕЗТЬ БАГИ
 	}
-	static popUpClose(closeButton, ...popUpWindow){ //.head_form .close
+	static popUpClose(closeButton, method, ...popUpWindow){
 
 		$(closeButton).click(callback);
 		function callback(e) {
 			e = e || event;
 			e.preventDefault();
 			popUpWindow.forEach(function (item) {
-				$(item).fadeOut(200).removeClass('active'); //.sign_in_form
+				if(method == 'slideUp')
+					$(item).slideUp(400);
+				else if(method == 'hide')
+					$(item).hide();
+				else
+					$(item).fadeOut(400);
+
+				$(item).removeClass('active');
 			});
 			if (!$('.pop_up').hasClass('active'))
 				$('.blur').removeClass('blur');
@@ -40,7 +47,7 @@ class popUpClass{
 		function callback(e) {
 			e = e || event;
 			e.preventDefault();
-			$(popUpWindow).addClass('active').fadeIn(200);  //'.sign_in_form'
+			$(popUpWindow).addClass('active').fadeIn(200);
 			$(focusElement).focus(); //'#email'
 
 			if (browser)
@@ -75,6 +82,8 @@ class popUpClass{
 
 			if(method == 'slideUp')
 				$(popUp).slideUp(400);
+			else if(method == 'hide')
+				$(popUp).hide();
 			else
 				$(popUp).fadeOut(400);
 		}

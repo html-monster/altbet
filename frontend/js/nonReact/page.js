@@ -45,10 +45,9 @@ $(document).ready(function () {
 	popUpClass.popUpOpen('.video button', '.video_form');
 	popUpClass.popUpOpen('header .price_plan', '.price_plan_form');
 
-	popUpClass.popUpClose('.sign_in_form a.register', '.sign_in_form');
-	popUpClass.popUpClose('.sign_in_form .close', '.sign_in_form'); // pop-up login
-	popUpClass.popUpClose('.wrapper_user_page .payment_message .hide', '.wrapper_user_page .payment_message'); //payment message
-	// popUpClass.popUpClose('.sign_up_form .confirm .btn', '.sign_up_form', '.sign_up_form .confirm'); // pop-up login
+	popUpClass.popUpClose('.sign_in_form a.register', 'fadeOut', '.sign_in_form');
+	popUpClass.popUpClose('.sign_in_form .close', 'fadeOut', '.sign_in_form'); // pop-up login
+	popUpClass.popUpClose('.wrapper_user_page .payment_message .hide', 'hide', '.wrapper_user_page .payment_message'); //payment message
 
 	popUpClass.globalPopUpClose('.warning'); // all warning message
 	popUpClass.globalPopUpClose('.user-menu', 'slideUp', '.log_in'); // login user menu

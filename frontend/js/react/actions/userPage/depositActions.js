@@ -7,7 +7,8 @@ import {
 	DEPOSIT_PRICE_PLAN_CHANGE,
 	DEPOSIT_PERIOD_CHANGE,
 	DEPOSIT_QUANTITY_VALIDATE,
-	DEPOSIT_SOCKET_MESSAGE
+	DEPOSIT_SOCKET_MESSAGE,
+	DEPOSIT_APPROVE
 } from "../../constants/ActionTypesDeposit";
 
 export function actionOnSocketMessage()
@@ -76,7 +77,7 @@ export function actionOnInputQuantityChange(actions, event)
 		// actions.actionOnQuantityValidate(event.target.value);
 		dispatch({
 			type: DEPOSIT_QUANTITY_CHANGE,
-			payload: event.target.value
+			payload: +event.target.value
 		});
 	}
 }
@@ -110,11 +111,20 @@ export function actionOnQuantityValidate(values)
 
 export function actionOnAjaxSend(context, values, serverValidation, event)
 {
-	return (dispatch) =>
+	return (dispatch, getState) =>
 	{
 		__DEV__ && console.log(values);
-		let form = $(event.target);
-		let submit = $(event.target).find('[type=submit]');
+		const { approved } = getState().deposit;
+		const form = $(event.target);
+		const submit = $(event.target).find('[type=submit]');
+		const jQAjax = defaultMethods.sendAjaxRequest.bind(null ,{
+			httpMethod: 'POST',
+			url       : $(event.target).attr('action'),
+			data      : values,
+			callback  : onSuccessAjax,
+			onError   : onErrorAjax,
+			beforeSend: OnBeginAjax,
+		});
 		let error = null;
 		if(!values.sum)
 			error = 'Required';
@@ -154,7 +164,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 			switch (code) {
 				case '200':{
 					const { transaction: { amount = null, fees = null } } = data;
-					popUpClass.nativePopUpOpen('.wrapper_user_page .deposit_message');
+					popUpClass.nativePopUpOpen('.wrapper_user_page .deposit.message');
 
 					$(context.refs.paymentMessage).find('.amount').text('$' + ((amount - fees[0].feeAmount) / 100));
 					serverValidation({message: 'The payment is successful'});
@@ -169,10 +179,10 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 					serverValidation({error: 'The account is closed'});
 					break;}
 				case '20007':{
-					serverValidation({error: `The Neteller ID / e-mail is invalid or the Secure ID / Authentication Code is invalid`, clientId: ' ', secureId: ' '});
+					serverValidation({error: `The Neteller ID or e-mail is invalid`, clientId: ' '});
 					break;}
 				case '20008':{
-					serverValidation({error: `The Neteller ID / e-mail is invalid or the Secure ID / Authentication Code is invalid`, clientId: ' ', secureId: ' '});
+					serverValidation({error: `The Secure ID or Authentication Code is invalid`, secureId: ' '});
 					break;}
 				case '20011':{
 					serverValidation({error: 'You are residing in a NETELLER blocked country/state/region'});
@@ -212,6 +222,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 				// // 	break;?????????????????????????????????????????????????????
 			submit.removeAttr('disabled');
 			form.removeClass('loading');
+			$(context.refs.paymentMessage).find('.hide').unbind('click');
 		}
 
 		function onErrorAjax()
@@ -221,19 +232,24 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 			submit.removeAttr('disabled');
 			form.removeClass('loading');
 			serverValidation(data);
+			$(context.refs.paymentMessage).find('.hide').unbind('click');
 			// defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 		}
 
-		if(values.sum && values.sum >= 10){
-			defaultMethods.sendAjaxRequest({
-				httpMethod: 'POST',
-				url: $(event.target).attr('action'),
-				data: values,
-				callback: onSuccessAjax,
-				onError: onErrorAjax,
-				beforeSend: OnBeginAjax,
-			});
+		if(!error && !approved) {
+			popUpClass.nativePopUpOpen('.wrapper_user_page .deposit.message');
+			$(context.refs.paymentMessage).find('.submit').click(() => {
+				if(!approved){
+					jQAjax();
+					dispatch({
+						type: DEPOSIT_APPROVE,
+						payload: true
+					});
+				}
+			})
 		}
+
+		if(approved && !error) jQAjax();
 
 		dispatch({
 			type: DEPOSIT_QUANTITY_VALIDATE,

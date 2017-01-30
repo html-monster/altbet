@@ -6,7 +6,7 @@ import {
 	WITHDRAW_QUANTITY_CHANGE,
 	WITHDRAW_QUANTITY_VALIDATE,
 	WITHDRAW_SOCKET_MESSAGE,
-	// WITHDRAW_APPROVE
+	WITHDRAW_APPROVE
 } from "../../constants/ActionTypesWithdraw";
 
 export function actionOnSocketMessage()
@@ -86,11 +86,21 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 {
 	return (dispatch, getState) =>
 	{
+		const { approved } = getState().withdraw;
 		__DEV__ && console.log(values);
 		// getState().withdraw.form = event.target;
-		let form = $(event.target);
-		let submit = $(event.target).find('[type=submit]');
+		const form = $(event.target);
+		const submit = $(event.target).find('[type=submit]');
+		const jQAjax = defaultMethods.sendAjaxRequest.bind(null ,{
+			httpMethod: 'POST',
+			url       : $(event.target).attr('action'),
+			data      : values,
+			callback  : onSuccessAjax,
+			onError   : onErrorAjax,
+			beforeSend: OnBeginAjax,
+		});
 		let error = null;
+
 		if(!values.sum)
 			error = 'Required';
 
@@ -134,10 +144,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 					serverValidation({error: 'The account is closed'});
 					break;}
 				case '20007':{
-					serverValidation({error: `The e-mail is invalid or the Secure ID / Authentication Code is invalid`, clientId: ' ', secureId: ' '});
-					break;}
-				case '20008':{
-					serverValidation({error: `The e-mail is invalid or the Secure ID / Authentication Code is invalid`, clientId: ' ', secureId: ' '});
+					serverValidation({error: `The Neteller ID or e-mail is invalid`, clientId: ' '});
 					break;}
 				case '20011':{
 					serverValidation({error: 'You are residing in a NETELLER blocked country/state/region'});
@@ -174,6 +181,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 			}
 			submit.removeAttr('disabled');
 			form.removeClass('loading');
+			$(context.refs.paymentMessage).find('.hide').unbind('click');
 			// getState().withdraw.approved = false;
 		}
 
@@ -184,24 +192,25 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 			submit.removeAttr('disabled');
 			form.removeClass('loading');
 			serverValidation(data);
+			$(context.refs.paymentMessage).find('.hide').unbind('click');
 			// getState().withdraw.approved = false;
 			// defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 		}
 
-		// if(!error) popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw_message');
-
-		// if($(event.target).hasClass('btn')) getState().withdraw.approved = true;
-
-		if(getState().withdraw.approved && values.sum && values.sum >= 10){
-			defaultMethods.sendAjaxRequest({
-				httpMethod: 'POST',
-				url: $(event.target).attr('action'),
-				data: values,
-				callback: onSuccessAjax,
-				onError: onErrorAjax,
-				beforeSend: OnBeginAjax,
-			});
+		if(!error && !approved) {
+			popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw.message');
+			$(context.refs.paymentMessage).find('.submit').click(() => {
+				if(!approved){
+					jQAjax();
+					dispatch({
+						type: WITHDRAW_APPROVE,
+						payload: true
+					});
+				}
+			})
 		}
+
+		if(approved && !error) jQAjax();
 
 		dispatch({
 			type: WITHDRAW_QUANTITY_VALIDATE,

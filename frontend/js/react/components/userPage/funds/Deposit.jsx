@@ -54,7 +54,7 @@ class Deposit extends React.Component{
 
 	render()
 	{
-		const { data, plan, payYearly, depositQuantity, pricePlan, sumValidation } = this.props.deposit;
+		const { approved, data, plan, payYearly, depositQuantity, pricePlan, sumValidation } = this.props.deposit;
 		const actions = this.props.actions;
 
 		return <div className="tab_item funds">
@@ -285,13 +285,23 @@ class Deposit extends React.Component{
 					</div>
 				</div>
 			</div>
-			<div className="payment_message deposit_message pop_up" ref="paymentMessage">
+			<div className="payment_message deposit message pop_up" ref="paymentMessage">
 				<div className="pop_up_container">
-                    <div className="pop_up_content">
-                        <span>Your account balance is refilled with <span className="amount">$100</span></span>
-						<a href={ABpp.baseUrl + '/eng'} className="btn">Trade Now</a>
-                        {/*<button className="btn">Ok</button>*/}
-                    </div>
+					{
+						approved ?
+							<div className="pop_up_content">
+								<span>Your account balance is refilled with <span className="amount">{}</span></span>
+								<a href={ABpp.baseUrl + '/eng'} className="btn">Trade Now</a>
+							</div>
+						:
+							<div className="pop_up_content">
+								<span>Please, confirm your action</span>
+								<div className="btn_container">
+									<button className="btn wave hide submit">Yes</button>
+									<button className="btn wave hide no">No</button>
+								</div>
+							</div>
+					}
 				</div>
 			</div>
 		</div>
