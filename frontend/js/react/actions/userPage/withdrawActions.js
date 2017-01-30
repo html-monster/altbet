@@ -121,7 +121,7 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 			switch (code) {
 				case '200':{
 					const { transaction: { amount = null, fees = null } } = data;
-					popUpClass.nativePopUpOpen('.wrapper_user_page .message');
+					popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw.message');
 
 					$(context.refs.paymentMessage).find('.amount').text('$' + (amount / 100));
 					serverValidation({message: 'The payment is successful'});
