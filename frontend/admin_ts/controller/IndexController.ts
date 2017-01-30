@@ -59,7 +59,7 @@ export class IndexController extends BaseController
         $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=settlement]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_SETTLEMENT));
 
         // get exchange details
-        $('[data-js-btn-def-action]').on('click', e => self.onDetailControlClick(e));
+        $('[data-js-btn-detail]').on('click', e => self.onDetailControlClick(e)); //[data-js-btn-def-action]
     }
 
 
@@ -184,31 +184,44 @@ export class IndexController extends BaseController
     {
         var self = this;
         var $that = $(ee.target);
-
         let $IndexView = (new IndexView);
         let $ExchangeModel = (new ExchangeModel);
-        // 0||console.log( '$that.attr(),', $that.data('id'), $that );
-        var $id = $that.data('id');
-        $ExchangeModel.getDetails({id: $id}).then(result =>
-        {
-            if( result.code < 0 )
-            {
-                messageBox({message: result.message, title: 'Warning', type: AlertBox.TYPE_WARN});
-            }
-            else
-            {
-                0||console.debug( 'get details', result );
-                var template = Handlebars.compile($("#TPLexchDetails").html());
-                var html = template(result.data);
+        let $details = $("[data-js-details]");
+        var $tr = $that.closest("tr").next();
+        var isOpened = $tr.hasClass('js-opened');
 
-                var $td = $that.closest("tr").next().children();
-                $td.html(html);
-                $td.children().slideDown(400);
-            } // endif
-        },
-        result => {
-            messageBox({message: result.message, title: 'Warning', type: AlertBox.TYPE_WARN});
-        });
+        $tr.closest('table').find(".js-opened").removeClass('js-opened');
+        if( isOpened )
+        {
+            $tr.children().children().stop().slideUp(399);
+        }
+        else
+        {
+            var $id = $that.data('id');
+            $ExchangeModel.getDetails({id: $id}).then(result =>
+            {
+                if( result.code < 0 )
+                {
+                    messageBox({message: result.message, title: 'Warning', type: AlertBox.TYPE_WARN});
+                }
+                else
+                {
+                    0||console.debug( 'get details', result );
+                    $details.slideUp(399);
+
+                    var template = Handlebars.compile($("#TPLexchDetails").html());
+                    var html = template(result.data);
+
+                    var $td = $tr.children();
+                    $td.html(html);
+                    $tr.addClass('js-opened');
+                    $td.children().stop().slideDown(400);
+                } // endif
+            },
+            result => {
+                messageBox({message: result.message, title: 'Warning', type: AlertBox.TYPE_WARN});
+            });
+        } // endif
     }
 
 

@@ -187,7 +187,7 @@ export default class ExchangeModel
                                 message = `Exchange “${fullName}” saved successfully`; break; // success
                             case -102 : message = "Url is not unique"; break;
                             case -103 : message = "Invalid start date. Start time must be less then end time."; break;
-                            case -104 : message = "End time may not be earlier than the current time"; break;
+                            case -104 : message = "Exchange event time may not be earlier than the current time"; break;
                             case -100: ; // some backend not controlled error
                             case -1000 : ; break;
                             default: error = -1001;
@@ -280,7 +280,7 @@ export default class ExchangeModel
                             case -101 : message = "Aliases are not unique"; break;
                             case -102 : message = "Url is not unique"; break;
                             case -103 : message = "Invalid start date. Start time must be less then end time."; break;
-                            case -104 : message = "End time may not be earlier than the current time"; break;
+                            case -104 : message = "Exchange event time may not be earlier than the current time"; break;
                             case -100: ; // some backend not controlled error
                             case -1000 : ; break;
                             default: error = -1001;
