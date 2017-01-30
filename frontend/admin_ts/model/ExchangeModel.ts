@@ -344,7 +344,8 @@ export default class ExchangeModel
         var ajaxPromise = (new AjaxSend()).send({
                 formData: inProps.formData,
                 message: `Error while changing status for exchange “${inProps.name}”, please, try again`,
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                url: MainConfig.BASE_URL + DS + inProps.url,
                 respCodes: [
                     {code: 100, message: `Status <b>${inProps.statusName}</b> was set successfully for exchange “${inProps.name}”`},
                     // {code: -101, message: "Some custom error"},

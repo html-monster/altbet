@@ -234,45 +234,60 @@ export class IndexController extends BaseController
         var $IndexView = this.IndexView;
         var $question, statusName;
         var tplName = 'TPLmodalDialog';
+        var afterInit = null;
+        var vars : any = {};
+        var url;
 
 
         switch( type )
         {
-            case ExchangeModel.STATUS_COMPLETE : tplName = 'TPLcompleteStatus'; break;
-
-            case ExchangeModel.STATUS_SETTLEMENT : $question = 'Set status <span class="label label-default">Settlement</span> for “' + $that.data('name') + '” ?';
+            case ExchangeModel.STATUS_SETTLEMENT : tplName = 'TPLcompleteStatus';
+                afterInit = (that, target) => $IndexView.onCompleteDialogInit(that, target);
                 statusName = "Settlement";
+                vars = {
+                    exchName: $that.data('name'),
+                    homeName: $that.data('homename'),
+                    awayName: $that.data('awayname'),
+                };
+                url = MainConfig.AJAX_TEST;
+                break;
+
+            case ExchangeModel.STATUS_COMPLETE : $question = 'Set status <span class="label label-warning">Completed</span> for “' + $that.data('name') + '” ?';
+                statusName = "Completed";
+                url = MainConfig.AJAX_TEST;
                 break;
             case ExchangeModel.STATUS_UNCOMPLETE : $question = 'Return to <span class="label label-success">Approved</span> status for “' + $that.data('name') + '” ?';
                 statusName = "Approved";
+                url = MainConfig.AJAX_TEST;
                 break;
             default: $question = 'Set status <span class="label label-success">Approved</span> for “' + $that.data('name') + '” ?';
                 statusName = "Approved";
+                url = MainConfig.AJAX_TEST;
         }
-0||console.log( 'tplName', tplName );
 
 
         var $Dialog = new Dialog({
             TPLName: '#' + tplName,
             target: '.js-mp-dialog',
             render: true,
+            afterInit: afterInit,
             vars: {
                 title: 'Question',
                 modalBody: $question,
                 btnOkTitle: 'OK',
                 btnCancelTitle: 'Cancel',
                 loading: true,
-                // type: 'modal-default',
+                ...vars,
             },
             // callbackCancel: function() { $IndexView.endDeleteExch() },
-            callbackOK: () =>
+            callbackOK: (ee) =>
             {
                 // $IndexView.beginDeleteExch();
-
-                var formData = new FormData();
-                formData.set('id', $that.data('id'));
-                formData.set('status', 2);
-                (new ExchangeModel).setExchStatus({formData, name: $that.data('name'), statusName}).then( result =>
+                var formData = new FormData(<HTMLFormElement>$(ee.target).closest('form')[0]);
+                formData.set('exchange', $that.data('id'));
+                // formData.set('status', 2);
+                // formData.set('result', $('[name=result]').val());
+                (new ExchangeModel).setExchStatus({formData, name: $that.data('name'), statusName, url}).then( result =>
                 {
                     0||console.log( 'result', result );
                     window.ADpp.User.setFlash({message: result.message, messageType: User.MESSAGE_TYPE_ABS, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
