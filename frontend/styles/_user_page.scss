@@ -620,6 +620,13 @@
     //display: block;
     color: $main-color-darker;
     z-index: 999;
+    .btn_container{
+      display: flex;
+      justify-content: center;
+      button{  width: 75px;
+        margin: 15px 5px 0;  }
+      .no{  background-image: linear-gradient(to bottom, #53515e, #3b3a44);  }
+    }
     .pop_up_content{
       display: block;
       width: 300px;

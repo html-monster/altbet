@@ -5,12 +5,12 @@ import {
 	WITHDRAW_QUANTITY_CHANGE,
 	WITHDRAW_QUANTITY_VALIDATE,
 	WITHDRAW_SOCKET_MESSAGE,
-	// WITHDRAW_APPROVE
+	WITHDRAW_APPROVE
 } from "../../constants/ActionTypesWithdraw";
 
 
 const initialState = {
-	approved: true,
+	approved: false,
 	data: appData.pageAccountData,
 	depositQuantity: '',
 	form: null,
@@ -31,8 +31,8 @@ export default function withdraw(state = initialState, action)
 			state.data.UserAssets.CurrentBalance = action.payload;
 			return {...state};
 
-		// case WITHDRAW_APPROVE:
-		// 	return {...state, approved : action.payload};
+		case WITHDRAW_APPROVE:
+			return {...state, approved : action.payload};
 
 			default:
 			return state

@@ -6,7 +6,8 @@ import {
 	DEPOSIT_PRICE_PLAN_CHANGE,
 	DEPOSIT_PERIOD_CHANGE,
 	DEPOSIT_QUANTITY_VALIDATE,
-	DEPOSIT_SOCKET_MESSAGE
+	DEPOSIT_SOCKET_MESSAGE,
+	DEPOSIT_APPROVE
 } from "../../constants/ActionTypesDeposit";
 
 
@@ -43,6 +44,9 @@ export default function deposit(state = initialState, action)
 		case DEPOSIT_SOCKET_MESSAGE:
 			state.data.UserAssets.CurrentBalance = action.payload;
 			return {...state};
+
+		case DEPOSIT_APPROVE:
+			return {...state, approved : action.payload};
 
 		default:
 			return state

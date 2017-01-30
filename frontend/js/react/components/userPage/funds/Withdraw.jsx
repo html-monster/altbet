@@ -25,10 +25,10 @@ class Withdraw extends React.Component{
 		$('html, body').animate({scrollTop: $(document).outerHeight(true)}, 800);
 	}
 
-	lalal()
-	{
-		popUpClass.nativePopUpOpen('.wrapper_user_page .payment_message.approve')
-	}
+	// lalal()
+	// {
+	// 	popUpClass.nativePopUpOpen('.wrapper_user_page .payment_message.approve')
+	// }
 
 	render()
 	{
@@ -154,13 +154,24 @@ class Withdraw extends React.Component{
 					</div>
 				</div>
 			</div>
-			<div className="payment_message message pop_up" ref="paymentMessage">
+			<div className="payment_message withdraw message pop_up" ref="paymentMessage">
 				<div className="pop_up_container">
-					<div className="pop_up_content">
-						<span><span className="amount">{}</span> are withdrawn from your account</span>
-						{/*<a href={ABpp.baseUrl + '/eng'} className="btn">Trade Now</a>*/}
-						<button className="btn hide">Ok</button>
-					</div>
+					{
+						approved ?
+							<div className="pop_up_content">
+								<span><span className="amount">{}</span> are withdrawn from your account</span>
+								{/*<a href={ABpp.baseUrl + '/eng'} className="btn">Trade Now</a>*/}
+								<button className="btn hide" onClick={popUpClass.nativePopUpClose.bind(null, '.wrapper_user_page .withdraw.message')}>Ok</button>
+							</div>
+						:
+							<div className="pop_up_content">
+								<span>Please, confirm your action</span>
+								<div className="btn_container">
+									<button className="btn wave hide submit">Yes</button>
+									<button className="btn wave hide no">No</button>
+								</div>
+							</div>
+					}
 				</div>
 			</div>
 		</div>
