@@ -44,9 +44,9 @@ export default class ExchangeModel
 
 
                         // prepate struct
-                        __LDEV__&&console.debug( 'data AJAX', data );
+                        // __LDEV__&&console.debug( 'data AJAX', data );
                         data = self.prepareEditData(data);
-                        __LDEV__&&console.debug( 'prepareEditData', data );
+                        // __LDEV__&&console.debug( 'prepareEditData', data );
 
 
                         //         fullname: 'Buffalo Bills_vs_New England Patriots',

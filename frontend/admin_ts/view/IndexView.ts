@@ -121,8 +121,12 @@ export class IndexView extends BaseView
 
         // auto fill url
         let $EdNames = $("[data-js=EdHomeName], [data-js=AwayName]", form);
-        $EdNames.blur((ee) => this.onNamesBlur(ee, {names: $EdNames, form: form}));
+        $EdNames.blur((ee) => this.onNamesBlurGenerateUrl(ee, {names: $EdNames, form: form}));
         $("[data-js=FullName]", form).blur((ee) => this.onFullNameBlur(ee, {form: form}));
+        // auto fill alias
+        $("[data-js=EdHomeName]", form).blur((ee) => this.onNamesBlurGenerateAlias(ee, {form: form, target: "[data-js=HomeAlias]"}));
+        $("[data-js=AwayName]", form).blur((ee) => this.onNamesBlurGenerateAlias(ee, {form: form, target: "[data-js=AwayAlias]"}));
+        // $("[data-js=EdHomeName], [data-js=AwayName]", form);
 
 
         $("[data-js=HomeHandicap], [data-js=AwayHandicap]", form).keypress((ee) => this.onlyDigits(ee));
@@ -501,9 +505,9 @@ export class IndexView extends BaseView
 
 
 
-    private onNamesBlur(ee, inProps)
+    private onNamesBlurGenerateUrl(ee, inProps)
     {
-        var $that = $(ee.target)
+        var $that = $(ee.target);
 
         let name1 = inProps.names[0].value;
         let name2 = inProps.names[1].value;
@@ -513,7 +517,7 @@ export class IndexView extends BaseView
         {
             if( $("[data-js=valueStor]", inProps.form).val() == 1 )
             {
-                $("[data-js=Url]", inProps.form).val(name1.replace(" ", "-") + "-vs-" + name2.replace(" ", "-"));
+                $("[data-js=Url]", inProps.form).val(name1.replace(/[ ]/g, "-").toLowerCase() + "-vs-" + name2.replace(/[ ]/g, "-").toLowerCase());
             } // endif
         } // endif
     }
@@ -530,8 +534,22 @@ export class IndexView extends BaseView
         {
             if( $("[data-js=valueStor]", inProps.form).val() == 2 )
             {
-                $("[data-js=Url]", inProps.form).val(name.replace(" ", "-"));
+                $("[data-js=Url]", inProps.form).val(name.replace(/[ ]/g, "-").toLowerCase());
             } // endif
+        } // endif
+    }
+
+
+
+    private onNamesBlurGenerateAlias(ee, inProps)
+    {
+        var $that = $(ee.target);
+
+        var $alias = $(inProps.target, inProps.form);
+        var $name = $that.val();
+        if( $alias.val() == '' && $name != '' )
+        {
+            $alias.val($name.split(" ").map((val) => val.trim().slice(0, 2)).join("").toUpperCase());
         } // endif
     }
 
