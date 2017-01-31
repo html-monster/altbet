@@ -7,11 +7,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import MyPosTabData from './pageMyPos/myPosTabData';
-import MyOpenOrdersTabData from './pageMyPos/myOpenOrdersTabData';
+import {TabOpenOrders} from './pageMyPos/TabOpenOrders';
 import {MyOrderHistoryTabData} from './pageMyPos/myOrderHistoryTabData';
 import BaseController from '../containers/BaseController';
 import actions from '../actions/ordersPageActions';
-import {Common} from '../common/Common';
+// import {Common} from '../common/Common';
 
 
 class PageMyPos extends BaseController //React.Component
@@ -73,59 +73,7 @@ class PageMyPos extends BaseController //React.Component
 
 
                         {/* // BM: --------------------------------------------------- OPENED ORDERS ---*/}
-                        <div className="tab_item">
-                            <div className="my_position_tab">
-                                <div className="wrapper">
-                                    <div className="filters">
-                                        <input type="checkbox" id="cb1" className="checkbox" value="openOrders_Sport" defaultChecked={true} />
-                                        <label htmlFor="cb1" className="sport"><span className="sub_tab">Sport</span></label>{' '}
-                                        <input type="checkbox" id="cb2" className="checkbox" value="openOrders_Finance" defaultChecked={true} />
-                                        <label htmlFor="cb2" className="finance"><span className="sub_tab">Finance</span></label>{' '}
-                                        <input type="checkbox" id="cb3" className="checkbox" value="openOrders_E-sport" defaultChecked={true} />
-                                        <label htmlFor="cb3" className="e_sport"><span className="sub_tab">E-sport</span></label>{' '}
-                                        <input type="checkbox" id="cb4" className="checkbox" value="openOrders_Society" defaultChecked={true} />
-                                        <label htmlFor="cb4" className="society"><span className="sub_tab">Society</span></label>
-                                    </div>
-                                    <div className="tab_content">
-                                        <div className="open_orders table_content">
-                                            <table>
-                                                <thead>
-                                                    <tr>
-                                                        <th>Symbol</th>
-                                                        <th>Time</th>
-                                                        <th>Type</th>
-                                                        <th>Quantity</th>
-                                                        <th>Price</th>
-                                                        <th>Latest</th>
-                                                        <th>Position</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-                                            <div id="open_orders">
-                                                {
-                                                    (openOrdersData && openOrdersData.length) ?
-                                                        <table>
-                                                                    {/*data={positionControllerClass.filterData(openOrdersData, 'openOrders_Sport')}*/}
-                                                            {
-                                                                myOpenOrdersFilters.map((val) =>
-                                                                    <MyOpenOrdersTabData
-                                                                            key={val}
-                                                                            data={openOrdersData}
-                                                                            id={val}
-                                                                    />)
-                                                            }
-                                                        </table>
-                                                        :
-                                                        <p>You have no order or positions</p>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        <TabOpenOrders data={openOrdersData}/>
 
                         {/* // BM: --------------------------------------------------- MY POSITIONS ---*/}
                         <div className="tab_item active">

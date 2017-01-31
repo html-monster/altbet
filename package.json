@@ -59,6 +59,7 @@
     "babel": "*",
     "babel-core": "*",
     "babel-loader": "*",
+    "babel-plugin-transform-class-properties": "^6.22.0",
     "babel-plugin-transform-runtime": "*",
     "babel-preset-es2015": "*",
     "babel-preset-react": "*",

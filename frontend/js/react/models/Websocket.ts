@@ -223,9 +223,10 @@ export class WebsocketModel
     private onOpen()
     {
         let self = this;
-        console.log('socket open ts');
+        __DEV__ && console.log('socket open ts');
 
         // self.ws.send($('span.user-name').text());
+
         // if was a failed requests before open
         if( this.lastErrorSendObj )
         {
@@ -233,24 +234,14 @@ export class WebsocketModel
             this.lastErrorSendObj = null;
         } // endif
 
-
-        //appendMessage('* Connection open<br/>');
-        //$('#messageInput').attr("disabled", "");
-        //$('#sendButton').attr("disabled", "");
-        //$('#connectButton').attr("disabled", "disabled");
-        //$('#disconnectButton').attr("disabled", "");
+        $("[data-js-connect-label]").fadeOut(200);
     }
 
 
 
     private onClose() {
-        // console.log('socket closed'); //self.ws.readyState
-        defaultMethods.showError('socket closed');
+        // defaultMethods.showError('socket closed');
+        $("[data-js-connect-label]").fadeIn(200);
         setTimeout(() => { this.connectSocketServer(); }, 1000);
-        //appendMessage('* Connection closed<br/>');
-        //$('#messageInput').attr("disabled", "disabled");
-        //$('#sendButton').attr("disabled", "disabled");
-        //$('#connectButton').attr("disabled", "");
-        //$('#disconnectButton').attr("disabled", "disabled");
     }
 }

@@ -77,6 +77,7 @@ module.exports = {
                 exclude: [/node_modules/, /public/],
                 query: {
                     presets: ['es2015', 'stage-0', 'react'],
+                    plugins: [['transform-class-properties', { "spec": true }]],
                   }
             },
             {
@@ -85,6 +86,7 @@ module.exports = {
                 exclude: [/node_modules/, /public/],
                 query: {
                     presets: ['es2015', 'stage-0', 'react'],
+                    plugins: [['transform-class-properties', { "spec": true }]],
                   }
             },
             {

@@ -10,6 +10,7 @@ header {
     button, a, .user-name{  font-size: 14px;  }
     .user-name:after{  top: 6px;  }
   }
+  .connect { display: none; width: 10px; height: 10px; background: red; border-radius: 50%; }
   .user_info{
     display: none;
     &.active{  display: block;  }

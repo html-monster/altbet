@@ -59,6 +59,7 @@ const MyOpenOrdersTabData = React.createClass({
 	// 	});
 	// },
 	render: function() {
+0||console.log( 'this.props.data', this.props.data );
 		let data = positionControllerClass.filterData(this.props.data, this.props.id);
 		// __DEV__&&console.debug( 'MyOpenOrdersTabData data', data );
 
