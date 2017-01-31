@@ -152,7 +152,7 @@ export class IndexController extends BaseController
                         var formData = new FormData(<HTMLFormElement>form[0]);
                         formData.set('Exchange', $id);
 // 0||console.log( 'form', form, formData.get('HomeName'), formData.get('Exchange') );
-                        $ExchangeModel.saveExchange({data: formData}).then( result =>
+                        $ExchangeModel.saveEditExchange({data: formData}).then(result =>
                         {
                             0||console.log( 'result', result );
                             $IndexView.setEditSuccess({...result, ...result.data});

@@ -115,13 +115,14 @@ export class Loading
             DiLoading.stop().fadeIn(400);
         });
 
-        $(inProps.targetElm).prepend(DiLoading);
+        $(inProps.targetElm).empty().prepend(DiLoading);
     }
 
 
 
     public hideLoading()
     {
+        // 0||console.log( 'this.loadingObj', this.loadingObj );
         $(this.loadingObj).stop().fadeOut(200, () => this.loadingObj.remove());
     }
 }

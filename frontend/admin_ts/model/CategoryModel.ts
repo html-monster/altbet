@@ -176,7 +176,7 @@ export default class CategoryModel
 
 
 
-    public saveCategory(inProps)
+    public saveEditCategory(inProps)
     {
         var self = this;
 

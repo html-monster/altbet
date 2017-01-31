@@ -94,7 +94,7 @@ export class CategoryController extends BaseController
             var form = $that.closest('form');
             var formData = new FormData(<HTMLFormElement>form[0]);
             // formData.set('op', '1');
-            (new CategoryModel).saveCategory({url: $that.attr('url'), name: $(".js-ed-name").val(), formData}).then( result =>
+            (new CategoryModel).saveEditCategory({url: $that.attr('url'), name: $(".js-ed-name").val(), formData}).then(result =>
             {
                 window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
                 location.href = MainConfig.BASE_URL + result.url;
