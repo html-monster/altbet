@@ -1,6 +1,5 @@
 import React from 'react';
 
-import MyOpenOrdersTabData from './myOpenOrdersTabData';
 import {DateLocalization} from '../../models/DateLocalization';
 
 
@@ -67,17 +66,18 @@ export class TabOpenOrders extends React.Component
                                         <table>
                                             <tbody className="filter_item active" id={this.props.id}>
                                             {
-                                                openOrdersData.map(function (item, key)
+                                                openOrdersData.map((item, key) =>
                                                 {
-                                                    return <tr key={key} className={(item.isMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))}
-                                                    id={item.ID}>
-                                                        <td className="title">
+                                                    let $handicap = (item.isMirror ? item.Symbol.AwayHandicap : item.Symbol.HomeHandicap);
+                                                    if( this.state.filters[item.Category] ) return <tr key={key} className={(item.isMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))} id={item.ID}>
+                                                    <td className="title">
                                                             {(item.isMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}
+                                                            <span className="muted">{$handicap && ` (${$handicap})`}</span>
                                                         </td>
                                                         <td>
                                                             <span className="timestamp help">
                                                                 <span className="date">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'DD MMM Y'})}</span>
-                                                                <span className="time">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: ' hh:mm'})}</span>
+                                                                <span className="muted">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: ' hh:mm'})}</span>
                                                             </span>
                                                         </td>
                                                         <td>{(item.isMirror ? (item.Side ? 'Buy' : 'Sell') : (item.Side ? 'Sell' : 'Buy'))}</td>

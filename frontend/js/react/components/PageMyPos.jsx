@@ -6,7 +6,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import MyPosTabData from './pageMyPos/myPosTabData';
+import {TabMyPos} from './pageMyPos/TabMyPos';
 import {TabOpenOrders} from './pageMyPos/TabOpenOrders';
 import {MyOrderHistoryTabData} from './pageMyPos/myOrderHistoryTabData';
 import BaseController from '../containers/BaseController';
@@ -76,58 +76,7 @@ class PageMyPos extends BaseController //React.Component
                         <TabOpenOrders data={openOrdersData}/>
 
                         {/* // BM: --------------------------------------------------- MY POSITIONS ---*/}
-                        <div className="tab_item active">
-                            <div className="my_position_tab">
-                                <div className="wrapper">
-                                    <div className="filters">
-                                        <input type="checkbox" id="cb5" className="checkbox" value="MyPos_Sport" defaultChecked={true} />
-                                        <label htmlFor="cb5" className="sport"><span className="sub_tab">Sport</span></label>&nbsp;
-                                        <input type="checkbox" id="cb6" className="checkbox" value="MyPos_Finance" defaultChecked={true} />
-                                        <label htmlFor="cb6" className="finance"><span className="sub_tab">Finance</span></label>&nbsp;
-                                        <input type="checkbox" id="cb7" className="checkbox" value="MyPos_E-sport" defaultChecked={true} />
-                                        <label htmlFor="cb7" className="e_sport"><span className="sub_tab">E-sport</span></label>&nbsp;
-                                        <input type="checkbox" id="cb8" className="checkbox" value="MyPos_Society" defaultChecked={true} />
-                                        <label htmlFor="cb8" className="society"><span className="sub_tab">Society</span></label>
-                                    </div>
-                                    <div className="tab_content">
-                                        <div className="my_position_container table_content">
-                                            <table>
-                                                <thead>
-                                                    <tr>
-                                                        <th>Symbol</th>
-                                                        <th>Type</th>
-                                                        <th>Quantity</th>
-                                                        <th>Price</th>
-                                                        <th><span className="sell">BID</span> | <span className="buy">ASK</span></th>
-                                                        <th><span className="profit">Profit</span>/<span className="loss">Loss</span></th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-
-                                            <div id="my_position_container">
-                                                                    {/*data={positionControllerClass.filterData(positionData, 'MyPos_Sport')}*/}
-                                                {
-                                                    (positionData && positionData.length) ?
-                                                        <div>
-                                                            {
-                                                                myPosFilers.map((val) =>
-                                                                    <MyPosTabData
-                                                                            key={val}
-                                                                            data={positionData}
-                                                                            id={val}
-                                                                    />)
-                                                            }
-                                                        </div>
-                                                        :
-                                                        <p>You have no positions</p>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <TabMyPos data={positionData}/>
 
 
                         {/* // BM: --------------------------------------------------- ORDER HISTORY ---*/}
