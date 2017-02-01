@@ -115,9 +115,10 @@ class EventPage extends BaseController
                     ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':' +
                     (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 
-                var side = item.Side ? 'sell' : 'buy';
+                var side = isMirror ? !item.Side : item.Side;
+                side = side ? 'sell' : 'buy';
 
-                var price = ((isMirror == 'True') ? (1 - item.Open).toFixed(2) : item.Open.toFixed(2));
+                var price = ((isMirror) ? (1 - item.Open).toFixed(2) : item.Open.toFixed(2));
 
                 if (price > maxPrice) maxPrice = price;
                 if (price < minPrice) minPrice = price;
@@ -205,10 +206,10 @@ class EventPage extends BaseController
             </div>
             <div id="mainController" className="executed">
                 <div className="executed_orders sell order_create event-content" data-symbol={symbol}>
-                    <BetsTable data={{data: bidData, typeb: BetsTable.TYPE_BID, isTraiderOn, exdata: data}} actions={this.actions} />
+                    <BetsTable data={{data: data.IsMirror ? askData : bidData, typeb: BetsTable.TYPE_BID, isTraiderOn, exdata: data}} actions={this.actions} />
                 </div>
                 <div className="executed_orders buy order_create event-content" data-symbol={symbol}>
-                    <BetsTable data={{data: askData, typeb: BetsTable.TYPE_ASK, isTraiderOn, exdata: data}} actions={this.actions} />
+                    <BetsTable data={{data: data.IsMirror ? bidData : askData, typeb: BetsTable.TYPE_ASK, isTraiderOn, exdata: data}} actions={this.actions} />
                 </div>
                 <div className="executed_orders">
                     <table>

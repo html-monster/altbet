@@ -392,11 +392,11 @@ export default class ExchangeModel
                 beforeChkResponse: (data) =>
                 {
                     // emulate
-                    data = {Error: 200};
-                    // data.Param1 = "?path=sport&status=approved";
-                    data.Param1 = "?status=New";
-                    data.Param2 = "Buffalo Bills_vs_New England Patriots"; // придётся брать самому!!!!!!!!!
-                    data.Param3 = "TOR-PHI-3152017"; // id
+                    // data = {Error: 200};
+                    // // data.Param1 = "?path=sport&status=approved";
+                    // data.Param1 = "?status=New";
+                    // data.Param2 = "Q1-W2-222017"; // id
+                    // // data.Param3 = "Buffalo Bills_vs_New England Patriots"; // придётся брать самому!!!!!!!!!
                     return data;
                 },
             });

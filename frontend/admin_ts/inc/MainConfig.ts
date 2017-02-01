@@ -20,5 +20,6 @@ export class MainConfig
     public static AJAX_EXCH_EDIT = 'Home/ChangeExchange';
     public static AJAX_GET_DETAILS = 'Home/Details';
 
+    public static AJAX_EXCH_SET_STATUS_APPROVED = 'Home/Approved';
     public static AJAX_EXCH_SET_STATUS_COMPLETED = 'Home/Completed';
 }

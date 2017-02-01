@@ -89,7 +89,18 @@ export default class ExchangeItem extends React.Component
                             ...commProps
                         }}/>
                         <div className="pl mode_info_js">
-                            <strong>P/L: <span></span></strong>
+                            {
+                                function() {
+                                    if( data.GainLoss != 0 )
+                                    {
+                                        let $class;
+                                        if (data.GainLoss < 0) $class = 'lose';
+                                        else if (data.GainLoss > 0) $class = 'win';
+
+                                        return <strong style={{'marginTop': 3}}>P/L: <span className={$class}>(${Math.abs(data.GainLoss)})</span></strong>;
+                                    } // endif
+                                }()
+                            }
                         </div>
                     </div>
                 </div>
@@ -118,50 +129,6 @@ export default class ExchangeItem extends React.Component
                             ...commProps
                         }}/>
 
-{/*
-                        <div className="sell button-container">
-                            {
-                                data.Orders.length && data.Orders.some((item) => item.Side == 1) ?
-                                        data.Orders.map((item) =>
-                                            item.Side == 1 ?
-                                                    item.SummaryPositionPrice.map((item) =>
-                                                        <button className="event animated sell mirror not-sort">
-                                                            <span className="price">{(1-(ABpp.User.settings.basicMode ? item.Price : item.Price)).toFixed(2)}</span>
-                                                            <span className="volume">{item.Quantity}</span>
-                                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
-                                                        </button>
-                                                    )
-                                                : false
-                                        )
-                                    :   <button className="event animated empty sell mirror not-sort">
-                                            <span className="price empty">OFFER</span>
-                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
-                                        </button>
-                            }
-                        </div>
-*/}
-{/*
-                        <div className="sell button-container">
-                            @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Sell && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
-                            {
-                                foreach (var spsItem in Model.Orders.Single(x => x.Side == AltBet.Exchange.Side.Sell).SummaryPositionPrice.Where(x => x.Quantity != 0).OrderByDescending(x => x.Price).ToList())
-                                {
-                                    <button className="event animated sell mirror not-sort">
-                                        <span className="price">@((Session["Mode"] != null) ? ((bool)Session["Mode"]) ? string.Format("${0}", (1 - spsItem.Price).ToString("0.00")) : (1 - spsItem.Price).ToString("0.00") : string.Format("${0}", (1 - spsItem.Price).ToString("0.00")))</span>
-                                        <span className="volume">@spsItem.Quantity</span>
-                                        <div className="symbolName" style="display: none">data.Symbol</div>
-                                    </button>
-                                }
-                            }
-                            else
-                            {
-                                <button className="event animated empty sell mirror not-sort">
-                                    <span className="price empty">OFFER</span>
-                                    <div className="symbolName" style="display: none">data.Symbol</div>
-                                </button>
-                            }
-                        </div>
-                        */}
                         <ButtonContainer actions={this.props.actions} data={{
                             type: 'buy',
                             side: 0,
@@ -171,53 +138,8 @@ export default class ExchangeItem extends React.Component
                             ...commProps
                         }}/>
 
-{/*
-                        <div className="buy button-container">
-                            {
-                                data.Orders.length && data.Orders.some((item) => item.Side == 0) ?
-                                        data.Orders.map((item) =>
-                                            item.Side == 0 ?
-                                                    item.SummaryPositionPrice.map((item) =>
-                                                        <button className="event animated sell mirror not-sort">
-                                                            <span className="price">{(1 - (ABpp.User.settings.basicMode ? item.Price : item.Price)).toFixed(2)}</span>
-                                                            <span className="volume">{item.Quantity}</span>
-                                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
-                                                        </button>
-                                                    )
-                                                : false
-                                        )
-                                    :   <button className="event animated empty buy mirror not-sort">
-                                            <span className="price empty">BID</span>
-                                            <div className="symbolName" style={{display: 'none'}}>{symbol}</div>
-                                        </button>
-                            }
-                        </div>
-*/}
-
-                        {/*
-                        <div className="buy button-container">
-                            @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Buy && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
-                            {
-                                foreach (var spsItem in Model.Orders.Single(x => x.Side == AltBet.Exchange.Side.Buy).SummaryPositionPrice.Where(x => x.Quantity != 0).OrderByDescending(x => x.Price).ToList())
-                                {
-                                    <button className="event animated buy mirror not-sort">
-                                        <span className="price">@((Session["Mode"] != null) ? ((bool)Session["Mode"]) ? string.Format("${0}", (1 - spsItem.Price).ToString("0.00")) : (1 - spsItem.Price).ToString("0.00") : string.Format("${0}", (1 - spsItem.Price).ToString("0.00")))</span>
-                                        <span className="volume">@spsItem.Quantity</span>
-                                        <div className="symbolName" style="display: none">data.Symbol</div>
-                                    </button>
-                                }
-                            }
-                            else
-                            {
-                                <button className="event animated empty buy mirror not-sort">
-                                    <span className="price empty">BID</span>
-                                    <div className="symbolName" style="display: none">data.Symbol</div>
-                                </button>
-                            }
-                        </div>
-*/}
                         <div className="pos mode_info_js">
-                            <strong>Pos: <span></span></strong>
+                            <strong style={data.Positions != 0 ? {'marginTop': 3} : {}}>Pos: <span>{data.Positions != 0 && data.Positions}</span></strong>
                         </div>
                     </div>
                 </div>

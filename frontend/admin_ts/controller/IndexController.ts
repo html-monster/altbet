@@ -51,12 +51,12 @@ export class IndexController extends BaseController
         // delete click
         $('[data-js=tabl-exch]').on('click', '.js-btn-crud[data-type=del]', e => self.onDelControlClick(e));
         // set approve status
-        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=approve]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_APPROVE));
+        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=approve]', e => self.onSetStatusClick(e, ExchangeModel.STATUS_APPROVE));
         // set complete status
-        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=complete]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_COMPLETE));
-        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=uncomplete]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_UNCOMPLETE));
+        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=complete]', e => self.onSetStatusClick(e, ExchangeModel.STATUS_COMPLETE));
+        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=uncomplete]', e => self.onSetStatusClick(e, ExchangeModel.STATUS_UNCOMPLETE));
         // set settlement status
-        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=settlement]', e => self.onSetApproveStatusClick(e, ExchangeModel.STATUS_SETTLEMENT));
+        $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=settlement]', e => self.onSetStatusClick(e, ExchangeModel.STATUS_SETTLEMENT));
 
         // get exchange details
         $('[data-js-btn-def-action], [data-js-btn-detail]').on('click', e => self.onDetailControlClick(e)); //[data-js-btn-def-action]
@@ -276,7 +276,7 @@ export class IndexController extends BaseController
 
 
 
-    private onSetApproveStatusClick(ee, type)
+    private onSetStatusClick(ee, type)
     {
         var self = this;
         var $that = $(ee.target);
@@ -303,7 +303,7 @@ export class IndexController extends BaseController
 
             case ExchangeModel.STATUS_COMPLETE : $question = 'Set status <span class="label label-warning">Completed</span> for “' + $that.data('name') + '” ?';
                 statusName = "Completed";
-                url = MainConfig.AJAX_TEST;
+                url = MainConfig.AJAX_EXCH_SET_STATUS_COMPLETED;
                 break;
             case ExchangeModel.STATUS_UNCOMPLETE : $question = 'Return to <span class="label label-success">Approved</span> status for “' + $that.data('name') + '” ?';
                 statusName = "Approved";
@@ -311,7 +311,7 @@ export class IndexController extends BaseController
                 break;
             default: $question = 'Set status <span class="label label-success">Approved</span> for “' + $that.data('name') + '” ?';
                 statusName = "Approved";
-                url = MainConfig.AJAX_TEST;
+                url = MainConfig.AJAX_EXCH_SET_STATUS_APPROVED;
         }
 
 
@@ -340,7 +340,7 @@ export class IndexController extends BaseController
                 {
                     0||console.log( 'result', result );
                     window.ADpp.User.setFlash({message: result.message, messageType: User.MESSAGE_TYPE_ABS, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
-                    window.ADpp.User.setFlash({id: result.data.Param3}, 'ChangedStatusExchId');
+                    window.ADpp.User.setFlash({id: result.data.Param2}, 'ChangedStatusExchId');
                     location.href = MainConfig.BASE_URL + result.data.Param1;
                 },
                 result => {

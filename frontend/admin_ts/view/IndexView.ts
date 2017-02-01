@@ -49,10 +49,13 @@ export class IndexView extends BaseView
         if( data )
         {
             let $tr = $("[data-js=tabl-exch] " + `[data-id=${data.id}]`);
-            $tr.addClass('added').attr('title', 'added');
-            setTimeout(() => $tr.addClass('animated').attr('title', ''), 5000);
+            if( $tr.length )
+            {
+                $tr.addClass('added').attr('title', 'added');
+                setTimeout(() => $tr.addClass('animated').attr('title', ''), 5000);
 
-            if( $tr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: $tr.offset().top - 50 }, 500);
+                if( $tr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: $tr.offset().top - 50 }, 500);
+            } // endif
         } // endif
     }
 
@@ -549,6 +552,8 @@ export class IndexView extends BaseView
         var $name = $that.val();
         if( $alias.val() == '' && $name != '' )
         {
+        // let name1 = translit(inProps.names[0].value, 5);
+            return inStr.replace(/[^a-zA-Z0-9 ]/g, '').replace(/[ ]/g, "-").toLowerCase();
             $alias.val($name.split(" ").map((val) => val.trim().slice(0, 2)).join("").toUpperCase());
         } // endif
     }
