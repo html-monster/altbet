@@ -3,7 +3,8 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, Redirect, IndexRoute, IndexRedirect, browserHistory } from 'react-router'
+// import { Router, Route, Redirect, IndexRoute, IndexRedirect, hashHistory, browserHistory } from 'react-router'
+
 
 
 import configureStore from './store/configureStore';
@@ -69,28 +70,14 @@ else{
 
 
 if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MYPOS ) {
-	var Wrapper = React.createClass({
-	  render: function () {
-		  0||console.log( 'this.props', this.props );
-		return this.props.children;
-	  }
-	});
-
 	// рендерим PageMyPos
 	ReactDOM.render(
 		<Provider store={store}>
-			<Router history={browserHistory}>
-			{/*<Redirect from='/AltBet/eng/home/positions-orders#1' to='/AltBet/eng/home/positions-orders#/test' />*/}
-				<Route path='/' component={Wrapper}>
-					{/*<IndexRoute component={PageMyPos} someval="aaaaa222222"/>*/}
-					{/*<Provider store={store}>*/}
-						{/*<PageMyPos someval="aaaa"/>*/}
-					{/*</Provider>,*/}
-					{/*<IndexRedirect to="/AltBet/eng/home/positions-orders#/test" />*/}
-					{/*<Route path='/' component={PageMyPos} someval="aaaaa" />*/}
-					<Route path='/AltBet/eng/home/positions-orders#/test' component={PageMyPos} someval="bbb" />
-				</Route>
-			</Router>
+			{/*<Router history={hashHistory}>*/}
+				{/*<Route path='/' component={PageMyPos} someval="aaaaaa" />*/}
+				{/*<Route path='/test' component={PageMyPos} someval="bbb" />*/}
+			{/*</Router>*/}
+			<PageMyPos />
 		</Provider>,
         document.getElementById('DiPageMyAssets')
 	);

@@ -28,7 +28,8 @@ export class TabMyPos extends React.Component
 
     render()
     {
-        var {data: positionData} = this.props;
+        // 0||console.log( 'this.props.route', this.props.route );
+        var {data: positionData, actions} = this.props;
         var plClass;
 
 
@@ -72,7 +73,6 @@ export class TabMyPos extends React.Component
                                                     else if(item.CommonSymbolProfitLoss > 0) plClass = 'profit';
 
 
-                                                    //if( this.state.filters[item.Category] )
                                                     return <table key={key} className="pos tmp">
                                                         <thead>
                                                         <tr>
@@ -93,6 +93,17 @@ export class TabMyPos extends React.Component
                                                         {
                                                             item.SubPositions.map((item2, key) =>
                                                             {
+                                                                var commProps = {
+                                                                    isMirror: item2.IsMirror,
+                                                                    // symbolName: symbol,
+                                                                    // Orders: data.Orders,
+                                                                    HomeName : item.Symbol.HomeName,
+                                                                    AwayName : item.Symbol.AwayName,
+                                                                    Positions : item.Positions,
+                                                                    Exchange : item.Symbol.Exchange,
+                                                                    Name : item.Symbol.Name,
+                                                                    Currency : item.Symbol.Currency,
+                                                                };
                                                                 plClass = '';
                                                                 if(item.CommonSymbolProfitLoss < 0) plClass = 'loss';
                                                                 else if(item.CommonSymbolProfitLoss > 0) plClass = 'profit';
@@ -114,8 +125,12 @@ export class TabMyPos extends React.Component
                                                                     </td>
                                                                     <td className={'pl ' + plClass}>{(item2.CommonProfitLoss < 0) ? '($' + (item2.CommonProfitLoss).toString().slice(1) + ')' : '$' + item2.CommonProfitLoss}</td>
                                                                     <td>
-                                                                        <span className="buy"><button className="buy btn event wave empty btnJs">Buy</button></span>
-                                                                        <span className="sell" style={{marginLeft : 10}}><button className="sell btn event wave empty btnJs">Sell</button></span>
+                                                                        <span className="buy"><button className="buy btn event wave empty btnJs"
+                                                                            onClick={() => actions.actionOnBuySellClick({type: 0, exdata: commProps})}
+                                                                        >Buy</button></span>
+                                                                        <span className="sell"><button className="sell btn event wave empty btnJs"
+                                                                            onClick={() => actions.actionOnBuySellClick({type: 1, exdata: commProps})}
+                                                                        style={{marginLeft : 10}}>Sell</button></span>
                                                                     </td>
                                                                 </tr>
                                                             })

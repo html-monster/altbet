@@ -11,7 +11,9 @@ import {TabOpenOrders} from './pageMyPos/TabOpenOrders';
 import {MyOrderHistoryTabData} from './pageMyPos/myOrderHistoryTabData';
 import BaseController from '../containers/BaseController';
 import actions from '../actions/ordersPageActions';
+import myPositionsActions from '../actions/OrderPage/myPositionsActions.ts';
 // import {Common} from '../common/Common';
+
 
 
 class PageMyPos extends BaseController //React.Component
@@ -56,12 +58,10 @@ class PageMyPos extends BaseController //React.Component
     render()
     {
         const { openOrdersData, positionData, historyData } = this.state.data;
-        __DEV__ && console.log( 'PageMyPos props', this.props.route );
+        // __DEV__ && console.log( 'PageMyPos props', this.props.route );
 
-
-        // __DEV__||console.debug( 'openOrdersData ', openOrdersData  );
-        const myOpenOrdersFilters = ['openOrders_Sport', 'openOrders_Finance', 'openOrders_E-sport', 'openOrders_Society'];
-        const myPosFilers = ['MyPos_Sport', 'MyPos_Finance', 'MyPos_E-sport', 'MyPos_Society'];
+        // const myOpenOrdersFilters = ['openOrders_Sport', 'openOrders_Finance', 'openOrders_E-sport', 'openOrders_Society'];
+        // const myPosFilers = ['MyPos_Sport', 'MyPos_Finance', 'MyPos_E-sport', 'MyPos_Society'];
 
         return <div className="my_position">
                 <div className="container">
@@ -78,7 +78,7 @@ class PageMyPos extends BaseController //React.Component
                         <TabOpenOrders data={openOrdersData}/>
 
                         {/* // BM: --------------------------------------------------- MY POSITIONS ---*/}
-                        <TabMyPos data={positionData}/>
+                        <TabMyPos data={positionData} actions={this.props.myPositionsActions}/>
 
 
                         {/* // BM: --------------------------------------------------- ORDER HISTORY ---*/}
@@ -105,5 +105,6 @@ export default connect(
     }),
     dispatch => ({
         actions: bindActionCreators(actions, dispatch),
+        myPositionsActions: bindActionCreators(myPositionsActions, dispatch),
     })
 )(PageMyPos)

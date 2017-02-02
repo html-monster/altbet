@@ -20,71 +20,35 @@ var __LDEV__ = true;
 
 class Actions extends BaseActions
 {
-    public actionOnBuyClick(props)
+    public actionOnBuySellClick(props)
     {
         let flag = false;
         let qt : any = 0,
             bpr : any = props.type == 1 ? 0 : 99;
         let isBasicMode = ABpp.config.basicMode;
 
-        if( props.isempty )
-        {
-            bpr = "0.";
-            qt = '';
-        }
-        else
-        {
-            if( isBasicMode )
-            {
-                qt = props.quantity;
-                bpr = props.price;
-            }
-            else
-            {
-                for( let val of props.PosPrice )
-                {
-                    if (!flag && val.Price == props.price) flag = true;
-                    if( props.type == 1 )
-                    {
-                        if( flag )
-                        {
-                            qt += val.Quantity;
-                            bpr < val.Price && (bpr = val.Price);
-                        } // endif
-                    }
-                    else
-                    {
-                        if( !flag || val.Price == props.price )
-                        {
-                            qt += val.Quantity;
-                            bpr > val.Price && (bpr = val.Price);
-                        } // endif
-                    } // endif
-                } // endfor
-            } // endif
-        } // endif
+        bpr = "0.";
+        qt = '';
 
-        props.ismirror && !props.isempty && (bpr = Common.toFixed(1 - bpr, 2));
 
-0||console.debug( '!!props.isempty', !!props.isempty );
         let outStruc = {
-            "ID": `${props.data.exdata.Exchange}_${props.data.exdata.Name}_${props.data.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
-            "EventTitle": props.ismirror ? props.data.exdata.AwayName : props.data.exdata.HomeName,
-            "Positions": props.data.exdata.Positions,
-            "isMirror": props.ismirror ? 1 : 0,
+            "ID": `${props.exdata.Exchange}_${props.exdata.Name}_${props.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
+            "EventTitle": props.exdata.isMirror ? props.exdata.AwayName : props.exdata.HomeName,
+            "Positions": props.exdata.Positions,
+            "isMirror": props.exdata.isMirror ? 1 : 0,
             "Orders": [
                 {
                     "Price": bpr,
                     "Side": props.type == 1 ? 1 : 0, // sell/buy
                     "Symbol": {
-                        "Exchange": props.data.exdata.Exchange,
-                        "Name": props.data.exdata.Name,
-                        "Currency": props.data.exdata.Currency
+                        "Exchange": props.exdata.Exchange,
+                        "Name": props.exdata.Name,
+                        "Currency": props.exdata.Currency
                     },
                     "Volume": qt,
-                    "Limit": isBasicMode ? true : !!props.isempty, // empty ? true : false
+                    "Limit": true,
                     "NewOrder": true,
-                    "isMirror": props.ismirror ? 1 : 0
+                    "isMirror": props.exdata.isMirror ? 1 : 0
                 },
             ]
         };
