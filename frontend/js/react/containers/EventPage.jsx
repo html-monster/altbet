@@ -189,13 +189,13 @@ class EventPage extends BaseController
                         </table>
                     </div>
                     <div className="ord_crt_cont event-content" data-symbol={symbol}>
-                        <button className="btn buy price event" disabled={isTraiderOn ? "disabled" : ''}
+                        <button className="btn buy price event" type="button" disabled={isTraiderOn}
                             onClick={() => this.actions.onSellBuyClick({
                                    type: 0,
                                    //data: data, // orders
                                    exdata: commProps, // for trader object
                         })}>Buy</button>
-                        <button className="btn sell price event" disabled={isTraiderOn ? "disabled" : ''}
+                        <button className="btn sell price event" type="button" disabled={isTraiderOn}
                             onClick={() => this.actions.onSellBuyClick({
                                    type: 1,
                                    //data: data, // orders

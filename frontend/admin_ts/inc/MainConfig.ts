@@ -22,4 +22,5 @@ export class MainConfig
 
     public static AJAX_EXCH_SET_STATUS_APPROVED = 'Home/Approved';
     public static AJAX_EXCH_SET_STATUS_COMPLETED = 'Home/Completed';
+    public static AJAX_EXCH_SET_STATUS_SETTLEMENT= 'Home/Settlement';
 }

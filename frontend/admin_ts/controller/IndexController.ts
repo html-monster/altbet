@@ -298,7 +298,7 @@ export class IndexController extends BaseController
                     homeName: $that.data('homename'),
                     awayName: $that.data('awayname'),
                 };
-                url = MainConfig.AJAX_TEST;
+                url = MainConfig.AJAX_EXCH_SET_STATUS_SETTLEMENT;
                 break;
 
             case ExchangeModel.STATUS_COMPLETE : $question = 'Set status <span class="label label-warning">Completed</span> for “' + $that.data('name') + '” ?';
@@ -307,7 +307,7 @@ export class IndexController extends BaseController
                 break;
             case ExchangeModel.STATUS_UNCOMPLETE : $question = 'Return to <span class="label label-success">Approved</span> status for “' + $that.data('name') + '” ?';
                 statusName = "Approved";
-                url = MainConfig.AJAX_TEST;
+                url = MainConfig.AJAX_EXCH_SET_STATUS_APPROVED;
                 break;
             default: $question = 'Set status <span class="label label-success">Approved</span> for “' + $that.data('name') + '” ?';
                 statusName = "Approved";

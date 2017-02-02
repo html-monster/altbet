@@ -496,6 +496,7 @@ export class IndexView extends BaseView
             var $this = $(ee.target);
             $this.removeClass("btn-default").addClass($this.data("class") + ' active');
             $("[data-js-wintype]", $that).val($this.data("id"));
+            $("[data-js-wintypestr]", $that).val($this.data("result"));
         })
     }
 
@@ -552,9 +553,10 @@ export class IndexView extends BaseView
         var $name = $that.val();
         if( $alias.val() == '' && $name != '' )
         {
-        // let name1 = translit(inProps.names[0].value, 5);
-            return inStr.replace(/[^a-zA-Z0-9 ]/g, '').replace(/[ ]/g, "-").toLowerCase();
-            $alias.val($name.split(" ").map((val) => val.trim().slice(0, 2)).join("").toUpperCase());
+            $alias.val($name.split(" ").map((val) => {
+                var $s1 = translit(val.trim(), 5);
+                return $s1.replace(/[^a-zA-Z0-9]/g, '').slice(0, 2);
+            }).join("").toUpperCase());
         } // endif
     }
 
