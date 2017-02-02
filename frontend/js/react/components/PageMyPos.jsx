@@ -56,6 +56,8 @@ class PageMyPos extends BaseController //React.Component
     render()
     {
         const { openOrdersData, positionData, historyData } = this.state.data;
+        __DEV__ && console.log( 'PageMyPos props', this.props.route );
+
 
         // __DEV__||console.debug( 'openOrdersData ', openOrdersData  );
         const myOpenOrdersFilters = ['openOrders_Sport', 'openOrders_Finance', 'openOrders_E-sport', 'openOrders_Society'];
