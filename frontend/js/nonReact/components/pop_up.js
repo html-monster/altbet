@@ -6,7 +6,7 @@ class popUpClass{
 				$('.pop_up').fadeOut();
 				$('body>.wrapper').removeClass('blur');
 				$('.video_form iframe').removeAttr('src', '');
-				$('#order_content').remove();
+				// $('#order_content').remove();
 				$('.confirm_window').removeClass('bounceInUp').addClass('bounceOutDown');
 				setTimeout(() => {
 					$('.confirm_window').removeClass('active');
@@ -41,7 +41,7 @@ class popUpClass{
 	}
 
 	static popUpOpen(openButton, popUpWindow, focusElement){
-		let browser = $.browser.chrome && ($.browser.version.slice(0, 2) > 50) || $.browser.mozilla;
+		let browser = $.browser.chrome && ($.browser.version.slice(0, 2) > 53) || $.browser.mozilla;
 
 		$(openButton).click(callback);
 		function callback(e) {

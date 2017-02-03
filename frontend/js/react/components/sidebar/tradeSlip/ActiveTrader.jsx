@@ -3,19 +3,28 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import AnimateOnUpdate from '../../Animation.jsx';
-import * as traderActions from '../../../actions/Sidebar/traderActions';
+import TraderDefaultForm from './activeTrader/traderDefaultForm';
+import traderActions from '../../../actions/Sidebar/traderActions.ts';
 import * as defaultOrderActions from '../../../actions/Sidebar/defaultOrderActions';
+// import RebuildServerData from '../../../actions/Sidebar/activeTrader/rebuildServerData';
 
 class ActiveTrader extends React.Component {
-	constructor(props) {
+	constructor()
+	{
 		super();
 
-		this.state = {data: props.data};
-		console.log(props);
+		// this.state = {
+		// 	activeString: null,
+		// 	showDefaultOrder: false,
+		// 	direction: null,
+		// 	limit: true
+		// };
 	}
 
-	componentDidMount() {
-		let trader = $('.active_trader');
+	componentDidMount()
+	{
+		this.props.traderActions.actionOnSocketMessage(this);
+		/*let trader = $('.active_trader');
 		let tbody	= $('table.limit tbody');
 		let isMirror;
 
@@ -49,34 +58,40 @@ class ActiveTrader extends React.Component {
 			}
 			if(JSON.stringify(this.state.data) != JSON.stringify(currSymbData) || this.state.isMirror != isMirror){
 				this.setState({data: currSymbData, isMirror: isMirror});
-			__DEV__ && console.log('re-render');
-// 0||console.debug( 're-render', currSymbData, newData, symbol );
+				__DEV__ && console.log('re-render');
 			}
 
-			activeTraderClass.scrollTo();
+			setTimeout(activeTraderClass.scrollTo(), 100);
 			tbody.addClass('scroll_dis');
 			activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), true);
 			activeTraderClass.spreaderChangeVal(trader.find('input.spreader'));
-		});
+		});*/
 	}
 
-	objectConstructor(data, isMirror){
+	/*objectConstructor(data, isMirror){
 		let copyData = $.extend(true, {}, data);
 		let price = 0.99,
 				backendData = objectReconstruct(copyData.Orders),
 				htmlData = [],
 				className = 'ask';
 
-		for(var ii = 1; ii <= 99; ii++){
+		for(let ii = 1; ii <= 99; ii++){
+			// htmlData.push(new RebuildServerData({
+			// 	backendData,
+			// 	className,
+			// 	data,
+			// 	price,
+			// 	isMirror
+			// }));
 			htmlData.push(new object());
 			price -= 0.01;
 		}
 
-		/**
+		/!**
 		 * на основе объекта с бэкенда формирует новый объект в формате ключ == price и добавляет side
 		 * @param inData
 		 * @returns {{}}
-		 */
+		 *!/
 		function objectReconstruct(inData){
 			let newData = {};
 
@@ -132,15 +147,17 @@ class ActiveTrader extends React.Component {
 		}
 		// console.log(htmlData);
 		return htmlData;
-	}
+	}*/
 
 	render()
 	{
-		var {activeExchange} = this.props.cmpData;
+		// let {activeExchange} = this.props.cmpData;
 		// 0||console.log( 'activeExchange', activeExchange );
-		let data = this.state.data;
-		let copyData = $.extend(true, {}, data);
-		let isMirror = this.state.isMirror;
+		// const { activeString, showDefaultOrder } = this.state;
+		const { data, ...info } = this.props;
+		const { cmpData:{ activeExchange }, isMirror, orderInfo:{...orderInfo},
+			rebuiltServerData, spread, quantity, traderActions, defaultOrderActions } = this.props;
+		// let copyData = $.extend(true, {}, data);
 		let className, $active, $activeM;
 		className = $active = $activeM = '';
 		( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
@@ -152,13 +169,20 @@ class ActiveTrader extends React.Component {
             else if (gainLoss > 0)
                 className = 'profit';
         }
-
-		let stringHtmlData = this.objectConstructor(data, isMirror);
+        const bid = isMirror ?
+			(data.Symbol && Math.round10(1 - data.Symbol.LastAsk, -2) != 1) ? Math.round10(1 - data.Symbol.LastAsk, -2) : ''
+			:
+			(data.Symbol && data.Symbol.LastBid != 0) ? data.Symbol.LastBid : '';
+        const ask = isMirror ?
+			(data.Symbol && Math.round10(1 - data.Symbol.LastBid, -2) != 1) ? Math.round10(1 - data.Symbol.LastBid, -2) : ''
+			:
+			(data.Symbol && data.Symbol.LastAsk != 1) ? data.Symbol.LastAsk : '';
+		// let stringHtmlData = traderActions.actionOnServerDataRebuild(data, isMirror);
 
 		return <div className="active_trader" style={{display: 'none'}} id={"trader_" + activeExchange.symbol}>
 			<div className="event_title">
-				<div className={$active + " event_name"} onClick={() => this.props.defaultOrderActions.actionOnTabMirrorClick(false)}></div>
-				<div className={$activeM + " event_name reverse"} onClick={() => this.props.defaultOrderActions.actionOnTabMirrorClick(true)}></div>
+				<div className={$active + " event_name"} onClick={() => defaultOrderActions.actionOnTabMirrorClick(false)}></div>
+				<div className={$activeM + " event_name reverse"} onClick={() => defaultOrderActions.actionOnTabMirrorClick(true)}></div>
 			</div>
 			<table className="info">
 				<tbody>
@@ -191,24 +215,72 @@ class ActiveTrader extends React.Component {
 			<table className="control">
 				<tbody>
 					<tr>
-						<td className="buy_mkt confim buy market_button wave"><button>Buy MKT</button></td>
-						<td className="sell_mkt confim sell market_button wave"><button>Sell MKT</button></td>
+						<td className={'buy_mkt confim buy market_button wave waves-effect waves-button' + (quantity && bid ? ' active clickable' : '')}>
+							<button
+								onClick={
+									traderActions.actionAddOrder.bind(null, {
+										direction: 'buy',
+										price    : data.Symbol ? Math.round10(1 - data.Symbol.LastAsk, -2) : '',
+										limit    : false
+									}, 'market')}
+								disabled={!quantity || !bid}>
+								Buy MKT
+							</button>
+						</td>
+						<td className={'sell_mkt confim sell market_button wave waves-effect waves-button' + (quantity && ask ? ' active clickable' : '')}>
+							<button
+								onClick={
+									traderActions.actionAddOrder.bind(null, {
+										direction: 'sell',
+										price    : data.Symbol ? Math.round10(1 - data.Symbol.LastAsk, -2) : '',
+										limit    : false
+									}, 'market')}
+								disabled={!quantity || !ask}>
+								Sell MKT
+							</button>
+						</td>
 						<td className="spreader label"><span>Spreader</span></td>
 					</tr>
-					<tr>{}</tr>
+					<tr>
+						<td>
+							{
+								orderInfo.activeString == 'market' && orderInfo.showDefaultOrder && quantity &&
+
+								<TraderDefaultForm
+									activeString={orderInfo.activeString}
+									index={'market'}
+									mainData={data}
+									quantity={quantity}
+									inputQuantityContext={this}
+									{...info}
+									{...orderInfo}
+								/>
+							}
+						</td>
+					</tr>
 					<tr>
 						<td className="label"><span>Quantity</span></td>
 						<td className="volume quantity">
 							<div className="input">
-								<button className="clear">{}</button>
-								<input type="text" className="number quantity" data-validation="1" maxLength="8"/>
-								<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div><div className="regulator min"><span className="plus" title="Press Arrow Up"></span><span className="minus" title="Press Arrow Down"></span></div>
+								<button className="clear" onClick={traderActions.actionOnQuantityClear.bind(null, this)}>{}</button>
+								<input type="text" className="number quantity" data-validation="1" maxLength="8"
+									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, this)}
+									   onChange={traderActions.actionOnQuantityChange.bind(null, this)}
+									   value={quantity} ref={'inputQuantity'}/>
+								<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div><div className="regulator min"><span className="plus" title="Press Arrow Up" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1)}>{}</span><span className="minus" title="Press Arrow Down" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, -1)}>{}</span></div>
 							</div>
 						</td>
 						<td className="spread_container">
 							<div className="input">
-								<button className="clear">{}</button>
-								<input type="text" className="number spreader" maxLength="4" disabled/>
+								<button className="clear" onClick={traderActions.actionOnSpreadClear.bind(null, this)}>{}</button>
+								<input type="text" className="number spreader" maxLength="4" data-validation="0.1"
+									   onMouseUp={traderActions.actionOnButtonSpreadChange.bind(null, this, '0.')}
+									   onKeyDown={traderActions.actionOnButtonSpreadRegulator.bind(null, this)}
+									   onChange={traderActions.actionOnSpreadChange.bind(null, this)}
+									   value={spread} ref={'inputSpread'} disabled={!quantity}/>
+								{
+									!!quantity && <div className="regulator min"><span className="plus" title="Press Arrow Up" onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.01, true)}>{}</span><span className="minus" title="Press Arrow Down" onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, -0.01, true)}>{}</span></div>
+								}
 								<div className="warning" style={{display: 'none'}}>
 									<p>Available value from 0.01 to 0.99</p>
 								</div>
@@ -220,29 +292,65 @@ class ActiveTrader extends React.Component {
 			<table className="control">
 				<tbody>
 					<tr>
-						<td className="button quantity"><button className="btn wave">5</button><button className="btn wave">10</button></td>
-						<td className="button quantity"><button className="btn wave">20</button><button className="btn wave">50</button></td>
-						<td className="button spread"><button className="wave" disabled>0.01</button><button className="wave" disabled>0.05</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 5)}>5</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 10)}>10</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 20)}>20</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 50)}>50</button></td>
+						<td className="button spread"><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.01)} disabled={!quantity}>0.01</button><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.05)} disabled={!quantity}>0.05</button></td>
 					</tr>
 					<tr>
-						<td className="button quantity"><button className="btn wave">100</button><button className="btn wave">200</button></td>
-						<td className="button quantity"><button className="btn wave">500</button><button className="btn wave">1000</button></td>
-						<td className="button spread"><button className="wave" disabled>0.10</button><button className="wave" disabled>0.15</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 100)}>100</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 200)}>200</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 500)}>500</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1000)}>1000</button></td>
+						<td className="button spread"><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.10)} disabled={!quantity}>0.10</button><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.15)} disabled={!quantity}>0.15</button></td>
 					</tr>
 					<tr>
-						<td className="join_bid buy market_button confim wave">
-							<a href="#">
-								Join BID <span className="price">{(data.Symbol && data.Symbol.LastBid != 0) ? data.Symbol.LastBid : ''}</span>
-							</a>
+						<td className={'join_bid buy market_button confim wave waves-effect waves-button' + (quantity && bid ? ' active clickable' : '')}>
+							<button onClick={
+								traderActions.actionAddOrder.bind(null, {
+									direction: 'buy',
+									price    : data.Symbol ? Math.round10(1 - data.Symbol.LastAsk, -2) : '',
+									limit    : true
+								}, 'limit')}
+								disabled={!quantity || !bid}>
+								Join BID <span className="price">
+									{
+										bid
+									}
+								</span>
+							</button>
 						</td>
-						<td className="join_ask sell market_button confim wave">
-							<a href="#">
-								<span className="price">{(data.Symbol && data.Symbol.LastAsk != 1) ? data.Symbol.LastAsk : ''}</span> Join ASK
-							</a>
+						<td className={'join_ask sell market_button confim wave waves-effect waves-button' + (quantity && ask ? ' active clickable' : '')}>
+							<button onClick={
+								traderActions.actionAddOrder.bind(null, {
+									direction: 'sell',
+									price    : data.Symbol ? Math.round10(1 - data.Symbol.LastBid, -2) : '',
+									limit    : true
+								}, 'limit')}
+								disabled={!quantity || !ask}>
+								<span className="price">
+									{
+										ask
+									}
+								</span> Join ASK
+							</button>
 						</td>
-						<td className="button spread"><button className="wave" disabled>0.25</button><button className="wave" disabled>0.30</button></td>
+						<td className="button spread"><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.25)} disabled={!quantity}>0.25</button><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.30)} disabled={!quantity}>0.30</button></td>
 					</tr>
-					<tr>{}</tr>
+					<tr>
+						<td>
+							{
+								orderInfo.activeString == 'limit' && orderInfo.showDefaultOrder && quantity &&
+
+								<TraderDefaultForm
+									activeString={orderInfo.activeString}
+									index={'limit'}
+									mainData={data}
+									quantity={quantity}
+									inputQuantityContext={this}
+									{...info}
+									{...orderInfo}
+								/>
+							}
+						</td>
+					</tr>
 				</tbody>
 			</table>
 			<div className="active_trader_footer">
@@ -289,8 +397,8 @@ class ActiveTrader extends React.Component {
 					</tbody>
 				</table>
 			</div>
-			<div className="table_limit">
-				<table className="limit">
+			<div className={'table_limit' + (quantity ? ' clickable' : '')}>
+				<table className={'limit' + ($.browser.webkit ? ' webkit' : '') + (quantity ? ' clickable' : '')}>
 					<thead>
 						<tr>
 							<th>My Bids</th>
@@ -302,13 +410,16 @@ class ActiveTrader extends React.Component {
 					</thead>
 					<tbody>
 						{
-							stringHtmlData.map((item) =>
-									<TraderString
-											key={item.Key}
-											mainData={copyData}
-											data={item}
-											isMirror={isMirror}
-									/>
+							rebuiltServerData.map((item, index) =>
+								<TraderString
+									data={item}
+									key={item.Key}
+									mainData={data}
+									orderInfo={orderInfo}
+									index={index}
+									inputQuantityContext={this}
+									{...info}
+								/>
 							)
 						}
 					</tbody>
@@ -318,32 +429,61 @@ class ActiveTrader extends React.Component {
 	}
 }
 
-
 class TraderString extends React.Component {
-	constructor()
+	constructor(props)
 	{
 		super();
+
+		this.state = {
+			index: props.index,
+			// showDefaultOrder: false,
+			direction: null,
+			limit: true
+		}
 	}
 
-	shouldComponentUpdate(nextProps){
-		let currentData = this.props.data;
-		let nextData = nextProps.data;
+	// shouldComponentUpdate(nextProps){
+		// const currentData = this.props.data;
+		// const nextData = nextProps.data;
+		//
+		// if(currentData.ClassName == nextData.ClassName &&
+		// 	currentData.QuantityBuy == nextData.QuantityBuy &&
+		// 	currentData.QuantitySell == nextData.QuantitySell &&
+		// 	currentData.ParticularUserQuantityBuy == nextData.ParticularUserQuantityBuy &&
+		// 	currentData.ParticularUserQuantitySell == nextData.ParticularUserQuantitySell &&
+		// 	currentData.Bid == nextData.Bid &&
+		// 	currentData.Ask == nextData.Ask &&
+		// 	this.props.quantity == nextProps.quantity) return false;
+		//
+		// return true;
+	// }
 
-		if(currentData.ClassName == nextData.ClassName &&
-			currentData.QuantityBuy == nextData.QuantityBuy &&
-			currentData.QuantitySell == nextData.QuantitySell &&
-			currentData.ParticularUserQuantityBuy == nextData.ParticularUserQuantityBuy &&
-			currentData.ParticularUserQuantitySell == nextData.ParticularUserQuantitySell &&
-			currentData.Bid == nextData.Bid &&
-			currentData.Ask == nextData.Ask) return false;
+	addOrder(data)
+	{
+		const { addOrder, index, stringIndexTake, traderActions } = this.props;
+		// const state = this.state;
 
-		return true;
+		// state.direction = data.direction;
+		// state.limit = data.limit;
+		// state.showDefaultOrder = true;
+
+		// traderActions.takeActiveFormContext(this);
+		// traderActions.actionSetActiveString(index);
+		traderActions.actionAddOrder(data, index);
 	}
 
 	render()
 	{
-		let data = this.props.data;
-		// console.log(data);
+		// const { traderActions, activeString, data, mainData, index, inputQuantityContext, isMirror, quantity } = this.props;
+		const { data, index, orderInfo: {...info}, quantity, ...spread } = this.props;
+		// const {  showDefaultOrder  } = this.state;
+		// console.log(this.props);
+		// let className = '';
+		// if(data.Symbol.LastBid < data.Price && data.Symbol.LastAsk > data.Price){
+		// 	className = 'active';
+		// }
+		// else if (data.Symbol.LastAsk < data.Price && Math.round(data.Price * 100))
+		// if(showDefaultOrder) orderFormStyle.visibility = 'visible';
 
 		return <AnimateOnUpdate
 				component="tr"
@@ -356,7 +496,7 @@ class TraderString extends React.Component {
 				transitionEnterTimeout={800}
 				data={data}
 		>
-			<td className="my_offers my_size animated" data-verify={'ParticularUserQuantityBuy'}>
+			<td className={'my_offers my_size animated'} data-verify={'ParticularUserQuantityBuy'}>
 					<span className="value">
 						{
 							data.ParticularUserQuantityBuy || ''
@@ -364,19 +504,38 @@ class TraderString extends React.Component {
 					</span>
 			</td>
 
-			<td className={'size buy size_buy confim animated ' + (data.Bid ? 'best_buy' : '')} data-verify="QuantityBuy">
+			<td className={'size buy size_buy confim animated ' + (data.Bid ? 'best_buy' : '') + (quantity ? ' clickable' : '')}
+				data-verify="QuantityBuy"
+				onClick={
+					spread.traderActions.actionAddOrder.bind(null, {
+						direction: 'buy',
+						price: data.Price,
+						limit: true
+					}, index)
+				}
+			>
 				<span className="container">
 					<span className="value">
 						{
-							data.QuantityBuy|| ''
+							data.QuantityBuy || ''
 						}
 					</span>
 				</span>
 			</td>
-			<td className={`price_value ${data.ClassName} ${data.Bid ? 'best_buy' : ''} ${data.Ask ? 'best_sell' : ''}`}>
+			{/*${data.ClassName}*/}
+			<td className={`price_value ${data.Bid ? 'best_buy' : ''} ${data.Ask ? 'best_sell' : ''}`}>
 				<span className="container"><span className="value">${(data.Price).toFixed(2)}</span></span>
 			</td>
-			<td className={'size sell size_sell confim animated ' + (data.Ask ? 'best_sell' : '')} data-verify="QuantitySell">
+			<td className={'size sell size_sell confim animated ' + (data.Ask ? 'best_sell' : '') + (quantity ? ' clickable' : '')}
+				data-verify="QuantitySell"
+				onClick={
+					spread.traderActions.actionAddOrder.bind(null, {
+						direction: 'sell',
+						price: data.Price,
+						limit: true
+					}, index)
+				}
+			>
 				<span className="container">
 					<span className="value">
 						{
@@ -385,20 +544,32 @@ class TraderString extends React.Component {
 					</span>
 				</span>
 			</td>
-			<td className="my_bids my_size animated" data-verify="ParticularUserQuantitySell">
+			<td className={'my_bids my_size animated'} data-verify="ParticularUserQuantitySell">
 				<span className="value">
 					{
 						data.ParticularUserQuantitySell || ''
 					}
 				</span>
 			</td>
-			<td>{}</td>
+			<td>
+				{
+					index == info.activeString && info.showDefaultOrder && quantity &&
+
+					<TraderDefaultForm
+						activeString={info.activeString}
+						index={index}
+						quantity={quantity}
+						{...spread}
+						{...info}
+					/>
+				}
+			</td>
 		</AnimateOnUpdate>
 	}
 }
 
 export default connect(state => ({
-		data: state.activeTrader,
+		...state.activeTrader,
 	}),
 	dispatch => ({
 		traderActions: bindActionCreators(traderActions, dispatch),

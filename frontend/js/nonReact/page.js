@@ -83,6 +83,10 @@ $(document).ready(function () {
 	// 		alert(e.message);
 	// 	}
 	// })();
+	// $(window).focus(function() {
+	// 	console.log('focus');
+	// });
+
 
 	// BM: Waves
 	Waves.init();

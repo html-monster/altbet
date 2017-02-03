@@ -79,7 +79,7 @@ export default class OrderForm extends React.Component{
 		if(data.NewOrder){
 			let dom = this.refs;
 
-			if(data.Limit){
+			if(data.Limit && data.Price == '0.'){
 				dom.inputPrice.focus();
 				OddsConverterObj.calculation(this, 'quantity', data.Limit)
 			}
@@ -234,7 +234,9 @@ export default class OrderForm extends React.Component{
 							<span>{checkboxProp ? 'Limit' : 'Market'}</span>
 						</label>
 					</div>
-					<input type="submit" className={`btn ${className}`} value={className} style={{textTransform: 'uppercase'}}/>
+					<i className="submit wave waves-input-wrapper waves-effect waves-button">
+						<input type="submit" className={`btn ${className}`} value={className} style={{textTransform: 'uppercase'}}/>
+					</i>
 					{
 						data.NewOrder ?
 							<span className="delete" onClick={this.props.onOrderDelete}>{}</span>

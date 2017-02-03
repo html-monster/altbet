@@ -117,7 +117,7 @@ class Sidebar extends React.Component
 				{/* // BM: --------------------------------------------------- NEW ORDER ---*/}
 				{/*<NewOrder data={{}}/>*/}
 
-				<div className="order_content default" style={{position: 'absolute', left: 0, zIndex: 10, opacity: 0, marginTop: 5}}>
+				{/*<div className="order_content default" style={{position: 'absolute', left: 0, zIndex: 10, opacity: 0, marginTop: 5}}>
 					<div className="sell-container">
 						<form action={ABpp.baseUrl + '/Order/Create'} autoComplete="off" data-ajax="true" data-ajax-begin="ajaxControllerClass.OnBeginJs" data-ajax-failure="ajaxControllerClass.OnFailureJs" data-ajax-success="ajaxControllerClass.OnSuccessJs" data-ajax-url={ABpp.baseUrl + '/Order/Create'} method="post" noValidate="novalidate">
 							<div className="container">
@@ -153,7 +153,9 @@ class Sidebar extends React.Component
 							<input className="direction" name="OrderType" type="hidden" value=""/>
 							<input className="price_value" name="LimitPrice" type="hidden" value=""/>
 							<div className="container">
-								<input type="submit" className="btn sell" value="Sell" style={{textTransform: 'uppercase'}}/>
+								<div className="submit_wrapper">
+									<input type="submit" className="btn sell wave" value="Sell" style={{textTransform: 'uppercase'}}/>
+								</div>
 								<span className="delete ">{}</span>
 								<div className="checkbox"></div>
 							</div>
@@ -212,13 +214,13 @@ class Sidebar extends React.Component
 							</div>
 						</form>
 					</div>
-				</div>
+				</div>*/}
 			</div>
 		</div>
 	}
 }
 
-
+console.log(sidebarActions);
 export default connect(state => ({
 		sidebar: state.sidebar,
 	}),

@@ -30,7 +30,7 @@ class inputNumber{
 				return false;
 			}
 		}
-		
+
 		this.parent.on('keydown', this.INPUT, _incrementValue);
 		// inputNum.keydown(_incrementValue);
 
@@ -53,9 +53,9 @@ class inputNumber{
 				input[0].selectionStart = input.val().length;
 			}
 
-			inputNumber.clearInput($(this).parents('.input').find('input'));
-			activeTraderClass.buttonActivation($(this).parents('.input').find('input.quantity'));
-			activeTraderClass.spreaderChangeVal($(this).parents('.input').find('input'), $(this).parents('.input').find('input').val());
+			// inputNumber.clearInput($(this).parents('.input').find('input'));
+			// activeTraderClass.buttonActivation($(this).parents('.input').find('input.quantity'));
+			// activeTraderClass.spreaderChangeVal($(this).parents('.input').find('input'), $(this).parents('.input').find('input').val());
 		});
 
 		//numericalVerification()==========================================================================================
@@ -65,31 +65,34 @@ class inputNumber{
 		this.parent.on('keydown', this.INPUT, _pasteDine);
 		inputNum.keydown(_pasteDine);
 
-		this.parent.on('keyup', this.INPUT, function (e) {
-			inputNumber.clearInput($(this));
-		});
+		// this.parent.on('keyup', this.INPUT, function (e) {
+		// 	inputNumber.clearInput($(this));
+		// });
 		this.parent.on('contextmenu', this.INPUT, _contextMenuDine);
 		inputNum.contextmenu(_contextMenuDine);
 
 
 		//clearInput=======================================================================================================
-		this.parent.on('click', '.input .clear', function () {
-			var self = $(this),
-					quantityNull = true,
-					spreadClearBtn = $('.spread_container .clear');
+		// this.parent.on('click', '.input .clear', function () {
+		// 	var self = $(this),
+		// 			quantityNull = true,
+		// 			spreadClearBtn = $('.spread_container .clear');
+		//
+		// 	self.parent().find('input').val('');
+		// 	self.removeClass('active');
+		// 	if(self.parents('.quantity').length) spreadClearBtn.removeClass('active');
+		// 	if($('.active_trader .number.quantity').val().length)
+		// 		quantityNull = false;
+		//
+		// 	activeTraderClass.spreaderClean(quantityNull);
+		// 	setTimeout(function () {
+		// 		self.hide();
+		// 		if(self.parents('.quantity').length) spreadClearBtn.hide();
+		// 	}, 150);
+		// });
 
-			self.parent().find('input').val('');
-			self.removeClass('active');
-			if(self.parents('.quantity').length) spreadClearBtn.removeClass('active');
-			if($('.active_trader .number.quantity').val().length)
-				quantityNull = false;
 
-			activeTraderClass.spreaderClean(quantityNull);
-			setTimeout(function () {
-				self.hide();
-				if(self.parents('.quantity').length) spreadClearBtn.hide();
-			}, 150);
-		});
+
 
 		// $(document).keyup(function (e) {
 		// 	e = e || event;
@@ -100,6 +103,9 @@ class inputNumber{
 		// 		}, 150);
 		// 	}
 		// });
+
+
+
 		function _checkInputNumber(e){
 			e = e || event;
 			let code = e.which || e.charCode || e.keyCode;
@@ -130,7 +136,6 @@ class inputNumber{
 
 			e = e || event;
 			code = e.which || e.charCode || e.keyCode;
-
 			(input.attr('data-validation') && !defaultMethods.isInteger(+input.attr('data-validation'))) ? flag = 0.01 : flag = 1;
 
 			if (limitInputData($(this), input, flag, code) === false)  return false;
@@ -148,23 +153,23 @@ class inputNumber{
 		}
 	}
 
-	static clearInput(current) {
-		var clearBtn = current.parent().find('.clear'),
-				spreadClearBtn = $('.spread_container .clear');
-
-		if(current.val()){
-			clearBtn.show();
-			setTimeout(function () {
-				clearBtn.addClass('active');
-			}, 100);
-		}
-		else{
-			clearBtn.removeClass('active');
-			if(current.parents('.quantity').length) spreadClearBtn.removeClass('active');
-			setTimeout(function () {
-				clearBtn.hide();
-				if(current.parents('.quantity').length) spreadClearBtn.hide();
-			}, 150);
-		}
-	}
+	// static clearInput(current) {
+	// 	var clearBtn = current.parent().find('.clear'),
+	// 			spreadClearBtn = $('.spread_container .clear');
+	//
+	// 	if(current.val()){
+	// 		clearBtn.show();
+	// 		setTimeout(function () {
+	// 			clearBtn.addClass('active');
+	// 		}, 100);
+	// 	}
+	// 	else{
+	// 		clearBtn.removeClass('active');
+	// 		if(current.parents('.quantity').length) spreadClearBtn.removeClass('active');
+	// 		setTimeout(function () {
+	// 			clearBtn.hide();
+	// 			if(current.parents('.quantity').length) spreadClearBtn.hide();
+	// 		}, 150);
+	// 	}
+	// }
 }

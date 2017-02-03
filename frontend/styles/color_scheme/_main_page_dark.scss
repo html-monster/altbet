@@ -58,6 +58,8 @@ $main_page_event_chart_button: url(../Images/sprite.svg) no-repeat -224px -354px
 	&.dota2:before{  background-position: -27px -465px;  }
 	&.csgo:before{  background-position: -59px -465px;  }
 	&.lol:before{  background-position: -85px -465px;  }
+	&.economy:before{  background-position: -115px -465px;  }
+	&.entertainment:before{  background-position: -148px -465px;  }
 
 }
 @mixin main_page_event_button{

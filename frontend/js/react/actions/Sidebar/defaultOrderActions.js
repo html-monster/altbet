@@ -106,20 +106,6 @@ export function actionOnOrderTypeChange(checkboxProp, formData)
 			type: ON_DEFAULT_ORDER_TYPE_CHANGE,
 			payload: state
 		});
-		if (!checkboxProp) {
-
-			setTimeout(function () {
-
-			}, 0);
-			price.focus();
-			price[0].selectionStart = 4;
-			OddsConverterObj.calculation(formData, 'price', !checkboxProp);
-		}
-		else {
-			quantity.focus();
-			quantity[0].selectionStart = quantity.val().length;
-			OddsConverterObj.calculation(formData, 'quantity', !checkboxProp);
-		}
 	}
 }
 

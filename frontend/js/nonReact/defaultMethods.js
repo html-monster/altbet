@@ -8,6 +8,10 @@ class defaultMethods{
 			}
 		});
 
+		$(window).focus(function () {
+			removeMesOnAction();
+		});
+
 		$(document).mousemove(function () {
 			removeMesOnAction();
 		});
