@@ -170,8 +170,7 @@ export function actionOnAjaxSend(context, parentData, e)
 
 		if(!ABpp.User.userIdentity) return false;
 
-		let data = context.props.data;
-		// console.log(parentData, context.props.data);
+		const data = context.props.data;
 		function OnBeginAjax()
 		{
 			$(context.refs.orderForm).find('[type=submit]').attr('disabled', true);

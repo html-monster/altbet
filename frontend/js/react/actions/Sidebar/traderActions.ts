@@ -330,14 +330,39 @@ class Actions extends BaseActions
 		}
 	}
 
-	// public actionSetActiveString(index)
-	// {
-	// 	return (dispatch, getState) => {
-	// 		const state = getState().activeTrader;
-    //
-	// 		state.orderInfo.activeString = index;
-	// 	}
-	// }
+	public actionOnAjaxSend(context, event)
+	{
+		return () =>{
+			event.preventDefault();
+			const { mainData, traderActions } = context.props;
+
+			function OnBeginAjax()
+			{
+				$(context.refs.defaultFrom).find('[type=submit]').attr('disabled', 'true');
+			}
+
+			function onSuccessAjax()
+			{
+				traderActions.actionRemoveOrderForm();
+				console.log(`Order sending finished: ${mainData.Symbol.Exchange}_${mainData.Symbol.Name}_${mainData.Symbol.Currency}`);
+			}
+
+			function onErrorAjax()
+			{
+				$(context.refs.defaultFrom).find('[type=submit]').removeAttr('disabled');
+				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+			}
+
+			defaultMethods.sendAjaxRequest({
+				httpMethod: 'POST',
+				url: $(context.refs.defaultFrom).attr('action'),
+				callback: onSuccessAjax,
+				onError: onErrorAjax,
+				beforeSend: OnBeginAjax,
+				context: $(context.refs.defaultFrom)
+			});
+		}
+	}
 
 	/**
 	 * на основе объекта с бэкенда формирует новый объект в формате ключ == price и добавляет side

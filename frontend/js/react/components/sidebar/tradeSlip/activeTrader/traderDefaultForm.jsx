@@ -21,11 +21,9 @@ export default class TraderDefaultForm extends React.Component {
 					key={direction}
 		>
 			<div className={direction == 'sell' ? 'sell-container' : 'buy-container'}>
-				<form action={ABpp.baseUrl + '/Order/Create'} autoComplete="off" data-ajax="true"
-					  data-ajax-begin="ajaxControllerClass.OnBeginJs"
-					  data-ajax-failure="ajaxControllerClass.OnFailureJs"
-					  data-ajax-success="ajaxControllerClass.OnSuccessJs"
-					  data-ajax-url={ABpp.baseUrl + '/Order/Create'} method="post" noValidate="novalidate">
+				<form action={ABpp.baseUrl + '/Order/Create'} autoComplete="off" ref={'defaultFrom'}
+					  onSubmit={traderActions.actionOnAjaxSend.bind(null, this)}
+				>
 					<div className="container">
 						<div className="price ">
 							<label>Price</label>

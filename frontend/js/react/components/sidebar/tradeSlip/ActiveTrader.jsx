@@ -306,7 +306,7 @@ class ActiveTrader extends React.Component {
 							<button onClick={
 								traderActions.actionAddOrder.bind(null, {
 									direction: 'buy',
-									price    : data.Symbol ? Math.round10(1 - data.Symbol.LastAsk, -2) : '',
+									price    : bid,
 									limit    : true
 								}, 'limit')}
 								disabled={!quantity || !bid}>
@@ -321,7 +321,7 @@ class ActiveTrader extends React.Component {
 							<button onClick={
 								traderActions.actionAddOrder.bind(null, {
 									direction: 'sell',
-									price    : data.Symbol ? Math.round10(1 - data.Symbol.LastBid, -2) : '',
+									price    : ask,
 									limit    : true
 								}, 'limit')}
 								disabled={!quantity || !ask}>
@@ -356,44 +356,44 @@ class ActiveTrader extends React.Component {
 			<div className="active_trader_footer">
 				<table className="remote control">
 					<tbody>
-					<tr>
-						<td className="reverse active">
-							<a href="#" className="ReverseAllJs">Reverse</a>
-							<div className="confirm_window animated">
-								<div className="container">
-									<span>Do you really want do it?</span>
-									<div className="button_container">
-										<button className="btn wave yes">Yes</button>
-										<button className="btn wave no">No</button>
+						<tr>
+							<td className="reverse active">
+								<a href="#" className="ReverseAllJs">Reverse</a>
+								<div className="confirm_window animated">
+									<div className="container">
+										<span>Do you really want do it?</span>
+										<div className="button_container">
+											<button className="btn wave yes">Yes</button>
+											<button className="btn wave no">No</button>
+										</div>
 									</div>
 								</div>
-							</div>
-						</td>
-						<td className="cancel_all active">
-							<a href="#" className="CancelAllJs">Cancel All</a>
-							<div className="confirm_window animated">
-								<div className="container">
-									<span>Do you really want do it?</span>
-									<div className="button_container">
-										<button className="btn wave yes">Yes</button>
-										<button className="btn wave no">No</button>
+							</td>
+							<td className="cancel_all active">
+								<a href="#" className="CancelAllJs">Cancel All</a>
+								<div className="confirm_window animated">
+									<div className="container">
+										<span>Do you really want do it?</span>
+										<div className="button_container">
+											<button className="btn wave yes">Yes</button>
+											<button className="btn wave no">No</button>
+										</div>
 									</div>
 								</div>
-							</div>
-						</td>
-						<td className="close_out active">
-							<a href="#" className="CloseOutJs">Close Out</a>
-							<div className="confirm_window animated">
-								<div className="container">
-									<span>Do you really want do it?</span>
-									<div className="button_container">
-										<button className="btn wave yes">Yes</button>
-										<button className="btn wave no">No</button>
+							</td>
+							<td className="close_out active">
+								<a href="#" className="CloseOutJs">Close Out</a>
+								<div className="confirm_window animated">
+									<div className="container">
+										<span>Do you really want do it?</span>
+										<div className="button_container">
+											<button className="btn wave yes">Yes</button>
+											<button className="btn wave no">No</button>
+										</div>
 									</div>
 								</div>
-							</div>
-						</td>
-					</tr>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
