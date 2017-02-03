@@ -49,8 +49,7 @@ class ActiveTrader extends React.Component {
 			}
 			if(JSON.stringify(this.state.data) != JSON.stringify(currSymbData) || this.state.isMirror != isMirror){
 				this.setState({data: currSymbData, isMirror: isMirror});
-			__DEV__ && console.log('re-render');
-// 0||console.debug( 're-render', currSymbData, newData, symbol );
+			// __DEV__ && console.log('re-render');
 			}
 
 			activeTraderClass.scrollTo();
@@ -154,6 +153,7 @@ class ActiveTrader extends React.Component {
         }
 
 		let stringHtmlData = this.objectConstructor(data, isMirror);
+
 
 		return <div className="active_trader" style={{display: 'none'}} id={"trader_" + activeExchange.symbol}>
 			<div className="event_title">

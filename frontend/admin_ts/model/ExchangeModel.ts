@@ -44,7 +44,7 @@ export default class ExchangeModel
 
 
                         // prepate struct
-                        // __LDEV__&&console.debug( 'data AJAX', data );
+                        __LDEV__&&console.debug( 'data AJAX', data );
                         data = self.prepareEditData(data);
                         // __LDEV__&&console.debug( 'prepareEditData', data );
 
@@ -327,7 +327,7 @@ export default class ExchangeModel
         var ajaxPromise = (new AjaxSend()).send({
                 formData: inProps.formData,
                 message: `Error while deleting exchange “${inProps.name}”, please, try again`,
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_DEL,
                 respCodes: [
                     {code: 100, message: `Exchange “${inProps.name}” deleted successfully`},
                     // {code: -101, message: "Some custom error"},
@@ -335,11 +335,12 @@ export default class ExchangeModel
                 beforeChkResponse: (data) =>
                 {
                     // emulate
-                    data = {Error: 200};
+                    // data = {Error: 200};
+                    // data.Param1 = "TOR-PHI-3152017"; // id
                     // data.Param1 = "?path=sport&status=approved";
-                    data.Param1 = "?status=New";
-                    data.Param2 = "Buffalo Bills_vs_New England Patriots";
-                    data.Param3 = "TOR-PHI-3152017"; // id
+                    // data.Param1 = "?status=New";
+                    // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                    // data.Param3 = "TOR-PHI-3152017"; // id
                     return data;
                 },
             });
@@ -393,9 +394,9 @@ export default class ExchangeModel
                 {
                     // emulate
                     // data = {Error: 200};
+                    // data.Param1 = "Q1-W2-222017"; // id
                     // // data.Param1 = "?path=sport&status=approved";
                     // data.Param1 = "?status=New";
-                    // data.Param2 = "Q1-W2-222017"; // id
                     // // data.Param3 = "Buffalo Bills_vs_New England Patriots"; // придётся брать самому!!!!!!!!!
                     return data;
                 },

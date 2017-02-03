@@ -329,9 +329,10 @@
 					var isMirror;
 
 					if($('#IsMirror').length)
-						isMirror = $('#IsMirror').val() == 'False' ? 0 : 1;
+						isMirror = $('#IsMirror').val().toLowerCase() == 'false' ? 0 : 1;
 					else
 						isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
+
 
 					html = $(element).clone();
 					html.attr('id', 'order_content').css({
@@ -775,6 +776,7 @@
 				className = 'ask',
 				activeTrader = $('.active_trader');
 
+		// 0||console.log( 'currentItem', currentItem );
 		if(currentItem.hasClass('content_bet'))
 			activeTrader.attr('id', 'trader_' + currentItem.find('.symbol_name').text());
 		else if(globalData.eventPageOn)

@@ -59,7 +59,7 @@ export class IndexController extends BaseController
         $('[data-js=tabl-exch]').on('click', '.js-btn-status[data-type=settlement]', e => self.onSetStatusClick(e, ExchangeModel.STATUS_SETTLEMENT));
 
         // get exchange details
-        $('[data-js-btn-def-action], [data-js-btn-detail]').on('click', e => self.onDetailControlClick(e)); //[data-js-btn-def-action]
+        $('[data-js-btn-detail]').on('click', e => self.onDetailControlClick(e)); //[data-js-btn-def-action]
     }
 
 
@@ -249,11 +249,13 @@ export class IndexController extends BaseController
                 $IndexView.beginDeleteExch();
 
                 var formData = new FormData();
-                formData.set('id', $that.data('id'));
+
+                formData.set('exchange', $that.data('id'));
                 (new ExchangeModel).delExch({formData, name: $that.data('name')}).then( result =>
                 {
                     window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
-                    location.href = MainConfig.BASE_URL + result.data.Param1;
+                    location.reload();
+                    // location.href = MainConfig.BASE_URL + result.data.Param1;
                 },
                 result => {
                     self.InfoMessage.render({
@@ -304,6 +306,7 @@ export class IndexController extends BaseController
             case ExchangeModel.STATUS_COMPLETE : $question = 'Set status <span class="label label-warning">Completed</span> for “' + $that.data('name') + '” ?';
                 statusName = "Completed";
                 url = MainConfig.AJAX_EXCH_SET_STATUS_COMPLETED;
+                // url = MainConfig.AJAX_TEST;
                 break;
             case ExchangeModel.STATUS_UNCOMPLETE : $question = 'Return to <span class="label label-success">Approved</span> status for “' + $that.data('name') + '” ?';
                 statusName = "Approved";
@@ -340,8 +343,9 @@ export class IndexController extends BaseController
                 {
                     0||console.log( 'result', result );
                     window.ADpp.User.setFlash({message: result.message, messageType: User.MESSAGE_TYPE_ABS, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
-                    window.ADpp.User.setFlash({id: result.data.Param2}, 'ChangedStatusExchId');
-                    location.href = MainConfig.BASE_URL + result.data.Param1;
+                    window.ADpp.User.setFlash({id: result.data.Param1}, 'ChangedStatusExchId');
+                    // location.href = MainConfig.BASE_URL + result.data.Param1;
+                    location.reload();
                 },
                 result => {
                     0||console.log( 'result', result );

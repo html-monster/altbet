@@ -152,7 +152,7 @@ class Actions extends BaseActions
         return (dispatch, getState) =>
         {
             // set init
-            0||console.log( 'inProps', inProps );
+            // 0||console.log( 'inProps', inProps );
             ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror, symbol: inProps.symbol});
             ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
 

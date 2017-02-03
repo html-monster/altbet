@@ -7,7 +7,8 @@ import NewOrder from '../order/NewOrder.jsx'
 
 import AnimateOnUpdate from '../../Animation.jsx';
 
-export default class DefaultOrders extends React.Component{
+export default class DefaultOrders extends React.Component
+{
 	constructor(props)
 	{
 		super();

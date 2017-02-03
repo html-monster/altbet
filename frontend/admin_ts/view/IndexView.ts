@@ -12,7 +12,7 @@ import {RadioBtns} from "../component/RadioBtns";
 import {Loading} from "../component/Loading";
 import {translit} from "../component/translit.js";
 import {User} from "../model/User";
-// import Common from "../inc/Common";
+import Common from "../inc/Common";
 
 
 export class IndexView extends BaseView
@@ -44,8 +44,8 @@ export class IndexView extends BaseView
         let data = window.ADpp.User.getFlash('AddExchSucc');
         data && this.highlightAddedExch(data);
 
-        // if success ch status
-        data = window.ADpp.User.getFlash('ChangedStatusExchId');
+        // if success ch status scroll and mark it
+/*        data = window.ADpp.User.getFlash('ChangedStatusExchId');
         if( data )
         {
             let $tr = $("[data-js=tabl-exch] " + `[data-id=${data.id}]`);
@@ -56,7 +56,7 @@ export class IndexView extends BaseView
 
                 if( $tr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: $tr.offset().top - 50 }, 500);
             } // endif
-        } // endif
+        } // endif*/
     }
 
 
@@ -521,7 +521,8 @@ export class IndexView extends BaseView
         {
             if( $("[data-js=valueStor]", inProps.form).val() == 1 )
             {
-                $("[data-js=Url]", inProps.form).val(name1.replace(/[ ]/g, "-").toLowerCase() + "-vs-" + name2.replace(/[ ]/g, "-").toLowerCase());
+                $("[data-js=Url]", inProps.form).val(Common.createUrlAlias(name1) +
+                        "-vs-" + Common.createUrlAlias(name2));
             } // endif
         } // endif
     }
@@ -538,7 +539,7 @@ export class IndexView extends BaseView
         {
             if( $("[data-js=valueStor]", inProps.form).val() == 2 )
             {
-                $("[data-js=Url]", inProps.form).val(name.replace(/[ ]/g, "-").toLowerCase());
+                $("[data-js=Url]", inProps.form).val(Common.createUrlAlias(name));
             } // endif
         } // endif
     }
@@ -555,7 +556,7 @@ export class IndexView extends BaseView
         {
             $alias.val($name.split(" ").map((val) => {
                 var $s1 = translit(val.trim(), 5);
-                return $s1.replace(/[^a-zA-Z0-9]/g, '').slice(0, 2);
+                return $s1.replace(/[^a-zA-Z0-9]/g, '').slice(0, 3);
             }).join("").toUpperCase());
         } // endif
     }

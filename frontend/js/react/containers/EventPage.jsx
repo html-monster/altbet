@@ -141,7 +141,7 @@ class EventPage extends BaseController
         };
 
 
-        return <div className="wrapper_event_page" data-id={symbol}>
+        return <div className="wrapper_event_page" data-id={symbol} id={symbol}>
             <h1>{data.SymbolsAndOrders.Symbol.HomeName} VS {data.SymbolsAndOrders.Symbol.AwayName}</h1>
             <div className="container">
                 <div className="chart_container">
