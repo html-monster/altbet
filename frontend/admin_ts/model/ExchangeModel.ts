@@ -5,8 +5,8 @@
 /// <reference path="./../../js/.d/common.d.ts" />
 
 import { MainConfig, DS } from "../inc/MainConfig";
-import {DateLocalization} from "../../js/react/models/DateLocalization";
 import {AjaxSend} from "../component/AjaxSend";
+import {DateLocalization} from "../component/DateLocalization";
 
 
 var __LDEV__ = true;
@@ -46,7 +46,7 @@ export default class ExchangeModel
                         // prepate struct
                         __LDEV__&&console.debug( 'data AJAX', data );
                         data = self.prepareEditData(data);
-                        __LDEV__&&console.debug( 'prepareEditData', data );
+                        // __LDEV__&&console.debug( 'prepareEditData', data );
 
 
                         //         fullname: 'Buffalo Bills_vs_New England Patriots',
@@ -108,11 +108,10 @@ export default class ExchangeModel
 
 
 
-    public saveExchange(inProps)
+    public saveEditExchange(inProps)
     {
         var self = this;
         var data = inProps.data;
-// 0||console.log( 'data', data );
 
 
         var promise = new Promise((resolve, reject) =>
@@ -126,13 +125,24 @@ export default class ExchangeModel
                 {
                     __LDEV__&&console.debug( 'data AJAX', data );
 
+                    // correct
+                    if( data.Error == 200 )
+                    {
+                        data.Param1 = data.ParamObj.Exchange.Symbols["0"];
+                        data.Param1.Exchange = data.ParamObj.Exchange.Name;
+                        data.Param1.StartDate = data.Param1.StartDate && (new DateLocalization).fromSharp(data.Param1.StartDate, 0).unixToLocalDate({format: "M/D/Y h:mm:ss A"});
+                        data.Param1.EndDate = data.Param1.EndDate && (new DateLocalization).fromSharp(data.Param1.EndDate, 0).unixToLocalDate({format: "M/D/Y h:mm:ss A"});
+                        var fullName = data.Param1.FullName;
+                    } // endif
+
+
                     // emulate
-                    data.Param1 = {
-                        Symbol: {
-                            FullName: data.Param2,
-                            Exchange: data.Param3,
-                        }
-                    };
+                    // data.Param1 = {
+                    //     Symbol: {
+                    //         FullName: data.Param2,
+                    //         Exchange: data.Param3,
+                    //     }
+                    // };
                     // data = {Error: 200};
                     // data.Param1 = Url
                     // data.Param2 = FullName
@@ -152,7 +162,6 @@ export default class ExchangeModel
                     //     }
                     // };
 
-                    var fullName = data.Param1.Symbol.FullName;
 
                     var error;
                     try
@@ -160,7 +169,8 @@ export default class ExchangeModel
                         // user defined error
                         if( data.Error > 100 && data.Error < 200 )
                         {
-                            error = -data.Error;
+                            error = -1 * data.Error;
+                            0||console.log( 'error', error );
                             throw new Error(message);
 
 
@@ -194,7 +204,7 @@ export default class ExchangeModel
                         }
                     }
 
-                    error < 0 ? reject({code: error, message}) : resolve({code: error, message, data: data.Param1.Symbol});
+                    error < 0 ? reject({code: error, message}) : resolve({code: error, message, data: data.Param1});
                 },
                 error: function() {
                     reject({code: -1002, message});
@@ -317,7 +327,7 @@ export default class ExchangeModel
         var ajaxPromise = (new AjaxSend()).send({
                 formData: inProps.formData,
                 message: `Error while deleting exchange “${inProps.name}”, please, try again`,
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_EXCH_DEL,
                 respCodes: [
                     {code: 100, message: `Exchange “${inProps.name}” deleted successfully`},
                     // {code: -101, message: "Some custom error"},
@@ -325,11 +335,12 @@ export default class ExchangeModel
                 beforeChkResponse: (data) =>
                 {
                     // emulate
-                    data = {Error: 200};
+                    // data = {Error: 200};
+                    // data.Param1 = "TOR-PHI-3152017"; // id
                     // data.Param1 = "?path=sport&status=approved";
-                    data.Param1 = "?status=New";
-                    data.Param2 = "Buffalo Bills_vs_New England Patriots";
-                    data.Param3 = "TOR-PHI-3152017"; // id
+                    // data.Param1 = "?status=New";
+                    // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                    // data.Param3 = "TOR-PHI-3152017"; // id
                     return data;
                 },
             });
@@ -382,11 +393,11 @@ export default class ExchangeModel
                 beforeChkResponse: (data) =>
                 {
                     // emulate
-                    data = {Error: 200};
-                    // data.Param1 = "?path=sport&status=approved";
-                    data.Param1 = "?status=New";
-                    data.Param2 = "Buffalo Bills_vs_New England Patriots";
-                    data.Param3 = "TOR-PHI-3152017"; // id
+                    // data = {Error: 200};
+                    // data.Param1 = "Q1-W2-222017"; // id
+                    // // data.Param1 = "?path=sport&status=approved";
+                    // data.Param1 = "?status=New";
+                    // // data.Param3 = "Buffalo Bills_vs_New England Patriots"; // придётся брать самому!!!!!!!!!
                     return data;
                 },
             });

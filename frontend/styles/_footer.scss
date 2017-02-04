@@ -14,12 +14,12 @@ footer{
   color: #ffffff;
   transition: 0.4s ease-out;
   //overflow: hidden;
-  &.active{  bottom: 0 !important;  }
-  .footer_container{
-    display: flex;
-    //@include span(8.1 of 12);
-    //@include push (1.5 of 12);
+  &.active{  bottom: 0 !important;
+    .footer_container{ display: flex; }
   }
+  .footer_container{ display: none; }
+
+
   .footer_item{
     width: 15%;
     padding: 0 20px;

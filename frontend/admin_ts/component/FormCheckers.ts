@@ -33,6 +33,9 @@ export class FormCheckers
             'elem': false,      // element for attach error message
             'message': '',      // element for attach error message
             'wait': 10000,          // delay before error message hint close
+            'ifthere': "",          //
+            'ifhere': "",           //
+            'elemthere': "",           //
         };
 
         self.filters = [
@@ -43,6 +46,7 @@ export class FormCheckers
                 'email',        // checks for right email adress
                 'if',           // checks for item.val == condition (message init is needed)
                                 //      example: data-field-check='elem:#BtnAddCity>a,message:Нужно добавить минимум один город,wait:2500,if:0'
+                'ifhere',       //      example: data-field-check='elem:#BtnAddCity>a,message:Нужно добавить минимум один город,wait:2500,if:0'
                 'password',     // check for equality of password and its recurrence
                 'notonlydigits',       // check for contains not only the numbers
                 'custom',       // custom checker via callback, depend on name when call this.addCheckerCustom
@@ -53,6 +57,7 @@ export class FormCheckers
                 'filterMulti',
                 'filterEmail',
                 'filterIf',
+                'filterIfhere',
                 'filterPassword',
                 'filterNotonlydigits',
                 'filterCustom',
@@ -230,6 +235,8 @@ export class FormCheckers
     {
         var self = this;
 
+        self.options[fName] = fVal;
+/*
         if( fName == 'name' ) self.options.name = fVal;
 
         // element for attach error message
@@ -251,7 +258,7 @@ export class FormCheckers
         {
             // self.waitTimeErrorMess
             self.options.wait = fVal;
-        } // endif
+        } // endif*/
     }
 
 
@@ -309,6 +316,27 @@ export class FormCheckers
     {
         var self = this;
         return inProps.itemVal == inProps.filterVal;
+    }
+
+
+    private filterIfhere(inProps)
+    {
+        var self = this;
+        0||console.log( 'inProps, this', inProps, this );
+
+        let flag = false;
+        let $thereVal = $(this.options.elemthere).val();
+        let $hereVal = inProps.itemVal;
+        let $hereFilter = this.options.ifhere;
+        let $thereFilter = this.options.ifthere;
+        if( $hereVal )
+        {
+        }
+        else
+        {
+        } // endif
+
+        return true;
     }
 
 

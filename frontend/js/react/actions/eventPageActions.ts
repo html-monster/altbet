@@ -71,6 +71,9 @@ class Actions extends BaseActions
                     if (val.Price == props.Price) break
                 } // endfor
 
+                if (inProps.exdata.isMirror) bpr = (1 - bpr).toFixed(2);
+
+
         // 0||console.debug( 'bpr', bpr, qt);
 
                 // return;
@@ -132,7 +135,7 @@ class Actions extends BaseActions
                 } // endfor
 
         // 0||console.debug( 'bpr', bpr, qt);
-                bpr = props.Price;
+                bpr = inProps.exdata.isMirror ? (1 - props.Price).toFixed(2) : props.Price;
 
                 // return;
                 let outStruc = {
@@ -255,7 +258,7 @@ class Actions extends BaseActions
 
             dispatch({
                 type: ON_TRADE_ONOFF,
-                payload: { isTraiderOn: ABpp.config.tradeOn }
+                payload: ABpp.config.tradeOn,
             });
         };
     }

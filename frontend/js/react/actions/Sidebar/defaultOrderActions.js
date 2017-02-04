@@ -237,7 +237,7 @@ export function actionOnTabMirrorClick(isMirror)
 	// });
 	return (dispatch, getState) =>
 	{
-		ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: getState().sidebar.activeExchange.name, isMirror: isMirror});
+		ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: getState().sidebar.activeExchange.name, isMirror: isMirror, symbol: getState().sidebar.activeExchange.symbol});
 		dispatch({
 			// type: ON_TAB_MIRROR_CHANGE,
 			type: ON_ACTIVE_SYMBOL_CHANGED,

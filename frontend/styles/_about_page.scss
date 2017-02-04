@@ -1,3 +1,4 @@
+$colorAbout: #b0afb0;
 //body.about_body{
 //  height: 100%;
 //  min-height: 100%;
@@ -27,13 +28,30 @@
         display: block;
         padding: 5px 30px;
         font-size: 16px;
-        color: #666666;
+        color: $colorAbout;
       }
     }
   }
   .about_info{
     margin-right: 10%;
-    h1, h2{  margin-top: 0; font-size: 30px;  color: #666666; }
-    p{  padding: 10px 25px 10px 0;  color: #666666;  }
+    h1, h2{  margin-top: 0; font-size: 30px;  color: $colorAbout; }
+    p{  padding: 10px 25px 10px 0;  color: $colorAbout;  }
+  }
+}
+
+// таблица на StaticP
+#glossary {
+  margin-bottom: 30px;
+  table {
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid #6d6d6d;
+    tr {
+      border-bottom: 1px solid #6d6d6d;
+      th, td {
+        border-right: 1px solid #6d6d6d;
+      }
+    }
   }
 }

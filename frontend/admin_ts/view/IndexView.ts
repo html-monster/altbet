@@ -12,7 +12,7 @@ import {RadioBtns} from "../component/RadioBtns";
 import {Loading} from "../component/Loading";
 import {translit} from "../component/translit.js";
 import {User} from "../model/User";
-// import Common from "../inc/Common";
+import Common from "../inc/Common";
 
 
 export class IndexView extends BaseView
@@ -44,16 +44,19 @@ export class IndexView extends BaseView
         let data = window.ADpp.User.getFlash('AddExchSucc');
         data && this.highlightAddedExch(data);
 
-        // if success ch status
-        data = window.ADpp.User.getFlash('ChangedStatusExchId');
+        // if success ch status scroll and mark it
+/*        data = window.ADpp.User.getFlash('ChangedStatusExchId');
         if( data )
         {
             let $tr = $("[data-js=tabl-exch] " + `[data-id=${data.id}]`);
-            $tr.addClass('added').attr('title', 'added');
-            setTimeout(() => $tr.addClass('animated').attr('title', ''), 5000);
+            if( $tr.length )
+            {
+                $tr.addClass('added').attr('title', 'added');
+                setTimeout(() => $tr.addClass('animated').attr('title', ''), 5000);
 
-            if( $tr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: $tr.offset().top - 50 }, 500);
-        } // endif
+                if( $tr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: $tr.offset().top - 50 }, 500);
+            } // endif
+        } // endif*/
     }
 
 
@@ -121,8 +124,12 @@ export class IndexView extends BaseView
 
         // auto fill url
         let $EdNames = $("[data-js=EdHomeName], [data-js=AwayName]", form);
-        $EdNames.blur((ee) => this.onNamesBlur(ee, {names: $EdNames, form: form}));
+        $EdNames.blur((ee) => this.onNamesBlurGenerateUrl(ee, {names: $EdNames, form: form}));
         $("[data-js=FullName]", form).blur((ee) => this.onFullNameBlur(ee, {form: form}));
+        // auto fill alias
+        $("[data-js=EdHomeName]", form).blur((ee) => this.onNamesBlurGenerateAlias(ee, {form: form, target: "[data-js=HomeAlias]"}));
+        $("[data-js=AwayName]", form).blur((ee) => this.onNamesBlurGenerateAlias(ee, {form: form, target: "[data-js=AwayAlias]"}));
+        // $("[data-js=EdHomeName], [data-js=AwayName]", form);
 
 
         $("[data-js=HomeHandicap], [data-js=AwayHandicap]", form).keypress((ee) => this.onlyDigits(ee));
@@ -489,6 +496,7 @@ export class IndexView extends BaseView
             var $this = $(ee.target);
             $this.removeClass("btn-default").addClass($this.data("class") + ' active');
             $("[data-js-wintype]", $that).val($this.data("id"));
+            $("[data-js-wintypestr]", $that).val($this.data("result"));
         })
     }
 
@@ -501,9 +509,9 @@ export class IndexView extends BaseView
 
 
 
-    private onNamesBlur(ee, inProps)
+    private onNamesBlurGenerateUrl(ee, inProps)
     {
-        var $that = $(ee.target)
+        var $that = $(ee.target);
 
         let name1 = inProps.names[0].value;
         let name2 = inProps.names[1].value;
@@ -513,7 +521,8 @@ export class IndexView extends BaseView
         {
             if( $("[data-js=valueStor]", inProps.form).val() == 1 )
             {
-                $("[data-js=Url]", inProps.form).val(name1.replace(" ", "-") + "-vs-" + name2.replace(" ", "-"));
+                $("[data-js=Url]", inProps.form).val(Common.createUrlAlias(name1) +
+                        "-vs-" + Common.createUrlAlias(name2));
             } // endif
         } // endif
     }
@@ -530,8 +539,25 @@ export class IndexView extends BaseView
         {
             if( $("[data-js=valueStor]", inProps.form).val() == 2 )
             {
-                $("[data-js=Url]", inProps.form).val(name.replace(" ", "-"));
+                $("[data-js=Url]", inProps.form).val(Common.createUrlAlias(name));
             } // endif
+        } // endif
+    }
+
+
+
+    private onNamesBlurGenerateAlias(ee, inProps)
+    {
+        var $that = $(ee.target);
+
+        var $alias = $(inProps.target, inProps.form);
+        var $name = $that.val();
+        if( $alias.val() == '' && $name != '' )
+        {
+            $alias.val($name.split(" ").map((val) => {
+                var $s1 = translit(val.trim(), 5);
+                return $s1.replace(/[^a-zA-Z0-9]/g, '').slice(0, 3);
+            }).join("").toUpperCase());
         } // endif
     }
 

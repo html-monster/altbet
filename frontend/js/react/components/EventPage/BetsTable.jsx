@@ -38,13 +38,14 @@ export class BetsTable extends React.Component
 
         if( typeb == BetsTable.TYPE_BID )
         {
-            data = data.slice().reverse();
+            if (!exdata.IsMirror) data = data.slice().reverse();
             $class += ' buy';
             $fieldName = 'Bid';
             $type = 0;
         }
         else
         {
+            if (exdata.IsMirror) data = data.slice().reverse();
             $class += ' sell';
             $fieldName = 'Ask';
             $type = 1;
@@ -103,7 +104,7 @@ export class BetsTable extends React.Component
                             >
 								{/*component="div"
                                  className="button" */}
-                                <span>${Common.toFixed(val.Price, 2)}</span>
+                                <span>${Common.toFixed(exdata.IsMirror ? 1 - val.Price : val.Price, 2)}</span>
                             </td>
                             <td className={`volume ${$class} animated`}
                                 data-verify="Quantity"
