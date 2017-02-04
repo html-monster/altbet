@@ -136,7 +136,7 @@ class OrderItem extends React.Component
 			callback: ::this.onSuccessAjax,
 			onError: ::this.onErrorAjax,
 			beforeSend: ::this.BeforeAjax,
-			url: '/AltBet/Order/Cancel',
+			url: ABpp.baseUrl + '/Order/Cancel',
 			context: $(this.refs.deleteForm)});
 	}
 	successHandler(serverData)

@@ -2,6 +2,9 @@
   @include span(7.6 of 12);
   @include push (1.8 of 12);
   margin-top: 70px;
+
+  .muted { opacity: 0.5 }
+  .fullname { font-size: 10px; }
   .my_position {
 		padding: 15px;
     .container {
@@ -297,7 +300,6 @@
 								background: url("../Images/sprite.svg") no-repeat -285px -177px;
 							}
 						}
-						.muted { opacity: 0.4; }
 					}
 				}
 				p{

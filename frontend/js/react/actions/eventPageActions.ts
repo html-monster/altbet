@@ -60,7 +60,8 @@ class Actions extends BaseActions
                 let props = inProps;
                 let flag = false;
                 let qt : any = 0,
-                    bpr = props.data[0].Price;
+                    bpr = inProps.Price;
+                    // bpr = props.data[0].Price;
                 let isBasicMode = ABpp.config.basicMode;
 
 
