@@ -15,7 +15,7 @@ export default class Dialog
     // private afterInit;
     // private callbackOK;
     // private callbackCancel;
-
+/*
     private options = {
             TPLName: '',
             target: '',
@@ -110,5 +110,5 @@ export default class Dialog
         if (this.options.callbackOK)
             if (this.options.callbackOK(event))
                 $("[data-js=wrapper]", this.options.target).fadeOut(200);
-    }
+    }*/
 }
