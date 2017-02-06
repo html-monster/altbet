@@ -322,21 +322,22 @@ export class FormCheckers
     private filterIfhere(inProps)
     {
         var self = this;
-        0||console.log( 'inProps, this', inProps, this );
 
         let flag = false;
         let $thereVal = $(this.options.elemthere).val();
         let $hereVal = inProps.itemVal;
         let $hereFilter = this.options.ifhere;
         let $thereFilter = this.options.ifthere;
-        if( $hereVal )
-        {
-        }
-        else
-        {
-        } // endif
 
-        return true;
+        // 0||console.log( 'here f', $hereFilter, $hereVal, $thereVal, $thereFilter );
+            // 1. Если here = hval && there = tval
+            // 2. Если here = {empty} && hval = "" && there = tval
+            // 3. Если here = {thereval} && hval = tval
+        // if( $hereVal == $hereFilter && $thereVal == $thereFilter ) return true; // пока нет применений
+        if( $hereFilter == "{empty}" && $hereVal == "" && $thereVal == $thereFilter ) { self.options.message = 'Field "' + self.options.name + '" is empty'; return true; }
+        // else if( $hereFilter == "{thereval}" && $hereVal == "" && $thereVal == $thereFilter ) return true;
+
+        return false;
     }
 
 

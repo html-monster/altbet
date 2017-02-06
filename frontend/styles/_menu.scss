@@ -96,9 +96,10 @@
     }
   }
   .nav_bet{
+    margin-top: 20px;
+    position: relative;
     font-family: "open_sans_regular", sans-serif;
     color: #d0d0d0;
-    position: relative;
     @include scroll;
     .menu_marker{
       display: block;

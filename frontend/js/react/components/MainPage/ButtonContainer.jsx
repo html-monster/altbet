@@ -99,7 +99,7 @@ export default class ButtonContainer extends React.Component
                                     PosPrice: [],
                                     ismirror: data.ismirror,
                                     price: 0,
-                                    type: data.type == "sell" ? 2 : 1,
+                                    type: data.type == "sell" ? 1 : 2,
                                     data: data,
                                 })}
                             disabled={isTraiderOn}

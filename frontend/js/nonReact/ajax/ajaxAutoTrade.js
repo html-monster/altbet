@@ -10,7 +10,7 @@ var ajaxAutoTradeClass = new function () {
 		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 	}
 
-	// BM: делаем ставку
+	// BM: делаем ставку Auto trade
 	this.sendOrder = function(context, modification, price){
 		let url,
 				data = {},
@@ -19,7 +19,7 @@ var ajaxAutoTradeClass = new function () {
 		data.Symbol = trader.attr('id').slice(7);
 		data.Quantity = $('.active_trader .control .quantity.number').val();
 		if($('#IsMirror').length)
-			data.isMirror = $('#IsMirror').val() == 'False' ? 0 : 1;
+			data.isMirror = $('#IsMirror').val().toLowerCase() == 'false' ? 0 : 1;
 		else
 			data.isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
 

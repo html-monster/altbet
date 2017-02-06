@@ -325,6 +325,9 @@
 				setTimeout(function () {
 					$('#order_content').addClass('active');
 				}, 0);
+
+
+				// BM: create order form
 				function createOrderForm(element, modification) {
 					var isMirror;
 
@@ -332,6 +335,7 @@
 						isMirror = $('#IsMirror').val().toLowerCase() == 'false' ? 0 : 1;
 					else
 						isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
+
 
 
 					html = $(element).clone();

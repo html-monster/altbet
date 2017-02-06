@@ -225,7 +225,10 @@ export class IndexController extends BaseController
     }
 
 
-
+    /**
+     * Delete category
+     * @param ee
+     */
     private onDelControlClick(ee)
     {
         var self = this;

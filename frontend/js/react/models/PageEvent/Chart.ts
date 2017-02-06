@@ -1,3 +1,4 @@
+import {DateLocalization} from "../DateLocalization";
 /**
  * Created by Vlasakh on 01.12.16.
  * @link http://api.highcharts.com/highstock/Axis.setExtremes
@@ -502,7 +503,8 @@ export class Chart
         for( let ii in inData )
         {
             let val = inData[ii];
-            let dt = val.Time.replace('/Date(', '').replace(')/', '') * 1 - new Date().getTimezoneOffset() * 60 * 1000;
+            let dt = (new DateLocalization()).fromSharp(val.Time);
+            // let dt = val.Time.replace('/Date(', '').replace(')/', '') * 1 - new Date().getTimezoneOffset() * 60 * 1000;
             let end = moment.unix(dt/1000);
 
             // add to raw data
@@ -604,31 +606,36 @@ export class Chart
 
             // Show highlights
             $('#' + container).bind('mousemove touchmove touchstart', function (e) { self.showHighlights(e) });
+            $('#' + container).bind('mouseleave', function (e) { self.showHighlights(e, 1) });
 
 
-            Highcharts.Point.prototype.highlight = function (event, data) {
+            Highcharts.Point.prototype.highlight = function (event, data, isClose = 0) {
                 //this.onMouseOver(); // Show the hover marker
                 //this.series.chart.tooltip.refresh(this); // Show the tooltip
                 if (!data) return;
 
-                var localDate = new Date(data.date + new Date().getTimezoneOffset() * 60 * 1000);
+                // var localDate = new Date(data.date + new Date().getTimezoneOffset() * 60 * 1000);
 
-                self.createLabel(Highcharts.charts[0],
-                    '<b>Datetime:</b> ' + //('0' + localDate.getMonth() + 1).slice(-2) +
-//                        '-' + ('0' + localDate.getDate()).slice(-2) +
-//                        '-' + localDate.getFullYear() +
-                        ' ' + ('0' + localDate.getMonth()).slice(-2) +
-                        '/' + ('0' + localDate.getDay()).slice(-2) +
-                        '/' + ('0' + localDate.getFullYear()).slice(-2) +
-                        ' ' + ('0' + localDate.getHours()).slice(-2) +
-                        ':' + ('0' + localDate.getMinutes()).slice(-2) +
-                        ':' + ('0' + localDate.getSeconds()).slice(-2) + ' ' +
+                var $label = '<b>Time:</b> ' + //('0' + localDate.getMonth() + 1).slice(-2) +
+// //                        '-' + ('0' + localDate.getDate()).slice(-2) +
+// //                        '-' + localDate.getFullYear() +
+//                     ' ' + ('0' + localDate.getMonth()).slice(-2) +
+//                     '/' + ('0' + localDate.getDay()).slice(-2) +
+//                     '/' + ('0' + localDate.getFullYear()).slice(-2) +
+//                     ' ' + ('0' + localDate.getHours()).slice(-2) +
+//                     ':' + ('0' + localDate.getMinutes()).slice(-2) +
+//                     ':' + ('0' + localDate.getSeconds()).slice(-2) + ' ' +
+                    (new DateLocalization()).unixToLocalDate({timestamp: data.date, format: "d MMM YY h:mm:ss "}) +
                     '<b>Vol:</b> ' + data.volume.toString().substr(0, 3) + '  <br/> ' +
                     '<b>Close:</b> ' + parseFloat("0" + data.close).toFixed(2).substr(1, 3) + ' ' +
                     '<b>Open:</b> ' + parseFloat("0" + data.open).toFixed(2).substr(1, 3) + ' ' +
                     '<b>Low:</b> ' + parseFloat("0" + data.low).toFixed(2).substr(1, 3) + ' ' +
-                    '<b>High:</b> ' + parseFloat("0" + data.high).toFixed(2).substr(1, 3) + ' '
+                    '<b>High:</b> ' + parseFloat("0" + data.high).toFixed(2).substr(1, 3) + ' ';
+                self.createLabel(Highcharts.charts[0],
+                    !isClose ? $label : ""
                 );
+
+
                 this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
             };
 
@@ -1033,7 +1040,7 @@ export class Chart
 
 
 
-    private showHighlights(e)
+    private showHighlights(e, isClose = 0)
     {
         // TODO: через индекс
         $(Highcharts.charts).each(function ()
@@ -1107,7 +1114,7 @@ export class Chart
                     //
                     //     }
                     // }
-                    point.highlight(e, data);
+                    point.highlight(e, data, isClose);
                 }
             } catch (e) {
                 __DEV__&&console.warn( 'e', e );

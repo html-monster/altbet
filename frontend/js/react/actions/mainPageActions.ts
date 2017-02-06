@@ -107,7 +107,7 @@ class Actions extends BaseActions
 
         props.ismirror && !props.isempty && (bpr = Common.toFixed(1 - bpr, 2));
 
-0||console.debug( '!!props.isempty', !!props.isempty );
+// 0||console.debug( '!!props.isempty', !!props.isempty );
         let outStruc = {
             "ID": `${props.data.exdata.Exchange}_${props.data.exdata.Name}_${props.data.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
             "EventTitle": props.ismirror ? props.data.exdata.AwayName : props.data.exdata.HomeName,

@@ -8,7 +8,7 @@ import { WebsocketModel } from '../models/Websocket';
 import { SocketSubscribe } from '../models/SocketSubscribe';
 
 
-var __LDEV__ = false;
+var __LDEV__ = true;
 
 class Actions extends BaseActions
 {

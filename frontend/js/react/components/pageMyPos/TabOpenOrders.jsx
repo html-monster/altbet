@@ -29,7 +29,7 @@ export class TabOpenOrders extends React.Component
     render()
     {
         var {data: openOrdersData} = this.props;
-0||console.debug( 'openOrdersData', openOrdersData );
+// 0||console.debug( 'openOrdersData', openOrdersData );
 
         // filter btn
         var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "1"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '2'} htmlFor={inCatName + "1"} className={inCatName.toLowerCase().replace("-", "_")}><span className="sub_tab">{inCatName}</span></label>];
@@ -74,7 +74,7 @@ export class TabOpenOrders extends React.Component
                                                             {(item.isMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}
                                                             <span className="muted">{$handicap && ` (${$handicap})`}</span>
                                                             <br />
-                                                            <span className="fullname muted">{item.Symbol.FullName}</span>
+                                                            <span className="fullname muted">{item.Symbol.HomeName} - {item.Symbol.AwayName}</span>
                                                         </td>
                                                         <td>
                                                             <span className="timestamp help">
