@@ -226,7 +226,7 @@ export class IndexController extends BaseController
 
 
     /**
-     * Delete category
+     * Delete exchange
      * @param ee
      */
     private onDelControlClick(ee)

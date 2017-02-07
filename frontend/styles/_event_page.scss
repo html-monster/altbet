@@ -2,14 +2,11 @@
   //background-color: #f8f8f8;
   //margin: 0 30px;
   padding-bottom: 25px;
-  h1 {
-    text-transform: uppercase;
-    font-size: 18px;
-    //color: transparentize($main-color, 0.3);
-		color: $main-color;
-		margin-bottom: 15px;
-    text-align: left;
-		//&.fadeColorOut {  animation-name: fadeColorOutSell;  }
+  h1 { margin-bottom: 15px; text-transform: uppercase; font-size: 18px; color: $main-color; text-align: left;
+    a { color: $main-color;
+      &.active { color: $color3About; }
+      &:hover { color: #fff; }
+    }
   }
 	h2{
 		padding-bottom: 15px;
