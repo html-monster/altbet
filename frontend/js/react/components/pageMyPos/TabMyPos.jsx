@@ -1,6 +1,7 @@
 import React from 'react';
 
-import {DateLocalization} from '../../models/DateLocalization';
+// import {DateLocalization} from '../../models/DateLocalization';
+import {Dialog} from '../../models/Dialog.ts';
 
 
 export class TabMyPos extends React.Component
@@ -24,6 +25,23 @@ export class TabMyPos extends React.Component
         this.state.filters[ee.target.dataset.filter] = !this.state.filters[ee.target.dataset.filter];
         this.setState({...this.state});
     }
+
+
+	_handleCloseOut(symbol, ee)
+	{
+        var {actions} = this.props;
+        0||console.debug( 'ee=', ee, symbol );
+
+	    new Dialog({
+            render: true,
+            vars: {
+                contentHtml: 'Please, confirm your action',
+                btn1Text: "Yes",
+                btn2Text: "No",
+            },
+            callbackOK: () => 0||console.debug( 'actions.actionOnCloseOutClick(symbol)', actions.actionOnCloseOutClick({symbol}) ),
+	    });
+	}
 
 
     render()
@@ -86,7 +104,7 @@ export class TabMyPos extends React.Component
                                                                             {(item.CommonSymbolProfitLoss < 0 ? '($' + (item.CommonSymbolProfitLoss).toString().slice(1) + ')' : '$' + item.CommonSymbolProfitLoss)}
                                                                         </span>
                                                             </th>
-                                                            <th><button className="btn close_out wave" onClick={this.handleCloseOut}>Close Out</button></th>
+                                                            <th><button className="btn close_out wave" onClick={this._handleCloseOut.bind(this, `${item.Symbol.Exchange}_${item.Symbol.Name}_${item.Symbol.Currency}`)}>Close Out</button></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody className="showhide active">

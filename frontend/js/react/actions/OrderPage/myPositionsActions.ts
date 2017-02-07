@@ -67,6 +67,28 @@ class Actions extends BaseActions
             // });
         }
     }
+
+
+
+    public actionOnCloseOutClick(props)
+    {
+        return (dispatch, getState) =>
+        {
+            return {ok: props.symbol};
+            let jsonData = { Symbol: props.symbol };
+
+            defaultMethods.sendAjaxRequest({
+                httpMethod: 'POST',
+                // callback: this.callback,
+                url: globalData.rootUrl + 'order/closeout',
+                data: jsonData});
+
+            // dispatch({
+            //     type: ON_POS_PRICE_CLICK,
+            //     payload: {}
+            // });
+        }
+    }
 }
 
 export default (new Actions()).export();
