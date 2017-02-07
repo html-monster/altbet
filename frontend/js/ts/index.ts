@@ -31,7 +31,7 @@ export class ABpp
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
-    public ver = 0.3;
+    public ver = 0.31;
 
 
     // application config

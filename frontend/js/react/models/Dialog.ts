@@ -7,20 +7,17 @@
 // import {Loading} from "./Loading";
 
 
-export default class Dialog
+export class Dialog
 {
-    // private vars;
-    // private TPLName;
-    // private target;
-    // private afterInit;
-    // private callbackOK;
-    // private callbackCancel;
-/*
+    private dialogObj;
+
     private options = {
-            TPLName: '',
-            target: '',
             render: false,
-            vars: null,
+            vars: {
+                contentHtml: 'Please, confirm your action',
+                btn1Text: "Yes",
+                btn2Text: "No",
+            },
             afterInit: null,
             callbackCancel: null,
             callbackOK: null,
@@ -44,29 +41,33 @@ export default class Dialog
 
         if( inProps ) this.saveProps(inProps);
 
+            // vars: {
+            //     contentHtml: '',
+            //     btn1Text: "Yes",
+            //     btn2Text: "No",
+            // }
+        let $wrapper = $("[data-js-dialog-win]");
+        this.dialogObj = $wrapper;
+        $("[data-js-btn1]", $wrapper).text(this.options.vars.btn1Text);
+        $("[data-js-btn2]", $wrapper).text(this.options.vars.btn2Text);
+        $("[data-js-message]", $wrapper).text(this.options.vars.contentHtml);
 
-        var source = $(this.options.TPLName).html();
-        var template = Handlebars.compile(source);
-        var html = template(this.options.vars);
+
+        $("[data-js-wrapper]", $wrapper).click(function(e) { self.onWrapperClick(e, this) });
+        $("[data-js-btn2]", $wrapper).click(function(e) { self.onBtn2Click(e, this) });
+        $("[data-js-btn1]", $wrapper).click(function(e) { self.onBtn1Click(e, this) });
 
 
-        $(this.options.target).html(html);
-        $("[data-js=cancel], [data-js=BtnClose]", this.options.target).click(function(e) { self.onCloseClick(e, this) });
-        $("[data-js=wrapper]", this.options.target).click(function(e) { self.onWrapperClick(e, this) });
-        $("[data-js=ok]", this.options.target).click(function(e) { self.onOkClick(e, this) });
+        $($wrapper).fadeIn(400);
 
-
-        $("[data-js=wrapper]", this.options.target).fadeIn(400);
-
-        this.options.afterInit && this.options.afterInit(this, this.options.target);
+        this.options.afterInit && this.options.afterInit(this, this.dialogObj);
     }
 
 
 
     public close()
     {
-        if (this.options.callbackCancel) this.options.callbackCancel();
-        $("[data-js=wrapper]", this.options.target).fadeOut(200);
+        $(this.dialogObj).fadeOut(200);
     }
 
 
@@ -74,41 +75,38 @@ export default class Dialog
     private saveProps(inProps)
     {
         this.options = Object.assign({}, this.options, inProps);
-
-        // if (inProps.TPLName) this.options.TPLName = inProps.TPLName;
-        // if (inProps.target) this.options.target = inProps.target;
-        // if (inProps.vars) this.options.vars = inProps.vars;
-        // if (inProps.callbackOK) this.options.callbackOK = inProps.callbackOK;
-        // if (inProps.callbackCancel) this.options.callbackCancel = inProps.callbackCancel;
     }
 
 
 
-    private onCloseClick(ee, that)
+    private onBtn2Click(ee, that)
     {
-        this.close();
+        if( this.options.callbackCancel )
+        {
+            if (this.options.callbackCancel()) this.close();
+        }
+        else
+        {
+            this.close();
+        } // endif
     }
 
 
 
     private onWrapperClick(ee, that)
     {
-        if( $(ee.target).data('js') == 'wrapper' )
+        if( $(ee.target).data('js-wrapper') == 'wrapper' )
         {
-            this.onCloseClick(ee, that);
+            this.close();
         } // endif
     }
 
 
 
-    private onOkClick(e, that)
+    private onBtn1Click(ee, that)
     {
-        e.stopPropagation();
-
-        (new Loading).showLoading({targetElm: $('[data-js=loading]', this.options.target), element: $("[data-js=ok]", this.options.target), pic: 2, outerAlign: Loading.ALIGN_OUTER_LEFT, offsetX: 4, position: Loading.POS_INLINE});
-
         if (this.options.callbackOK)
-            if (this.options.callbackOK(event))
-                $("[data-js=wrapper]", this.options.target).fadeOut(200);
-    }*/
+            if (this.options.callbackOK(ee, this.dialogObj))
+                $("[data-js=wrapper]", this).fadeOut(200);
+    }
 }
