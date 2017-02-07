@@ -72,16 +72,19 @@ class Actions extends BaseActions
 
     public actionOnCloseOutClick(props)
     {
+        // {event: ee, that: self, resolve, reject}
         return (dispatch, getState) =>
         {
-            return {ok: props.symbol};
-            let jsonData = { Symbol: props.symbol };
-
             defaultMethods.sendAjaxRequest({
                 httpMethod: 'POST',
-                // callback: this.callback,
-                url: globalData.rootUrl + 'order/closeout',
-                data: jsonData});
+                dataType: "text",
+                callback: () => 0||console.log( 'props.resolve()', props.resolve() ),
+                onError: props.reject.bind(1),
+                url: ABpp.baseUrl + '/order/closeout',
+                // url: 'http://localhost/AltBet.Admin/Category/TestAction',
+                data: { Symbol: props.symbol }});
+
+
 
             // dispatch({
             //     type: ON_POS_PRICE_CLICK,

@@ -1,4 +1,5 @@
 $clr1Status: #cccb35;
+$color2About: #b0afb0;
 
 
 ::-webkit-input-placeholder{
@@ -60,6 +61,8 @@ a.text_decoration, a.link{
 	color: $link-color;
 	@include text-decoration;
 }
+
+.nowrap { white-space: nowrap; }
 
 button {
   height: 30px;
@@ -539,14 +542,15 @@ label.disabled{
 .pop_up_container { display: flex; height: 100%; }
 .pop_up_content { margin: auto; padding: 15px; background: $bg_color; border-radius: 6px; }
 
+// BM: new dialog
 .dialog-win { @extend .pop_up;
   &__container { @extend .pop_up_container }
-  &__content { @extend .pop_up_content; position: relative; display: block; padding: 10px; width: 300px; background: #211e25;
+  &__content { @extend .pop_up_content; position: relative; display: block; margin-top: 25%; padding: 10px; background: #211e25;
       border-radius: 4px; border: 1px solid #000; text-align: center;
-    &::before { content: ''; position: absolute; display: block; top: -10px; left: -10px; width: 320px; height: calc(100% + 20px); z-index: -1;
+    &::before { content: ''; position: absolute; display: block; top: -10px; left: -10px; width: calc(100% + 20px); height: calc(100% + 20px); z-index: -1;
         background: linear-gradient(to bottom, #53515e, #292830); box-shadow: 0 0 20px -1px rgba(0, 0, 0, 0.5); border-radius: 4px; }
   }
-  &__message { color: #53515e; }
+  &__message { color: $color2About; }
   &__buttons { display: flex; justify-content: center; }
   button { display: block; margin: 15px 5px 0; width: 75px; }
   button.btn1 { background-image: linear-gradient(to bottom, #84d65b, #4dac2e); }

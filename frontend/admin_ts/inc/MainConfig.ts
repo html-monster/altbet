@@ -13,6 +13,7 @@ export class MainConfig
 
     // public static AJAX_TEST = 'Category/GetAjax';
     public static AJAX_TEST = 'Category/EditCategory?catery=nfl';
+    // public static AJAX_TEST = 'http://localhost/AltBet.Admin/Category/TestAction';
     public static AJAX_CATEGORY_ADD = 'Category/AddCategory';
     public static AJAX_CATEGORY_EDIT = 'Category/ChangeCategory';
     public static AJAX_EXCH_GET = 'Home/EditExchange';

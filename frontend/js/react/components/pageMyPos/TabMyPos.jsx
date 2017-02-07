@@ -27,19 +27,18 @@ export class TabMyPos extends React.Component
     }
 
 
-	_handleCloseOut(symbol, ee)
+	_handleCloseOut({symbol, name}, ee)
 	{
         var {actions} = this.props;
-        0||console.debug( 'ee=', ee, symbol );
 
 	    new Dialog({
             render: true,
             vars: {
-                contentHtml: 'Please, confirm your action',
+                contentHtml: `<span class="nowrap">Close out symbol “${name}” ?</span>`,
                 btn1Text: "Yes",
                 btn2Text: "No",
             },
-            callbackOK: () => 0||console.debug( 'actions.actionOnCloseOutClick(symbol)', actions.actionOnCloseOutClick({symbol}) ),
+            callbackOK: (inProps) => actions.actionOnCloseOutClick({symbol, ...inProps}),
 	    });
 	}
 
@@ -104,7 +103,7 @@ export class TabMyPos extends React.Component
                                                                             {(item.CommonSymbolProfitLoss < 0 ? '($' + (item.CommonSymbolProfitLoss).toString().slice(1) + ')' : '$' + item.CommonSymbolProfitLoss)}
                                                                         </span>
                                                             </th>
-                                                            <th><button className="btn close_out wave" onClick={this._handleCloseOut.bind(this, `${item.Symbol.Exchange}_${item.Symbol.Name}_${item.Symbol.Currency}`)}>Close Out</button></th>
+                                                            <th><button className="btn close_out wave" onClick={this._handleCloseOut.bind(this, {symbol: `${item.Symbol.Exchange}_${item.Symbol.Name}_${item.Symbol.Currency}`, name: item.Symbol.HomeName + ' - ' + item.Symbol.AwayName})}>Close Out</button></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody className="showhide active">

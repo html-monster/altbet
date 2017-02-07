@@ -43,7 +43,7 @@ class EventOrders extends React.Component
 		let yourOrdersData = this.props.yourOrders;
 		return <div className="tab_item" id="current-orders">
 			{
-				yourOrdersData.yourOrders.map((item, index) =>
+				ABpp.User.login != "" ? yourOrdersData.yourOrders.map((item, index) =>
 					<GroupingOrder
 							key={item.ID}
 							indexGr={index}
@@ -53,6 +53,8 @@ class EventOrders extends React.Component
 							actions={this.props.actions}
 					/>
 				)
+				:
+				<p className="default_order_info">You must login to see your orders</p>
 			}
 		</div>
 	}
