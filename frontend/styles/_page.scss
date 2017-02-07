@@ -1,16 +1,15 @@
-$colorAbout: #b0afb0;
 //$colorAbout: $colorAbout;
 .content.page{
 	padding: 15px;
-	color: $colorAbout;
+	color: $color2About;
 	.page_wrapper{  padding: 0 5px;  }
 	.page_content_plan{
 		margin-bottom: 10px;
 		li{  display: block;  }
 		a{
-			color: $colorAbout;
-			&:visited{  color: transparentize($colorAbout, 0.4);  }
-			&:hover{  color: $colorAbout * 1.8;  }
+			color: $color2About;
+			&:visited{  color: transparentize($color2About, 0.4);  }
+			&:hover{  color: $color2About * 1.8;  }
 			&:before{  display: none;  }
 		}
 	}

@@ -197,16 +197,18 @@ class defaultMethods{
 	 * @param context - форма с которой идет вызов(нужна для серилизации данных)
 	 * @param data - сформированный объект данных для отправки
 	 */
-	static sendAjaxRequest({httpMethod = 'POST', callback = null, onError = null, beforeSend = null, url, context = null, data = null}) {
+	static sendAjaxRequest({httpMethod = 'POST', callback = null, onError = null, beforeSend = null, url, context = null, data = null, dataType = 'json'}) {
 		if(!data && callback) data = context.serialize();
 		if(!data && !context) {
 			console.error('для ajax нужно передать данные или контекст вызова');
 			return false;
 		}
+		// 0||console.log( 'here', callback, url );
+		// callback();
 		$.ajax({
 			url: url,
 			type: httpMethod,
-			dataType: 'json',
+			dataType: dataType,
 			data: data,
 			success: callback,
 			error: onError,

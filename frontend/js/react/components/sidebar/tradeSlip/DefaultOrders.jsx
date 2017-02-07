@@ -110,7 +110,7 @@ export default class DefaultOrders extends React.Component
 			>
 				{
 					(data && data.length == 0) ?
-						<p id="default_order_info" className="animated">MAKE YOUR SELECTION(S) ON THE LEFT BY CLICKING ON THE PRICES. OR TURN ON ACTIVE BETTOR ABOVE.</p>
+						<p id="default_order_info" className="default_order_info animated">{ABpp.User.login != "" ? "MAKE YOUR SELECTION(S) ON THE LEFT BY CLICKING ON THE PRICES. OR TURN ON ACTIVE BETTOR ABOVE." : "You must login to make orders"}</p>
 						:
 						/* // BM: --------------------------------------------------- NEW ORDER ---*/
 						data.map((item) =>

@@ -12,7 +12,8 @@ export class Dialog
     private dialogObj;
 
     private options = {
-            render: false,
+            target: "[data-js-dialog-mp]",  // mount point for html template
+            render: false,                  // render after construct
             vars: {
                 contentHtml: 'Please, confirm your action',
                 btn1Text: "Yes",
@@ -46,18 +47,25 @@ export class Dialog
             //     btn1Text: "Yes",
             //     btn2Text: "No",
             // }
-        let $wrapper = $("[data-js-dialog-win]");
+        let $wrapper = $("[data-js-dialog-win].template").clone().removeClass("template");
         this.dialogObj = $wrapper;
-        $("[data-js-btn1]", $wrapper).text(this.options.vars.btn1Text);
+
+
+
+        // apply dialog vars
+        $("[data-js-btn1]", $wrapper).prop("disabled", false).text(this.options.vars.btn1Text);
         $("[data-js-btn2]", $wrapper).text(this.options.vars.btn2Text);
-        $("[data-js-message]", $wrapper).text(this.options.vars.contentHtml);
+        $("[data-js-message]", $wrapper).html(this.options.vars.contentHtml);
 
 
         $("[data-js-wrapper]", $wrapper).click(function(e) { self.onWrapperClick(e, this) });
+        // cancel btn
         $("[data-js-btn2]", $wrapper).click(function(e) { self.onBtn2Click(e, this) });
+        // yes btn
         $("[data-js-btn1]", $wrapper).click(function(e) { self.onBtn1Click(e, this) });
 
 
+        $("[data-js-dialog-mp]").empty().append($wrapper);
         $($wrapper).fadeIn(400);
 
         this.options.afterInit && this.options.afterInit(this, this.dialogObj);
@@ -105,8 +113,31 @@ export class Dialog
 
     private onBtn1Click(ee, that)
     {
+        var self = this;
+
+        var $target = $(ee.target);
+        $target.prop("disabled", true);
+        0||console.log( 'btn 1 click', 0 );
+
         if (this.options.callbackOK)
-            if (this.options.callbackOK(ee, this.dialogObj))
-                $("[data-js=wrapper]", this).fadeOut(200);
+        {
+            var $Promise = new Promise((resolve, reject) =>
+            {
+                this.options.callbackOK({event: ee, that: self, resolve, reject});
+            });
+
+
+            $Promise.then(
+                () => $(this.dialogObj).fadeOut(200),
+                (isClose = 0) =>
+                {
+                    // 0||console.log( 'here rej', isClose );
+                    $target.prop("disabled", false);
+                    isClose && $(this.dialogObj).fadeOut(200)
+                }
+            );
+        } // endif
+
+
     }
 }
