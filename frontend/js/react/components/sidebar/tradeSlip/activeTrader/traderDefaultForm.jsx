@@ -21,7 +21,8 @@ export default class TraderDefaultForm extends React.Component {
 					key={direction}
 		>
 			<div className={direction == 'sell' ? 'sell-container' : 'buy-container'}>
-				<form action={ABpp.baseUrl + '/Order/Create'} autoComplete="off" ref={'defaultFrom'}
+				<form action={ABpp.baseUrl + '/Order/Create'}
+					  autoComplete="off"
 					  onSubmit={traderActions.actionOnAjaxSend.bind(null, this)}
 				>
 					<div className="container">
@@ -44,8 +45,8 @@ export default class TraderDefaultForm extends React.Component {
 									   type="text" ref={'inputQuantity'} value={quantity}/>
 								<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>
 								<div className="regulator">
-												<span className="plus" title="Press Arrow Up"
-													  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, 1)}>{}</span>
+									<span className="plus" title="Press Arrow Up"
+										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, 1)}>{}</span>
 									<span className="minus" title="Press Arrow Down"
 										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, -1)}>{}</span>
 								</div>

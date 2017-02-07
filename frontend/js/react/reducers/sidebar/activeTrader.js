@@ -7,7 +7,8 @@ import {
 	TRADER_ON_QUANTITY_CHANGE,
 	TRADER_ON_SPREAD_CHANGE,
 	TRADER_ON_ADD_ORDER,
-	TRADER_ON_DELETE_ORDER
+	TRADER_ON_DELETE_ORDER,
+	TRADER_ON_SPREAD_HIGHLIGHT
 } from '../../constants/ActionTypesActiveTrader';
 import RebuildServerData from '../../actions/Sidebar/activeTrader/rebuildServerData';
 
@@ -15,25 +16,29 @@ const initialState = {
 	data: {},
 	isMirror: 0,
 	rebuiltServerData:[],
-	spread: '',
-	quantity: '',
+	spread: 0.1,
+	spreadHighLight: [],
+	quantity: 10,
 	orderInfo: {
-		price: null,
 		activeString: null,
-		showDefaultOrder: false,
 		direction: null,
-		limit: true
-	}
+		limit: true,
+		price: null,
+		showSpreadOrder: false,
+		showDefaultOrder: false,
+		showDirectionConfirm: false
+	},
 };
 let price = 0.99;
 for(let ii = 1; ii <= 99; ii++)
 {
-	initialState.rebuiltServerData.push(new RebuildServerData({price}));
+	initialState.rebuiltServerData.push(new RebuildServerData({price, data: initialState.data}));
 	price = Math.round10(price - 0.01, -2);
 }
 
 export default function activeTrader(state = initialState, action)
 {
+	let orderInfo;
 	switch (action.type)
 	{
 		case TRADER_ON_QUANTITY_CHANGE:
@@ -46,10 +51,15 @@ export default function activeTrader(state = initialState, action)
 			return {...state, data: action.payload.data, isMirror: action.payload.isMirror, rebuiltServerData: action.payload.rebuiltServerData };
 
 		case TRADER_ON_ADD_ORDER:
-			return {...state, orderInfo: {...action.payload}};
+			orderInfo = Object.assign(state.orderInfo, {...action.payload});
+			return {...state, orderInfo: {...orderInfo} };
 
 		case TRADER_ON_DELETE_ORDER:
-			return {...state, orderInfo: {...action.payload}};
+			orderInfo = Object.assign(state.orderInfo, {...action.payload});
+			return {...state, orderInfo: {...orderInfo}};
+
+		case TRADER_ON_SPREAD_HIGHLIGHT:
+			return {...state, spreadHighLight: action.payload};
 
 		default:
 			return state

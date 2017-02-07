@@ -6,7 +6,8 @@ import {
 	TRADER_ON_QUANTITY_CHANGE,
 	TRADER_ON_SPREAD_CHANGE,
 	TRADER_ON_ADD_ORDER,
-	TRADER_ON_DELETE_ORDER
+	TRADER_ON_DELETE_ORDER,
+	TRADER_ON_SPREAD_HIGHLIGHT
 } from '../../constants/ActionTypesActiveTrader';
 import BaseActions from '../BaseActions';
 import RebuildServerData from '../Sidebar/activeTrader/rebuildServerData';
@@ -66,8 +67,8 @@ class Actions extends BaseActions
 
 				setTimeout(activeTraderClass.scrollTo(), 100);
 				tbody.addClass('scroll_dis');
-				activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), true);
-				activeTraderClass.spreaderChangeVal(trader.find('input.spreader'));
+				// activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), true);
+				// activeTraderClass.spreaderChangeVal(trader.find('input.spreader'));
 			});
 		};
 
@@ -233,7 +234,16 @@ class Actions extends BaseActions
 				payload: ''
 			});
 		}
+	}
 
+	public actionOnSpreadHighLight(highLightElem)
+	{
+		return (dispatch) => {
+			dispatch({
+				type: TRADER_ON_SPREAD_HIGHLIGHT,
+				payload: highLightElem
+			});
+		}
 	}
 
 	// public takeActiveFormContext(context)
@@ -250,7 +260,7 @@ class Actions extends BaseActions
 			let price = 0.99,
 				backendData = this.objectReconstruct(copyData.Orders, isMirror),
 				htmlData = [];
-				// className = 'ask';
+			// let className = 'ask';
 
 			for(let ii = 1; ii <= 99; ii++)
 			{
@@ -263,7 +273,6 @@ class Actions extends BaseActions
 				}));
 				price = Math.round10(price - 0.01, -2);
 			}
-
 
 
 			/*function object() {
@@ -304,7 +313,7 @@ class Actions extends BaseActions
 			return htmlData;		}
 	}
 
-	public actionAddOrder(data, index)
+	public actionAddDefaultOrder(data, index)
 	{
 		return (dispatch) => {
 			dispatch({
@@ -314,7 +323,54 @@ class Actions extends BaseActions
 					direction:  data.direction,
 					price: data.price,
 					limit:  data.limit,
-					showDefaultOrder:  true
+					showDirectionConfirm:  false,
+					showDefaultOrder:  true,
+					showSpreadOrder:  false,
+				}
+			});
+		}
+	}
+
+	public actionAddSpreadOrder(data, index, event)
+	{
+		return (dispatch) => {
+			event.stopPropagation();
+			dispatch({
+				type: TRADER_ON_ADD_ORDER,
+				payload: {
+					activeString: index,
+					direction: data.direction,
+					price: data.price,
+					showDefaultOrder:  false,
+					showSpreadOrder:  true
+				}
+			});
+		}
+	}
+
+	public actionShowDirectionConfirm(index, event)
+	{
+		return (dispatch) => {
+			event.stopPropagation();
+			dispatch({
+				type: TRADER_ON_ADD_ORDER,
+				payload: {
+					activeString: index,
+					showDirectionConfirm:  true,
+					showDefaultOrder:  false,
+					showSpreadOrder:  false
+				}
+			});
+		}
+	}
+
+	public actionHideDirectionConfirm()
+	{
+		return (dispatch) => {
+			dispatch({
+				type: TRADER_ON_ADD_ORDER,
+				payload: {
+					showDirectionConfirm:  false,
 				}
 			});
 		}
@@ -325,7 +381,10 @@ class Actions extends BaseActions
 		return (dispatch) => {
 			dispatch({
 				type: TRADER_ON_DELETE_ORDER,
-				payload: {showDefaultOrder: false}
+				payload: {
+					showDefaultOrder: false,
+					showSpreadOrder: false
+				}
 			});
 		}
 	}
@@ -338,7 +397,7 @@ class Actions extends BaseActions
 
 			function OnBeginAjax()
 			{
-				$(context.refs.defaultFrom).find('[type=submit]').attr('disabled', 'true');
+				$(event.target).find('[type=submit]').attr('disabled', 'true');
 			}
 
 			function onSuccessAjax()
@@ -349,17 +408,17 @@ class Actions extends BaseActions
 
 			function onErrorAjax()
 			{
-				$(context.refs.defaultFrom).find('[type=submit]').removeAttr('disabled');
+				$(event.target).find('[type=submit]').removeAttr('disabled');
 				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 			}
 
 			defaultMethods.sendAjaxRequest({
 				httpMethod: 'POST',
-				url: $(context.refs.defaultFrom).attr('action'),
+				url: $(event.target).attr('action'),
 				callback: onSuccessAjax,
 				onError: onErrorAjax,
 				beforeSend: OnBeginAjax,
-				context: $(context.refs.defaultFrom)
+				context: $(event.target)
 			});
 		}
 	}

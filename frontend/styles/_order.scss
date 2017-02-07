@@ -460,13 +460,14 @@
       }
       td{
         user-select: none;
-        transition: 0.4s ease-out;
+        transition: 0s;
         &:nth-of-type(1){  width: 60px;  }
         &:nth-of-type(5){  width: 68px; }
         &.active{  cursor: pointer;  }
         &.price_value.active{
           position: relative;
           z-index: 4;
+          &:hover{  background: #ffc11a !important;  }
           &:not(.best_buy):not(.best_sell){
             background: $trader_spread_button_bg;
           }
@@ -559,6 +560,7 @@
       //visibility: hidden;
       position: absolute;
       left: 0;
+      right: 0;
       z-index: 10;
       //margin: 0;
       margin-top: 10px;
@@ -575,6 +577,12 @@
         //margin-top: 0 !important;
         //visibility: visible;
         //opacity: 1 !important;
+      }
+      &.spread i.submit{
+        width: 100%;
+        height: 100%;
+        position: relative;
+        z-index: 1;
       }
       form{
         margin-bottom: 0;
@@ -672,7 +680,7 @@
     //animation-duration: 0.5s;
     //animation-fill-mode: both;
   }
-  .spread_confim{
+  .spread_confirm{
     width: 100%;
     height: 100%;
     position: absolute;
@@ -682,7 +690,7 @@
     transition: 0.4s ease-out;
     .sell, .buy{
       display: block;
-      width: 0;
+      width: 1%;
       height: 100%;
       color: #ffffff;
       text-align: center;
@@ -692,26 +700,30 @@
       padding: 0;
       transition: 0.4s ease-out;
       overflow: hidden;
+      opacity: 0;
     }
     .sell{
-      left: 100%;
+      left: calc(100% + 1px);
       background-image: linear-gradient(to bottom, #f88447, #ef4d22);
     }
     .buy{
-      right: 100%;
+      right: calc(100% + 1px);
       background-image: linear-gradient(to bottom, #64c9ef, #3498da);
     }
     &.active{
-      span.confim_button{
-        border: 1px solid $order_sidebar_order_border_color;
-      }
+      //span.confirm_button{
+      //  border: 1px solid $order_sidebar_order_border_color;
+      //}
       .sell, .buy{
-        width: calc(100% + 1px);
-        height: calc(100% + 2px);
+        width: 100%;
+        //height: calc(100% + 2px);
+        //transform: scaleX(100);
         padding: 0 5px;
-        top: -1px;
+        //top: -1px;
+        top: 0;
+        opacity: 1;
       }
-      .sell{  width: calc(100% + 2px);  }
+      //.sell{  width: calc(100% + 3px);  }
     }
   }
   .order_content {
@@ -1007,11 +1019,6 @@
       .success, .delete{
         width: 20% !important;
         height: 59px !important;
-      }
-      .success_btn{
-        border: none;
-        position: relative;
-        z-index: 1;
       }
       .delete{
         &:hover{  background: $trader_order_button_hover;  }

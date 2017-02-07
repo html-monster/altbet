@@ -195,8 +195,8 @@ class Actions extends BaseActions
                 activeTrader.attr('id', 'trader_' + inProps.symbol);
                 activeTrader.find('table.limit tbody').removeClass('scroll_dis');
 
-                activeTraderClass.spreaderClean(true);
-                activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);
+                // activeTraderClass.spreaderClean(true);
+                // activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);
             } // endif
 
             // 0||console.log( 'inProps, val.Symbol.Exchange', inProps, inProps.name, inProps.isMirror );

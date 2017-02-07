@@ -234,24 +234,24 @@
 			// 	}, 400);
 			// });
 
-			function takeSpreadPrice(context) {
-				var price1, price2, spreadVal = +$('.active_trader input.spreader').val();
+			// function takeSpreadPrice(context) {
+			// 	var price1, price2, spreadVal = +$('.active_trader input.spreader').val();
+			//
+			// 	if(context.hasClass('ask')){
+			// 		price2 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
+			// 		price1 = (+price2 - spreadVal).toFixed(2);
+			// 		price1 = price1 < 0.01 ? 0.01 : price1;
+			// 	}
+			// 	else{
+			// 		price1 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
+			// 		price2 = (+price1 + spreadVal).toFixed(2);
+			// 		price2 = price2 > 0.99 ? 0.99 : price2;
+			// 	}
+			//
+			// 	return {price1, price2};
+			// }
 
-				if(context.hasClass('ask')){
-					price2 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
-					price1 = (+price2 - spreadVal).toFixed(2);
-					price1 = price1 < 0.01 ? 0.01 : price1;
-				}
-				else{
-					price1 = context.parents('tr').find('.price_value .value').text().replace(/[^0-9.]+/g, "");
-					price2 = (+price1 + spreadVal).toFixed(2);
-					price2 = price2 > 0.99 ? 0.99 : price2;
-				}
-
-				return {price1, price2};
-			}
-
-			function addOrder(context, event) {
+			/*function addOrder(context, event) {
 				var position = context.position().top + 25,
 						price = context.find('.price').text().replace(/[^0-9.]+/g, "") || context.parent().find('.price_value .value').text().replace(/[^0-9.]+/g, ""),
 						quantity = +trader.find('input.quantity').val();
@@ -383,7 +383,7 @@
 					else
 						html.find('.mirror').val(1);
 				}
-			}
+			}*/
 
 			// $('.active_trader input.spreader').mouseup(function () {
 			// 	var value = +$(this).val() || '0.';
@@ -391,15 +391,15 @@
 			// 	$(this)[0].selectionStart = value.length;
 			// });
 
-			$('.order label input.auto').change(function () {
-				if($(this).prop('checked')){
-					trader.find('#order_content').remove();
-					trader.find('.spread_confim').remove();
-					globalData.autoTradeOn = true;
-				}
-				else
-					globalData.autoTradeOn = false;
-			});
+			// $('.order label input.auto').change(function () {
+			// 	if($(this).prop('checked')){
+			// 		trader.find('#order_content').remove();
+			// 		trader.find('.spread_confim').remove();
+			// 		globalData.autoTradeOn = true;
+			// 	}
+			// 	else
+			// 		globalData.autoTradeOn = false;
+			// });
 
 		}();
 
@@ -620,7 +620,7 @@
 	 * @param current дом узел (кнопки или поля ввода в контрольной панеле трейдера)
 	 * @param recalc bool (вызывает функцию пересчета recaluculateSum для пересчета кол. и суммы в контрольной панеле и в вызваном ордере одновременно)
 	 */
-	static buttonActivation(current, recalc) {
+	// static buttonActivation(current, recalc) {
 		// if(current.parents('.active_trader').length){
 		// 	var	html = '<div class="regulator min" style="display: none;"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>',
 		// 			input = $('.active_trader input.quantity'),
@@ -682,7 +682,7 @@
 		// 		input[0].selectionStart = input.val().length;
 		// 	}
 		// }
-	}
+	// }
 
 	/**
 	 * вычисляет в трейдере центр между бидом и аском
@@ -713,7 +713,7 @@
 	 * удаляет вызванный ордер в трейдере, дизактивирует все активные элементы в трейдере(сбрасывает его в изначальное состояние)
 	 * @param removeOrder
 	 */
-	static spreaderClean(removeOrder) {
+	// static spreaderClean(removeOrder) {
 		// $('.active_trader table.limit tbody tr').find('.price_value').removeClass('active');
 		// $('.active_trader input.spreader').val('');
 		// $('.active_trader table.limit td.best_buy').removeClass('active');
@@ -725,27 +725,27 @@
 		// 	$('.active_trader #order_content').remove();
 		// }
 		// $('.active_trader .spread_confim').remove();
-	}
+	// }
 
 	/**
 	 * для пересчета кол. и суммы в контрольной панеле и в вызваном ордере одновременно
 	 * @param item дом узел с которым ордер будет синхронизирован в пересчете
 	 */
-	static recaluculateSum(item){
-		var order_content = $('#order_content'),
-				quantity = +item.text() || +item.val() || '',
-				price = +order_content.find('.price input').val();
-
-		if(item.parents('td.button.quantity').length)
-			quantity = order_content.find('.volume input').val();
-		else
-			$('.active_trader .volume input').not(item).val(quantity);
-
-		if(order_content.find('.sell-container').children().length)
-			order_content.find('.obligations input').val(((1 - price) * quantity).toFixed(2));
-		else
-			order_content.find('.obligations input').val((price * quantity).toFixed(2));
-	}
+	// static recaluculateSum(item){
+	// 	var order_content = $('#order_content'),
+	// 			quantity = +item.text() || +item.val() || '',
+	// 			price = +order_content.find('.price input').val();
+	//
+	// 	if(item.parents('td.button.quantity').length)
+	// 		quantity = order_content.find('.volume input').val();
+	// 	else
+	// 		$('.active_trader .volume input').not(item).val(quantity);
+	//
+	// 	if(order_content.find('.sell-container').children().length)
+	// 		order_content.find('.obligations input').val(((1 - price) * quantity).toFixed(2));
+	// 	else
+	// 		order_content.find('.obligations input').val((price * quantity).toFixed(2));
+	// }
 
 	//spread show/hide ===================================================================================================
 	/**
@@ -766,110 +766,110 @@
 	 * берет данные при смене события(название события, symbol и т.п.)
 	 * @param currentItem дом узел события с которого берется symbol
 	 */
-	static takeData(currentItem) {
-		var ii, priceSell = [], priceBuy = [], volumeSell = [], volumeBuy = [],
-				bestSell, bestBuy, currentPrice,
-				table = $('table.limit tbody tr'),
-				join_bid = $('.join_bid a'),
-				join_ask = $('.join_ask a'),
-				className = 'ask',
-				activeTrader = $('.active_trader');
-
-		if(currentItem.hasClass('content_bet'))
-			activeTrader.attr('id', 'trader_' + currentItem.find('.symbol_name').text());
-		else if(globalData.eventPageOn)
-			activeTrader.attr('id', 'trader_' + currentItem.attr('id'));
-		else
-			activeTrader.attr('id', 'trader_' + currentItem.parents('.content_bet').find('.symbol_name').text());
-
-		activeTrader.find('table.limit tbody').removeClass('scroll_dis');
-
-		currentItem = currentItem.hasClass('content_bet') ? currentItem.find('.table').children('.event-content').eq(0) : currentItem;
-		if(!(currentItem.hasClass('content_bet')))
-			currentItem.addClass('active');
-
-
-	/*	if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){// for development ==============
-			for(ii = 0; ii < currentItem.find('.sell').find('button.event').length; ii++){
-				priceSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.price').text());
-				volumeSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.volume').text());
-				bestSell = currentItem.find('.sell').find('button.event').eq(ii).find('.price').text();
-			}
-			for(ii = 0; ii < currentItem.find('.buy').find('button.event').length; ii++){
-				priceBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.price').text());
-				volumeBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.volume').text());
-			}
-			bestBuy = currentItem.find('.buy').find('button.event').eq(0).find('.price').text();
-
-			if(priceSell.length)
-				if(priceSell[0].search(/[0-9]+/i) == -1) bestSell = '';
-
-			if(priceBuy.length)
-				if(priceBuy[0].search(/[0-9]+/i) == -1) bestBuy = '';
-
-
-			join_bid.find('.price').text(bestSell);
-			join_ask.find('.price').text(bestBuy);
-
-			table.find('.size').removeClass('best_sell best_buy').find('.value').text('');
-			table.find('.my_size').find('.value').text('');
-			table.find('.price_value').removeClass('best_sell best_buy');
-		}
-
-		table.each(function () {
-			var current = $(this);
-			currentPrice = $(this).find('.price_value').text();
-			if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru') {// for development =============
-				if(defaultMethods.searchValue(priceSell, currentPrice) != -1){
-					ii = defaultMethods.searchValue(priceSell, currentPrice);
-					$(this).find('.size_sell').addClass('animated fadeOut').find('span.value').text(volumeSell[ii]);
-					if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_bids').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeSell[ii]));  // for development =============================================
-					var context = $(this);
-					setTimeout(function () {
-						context.find('.size_sell').removeClass('animated fadeOut');
-						context.find('.my_bids').removeClass('animated fadeOut'); // for development =============================================
-					}, 1000);
-					if(bestSell == currentPrice){
-						$(this).find('.size_sell').addClass('best_sell');
-						$(this).find('.price_value').addClass('best_sell');
-					}
-				}
-				if(defaultMethods.searchValue(priceBuy, currentPrice) != -1){
-					ii = defaultMethods.searchValue(priceBuy, currentPrice);
-					$(this).find('.size_buy').addClass('animated fadeOut').find('span.value').text(volumeBuy[ii]);
-					if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_offers').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeBuy[ii]));  // for development =============================================
-					var context = $(this);
-					setTimeout(function () {
-						context.find('.size_buy').removeClass('animated fadeOut');
-						context.find('.my_offers').removeClass('animated fadeOut'); // for development =============================================
-					}, 1000);
-					if(bestBuy == currentPrice){
-						$(this).find('.size_buy').addClass('best_buy');
-						$(this).find('.price_value').addClass('best_buy');
-					}
-				}
-			}
-
-			;(function separation() {
-				current = current.find('td.price_value');
-
-				current.removeClass('ask bid mid');
-				if(current.hasClass('best_sell')){
-					className = 'bid';
-				}
-				current.addClass(className);
-				if(current.hasClass('best_buy')){
-					if(activeTrader.find('.best_buy').length && activeTrader.find('.best_sell').length )
-						className = 'mid';
-					else
-						className = 'bid';
-				}
-			})();
-		});*/
-
-
-		// activeTraderClass.scrollTo();
-	}
+	// static takeData(currentItem) {
+	// 	var ii, priceSell = [], priceBuy = [], volumeSell = [], volumeBuy = [],
+	// 			bestSell, bestBuy, currentPrice,
+	// 			table = $('table.limit tbody tr'),
+	// 			join_bid = $('.join_bid a'),
+	// 			join_ask = $('.join_ask a'),
+	// 			className = 'ask',
+	// 			activeTrader = $('.active_trader');
+	//
+	// 	if(currentItem.hasClass('content_bet'))
+	// 		activeTrader.attr('id', 'trader_' + currentItem.find('.symbol_name').text());
+	// 	else if(globalData.eventPageOn)
+	// 		activeTrader.attr('id', 'trader_' + currentItem.attr('id'));
+	// 	else
+	// 		activeTrader.attr('id', 'trader_' + currentItem.parents('.content_bet').find('.symbol_name').text());
+	//
+	// 	activeTrader.find('table.limit tbody').removeClass('scroll_dis');
+	//
+	// 	currentItem = currentItem.hasClass('content_bet') ? currentItem.find('.table').children('.event-content').eq(0) : currentItem;
+	// 	if(!(currentItem.hasClass('content_bet')))
+	// 		currentItem.addClass('active');
+	//
+	//
+	// /*	if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){// for development ==============
+	// 		for(ii = 0; ii < currentItem.find('.sell').find('button.event').length; ii++){
+	// 			priceSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.price').text());
+	// 			volumeSell.push(currentItem.find('.sell').find('button.event').eq(ii).find('.volume').text());
+	// 			bestSell = currentItem.find('.sell').find('button.event').eq(ii).find('.price').text();
+	// 		}
+	// 		for(ii = 0; ii < currentItem.find('.buy').find('button.event').length; ii++){
+	// 			priceBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.price').text());
+	// 			volumeBuy.push(currentItem.find('.buy').find('button.event').eq(ii).find('.volume').text());
+	// 		}
+	// 		bestBuy = currentItem.find('.buy').find('button.event').eq(0).find('.price').text();
+	//
+	// 		if(priceSell.length)
+	// 			if(priceSell[0].search(/[0-9]+/i) == -1) bestSell = '';
+	//
+	// 		if(priceBuy.length)
+	// 			if(priceBuy[0].search(/[0-9]+/i) == -1) bestBuy = '';
+	//
+	//
+	// 		join_bid.find('.price').text(bestSell);
+	// 		join_ask.find('.price').text(bestBuy);
+	//
+	// 		table.find('.size').removeClass('best_sell best_buy').find('.value').text('');
+	// 		table.find('.my_size').find('.value').text('');
+	// 		table.find('.price_value').removeClass('best_sell best_buy');
+	// 	}
+	//
+	// 	table.each(function () {
+	// 		var current = $(this);
+	// 		currentPrice = $(this).find('.price_value').text();
+	// 		if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru') {// for development =============
+	// 			if(defaultMethods.searchValue(priceSell, currentPrice) != -1){
+	// 				ii = defaultMethods.searchValue(priceSell, currentPrice);
+	// 				$(this).find('.size_sell').addClass('animated fadeOut').find('span.value').text(volumeSell[ii]);
+	// 				if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_bids').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeSell[ii]));  // for development =============================================
+	// 				var context = $(this);
+	// 				setTimeout(function () {
+	// 					context.find('.size_sell').removeClass('animated fadeOut');
+	// 					context.find('.my_bids').removeClass('animated fadeOut'); // for development =============================================
+	// 				}, 1000);
+	// 				if(bestSell == currentPrice){
+	// 					$(this).find('.size_sell').addClass('best_sell');
+	// 					$(this).find('.price_value').addClass('best_sell');
+	// 				}
+	// 			}
+	// 			if(defaultMethods.searchValue(priceBuy, currentPrice) != -1){
+	// 				ii = defaultMethods.searchValue(priceBuy, currentPrice);
+	// 				$(this).find('.size_buy').addClass('animated fadeOut').find('span.value').text(volumeBuy[ii]);
+	// 				if (defaultMethods.randomInteger(0, 1)) $(this).find('.my_offers').addClass('animated fadeOut').find('span.value').text(defaultMethods.randomInteger(1, +volumeBuy[ii]));  // for development =============================================
+	// 				var context = $(this);
+	// 				setTimeout(function () {
+	// 					context.find('.size_buy').removeClass('animated fadeOut');
+	// 					context.find('.my_offers').removeClass('animated fadeOut'); // for development =============================================
+	// 				}, 1000);
+	// 				if(bestBuy == currentPrice){
+	// 					$(this).find('.size_buy').addClass('best_buy');
+	// 					$(this).find('.price_value').addClass('best_buy');
+	// 				}
+	// 			}
+	// 		}
+	//
+	// 		;(function separation() {
+	// 			current = current.find('td.price_value');
+	//
+	// 			current.removeClass('ask bid mid');
+	// 			if(current.hasClass('best_sell')){
+	// 				className = 'bid';
+	// 			}
+	// 			current.addClass(className);
+	// 			if(current.hasClass('best_buy')){
+	// 				if(activeTrader.find('.best_buy').length && activeTrader.find('.best_sell').length )
+	// 					className = 'mid';
+	// 				else
+	// 					className = 'bid';
+	// 			}
+	// 		})();
+	// 	});*/
+	//
+	//
+	// 	// activeTraderClass.scrollTo();
+	// }
 
 	/**
 	 * просчет высоты таблицы с данным в трейдере
