@@ -3,7 +3,7 @@
 import PageMyPos from './components/PageMyPos.jsx';
 // const MyPosTabData = require('./components/myPosTabData.jsx');
 // const MyOpenOrdersTabData = require('./components/myOpenOrdersTabData.jsx');
-// const MyOrderHistoryTabData = require('./components/myOrderHistoryTabData.jsx');
+// const TabMyOrderHistory = require('./components/TabHistory.jsx');
 window.ee = new EventEmitter();
 
 if(globalData.myPosOn){
@@ -79,7 +79,7 @@ if(globalData.myPosOn){
 
 
 	// ReactDOM.render(
-	// 		<MyOrderHistoryTabData
+	// 		<TabMyOrderHistory
 	// 				key="my_order_history"
 	// 				data={historyData}
 	// 		/>
