@@ -11,6 +11,7 @@ import configureStore from './store/configureStore';
 import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
 import EventPage from './containers/EventPage';
+import AccountPage from './containers/AccountPage';
 import PageMyPos from './components/PageMyPos.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Funds from './components/userPage/Funds';
@@ -45,9 +46,11 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MAIN ) {
 if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
 	ReactDOM.render(
 		<Provider store={store}>
-			<Funds />
+			{/*<Funds />*/}
+			<AccountPage />
 		</Provider>,
-		document.getElementById('funds')
+		document.getElementById('DiMPAccountPage')
+		// document.getElementById('funds')
 	);
 	// ReactDOM.render(
 	// 	<Provider store={store}>

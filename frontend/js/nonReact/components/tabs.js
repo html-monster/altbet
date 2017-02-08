@@ -3,7 +3,10 @@ class tabsClass{
 		this.defaultTab = function () {
 			let tab = $('.tab');
 
-			tab.click(function () {
+			
+			tab.click(function () 
+			{
+				0||console.debug( 'here', 0 );
 				let tabContainer = $(this).parent(),
 						itemContainer = tabContainer.next();
 				if(!($(this).attr('data-disabled'))){
