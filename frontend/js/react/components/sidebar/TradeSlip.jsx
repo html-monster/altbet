@@ -39,13 +39,14 @@ class TradeSlip extends React.Component
 	render()
 	{
         // 0||console.log( 'this.props.data.isAllowAT', this.props.data.isAllowAT );
+		const { data, defaultOrderActions, tradeSlip } = this.props;
         return <div className="tab_item" id="order">
 
-			<DefaultOrders data={this.props.tradeSlip.orderNewData} actions={this.props.defaultOrderActions}/>
+			<DefaultOrders data={tradeSlip.orderNewData} actions={defaultOrderActions}/>
 
 			{/* // BM: --------------------------------------------------- ACTIVE TRADER ---*/}
 			{
-				this.props.data.isAllowAT && <ActiveTrader cmpData={{...this.props.tradeSlip, activeExchange: this.props.data.activeExchange}}/>
+				data.isAllowAT && <ActiveTrader cmpData={{...tradeSlip, ...data}}/>
 			}
 
 		</div>

@@ -224,10 +224,10 @@ export default class OrderForm extends React.Component{
 						<label className="checkbox">
 							{
 								data.Limit == undefined ?
-									<input name="OrderType" type="checkbox" value="true" defaultChecked={checkboxProp}
+									<input name="OrderType" type="checkbox" value="true" checked={checkboxProp}
 										   onChange={this.onTypeChange.bind(this, checkboxProp)}/>
 									:
-									<input name="OrderType" type="checkbox" value="true" defaultChecked={checkboxProp} key={checkboxProp + 'checkbox'}
+									<input name="OrderType" type="checkbox" value="true" checked={checkboxProp}
 										   onChange={this.props.actions.actionOnOrderTypeChange.bind(null, checkboxProp, this)}/>
 							}
 							<input name="OrderType" type="hidden" value="false"/>

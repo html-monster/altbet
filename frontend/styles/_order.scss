@@ -26,6 +26,20 @@
   //  z-index: 100;
   //}
   .wrapper {  text-align: center;  margin-top: 10px;  }
+  .left_order > label {
+    padding-right: 20px;
+    @include checkbox_vertical;
+    position: absolute;
+    top: 53px;
+    left: 13px;
+    line-height: 1.6em;
+    span {
+      text-transform: capitalize;
+      font-size: 13px;
+    }
+    &.trader .help_message{  width: 250px;  }
+    &.auto_trade{  left: auto; right: 15px;  }
+  }
   .tabs {
     display: flex;
     justify-content: center;
@@ -45,31 +59,12 @@
         background-image: $active_bg;
         border: none;
         color: $main_page_tab_color_active;
-        label{
-          top: 44px;
-          left: 1px;
-          &.auto_trade{  right: 1px;  }
-        }
       }
       @include order_sidebar_tab_separator;
       &:last-child {
         //&.active{  border-left: 1px solid #445b69;  }
         border-radius: 0 4px 4px 0;
         border-left: none;
-      }
-      label {
-        padding-right: 20px;
-        @include checkbox_vertical;
-        position: absolute;
-        top: 43px;
-        left: 0;
-        line-height: 1.6em;
-        span {
-          text-transform: capitalize;
-          font-size: 13px;
-        }
-        &.trader .help_message{  width: 250px;  }
-        &.auto_trade{  display: none;  left: auto; right: 0; }
       }
     }
   }

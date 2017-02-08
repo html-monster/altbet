@@ -4,7 +4,7 @@ $order_sidebar_tab_color: #fff;
 $order_sidebar_head_separator: #000000;
 $order_sidebar_activation_column_opacity: 0.1;
 @mixin order_sidebar_tab_separator{
-	&:first-child{  border-right: none;  }
+	//&:first-child{  border-right: none;  }
 	&:last-child{
 		&:after{
 			content: '';

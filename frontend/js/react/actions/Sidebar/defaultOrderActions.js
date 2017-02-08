@@ -179,7 +179,7 @@ export function actionOnAjaxSend(context, parentData, e)
 		function onSuccessAjax()
 		{
 			context.props.actions.actionOnDeleteOrder(parentData, context.props.data);
-			console.log(`Order sending finished: ${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`);
+			__DEV__ && console.log(`Order sending finished: ${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`);
 		}
 
 		function onErrorAjax()

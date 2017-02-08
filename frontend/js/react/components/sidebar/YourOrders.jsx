@@ -43,18 +43,21 @@ class EventOrders extends React.Component
 		let yourOrdersData = this.props.yourOrders;
 		return <div className="tab_item" id="current-orders">
 			{
-				ABpp.User.login != "" ? yourOrdersData.yourOrders.map((item, index) =>
-					<GroupingOrder
-							key={item.ID}
-							indexGr={index}
-							allData={yourOrdersData}
-							data={item}
-							onOrderDelete={::this.props.actions.actionOnYourOrderDelete}
-							actions={this.props.actions}
-					/>
-				)
+				ABpp.User.login != "" ?
+					yourOrdersData.yourOrders.length ?
+						yourOrdersData.yourOrders.map((item, index) =>
+						<GroupingOrder
+								key={item.ID}
+								indexGr={index}
+								allData={yourOrdersData}
+								data={item}
+								onOrderDelete={::this.props.actions.actionOnYourOrderDelete}
+								actions={this.props.actions}
+						/>)
+					:
+						<p className="default_order_info">You have no orders</p>
 				:
-				<p className="default_order_info">You must login to see your orders</p>
+					<p className="default_order_info">You must login to see your orders</p>
 			}
 		</div>
 	}

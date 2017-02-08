@@ -21,7 +21,7 @@ export default class TraderDefaultForm extends React.Component {
 					key={direction}
 		>
 			<div className={direction == 'sell' ? 'sell-container' : 'buy-container'}>
-				<form action={ABpp.baseUrl + '/Order/Create'}
+				<form action={ABpp.baseUrl + (limit ? '/Order/Create' : '/Order/MarketTrading')}
 					  autoComplete="off"
 					  onSubmit={traderActions.actionOnAjaxSend.bind(null, this)}
 				>

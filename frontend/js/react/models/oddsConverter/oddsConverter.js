@@ -42,7 +42,7 @@ class OddsConverter
             volume = +volumeInput.val(),
             sum = +sumInput.val(),
             fee = Math.round10(ABpp.config.takerFees * volume, -2);
-console.log(priceInput);
+// console.log(priceInput);
         if (checkboxProp) {
             if (priceInput.parents('.sell-container').length) {
                 price = 1 - priceInput.val();

@@ -19,7 +19,7 @@ class Actions extends BaseActions
 	{
 		return (dispatch, getState) =>
 		{
-			let trader = $('.active_trader');
+			// let trader = $('.active_trader');
 			let tbody = $('table.limit tbody');
 			let isMirror;
 
@@ -53,6 +53,7 @@ class Actions extends BaseActions
 					if(currSymbData.Symbol.LastAsk == 1) currSymbData.Symbol.LastAsk = null;
 					if(currSymbData.Symbol.LastBid == 0) currSymbData.Symbol.LastBid = null;
 				}
+				// console.log(JSON.stringify(state.activeTrader.data), JSON.stringify(currSymbData));
 				if(JSON.stringify(state.activeTrader.data) != JSON.stringify(currSymbData) || state.activeTrader.isMirror != isMirror){
 					// this.setState({data: currSymbData, isMirror: isMirror});
 					dispatch({
@@ -313,39 +314,46 @@ class Actions extends BaseActions
 			return htmlData;		}
 	}
 
-	public actionAddDefaultOrder(data, index)
+	public actionAddDefaultOrder(context, data, index)
 	{
 		return (dispatch, getState) => {
-			console.log(getState());
-			dispatch({
-				type: TRADER_ON_ADD_ORDER,
-				payload: {
-					activeString: index,
-					direction:  data.direction,
-					price: data.price,
-					limit:  data.limit,
-					showDirectionConfirm:  false,
-					showDefaultOrder:  true,
-					showSpreadOrder:  false,
-				}
-			});
+			if(getState().sidebar.autoTradeOn)
+				context.props.traderActions.actionOnAjaxAutoTrade(context, data);
+			else{
+				dispatch({
+					type: TRADER_ON_ADD_ORDER,
+					payload: {
+						activeString: index,
+						direction:  data.direction,
+						price: data.price,
+						limit:  data.limit,
+						showDirectionConfirm:  false,
+						showDefaultOrder:  true,
+						showSpreadOrder:  false,
+					}
+				});
+			}
 		}
 	}
 
-	public actionAddSpreadOrder(data, index, event)
+	public actionAddSpreadOrder(context, data, index, event)
 	{
-		return (dispatch) => {
+		return (dispatch, getState) => {
 			event.stopPropagation();
-			dispatch({
-				type: TRADER_ON_ADD_ORDER,
-				payload: {
-					activeString: index,
-					direction: data.direction,
-					price: data.price,
-					showDefaultOrder:  false,
-					showSpreadOrder:  true
-				}
-			});
+			if(getState().sidebar.autoTradeOn)
+				context.props.traderActions.actionOnAjaxAutoTradeSpread(context, data);
+			else{
+				dispatch({
+					type: TRADER_ON_ADD_ORDER,
+					payload: {
+						activeString: index,
+						direction: data.direction,
+						price: data.price,
+						showDefaultOrder:  false,
+						showSpreadOrder:  true
+					}
+				});
+			}
 		}
 	}
 
@@ -387,6 +395,87 @@ class Actions extends BaseActions
 					showSpreadOrder: false
 				}
 			});
+		}
+	}
+
+	public actionOnAjaxAutoTrade(context, orderData){
+		return () => {
+			const { data, isMirror, mainData, quantity } = context.props;
+			const { direction, limit, price } = orderData;
+			let url : string, ajaxData : any = {};
+
+			if(mainData)
+				ajaxData.Symbol = `${mainData.Symbol.Exchange}_${mainData.Symbol.Name}_${mainData.Symbol.Currency}`;
+			else
+				ajaxData.Symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
+
+			ajaxData.Quantity = quantity;
+			ajaxData.isMirror = isMirror;
+			ajaxData.OrderType = limit;
+			if(limit){
+				ajaxData.LimitPrice = price;
+				url = globalData.rootUrl + 'Order/Create';
+			}
+			else
+				url = globalData.rootUrl + 'Order/MarketTrading';
+
+			ajaxData.Side = (direction)[0].toUpperCase() + (direction).slice(1);
+
+			defaultMethods.sendAjaxRequest({
+				httpMethod: 'POST',
+				callback: onSuccessAjax,
+				onError: onErrorAjax,
+				url: url,
+				data: ajaxData});
+
+			function onSuccessAjax()
+			{
+				__DEV__ && console.log(`Order sending finished: ${ajaxData.Symbol}`);
+			}
+
+			function onErrorAjax()
+			{
+				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+			}
+		}
+	}
+
+	public actionOnAjaxAutoTradeSpread(context, orderData){
+		return () => {
+			const { isMirror, mainData, quantity, spread } = context.props;
+			const { direction, price } = orderData;
+			const spreadPricePos = Math.round10(price + +spread, -2);
+			const spreadPriceNeg = Math.round10(price - spread, -2);
+			let url : string, ajaxData : any = {};
+
+			ajaxData.Symbol = `${mainData.Symbol.Exchange}_${mainData.Symbol.Name}_${mainData.Symbol.Currency}`;
+
+			ajaxData.SellOrderQuantity = quantity;
+			ajaxData.BuyOrderQuantity = quantity;
+			ajaxData.SellOrderLimitPrice = direction == 'ask' ? price : (spreadPricePos > 0.98 ? 0.99 : spreadPricePos);
+			ajaxData.BuyOrderLimitPrice = direction == 'bid' ? price : (spreadPriceNeg < 0.02 ? 0.01 : spreadPriceNeg);
+			ajaxData.isMirror = isMirror;
+
+			// ajaxData.Quantity = quantity;
+			// ajaxData.OrderType = limit;
+			url = globalData.rootUrl + 'Order/Spreader';
+
+			defaultMethods.sendAjaxRequest({
+				httpMethod: 'POST',
+				callback: onSuccessAjax,
+				onError: onErrorAjax,
+				url: url,
+				data: ajaxData});
+
+			function onSuccessAjax()
+			{
+				__DEV__ && console.log(`Order sending finished: ${ajaxData.Symbol}`);
+			}
+
+			function onErrorAjax()
+			{
+				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+			}
 		}
 	}
 

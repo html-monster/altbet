@@ -1,5 +1,6 @@
 import {
     ON_TRADER_ON,
+	ON_AUTO_TRADE,
 	ALLOW_AT_CH,
 	ON_ACTIVE_SYMBOL_CHANGED,
 } from '../constants/ActionTypesSidebar.js';
@@ -34,7 +35,7 @@ class Actions extends BaseActions
         return (dispatch, getState) =>
         {
 			let ii = 0;
-			let autoTrade = $('.left_order .tab input.auto'),
+			let autoTrade = $('.left_order input.auto'),
 					order = $('#order'),
 					default_order = $('.left_order .default_orders'),
 					active_trader = $('.left_order .active_trader'),
@@ -51,10 +52,10 @@ class Actions extends BaseActions
 			if( isChecked )
 			{
 
-				var symbol = event_container.eq(0).attr('data-symbol');
+				// var symbol = event_container.eq(0).attr('data-symbol');
 
 				order.css('overflow-y', 'hidden');
-				autoTrade.parent().fadeIn(200);
+				// autoTrade.parent().fadeIn(200);
 				default_order.stop(true).fadeOut(200);
 				setTimeout(function () {
 					active_trader.fadeIn(200);
@@ -115,16 +116,16 @@ class Actions extends BaseActions
 				// === ==================== ===============================================
 			}
 			else{
-				autoTrade.parent().fadeOut(200);
+				// autoTrade.parent().fadeOut(200);
 				order.css('overflow-y', 'auto');
 				setTimeout(function () {
 					default_order.stop(true).fadeIn(200);
 				}, 200);
 				active_trader.fadeOut(200);
-				buttons.removeAttr('disabled');
-				event_container.removeClass('clickable');
-				if($('.wrapper_event_page').length)
-					executedOrders.find('td.clickable').addClass('clickable');
+				// buttons.removeAttr('disabled');
+				// event_container.removeClass('clickable');
+				// if($('.wrapper_event_page').length)
+				// 	executedOrders.find('td.clickable').addClass('clickable');
 
 				globalData.tradeOn = false;
 				// === Vlasakh === 17-01-12 ===============================================
@@ -144,10 +145,20 @@ class Actions extends BaseActions
         }
     }
 
+	public actionOnAutoTradeChange(event)
+	{
+		return (dispatch) =>
+		{
+			dispatch({
+				type: ON_AUTO_TRADE,
+				payload: event.target.checked,
+			});
+		}
+	}
 
     public actionOnActiveSymbolChanged(props)
     {
-        return (dispatch, getState) =>
+        return (dispatch) =>
         {
             dispatch({
                 type: ON_ACTIVE_SYMBOL_CHANGED,

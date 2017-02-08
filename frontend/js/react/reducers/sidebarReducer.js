@@ -1,6 +1,7 @@
 import {
 	ALLOW_AT_CH,
 	ON_TRADER_ON,
+	ON_AUTO_TRADE,
 	ON_TAB_SWITCH,
 	ON_ACTIVE_SYMBOL_CHANGED,
 } from '../constants/ActionTypesSidebar.js';
@@ -24,6 +25,9 @@ export default function sidebar(state = initialState, action)
 
         case ON_TRADER_ON:
             return {...state, traderOn: action.payload};
+
+		case ON_AUTO_TRADE:
+            return {...state, autoTradeOn: action.payload};
 
         case ON_ACTIVE_SYMBOL_CHANGED:
             if (!action.payload.id) action.payload.id = state.activeExchange.name;
