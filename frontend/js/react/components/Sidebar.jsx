@@ -220,7 +220,6 @@ class Sidebar extends React.Component
 	}
 }
 
-console.log(sidebarActions);
 export default connect(state => ({
 		sidebar: state.sidebar,
 	}),

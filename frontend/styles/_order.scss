@@ -639,10 +639,8 @@
       }
       .basic_mode{
         .switch{  display: none;  }
-        input[type=submit]{
-          width: 100%;
-          border-right: none;
-        }
+        i.submit{  width: 100%;  }
+        [type=submit]{  border-right: none;  }
       }
     }
   }
@@ -665,10 +663,8 @@
     }
 		.basic_mode{
 			.switch{  display: none;  }
-			input[type=submit]{
-				width: 100%;
-				border-right: none;
-			}
+			i.submit{  width: 100%;  }
+      [type=submit]{  border-right: none;  }
 		}
     .order_content form .container .obligations label{  width: calc(100% - 18px);  }
   }

@@ -315,7 +315,8 @@ class Actions extends BaseActions
 
 	public actionAddDefaultOrder(data, index)
 	{
-		return (dispatch) => {
+		return (dispatch, getState) => {
+			console.log(getState());
 			dispatch({
 				type: TRADER_ON_ADD_ORDER,
 				payload: {

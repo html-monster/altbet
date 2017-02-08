@@ -307,7 +307,7 @@ class Deposit extends React.Component{
 		</div>
 	}
 }
-console.log(actions);
+
 export default connect(state => ({
 		deposit: state.deposit,
 	}),

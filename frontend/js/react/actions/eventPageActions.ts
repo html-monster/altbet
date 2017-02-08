@@ -248,8 +248,8 @@ class Actions extends BaseActions
                 activeTrader.attr('id', 'trader_' + `${data.SymbolsAndOrders.Symbol.Exchange}_${data.SymbolsAndOrders.Symbol.Name}_${data.SymbolsAndOrders.Symbol.Currency}`);
                 activeTrader.find('table.limit tbody').removeClass('scroll_dis');
 
-                activeTraderClass.spreaderClean(true);
-                activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);
+                // activeTraderClass.spreaderClean(true);
+                // activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);
             } // endif
 
 
