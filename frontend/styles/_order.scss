@@ -547,7 +547,7 @@
             }
             //.container:after{
             //  transform: scaleX(1) !important;
-            //  background: #b5e5ec; 
+            //  background: #b5e5ec;
             //}
           }
         }
@@ -612,7 +612,7 @@
       display: block;
     }
     .default_orders, &#current-orders{  border-top: 1px solid $order_sidebar_head_separator;  }
-    &#order p#default_order_info{
+    .default_order_info{
       padding: 10px 15px;
       font-size: 14px;
       color: #b1b1b1;

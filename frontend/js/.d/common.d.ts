@@ -1,6 +1,5 @@
 declare let __DEV__;
-/** @var ABpp
- * @file "../react/models/SysEvents.ts" */
+/** @var ABpp */
 declare let ABpp;
 declare let __LDEV__;
 declare let moment;

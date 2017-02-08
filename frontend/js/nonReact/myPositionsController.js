@@ -2,6 +2,7 @@ var positionControllerClass = new function () {
 	this.checkTab = function () {
 		setData('.my_position .tab');
 		$('.my_position .tab').click(setData(this));
+
 		function setData(self) {
 			globalData.myPosTabOn.openPrders = false;
 			globalData.myPosTabOn.myPositions = false;

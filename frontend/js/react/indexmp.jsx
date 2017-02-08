@@ -3,6 +3,8 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+// import { Router, Route, Redirect, IndexRoute, IndexRedirect, hashHistory, browserHistory } from 'react-router'
+
 
 
 import configureStore from './store/configureStore';
@@ -71,6 +73,10 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MYPOS ) {
 	// рендерим PageMyPos
 	ReactDOM.render(
 		<Provider store={store}>
+			{/*<Router history={hashHistory}>*/}
+				{/*<Route path='/' component={PageMyPos} someval="aaaaaa" />*/}
+				{/*<Route path='/test' component={PageMyPos} someval="bbb" />*/}
+			{/*</Router>*/}
 			<PageMyPos />
 		</Provider>,
         document.getElementById('DiPageMyAssets')

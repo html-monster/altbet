@@ -24,6 +24,7 @@ class RApp extends React.Component
         // activate websocket
         ABpp.Websocket = new WebsocketModel();
         ABpp.Websocket.connectSocketServer();
+        globalData.Websocket = ABpp.Websocket; // for debug
 
         // globalData.theme
     }

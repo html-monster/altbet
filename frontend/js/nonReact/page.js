@@ -26,7 +26,8 @@ $(document).ready(function () {
 	// else
 	// 	globalData.mainPage = false;
 
-	tabsClass.tabFilter('.filters'); // page my_position
+	// BM: page my_position
+	// tabsClass.tabFilter('.filters');
 
 	new tabsClass();
 	// if(globalData.positionData) positionControllerClass.checkTab();

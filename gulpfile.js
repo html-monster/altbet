@@ -68,7 +68,7 @@ gulp.task('styles', function() {
         }))
       }))
       .pipe(gulpIf(isDevelopment, sourcemaps.init()))
-      .pipe(sass())
+      .pipe(sass({outputStyle: "compact"}))
       .pipe(autoprefixer({
         browsers: ['last 4 versions']
       }))

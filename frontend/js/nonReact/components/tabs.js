@@ -31,7 +31,7 @@ class tabsClass{
 	// 		$(container).find(tab_item).hide().eq($(this).index()).fadeIn();
 	// 	}).eq(0).addClass("active");
 	// }
-	
+
 	static tabsChangeAnimate(container, animated_row){
 		$(container).find('.wrapper .tab').click(function () { //$(".nav_items .wrapper .tab")
 			$(container).find('.wrapper .tab').removeClass("active").eq($(this).index()).addClass("active");
@@ -49,15 +49,16 @@ class tabsClass{
 		}).eq(0).addClass("active");
 	}
 
-	static tabFilter(filterContainer){
-		$(filterContainer).find('input[type="checkbox"]').change(function(){
-			let current_div = $('#'+$(this).val());
-
-			if($(this).is(':checked'))
-				current_div.addClass('active');
-			else
-				current_div.removeClass('active');
-		});
-	}
+	// static tabFilter(filterContainer){
+	// 	$(filterContainer).find('input[type="checkbox"]').change(function(){
+	// 		let current_div = $('#'+$(this).val());
+	// 	0||console.log( 'here', 0 );
+    //
+	// 		if($(this).is(':checked'))
+	// 			current_div.addClass('active');
+	// 		else
+	// 			current_div.removeClass('active');
+	// 	});
+	// }
 }
 

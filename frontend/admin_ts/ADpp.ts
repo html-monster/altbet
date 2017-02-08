@@ -32,6 +32,7 @@ export default class ADpp
         this.controllers['Index'] = IndexController;
 
         if (location.host == 'localhost') MainConfig.BASE_URL = '/AltBet.Admin';
+        else MainConfig.BASE_URL = '/Admin';
 
 
         // init current controller (sets in razor views)

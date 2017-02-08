@@ -325,13 +325,18 @@
 				setTimeout(function () {
 					$('#order_content').addClass('active');
 				}, 0);
+
+
+				// BM: create order form
 				function createOrderForm(element, modification) {
 					var isMirror;
 
 					if($('#IsMirror').length)
-						isMirror = $('#IsMirror').val() == 'False' ? 0 : 1;
+						isMirror = $('#IsMirror').val().toLowerCase() == 'false' ? 0 : 1;
 					else
 						isMirror = trader.find('.event_name').eq(0).hasClass('active') ? 0 : 1;
+
+
 
 					html = $(element).clone();
 					html.attr('id', 'order_content').css({

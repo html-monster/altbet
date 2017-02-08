@@ -115,9 +115,10 @@ class EventPage extends BaseController
                     ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':' +
                     (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 
-                var side = item.Side ? 'sell' : 'buy';
+                var side = isMirror ? !item.Side : item.Side;
+                side = side ? 'sell' : 'buy';
 
-                var price = ((isMirror == 'True') ? (1 - item.Open).toFixed(2) : item.Open.toFixed(2));
+                var price = ((isMirror) ? (1 - item.Open).toFixed(2) : item.Open.toFixed(2));
 
                 if (price > maxPrice) maxPrice = price;
                 if (price < minPrice) minPrice = price;
@@ -140,8 +141,28 @@ class EventPage extends BaseController
         };
 
 
-        return <div className="wrapper_event_page" data-id={symbol}>
-            <h1>{data.SymbolsAndOrders.Symbol.HomeName} VS {data.SymbolsAndOrders.Symbol.AwayName}</h1>
+        // mirror link
+        var $msclass, $fsclass;
+        var $titleFside = "Current side";
+        var $titleMirror = "Go another side";
+        if( isMirror )
+        {
+            $msclass = $titleFside;
+            $titleFside = $titleMirror;
+            $titleMirror = $msclass;
+            $msclass = "active";
+        }
+        else
+        {
+            $fsclass = "active";
+        } // endif
+
+        return <div className="wrapper_event_page" data-id={symbol} id={symbol}>
+            <h1>
+                <a href={appData.pageEventData.fsideLink} className={$fsclass} title={$titleFside}>{data.SymbolsAndOrders.Symbol.HomeName}</a>
+                &nbsp;VS&nbsp;
+                <a href={appData.pageEventData.mirrorLink} className={$msclass} title={$titleMirror}>{data.SymbolsAndOrders.Symbol.AwayName}</a>
+            </h1>
             <div className="container">
                 <div className="chart_container">
                     <Chart data={this.props.eventPage} actions={this.props.chartActions} />
@@ -188,13 +209,13 @@ class EventPage extends BaseController
                         </table>
                     </div>
                     <div className="ord_crt_cont event-content" data-symbol={symbol}>
-                        <button className="btn buy price event" disabled={isTraiderOn ? "disabled" : ''}
+                        <button className="btn buy price event" type="button" disabled={isTraiderOn}
                             onClick={() => this.actions.onSellBuyClick({
                                    type: 0,
                                    //data: data, // orders
                                    exdata: commProps, // for trader object
                         })}>Buy</button>
-                        <button className="btn sell price event" disabled={isTraiderOn ? "disabled" : ''}
+                        <button className="btn sell price event" type="button" disabled={isTraiderOn}
                             onClick={() => this.actions.onSellBuyClick({
                                    type: 1,
                                    //data: data, // orders
@@ -205,10 +226,10 @@ class EventPage extends BaseController
             </div>
             <div id="mainController" className="executed">
                 <div className="executed_orders sell order_create event-content" data-symbol={symbol}>
-                    <BetsTable data={{data: bidData, typeb: BetsTable.TYPE_BID, isTraiderOn, exdata: data}} actions={this.actions} />
+                    <BetsTable data={{data: data.IsMirror ? askData : bidData, typeb: BetsTable.TYPE_BID, isTraiderOn, exdata: data}} actions={this.actions} />
                 </div>
                 <div className="executed_orders buy order_create event-content" data-symbol={symbol}>
-                    <BetsTable data={{data: askData, typeb: BetsTable.TYPE_ASK, isTraiderOn, exdata: data}} actions={this.actions} />
+                    <BetsTable data={{data: data.IsMirror ? bidData : askData, typeb: BetsTable.TYPE_ASK, isTraiderOn, exdata: data}} actions={this.actions} />
                 </div>
                 <div className="executed_orders">
                     <table>

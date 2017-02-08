@@ -203,13 +203,13 @@ export default class OrderForm extends React.Component{
 						</div>
 					</div>
 					<div className="risk">
-						<label>Max t.c.</label>
+						<label>Total Cost</label>
 						<div className="input">
 							<input type="text" className="number" autoComplete="off" ref="inputRisk" disabled/>
 						</div>
 					</div>
 					<div className="profit">
-						<label>Max Prof.</label>
+						<label>Profitability</label>
 						<div className="input">
 							<input type="text" className="number" autoComplete="off" ref="inputProfit" disabled />
 						</div>
