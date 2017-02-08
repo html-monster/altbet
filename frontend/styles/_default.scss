@@ -259,10 +259,8 @@ label.disabled{
 			background: #ffffff;
 		}
 	}
-	input{
-		display: none;
-		&:checked ~ span{
-			color: #000000;
+	input{ display: none;
+		&:checked ~ span { color: #000000;
 			&:before{  background: url('../Images/sprite.svg') no-repeat -284px -64px, linear-gradient(to bottom, #3aab4a, #3aab4a * 0.9);  }
 			&:after{  left: 18px;  }
 		}
@@ -550,7 +548,7 @@ label.disabled{
     &::before { content: ''; position: absolute; display: block; top: -10px; left: -10px; width: calc(100% + 20px); height: calc(100% + 20px); z-index: -1;
         background: linear-gradient(to bottom, #53515e, #292830); box-shadow: 0 0 20px -1px rgba(0, 0, 0, 0.5); border-radius: 4px; }
   }
-  &__message { color: $color2About; }
+  &__message { color: #53515e; }
   &__buttons { display: flex; justify-content: center; }
   button { display: block; margin: 15px 5px 0; width: 75px; }
   button.btn1 { background-image: linear-gradient(to bottom, #84d65b, #4dac2e); }

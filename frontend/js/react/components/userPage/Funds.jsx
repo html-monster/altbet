@@ -26,14 +26,9 @@ export default class Funds extends React.Component{
 		// const actions = this.props.actions;
 		const staticData = appData.pageAccountData;
 
-		return <div className="funds">
+		return <div className="tab_item funds">
 			<h2>Funds</h2>
-			<div className="user_info">
-				<div className="personal_info">
-					<h3 className="mail">{staticData.UserInfo.Email}</h3>
-					<strong>{`${staticData.UserInfo.FirstName} ${staticData.UserInfo.LastName}`}</strong>
-				</div>
-			</div>
+			{this.props.data.header}
 			<div className="funds_tab">
 				<div className="wrapper_user">
 					<div className="tabs">

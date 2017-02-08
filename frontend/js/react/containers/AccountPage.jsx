@@ -22,6 +22,14 @@ class AccountPage extends BaseController
 
     render()
     {
+        const staticData = appData.pageAccountData;
+        var $tabHeaderHtml = <div className="user_info">
+				<div className="personal_info">
+					<h3 className="mail">{staticData.UserInfo.Email}</h3>
+					<strong>{`${staticData.UserInfo.FirstName} ${staticData.UserInfo.LastName}`}</strong>
+				</div>
+			</div>;
+
         return <div className="wrapper_about wrapper_user_page">
             <ul className="tabs">
                 <li className="tab active"><span>Funds</span></li>
@@ -29,17 +37,10 @@ class AccountPage extends BaseController
                 <li className="tab"><span>Settings</span></li>
             </ul>
             <div className="tab_content">
-                <Funds/>
+                <Funds data={{header: $tabHeaderHtml}}/>
 
-                <div className="tab_item preferences">
-                    <h2>Preferences</h2>
-                    <div className="user_info">
-                        <div className="personal_info">
-                            <h3 className="mail">test2@alt.bet</h3>
-                            <strong>FirstName LastName</strong>
-                        </div>
-                    </div>
-                </div>
+                <Preferences data={{header: $tabHeaderHtml}}/>
+
                 <div className="tab_item settings">
                     <h2>Settings</h2>
                     <div className="user_info">
@@ -49,8 +50,6 @@ class AccountPage extends BaseController
                             <strong>FirstName LastName</strong>
                         </div>
                     </div>
-
-
                 </div>
 
             </div>
