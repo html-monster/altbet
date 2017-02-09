@@ -4,6 +4,7 @@
 
 import {
 	TRADER_ON_SOCKET_MESSAGE,
+	TRADER_ON_EXCHANGE_CHANGE,
 	TRADER_ON_QUANTITY_CHANGE,
 	TRADER_ON_SPREAD_CHANGE,
 	TRADER_ON_ADD_ORDER,
@@ -48,7 +49,11 @@ export default function activeTrader(state = initialState, action)
 			return {...state, spread: action.payload};
 
 		case TRADER_ON_SOCKET_MESSAGE:
-			return {...state, data: action.payload.data, isMirror: action.payload.isMirror, rebuiltServerData: action.payload.rebuiltServerData };
+			return {...state, data: action.payload.data, rebuiltServerData: action.payload.rebuiltServerData };
+
+		case TRADER_ON_EXCHANGE_CHANGE:
+			let newState = Object.assign(state, action.payload);
+			return {...newState};
 
 		case TRADER_ON_ADD_ORDER:
 			orderInfo = Object.assign(state.orderInfo, {...action.payload});

@@ -19,15 +19,16 @@ class ActiveTrader extends React.Component {
 	componentDidMount()
 	{
 		this.props.traderActions.actionOnSocketMessage(this);
+		activeTraderClass.tbodyResize();
 	}
 
-	shouldComponentUpdate(nextProps)
-	{
-		// console.log(nextProps.cmpData.traderOn);
-		if(!nextProps.cmpData.traderOn) return false;
-
-		return true;
-	}
+	// shouldComponentUpdate(nextProps)
+	// {
+	// 	// console.log(nextProps.cmpData.traderOn);
+	// 	if(!nextProps.cmpData.traderOn) return false;
+	//
+	// 	return true;
+	// }
 
 	render()
 	{
@@ -36,11 +37,13 @@ class ActiveTrader extends React.Component {
 		// const { activeString, showDefaultOrder } = this.state;
 		const { data, ...info } = this.props;
 		const { cmpData:{ activeExchange, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
-			rebuiltServerData, spread, quantity, traderActions, defaultOrderActions } = this.props;
+			rebuiltServerData, spread, quantity, traderActions } = this.props;
 		// let copyData = $.extend(true, {}, data);
-		let className, $active, $activeM;
-		className = $active = $activeM = '';
-		( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
+		// let className, $active, $activeM;
+		let className = '';
+		// console.log(activeExchange);
+		// className = $active = $activeM = '';
+		// ( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
 
         let gainLoss = data && data.GainLoss ? data.GainLoss : '';
         if (data) {
@@ -50,47 +53,58 @@ class ActiveTrader extends React.Component {
                 className = 'profit';
         }
         const bid = isMirror ?
-			(data.Symbol && Math.round10(1 - data.Symbol.LastAsk, -2) != 1) ? Math.round10(1 - data.Symbol.LastAsk, -2) : ''
+			(data.Symbol && data.Symbol.LastAsk) ? Math.round10(1 - data.Symbol.LastAsk, -2) : ''
 			:
-			(data.Symbol && data.Symbol.LastBid != 0) ? data.Symbol.LastBid : '';
+			(data.Symbol && data.Symbol.LastBid) ? data.Symbol.LastBid : '';
         const ask = isMirror ?
-			(data.Symbol && Math.round10(1 - data.Symbol.LastBid, -2) != 1) ? Math.round10(1 - data.Symbol.LastBid, -2) : ''
+			(data.Symbol && data.Symbol.LastBid) ? Math.round10(1 - data.Symbol.LastBid, -2) : ''
 			:
-			(data.Symbol && data.Symbol.LastAsk != 1) ? data.Symbol.LastAsk : '';
+			(data.Symbol && data.Symbol.LastAsk) ? data.Symbol.LastAsk : '';
 		// let stringHtmlData = traderActions.actionOnServerDataRebuild(data, isMirror);
 
-		return <div className="active_trader" style={{display: 'none'}} id={"trader_" + activeExchange.symbol}
+		return <div className="active_trader" id="active_trader" style={{display: 'none'}}
+					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
 			<div className="event_title">
-				<div className={$active + " event_name"} onClick={() => defaultOrderActions.actionOnTabMirrorClick(false)}></div>
-				<div className={$activeM + " event_name reverse"} onClick={() => defaultOrderActions.actionOnTabMirrorClick(true)}></div>
+				<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}
+					 onClick={traderActions.actionOnTabMirrorClick.bind(null, false)}>
+					{
+						JSON.stringify(data) != '{}' && `${data.Symbol.HomeName} ${data.Symbol.HomeHandicap}`
+					}
+				</div>
+				<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}
+					 onClick={traderActions.actionOnTabMirrorClick.bind(null, true)}>
+					{
+						JSON.stringify(data) != '{}' && `${data.Symbol.AwayName} ${data.Symbol.AwayHandicap}`
+					}
+				</div>
 			</div>
 			<table className="info">
 				<tbody>
-				<tr>
-					<td className="open_pnl trader_info">
-						<a href="#">
-							P/L
-							<span className={'quantity ' + className}>{gainLoss && gainLoss < 0 ? `($${(gainLoss).toString().slice(1)})` :
-							'$' + (gainLoss || '')}</span>
-							<span className="help"><span className="help_message right"><strong>Profit in this event</strong></span></span>
-						</a>
-					</td>
-					<td className="open_contracts trader_info">
-						<a href="#">
-							Quantity
-							<span className="quantity up">{data.Positions}</span>
-							<span className="help"><span className="help_message"><strong>Open postions</strong></span></span>
-						</a>
-					</td>
-					<td className="amount trader_info">
-						<a href="#">
-							Avg. Price
-							<span className="quantity up">26</span>
-							<span className="help"><span className="help_message"><strong>Average price of postion</strong></span></span>
-						</a>
-					</td>
-				</tr>
+					<tr>
+						<td className="open_pnl trader_info">
+							<a href="#">
+								P/L
+								<span className={'quantity ' + className}>{gainLoss && gainLoss < 0 ? `($${(gainLoss).toString().slice(1)})` :
+								'$' + (gainLoss || '')}</span>
+								<span className="help"><span className="help_message right"><strong>Profit in this event</strong></span></span>
+							</a>
+						</td>
+						<td className="open_contracts trader_info">
+							<a href="#">
+								Quantity
+								<span className="quantity up">{data.Positions}</span>
+								<span className="help"><span className="help_message"><strong>Open postions</strong></span></span>
+							</a>
+						</td>
+						<td className="amount trader_info">
+							<a href="#">
+								Avg. Price
+								<span className="quantity up">26</span>
+								<span className="help"><span className="help_message"><strong>Average price of postion</strong></span></span>
+							</a>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 			<table className="control">
@@ -289,7 +303,7 @@ class ActiveTrader extends React.Component {
 							<th>My Offers</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody ref={'traderBody'}>
 						{
 							rebuiltServerData.map((item, index) =>
 								<TraderString
@@ -349,7 +363,7 @@ class TraderString extends React.Component {
 	render()
 	{
 		// const { traderActions, activeString, data, mainData, index, inputQuantityContext, isMirror, quantity } = this.props;
-		const { data, cmpData: {autoTradeOn}, index, orderInfo: {...info}, spreadHighLight, quantity, spread, ...other } = this.props;
+		const { data, cmpData: { autoTradeOn }, index, orderInfo: {...info}, spreadHighLight, quantity, spread, ...other } = this.props;
 		// const {  showDefaultOrder  } = this.state;
 		// console.log(this.props);
 		const spreadPricePos = Math.round10(data.Price + +spread, -2);
@@ -503,6 +517,7 @@ class TraderString extends React.Component {
 						(info.showDefaultOrder &&
 							<TraderDefaultForm
 								activeString={info.activeString}
+								cmpData={this.props.cmpData}
 								index={index}
 								quantity={quantity}
 								{...other}
@@ -513,6 +528,7 @@ class TraderString extends React.Component {
 						(spread && info.showSpreadOrder &&
 							<TraderSpreadForm
 								activeString={info.activeString}
+								cmpData={this.props.cmpData}
 								index={index}
 								quantity={quantity}
 								spread={spread}

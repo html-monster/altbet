@@ -11,8 +11,8 @@ import {SocketSubscribe} from "../models/SocketSubscribe";
 
 
 // var __LDEV__ = true;
-var __LDEV__ = false;
-
+let __LDEV__ = false;
+declare let orderClass;
 
 class Actions extends BaseActions
 {
@@ -156,6 +156,12 @@ class Actions extends BaseActions
             ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror, symbol: inProps.symbol});
             ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
 
+            // === Htmlbook === 17-02-09 ===============================================
+            if($('#ChkLimit').prop('checked')) globalData.tradeOn = true;
+            orderClass.tabReturn();
+            $('#active_trader').addClass('loading');
+            // === Htmlbook === 17-02-09 ===============================================
+
             // call common part
             let ret = this.exchangeSide(inProps);
             dispatch({
@@ -178,22 +184,22 @@ class Actions extends BaseActions
             {
                 // todo: needs move to sidebar
                 // set current tab
-                $('.active_trader .event_title .event_name').removeClass('active').eq(inProps.isMirror ? 1 : 0).addClass('active');
+                // $('.active_trader .event_title .event_name').removeClass('active').eq(inProps.isMirror ? 1 : 0).addClass('active');
 
                 // todo: needs move to sidebar
                 // set new tabs titles
-                var tabs = $('.active_trader .event_title .event_name');
-                var ii = 0;
-                tabs.each(function () {
-                    $(this).text(inProps.title[ii++]);
-                });
+                // var tabs = $('.active_trader .event_title .event_name');
+                // var ii = 0;
+                // tabs.each(function () {
+                //     $(this).text(inProps.title[ii++]);
+                // });
 
 
                 // todo: needs move to activeTrader
                 // берет данные при смене события(название события, symbol и т.п.)
-                var activeTrader = $('.active_trader');
-                activeTrader.attr('id', 'trader_' + inProps.symbol);
-                activeTrader.find('table.limit tbody').removeClass('scroll_dis');
+                // var activeTrader = $('.active_trader');
+                // activeTrader.attr('id', 'trader_' + inProps.symbol);
+                // activeTrader.find('table.limit tbody').removeClass('scroll_dis');
 
                 // activeTraderClass.spreaderClean(true);
                 // activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);

@@ -12,8 +12,9 @@ export default class TraderDefaultForm extends React.Component {
 
 	render()
 	{
-		const { traderActions, activeString, direction, price, limit, mainData, index, inputQuantityContext,
-			isMirror, quantity } = this.props;
+		console.log(this.props);
+		const { activeString, cmpData: { activeExchange }, direction, price, limit, index, inputQuantityContext,
+			isMirror, traderActions, quantity } = this.props;
 		// let orderFormStyle = {position: 'absolute', left: 0, zIndex: 10, marginTop: 10};
 
 		return <div className={'order_content default animated' + (index == activeString || !index ? ' fadeInUp' : '')}
@@ -69,7 +70,7 @@ export default class TraderDefaultForm extends React.Component {
 						</div>
 					</div>
 					<input className="side" name="Side" type="hidden" defaultValue={(direction)[0].toUpperCase() + (direction).slice(1)}/>
-					<input className="symbol" name="Symbol" type="hidden" defaultValue={`${mainData.Symbol.Exchange}_${mainData.Symbol.Name}_${mainData.Symbol.Currency}`}/>
+					<input className="symbol" name="Symbol" type="hidden" defaultValue={activeExchange.symbol}/>
 					<input className="mirror" name="isMirror" type="hidden" defaultValue={isMirror}/>
 					<input className="direction" name="OrderType" type="hidden" defaultValue={limit}/>
 					{

@@ -3,15 +3,19 @@
  */
 import {
 	TRADER_ON_SOCKET_MESSAGE,
+	TRADER_ON_EXCHANGE_CHANGE,
 	TRADER_ON_QUANTITY_CHANGE,
 	TRADER_ON_SPREAD_CHANGE,
 	TRADER_ON_ADD_ORDER,
 	TRADER_ON_DELETE_ORDER,
 	TRADER_ON_SPREAD_HIGHLIGHT
 } from '../../constants/ActionTypesActiveTrader';
+import { ON_ACTIVE_SYMBOL_CHANGED } from '../../constants/ActionTypesSidebar.js';
 import BaseActions from '../BaseActions';
 import RebuildServerData from '../Sidebar/activeTrader/rebuildServerData';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
+
+declare var orderClass;
 
 class Actions extends BaseActions
 {
@@ -20,7 +24,8 @@ class Actions extends BaseActions
 		return (dispatch, getState) =>
 		{
 			// let trader = $('.active_trader');
-			let tbody = $('table.limit tbody');
+			// let tbody = $('table.limit tbody');
+			const { traderActions } = context.props;
 			let isMirror;
 
 			window.ee.addListener('activeOrders.update', (newData) => {
@@ -60,14 +65,25 @@ class Actions extends BaseActions
 						type: TRADER_ON_SOCKET_MESSAGE,
 						payload: {
 							data: currSymbData,
-							isMirror: isMirror,
-							rebuiltServerData: context.props.traderActions.actionOnServerDataRebuild(currSymbData, isMirror)}
+							rebuiltServerData: traderActions.actionOnServerDataRebuild(currSymbData, isMirror)}
 					});
 					__DEV__ && console.log('re-render');
 				}
-
-				setTimeout(activeTraderClass.scrollTo(), 100);
-				tbody.addClass('scroll_dis');
+				if(state.activeTrader.activeExchange != symbol || state.activeTrader.isMirror != isMirror){
+					setTimeout(traderActions.scrollTo(context, currSymbData, isMirror), 1300);
+					dispatch({
+						type: TRADER_ON_EXCHANGE_CHANGE,
+						payload: {
+							isMirror: isMirror,
+							activeExchange: symbol
+						}
+					});
+					$(context.refs.activeTrader).removeClass('loading');
+					// state.activeTrader.activeExchange = symbol;
+				}
+				// console.log(currSymbData);
+				// setTimeout(activeTraderClass.scrollTo(), 100);
+				// tbody.addClass('scroll_dis');
 				// activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), true);
 				// activeTraderClass.spreaderChangeVal(trader.find('input.spreader'));
 			});
@@ -400,15 +416,11 @@ class Actions extends BaseActions
 
 	public actionOnAjaxAutoTrade(context, orderData){
 		return () => {
-			const { data, isMirror, mainData, quantity } = context.props;
+			const { cmpData, isMirror, quantity } = context.props;
 			const { direction, limit, price } = orderData;
 			let url : string, ajaxData : any = {};
 
-			if(mainData)
-				ajaxData.Symbol = `${mainData.Symbol.Exchange}_${mainData.Symbol.Name}_${mainData.Symbol.Currency}`;
-			else
-				ajaxData.Symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
-
+			ajaxData.Symbol = `${cmpData.activeExchange.symbol}`;
 			ajaxData.Quantity = quantity;
 			ajaxData.isMirror = isMirror;
 			ajaxData.OrderType = limit;
@@ -442,13 +454,14 @@ class Actions extends BaseActions
 
 	public actionOnAjaxAutoTradeSpread(context, orderData){
 		return () => {
-			const { isMirror, mainData, quantity, spread } = context.props;
+			console.log(context);
+			const { cmpData, isMirror, quantity, spread } = context.props;
 			const { direction, price } = orderData;
 			const spreadPricePos = Math.round10(price + +spread, -2);
 			const spreadPriceNeg = Math.round10(price - spread, -2);
 			let url : string, ajaxData : any = {};
 
-			ajaxData.Symbol = `${mainData.Symbol.Exchange}_${mainData.Symbol.Name}_${mainData.Symbol.Currency}`;
+			ajaxData.Symbol = `${cmpData.activeExchange.symbol}`;
 
 			ajaxData.SellOrderQuantity = quantity;
 			ajaxData.BuyOrderQuantity = quantity;
@@ -538,6 +551,53 @@ class Actions extends BaseActions
 		});
 
 		return newData;
+	}
+
+	public scrollTo(context, data, isMirror) {
+		return () =>
+		{
+			const tbody =  $(context.refs.traderBody);
+			if(JSON.stringify(data) != '{}'){
+				let { Symbol: { LastAsk, LastBid } } = data;
+				if(isMirror) {
+					let LastBidOld = LastBid;
+
+					if(LastAsk)LastBid = Math.round10(1 - LastAsk, -2);
+					else LastBid = null;
+
+					if(LastBidOld) LastAsk = Math.round10(1 - LastBidOld, -2);
+					else LastAsk = null;
+				}
+
+				let indexBuy = LastBid ? Math.round(99 - LastBid * 100) : 0,
+					indexSell = LastAsk ? Math.round(99 - LastAsk * 100) : 0;
+
+				if(!indexBuy)
+					indexBuy = indexSell;
+				else if(!indexSell)
+					indexSell = indexBuy;
+
+				tbody.animate({scrollTop: (indexBuy + (indexSell - indexBuy) / 2) * 20 - tbody.height() / 2 + 10}, 400);
+			}
+			else
+				tbody.animate({scrollTop: 980 - tbody.height() / 2}, 200);
+
+			console.log(tbody.height());
+			console.log(980 - tbody.height() / 2);
+		}
+	}
+
+	public actionOnTabMirrorClick(isMirror)
+	{
+		return (dispatch, getState) =>
+		{
+			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: getState().sidebar.activeExchange.name, isMirror: isMirror, symbol: getState().sidebar.activeExchange.symbol});
+			dispatch({
+				// type: ON_TAB_MIRROR_CHANGE,
+				type: ON_ACTIVE_SYMBOL_CHANGED,
+				payload: {isMirror}
+			});
+		}
 	}
 }
 export default (new Actions()).export();

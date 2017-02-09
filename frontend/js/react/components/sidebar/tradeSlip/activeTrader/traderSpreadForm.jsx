@@ -11,7 +11,7 @@ export default class TraderSpreadForm extends React.Component {
 
 	render()
 	{
-		const { traderActions, activeString, direction, price, mainData, index, inputQuantityContext,
+		const { traderActions, activeString, cmpData: { activeExchange }, direction, price, index, inputQuantityContext,
 			isMirror, quantity, spread } = this.props;
 		const spreadPricePos = Math.round10(price + +spread, -2);
 		const spreadPriceNeg = Math.round10(price - spread, -2);
@@ -59,7 +59,7 @@ export default class TraderSpreadForm extends React.Component {
 							{/*<input type="submit" className="success_btn"/>*/}
 						</div>
 					</div>
-					<input className="symbol" name="Symbol" type="hidden" defaultValue={`${mainData.Symbol.Exchange}_${mainData.Symbol.Name}_${mainData.Symbol.Currency}`}/>
+					<input className="symbol" name="Symbol" type="hidden" defaultValue={activeExchange.symbol}/>
 					<input className="mirror" name="isMirror" type="hidden" defaultValue={isMirror}/>
 					<input className="SellOrderLimitPrice" name="SellOrderLimitPrice" type="hidden"
 						   defaultValue={direction == 'ask' ? price : (spreadPricePos > 0.98 ? 0.99 : spreadPricePos)}/>

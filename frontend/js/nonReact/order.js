@@ -32,7 +32,7 @@ class orderClass{
 				if($(this).attr('data-disabled')) return false;
 
 				if($(this).index() == 0){
-					if($('.left_order .tab input.limit').prop('checked')) globalData.tradeOn = true;
+					if($('#ChkLimit').prop('checked')) globalData.tradeOn = true;
 					globalData.myOrdersOn = false;
 				}
 				else{

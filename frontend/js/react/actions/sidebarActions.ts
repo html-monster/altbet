@@ -4,15 +4,15 @@ import {
 	ALLOW_AT_CH,
 	ON_ACTIVE_SYMBOL_CHANGED,
 } from '../constants/ActionTypesSidebar.js';
-import { WebsocketModel } from '../models/Websocket';
-import { Common } from '../common/Common';
+// import { WebsocketModel } from '../models/Websocket';
+// import { Common } from '../common/Common';
 import BaseActions from './BaseActions';
 import {SocketSubscribe} from "../models/SocketSubscribe";
 
 
 var __LDEV__ = true;
 // var __LDEV__ = false;
-
+let initialLoad = true;
 declare var orderClass;
 
 
@@ -35,15 +35,14 @@ class Actions extends BaseActions
         return (dispatch, getState) =>
         {
 			let ii = 0;
-			let autoTrade = $('.left_order input.auto'),
+			let //autoTrade = $('.left_order input.auto'),
 					order = $('#order'),
 					default_order = $('.left_order .default_orders'),
 					active_trader = $('.left_order .active_trader'),
-					buttons = $('.event-content button.event'),
+					// buttons = $('.event-content button.event'),
 					event_container = $('.content_bet'),
 					titles = event_container.eq(0).find('.event-title .title'),
 					executedOrders = $('.wrapper_event_page .executed_orders');
-
 
             // call socket if allow active trader
 			getState().sidebar.isAllowAT && ABpp.Websocket.sendSubscribe({tradeOn: isChecked}, SocketSubscribe.TRADER_ON);
@@ -61,6 +60,11 @@ class Actions extends BaseActions
 					active_trader.fadeIn(200);
 				}, 200);
 				activeTraderClass.tbodyResize();
+				if(initialLoad){
+					console.log(1);
+					$('#active_trader').addClass('loading');
+					initialLoad = false;
+				}
 				// buttons.attr('disabled', true);
 
 
@@ -85,7 +89,7 @@ class Actions extends BaseActions
 				// }
 				// === ==================== ===============================================
 
-				orderClass.tabReturn();
+
 				// setTimeout(function () {
 				// 	if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == ''){
 				// 		if(globalData.mainPage || globalData.myPosOn)
@@ -137,7 +141,7 @@ class Actions extends BaseActions
             /** @var ABpp ABpp */ ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, isChecked);
 
 
-
+			orderClass.tabReturn();
             dispatch({
                 type: ON_TRADER_ON,
                 payload: isChecked,
