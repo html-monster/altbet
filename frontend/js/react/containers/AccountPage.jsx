@@ -31,7 +31,7 @@ class AccountPage extends BaseController
 					<strong>{`${staticData.UserInfo.FirstName} ${staticData.UserInfo.LastName}`}</strong>
 				</div>
 			</div>;
-			
+
 
         return <div className="wrapper_about wrapper_user_page">
             <ul className="tabs">
@@ -40,7 +40,7 @@ class AccountPage extends BaseController
                 <li className={"tab " + (this.props.route.tab == "sett" ? "active" : "")}><Link to={`/settings`}>Settings</Link></li>
             </ul>
             <div className="tab_content">
-                <Funds data={{header: $tabHeaderHtml, active: this.props.route.tab == "funds"}}/>
+                <Funds data={{header: $tabHeaderHtml, active: this.props.route.tab == "funds", tab: this.props.params.tabname}}/>
 
                 <Preferences data={{header: $tabHeaderHtml, active: this.props.route.tab == "pref"}}/>
 

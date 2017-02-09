@@ -57,7 +57,7 @@ class Deposit extends React.Component{
 		const { approved, data, plan, payYearly, depositQuantity, pricePlan, sumValidation } = this.props.deposit;
 		const actions = this.props.actions;
 
-		return <div className="tab_item funds">
+		return <div className={"tab_item funds " + this.props.active}>
 			<h3>Add funds</h3>
 			<span className="account_balance">You currently have <span className="value">${Math.round10(data.UserAssets.CurrentBalance, -2)}</span> in your account</span>
 			<div className="quantity_control">

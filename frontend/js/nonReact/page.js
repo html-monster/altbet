@@ -1,6 +1,16 @@
 window.ee = new EventEmitter();
 
-$(document).ready(function () {
+$(document).ready(function ()
+{
+	// ----------------------------------
+	$("[data-js-deposit]").click((ee) => {
+		var $that = $(ee.target);
+		location.href = $that.attr("href");
+		location.reload();
+		0||console.log( '$that.attr("href")', $that.attr("href") );
+	});
+	// ----------------------------------
+
 	new defaultMethods();
 	// new inputValidationClass();
 	new inputNumber('.order');

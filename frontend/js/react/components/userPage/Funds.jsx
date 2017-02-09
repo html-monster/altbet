@@ -25,7 +25,9 @@ export default class Funds extends React.PureComponent{
 		// const { data, plan, payYearly, depositQuantity, pricePlan, sumValidation } = this.props.deposit;
 		// const actions = this.props.actions;
 		const staticData = appData.pageAccountData;
-		var {header, active} = this.props.data;
+		var {header, active, tab} = this.props.data;
+		tab || (tab = "balance")
+		var tabA = {}; tabA[tab] = "active";
 
 
 		return <div className={"tab_item funds " + (active ? "active" : "")}>
@@ -34,14 +36,14 @@ export default class Funds extends React.PureComponent{
 			<div className="funds_tab">
 				<div className="wrapper_user">
 					<div className="tabs">
-						<span className="tab btn wave active">Account Balance</span>
-						<span className="tab btn wave">Deposit Funds</span>
+						<span className={"tab btn wave " + tabA["balance"]}>Account Balance</span>
+						<span className={"tab btn wave " + tabA["deposit"]}>Deposit Funds</span>
 						<span className="tab btn wave">Withdraw Funds</span>
 						<span className="tab btn wave">Transaction History</span>
 					</div>
 					<div className="tab_content">
-						<AccountBalance staticData={staticData}/>
-						<Deposit />
+						<AccountBalance staticData={staticData} active={tabA["balance"]} />
+						<Deposit active={tabA["deposit"]} />
 						<Withdraw />
 						<TransHistory staticData={staticData} />
 					</div>

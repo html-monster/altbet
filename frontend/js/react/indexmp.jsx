@@ -46,9 +46,9 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
 	ReactDOM.render(
 		<Provider store={store}>
 			<Router history={hashHistory}>
-                <Route path='/' component={AccountPage} tab="funds">
+                <Route path='/'>
                     <IndexRedirect to="/funds" />
-                    <Route path='/funds' component={AccountPage} tab="funds" />
+                    <Route path='/funds(/:tabname)' component={AccountPage} tab="funds" />
                     <Route path='/preferences' component={AccountPage} tab="pref" />
                     <Route path='/settings' component={AccountPage} tab="sett" />
                 </Route>
