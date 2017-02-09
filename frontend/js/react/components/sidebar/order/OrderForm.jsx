@@ -79,7 +79,7 @@ export default class OrderForm extends React.Component{
 		if(data.NewOrder){
 			let dom = this.refs;
 
-			if(data.Limit){
+			if(data.Limit && data.Price == '0.'){
 				dom.inputPrice.focus();
 				OddsConverterObj.calculation(this, 'quantity', data.Limit)
 			}
@@ -224,17 +224,19 @@ export default class OrderForm extends React.Component{
 						<label className="checkbox">
 							{
 								data.Limit == undefined ?
-									<input name="OrderType" type="checkbox" value="true" defaultChecked={checkboxProp}
+									<input name="OrderType" type="checkbox" value="true" checked={checkboxProp}
 										   onChange={this.onTypeChange.bind(this, checkboxProp)}/>
 									:
-									<input name="OrderType" type="checkbox" value="true" defaultChecked={checkboxProp} key={checkboxProp + 'checkbox'}
+									<input name="OrderType" type="checkbox" value="true" checked={checkboxProp}
 										   onChange={this.props.actions.actionOnOrderTypeChange.bind(null, checkboxProp, this)}/>
 							}
 							<input name="OrderType" type="hidden" value="false"/>
 							<span>{checkboxProp ? 'Limit' : 'Market'}</span>
 						</label>
 					</div>
-					<input type="submit" className={`btn ${className}`} value={className} style={{textTransform: 'uppercase'}}/>
+					<i className="submit wave waves-input-wrapper waves-effect waves-button">
+						<input type="submit" className={`btn ${className}`} value={className} style={{textTransform: 'uppercase'}}/>
+					</i>
 					{
 						data.NewOrder ?
 							<span className="delete" onClick={this.props.onOrderDelete}>{}</span>

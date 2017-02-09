@@ -196,7 +196,6 @@ export class WebsocketModel
         if(globalData.eventPageOn) { window.ee.emit('EventPage.Chart.setData', data.Bars); }
         // if(globalData.eventPageOn) eventChartController.drawEventChart(data.Bars);
 
-
         if(globalData.tradeOn) window.ee.emit('activeOrders.update', data.ActiveOrders);//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
 
         // BM: event page data

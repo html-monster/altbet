@@ -19,16 +19,16 @@ export class GroupsTree
 
         $('#DiCatTree').jstree(
         {
-            'core': {
-                'check_callback' : function (operation, node, node_parent, node_position, more) {
-                    // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
-                    // in case of 'rename_node' node_position is filled with the new node name
-                    0||console.log( 'operation, node, node_parent, node_position, more', operation, node, node_parent, node_position, more );
-                    let flag = false;
-                    if( operation == 'move_node' && node.parent == node_parent.id) flag = true;
-                    return flag;
-                }
-            },
+            // 'core': {
+            //     'check_callback' : function (operation, node, node_parent, node_position, more) {
+            //         // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
+            //         // in case of 'rename_node' node_position is filled with the new node name
+            //         0||console.log( 'operation, node, node_parent, node_position, more', operation, node, node_parent, node_position, more );
+            //         let flag = false;
+            //         if( operation == 'move_node' && node.parent == node_parent.id) flag = true;
+            //         return flag;
+            //     }
+            // },
             "conditionalselect": function (node, event) {
                 return false;
             },
@@ -40,7 +40,7 @@ export class GroupsTree
                 //     "icon": "glyphicon glyphicon-ok"
                 // }
             },
-            "plugins": ["types", "conditionalselect", "dnd"]
+            "plugins": ["types", "conditionalselect", /*"dnd"*/]
         });
 
         // 0||console.debug( '$(".sidebar-menu .js-treeview.active")', $(".sidebar-menu .treeview.active") );
@@ -88,7 +88,7 @@ export class GroupsTree
                     {
                         window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
                         indexView.endDelete();
-                        location.href = MainConfig.BASE_URL + result.url;
+                        location.href = result.url ? MainConfig.BASE_URL + result.url : MainConfig.BASE_URL;
                     },
                     result => {
                         window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_ALERT, header: "Fail"});

@@ -16,7 +16,7 @@ import myPosReduce from './MyPosReducer';
 
 let reducers = {};
 // export default combineReducers({
-// 	'App': appState,
+// 	App': appState,
 // 	mainPage,
 //     eventPage,
 // 	myPosReduce,
@@ -33,7 +33,7 @@ ABpp.CONSTS = constants;
 switch (ABpp.config.currentPage){
 	case  ABpp.CONSTS.PAGE_MAIN:{
 		reducers = {
-			'App': appState,
+			App: appState,
 			mainPage,
 			myPosReduce,
 			sidebar,
@@ -45,7 +45,7 @@ switch (ABpp.config.currentPage){
 	}
 	case ABpp.CONSTS.PAGE_EVENT:{
 		reducers = {
-			'App': appState,
+			App: appState,
 			eventPage,
 			sidebar,
 			tradeSlip,
@@ -66,7 +66,7 @@ switch (ABpp.config.currentPage){
 	}
 	case ABpp.CONSTS.PAGE_MYPOS:{
 		reducers = {
-			'App': appState,
+			App: appState,
 			myPosReduce,
 			sidebar,
 			tradeSlip,

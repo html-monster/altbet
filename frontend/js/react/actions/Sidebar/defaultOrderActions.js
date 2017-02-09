@@ -106,20 +106,6 @@ export function actionOnOrderTypeChange(checkboxProp, formData)
 			type: ON_DEFAULT_ORDER_TYPE_CHANGE,
 			payload: state
 		});
-		if (!checkboxProp) {
-
-			setTimeout(function () {
-
-			}, 0);
-			price.focus();
-			price[0].selectionStart = 4;
-			OddsConverterObj.calculation(formData, 'price', !checkboxProp);
-		}
-		else {
-			quantity.focus();
-			quantity[0].selectionStart = quantity.val().length;
-			OddsConverterObj.calculation(formData, 'quantity', !checkboxProp);
-		}
 	}
 }
 
@@ -184,8 +170,7 @@ export function actionOnAjaxSend(context, parentData, e)
 
 		if(!ABpp.User.userIdentity) return false;
 
-		let data = context.props.data;
-		// console.log(parentData, context.props.data);
+		const data = context.props.data;
 		function OnBeginAjax()
 		{
 			$(context.refs.orderForm).find('[type=submit]').attr('disabled', true);
@@ -194,7 +179,7 @@ export function actionOnAjaxSend(context, parentData, e)
 		function onSuccessAjax()
 		{
 			context.props.actions.actionOnDeleteOrder(parentData, context.props.data);
-			console.log(`Order sending finished: ${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`);
+			__DEV__ && console.log(`Order sending finished: ${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`);
 		}
 
 		function onErrorAjax()

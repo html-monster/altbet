@@ -63,6 +63,11 @@ interface FormData {
 }
 
 
+interface Math {
+    round10(p1, p2)
+}
+
+
 
 // admin
 declare var Handlebars;

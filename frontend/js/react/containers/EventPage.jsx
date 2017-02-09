@@ -158,8 +158,28 @@ class EventPage extends BaseController
         };
 
 
+        // mirror link
+        var $msclass, $fsclass;
+        var $titleFside = "Current side";
+        var $titleMirror = "Go another side";
+        if( isMirror )
+        {
+            $msclass = $titleFside;
+            $titleFside = $titleMirror;
+            $titleMirror = $msclass;
+            $msclass = "active";
+        }
+        else
+        {
+            $fsclass = "active";
+        } // endif
+
         return <div className="wrapper_event_page" data-id={symbol} id={symbol}>
-            <h1>{data.SymbolsAndOrders.Symbol.HomeName} VS {data.SymbolsAndOrders.Symbol.AwayName}</h1>
+            <h1>
+                <a href={appData.pageEventData.fsideLink} className={$fsclass} title={$titleFside}>{data.SymbolsAndOrders.Symbol.HomeName}</a>
+                &nbsp;VS&nbsp;
+                <a href={appData.pageEventData.mirrorLink} className={$msclass} title={$titleMirror}>{data.SymbolsAndOrders.Symbol.AwayName}</a>
+            </h1>
             <div className="container">
                 <div className="chart_container">
                     <Chart data={this.props.eventPage} actions={this.props.chartActions} />

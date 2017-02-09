@@ -46,66 +46,70 @@ class Sidebar extends React.Component
 
 	componentDidMount()
     {
+    	// const isChecked = this.props.sidebar.traderOn;
         // 0||console.log( 'ABpp.User.settings.tradeOn', ABpp.User.settings.tradeOn );
-        this.props.actions.actionOnTraderOnChange(this.isAllowAT ? ABpp.User.settings.tradeOn : false);
+		// console.log(ABpp.Websocket);
+		// isChecked && ABpp.Websocket.sendSubscribe({tradeOn: isChecked}, SocketSubscribe.TRADER_ON);
+		// ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, isChecked);
+        this.props.actions.actionOnTraderOnChange(this.props.sidebar.traderOn);
     }
 
 
 	render()
 	{
 		let userIdentity = this.state.globalData.userIdentity;
-        var {traderOn} = this.props.sidebar;
-        if( this.FLAG_LOAD  )
-        {
-            traderOn = this.isAllowAT ? ABpp.User.settings.tradeOn : false;
-            this.FLAG_LOAD = false;
-        } // endif
-
+		const { actions, sidebar: { autoTradeOn, isAllowAT, traderOn } } = this.props;
+        // var {traderOn} = this.props.sidebar;
+        // if( this.FLAG_LOAD  )
+        // {
+        //     traderOn = this.isAllowAT ? ABpp.User.settings.tradeOn : false;
+        //     this.FLAG_LOAD = false;
+        // } // endif
 
 		return <div className="left_order">
+			{
+				isAllowAT &&
+				<label htmlFor="ChkLimit" className={'trader ' + (userIdentity == 'True' ? '' : 'disabled')}>
+					<input type="checkbox" id="ChkLimit" name="limit" className="limit" ref="chkTraderOn" checked={traderOn}
+						   onChange={(ee) => actions.actionOnTraderOnChange(ee.target.checked)}
+						   disabled={userIdentity != 'True'}/>
+					<span>
+						Active bettor
+						<span className="help">
+							<span className="help_message">
+								<strong>The Active Bettor interface offers some slick, highly sophisticated, super user friendly, never offered before in the betting world, functionalities, so fasten your seatbelts and off you go to the market - fast!</strong>
+							</span>
+						</span>
+					</span>
+				</label>
+			}
+			{
+				isAllowAT && traderOn && <label className="auto_trade">
+					<input type="checkbox" className="auto" onChange={actions.actionOnAutoTradeChange} checked={autoTradeOn}/>
+					<span>
+						Auto trade
+						<span className="help">
+							<span className="help_message">
+								<strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, vel?</strong>
+							</span>
+						</span>
+					</span>
+				</label>
+			}
 			<div className="wrapper">
 				<div className="tabs">
-                    <span className="tab active">
-                        Trade Slip
-                        { this.isAllowAT &&
-                            <label htmlFor="ChkLimit" className={'trader ' + (userIdentity == 'True' ? '' : 'disabled')}>
-                                <input type="checkbox" id="ChkLimit" name="limit" className="limit" ref="chkTraderOn" checked={traderOn} onChange={(ee) => this.props.actions.actionOnTraderOnChange(ee.target.checked)} disabled={userIdentity != 'True'}/>
-                                <span>
-                                    Active bettor
-                                    <span className="help">
-                                        <span className="help_message">
-                                            <strong>The Active Bettor interface offers some slick, highly sophisticated, super user friendly, never offered before in the betting world, functionalities, so fasten your seatbelts and off you go to the market - fast!</strong>
-                                        </span>
-                                    </span>
-                                </span>
-                            </label>
-                        }
-                    </span>
-
-					<span className="tab js-tab2">
-							Your Orders
-							<label className="auto_trade">
-								{
-									(this.state.globalData.autoTradeOn) ?
-										<input type="checkbox" name="auto" className="auto" defaultChecked="true"/>
-									:
-										<input type="checkbox" name="auto" className="auto"/>
-								}
-								<span>
-									Auto trade
-									<span className="help">
-										<span className="help_message">
-											<strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, vel?</strong>
-										</span>
-									</span>
-								</span>
-							</label>
-						</span>
+					<span className="tab active">Trade Slip</span>
+					{
+						ABpp.User.userIdentity ?
+							<span className="tab js-tab2">Your Orders</span>
+							:
+							<span className="tab js-tab2" data-disabled={true}>Your Orders</span>
+					}
 				</div>
 				<div className="tab_content order-content">
 
 					{/* // BM: --------------------------------------------------- TRADE SLIP ---*/}
-					<TradeSlip data={{...this.props.sidebar, isAllowAT: this.isAllowAT}} />
+					<TradeSlip data={{...this.props.sidebar, isAllowAT}} />
 
 					{/* // BM: --------------------------------------------------- YOUR ORDERS ---*/}
 					<EventOrders/>
@@ -117,7 +121,7 @@ class Sidebar extends React.Component
 				{/* // BM: --------------------------------------------------- NEW ORDER ---*/}
 				{/*<NewOrder data={{}}/>*/}
 
-				<div className="order_content default" style={{position: 'absolute', left: 0, zIndex: 10, opacity: 0, marginTop: 5}}>
+				{/*<div className="order_content default" style={{position: 'absolute', left: 0, zIndex: 10, opacity: 0, marginTop: 5}}>
 					<div className="sell-container">
 						<form action={ABpp.baseUrl + '/Order/Create'} autoComplete="off" data-ajax="true" data-ajax-begin="ajaxControllerClass.OnBeginJs" data-ajax-failure="ajaxControllerClass.OnFailureJs" data-ajax-success="ajaxControllerClass.OnSuccessJs" data-ajax-url={ABpp.baseUrl + '/Order/Create'} method="post" noValidate="novalidate">
 							<div className="container">
@@ -153,7 +157,9 @@ class Sidebar extends React.Component
 							<input className="direction" name="OrderType" type="hidden" value=""/>
 							<input className="price_value" name="LimitPrice" type="hidden" value=""/>
 							<div className="container">
-								<input type="submit" className="btn sell" value="Sell" style={{textTransform: 'uppercase'}}/>
+								<div className="submit_wrapper">
+									<input type="submit" className="btn sell wave" value="Sell" style={{textTransform: 'uppercase'}}/>
+								</div>
 								<span className="delete ">{}</span>
 								<div className="checkbox"></div>
 							</div>
@@ -212,12 +218,11 @@ class Sidebar extends React.Component
 							</div>
 						</form>
 					</div>
-				</div>
+				</div>*/}
 			</div>
 		</div>
 	}
 }
-
 
 export default connect(state => ({
 		sidebar: state.sidebar,

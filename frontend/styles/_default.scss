@@ -1,5 +1,6 @@
 $clr1Status: #cccb35;
 $color2About: #b0afb0;
+$color3About: #f8b747;
 
 
 ::-webkit-input-placeholder{
@@ -159,6 +160,7 @@ form.sending{
     &:before{  transform: rotate(45deg);  }
     &:after{  transform: rotate(-45deg);  }
   }
+
 }
 i.wave{  display: inline-block;  font-style: normal; border-radius: 4px; }
 .waves-effect {

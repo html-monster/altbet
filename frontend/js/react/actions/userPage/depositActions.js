@@ -87,7 +87,7 @@ export function actionOnButtonQuantityClick(actions, event)
 	return (dispatch, getState) =>
 	{
 		// let summary = +getState().deposit.depositQuantity + +event.target.textContent;
-		actions.actionOnQuantityValidate(event.target.textContent);
+		// actions.actionOnQuantityValidate(event.target.textContent);
 		dispatch({
 			type: DEPOSIT_QUANTITY_CHANGE,
 			payload: +event.target.textContent

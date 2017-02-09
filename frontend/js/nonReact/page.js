@@ -94,6 +94,10 @@ $(document).ready(function ()
 	// 		alert(e.message);
 	// 	}
 	// })();
+	// $(window).focus(function() {
+	// 	console.log('focus');
+	// });
+
 
 	// BM: Waves
 	Waves.init();
@@ -204,7 +208,7 @@ $(document).ready(function ()
 		$(this).parents('.pass_container').find('input[type=text]').attr('type', 'password').focus();
 	});
 
-	$('.help').mouseover(function () {
+	$('.help').mouseenter(function () {
 		$('.help').css('zIndex', 10);
 		$(this).css('zIndex', 80);
 	});

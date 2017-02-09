@@ -17,7 +17,7 @@ $(document).ready(function () {
 
   });
 
-  $(".item_category").mouseover(function () {
+  $(".item_category").mouseenter(function () {
     var ID = $(this).attr("id");
     var IdVideo = ID + '_video';
     $('#' + IdVideo).addClass('active');
