@@ -1,15 +1,31 @@
 window.ee = new EventEmitter();
 
+
+// BM: for Discuss
+if( appData && appData.pageEventData )
+{
+    try {
+        var disqus_config = function () {
+            this.page.url = "http://" + location.host + appData.pageEventData.exchangeLink;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = appData.pageEventData.SymbolsAndOrders.Symbol.Exchange; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+    } catch (e) {
+        console.warn( 'disqus_config fails' );
+    }
+} // endif
+
+
+
 $(document).ready(function ()
 {
-	// ----------------------------------
+	// BM: Deposit btn click for routing ----------------------------------
 	$("[data-js-deposit]").click((ee) => {
 		var $that = $(ee.target);
 		location.href = $that.attr("href");
 		location.reload();
-		0||console.log( '$that.attr("href")', $that.attr("href") );
 	});
-	// ----------------------------------
+
+
 
 	new defaultMethods();
 	// new inputValidationClass();

@@ -27,3 +27,6 @@
 - Handlebar (http://handlebarsjs.com/)
 - Select2 (https://select2.github.io/examples.html)
 
+
+## Disqus
+- Стилизайия под сайт (https://help.disqus.com/customer/portal/articles/545277)
