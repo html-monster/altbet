@@ -25,9 +25,11 @@ export class Preferences extends React.PureComponent
     render()
     {
         var {IsMode, IsBettor, IsTrade} = appData.pageAccountData.Account;
-        return <div className="tab_item preferences">
+        var {header, active} = this.props.data;
+
+        return <div className={"tab_item preferences " + (active ? "active" : "")}>
                 <h2>Preferences</h2>
-                {this.props.data.header}
+                {header}
                 <div className="section">
                     <h3 className="section_user">General</h3>
                     <hr/>

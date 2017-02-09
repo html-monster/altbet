@@ -5,10 +5,12 @@
 import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 
 import BaseController from './BaseController';
 import Funds from '../components/userPage/Funds';
 import {Preferences} from '../components/userPage/Preferences';
+import {Settings} from '../components/userPage/Settings';
 
 
 class AccountPage extends BaseController
@@ -29,29 +31,20 @@ class AccountPage extends BaseController
 					<strong>{`${staticData.UserInfo.FirstName} ${staticData.UserInfo.LastName}`}</strong>
 				</div>
 			</div>;
+			
 
         return <div className="wrapper_about wrapper_user_page">
             <ul className="tabs">
-                <li className="tab active"><span>Funds</span></li>
-                <li className="tab"><span>My Preferences</span></li>
-                <li className="tab"><span>Settings</span></li>
+                <li className={"tab " + (this.props.route.tab == "funds" ? "active" : "")}><Link to={`/funds`}>Funds</Link></li>
+                <li className={"tab " + (this.props.route.tab == "pref" ? "active" : "")}><Link to={`/preferences`}>My Preferences</Link></li>
+                <li className={"tab " + (this.props.route.tab == "sett" ? "active" : "")}><Link to={`/settings`}>Settings</Link></li>
             </ul>
             <div className="tab_content">
-                <Funds data={{header: $tabHeaderHtml}}/>
+                <Funds data={{header: $tabHeaderHtml, active: this.props.route.tab == "funds"}}/>
 
-                <Preferences data={{header: $tabHeaderHtml}}/>
+                <Preferences data={{header: $tabHeaderHtml, active: this.props.route.tab == "pref"}}/>
 
-                <div className="tab_item settings">
-                    <h2>Settings</h2>
-                    <div className="user_info">
-                        <div className="logo"></div>
-                        <div className="personal_info">
-                            <h3 className="mail">test2@alt.bet</h3>
-                            <strong>FirstName LastName</strong>
-                        </div>
-                    </div>
-                </div>
-
+                <Settings data={{header: $tabHeaderHtml, active: this.props.route.tab == "sett"}}/>
             </div>
         </div>;
     }

@@ -19,7 +19,6 @@ export default class BaseController extends React.Component
     }
 
 
-
     /**
      * @private
      */
