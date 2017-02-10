@@ -7,6 +7,7 @@
       &.active { color: $color3About; }
       &:hover { color: #fff; }
     }
+    .lower { text-transform: lowercase }
   }
 	h2{
 		padding-bottom: 15px;
