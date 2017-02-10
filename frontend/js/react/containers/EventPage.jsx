@@ -57,6 +57,17 @@ class EventPage extends BaseController
         executedOrders.on('mouseleave', 'td.clickable', function () {
             $(this).parents('.executed_orders').find('tr').removeClass('active');
         });
+
+
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = '//altbet.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
     }
 
 
@@ -291,11 +302,12 @@ class EventPage extends BaseController
                         </tbody>
                     </table>
                 </div>
-              <div className="table_wrap">
-              </div>
+                <div className="table_wrap"></div>
             </div>
-            <div className="information">
-            </div>
+            <div className="information"></div>
+
+            <div id="disqus_thread"></div>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         </div>
     }
 }

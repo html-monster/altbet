@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 
 import {TabMyPos} from './pageMyPos/TabMyPos';
 import {TabOpenOrders} from './pageMyPos/TabOpenOrders';
-import {MyOrderHistoryTabData} from './pageMyPos/myOrderHistoryTabData';
+import {TabMyOrderHistory} from './pageMyPos/TabHistory';
 import BaseController from '../containers/BaseController';
 import actions from '../actions/ordersPageActions';
 import myPositionsActions from '../actions/OrderPage/myPositionsActions.ts';
@@ -82,15 +82,7 @@ class PageMyPos extends BaseController //React.Component
 
 
                         {/* // BM: --------------------------------------------------- ORDER HISTORY ---*/}
-                        <div className="tab_item">
-                            <div className="my_position_tab">
-                                <div className="wrapper">
-                                    <div className="my_order_history table_content" id="my_order_history">
-                                        <MyOrderHistoryTabData key="my_order_history" data={historyData}/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <TabMyOrderHistory key="my_order_history" data={historyData}/>
                     </div>
                 </div>
             </div>
