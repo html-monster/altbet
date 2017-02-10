@@ -171,7 +171,7 @@ class EventPage extends BaseController
         return <div className="wrapper_event_page" data-id={symbol} id={symbol}>
             <h1>
                 <a href={appData.pageEventData.fsideLink} className={$fsclass} title={$titleFside}>{data.SymbolsAndOrders.Symbol.HomeName}</a>
-                &nbsp;VS&nbsp;
+                <span className="lower"> vs </span>
                 <a href={appData.pageEventData.mirrorLink} className={$msclass} title={$titleMirror}>{data.SymbolsAndOrders.Symbol.AwayName}</a>
             </h1>
             <div className="container">

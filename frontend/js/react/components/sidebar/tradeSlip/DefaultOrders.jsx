@@ -93,11 +93,12 @@ export default class DefaultOrders extends React.Component
 
 	render()
 	{
-		let data = this.props.data;
+		const { actions, cmpData: { traderOn }, data } = this.props;
 
 		return <AnimateOnUpdate
 				component="div"
 				className="default_orders"
+				style={traderOn ? {display: 'none'} : {}}
 				transitionName={{
 					appear: 'fadeInAnimation',
 					enter: 'fadeInAnimation'
@@ -118,8 +119,8 @@ export default class DefaultOrders extends React.Component
 								allData={data}
 								data={item}
 								key={`${item.ID}-${item.isMirror}`}
-								onDeleteOrderHandler={this.props.actions.actionOnDeleteOrder.bind(this, item)}
-								actions={this.props.actions}
+								onDeleteOrderHandler={actions.actionOnDeleteOrder.bind(this, item)}
+								actions={actions}
 							/>
 						)
 				}

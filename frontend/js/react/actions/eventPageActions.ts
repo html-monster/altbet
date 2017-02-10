@@ -8,7 +8,8 @@ import { WebsocketModel } from '../models/Websocket';
 import { SocketSubscribe } from '../models/SocketSubscribe';
 
 
-var __LDEV__ = true;
+let __LDEV__ = true;
+declare let orderClass;
 
 class Actions extends BaseActions
 {
@@ -101,6 +102,9 @@ class Actions extends BaseActions
                 };
                 __LDEV__&&console.debug( 'outStruc', props, outStruc );
 
+                // === Htmlbook === 17-02-09 ===============================================
+                orderClass.tabReturn();
+                // === Htmlbook === 17-02-09 ===============================================
 
                 // call trade slip action
                 getState().App.controllers.TradeSlip.createNewOrder(outStruc);
@@ -163,6 +167,10 @@ class Actions extends BaseActions
                 __LDEV__&&console.debug( 'outStruc', props, outStruc );
 
                 getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+
+                // === Htmlbook === 17-02-09 ===============================================
+                orderClass.tabReturn();
+                // === Htmlbook === 17-02-09 ===============================================
 
                 // dispatch({
                 //     type: ON_SOCKET_MESSAGE,
@@ -235,7 +243,7 @@ class Actions extends BaseActions
 
                 // todo: needs move to sidebar
                 // set current tab
-                $('.active_trader .event_title .event_name').removeClass('active').eq(data.isMirror ? 1 : 0).addClass('active');
+                // $('.active_trader .event_title .event_name').removeClass('active').eq(data.isMirror ? 1 : 0).addClass('active');
 
                 // todo: needs move to sidebar
                 // set new tabs titles
@@ -248,9 +256,9 @@ class Actions extends BaseActions
 
                 // todo: needs move to activeTrader
                 // берет данные при смене события(название события, symbol и т.п.)
-                var activeTrader = $('.active_trader');
-                activeTrader.attr('id', 'trader_' + `${data.SymbolsAndOrders.Symbol.Exchange}_${data.SymbolsAndOrders.Symbol.Name}_${data.SymbolsAndOrders.Symbol.Currency}`);
-                activeTrader.find('table.limit tbody').removeClass('scroll_dis');
+                // var activeTrader = $('.active_trader');
+                // activeTrader.attr('id', 'trader_' + `${data.SymbolsAndOrders.Symbol.Exchange}_${data.SymbolsAndOrders.Symbol.Name}_${data.SymbolsAndOrders.Symbol.Currency}`);
+                // activeTrader.find('table.limit tbody').removeClass('scroll_dis');
 
                 // activeTraderClass.spreaderClean(true);
                 // activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);

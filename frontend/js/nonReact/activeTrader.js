@@ -1,4 +1,4 @@
-	class activeTraderClass{
+class activeTraderClass{
 	constructor(){
 		var content = $('.content');
 
@@ -9,8 +9,8 @@
 		// $('.left_order .tab.js-tab2 label').click(function (e) {
          //        e.stopPropagation();
 		// });
-		if($('.wrapper_event_page').length || $('.my_position_tab').length)
-			$('.active_trader .event_title').hide();
+		// if($('.wrapper_event_page').length || $('.my_position_tab').length)
+		// 	$('.active_trader .event_title').hide();
 
 		// $('.active_trader table.limit').addClass($.browser.webkit ? 'webkit' : '');
 		// BM: init trader On/Off
@@ -79,20 +79,20 @@
 			tabs.eq(0).addClass('active');
 
 			// BM: tab_item onClick TODEL
-			$('.tab_item').on('click', 'event_container', function () {
-				if (checkbox.prop('checked')) {
-					console.log( '.tab_item .event_container click' );
-					var titles = $(this).find('.event-title .title');
-
-					// tableLimitChangeData($(this), titles);
-					tabs.removeClass('active').eq(0).addClass('active');
-					$(this).find('.event-content').eq(0).addClass('active');
-
-					// activeTraderClass.takeData($(this));
-					activeTraderClass.spreaderClean(true);
-					activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
-				}
-			});
+			// $('.tab_item').on('click', 'event_container', function () {
+			// 	if (checkbox.prop('checked')) {
+			// 		console.log( '.tab_item .event_container click' );
+			// 		var titles = $(this).find('.event-title .title');
+			//
+			// 		// tableLimitChangeData($(this), titles);
+			// 		tabs.removeClass('active').eq(0).addClass('active');
+			// 		$(this).find('.event-content').eq(0).addClass('active');
+			//
+			// 		// activeTraderClass.takeData($(this));
+			// 		// activeTraderClass.spreaderClean(true);
+			// 		// activeTraderClass.buttonActivation($('.active_trader .control input.quantity'));
+			// 	}
+			// });
 			// Removed after EventPage on react
 			/*event_content.click(function (e) {
 				return ; // added after move this to react
@@ -892,11 +892,9 @@
 
 		// order.css('overflow-y', 'hidden');
 		setTimeout(function () {
-			var	orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight(true) + $('header').outerHeight(true)),
-			 		eventTitleHeight = ($('.active_trader .event_title').length) ? $('.active_trader .event_title')[0].offsetHeight : '',
-					activeTraderHeight = orderSidebarHeight - (eventTitleHeight + $('.active_trader .info').outerHeight() +
-							$('.active_trader .control').eq(0).outerHeight() + $('.active_trader .control').eq(1).outerHeight() +
-							$('.active_trader .control.remote').outerHeight() + $('.active_trader .limit thead').outerHeight() + 12);
+			let orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight(true) + $('header').outerHeight(true)),
+				eventTitleHeight = $('.active_trader .event_title').length ? 35 : 0,
+				activeTraderHeight = orderSidebarHeight - (eventTitleHeight + 214);
 
 			if(footer.hasClass('active')){
 				tbody.css('max-height', activeTraderHeight - footerHeight);

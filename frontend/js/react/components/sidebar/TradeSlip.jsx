@@ -42,7 +42,7 @@ class TradeSlip extends React.Component
 		const { data, defaultOrderActions, tradeSlip } = this.props;
         return <div className="tab_item" id="order">
 
-			<DefaultOrders data={tradeSlip.orderNewData} actions={defaultOrderActions}/>
+			<DefaultOrders cmpData={{...tradeSlip, ...data}} data={tradeSlip.orderNewData} actions={defaultOrderActions}/>
 
 			{/* // BM: --------------------------------------------------- ACTIVE TRADER ---*/}
 			{
