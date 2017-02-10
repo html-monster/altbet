@@ -17,9 +17,9 @@ const initialState = {
 	data: {},
 	isMirror: 0,
 	rebuiltServerData:[],
-	spread: 0.1,
+	spread: '',
 	spreadHighLight: [],
-	quantity: 10,
+	quantity: '',
 	orderInfo: {
 		activeString: null,
 		direction: null,
