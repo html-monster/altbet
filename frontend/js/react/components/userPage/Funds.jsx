@@ -9,7 +9,7 @@ import Deposit from './funds/Deposit';
 import Withdraw from './funds/Withdraw';
 import TransHistory from './funds/TransHistory';
 
-export default class Funds extends React.Component{
+export default class Funds extends React.PureComponent{
 	constructor()
 	{
 		super();
@@ -25,26 +25,25 @@ export default class Funds extends React.Component{
 		// const { data, plan, payYearly, depositQuantity, pricePlan, sumValidation } = this.props.deposit;
 		// const actions = this.props.actions;
 		const staticData = appData.pageAccountData;
+		var {header, active, tab} = this.props.data;
+		tab || (tab = "balance")
+		var tabA = {}; tabA[tab] = "active";
 
-		return <div className="funds">
+
+		return <div className={"tab_item funds " + (active ? "active" : "")}>
 			<h2>Funds</h2>
-			<div className="user_info">
-				<div className="personal_info">
-					<h3 className="mail">{staticData.UserInfo.Email}</h3>
-					<strong>{`${staticData.UserInfo.FirstName} ${staticData.UserInfo.LastName}`}</strong>
-				</div>
-			</div>
+			{header}
 			<div className="funds_tab">
 				<div className="wrapper_user">
 					<div className="tabs">
-						<span className="tab btn wave active">Account Balance</span>
-						<span className="tab btn wave">Deposit Funds</span>
+						<span className={"tab btn wave " + tabA["balance"]}>Account Balance</span>
+						<span className={"tab btn wave " + tabA["deposit"]}>Deposit Funds</span>
 						<span className="tab btn wave">Withdraw Funds</span>
 						<span className="tab btn wave">Transaction History</span>
 					</div>
 					<div className="tab_content">
-						<AccountBalance staticData={staticData}/>
-						<Deposit />
+						<AccountBalance staticData={staticData} active={tabA["balance"]} />
+						<Deposit active={tabA["deposit"]} />
 						<Withdraw />
 						<TransHistory staticData={staticData} />
 					</div>

@@ -24,12 +24,12 @@
     li {
       padding-right: 10px;
       transition: 0.1s ease-out;
-      &.active, &:hover, &:hover a {
-        color: #3498da;
+      &.active, &:hover {
+        a { color: #3498da; }
       }
     }
     a {
-      //color: #37343b;
+      color: $main-color;
       transition: 0.1s ease-out;
     }
   }

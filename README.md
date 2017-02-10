@@ -18,6 +18,7 @@
 - DeepCompare (http://stackoverflow.com/questions/1068834/object-comparison-in-javascript)
 - Loaders (http://preloaders.net/en/free)
 - Translit (https://github.com/xguest/iso_9_js)
+- React-router (https://github.com/ReactTraining/react-router)
 
 
 ## Plugins
@@ -26,3 +27,6 @@
 - Handlebar (http://handlebarsjs.com/)
 - Select2 (https://select2.github.io/examples.html)
 
+
+## Disqus
+- Стилизайия под сайт (https://help.disqus.com/customer/portal/articles/545277)

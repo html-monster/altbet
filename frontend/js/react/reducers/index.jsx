@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import appState from './appReducer';
 import mainPage from './mainPageReducer';
 import eventPage from './eventPageReducer';
+import accountPage from './accountPageReducer';
 import sidebar from './sidebarReducer';
 import tradeSlip from './sidebar/defaultOrders';
 import activeTrader from './sidebar/activeTrader';
@@ -55,7 +56,8 @@ switch (ABpp.config.currentPage){
 	}
 	case ABpp.CONSTS.PAGE_ACCOUNT:{
 		reducers = {
-			App: appState,
+			'App': appState,
+			accountPage,
 			deposit,
 			withdraw,
 			transHistory

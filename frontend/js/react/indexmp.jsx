@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-// import { Router, Route, Redirect, IndexRoute, IndexRedirect, hashHistory, browserHistory } from 'react-router'
+import { Router, Route, IndexRedirect, hashHistory } from 'react-router'
 
 
 
@@ -11,9 +11,9 @@ import configureStore from './store/configureStore';
 import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
 import EventPage from './containers/EventPage';
+import AccountPage from './containers/AccountPage';
 import PageMyPos from './components/PageMyPos.jsx';
 import Sidebar from './components/Sidebar.jsx';
-import Funds from './components/userPage/Funds';
 
 
 
@@ -45,9 +45,17 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MAIN ) {
 if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
 	ReactDOM.render(
 		<Provider store={store}>
-			<Funds />
+			<Router history={hashHistory}>
+                <Route path='/'>
+                    <IndexRedirect to="/funds" />
+                    <Route path='/funds(/:tabname)' component={AccountPage} tab="funds" />
+                    <Route path='/preferences' component={AccountPage} tab="pref" />
+                    <Route path='/settings' component={AccountPage} tab="sett" />
+                </Route>
+			</Router>
 		</Provider>,
-		document.getElementById('funds')
+		document.getElementById('DiMPAccountPage')
+		// document.getElementById('funds')
 	);
 	// ReactDOM.render(
 	// 	<Provider store={store}>
