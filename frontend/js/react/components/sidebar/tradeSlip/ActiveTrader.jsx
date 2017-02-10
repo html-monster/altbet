@@ -64,20 +64,25 @@ class ActiveTrader extends React.Component {
 		return <div className="active_trader" id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
-			<div className="event_title">
-				<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}
-					 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>
-					{
-						JSON.stringify(data) != '{}' && `${data.Symbol.HomeName} ${data.Symbol.HomeHandicap}`
-					}
-				</div>
-				<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}
-					 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, true)}>
-					{
-						JSON.stringify(data) != '{}' && `${data.Symbol.AwayName} ${data.Symbol.AwayHandicap}`
-					}
-				</div>
-			</div>
+			{
+				ABpp.config.currentPage != 2 ?
+					<div className="event_title">
+						<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}
+							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>
+							{
+								JSON.stringify(data) != '{}' && `${data.Symbol.HomeName} ${data.Symbol.HomeHandicap}`
+							}
+						</div>
+						<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}
+							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, true)}>
+							{
+								JSON.stringify(data) != '{}' && `${data.Symbol.AwayName} ${data.Symbol.AwayHandicap}`
+							}
+						</div>
+					</div>
+					:
+					''
+			}
 			<table className="info">
 				<tbody>
 					<tr>

@@ -16,6 +16,7 @@ import RebuildServerData from '../Sidebar/activeTrader/rebuildServerData';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 
 declare var orderClass;
+let initialStart = true;
 
 class Actions extends BaseActions
 {
@@ -60,7 +61,6 @@ class Actions extends BaseActions
 				}
 				// console.log(JSON.stringify(state.activeTrader.data), JSON.stringify(currSymbData));
 				if(JSON.stringify(state.activeTrader.data) != JSON.stringify(currSymbData) || state.activeTrader.isMirror != isMirror){
-					// this.setState({data: currSymbData, isMirror: isMirror});
 					dispatch({
 						type: TRADER_ON_SOCKET_MESSAGE,
 						payload: {
@@ -70,7 +70,8 @@ class Actions extends BaseActions
 					__DEV__ && console.log('re-render');
 				}
 				if(state.activeTrader.activeExchange != symbol || state.activeTrader.isMirror != isMirror){
-					setTimeout(traderActions.scrollTo(context, currSymbData, isMirror), 1300);
+					setTimeout(() => {traderActions.scrollTo(context, currSymbData, isMirror)}, initialStart ? 400 : 100);
+					if(initialStart) initialStart = false;
 					dispatch({
 						type: TRADER_ON_EXCHANGE_CHANGE,
 						payload: {
@@ -454,7 +455,6 @@ class Actions extends BaseActions
 
 	public actionOnAjaxAutoTradeSpread(context, orderData){
 		return () => {
-			console.log(context);
 			const { cmpData, isMirror, quantity, spread } = context.props;
 			const { direction, price } = orderData;
 			const spreadPricePos = Math.round10(price + +spread, -2);
@@ -582,10 +582,36 @@ class Actions extends BaseActions
 			else
 				tbody.animate({scrollTop: 980 - tbody.height() / 2}, 200);
 
-			console.log(tbody.height());
-			console.log(980 - tbody.height() / 2);
+			// console.log(tbody.height());
+			// console.log(980 - tbody.height() / 2);
 		}
 	}
+
+	// public tbodyResize(showFooter){
+	// 	let windowHeight = window.innerHeight,
+	// 		footer = $('footer'),
+	// 		footerHeight = footer.outerHeight(),
+	// 		tbody = $('.left_order table.limit tbody'),
+	// 		delay = 400;
+	// 	// order = $('#order');
+    //
+	// 	if(showFooter) delay = 0;
+    //
+	// 	// order.css('overflow-y', 'hidden');
+	// 	setTimeout(function () {
+	// 		let orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight(true) + $('header').outerHeight(true)),
+	// 			eventTitleHeight = ($('.active_trader .event_title').length) ? $('.active_trader .event_title')[0].offsetHeight : 0,
+	// 			activeTraderHeight = orderSidebarHeight - (eventTitleHeight + $('.active_trader .info').outerHeight() +
+	// 				$('.active_trader .control').eq(0).outerHeight() + $('.active_trader .control').eq(1).outerHeight() +
+	// 				$('.active_trader .control.remote').outerHeight() + $('.active_trader .limit thead').outerHeight() + 12);
+    //
+	// 		if(footer.hasClass('active')){
+	// 			tbody.css('max-height', activeTraderHeight - footerHeight);
+	// 		} else {
+	// 			tbody.css('max-height', activeTraderHeight);
+	// 		}
+	// 	}, delay);
+	// };
 
 	public actionOnTabMirrorClick(context, isMirror)
 	{
