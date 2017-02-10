@@ -12,7 +12,6 @@ export default class TraderDefaultForm extends React.Component {
 
 	render()
 	{
-		console.log(this.props);
 		const { activeString, cmpData: { activeExchange }, direction, price, limit, index, inputQuantityContext,
 			isMirror, traderActions, quantity } = this.props;
 		// let orderFormStyle = {position: 'absolute', left: 0, zIndex: 10, marginTop: 10};

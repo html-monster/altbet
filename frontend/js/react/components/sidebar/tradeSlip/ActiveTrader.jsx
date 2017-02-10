@@ -59,7 +59,7 @@ class ActiveTrader extends React.Component {
 			(data.Symbol && data.Symbol.LastBid) ? Math.round10(1 - data.Symbol.LastBid, -2) : ''
 			:
 			(data.Symbol && data.Symbol.LastAsk) ? data.Symbol.LastAsk : '';
-		// let stringHtmlData = traderActions.actionOnServerDataRebuild(data, isMirror);
+
 
 		return <div className="active_trader" id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
