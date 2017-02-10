@@ -13,7 +13,6 @@ class ActiveTrader extends React.Component {
 	constructor()
 	{
 		super();
-
 	}
 
 	componentDidMount()
@@ -36,7 +35,7 @@ class ActiveTrader extends React.Component {
 		// 0||console.log( 'activeExchange', activeExchange );
 		// const { activeString, showDefaultOrder } = this.state;
 		const { data, ...info } = this.props;
-		const { cmpData:{ activeExchange, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
+		const { cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
 			rebuiltServerData, spread, quantity, traderActions } = this.props;
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
@@ -62,7 +61,7 @@ class ActiveTrader extends React.Component {
 			(data.Symbol && data.Symbol.LastAsk) ? data.Symbol.LastAsk : '';
 		// let stringHtmlData = traderActions.actionOnServerDataRebuild(data, isMirror);
 
-		return <div className="active_trader" id="active_trader" style={{display: 'none'}}
+		return <div className="active_trader" id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
 			<div className="event_title">

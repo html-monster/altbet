@@ -55,10 +55,10 @@ class Actions extends BaseActions
 
 				order.css('overflow-y', 'hidden');
 				// autoTrade.parent().fadeIn(200);
-				default_order.stop(true).fadeOut(200);
-				setTimeout(function () {
-					active_trader.fadeIn(200);
-				}, 200);
+				// default_order.stop(true).fadeOut(200);
+				// setTimeout(function () {
+				// 	active_trader.fadeIn(200);
+				// }, 200);
 				activeTraderClass.tbodyResize();
 				if(initialLoad){
 					$('#active_trader').addClass('loading');
@@ -121,10 +121,10 @@ class Actions extends BaseActions
 			else{
 				// autoTrade.parent().fadeOut(200);
 				order.css('overflow-y', 'auto');
-				setTimeout(function () {
-					default_order.stop(true).fadeIn(200);
-				}, 200);
-				active_trader.fadeOut(200);
+				// setTimeout(function () {
+				// 	default_order.stop(true).fadeIn(200);
+				// }, 200);
+				// active_trader.fadeOut(200);
 				// buttons.removeAttr('disabled');
 				// event_container.removeClass('clickable');
 				// if($('.wrapper_event_page').length)
