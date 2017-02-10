@@ -61,7 +61,6 @@ class Actions extends BaseActions
 				}, 200);
 				activeTraderClass.tbodyResize();
 				if(initialLoad){
-					console.log(1);
 					$('#active_trader').addClass('loading');
 					initialLoad = false;
 				}
