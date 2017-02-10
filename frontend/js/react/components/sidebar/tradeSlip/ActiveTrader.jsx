@@ -66,13 +66,13 @@ class ActiveTrader extends React.Component {
 					onClick={traderActions.actionHideDirectionConfirm}>
 			<div className="event_title">
 				<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}
-					 onClick={traderActions.actionOnTabMirrorClick.bind(null, false)}>
+					 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>
 					{
 						JSON.stringify(data) != '{}' && `${data.Symbol.HomeName} ${data.Symbol.HomeHandicap}`
 					}
 				</div>
 				<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}
-					 onClick={traderActions.actionOnTabMirrorClick.bind(null, true)}>
+					 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, true)}>
 					{
 						JSON.stringify(data) != '{}' && `${data.Symbol.AwayName} ${data.Symbol.AwayHandicap}`
 					}
