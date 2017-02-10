@@ -9,8 +9,8 @@ export class Settings extends React.PureComponent
 {
     render()
     {
-        var {header, active} = this.props.data;
-        var {FirstName, LastName, UserName, DateOfBirth, Email, Country, Address, Phone} = appData.pageAccountData.UserInfo;
+        const {header, active} = this.props.data;
+        const {FirstName, LastName, UserName, DateOfBirth, Email, Country, Address, Phone} = appData.pageAccountData.UserInfo;
 
 
         return <div className={"tab_item settings " + (active ? "active" : "")}>
