@@ -20,7 +20,6 @@ export class CheckBox extends React.Component
      */
     _onChkChange()
     {
-        0||console.log( 'here ', 1 );
         this.state.ischecked = !this.state.ischecked;
         this.setState({...this.state});
     }
