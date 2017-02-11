@@ -13,7 +13,7 @@ import { MainConfig } from "./inc/MainConfig";
 import {User} from "./model/User";
 import {IndexController} from "./controller/IndexController";
 import {LoginController} from "./controller/LoginController";
-import {RadioBtns} from "./component/RadioBtns";
+// import {RadioBtns} from "./component/RadioBtns";
 
 
 export default class ADpp

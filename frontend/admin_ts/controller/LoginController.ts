@@ -58,26 +58,25 @@ export class LoginController extends BaseController
             ],
         });
 
-// 0||console.log( 'ret', ret );
+
         if( ret )
         {
             var formData = new FormData(<HTMLFormElement>$form[0]);
-            // 0||console.log( 'inProps.formData', JSON.stringify(form.serializeArray()) );
-
             // formData.set('op', '1');
+
             (new LoginModel()).login({url: $form.attr('action'), formData}).then( result =>
             {
-                0||console.log( 'result', result );
+                // 0||console.log( 'result', result );
                 // window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
                 // window.ADpp.User.setFlash({...result}, 'AddExchSucc');
-                location.href = MainConfig.BASE_URL + result.url;
+                // location.href = MainConfig.BASE_URL + result.data.Param1;
+                location.href = MainConfig.BASE_URL;
             },
             result => {
-                // 0||console.debug( 'reuslt', reuslt );
+                // 0||console.debug( 'result', result );
                 $LoginView.setErrors({form: $form, ...result});
                 $LoginView.endLogin();
             });
-            // (new CategoryModel).saveCategory($("#F1EditCat").serializeArray());
         }
         else
         {

@@ -45,8 +45,8 @@ export class LoginView extends BaseView
     {
        var self = this;
 
-        $("[data-js-wellcome]").hide();
-        $("[data-js-error]").show();
+        $("[data-js-wellcome]").show();
+        $("[data-js-error]").hide();
 
         this.Loading.showLoading({targetElm: $('[data-js-loading]'), element: $("[data-js-btn-login]"), pic: 2, outerAlign: Loading.ALIGN_OUTER_LEFT, offsetX: 4, position: Loading.POS_INLINE});
     }
@@ -62,6 +62,12 @@ export class LoginView extends BaseView
 
     public setErrors(props)
     {
-        0||console.log( 'props', props );
+        var $mess = $("[data-js-error]");
+
+        $("[data-js-wellcome]").hide();
+        $mess.children("span").text(props.message);
+        $mess.show()
+
+        this.Loading.hideLoading();
     }
 }

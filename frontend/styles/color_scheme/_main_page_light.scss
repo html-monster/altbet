@@ -40,7 +40,7 @@ $main_page_event_chart_button: url(../Images/sprite.svg) no-repeat -166px -354px
 @mixin main_page_event_icon{
 	&.sport:before{  background-position: -68px -306px;  }
 	&.e_sport:before{  background-position: -186px -306px;  }
-	&.finance:before{  background-position: -107px -306px;  }
+	&.economy:before, &.finance:before{  background-position: -107px -306px;  }
 	&.society:before{  background-position: -27px -306px;  }
 
 	&.soccer:before{  background-position: -27px -517px;  }

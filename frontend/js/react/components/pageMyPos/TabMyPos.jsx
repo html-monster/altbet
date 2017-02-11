@@ -6,7 +6,7 @@ import {Dialog} from '../../models/Dialog.ts';
 
 export class TabMyPos extends React.Component
 {
-    filters = {'Sport': 'Sport', 'Finance': 'Finance', 'E-Sport': 'E-Sport', 'Society': 'Society', };
+    filters = {'Sport': 'Sport', 'Economy': 'Economy', 'E-Sport': 'E-Sport', 'Society': 'Society', };
 
     constructor(props)
     {
@@ -51,7 +51,7 @@ export class TabMyPos extends React.Component
 
 
         // filter btn
-        var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "1"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '2'} htmlFor={inCatName + "1"} className={inCatName.toLowerCase().replace("-", "_")}><span className="sub_tab">{inCatName}</span></label>];
+        var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "2"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '3'} htmlFor={inCatName + "2"} className={inCatName.toLowerCase().replace("-", "_")}><span className="sub_tab">{inCatName}</span></label>];
 
 
         return <div className="tab_item active">
@@ -59,7 +59,7 @@ export class TabMyPos extends React.Component
                         <div className="wrapper">
                             <div className="filters">
                                 {filterBtn(this.filters['Sport'])}&nbsp;
-                                {filterBtn(this.filters['Finance'])}&nbsp;
+                                {filterBtn(this.filters['Economy'])}&nbsp;
                                 {filterBtn(this.filters['E-Sport'])}&nbsp;
                                 {filterBtn(this.filters['Society'])}
                             </div>

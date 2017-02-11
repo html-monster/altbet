@@ -5,7 +5,7 @@ import {DateLocalization} from '../../models/DateLocalization';
 
 export class TabOpenOrders extends React.Component
 {
-    filters = {'Sport': 'Sport', 'Finance': 'Finance', 'E-Sport': 'E-Sport', 'Society': 'Society', };
+    filters = {'Sport': 'Sport', 'Economy': 'Economy', 'E-Sport': 'E-Sport', 'Society': 'Society', };
 
     constructor(props)
     {
@@ -40,7 +40,7 @@ export class TabOpenOrders extends React.Component
                 <div className="wrapper">
                     <div className="filters">
                         {filterBtn(this.filters['Sport'])}&nbsp;
-                        {filterBtn(this.filters['Finance'])}&nbsp;
+                        {filterBtn(this.filters['Economy'])}&nbsp;
                         {filterBtn(this.filters['E-Sport'])}&nbsp;
                         {filterBtn(this.filters['Society'])}
                     </div>

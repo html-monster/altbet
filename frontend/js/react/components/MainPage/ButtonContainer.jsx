@@ -78,9 +78,7 @@ export default class ButtonContainer extends React.Component
                                                     type: data.type == "sell" ? 1 : 2,
                                                     data: data,
                                                 })}
-                                            data-verify="Quantity"
-                                            disabled={isTraiderOn}
-                                        >
+                                        data-verify="Quantity" disabled={isTraiderOn} title="Click to make order">
                                             <span className="price">{((price = Common.toFixed(data.ismirror ? 1 - price : price, 2))||true) && isBasicMode  ? '$' + price : price}</span>
                                             <span className="volume">{item2.Quantity}</span>
                                             {/*<div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>*/}
@@ -102,8 +100,7 @@ export default class ButtonContainer extends React.Component
                                     type: data.type == "sell" ? 1 : 2,
                                     data: data,
                                 })}
-                            disabled={isTraiderOn}
-                        >
+                        disabled={isTraiderOn} title="Click to make order">
                             <span className="price empty">{emptBtnName}</span>
                             <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
                         </button>
