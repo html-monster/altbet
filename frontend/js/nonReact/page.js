@@ -181,8 +181,9 @@ $(document).ready(function ()
 		input.keyup(function () { return false; });
 		input.keydown(function () { return false; });
 		input.keypress(function () { return false; });
-		input.datepicker({
+		input.datepicker({  // remove "hasDatepicker" !!!!!!!!!!!!!!
 			yearRange: "1901:c+0",
+			dateFormat: "d M y",
 			maxDate: "0",
 			minDate: new Date(1, 1 - 1, 1),
 			changeMonth: true,
