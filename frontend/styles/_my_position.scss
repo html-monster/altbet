@@ -43,7 +43,7 @@
 					box-shadow: inset 0 -16px 20px -6px #3498da;
 					&:before{  opacity: 1;  }
 					&.sport:before {  background-position: -66px -275px;  }
-					&.finance:before {  background-position: -107px -275px;  }
+					&.economy:before {  background-position: -107px -275px;  }
 					&.e_sport:before {  background-position: -187px -275px;  }
 					&.society:before {  background-position: -26px -275px;  }
 				}
@@ -75,7 +75,7 @@
 					}
 					&.sport:before{  background-position: -66px -304px;  }
 					&.e_sport:before{  background-position: -187px -304px;  }
-					&.finance:before{  background-position: -107px -304px;  }
+					&.economy:before{  background-position: -107px -304px;  }
 					&.society:before{  background-position: -26px -304px;  }
 				}
 			}

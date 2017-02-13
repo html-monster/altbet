@@ -144,7 +144,7 @@ export default class ExchangeItem extends React.Component
                     </div>
                 </div>
 
-                <button className="show-schedule" title="Показать график"></button>
+                <button className="show-schedule" title="Show chart"></button>
                 <div className="schedule loader not-sort">
                     <div id={"container_" + symbol}></div>
                     {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
