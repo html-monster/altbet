@@ -82,31 +82,34 @@ class Actions extends BaseActions
             }
             else
             {
-                0||console.debug( 'props.type == 0 && props.ismirror', props.type, props.ismirror );
                 for( let val of props.PosPrice )
                 {
-                    if (!flag && val.Price == props.price) flag = true;
                     if( props.ismirror )
                     {
-                        if( props.type == 2 )
+                        if( props.type == 1 )
                         {
-                            // if( flag )
+                            qt += val.Quantity;
+                            if( val.Price == props.price )
                             {
-                                qt += val.Quantity;
-                                bpr < val.Price && (bpr = val.Price);
+                                bpr = props.PosPrice[0].Price;
+                                break;
                             } // endif
                         }
                         else
                         {
-                            // if( !flag || val.Price == props.price )
+                            if( val.Price == props.price ) flag = true;
+
+                            if( flag )
                             {
                                 qt += val.Quantity;
-                                bpr > val.Price && (bpr = val.Price);
+                                bpr = val.Price;
                             } // endif
                         } // endif
                     }
                     else
                     {
+                        if (!flag && val.Price == props.price) flag = true;
+
                         if( props.type == 1 )
                         {
                             if( flag )

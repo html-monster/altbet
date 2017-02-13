@@ -31,7 +31,7 @@ export class LoginModel
                 beforeChkResponse: (data) =>
                 {
                     // emulate
-                    // data = {Error: 100};
+                    // data = {Error: 200};
                     // data.Param1 = "?path=sport&status=approved";
                     // data.Param1 = "TOR-PHI-3152017"; // id
                     // data.Param1 = "?status=New";
