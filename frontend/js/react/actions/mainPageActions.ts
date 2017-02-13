@@ -82,23 +82,46 @@ class Actions extends BaseActions
             }
             else
             {
+                0||console.debug( 'props.type == 0 && props.ismirror', props.type, props.ismirror );
                 for( let val of props.PosPrice )
                 {
                     if (!flag && val.Price == props.price) flag = true;
-                    if( props.type == 1 )
+                    if( props.ismirror )
                     {
-                        if( flag )
+                        if( props.type == 2 )
                         {
-                            qt += val.Quantity;
-                            bpr < val.Price && (bpr = val.Price);
+                            // if( flag )
+                            {
+                                qt += val.Quantity;
+                                bpr < val.Price && (bpr = val.Price);
+                            } // endif
+                        }
+                        else
+                        {
+                            // if( !flag || val.Price == props.price )
+                            {
+                                qt += val.Quantity;
+                                bpr > val.Price && (bpr = val.Price);
+                            } // endif
                         } // endif
                     }
                     else
                     {
-                        if( !flag || val.Price == props.price )
+                        if( props.type == 1 )
                         {
-                            qt += val.Quantity;
-                            bpr > val.Price && (bpr = val.Price);
+                            if( flag )
+                            {
+                                qt += val.Quantity;
+                                bpr < val.Price && (bpr = val.Price);
+                            } // endif
+                        }
+                        else
+                        {
+                            if( !flag || val.Price == props.price )
+                            {
+                                qt += val.Quantity;
+                                bpr > val.Price && (bpr = val.Price);
+                            } // endif
                         } // endif
                     } // endif
                 } // endfor
