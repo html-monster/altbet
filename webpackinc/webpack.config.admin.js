@@ -35,10 +35,10 @@ module.exports = {
     // entry: [ './frontend/js/react/indexmp.tsx' ].concat(applicationEntries),
 
     output: {
-        path: __dirname + options.path.destServerAdmin + '/Scripts/js-assets', //Content
+        path: __dirname + options.path.destServerAdmin + '/Scripts/dist', //Content
         // path: 'D:/Project/altbetNew/RefactoredCore/Alt.Bet/Scripts',
-        publicPath: __dirname + options.path.destServerAdmin + '/Scripts/js-assets/',
-        filename: "[name].[chunkhash].js",
+        // publicPath: __dirname + options.path.destServerAdmin + '/Scripts/js-assets/',
+        filename: "[name].js",
     },
 
     // output: {
@@ -78,12 +78,12 @@ module.exports = {
         //    path: __dirname + options.path.destServerAdmin + '/Scripts',
         //    update: true,
         // }),
-        new ManifestPlugin({
-            fileName: '../js-man-assets.json',
-            // basePath: __dirname + options.path.destServerAdmin + '/Scripts',
-            // basePath: __dirname + options.path.destServerAdmin + '/Scripts/js-assets/',
-            publicPath: "",
-        })
+        // new ManifestPlugin({
+        //     fileName: '../js-man-assets.json',
+        //     // basePath: __dirname + options.path.destServerAdmin + '/Scripts',
+        //     // basePath: __dirname + options.path.destServerAdmin + '/Scripts/js-assets/',
+        //     publicPath: "",
+        // })
     ],
     // ].concat(sourceMap),
 

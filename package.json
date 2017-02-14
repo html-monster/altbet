@@ -69,6 +69,8 @@
     "file-loader": "^0.8.5",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-babel": "^6.1.1",
+    "gulp-rev-all": "^0.9.7",
+    "gulp-rev-del-redundant": "^1.1.5",
     "gulp-sass": "^2.3.1",
     "gulp-uglify": "^1.5.1",
     "json-loader": "^0.5.4",
