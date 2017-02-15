@@ -105,6 +105,7 @@ export class Loading
 
 
                 DiLoading.css({position: "relative", display: 'inline-block', ...$css});
+                // hello world
             } // endif
 
             if( inProps.withBg ) {

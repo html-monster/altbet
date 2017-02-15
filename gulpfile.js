@@ -1,6 +1,6 @@
 'use strict';
 
-var OPTIONS = require('./gulpinc/pathes');
+const OPTIONS = require('./gulpinc/pathes');
 
 const path = require('path');
 const del = require('del');
@@ -48,7 +48,7 @@ function lazyRequire(taskName, inTaskName, path, options)
 // BM: ================================================================================================ ADMIN STYLES ===
 lazyRequire('styles-admin', 'def', './gulpinc/styles-admin', {
     src: 'frontend/admin_styles/index-admin.scss',
-    dst: OPTIONS.path.dest_server_admin + '/Content',
+    dst: OPTIONS.path.dest_server_admin + '/Content/dist',
 });
 
 
@@ -57,6 +57,14 @@ lazyRequire('admin-js-rev', 'def', './gulpinc/admin-js-rev', {
     src: OPTIONS.path.dest_server_admin + '/Scripts/dist',
     dst: OPTIONS.path.dest_server_admin + '/Scripts/js-assets',
     manifestPath: OPTIONS.path.dest_server_admin + '/Scripts',
+});
+
+
+// BM: ========================================================================================== ADMIN CSS REVISION ===
+lazyRequire('admin-css-rev', 'def', './gulpinc/admin-css-rev', {
+    src: OPTIONS.path.dest_server_admin + '/Content/dist',
+    dst: OPTIONS.path.dest_server_admin + '/Content/css-assets',
+    manifestPath: OPTIONS.path.dest_server_admin + '/Content',
 });
 
 
@@ -184,27 +192,24 @@ gulp.task('js',function(){
 // });
 
 
-
-// gulp.task('test-rev',function(){
-//   return gulp.src([OPTIONS.path.dest_server_admin + '/Scripts/dist/**'])
-//       // .pipe($.concat('some.js'))
-//     // .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts/js-assets'))
-//     .pipe(RevAll.revision({
-//         transformFilename: function (file, hash) {
-//             var ext = path.extname(file.path);
-//             return path.basename(file.path, ext) + '-' + hash.substr(0, 8) + ext; // 3410c.filename.ext
-//         }
-//     }))
-//     .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts/js-assets'))
-//     .pipe(RevAll.manifestFile({fileNameManifest: "rev-manifest.json",}))
-//     .pipe(revDelRedundant({ dest: OPTIONS.path.dest_server_admin + '/Scripts/js-assets/', force: true }))
-//     // .pipe(revDel({ dest: OPTIONS.path.dest_server_admin + '/Scripts/js-assets/' }))
-//     .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts'))
-//     // .pipe(revDelRedundant("d:/Project/altbetServer/RefactoredCore/Alt.Bet.Admin/Scripts/rev-manifest.json", { dest: "d:/Project/altbetServer/RefactoredCore/Alt.Bet.Admin/Scripts/js-assets", force: true }))
-//     // .pipe(RevAll.versionFile())
-//     // .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts'))
-//     ;
-// });
+/*
+const RevAll = require('gulp-rev-all');
+const revDelRedundant = require('gulp-rev-del-redundant');
+gulp.task('test-rev', function () {
+    return gulp.src([OPTIONS.path.dest_server_admin + '/Scripts/dist/!**'])
+        .pipe(RevAll.revision({
+            transformFilename: function (file, hash) {
+                var ext = path.extname(file.path);
+                return path.basename(file.path, ext) + '-' + hash.substr(0, 8) + ext; // 3410c.filename.ext
+            }
+        }))
+        .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts/js-assets'))
+        .pipe(RevAll.manifestFile({fileNameManifest: "rev-manifest.json",}))
+        .pipe(revDelRedundant({dest: OPTIONS.path.dest_server_admin + '/Scripts/js-assets/', force: true}))
+        .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts'))
+        ;
+});
+*/
 
 
 
@@ -262,11 +267,14 @@ gulp.task('clean', function() {
 gulp.task('build', gulp.series('clean', gulp.parallel('styles:assets', 'styles', 'js'), 'assets', 'fonts'));
 
 
+// BM: ========================================================================================== ADMIN DEV BUILDING ===
 gulp.task('watch-admin', function () {
     gulp.watch('frontend/admin_styles/**/*.*', gulp.series('styles-admin'));
-    gulp.watch(OPTIONS.path.dest_server_admin + '/Scripts/dist/**', gulp.series('admin-js-rev'));
+    gulp.watch(OPTIONS.path.dest_server_admin + '/Content/dist/*.*', {delay: 700}, gulp.series('admin-css-rev'));
+    gulp.watch(OPTIONS.path.dest_server_admin + '/Scripts/dist/*.*', {delay: 700}, gulp.series('admin-js-rev'));
 });
 
+// BM: ========================================================================================== FRONT DEV BUILDING ===
 gulp.task('watch-js-styles', function () {
     gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
     gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));

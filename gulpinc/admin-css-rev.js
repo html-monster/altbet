@@ -18,7 +18,7 @@ module.exports = {
 
             return gulp.src(options.src + '/*.*')
                 .pipe(RevAll.revision({
-                    fileNameManifest: "js-assets.json",
+                    fileNameManifest: "css-assets.json",
                     transformFilename: function (file, hash) {
                         var ext = path.extname(file.path);
                         return path.basename(file.path, ext) + '-' + hash.substr(0, 8) + ext;
