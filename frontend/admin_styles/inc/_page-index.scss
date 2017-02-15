@@ -27,6 +27,9 @@
     }
 
     .exchanges { margin-top: 20px;
+      a { border-bottom: 1px dotted lighten($colorFont, 20%); color: $colorFont;
+        &:hover { border-bottom-style: solid }
+      }
       & > tbody + tbody {
           border-top: 0;
       }
@@ -55,10 +58,10 @@
     }
 
     .icon { @include box(i,r); padding-right: 17px;
-      &::before { @include box(n,a,16 16 px); content: ''; right: 0; top: 3px; background: url(../Images/sprite-01.svg) -16px 0 no-repeat; background-size: 64px }
+      &::before { @include box(n,a,16 16 px); content: ''; right: 0; top: 3px; background: url("#{$theme-path-pic}/sprite-01.svg") 0 0 no-repeat; background-size: 64px }
       &.active::before { display: inline-block; }
-      &.Desc::before { background-position: 0 0 }
-      a { color: #000; }
+      &.Desc::before { background-position: -16px 0 }
+      //a { color: #000; }
     }
   }
 }

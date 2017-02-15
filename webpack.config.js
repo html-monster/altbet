@@ -16,9 +16,9 @@ let configAdmin = require('./webpackinc/webpack.config.admin');
 // });
 
 module.exports = [
-    // configBundle,
-    // configBundleR,
-    // configBundleM,
+    configBundle,
+    configBundleR,
+    configBundleM,
     configAdmin,
     ];
 

@@ -9,8 +9,10 @@ import rootReducer from '../reducers/index.jsx';
 
 export default function configureStore(initialState)
 {
-    // const store = createStore(rootReducer, initialState);
+    // const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(thunk));
     const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
+
+    // const store = createStore(rootReducer, initialState);
     // const logger = createLogger();
     // const store = createStore(rootReducer, initialState, applyMiddleware(logger));
     // if (module.hot)
