@@ -3,7 +3,7 @@ const options = require('./pathes');
 const webpack = require('webpack');
 const WebpackNotifierPlugin = require('webpack-notifier');
 
-const ManifestPlugin = require('webpack-manifest-plugin');
+// const ManifestPlugin = require('webpack-manifest-plugin');
 // const AssetsPlugin = require('assets-webpack-plugin');
 
 // var ExtractTextPlugin = require('extract-text-webpack-plugin');

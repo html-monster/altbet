@@ -8,6 +8,7 @@
 import { MainConfig, DS } from "../inc/MainConfig";
 import {AjaxSend} from "../component/AjaxSend";
 import {DateLocalization} from "../component/DateLocalization";
+import {log} from "typings/dist/support/cli";
 
 
 var __LDEV__ = true;
@@ -20,13 +21,14 @@ export class LoginModel
         var self = this;
 
         // 0||console.debug( 'data', data, data.getAll('op') );
+        var message = `Error while login, please, try again`;
         var ajaxPromise = (new AjaxSend()).send({
                 formData: inProps.formData,
-                message: `Error while login, please, try again`,
+                message: message,
                 url: inProps.url,
                 respCodes: [
-                    {code: 100, message: ""},
-                    {code: -101, message: "Wrong login or password"},
+                    {code: 100, message},
+                    {code: -101, callback: (data) => data.Param1},
                 ],
                 beforeChkResponse: (data) =>
                 {
