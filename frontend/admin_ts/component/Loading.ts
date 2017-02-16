@@ -101,9 +101,11 @@ export class Loading
                 // align outer left
                 else if( inProps.outerAlign == Loading.ALIGN_OUTER_LEFT && inProps.offsetX ) $css = {marginRight: inProps.offsetX};
                 else ;
+                // 0||console.debug( 'here ', 0 );
 
 
                 DiLoading.css({position: "relative", display: 'inline-block', ...$css});
+                // hello world
             } // endif
 
             if( inProps.withBg ) {

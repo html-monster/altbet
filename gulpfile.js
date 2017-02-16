@@ -1,6 +1,6 @@
 'use strict';
 
-var OPTIONS = require('./gulpinc/pathes');
+const OPTIONS = require('./gulpinc/pathes');
 
 const path = require('path');
 const del = require('del');
@@ -17,8 +17,8 @@ const autoprefixer = require("gulp-autoprefixer");
 const browserSync = require('browser-sync').create();
 const gulpIf = require('gulp-if');
 const cssnano = require('gulp-cssnano');
-const rev = require('gulp-rev');
-const revReplace = require('gulp-rev-replace');
+// const rev = require('gulp-rev');
+// const revReplace = require('gulp-rev-replace');
 const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
 const uglify = require('gulp-uglify');
@@ -48,8 +48,25 @@ function lazyRequire(taskName, inTaskName, path, options)
 // BM: ================================================================================================ ADMIN STYLES ===
 lazyRequire('styles-admin', 'def', './gulpinc/styles-admin', {
     src: 'frontend/admin_styles/index-admin.scss',
-    dst: OPTIONS.path.dest_server_admin + '/Content',
+    dst: OPTIONS.path.dest_server_admin + '/Content/dist',
 });
+
+
+// BM: =========================================================================================== ADMIN JS REVISION ===
+lazyRequire('admin-js-rev', 'def', './gulpinc/admin-js-rev', {
+    src: OPTIONS.path.dest_server_admin + '/Scripts/dist',
+    dst: OPTIONS.path.dest_server_admin + '/Scripts/js-assets',
+    manifestPath: OPTIONS.path.dest_server_admin + '/Scripts',
+});
+
+
+// BM: ========================================================================================== ADMIN CSS REVISION ===
+lazyRequire('admin-css-rev', 'def', './gulpinc/admin-css-rev', {
+    src: OPTIONS.path.dest_server_admin + '/Content/dist',
+    dst: OPTIONS.path.dest_server_admin + '/Content/css-assets',
+    manifestPath: OPTIONS.path.dest_server_admin + '/Content',
+});
+
 
 
 gulp.task('fonts', function() {
@@ -73,10 +90,11 @@ gulp.task('styles', function() {
         browsers: ['last 4 versions']
       }))
       .pipe(gulpIf(isDevelopment, sourcemaps.write()))
-      .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
+      // .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
       .pipe(gulp.dest('public/styles'))
       .pipe(gulp.dest(OPTIONS.path.dest_server + '/Content'))
-      .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))));
+      // .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))))
+      ;
 
 });
 
@@ -86,9 +104,9 @@ gulp.task('styles', function() {
 gulp.task('assets', function() {
   return gulp.src('frontend/assets/**/*.html', {since: gulp.lastRun('assets')})
       //.pipe(jade())
-      .pipe(gulpIf(!isDevelopment, revReplace({
-        manifest: gulp.src('manifest/css.json', {allowEmpty: true})
-      })))
+      // .pipe(gulpIf(!isDevelopment, revReplace({
+      //   manifest: gulp.src('manifest/css.json', {allowEmpty: true})
+      // })))
       .pipe(gulp.dest('public'));
 });
 
@@ -150,6 +168,51 @@ gulp.task('js',function(){
 
 
 
+// gulp.task('test-vendor',function(){
+//   return gulp.src(['vendor/Waves/dist/waves.min.js',
+//       'vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js',
+//       'vendor/ms-Dropdown-js/js/msdropdown/jquery.dd.min.js',
+//       'vendor/eventEmitter/eventEmitter.min.js',
+//       'vendor/momentjs/moment-min.js',
+//       'vendor/daterangepicker/daterangepicker.js',
+//       // '!vendor/react-15.3.1/build/react.js',
+//       // '!vendor/react-15.3.1/build/react-dom.js',
+//       'frontend/js/nonReact/browserCheck.js'])
+//       .pipe($.concat('vendors.js'))
+//       // $.uglify(),
+//       .pipe(babel({
+//           presets: ['es2015']
+//       }))
+//       .pipe(sourcemaps.init())
+//       .pipe($.uglify())
+//       .pipe(rev())
+//       .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts/js-assets'))
+//       .pipe(rev.manifest({path: 'js-man-assets.json', merge: true}))
+//       .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts'));
+// });
+
+
+/*
+const RevAll = require('gulp-rev-all');
+const revDelRedundant = require('gulp-rev-del-redundant');
+gulp.task('test-rev', function () {
+    return gulp.src([OPTIONS.path.dest_server_admin + '/Scripts/dist/!**'])
+        .pipe(RevAll.revision({
+            transformFilename: function (file, hash) {
+                var ext = path.extname(file.path);
+                return path.basename(file.path, ext) + '-' + hash.substr(0, 8) + ext; // 3410c.filename.ext
+            }
+        }))
+        .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts/js-assets'))
+        .pipe(RevAll.manifestFile({fileNameManifest: "rev-manifest.json",}))
+        .pipe(revDelRedundant({dest: OPTIONS.path.dest_server_admin + '/Scripts/js-assets/', force: true}))
+        .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts'))
+        ;
+});
+*/
+
+
+
 gulp.task('vendor',function(){
   return combine(
     gulp.src(['vendor/Waves/dist/waves.min.js',
@@ -204,10 +267,14 @@ gulp.task('clean', function() {
 gulp.task('build', gulp.series('clean', gulp.parallel('styles:assets', 'styles', 'js'), 'assets', 'fonts'));
 
 
+// BM: ========================================================================================== ADMIN DEV BUILDING ===
 gulp.task('watch-admin', function () {
     gulp.watch('frontend/admin_styles/**/*.*', gulp.series('styles-admin'));
+    gulp.watch(OPTIONS.path.dest_server_admin + '/Content/dist/*.*', {delay: 700}, gulp.series('admin-css-rev'));
+    gulp.watch(OPTIONS.path.dest_server_admin + '/Scripts/dist/*.*', {delay: 700}, gulp.series('admin-js-rev'));
 });
 
+// BM: ========================================================================================== FRONT DEV BUILDING ===
 gulp.task('watch-js-styles', function () {
     gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
     gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));

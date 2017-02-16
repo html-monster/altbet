@@ -2,6 +2,10 @@ const path = require('path');
 const options = require('./pathes');
 const webpack = require('webpack');
 const WebpackNotifierPlugin = require('webpack-notifier');
+
+const ManifestPlugin = require('webpack-manifest-plugin');
+// const AssetsPlugin = require('assets-webpack-plugin');
+
 // var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // const loaders = require('./webpack/loaders');
@@ -31,9 +35,9 @@ module.exports = {
     // entry: [ './frontend/js/react/indexmp.tsx' ].concat(applicationEntries),
 
     output: {
-        path: __dirname + options.path.destServerAdmin + '/Scripts', //Content
+        path: __dirname + options.path.destServerAdmin + '/Scripts/dist', //Content
         // path: 'D:/Project/altbetNew/RefactoredCore/Alt.Bet/Scripts',
-        publicPath: "Scripts/",
+        // publicPath: __dirname + options.path.destServerAdmin + '/Scripts/js-assets/',
         filename: "[name].js",
     },
 
@@ -69,6 +73,17 @@ module.exports = {
             __TEST__: JSON.stringify(process.env.TEST || false),
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         }),
+        // new AssetsPlugin({
+        //    filename: "js-assets.json",
+        //    path: __dirname + options.path.destServerAdmin + '/Scripts',
+        //    update: true,
+        // }),
+        // new ManifestPlugin({
+        //     fileName: '../js-man-assets.json',
+        //     // basePath: __dirname + options.path.destServerAdmin + '/Scripts',
+        //     // basePath: __dirname + options.path.destServerAdmin + '/Scripts/js-assets/',
+        //     publicPath: "",
+        // })
     ],
     // ].concat(sourceMap),
 
