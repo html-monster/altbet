@@ -1,4 +1,4 @@
-let id = [];
+let id = []
 
 class orderClass{
 	constructor(){

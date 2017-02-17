@@ -27,9 +27,9 @@ module.exports = {
     // entry: [ './frontend/js/react/indexmp.tsx' ].concat(applicationEntries),
 
     output: {
-        path: __dirname + options.path.destServer + '/Scripts',
+        path: __dirname + options.path.destServer + '/Scripts/dist',
         // path: 'D:/Project/altbetNew/RefactoredCore/Alt.Bet/Scripts',
-        publicPath: "Scripts/",
+        // publicPath: "Scripts/",
         filename: "bundler.js"
     },
 

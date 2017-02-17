@@ -66,7 +66,7 @@
 						display: block;
 						width: 22px;
 						height: 22px;
-						background: url(../Images/sprite.svg) no-repeat;
+						background: url("#{$pathImage}/sprite.svg") no-repeat;
 						position: absolute;
 						top: calc(50% - 11px);
 						left: 10px;
@@ -107,7 +107,7 @@
 								display: inline-block;
 								width: 10px;
 								height: 12px;
-								background: url(../Images/sprite.svg) no-repeat -164px -93px;
+								background: url("#{$pathImage}/sprite.svg") no-repeat -164px -93px;
 								margin-left: 2px;
 								vertical-align: middle;
 							}
@@ -140,7 +140,7 @@
 								width: 9px;
 								height: 9px;
 								vertical-align: middle;
-								background: url("../Images/sprite.svg") no-repeat;
+								background: url("#{$pathImage}/sprite.svg") no-repeat;
 							}
 							&.buy{
 								color: #3498da;
@@ -297,7 +297,7 @@
 								position: absolute;
 								top: calc(50% - 8px);
 								left: 27px;
-								background: url("../Images/sprite.svg") no-repeat -285px -177px;
+								background: url("#{$pathImage}/sprite.svg") no-repeat -285px -177px;
 							}
 						}
 					}

@@ -86,7 +86,7 @@
       display: block;
       width: 100%;
       height: 100%;
-      background: url(../Images/ajax-loader.gif) rgba(0, 0, 0, 0.7) no-repeat;
+      background: url("#{$pathImage}/ajax-loader.gif") rgba(0, 0, 0, 0.7) no-repeat;
       background-position: center center;
       position: absolute;
       top: 0;
@@ -115,7 +115,7 @@
       box-shadow: 0 -6px 15px -3px rgba(0, 0, 0, 0.3);
       transition: 0.4s ease-out;
     }
-    span.close{  height: 31px; background: url("../Images/ico-delete-w.png") no-repeat center #969696;  border-radius: 5px; cursor: pointer; }
+    span.close{  height: 31px; background: url("#{$pathImage}/ico-delete-w.png") no-repeat center #969696;  border-radius: 5px; cursor: pointer; }
     .help{
       right: 0;
       @include md(1450){  right: -3px;  }
@@ -882,7 +882,7 @@
           width: 9px;
           height: 9px;
           vertical-align: middle;
-          background: url("../Images/sprite.svg") no-repeat;
+          background: url("#{$pathImage}/sprite.svg") no-repeat;
         }
         &.up{
           color: #1196d4;
@@ -1040,7 +1040,7 @@
           position: absolute;
           top: calc(50% - 12px);
           left: calc(50% - 12px);
-          background: url(../Images/sprite.svg) $trader_button_success no-repeat;
+          background: url("#{$pathImage}/sprite.svg") $trader_button_success no-repeat;
         }
       }
       .success_btn{
@@ -1094,7 +1094,7 @@
         }
       }
       .col-3 .btn{  display: inline-block;  width: 46%;  background-size: 18px;  vertical-align: bottom;  }
-      .cancel{  background: url("../Images/ico-delete.png") no-repeat center;  }
+      .cancel{  background: url("#{$pathImage}/ico-delete.png") no-repeat center;  }
       label:not(.checkbox){
         display: block;
         width: 100%;
@@ -1176,7 +1176,7 @@
         font-size: 14px;
         &.sell{  background-color: #ff4444;  }
         &.buy{  background-color: #2dc7ca;  }
-        //&.success{  background: url("../Images/ico-success-w.png") no-repeat center #969696;  }
+        //&.success{  background: url("#{$pathImage}/ico-success-w.png") no-repeat center #969696;  }
       }
       i.submit{  display: block;  width: 66.66%; border-radius: 0;  }
       input[type=submit]{

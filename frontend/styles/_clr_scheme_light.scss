@@ -11,7 +11,7 @@ $color-max: #fff;
 $checkbox_bg: #ffffff;
 $checkbox_label_color: #000000;
 
-$help_block: url("../Images/sprite.svg") no-repeat -50px -162px;
+$help_block: url("#{$pathImage}/sprite.svg") no-repeat -50px -162px;
 
 //.waves-ripple{  display: none;  }
 

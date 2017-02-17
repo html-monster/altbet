@@ -23,7 +23,7 @@ header.first_page {
       display: block;
       width: 150px;
       height: 50px;
-      background: url("../Images/sprite.svg") no-repeat -19px -17px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -19px -17px;
     }
   }
   .page_menu {
@@ -95,7 +95,7 @@ header.first_page {
     position: fixed;
     width: 115%;
     height: calc(100% + 1200px);
-    background: url('../Images/first_page/fp_bg33.jpg') no-repeat -2px -2px;
+    background: url('#{$pathImage}/first_page/fp_bg33.jpg') no-repeat -2px -2px;
     transition: 0.7s ease;
   }
   .slide {
@@ -378,7 +378,7 @@ header.first_page {
           display: block;
           width: 42px;
           height: 32px;
-          background: url(../Images/Sprite_lend.svg) no-repeat -93px -187px;
+          background: url("#{$pathImage}/Sprite_lend.svg") no-repeat -93px -187px;
         }
       }
       &:nth-child(2) {
@@ -398,7 +398,7 @@ header.first_page {
             display: block;
             width: 33px;
             height: 32px;
-            background: url(../Images/Sprite_lend.svg) no-repeat -167px -187px;
+            background: url("#{$pathImage}/Sprite_lend.svg") no-repeat -167px -187px;
           }
 
         }
@@ -436,7 +436,7 @@ header.first_page {
         position: relative;
         width: 100px;
         height: 100px;
-        background: url(../Images/Sprite_lend.svg) no-repeat -242px -111px;
+        background: url("#{$pathImage}/Sprite_lend.svg") no-repeat -242px -111px;
         cursor: pointer;
         transition: 0.2s ease;
       }
@@ -488,13 +488,13 @@ header.first_page {
         }
         &:nth-child(1) {
           span.icon {
-            background: url("../Images/Sprite_lend.svg") no-repeat -30px -245px;
+            background: url("#{$pathImage}/Sprite_lend.svg") no-repeat -30px -245px;
           }
         }
         &:nth-child(2) {
           border-left: 1px solid transparentize(#ffffff, 0.8);
           span.icon {
-            background: url("../Images/Sprite_lend.svg") no-repeat -108px -245px;
+            background: url("#{$pathImage}/Sprite_lend.svg") no-repeat -108px -245px;
           }
         }
         &:nth-child(3) {
@@ -502,7 +502,7 @@ header.first_page {
           span.icon {
             width: 60px;
             height: 55px;
-            background: url("../Images/Sprite_lend.svg") no-repeat -194px -243px;
+            background: url("#{$pathImage}/Sprite_lend.svg") no-repeat -194px -243px;
           }
           ul {
             color: #ffffff;
@@ -1079,7 +1079,7 @@ html.fp-enabled,
   top: 0;
   right: 0;
   bottom: 0;
-  background: url('../Images/first_page/fp_bg33.jpg') no-repeat -2px -2px;
+  background: url('#{$pathImage}/first_page/fp_bg33.jpg') no-repeat -2px -2px;
   z-index: 30;
 }
 .contpre small {
@@ -1104,7 +1104,7 @@ html.fp-enabled,
   position: absolute;
   width: 41px;
   height: 41px;
-  background: url('../Images/first_page/preload.svg') center center no-repeat;
+  background: url('#{$pathImage}/first_page/preload.svg') center center no-repeat;
   background-size: 41px;
   margin: -16px 0 0 -16px;
 }

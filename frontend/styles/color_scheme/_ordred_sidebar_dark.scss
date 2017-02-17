@@ -72,6 +72,6 @@ $order_sidebar_current_order_title_color: #ffffff;
 	}
 }
 $order_sidebar_order_label_color: #ffffff;
-$order_sidebar_order_edit: url("../Images/sprite.svg") no-repeat -163px -135px;
-$order_sidebar_order_delete: url("../Images/sprite.svg") no-repeat -163px -178px;
+$order_sidebar_order_edit: url("#{$pathImage}/sprite.svg") no-repeat -163px -135px;
+$order_sidebar_order_delete: url("#{$pathImage}/sprite.svg") no-repeat -163px -178px;
 $order_sidebar_order_border_color: #211e25;

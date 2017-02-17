@@ -12,7 +12,7 @@
     width: 50px;
     height: 50px;
     float: left;
-    background: url(../Images/sprite.svg) no-repeat -171px -73px;
+    background: url("#{$pathImage}/sprite.svg") no-repeat -171px -73px;
     border-right: 1px solid #4e4d56;
     cursor: pointer;
   }
@@ -27,7 +27,7 @@
       display: block;
       width: 150px;
       height: 50px;
-      background: url("../Images/sprite.svg") no-repeat -11px -17px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -11px -17px;
     }
   }
   .nav_search {
@@ -85,7 +85,7 @@
         z-index: 2;
         width: 25px;
         height: 25px;
-        background: url("../Images/sprite.svg") no-repeat -173px -22px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -173px -22px;
         cursor: pointer;
         outline: none;
         opacity: 0.3;
@@ -151,7 +151,7 @@
         left: 0;
         z-index: 2;
 				opacity: 0.2;
-        background: url(../Images/sprite.svg) no-repeat -84px -114px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -84px -114px;
         transition: 0.2s ease-out;
         &:hover{
           animation-duration: 1s;
@@ -168,7 +168,7 @@
         top: 8px;
         right: 8px;
         z-index: 2;
-        background: url(../Images/sprite.svg) no-repeat -96px -196px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -96px -196px;
         opacity: 0;
         transition: 0s;
         &:hover{  background-position: -96px -226px;  }
@@ -196,7 +196,7 @@
           height: 25px;
           vertical-align: bottom;
           margin-right: 5px;
-          background: url("../Images/sprite.svg") no-repeat;
+          background: url("#{$pathImage}/sprite.svg") no-repeat;
         }
         a.jump{  top: 12px;  }
       }

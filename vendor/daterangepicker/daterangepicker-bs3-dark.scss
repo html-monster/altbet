@@ -124,7 +124,7 @@
     position: absolute;
     top: calc(50% - 7.5px);
     left: calc(50% - 7.5px);
-    background: url("../Images/sprite.svg") no-repeat;
+    background: url("#{$pathImage}/sprite.svg") no-repeat;
   }
 }
 .daterangepicker .calendar-table {

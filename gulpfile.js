@@ -1,6 +1,7 @@
 'use strict';
 
 const OPTIONS = require('./gulpinc/pathes');
+const $pathDestServer = OPTIONS.path.dest_server;
 
 const path = require('path');
 const del = require('del');
@@ -44,7 +45,7 @@ function lazyRequire(taskName, inTaskName, path, options)
 }
 
 
-// BMS: --- Tasks --------------------------------------------------------------------------------------
+// BMS: --- ADMIN TASKS ------------------------------------------------------------------------------------------------
 // BM: ================================================================================================ ADMIN STYLES ===
 lazyRequire('styles-admin', 'def', './gulpinc/styles-admin', {
     src: 'frontend/admin_styles/index-admin.scss',
@@ -53,7 +54,7 @@ lazyRequire('styles-admin', 'def', './gulpinc/styles-admin', {
 
 
 // BM: =========================================================================================== ADMIN JS REVISION ===
-lazyRequire('admin-js-rev', 'def', './gulpinc/admin-js-rev', {
+lazyRequire('admin-js-rev', 'def', './gulpinc/js-rev', {
     src: OPTIONS.path.dest_server_admin + '/Scripts/dist',
     dst: OPTIONS.path.dest_server_admin + '/Scripts/js-assets',
     manifestPath: OPTIONS.path.dest_server_admin + '/Scripts',
@@ -61,7 +62,7 @@ lazyRequire('admin-js-rev', 'def', './gulpinc/admin-js-rev', {
 
 
 // BM: ========================================================================================== ADMIN CSS REVISION ===
-lazyRequire('admin-css-rev', 'def', './gulpinc/admin-css-rev', {
+lazyRequire('admin-css-rev', 'def', './gulpinc/css-rev', {
     src: OPTIONS.path.dest_server_admin + '/Content/dist',
     dst: OPTIONS.path.dest_server_admin + '/Content/css-assets',
     manifestPath: OPTIONS.path.dest_server_admin + '/Content',
@@ -69,10 +70,28 @@ lazyRequire('admin-css-rev', 'def', './gulpinc/admin-css-rev', {
 
 
 
+// BMS: --- MORDA TASKS ------------------------------------------------------------------------------------------------
+// BM: =========================================================================================== MORDA JS REVISION ===
+lazyRequire('front-js-rev', 'def', './gulpinc/js-rev', {
+    src: $pathDestServer + '/Scripts/dist',
+    dst: $pathDestServer + '/Scripts/js-assets',
+    manifestPath: $pathDestServer + '/Scripts',
+});
+
+// BM: ========================================================================================== MORDA CSS REVISION ===
+lazyRequire('front-css-rev', 'def', './gulpinc/css-rev', {
+    src: $pathDestServer + '/Content/dist',
+    dst: $pathDestServer + '/Content/css-assets',
+    manifestPath: $pathDestServer + '/Content',
+});
+
+
+// TODO: is used anymore?
 gulp.task('fonts', function() {
   return gulp.src('frontend/fonts/**/*.*', {since: gulp.lastRun('fonts')})
              .pipe(gulp.dest('public/fonts'));
 });
+
 
 
 gulp.task('styles', function() {
@@ -91,8 +110,8 @@ gulp.task('styles', function() {
       }))
       .pipe(gulpIf(isDevelopment, sourcemaps.write()))
       // .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
-      .pipe(gulp.dest('public/styles'))
-      .pipe(gulp.dest(OPTIONS.path.dest_server + '/Content'))
+      // .pipe(gulp.dest('public/styles'))
+      .pipe(gulp.dest(OPTIONS.path.dest_server + '/Content/dist'))
       // .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))))
       ;
 
@@ -100,15 +119,15 @@ gulp.task('styles', function() {
 
 
 
-
-gulp.task('assets', function() {
-  return gulp.src('frontend/assets/**/*.html', {since: gulp.lastRun('assets')})
+// TODEL is used anymore?
+/*gulp.task('assets', function() {
+  return gulp.src('frontend/assets/!**!/!*.html', {since: gulp.lastRun('assets')})
       //.pipe(jade())
       // .pipe(gulpIf(!isDevelopment, revReplace({
       //   manifest: gulp.src('manifest/css.json', {allowEmpty: true})
       // })))
       .pipe(gulp.dest('public'));
-});
+});*/
 
 
 // gulp.task('ts:process', function () {
@@ -144,72 +163,10 @@ gulp.task('js',function(){
         var options = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
         return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options);
     }))
-    .pipe(gulp.dest('./public/js'))
-    .pipe(gulp.dest(OPTIONS.path.dest_server + '/Scripts'));
-  // return combine(
-  //   gulp.src(['frontend/js/nonReact/**/*.js',  '!frontend/js/nonReact/browserCheck.js','!frontend/js/nonReact/test.js',
-  //     '!frontend/js/nonReact/access.js', '!frontend/js/nonReact/pageFirst.js']),
-  //   babel({
-  //     presets: ['es2015']
-  //   }),
-  //   $.concat('all.js'),
-  //   sourcemaps.init(),
-  //   // $.uglify(),
-  //   gulp.dest('./public/js'),
-  //   gulp.dest(OPTIONS.path.dest_server + '/Scripts')
-  //
-  // ).on('error', $.notify.onError(function (err) {
-  //   return {
-  //     title: 'JS',
-  //     message: err.message
-  //   }
-  // }));
+    // .pipe(gulp.dest('./public/js'))
+    .pipe(gulp.dest($pathDestServer + '/Scripts/dist'));
 });
 
-
-
-// gulp.task('test-vendor',function(){
-//   return gulp.src(['vendor/Waves/dist/waves.min.js',
-//       'vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js',
-//       'vendor/ms-Dropdown-js/js/msdropdown/jquery.dd.min.js',
-//       'vendor/eventEmitter/eventEmitter.min.js',
-//       'vendor/momentjs/moment-min.js',
-//       'vendor/daterangepicker/daterangepicker.js',
-//       // '!vendor/react-15.3.1/build/react.js',
-//       // '!vendor/react-15.3.1/build/react-dom.js',
-//       'frontend/js/nonReact/browserCheck.js'])
-//       .pipe($.concat('vendors.js'))
-//       // $.uglify(),
-//       .pipe(babel({
-//           presets: ['es2015']
-//       }))
-//       .pipe(sourcemaps.init())
-//       .pipe($.uglify())
-//       .pipe(rev())
-//       .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts/js-assets'))
-//       .pipe(rev.manifest({path: 'js-man-assets.json', merge: true}))
-//       .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts'));
-// });
-
-
-/*
-const RevAll = require('gulp-rev-all');
-const revDelRedundant = require('gulp-rev-del-redundant');
-gulp.task('test-rev', function () {
-    return gulp.src([OPTIONS.path.dest_server_admin + '/Scripts/dist/!**'])
-        .pipe(RevAll.revision({
-            transformFilename: function (file, hash) {
-                var ext = path.extname(file.path);
-                return path.basename(file.path, ext) + '-' + hash.substr(0, 8) + ext; // 3410c.filename.ext
-            }
-        }))
-        .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts/js-assets'))
-        .pipe(RevAll.manifestFile({fileNameManifest: "rev-manifest.json",}))
-        .pipe(revDelRedundant({dest: OPTIONS.path.dest_server_admin + '/Scripts/js-assets/', force: true}))
-        .pipe(gulp.dest(OPTIONS.path.dest_server_admin + '/Scripts'))
-        ;
-});
-*/
 
 
 
@@ -226,23 +183,23 @@ gulp.task('vendor',function(){
         'frontend/js/nonReact/browserCheck.js']),
     $.concat('vendors.js'),
     // $.uglify(),
-    gulp.dest('./public/js'),
-    gulp.dest(OPTIONS.path.dest_server + '/Scripts'),
+    // gulp.dest('./public/js'),
+    gulp.dest($pathDestServer + '/Scripts/dist'),
 
     gulp.src(['vendor/fullpage.js/jquery.fullPage.min.js', 'frontend/js/nonReact/pageFirst.js']),
     $.concat('landingPage.js'),
     $.uglify(),
-    gulp.dest('./public/js'),
-    gulp.dest(OPTIONS.path.dest_server + '/Scripts'),
+    // gulp.dest('./public/js'),
+    gulp.dest($pathDestServer + '/Scripts')
 
-		gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/nonReact/access.js']),
+/*    gulp.src(['vendor/jquery/dist/jquery.min.js', 'frontend/js/nonReact/access.js']),
     $.concat('jQuery.js'),
     babel({
       presets: ['es2015']
     }),
     sourcemaps.init(),
     $.uglify(),
-    gulp.dest('./public/js')
+    gulp.dest('./public/js')*/
   ).on('error', $.notify.onError(function (err) {
     return {
       title: 'JS',
@@ -252,6 +209,7 @@ gulp.task('vendor',function(){
 });
 
 
+// я опасаюсь это использовать, наверное, лучше это более не юзать
 gulp.task('styles:assets', function() {
   return gulp.src('frontend/Images/**/*.{svg,png,jpg,gif,ico}', {since: gulp.lastRun('styles:assets')})
       .pipe(gulp.dest(OPTIONS.path.dest_server + '/Images'))
@@ -264,9 +222,11 @@ gulp.task('clean', function() {
 
 
 // BM: ============================================================================================== ONE TIME BUILD ===
-gulp.task('build', gulp.series('clean', gulp.parallel('styles:assets', 'styles', 'js'), 'assets', 'fonts'));
+gulp.task('build', gulp.series(gulp.parallel('styles', 'js', 'vendor')/*, 'assets', 'fonts'*/));
 
 
+
+// BMS: --- WATCHES ----------------------------------------------------------------------------------------------------
 // BM: ========================================================================================== ADMIN DEV BUILDING ===
 gulp.task('watch-admin', function () {
     gulp.watch('frontend/admin_styles/**/*.*', gulp.series('styles-admin'));
@@ -275,10 +235,13 @@ gulp.task('watch-admin', function () {
 });
 
 // BM: ========================================================================================== FRONT DEV BUILDING ===
-gulp.task('watch-js-styles', function () {
+gulp.task('watch-front-js-styles', function () {
     gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
     gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));
+    gulp.watch($pathDestServer + '/Scripts/dist/*.*', {delay: 700}, gulp.series('front-js-rev'));
+    gulp.watch($pathDestServer + '/Content/dist/*.*', {delay: 700}, gulp.series('front-css-rev'));
 });
+
 
 
 gulp.task('serve', function() {
