@@ -28,28 +28,30 @@ $font-Myriad-Pro: Myriad-Pro, verdana, arial;
 
 $font-size-base: 13px;
 
-
+$line1ico: -306px;
+$line2ico: -517px;
+$line3ico: -552px;
 @mixin main_page_event_icon{
-  &.sport:before{  background-position: -68px -306px;  }
-  &.cybersport:before, &.e_sport:before{  background-position: -186px -306px;  }
-  &.economy:before, &.finance:before{  background-position: -107px -306px; }
-  &.society:before{  background-position: -27px -306px;  }
+  &.sport:before{  background-position: -68px $line1ico;  }
+  &.cybersport:before, &.e_sport:before{  background-position: -186px $line1ico;  }
+  &.economy:before, &.finance:before{  background-position: -107px $line1ico; }
+  &.society:before{  background-position: -27px $line1ico;  }
 
-  &.soccer:before{  background-position: -27px -517px;  }
-  &.rugby:before{  background-position: -59px -517px;  }
-  &.basketball:before{  background-position: -88px -517px;  }
-  &.tennis:before{  background-position: -117px -517px;  }
-  &.volleyball:before{  background-position: -147px -517px;  }
-  &.hockey:before{  background-position: -176px -517px;  }
-  &.baseball:before{  background-position: -207px -517px;  }
-  &.boxing:before{  background-position: -237px -517px;  }
-  &.horse_racing:before{  background-position: -269px -517px;  }
-  &.politics:before{  background-position: -297px -517px;  }
-  &.currencies:before{  background-position: -324px -517px;  }
-  &.indexes:before{  background-position: -350px -517px;  }
-  &.dota2:before{  background-position: -27px -552px;  }
-  &.csgo:before{  background-position: -59px -552px;  }
-  &.lol:before{  background-position: -85px -552px;  }
-  &.economy:before{  background-position: -115px -552px;  }
-  &.entertainment:before{  background-position: -148px -552px;  }
+  &.soccer:before{  background-position: -27px $line2ico;  }
+  &.rugby:before{  background-position: -59px $line2ico;  }
+  &.basketball:before{  background-position: -88px $line2ico;  }
+  &.tennis:before{  background-position: -117px $line2ico;  }
+  &.volleyball:before{  background-position: -147px $line2ico;  }
+  &.hockey:before{  background-position: -176px $line2ico;  }
+  &.baseball:before{  background-position: -207px $line2ico;  }
+  &.boxing:before{  background-position: -237px $line2ico;  }
+  &.horse_racing:before{  background-position: -269px $line2ico;  }
+  &.politics:before{  background-position: -295px $line2ico;  }
+  &.currencies:before{  background-position: -324px $line2ico;  }
+  &.indexes:before{  background-position: -350px $line2ico;  }
+  &.dota2:before{  background-position: -27px $line3ico;  }
+  &.csgo:before{  background-position: -59px $line3ico;  }
+  &.lol:before{  background-position: -85px $line3ico;  }
+  &.economy:before{  background-position: -115px $line3ico;  }
+  &.entertainment:before{  background-position: -148px $line3ico;  }
 }
