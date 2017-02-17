@@ -69,6 +69,6 @@ $order_sidebar_activation_column_opacity: 0.2;
 $order_sidebar_current_order_title_color: #000000;
 @mixin order_sidebar_order_input{  background: #ffffff;  }
 $order_sidebar_order_label_color: #000000;
-$order_sidebar_order_edit: url("../Images/sprite.svg") no-repeat -191px -135px;
-$order_sidebar_order_delete: url("../Images/sprite.svg") no-repeat -191px -178px;
+$order_sidebar_order_edit: url("#{$pathImage}/sprite.svg") no-repeat -191px -135px;
+$order_sidebar_order_delete: url("#{$pathImage}/sprite.svg") no-repeat -191px -178px;
 $order_sidebar_order_border_color: #e9eaee;

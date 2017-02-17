@@ -11,7 +11,7 @@ $color-max: #000;
 $checkbox_bg: #53525d;
 $checkbox_label_color: #ffffff;
 
-$help_block: url("../Images/sprite.svg") no-repeat -50px -182px;
+$help_block: url("#{$pathImage}/sprite.svg") no-repeat -50px -182px;
 
 
 $warning_message_bg: linear-gradient(to bottom, #3a3943, #292830);

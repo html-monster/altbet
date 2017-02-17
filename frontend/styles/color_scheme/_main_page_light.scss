@@ -2,7 +2,7 @@
 $main_page_tab_color: #363640;
 $main_page_tab_color_active: #ffffff;
 $main_page_tab_bg: #ffffff;
-$main_page_gif: url("../Images/ajax-loader-w.gif");
+$main_page_gif: url("#{$pathImage}/ajax-loader-w.gif");
 $main_page_pos_color: #de640a;
 @mixin main_page_tab_icon{
 	&:before {
@@ -12,7 +12,7 @@ $main_page_pos_color: #de640a;
 		height: 38px;
 		margin-top: -2px;
 		margin-right: 5px;
-		background: url(../Images/sprite.svg) no-repeat -326px -147px;
+		background: url("#{$pathImage}/sprite.svg") no-repeat -326px -147px;
 		vertical-align: middle;
 		transition: 0.4s ease-out;
 	}
@@ -33,7 +33,7 @@ $main_page_pos_color: #de640a;
 }
 
 $main_page_event_title: #000000;
-$main_page_event_chart_button: url(../Images/sprite.svg) no-repeat -166px -354px;
+$main_page_event_chart_button: url("#{$pathImage}/sprite.svg") no-repeat -166px -354px;
 @mixin main_page_event_bg{  background: #ffffff; }
 
 // при изменении поменять и в /frontend/admin_styles/inc/_vars.scss  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

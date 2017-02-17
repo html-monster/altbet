@@ -203,7 +203,7 @@
             width: 15px;
             height: 14px;
             margin-left: 4px;
-            background: url("../Images/sprite.svg") no-repeat -59px -209px;
+            background: url("#{$pathImage}/sprite.svg") no-repeat -59px -209px;
           }
         }
         strong.score{
@@ -219,7 +219,7 @@
         position: absolute;
         top: 44px;
         left: calc(50% - 10px);
-        background: url(../Images/sprite.svg) no-repeat -97px -123px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -97px -123px;
         z-index: 2;
         transition: 0.2s ease-out;
         &:hover {
@@ -244,7 +244,7 @@
           width: 24px;
           height: 22px;
           margin-right: 5px;
-          background: url("../Images/sprite.svg") no-repeat;
+          background: url("#{$pathImage}/sprite.svg") no-repeat;
         }
         @include main_page_event_icon;
         span {
@@ -305,7 +305,7 @@
             position: absolute;
             top: calc(50% - 3px);
             left: 10px;
-            background: url("../Images/sprite.svg") no-repeat -27px -356px;
+            background: url("#{$pathImage}/sprite.svg") no-repeat -27px -356px;
           }
           h2{
             &:before{
@@ -316,7 +316,7 @@
               position: absolute;
               top: calc(50% - 5px);
               left: -19px;
-              background: url("../Images/sprite.svg") no-repeat;
+              background: url("#{$pathImage}/sprite.svg") no-repeat;
             }
             &:first-of-type:before{  background-position: -27px -346px;  }
             &:last-of-type:before{  background-position: -27px -372px;  }
@@ -501,7 +501,7 @@
             bottom: -45px;
             font-size: 12px;
             color: $main-color;
-            background: url("../Images/sprite.svg") no-repeat;
+            background: url("#{$pathImage}/sprite.svg") no-repeat;
             overflow: hidden;
             strong{
               display: block;

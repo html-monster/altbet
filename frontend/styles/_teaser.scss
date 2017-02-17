@@ -116,7 +116,7 @@
 		.logo {
 			display: block;
 			height: 100%;
-			background: url("../Images/tize_sprite.svg") no-repeat;
+			background: url("#{$pathImage}/tize_sprite.svg") no-repeat;
 			background-position: -3px -9px;
 			color: transparent;
 			@include xsmax($xsmax){  width: 90%;  float: right;  }
@@ -136,7 +136,7 @@
 				display: block;
 				width: 24px;
 				height: 24px;
-				background: url("../Images/tize_sprite.svg") no-repeat;
+				background: url("#{$pathImage}/tize_sprite.svg") no-repeat;
 				background-position: -50px -90px;
 				position: absolute;
 				top: calc(50% - 12px);
@@ -235,7 +235,7 @@
 				height: 23px;
 				left: 0;
 				top: 9px;
-				background: url("../Images/tize_sprite.svg") no-repeat;
+				background: url("#{$pathImage}/tize_sprite.svg") no-repeat;
 				background-position: -16px -84px;
 				margin-left: 5px;
 			}
@@ -287,7 +287,7 @@
 		left: 0;
 		height: 56%;
 		width: 100%;
-		background: url("../Images/tize_bg.png") no-repeat center bottom;
+		background: url("#{$pathImage}/tize_bg.png") no-repeat center bottom;
 		background-size: contain;
 		z-index: 2;
 		@include lgmax($lgmax){  bottom: 16px;  }

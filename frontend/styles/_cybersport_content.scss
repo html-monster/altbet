@@ -21,7 +21,7 @@
         display: inline-block;
         width: 33px;
         height: 20px;
-        background: url('../Images/tv.png') no-repeat 50% 50%;
+        background: url('#{$pathImage}/tv.png') no-repeat 50% 50%;
         cursor: pointer;
       }
     }

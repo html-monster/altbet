@@ -15,8 +15,8 @@ module.exports = {
 
     entry: "./frontend/js/react/index.js",
     output: {
-        path: __dirname + options.path.destServer + '/Scripts',
-        publicPath: "Scripts/",
+        path: __dirname + options.path.destServer + '/Scripts/dist',
+        // publicPath: "Scripts/",
         filename: "bundle.js"
     },
     module: {

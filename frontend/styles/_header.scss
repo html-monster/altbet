@@ -92,7 +92,7 @@ header {
           &:before{  display: none;  }
           .ddTitle{  background: none;  }
           .divider{  border: none;  }
-          .ddArrow{  transition: 0.2s ease-out; background: url("../Images/sprite.svg") no-repeat -228px -196px;  }
+          .ddArrow{  transition: 0.2s ease-out; background: url("#{$pathImage}/sprite.svg") no-repeat -228px -196px;  }
           .dd.borderRadiusTp .ddArrow{  transform: rotate(180deg);  }
           .ddChild{
             top: 50px !important;
@@ -148,7 +148,7 @@ header {
     height: 44px;
     margin-right: -1px;
     border-radius: 0;
-    background: url("../Images/sprite.svg") no-repeat -219px -13px, url("../Images/chat.png") no-repeat 0 7px/ contain;
+    background: url("#{$pathImage}/sprite.svg") no-repeat -219px -13px, url("#{$pathImage}/chat.png") no-repeat 0 7px/ contain;
   }
   .user {
     height: 100%;
@@ -230,7 +230,7 @@ header {
         display: inline-block;
         width: 20px;
         height: 20px;
-        background: url("../Images/sprite.svg") no-repeat -102px -357px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -102px -357px;
         position: relative;
         span.count{
           display: block;
@@ -260,7 +260,7 @@ header {
           display: block;
           width: 10px;
           height: 10px;
-          background: url(../Images/sprite.svg) no-repeat -231px -199px;
+          background: url("#{$pathImage}/sprite.svg") no-repeat -231px -199px;
           position: absolute;
           top: 8px;
           right: 0;
@@ -286,7 +286,7 @@ header {
         display: block;
         width: 25px;
         height: 25px;
-        background: url("../Images/sprite.svg") no-repeat -424px -18px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -424px -18px;
       }
       &.active{  display: flex;  }
       a {

@@ -128,7 +128,7 @@ a.ui-button:active,
 	background: linear-gradient(to bottom, #53515e, #292830);
 	border-radius: 4px;
 	border: 1px solid #666666;
-	span{  background: url("../Images/sprite.svg") no-repeat;  }
+	span{  background: url("#{$pathImage}/sprite.svg") no-repeat;  }
 }
 .ui-datepicker .ui-datepicker-prev span{
 	background-position: -136px -105px;

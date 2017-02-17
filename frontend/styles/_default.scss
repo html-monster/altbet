@@ -1,7 +1,3 @@
-$clr1Status: #cccb35;
-$color2About: #b0afb0;
-$color3About: #f8b747;
-
 
 ::-webkit-input-placeholder{
   color: #dbdbdb;
@@ -46,11 +42,11 @@ html{
 }
 body>.wrapper{
   background: $main-bg -50px;
-  //&.blur{  filter: url('../Images/blur.svg#blur') blur(5px);  }
+  //&.blur{  filter: url('#{$pathImage}/blur.svg#blur') blur(5px);  }
 }
 .blur{
   *:not(.pop_up){
-    filter: url('../Images/blur.svg#blur') blur(5px);
+    filter: url("#{$pathImage}/blur.svg#blur") blur(5px);
   }
 }
 
@@ -135,7 +131,7 @@ input.datePickerJs:not([disabled]){  cursor: pointer;  }
 form.sending{
   [type=submit]{
     text-indent: -9999px;
-    background-image: url(../Images/ajax-loader-balls.gif);
+    background-image: url("#{$pathImage}/ajax-loader-balls.gif");
   }
 }
 .clear{
@@ -193,7 +189,7 @@ i.wave{  display: inline-block;  font-style: normal; border-radius: 4px; }
   display: inline-block;
   width: 20px;
   height: 20px;
-  background: url("../Images/ico-eye.png") no-repeat;
+  background: url("#{$pathImage}/ico-eye.png") no-repeat;
   background-size: 20px;
   cursor: pointer;
   vertical-align: middle;
@@ -249,7 +245,7 @@ label.disabled{
 			top: calc(50% - 8px);
 			border-radius: 10px;
 			box-shadow: inset 0 0 6px -1px rgba(0, 0, 0, 0.5);
-			background: url('../Images/sprite.svg') no-repeat -296px -64px $checkbox_bg;
+			background: url("#{$pathImage}/sprite.svg") no-repeat -296px -64px $checkbox_bg;
 		}
 		&:after{
 			width: 13px;
@@ -263,7 +259,7 @@ label.disabled{
 	}
 	input{ display: none;
 		&:checked ~ span { color: #000000;
-			&:before{  background: url('../Images/sprite.svg') no-repeat -284px -64px, linear-gradient(to bottom, #3aab4a, #3aab4a * 0.9);  }
+			&:before{  background: url("#{$pathImage}/sprite.svg") no-repeat -284px -64px, linear-gradient(to bottom, #3aab4a, #3aab4a * 0.9);  }
 			&:after{  left: 18px;  }
 		}
 	}
@@ -368,7 +364,7 @@ label.disabled{
     display: block;
     width: 16px;
     height: 16px;
-    background: url(../Images/dropdown/dd_arrow.gif) no-repeat;
+    background: url("#{$pathImage}/dropdown/dd_arrow.gif") no-repeat;
     position: absolute;
     top: 22%;
     right: 4px;
@@ -594,7 +590,7 @@ label.disabled{
       margin: 0 5px 0 8px;
       position: absolute;
       top: 7px;
-      background: url("../Images/sprite.svg") no-repeat -60px -211px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -60px -211px;
     }
   }
 }
@@ -613,7 +609,7 @@ label.disabled{
   }
   .ddTitleText{
     text-align: left;
-    img{  width: 16px;  height: 11px;  margin-top: -3px;  background-image: url(../Images/dropdown/flagssprite_small.png);
+    img{  width: 16px;  height: 11px;  margin-top: -3px;  background-image: url("#{$pathImage}/dropdown/flagssprite_small.png");
       background-repeat: no-repeat;  background-size: 80px 583px; border-radius: 0!important;}
   }
   .divider{  height: 30px;right: 20px;  }
@@ -635,7 +631,7 @@ label.disabled{
         text-align: left;
         border-left: 1px solid #dadada;
         border-right: 1px solid #dadada;
-        img{  width: 16px;  height: 11px;  background-image: url(../Images/dropdown/flagssprite_small.png);
+        img{  width: 16px;  height: 11px;  background-image: url("#{$pathImage}/dropdown/flagssprite_small.png");
           background-repeat: no-repeat;  background-size: 80px 583px; border-radius: 0!important;}
       }
     }
@@ -726,7 +722,7 @@ label.disabled{
     position: absolute;
     top: calc(50% - 10px);
     left: 0;
-    background-image: url(../Images/sprite.svg);
+    background-image: url("#{$pathImage}/sprite.svg");
     background-position: -18px -206px;
   }
 }

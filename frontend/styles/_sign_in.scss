@@ -143,7 +143,7 @@
         //    background: $sign_in_autofill_pass;
         //  }
         //}
-        
+
         //.input__label--kuro::before,
         //.input__label--kuro::after {
         //  content: '';
@@ -227,7 +227,7 @@
               margin-right: 5px;
               width: 16px;
               height: 16px;
-              background: url("../Images/sprite.svg") no-repeat -20px -160px;
+              background: url("#{$pathImage}/sprite.svg") no-repeat -20px -160px;
               vertical-align: middle;
             }
           }

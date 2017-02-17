@@ -37,7 +37,7 @@ section.sidebar { overflow: visible }
     }
   }
   .category-icon:not(.noicon) { position: relative; @include main_page_event_icon;
-    &:before { content: ''; @include box(b,a,24 22 px); margin-top: 3px; background: url(../../Images/sprite.svg) no-repeat; }
+    &:before { content: ''; @include box(b,a,24 22 px); margin-top: 3px; background: url("#{$pathImage}/sprite.svg") no-repeat; }
   }
   .controls { @include box(n,a); margin-right: -80px; padding-left: 10px; right: 0; top: -2px; z-index: 1000;
     span { @include iblock; margin: 0; padding: 0; width: 22px; height: 22px; }
