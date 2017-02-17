@@ -53,8 +53,8 @@ export default class ExchangeItem extends React.Component
                 {data.Symbol.Status == 2 ? <i className="half_time" title="Completed">ht<span>Completed</span></i> : ""}
             </div>
             <div className="content_title command">
-                <h2>{data.Symbol.HomeName} {(data.Symbol.HomePoints != null) ? <span>{data.Symbol.HomePoints}</span> : '' }</h2>
-                <h2>{data.Symbol.AwayName} {(data.Symbol.AwayPoints != null) ? <span>{data.Symbol.AwayPoints}</span> : ''}</h2>
+                <h2>{data.Symbol.HomeName} {(data.Symbol.HomePoints != null) ? <span>({data.Symbol.HomePoints})</span> : '' }</h2>
+                <h2>{data.Symbol.AwayName} {(data.Symbol.AwayPoints != null) ? <span>({data.Symbol.AwayPoints})</span> : ''}</h2>
                 <span className="symbol_name hidden">{symbol}</span>
             </div>
             <div className="table not-sort wave waves-effect waves-button"> {/*id="exchange_table"*/}
