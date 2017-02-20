@@ -12,8 +12,10 @@ export class MainConfig
     public static PATH_PIC = "Images";
 
     // public static AJAX_TEST = 'Category/GetAjax';
-    public static AJAX_TEST = 'Category/EditCategory?catery=nfl';
+    // public static AJAX_TEST = 'Category/EditCategory?catery=nfl';
+    public static AJAX_TEST = 'Category/TestAction';
     // public static AJAX_TEST = 'http://localhost/AltBet.Admin/Category/TestAction';
+
     public static AJAX_CATEGORY_ADD = 'Category/AddCategory';
     public static AJAX_CATEGORY_EDIT = 'Category/ChangeCategory';
     public static AJAX_EXCH_GET = 'Home/EditExchange';
@@ -25,4 +27,6 @@ export class MainConfig
     public static AJAX_EXCH_SET_STATUS_APPROVED = 'Home/Approved';
     public static AJAX_EXCH_SET_STATUS_COMPLETED = 'Home/Completed';
     public static AJAX_EXCH_SET_STATUS_SETTLEMENT= 'Home/Settlement';
+
+    public static AJAX_CATEGORY_MOVE = 'Category/MoveCategory';
 }

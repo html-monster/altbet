@@ -17,9 +17,9 @@ $main_page_pos_color: #bab500;
 		transition: 0.4s ease-out;
 	}
 	&:nth-of-type(2):before{  background-position: -367px -176px;  }
-	&:nth-of-type(3):before{  background-position: -407px -176px;  }
-	&:nth-of-type(4):before{  background-position: -446px -176px;  }
-	&:nth-of-type(5):before{  background-position: -486px -176px;  }
+	//&:nth-of-type(3):before{  background-position: -407px -176px;  }
+	&:nth-of-type(3):before{  background-position: -446px -176px;  }
+	&:nth-of-type(4):before{  background-position: -486px -176px;  }
 }
 @mixin  main_page_tab_icon_active{
 	background: #ffffff;
@@ -27,9 +27,9 @@ $main_page_pos_color: #bab500;
 	color: $main_page_tab_color;
 	&:before{ background-position: -326px -146px; }
 	&:nth-of-type(2):before{  background-position: -367px -147px;  }
-	&:nth-of-type(3):before{  background-position: -407px -147px;  }
-	&:nth-of-type(4):before{  background-position: -446px -147px;  }
-	&:nth-of-type(5):before{  background-position: -486px -147px;  }
+	//&:nth-of-type(3):before{  background-position: -407px -147px;  }
+	&:nth-of-type(3):before{  background-position: -446px -147px;  }
+	&:nth-of-type(4):before{  background-position: -486px -147px;  }
 }
 
 $main_page_event_title: transparentize(#ffffff, 0.2);

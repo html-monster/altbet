@@ -91,13 +91,13 @@ export default class ExchangeItem extends React.Component
                         <div className="pl mode_info_js">
                             {
                                 function() {
-                                    if( data.GainLoss != 0 )
+                                    if( data.Positions != 0 )
                                     {
                                         let $class;
                                         if (data.GainLoss < 0) $class = 'lose';
                                         else if (data.GainLoss > 0) $class = 'win';
 
-                                        return <strong style={{'marginTop': 3}}>P/L: <span className={$class}>(${Math.abs(data.GainLoss)})</span></strong>;
+                                        return <strong style={{'marginTop': 3}}>P/L: <span className={$class}>(${data.GainLoss ? Math.abs(data.GainLoss) : 0})</span></strong>;
                                     } // endif
                                 }()
                             }

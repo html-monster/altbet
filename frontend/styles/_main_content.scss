@@ -57,7 +57,7 @@
         cursor: pointer;
         &.active {
           @include main_page_tab_icon_active;
-          span{
+          span {
             &:after{  margin-bottom: 0;  }
             &:before{  margin-top: -30px;  }
           }

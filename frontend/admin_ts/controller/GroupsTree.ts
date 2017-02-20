@@ -9,26 +9,72 @@ import {IndexView} from "../view/IndexView";
 import CategoryModel from "../model/CategoryModel";
 import {InfoMessage} from "../component/InfoMessage";
 import {MainConfig} from "../inc/MainConfig";
+import {TreeModel} from "../model/TreeModel";
 
 
 export class GroupsTree
 {
+    private InfoMessage = null;
+
+
+    constructor()
+    {
+        this.InfoMessage = new InfoMessage({
+            TPLName: '#TPLinfoMessageAbs',
+            target: "[data-js=DiInfoMP]",
+            timeout: 5000,
+        });
+    }
+
+
+
     public init()
     {
         var self = this;
 
+        $(document).on('dnd_stop.vakata', function(e, data)
+        // $(document).on('move_node.jstree', function(e, data)
+        {
+          var src = $(data.element).closest('.jstree-node');
+          var targetnode = $(data.event.target).closest('.jstree-node');
+
+          // 0||console.log( 'parents', targetnode.parent().closest('.jstree-node').attr('id'), src.parent().closest('.jstree-node').attr('id') );
+          if( targetnode.parent().closest('.jstree-node').attr('id') == src.parent().closest('.jstree-node').attr('id') )
+          {
+            // 0||console.log( 'targetnode, data', targetnode, src, data, targetnode.data('pos'), src.data('pos') );
+            // src
+            // move_node (obj, par [, pos, callback, is_loaded])
+          }
+          else
+          {
+          } // endif
+        });
+
         $('#DiCatTree').jstree(
         {
-            // 'core': {
-            //     'check_callback' : function (operation, node, node_parent, node_position, more) {
-            //         // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
-            //         // in case of 'rename_node' node_position is filled with the new node name
-            //         0||console.log( 'operation, node, node_parent, node_position, more', operation, node, node_parent, node_position, more );
-            //         let flag = false;
-            //         if( operation == 'move_node' && node.parent == node_parent.id) flag = true;
-            //         return flag;
-            //     }
-            // },
+            'core': {
+                'check_callback' : function (operation, node, node_parent, node_position, more) {
+                    // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
+                    // in case of 'rename_node' node_position is filled with the new node name
+                    // 0||console.log( 'operation, node, node_parent, node_position, more', operation, node, node_parent, node_position, more );
+                    // 0||console.log( 'node.data.pos, node_position', node.data.pos, node_position );
+                    if( operation == 'move_node' && more.core )
+                    {
+                        0||console.log( 'more', more, operation, node_position, node.li_attr["data-id"] );
+                        if (node.data.pos > node_position) node_position++;
+                        self.moveCategory({node, node_parent, node_position});
+                        0||console.log( '', node_position, node.li_attr["data-id"] );
+                    } // endif
+
+                    let flag = false;
+                    if( operation == 'move_node' && node.parent == node_parent.id &&
+                        (more.pos == 'a' && node.data.pos < node_position || more.pos == 'b' && node.data.pos > node_position) ) {flag = true; /*0||console.log( '$("#vakata-dnd")', $("#vakata-dnd").html() )*/;}
+                    return flag;
+                },
+                'dnd': {
+                    'check_while_dragging': false,
+                }
+            },
             "conditionalselect": function (node, event) {
                 return false;
             },
@@ -37,10 +83,10 @@ export class GroupsTree
                     "icon": "fa fa-folder-o"
                 },
                 // "demo": {
-                //     "icon": "glyphicon glyphicon-ok"
+                //     "icon": "glyphicon glyphicon-ok",
                 // }
             },
-            "plugins": ["types", "conditionalselect", /*"dnd"*/]
+            "plugins": ["types", "conditionalselect", "dnd"]
         });
 
         // 0||console.debug( '$(".sidebar-menu .js-treeview.active")', $(".sidebar-menu .treeview.active") );
@@ -106,5 +152,44 @@ export class GroupsTree
         {
             location.href = $that.data('url');
         } // endif
+    }
+
+
+
+    private moveCategory({node, node_parent, node_position})
+    {
+        var self = this;
+
+        var formData = new FormData();
+        formData.set('id', node.li_attr["data-id"]);
+        formData.set('position', node_position);
+
+        (new TreeModel).moveNode({formData, name: node.li_attr["data-name"]}).then( result =>
+            {
+                0||console.log( 'moved OK', 0 );
+                // window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
+                // location.reload();
+                // location.href = MainConfig.BASE_URL + result.data.Param1;
+                $('#DiCatTree').jstree("move_node", node, node_parent, node_position);
+
+                self.InfoMessage.render({
+                    vars: {
+                        header: "Info",
+                        text: result.message,
+                        type: InfoMessage.TYPE_SUCCESS,
+                    }
+                });
+            },
+            result => {
+                self.InfoMessage.render({
+                    vars: {
+                        header: "Info",
+                        text: result.message,
+                        type: InfoMessage.TYPE_ALERT,
+                    }
+                });
+
+                0||console.log( 'moved Fail', 0 );
+            });
     }
 }

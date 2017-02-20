@@ -22,3 +22,11 @@
 .alert-message { @include nblock }
 
 .info-mess-abs { position: fixed; right: 5px; top: 55px; z-index: 1 }
+
+
+#vakata-dnd {
+  #jstree-dnd { position: relative; display: inline-block; margin: 0; padding: 0 4px 0 1px; height: 24px; line-height: 24px;
+    vertical-align: top; white-space: nowrap; background: #e7f4f9; border-radius: 2px; box-shadow: inset 0 0 1px #ccc;
+    text-decoration: none; transition: background-color .15s,box-shadow .15s; border: 1px dotted #444; }
+  .js-btn { display: none }
+}

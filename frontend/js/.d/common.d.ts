@@ -28,7 +28,7 @@ interface ABpp
 
 interface JQuery
 {
-    jstree(p1?)
+    jstree(p1?, ...p2?)
     datepicker(p1?);
     daterangepicker(p1?);
     select2(p1?);

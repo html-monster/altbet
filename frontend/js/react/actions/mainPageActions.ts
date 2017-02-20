@@ -20,12 +20,17 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
+            let flag = true;
             let data = getState().mainPage.marketsData["0"];
+
+            // prevent empty data error
+            if( !data ) { data = {Symbol: {}}; flag = false; }
+
 
             let symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
             ABpp.Websocket.sendSubscribe({exchange: data.Symbol.Exchange}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
-            ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false});
-            setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false}), 700);
+            flag && ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false});
+            flag && setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false}), 700);
 
             ABpp.Websocket.subscribe((inData) =>
             {
@@ -250,20 +255,24 @@ class Actions extends BaseActions
         return (dispatch, getState) =>
         {
             let state = getState().mainPage;
+
             if (state.activeExchange.name == '')
             {
                 let data = state.marketsData["0"];
 
-                let ret = this.exchangeSide({name: data.Symbol.Exchange,
-                    isMirror: false,
-                    title: [data.Symbol.HomeName, data.Symbol.AwayName],
-                    symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
-                });
+                if( data && data.Symbol )
+                {
+                    let ret = this.exchangeSide({name: data.Symbol.Exchange,
+                        isMirror: false,
+                        title: [data.Symbol.HomeName, data.Symbol.AwayName],
+                        symbol: `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`,
+                    });
 
-                dispatch({
-                    type: ret.type,
-                    payload: ret.data,
-                });
+                    dispatch({
+                        type: ret.type,
+                        payload: ret.data,
+                    });
+                }
             }
         };
     }
@@ -308,13 +317,14 @@ class Actions extends BaseActions
         {
             let state = getState().mainPage;
 
+
             for( var val of state.marketsData )
             {
                 // if( inProps.id == `${val.Symbol.Exchange}_${val.Symbol.Name}_${val.Symbol.Currency}` ) break;
                 if( inProps.id == val.Symbol.Exchange ) break;
             } // endfor
 
-            let ret = this.exchangeSide({name: val.Symbol.Exchange,
+            var {type, data} = this.exchangeSide({name: val.Symbol.Exchange,
                 isMirror: inProps.isMirror,
                 title: [val.Symbol.HomeName, val.Symbol.AwayName],
                 symbol: `${val.Symbol.Exchange}_${val.Symbol.Name}_${val.Symbol.Currency}`,
@@ -322,8 +332,8 @@ class Actions extends BaseActions
 
 
             dispatch({
-                type: ret.type,
-                payload: ret.data,
+                type: type,
+                payload: data,
             });
         };
     }
