@@ -74,9 +74,9 @@ export class GroupsTree
 
                     if( more.dnd && operation == 'move_node' )
                     {
+                        flag = false;
                         if( node.parent == node_parent.id &&
-                            (more.pos == 'a' && $(`#${node.id}`).index() < node_position || more.pos == 'b' && $(`#${node.id}`).index() > node_position) ) ;
-                            else flag = false;
+                            (more.pos == 'a' &&  $(`#${node.id}`).index() < node_position || more.pos == 'b' && $(`#${node.id}`).index() > node_position) ) flag = true;
                     } // endif
 
                     return flag;

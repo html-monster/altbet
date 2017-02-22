@@ -65,6 +65,9 @@
       &.Desc::before { background-position: -16px 0 }
       //a { color: #000; }
     }
+
+
+    .cb-timezones+.select2 { width: 100% !important; }
   }
 }
 
