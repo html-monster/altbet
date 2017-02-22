@@ -50,7 +50,7 @@ export class GroupsTree
           } // endif
         });
 
-        $('#DiCatTree').jstree(
+        var jstree = $('#DiCatTree').jstree(
         {
             'core': {
                 'check_callback' : function (operation, node, node_parent, node_position, more) {
@@ -58,17 +58,27 @@ export class GroupsTree
                     // in case of 'rename_node' node_position is filled with the new node name
                     // 0||console.log( 'operation, node, node_parent, node_position, more', operation, node, node_parent, node_position, more );
                     // 0||console.log( 'node.data.pos, node_position', node.data.pos, node_position );
-                    if( operation == 'move_node' && more.core )
+                    let flag = true;
+                    try {
+                        // 0||console.log( 'more', more );
+                        if( operation == 'move_node' && more.core && more.origin.element.context.id == "DiCatTree" )
+                        {
+                            // 0||console.log( 'more', more, operation, node_position, node.li_attr["data-id"], more.origin );
+                            if (node.data.pos > node_position) node_position++;
+                            self.moveCategory({jstree, node, node_parent, node_position});
+                            // 0||console.log( '', node_position, node.li_attr["data-id"] );
+                            flag = false;
+                        } // endif
+                    } catch (e) {
+                    }
+
+                    if( more.dnd && operation == 'move_node' )
                     {
-                        0||console.log( 'more', more, operation, node_position, node.li_attr["data-id"] );
-                        if (node.data.pos > node_position) node_position++;
-                        self.moveCategory({node, node_parent, node_position});
-                        0||console.log( '', node_position, node.li_attr["data-id"] );
+                        if( node.parent == node_parent.id &&
+                            (more.pos == 'a' && $(`#${node.id}`).index() < node_position || more.pos == 'b' && $(`#${node.id}`).index() > node_position) ) ;
+                            else flag = false;
                     } // endif
 
-                    let flag = false;
-                    if( operation == 'move_node' && node.parent == node_parent.id &&
-                        (more.pos == 'a' && node.data.pos < node_position || more.pos == 'b' && node.data.pos > node_position) ) {flag = true; /*0||console.log( '$("#vakata-dnd")', $("#vakata-dnd").html() )*/;}
                     return flag;
                 },
                 'dnd': {
@@ -156,7 +166,7 @@ export class GroupsTree
 
 
 
-    private moveCategory({node, node_parent, node_position})
+    private moveCategory({jstree, node, node_parent, node_position})
     {
         var self = this;
 
@@ -170,7 +180,7 @@ export class GroupsTree
                 // window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
                 // location.reload();
                 // location.href = MainConfig.BASE_URL + result.data.Param1;
-                $('#DiCatTree').jstree("move_node", node, node_parent, node_position);
+                jstree.jstree("move_node", node, node_parent, node_position);
 
                 self.InfoMessage.render({
                     vars: {
