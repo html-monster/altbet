@@ -69,8 +69,9 @@ export class LoginController extends BaseController
                 // 0||console.log( 'result', result );
                 // window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
                 // window.ADpp.User.setFlash({...result}, 'AddExchSucc');
-                location.href = MainConfig.BASE_URL + result.data.Param1;
-                // location.href = MainConfig.BASE_URL;
+
+                // location.href = MainConfig.BASE_URL + result.data.Param1;
+                location.href = MainConfig.BASE_URL;
             },
             result => {
                 // 0||console.debug( 'result', result );

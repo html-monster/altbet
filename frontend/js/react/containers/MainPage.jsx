@@ -86,7 +86,7 @@ let nb = "&nbsp;";
                     <div className="tabs">
                         <span className="tab"><span data-content="Closing soon"></span></span>
                         <span className="tab"><span data-content="Popular"></span></span>
-                        <span className="tab"><span data-content="Trending"></span></span>
+                        {/*<span className="tab"><span data-content="Trending"></span></span>*/}
                         <span className="tab"><span data-content="New"></span></span>
                         <span className="tab"><span data-content="Movers"></span></span>
                         <div className="mode_wrapper">

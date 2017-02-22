@@ -70,7 +70,7 @@ export class TabOpenOrders extends React.Component
                                                 {
                                                     let $handicap = (item.isMirror ? item.Symbol.AwayHandicap : item.Symbol.HomeHandicap);
                                                     if( this.state.filters[item.Category] ) return <tr key={key} className={(item.isMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))} id={item.ID}>
-                                                    <td className="title">
+                                                        <td className="title">
                                                             {(item.isMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}
                                                             <span className="muted">{$handicap && ` (${$handicap})`}</span>
                                                             <br />

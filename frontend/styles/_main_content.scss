@@ -1,7 +1,7 @@
 .content {
   @include span(7.6 of 12);
   @include push (1.8 of 12);
-  margin-top: 70px;
+  margin-top: 45px;
   padding: 15px;
   position: relative;
   .nav_items {
@@ -57,7 +57,7 @@
         cursor: pointer;
         &.active {
           @include main_page_tab_icon_active;
-          span{
+          span {
             &:after{  margin-bottom: 0;  }
             &:before{  margin-top: -30px;  }
           }

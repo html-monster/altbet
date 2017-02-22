@@ -1,41 +1,39 @@
 /**
- * Created by Vlasakh on 10.02.2017.
+ * Created by Vlasakh on 20.02.2017.
  */
-
 
 /// <reference path="./../../js/.d/common.d.ts" />
 
-import { MainConfig, DS } from "../inc/MainConfig";
 import {AjaxSend} from "../component/AjaxSend";
-import {DateLocalization} from "../component/DateLocalization";
-import {log} from "typings/dist/support/cli";
+import { MainConfig, DS } from "../inc/MainConfig";
 
 
 var __LDEV__ = true;
 
 
-export class LoginModel
+export class TreeModel
 {
-    public login(inProps)
+    public moveNode(inProps)
     {
         var self = this;
 
         // 0||console.debug( 'data', data, data.getAll('op') );
-        var message = `Error while login, please, try again`;
         var ajaxPromise = (new AjaxSend()).send({
                 formData: inProps.formData,
-                message: message,
-                url: inProps.url,
+                message: `Error while moving category, please, try again`,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_MOVE,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 respCodes: [
-                    {code: 100, message},
-                    {code: -101, callback: (data) => data.Param1},
+                    {code: 100, message: `Category “${inProps.name}” moved successfully`},
+                    // {code: -101, message: "Some custom error"},
                 ],
                 beforeChkResponse: (data) =>
                 {
                     // emulate
-                    // data = {Error: 200};
-                    // data.Param1 = "?path=sport&status=approved";
+                    // 0||console.log( 'data', data );
+                    data = {Error: 200};
                     // data.Param1 = "TOR-PHI-3152017"; // id
+                    // data.Param1 = "?path=sport&status=approved";
                     // data.Param1 = "?status=New";
                     // data.Param2 = "Buffalo Bills_vs_New England Patriots";
                     // data.Param3 = "TOR-PHI-3152017"; // id
@@ -46,4 +44,3 @@ export class LoginModel
         return ajaxPromise;
     }
 }
-
