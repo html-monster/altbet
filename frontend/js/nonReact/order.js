@@ -59,49 +59,49 @@ class orderClass{
 		self.formValidation = function() {
 			let order = $('.order');
 
-			order.on('submit','form', function () {
-
-				if($(this).find('[data-log-out]').attr('data-log-out')) return false;
-
-				let price = +$(this).find('.price input').val(),
-						volume = +$(this).find('.volume input').val(),
-						sum = +$(this).find('.obligations input').val(),
-						checkboxProp = $(this).find('input[type="checkbox"]').length ? $(this).find('input[type="checkbox"]').prop('checked') : 1,
-						staticProject = location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru';
-
-				if(globalData.userIdentity == 'False'){
-					$('.sign_in_form').fadeIn(200);  //'.sign_in_form'
-					$('#login-email').focus(); //'#email'
-					return false;
-				}
-
-
-				if(checkboxProp){
-					if(0 >= price || price > 0.99){
-						$(this).find('.price input').next().fadeIn(200);
-						return false;
-					}
-					if(0 >= volume || !(defaultMethods.isInteger(volume))){//|| +volume > 999999
-						$(this).find('.volume input').next().fadeIn(200);
-						return false;
-					}
-					if(0 >= sum){// || +sum > 999999
-						$(this).find('.obligations input').next().fadeIn(200);
-						return false;
-					}
-				}
-				else{
-					if((0 >= volume || !(defaultMethods.isInteger(volume))) && sum == ''){//|| +volume > 999999
-						$(this).find('.volume input').next().fadeIn(200);
-						return false;
-					}
-					if(0 >= sum && volume == ''){// || +sum > 999999
-						$(this).find('.obligations input').next().fadeIn(200);
-						return false;
-					}
-				}
-				return true;
-			});
+			// order.on('submit','form', function () {
+			//
+			// 	if($(this).find('[data-log-out]').attr('data-log-out')) return false;
+			//
+			// 	let price = +$(this).find('.price input').val(),
+			// 			volume = +$(this).find('.volume input').val(),
+			// 			sum = +$(this).find('.obligations input').val(),
+			// 			checkboxProp = $(this).find('input[type="checkbox"]').length ? $(this).find('input[type="checkbox"]').prop('checked') : 1,
+			// 			staticProject = location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru';
+			//
+			// 	if(globalData.userIdentity == 'False'){
+			// 		$('.sign_in_form').fadeIn(200);  //'.sign_in_form'
+			// 		$('#login-email').focus(); //'#email'
+			// 		return false;
+			// 	}
+			//
+			//
+			// 	if(checkboxProp){
+			// 		if(0 >= price || price > 0.99){
+			// 			$(this).find('.price input').next().fadeIn(200);
+			// 			return false;
+			// 		}
+			// 		if(0 >= volume || !(defaultMethods.isInteger(volume))){//|| +volume > 999999
+			// 			$(this).find('.volume input').next().fadeIn(200);
+			// 			return false;
+			// 		}
+			// 		if(0 >= sum){// || +sum > 999999
+			// 			$(this).find('.obligations input').next().fadeIn(200);
+			// 			return false;
+			// 		}
+			// 	}
+			// 	else{
+			// 		if((0 >= volume || !(defaultMethods.isInteger(volume))) && sum == ''){//|| +volume > 999999
+			// 			$(this).find('.volume input').next().fadeIn(200);
+			// 			return false;
+			// 		}
+			// 		if(0 >= sum && volume == ''){// || +sum > 999999
+			// 			$(this).find('.obligations input').next().fadeIn(200);
+			// 			return false;
+			// 		}
+			// 	}
+			// 	return true;
+			// });
 			order.on('focus','input', function () {
 				$(this).next('.warning').fadeOut(200);
 			});

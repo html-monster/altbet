@@ -8,6 +8,7 @@ import React from 'react';
 
 import NetellerForm from './transactionForms/NetellerForm';
 import EcoPayzForm from './transactionForms/EcoPayzForm';
+import InputNumber from '../../inputNumber';
 import * as actions from '../../../actions/userPage/depositActions';
 
 class Deposit extends React.Component{
@@ -68,14 +69,14 @@ class Deposit extends React.Component{
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>100</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>250</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>500</button>
-				<input type="tel" className={`number ${sumValidation ? 'invalidJs' : ''}`} value={depositQuantity}
+				<InputNumber type="tel" className={sumValidation ? 'invalidJs' : ''} value={depositQuantity} hard="true"
 					   onChange={actions.actionOnInputQuantityChange.bind(null, actions)} maxLength="7" autoFocus/>
 				<span className="validation-summary-errors">{sumValidation}</span>
 				<span className="label">$</span>
 			</div>
-			<div className="recommended_block" onClick={::this.plansToggle}>
+			<div className="recommended_block">
 				<h4>Also the subscription is recommended</h4>
-				<button className="btn wave">{this.state.toggle} Pricing plans</button>
+				<button className="btn wave" onClick={::this.plansToggle}>{this.state.toggle} Pricing plans</button>
 			</div>
 			<div className="price_wrapper price_plan_form" ref="plans">
 				<div className="container">

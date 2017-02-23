@@ -7,6 +7,7 @@ import React from 'react';
 
 import NetellerForm from './transactionForms/NetellerForm';
 import EcoPayzForm from './transactionForms/EcoPayzForm';
+import InputNumber from '../../inputNumber';
 import * as actions from '../../../actions/userPage/withdrawActions';
 
 class Withdraw extends React.Component{
@@ -46,8 +47,8 @@ class Withdraw extends React.Component{
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>100</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>250</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>500</button>
-				<input type="tel" className={`number ${sumValidation ? 'invalidJs' : ''}`} value={depositQuantity}
-					   onChange={actions.actionOnInputQuantityChange.bind(null, actions)} maxLength="7" autoFocus/>
+				<InputNumber type="tel" className={sumValidation ? 'invalidJs' : ''} value={depositQuantity} inputValidate="integer"
+							 hard="true" onChange={actions.actionOnInputQuantityChange.bind(null, actions)} maxLength="7" autoFocus/>
 				<span className="validation-summary-errors">{sumValidation}</span>
 				<span className="label">$</span>
 			</div>

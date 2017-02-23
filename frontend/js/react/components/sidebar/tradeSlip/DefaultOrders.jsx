@@ -118,7 +118,7 @@ export default class DefaultOrders extends React.Component
 							<NewOrder
 								allData={data}
 								data={item}
-								key={`${item.ID}-${item.isMirror}`}
+								key={`${item.ID}-${item.isMirror}-${item.Price}-${item.Volume}`}
 								onDeleteOrderHandler={actions.actionOnDeleteOrder.bind(this, item)}
 								actions={actions}
 							/>

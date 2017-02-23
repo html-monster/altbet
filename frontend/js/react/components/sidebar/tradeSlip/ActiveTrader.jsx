@@ -60,7 +60,7 @@ class ActiveTrader extends React.Component {
 			:
 			(data.Symbol && data.Symbol.LastAsk) ? data.Symbol.LastAsk : '';
 
-
+        console.log(this.props);
 		return <div className="active_trader" id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
@@ -166,10 +166,11 @@ class ActiveTrader extends React.Component {
 									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, this)}
 									   onChange={traderActions.actionOnQuantityChange.bind(null, this)}
 									   value={quantity} ref={'inputQuantity'}/>
-								<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div><div className="regulator min"><span className="plus" title="Press Arrow Up" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1)}>{}</span><span className="minus" title="Press Arrow Down" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, -1)}>{}</span></div>
+								<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>
+								<div className="regulator min"><span className="plus" title="Press Arrow Up" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1)}>{}</span><span className="minus" title="Press Arrow Down" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, -1)}>{}</span></div>
 							</div>
 						</td>
-						<td className="spread_container">
+						<td className="spread_container ">
 							<div className="input">
 								<button className="clear" onClick={traderActions.actionOnSpreadClear.bind(null, this)}>{}</button>
 								<input type="text" className="number spreader" maxLength="4" data-validation="0.1"
@@ -177,12 +178,12 @@ class ActiveTrader extends React.Component {
 									   onKeyDown={traderActions.actionOnButtonSpreadRegulator.bind(null, this)}
 									   onChange={traderActions.actionOnSpreadChange.bind(null, this)}
 									   value={spread} ref={'inputSpread'} disabled={!quantity}/>
-								{
-									!!quantity && <div className="regulator min"><span className="plus" title="Press Arrow Up" onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.01, true)}>{}</span><span className="minus" title="Press Arrow Down" onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, -0.01, true)}>{}</span></div>
-								}
 								<div className="warning" style={{display: 'none'}}>
 									<p>Available value from 0.01 to 0.99</p>
 								</div>
+								{
+									!!quantity && <div className="regulator min"><span className="plus" title="Press Arrow Up" onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.01, true)}>{}</span><span className="minus" title="Press Arrow Down" onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, -0.01, true)}>{}</span></div>
+								}
 							</div>
 						</td>
 					</tr>
@@ -253,6 +254,7 @@ class ActiveTrader extends React.Component {
 				</tbody>
 			</table>
 			<div className="active_trader_footer">
+				<input type="hidden" id="market_symbol" value={activeExchange.symbol}/>
 				<table className="remote control">
 					<tbody>
 						<tr>
@@ -438,11 +440,14 @@ class TraderString extends React.Component {
 			<td className={'size buy size_buy animated ' + (data.Bid ? 'best_buy' : '') + (quantity ? ' clickable' : '')}
 				data-verify="QuantityBuy"
 				onClick={
-					other.traderActions.actionAddDefaultOrder.bind(null, this, {
-						direction: 'buy',
-						price: data.Price,
-						limit: true
-					}, index)
+					quantity ?
+						other.traderActions.actionAddDefaultOrder.bind(null, this, {
+							direction: 'buy',
+							price: data.Price,
+							limit: true
+						}, index)
+						:
+						null
 				}
 			>
 				<span className="container">
@@ -457,45 +462,48 @@ class TraderString extends React.Component {
 			<td className={`price_value${data.Bid ? ' best_buy' : ''}${data.Ask ? ' best_sell' : ''}${className}${spreadHighLight[0] == data.Price || spreadHighLight[1] == data.Price ? ' hovered' : ''}`}
 				onMouseEnter={spreadHighLightFunc}
 				onMouseLeave={other.traderActions.actionOnSpreadHighLight.bind(null, [])}
-				onClick={addOrder}>
+				onClick={spread ? addOrder : null}>
 				<div className="container">
 					<span className="value">${(data.Price).toFixed(2)}</span>
-				{
-					!!spread && data.Spread == 'mid' &&
+					{
+						!!spread && data.Spread == 'mid' &&
 
-					<div className={'spread_confirm' + (index == info.activeString && info.showDirectionConfirm ? ' active' : '')}>
-						<span className="sell confirm_button"
-							  onClick={
-								  other.traderActions.actionAddSpreadOrder.bind(null, this, {
-									  direction: 'ask',
-									  price: data.Price,
-								  }, index)
-							  }
-							  onMouseEnter={other.traderActions.actionOnSpreadHighLight.bind(null, [spreadPriceNeg])}
-							  onMouseLeave={other.traderActions.actionOnSpreadHighLight.bind(null, [])}
-						>Sell</span>
-						<span className="buy confirm_button"
-							  onClick={
-								  other.traderActions.actionAddSpreadOrder.bind(null, this, {
-									  direction: 'bid',
-									  price: data.Price,
-								  }, index)
-							  }
-							  onMouseEnter={other.traderActions.actionOnSpreadHighLight.bind(null, [spreadPricePos])}
-							  onMouseLeave={other.traderActions.actionOnSpreadHighLight.bind(null, [])}
-						>Buy</span>
-					</div>
-				}
+						<div className={'spread_confirm' + (index == info.activeString && info.showDirectionConfirm ? ' active' : '')}>
+							<span className="sell confirm_button"
+								  onClick={
+									  other.traderActions.actionAddSpreadOrder.bind(null, this, {
+										  direction: 'ask',
+										  price: data.Price,
+									  }, index)
+								  }
+								  onMouseEnter={other.traderActions.actionOnSpreadHighLight.bind(null, [spreadPriceNeg])}
+								  onMouseLeave={other.traderActions.actionOnSpreadHighLight.bind(null, [])}
+							>Sell</span>
+							<span className="buy confirm_button"
+								  onClick={
+									  other.traderActions.actionAddSpreadOrder.bind(null, this, {
+										  direction: 'bid',
+										  price: data.Price,
+									  }, index)
+								  }
+								  onMouseEnter={other.traderActions.actionOnSpreadHighLight.bind(null, [spreadPricePos])}
+								  onMouseLeave={other.traderActions.actionOnSpreadHighLight.bind(null, [])}
+							>Buy</span>
+						</div>
+					}
 				</div>
 			</td>
 			<td className={'size sell size_sell animated ' + (data.Ask ? 'best_sell' : '') + (quantity ? ' clickable' : '')}
 				data-verify="QuantitySell"
 				onClick={
-					other.traderActions.actionAddDefaultOrder.bind(null, this, {
-						direction: 'sell',
-						price: data.Price,
-						limit: true
-					}, index)
+					quantity ?
+						other.traderActions.actionAddDefaultOrder.bind(null, this, {
+							direction: 'sell',
+							price: data.Price,
+							limit: true
+						}, index)
+						:
+						null
 				}
 			>
 				<span className="container">

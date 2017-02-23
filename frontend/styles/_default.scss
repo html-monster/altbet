@@ -464,6 +464,7 @@ label.disabled{
       border: 7px solid transparent;
       border-bottom: 6px solid $checkbox_bg;
     }
+    span{  display: block;  }
     strong{
       font-size: 10px;
       color: transparentize($checkbox_label_color, 0.5);
