@@ -37,5 +37,7 @@ export class DateLocalization
         let ts : any = inProps.timestamp;
         if (!ts) ts = this.currentTimestamp;
         return ts > 0 ? moment.unix(ts/1000).format(inProps.format) : undefined;
+        // return ts > 0 ? moment.unix(ts/1000).utcOffset(moment().utcOffset()).format(inProps.format) : undefined;
+        // return ts > 0 ? moment.unix(ts/1000).utc().format(inProps.format) : undefined;
     }
 }
