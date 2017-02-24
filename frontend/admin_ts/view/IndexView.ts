@@ -149,6 +149,29 @@ export class IndexView extends BaseView
         });
 
 
+        // timezones
+        var data = [];
+                //[{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
+        for( let ii in globalData.timezone )
+        {
+            let val = globalData.timezone[ii];
+            data.push({id: val.offset, text: val.text});
+        } // endfor
+
+        // var tmpl = function
+        $("[data-js-cb-timezones]").select2({
+            data: data,
+            templateResult: (state) => {
+                    if (!state.id) {
+                        return state.text;
+                    }
+                    var $state = $('<span class="icon ' + state.id + '">' + state.text + '</span>');
+                    if (state.id < 0) var $state = $('<span class="icon noicon">' + state.text + '</span>');
+                    return $state;
+                }
+        }).val(globalData.currentIcon ? globalData.currentIcon : "-100").trigger("change");
+
+
         // disable/enable on date
         let $ChkStartDate = $("[data-js=ChkStartDate]", form);
         let $ChkEndDate = $("[data-js=ChkEndDate]", form);

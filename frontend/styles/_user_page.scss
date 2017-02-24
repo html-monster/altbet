@@ -511,7 +511,7 @@
         @include user_page_li_action;
         &:last-of-type{  border-bottom: none;  }
       }
-      .payment_history{  width: 627px;  }
+      //.payment_history{  width: 750px;  }
       table{  width: 100%; font-size: 14px;  }
       thead{
         display: block;
@@ -525,7 +525,7 @@
       }
       tr{
         display: table;
-        width: 627px;
+        width: 100%;
         table-layout: fixed;
         border-bottom: 1px solid $user_page_tr_separate;
         &:last-of-type{  border-bottom: none;  }
@@ -543,9 +543,9 @@
         }
       }
       th, td{
-        width: 28%;
+        width: 21%;
         padding: 10px 12px;
-        &:last-of-type{  width: 16%;  }
+        &:nth-last-of-type(2){  width: 16%;  }
       }
       th{  text-align: left;  }
       td{
@@ -561,7 +561,12 @@
           background: rgba(255, 255, 255, 0.1);
         }
         &:nth-of-type(3){  padding: 0 12px;  }
-        span{
+        &.Processed{  color: #4dac2e;  }
+        &.Pending, &.Waiting{  color: #ef8022;  }
+        &.Cancelled{  color: #8b8c8b;  }
+        &.Failed{  color: #ef4d22;  }
+        &.Chargeback{  color: #8b8c8b;  }
+        span.payment{
           display: block;
           width: 120%;
           height: 30px;
@@ -571,7 +576,7 @@
           top: calc(50% - 14px);
           left: -9px;  }
       }
-      span{
+      span.payment{
         &.VisaMC{  background-position: -26px -180px;  }
         &.Skrill{  background-position: -23px -72px;  }
         &.Neteller{  background-position: -23px -19px;  }

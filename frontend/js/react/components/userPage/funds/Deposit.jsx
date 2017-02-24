@@ -8,6 +8,8 @@ import React from 'react';
 
 import NetellerForm from './transactionForms/NetellerForm';
 import EcoPayzForm from './transactionForms/EcoPayzForm';
+import ScrillForm from './transactionForms/ScrillForm';
+import InputNumber from '../../inputNumber';
 import * as actions from '../../../actions/userPage/depositActions';
 
 class Deposit extends React.Component{
@@ -68,14 +70,14 @@ class Deposit extends React.Component{
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>100</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>250</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>500</button>
-				<input type="tel" className={`number ${sumValidation ? 'invalidJs' : ''}`} value={depositQuantity}
+				<InputNumber type="tel" className={sumValidation ? 'invalidJs' : ''} value={depositQuantity} hard="true"
 					   onChange={actions.actionOnInputQuantityChange.bind(null, actions)} maxLength="7" autoFocus/>
 				<span className="validation-summary-errors">{sumValidation}</span>
 				<span className="label">$</span>
 			</div>
-			<div className="recommended_block" onClick={::this.plansToggle}>
+			<div className="recommended_block">
 				<h4>Also the subscription is recommended</h4>
-				<button className="btn wave">{this.state.toggle} Pricing plans</button>
+				<button className="btn wave" onClick={::this.plansToggle}>{this.state.toggle} Pricing plans</button>
 			</div>
 			<div className="price_wrapper price_plan_form" ref="plans">
 				<div className="container">
@@ -185,8 +187,8 @@ class Deposit extends React.Component{
 			<div className="payment_container">
 				<div className="tabs">
 					<span className="tab btn wave VisaMC" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Skrill" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Neteller active" onClick={this.scrollBottom}><span>{}</span></span>
+					<span className="tab btn wave Skrill active" onClick={this.scrollBottom}><span>{}</span></span>
+					<span className="tab btn wave Neteller" onClick={this.scrollBottom}><span>{}</span></span>
 					<span className="tab btn wave Ecopayz" onClick={this.scrollBottom}><span>{}</span></span>
 				</div>
 				<div className="tab_content">
@@ -222,31 +224,32 @@ class Deposit extends React.Component{
 							</div>
 						</form>
 					</div>
-					<div className="tab_item payment_tab">
-						<form>
-							<div className="container">
-								<span className={'input_animate input--yoshiko ' + (data.UserInfo.Email ? 'input--filled' : '')}>
-									<input className="input__field input__field--yoshiko" id="skrill_id" type="text" defaultValue={data.UserInfo.Email}/>
-									<label className="input__label input__label--yoshiko" htmlFor="skrill_id">
-										<span className="input__label-content input__label-content--yoshiko" data-content="From Address">From Address</span>
-									</label>
-									<span className="validation-summary-errors">{}</span>
-								</span>
-								<span className={'input_animate input--yoshiko ' + (depositQuantity || pricePlan ? 'input--filled' : '')}>
-									<input className="input__field input__field--yoshiko total number" id="skrill_total" type="tel"
-										   value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''} onChange={actions.actionOnInputQuantityChange} disabled={true}/>
-									<label className="input__label input__label--yoshiko" htmlFor="skrill_total">
-										<span className="input__label-content input__label-content--yoshiko" data-content="Deposit amount">Deposit amount</span>
-									</label>
-									<span className="label">$</span>
-									<span className="validation-summary-errors">{}</span>
-								</span>
-								<input type="submit" className="wave btn" defaultValue={'Submit'} />
-							</div>
-							<input type="hidden" name="plan" value={plan}/>
-						</form>
-					</div>
 					<div className="tab_item payment_tab active">
+						{/*<form>*/}
+							{/*<div className="container">*/}
+								{/*<span className={'input_animate input--yoshiko ' + (data.UserInfo.Email ? 'input--filled' : '')}>*/}
+									{/*<input className="input__field input__field--yoshiko" id="skrill_id" type="text" defaultValue={data.UserInfo.Email}/>*/}
+									{/*<label className="input__label input__label--yoshiko" htmlFor="skrill_id">*/}
+										{/*<span className="input__label-content input__label-content--yoshiko" data-content="From Address">From Address</span>*/}
+									{/*</label>*/}
+									{/*<span className="validation-summary-errors">{}</span>*/}
+								{/*</span>*/}
+								{/*<span className={'input_animate input--yoshiko ' + (depositQuantity || pricePlan ? 'input--filled' : '')}>*/}
+									{/*<input className="input__field input__field--yoshiko total number" id="skrill_total" type="tel"*/}
+										   {/*value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''} onChange={actions.actionOnInputQuantityChange} disabled={true}/>*/}
+									{/*<label className="input__label input__label--yoshiko" htmlFor="skrill_total">*/}
+										{/*<span className="input__label-content input__label-content--yoshiko" data-content="Deposit amount">Deposit amount</span>*/}
+									{/*</label>*/}
+									{/*<span className="label">$</span>*/}
+									{/*<span className="validation-summary-errors">{}</span>*/}
+								{/*</span>*/}
+								{/*<input type="submit" className="wave btn" defaultValue={'Submit'} />*/}
+							{/*</div>*/}
+							{/*<input type="hidden" name="plan" value={plan}/>*/}
+						{/*</form>*/}
+						<ScrillForm data={this.props.deposit} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Skrill')} />
+					</div>
+					<div className="tab_item payment_tab">
 						{/*<form>*/}
 							{/*<div className="container">*/}
 								{/*<span className={'input_animate input--yoshiko ' + (data.UserInfo.Email ? 'input--filled' : '')}>*/}
@@ -278,7 +281,7 @@ class Deposit extends React.Component{
 							{/*</div>*/}
 							{/*<input type="hidden" name="plan" value={plan}/>*/}
 						{/*</form>*/}
-						<NetellerForm data={this.props.deposit} onSubmit={actions.actionOnAjaxSend.bind(null, this)} />
+						<NetellerForm data={this.props.deposit} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Neteller')} />
 					</div>
 					<div className="tab_item payment_tab">
 						<EcoPayzForm data={this.props.deposit} onSubmit={actions.actionOnAjaxSend} />

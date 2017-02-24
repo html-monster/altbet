@@ -17,6 +17,7 @@ export default class NewOrder extends React.Component{
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
 		};
+
 		return <div className="order_content new animated">
 			<div className="order-title">
 				<h3>{data.EventTitle}</h3>

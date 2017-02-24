@@ -12,7 +12,7 @@ var ajaxControlTraderClass = new function () {
 		let url = `${globalData.rootUrl}Order/${method}`,
 				data = {};
 
-		data.symbol = ($('.active_trader').attr('id')).slice(7);
+		data.symbol = $('#market_symbol').val();
 		defaultMethods.sendAjaxRequest({
 			httpMethod: 'POST',
 			callback: onSuccessAjax,

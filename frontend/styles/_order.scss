@@ -17,6 +17,13 @@
     font-size: 12px;
     font-weight: 600;
   }
+  .help_message{
+    width: 95px;
+    &.right:after{  right: 2px;  }
+  }
+  .profit, .risk{
+    .help_message{  width: 166px;  left: -151px;  }
+  }
   //.order_screening{
   //  width: 100%;
   //  height: 100%;

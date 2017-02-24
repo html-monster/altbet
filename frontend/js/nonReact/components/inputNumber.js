@@ -2,7 +2,7 @@ class inputNumber{
 	constructor(parent){
 		this.parent = $(parent);
 		this.INPUT = 'input.number';
-		let inputNum = $('input.number')
+		let inputNum = $('input.number');
 
 		//oneStepValueChange()==============================================================================================
 		let flag, self = this;
@@ -31,45 +31,45 @@ class inputNumber{
 			}
 		}
 
-		this.parent.on('keydown', this.INPUT, _incrementValue);
+		// this.parent.on('keydown', this.INPUT, _incrementValue);
 		// inputNum.keydown(_incrementValue);
 
-		this.parent.on('click', '.regulator span', function () {
-			let input = $(this).parents('.input').find('input.number'),
-					value = +input.val();
-
-			(!defaultMethods.isInteger(+input.attr('data-validation'))) ? flag = 0.01 : flag = 1;
-
-			if (limitInputData($(this), input, flag) === false)  return false;
-
-			if ($(this).hasClass('plus')) {
-				input.val((flag == 1) ? value + flag : (value + flag).toFixed(2));
-				input.focus();
-				input[0].selectionStart = input.val().length;
-			}
-			else {
-				input.val((flag == 1) ? value - flag : (value - flag).toFixed(2));
-				input.focus();
-				input[0].selectionStart = input.val().length;
-			}
-
-			// inputNumber.clearInput($(this).parents('.input').find('input'));
-			// activeTraderClass.buttonActivation($(this).parents('.input').find('input.quantity'));
-			// activeTraderClass.spreaderChangeVal($(this).parents('.input').find('input'), $(this).parents('.input').find('input').val());
-		});
+		// this.parent.on('click', '.regulator span', function () {
+		// let input = $(this).parents('.input').find('input.number'),
+		// 		value = +input.val();
+		//
+		// (!defaultMethods.isInteger(+input.attr('data-validation'))) ? flag = 0.01 : flag = 1;
+		//
+		// if (limitInputData($(this), input, flag) === false)  return false;
+		//
+		// if ($(this).hasClass('plus')) {
+		// 	input.val((flag == 1) ? value + flag : (value + flag).toFixed(2));
+		// 	input.focus();
+		// 	input[0].selectionStart = input.val().length;
+		// }
+		// else {
+		// 	input.val((flag == 1) ? value - flag : (value - flag).toFixed(2));
+		// 	input.focus();
+		// 	input[0].selectionStart = input.val().length;
+		// }
+		//
+		// // inputNumber.clearInput($(this).parents('.input').find('input'));
+		// // activeTraderClass.buttonActivation($(this).parents('.input').find('input.quantity'));
+		// // activeTraderClass.spreaderChangeVal($(this).parents('.input').find('input'), $(this).parents('.input').find('input').val());
+		// });
 
 		//numericalVerification()==========================================================================================
-		this.parent.on('keypress', this.INPUT, _checkInputNumber);
-		inputNum.keypress(_checkInputNumber);
-
-		this.parent.on('keydown', this.INPUT, _pasteDine);
-		inputNum.keydown(_pasteDine);
-
-		// this.parent.on('keyup', this.INPUT, function (e) {
-		// 	inputNumber.clearInput($(this));
-		// });
-		this.parent.on('contextmenu', this.INPUT, _contextMenuDine);
-		inputNum.contextmenu(_contextMenuDine);
+		// this.parent.on('keypress', this.INPUT, _checkInputNumber);
+		// inputNum.keypress(_checkInputNumber);
+		//
+		// this.parent.on('keydown', this.INPUT, _pasteDine);
+		// inputNum.keydown(_pasteDine);
+		//
+		// // this.parent.on('keyup', this.INPUT, function (e) {
+		// // 	inputNumber.clearInput($(this));
+		// // });
+		// this.parent.on('contextmenu', this.INPUT, _contextMenuDine);
+		// inputNum.contextmenu(_contextMenuDine);
 
 
 		//clearInput=======================================================================================================
@@ -108,7 +108,7 @@ class inputNumber{
 
 		function _checkInputNumber(e){
 			e = e || event;
-			let code = e.which || e.charCode || e.keyCode;
+			const code = e.which || e.charCode || e.keyCode;
 
 			if(code != 13){
 				if(!(code == 46 || code >= 48 && code <= 57 || code >= 8 && code <= 9

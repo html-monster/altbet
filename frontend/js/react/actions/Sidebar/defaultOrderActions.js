@@ -11,6 +11,7 @@ import {
 } from "../../constants/ActionTypesDefaultOrders.js";
 // import { ON_ACTIVE_SYMBOL_CHANGED } from '../../constants/ActionTypesSidebar.js';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
+import { orderForm } from '../../components/formValidation/validation';
 
 
 // let OddsConverterObj = new OddsConverter('implied_probability');
@@ -88,9 +89,9 @@ export function actionOnOrderTypeChange(checkboxProp, formData)
 
 						newObj.Limit = !checkboxProp;
 
-						if(checkboxProp && (newObj.Price == '0.' || price.val() == '0.'))
+						if(checkboxProp && (newObj.Price == '0.'))
 							newObj.Price = '';
-						else if(price.val() == '')
+						else if((newObj.Price == ''))
 							newObj.Price = '0.';
 
 						arr.splice(index, 1, newObj);
@@ -168,7 +169,8 @@ export function actionOnAjaxSend(context, parentData, e)
 	{
 		e.preventDefault();
 
-		if(!ABpp.User.userIdentity) return false;
+		// if(!ABpp.User.userIdentity) return false;
+		if(!orderForm(context.refs.orderForm)) return false;
 
 		const data = context.props.data;
 		function OnBeginAjax()

@@ -92,7 +92,7 @@ $(document).ready(function ()
 	// messageClass.showHelpMessage('.active_trader .help', '.tab_item');
 
 	new orderClass();//order activation
-	new myOrderClass();
+	// new myOrderClass();
 	// myOrdersControllerClass.createTemplate();
 	// positionControllerClass.createTemplate();
 	new activeTraderClass(); //active trader activation
