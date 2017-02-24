@@ -5,8 +5,7 @@ class ajaxPreferencesClass{
 			message.removeClass('valid').addClass('validation-summary-errors').text(e);
 		}
 		else
-			message.removeClass('validation-summary-errors').addClass('valid')
-																													.text('Your data has been successfully updated');
+			message.removeClass('validation-summary-errors').addClass('valid').text('Your data has been successfully updated');
 
 		setTimeout(() => {
 			message.removeClass('valid validation-summary-errors').text('');

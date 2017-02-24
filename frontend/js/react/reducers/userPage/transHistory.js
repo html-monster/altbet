@@ -2,10 +2,11 @@
  * Created by Htmlbook on 20.01.2017.
  */
 import {
+	TRANS_HISTORY_ON_LOAD,
 	TRANS_HISTORY_SET_PAYMENT_FILTER,
 	TRANS_HISTORY_SET_DATE_FILTER
 } from "../../constants/ActionTypesTransHistory";
-import {DateLocalization} from '../../models/DateLocalization';
+
 
 const data = appData.pageAccountData ? appData.pageAccountData.PaymentsHistory : [];
 
@@ -92,16 +93,13 @@ const initialState = {
 	// ]
 };
 
-const Localization = new DateLocalization;
-
-initialState.transHistory.forEach((item) => {
-	item.date = Localization.fromSharp(item.date);
-});
-
 export default function transHistory(state = initialState, action)
 {
 	switch (action.type)
 	{
+		case TRANS_HISTORY_ON_LOAD:
+			return {...state, transHistory : action.payload};
+
 		case TRANS_HISTORY_SET_PAYMENT_FILTER:
 			return {...state, paymentFilter : action.payload};
 

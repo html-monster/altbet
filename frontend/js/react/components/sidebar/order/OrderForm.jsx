@@ -143,8 +143,6 @@ export default class OrderForm extends React.Component{
 			if(input == 'Volume'){
 				const price = state.Side ? 1 - state.Price : state.Price;
 				state[input] = value;
-				console.log(value);
-				console.log(Math.round10(value * price, -2));
 				value = Math.round10(value * price, -2);
 			}
 			state['Sum'] = value;

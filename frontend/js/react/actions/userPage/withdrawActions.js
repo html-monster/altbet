@@ -82,7 +82,7 @@ export function actionOnQuantityValidate(values)
 // 	}
 // }
 
-export function actionOnAjaxSend(context, values, serverValidation, event)
+export function actionOnAjaxSend(context, payment, values, serverValidation, event)
 {
 	return (dispatch, getState) =>
 	{
@@ -90,10 +90,22 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 		__DEV__ && console.log(values);
 		// getState().withdraw.form = event.target;
 		const form = $(event.target);
-		const submit = $(event.target).find('[type=submit]');
+		const url = $(event.target).attr('action');
+		const submit = form.find('[type=submit]');
+		let onSuccessAjax;
+
+		switch (payment){
+			case 'Neteller':{
+				onSuccessAjax =  context.props.actions.onSuccessAjaxNeteller.bind(null, context, form, serverValidation);
+				break;}
+			case 'Skrill':{
+				onSuccessAjax =  context.props.actions.onSuccessAjaxSkrill.bind(null, context, form, serverValidation);
+				break;}
+		}
+
 		const jQAjax = defaultMethods.sendAjaxRequest.bind(null ,{
 			httpMethod: 'POST',
-			url       : $(event.target).attr('action'),
+			url       : url,
 			data      : values,
 			callback  : onSuccessAjax,
 			onError   : onErrorAjax,
@@ -101,88 +113,14 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 		});
 		let error = null;
 
-		if(!values.sum)
-			error = 'Required';
+		if(!values.sum) error = 'Required';
 
-		if(values.sum && values.sum < 10)
-			error = 'Minimum withdraw is $10';
+		if(values.sum && values.sum < 10) error = 'Minimum withdraw is $10';
 
 		function OnBeginAjax()
 		{
 			submit.attr('disabled', true);
 			form.addClass('loading');
-		}
-
-		function onSuccessAjax(data)
-		{
-			__DEV__ && console.log(data);
-			const {Answer: { code }} = data;
-			// serverValidation(obj);
-			switch (code) {
-				case '200':{
-					const { transaction: { amount = null, fees = null } } = data;
-					popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw.message');
-
-					$(context.refs.paymentMessage).find('.amount').text('$' + (amount / 100));
-					serverValidation({message: 'The payment is successful'});
-					break;}
-				case '555':{
-					serverValidation({error: 'The payment failed. Please reload the page or try again later'});
-					break;}
-				case '556':{
-					serverValidation({error: 'You don`t have enough money in your Alt.bet account'});
-					error = ' ';
-					dispatch({
-						type: WITHDRAW_QUANTITY_VALIDATE,
-						payload: error
-					});
-					break;}
-				case 'Account disabled':{
-					serverValidation({error: 'The account you provided is disabled'});
-					break;}
-				case '20001':{
-					serverValidation({error: 'The account is closed'});
-					break;}
-				case '20007':{
-					serverValidation({error: `The Neteller ID or e-mail is invalid`, clientId: ' '});
-					break;}
-				case '20011':{
-					serverValidation({error: 'You are residing in a NETELLER blocked country/state/region'});
-					break;}
-				case '20015':{
-					serverValidation({error: 'You are not entitled to receive this type of transaction'});
-					break;}
-				case '20020':{
-					serverValidation({error: 'Insufficient balance to complete the transaction'});
-					error = ' ';
-					dispatch({
-						type: WITHDRAW_QUANTITY_VALIDATE,
-						payload: error
-					});
-					break;}
-				case '20021':{
-					serverValidation({error: 'The specified amount is below defined minimum transfer limits'});
-					break;}
-				case '20022':{
-					serverValidation({error: 'The specified amount is above defined maximum transfer out limits'});
-					break;}
-				case '20031':{
-					serverValidation({error: 'The specified amount is too high. You must specify an amount within your transactional limit'});
-					break;}
-				case '20035':{
-					serverValidation({error: 'The transaction exceeds allowed account limits'});
-					break;}
-				case '20301':{
-					serverValidation({error: 'NETELLER has declined to process the transaction'});
-					break;}
-				default:{
-					serverValidation({error: 'The payment failed. Try again later'});
-				}
-			}
-			submit.removeAttr('disabled');
-			form.removeClass('loading');
-			$(context.refs.paymentMessage).find('.hide').unbind('click');
-			// getState().withdraw.approved = false;
 		}
 
 		function onErrorAjax()
@@ -216,6 +154,121 @@ export function actionOnAjaxSend(context, values, serverValidation, event)
 			type: WITHDRAW_QUANTITY_VALIDATE,
 			payload: error
 		});
+	}
+}
+
+export function onSuccessAjaxNeteller(context, form, serverValidation, data)
+{
+	return (dispatch) =>
+	{
+		__DEV__ && console.log(data);
+		const {Answer: { code }} = data;
+		// serverValidation(obj);
+		switch (code) {
+			case '200':{
+				const { transaction: { amount = null } } = data;
+				popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw.message');
+
+				$(context.refs.paymentMessage).find('.amount').text('$' + (amount / 100));
+				serverValidation({message: 'The payment is successful'});
+				break;}
+			case '555':{
+				serverValidation({error: 'The payment failed. Please reload the page or try again later'});
+				break;}
+			case '556':{
+				serverValidation({error: 'You don`t have enough money in your Alt.bet account'});
+				error = ' ';
+				dispatch({
+					type: WITHDRAW_QUANTITY_VALIDATE,
+					payload: error
+				});
+				break;}
+			case 'Account disabled':{
+				serverValidation({error: 'The account you provided is disabled'});
+				break;}
+			case '20001':{
+				serverValidation({error: 'The account is closed'});
+				break;}
+			case '20007':{
+				serverValidation({error: `The Neteller ID or e-mail is invalid`, clientId: ' '});
+				break;}
+			case '20011':{
+				serverValidation({error: 'You are residing in a NETELLER blocked country/state/region'});
+				break;}
+			case '20015':{
+				serverValidation({error: 'You are not entitled to receive this type of transaction'});
+				break;}
+			case '20020':{
+				serverValidation({error: 'Insufficient balance to complete the transaction'});
+				error = ' ';
+				dispatch({
+					type: WITHDRAW_QUANTITY_VALIDATE,
+					payload: error
+				});
+				break;}
+			case '20021':{
+				serverValidation({error: 'The specified amount is below defined minimum transfer limits'});
+				break;}
+			case '20022':{
+				serverValidation({error: 'The specified amount is above defined maximum transfer out limits'});
+				break;}
+			case '20031':{
+				serverValidation({error: 'The specified amount is too high. You must specify an amount within your transactional limit'});
+				break;}
+			case '20035':{
+				serverValidation({error: 'The transaction exceeds allowed account limits'});
+				break;}
+			case '20301':{
+				serverValidation({error: 'NETELLER has declined to process the transaction'});
+				break;}
+			default:{
+				serverValidation({error: 'The payment failed. Try again later'});
+			}
+		}
+		form.find('[type=submit]').removeAttr('disabled');
+		form.removeClass('loading');
+		$(context.refs.paymentMessage).find('.hide').unbind('click');
+		// getState().withdraw.approved = false;
+	}
+}
+
+export function onSuccessAjaxSkrill(context, form, serverValidation, data)
+{
+	return (dispatch) =>
+	{
+		__DEV__ && console.log(data);
+		const {Answer: { code }} = data;
+		// serverValidation(obj);
+		switch (code) {
+			case '200':{
+				const { transaction: { amount = null } } = data;
+				popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw.message');
+
+				$(context.refs.paymentMessage).find('.amount').text('$' + (amount / 100));
+				serverValidation({message: 'The payment is successful'});
+				break;}
+			case '555':{
+				serverValidation({error: 'The payment failed. Please reload the page or try again later'});
+				break;}
+			case '556':{
+				serverValidation({error: 'You don`t have enough money in your Alt.bet account'});
+				error = ' ';
+				dispatch({
+					type: WITHDRAW_QUANTITY_VALIDATE,
+					payload: error
+				});
+				break;}
+			case 'SINGLE_TRN_LIMIT_VIOLATED':{
+				serverValidation({error: 'Maximum amount per payment transaction = EUR 10,000'});
+				break;}
+			default:{
+				serverValidation({error: 'The payment failed. Try again later'});
+			}
+		}
+		form.find('[type=submit]').removeAttr('disabled');
+		form.removeClass('loading');
+		$(context.refs.paymentMessage).find('.hide').unbind('click');
+		// getState().withdraw.approved = false;
 	}
 }
 

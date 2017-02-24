@@ -60,7 +60,7 @@ class ActiveTrader extends React.Component {
 			:
 			(data.Symbol && data.Symbol.LastAsk) ? data.Symbol.LastAsk : '';
 
-        console.log(this.props);
+
 		return <div className="active_trader" id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
