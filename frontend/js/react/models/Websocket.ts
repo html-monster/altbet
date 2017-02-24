@@ -17,7 +17,8 @@ export class WebsocketModel
     public static CALLBACK_EVENTPAGE_ORDERS = "CEPO2";      // a event page receive data callback
 
     private noSupportMessage = "Your browser cannot support WebSocket!";
-    private connectionString = "ws://localhost:2001/";
+    // private connectionString = "ws://localhost:2001/";
+    private connectionString = "ws://192.168.1.249:2001/";
     // private connectionString = "ws://54.171.212.235:2001/";    // IP
 
     private ws = null;

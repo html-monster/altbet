@@ -54,17 +54,13 @@ export class GroupsTree
         {
             'core': {
                 'check_callback' : function (operation, node, node_parent, node_position, more) {
-                    // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
-                    // in case of 'rename_node' node_position is filled with the new node name
-                    // 0||console.log( 'operation, node, node_parent, node_position, more', operation, node, node_parent, node_position, more );
-                    // 0||console.log( 'node.data.pos, node_position', node.data.pos, node_position );
                     let flag = true;
                     try {
                         // 0||console.log( 'more', more );
                         if( operation == 'move_node' && more.core && more.origin.element.context.id == "DiCatTree" )
                         {
                             // 0||console.log( 'more', more, operation, node_position, node.li_attr["data-id"], more.origin );
-                            if (node.data.pos > node_position) node_position++;
+                            // if (node.data.pos > node_position) node_position++;
                             self.moveCategory({jstree, node, node_parent, node_position});
                             // 0||console.log( '', node_position, node.li_attr["data-id"] );
                             flag = false;
@@ -172,11 +168,11 @@ export class GroupsTree
 
         var formData = new FormData();
         formData.set('id', node.li_attr["data-id"]);
-        formData.set('position', node_position);
+        formData.set('position', $("#"+node.id).parent().children("li").index($("#"+node.id)) > node_position ? node_position + 1 : node_position);
 
         (new TreeModel).moveNode({formData, name: node.li_attr["data-name"]}).then( result =>
             {
-                0||console.log( 'moved OK', 0 );
+                // 0||console.log( 'moved OK', node, $("#"+node.id).parent().children("li").index($("#"+node.id)) );
                 // window.ADpp.User.setFlash({message: result.message, type: InfoMessage.TYPE_SUCCESS, header: "Success"});
                 // location.reload();
                 // location.href = MainConfig.BASE_URL + result.data.Param1;

@@ -151,25 +151,55 @@ export class IndexView extends BaseView
 
         // timezones
         var data = [];
-                //[{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
-        for( let ii in globalData.timezone )
-        {
-            let val = globalData.timezone[ii];
-            data.push({id: val.offset, text: val.text});
-        } // endfor
+        var $CBtz = $("[data-js-cb-timezones]", form);
+        var $width = $CBtz.parent().width();
 
-        // var tmpl = function
-        $("[data-js-cb-timezones]").select2({
+                //[{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
+        for( let val of globalData.timezone )
+        {
+            data.push({id: val.BaseUtcOffset, text: val.DisplayName});
+        } // endfor
+/*
+        // $CBtz.html($("#TPLtz").html());
+
+        var timeZones = moment.tz.names();
+        var offsetTmz = {};
+        // 0||console.log( 'moment.tz, timeZones', timeZones );
+        // setTimeout(() => console.log('tsz',moment.tz.names()), 700)
+
+        for (var ii in timeZones) {
+            // var parts = val.text.match(/GMT.+\)(.*\/(.*))/);
+            // 0||console.log( 'timeZones[i]', timeZones[ii] );
+            if (!offsetTmz[moment.tz(timeZones[ii]).utcOffset() + ""]) offsetTmz[moment.tz(timeZones[ii]).utcOffset() + ""] = [];
+            // offsetTmz[moment.tz(timeZones[ii]).utcOffset() + ""].push(moment.tz(timeZones[ii]).utcOffset() + ` (GMT` + moment.tz(timeZones[ii]).format('Z') + ")" + timeZones[ii]);
+            offsetTmz[moment.tz(timeZones[ii]).utcOffset() + ""].push(timeZones[ii]);
+        }
+
+        data = [];
+        for( let ii in offsetTmz )
+        {
+            let val = offsetTmz[ii];
+            data.push(val.reduce(function (res, current) {
+                return res != "" ? `${res}, ${current}` : current;
+            }, ""));
+        } // endfor*/
+
+        $CBtz.select2({
+            width: $width,
             data: data,
-            templateResult: (state) => {
+            dropdownAutoWidth: true,
+            templateResult: (state, liItm) => {
                     if (!state.id) {
                         return state.text;
                     }
+
                     var $state = $('<span class="icon ' + state.id + '">' + state.text + '</span>');
                     if (state.id < 0) var $state = $('<span class="icon noicon">' + state.text + '</span>');
                     return $state;
                 }
-        }).val(globalData.currentIcon ? globalData.currentIcon : "-100").trigger("change");
+        })
+        // .val(moment().utcOffset()/60).trigger("change");
+        .val("00:00:00").trigger("change");
 
 
         // disable/enable on date
@@ -306,6 +336,29 @@ export class IndexView extends BaseView
                     }
                 });
 
+
+                // timezones
+                var cbdata = [];
+                var $CBtz = $("[data-js-cb-timezones]", wrapper);
+                var $width = $CBtz.parent().width();
+
+                for( let val of globalData.timezone ) cbdata.push({id: val.BaseUtcOffset, text: val.DisplayName});
+
+                $CBtz.select2({
+                    width: $width,
+                    data: cbdata,
+                    dropdownAutoWidth: true,
+                    templateResult: (state, liItm) => {
+                            if (!state.id) {
+                                return state.text;
+                            }
+
+                            var $state = $('<span class="icon ' + state.id + '">' + state.text + '</span>');
+                            if (state.id < 0) var $state = $('<span class="icon noicon">' + state.text + '</span>');
+                            return $state;
+                        }
+                })
+                .val("00:00:00").trigger("change");
 
 
                 $("[data-js=ChkStartDate]", wrapper).click(function () { $(this).find("input").click(); });

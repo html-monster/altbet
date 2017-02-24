@@ -67,7 +67,8 @@
     }
 
 
-    .cb-timezones+.select2 { width: 100% !important; }
+    .cb-timezones { max-width: 100%; }
+    //.cb-timezones+.select2 { width: 100% !important; }
   }
 }
 
