@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import appState from './appReducer';
+import header from './headerReducer';
 import mainPage from './mainPageReducer';
 import eventPage from './eventPageReducer';
 import accountPage from './accountPageReducer';
@@ -34,6 +35,7 @@ switch (ABpp.config.currentPage){
 	case  ABpp.CONSTS.PAGE_MAIN:{
 		reducers = {
 			App: appState,
+			header,
 			mainPage,
 			myPosReduce,
 			sidebar,
@@ -46,6 +48,7 @@ switch (ABpp.config.currentPage){
 	case ABpp.CONSTS.PAGE_EVENT:{
 		reducers = {
 			App: appState,
+			header,
 			eventPage,
 			sidebar,
 			tradeSlip,
@@ -56,7 +59,8 @@ switch (ABpp.config.currentPage){
 	}
 	case ABpp.CONSTS.PAGE_ACCOUNT:{
 		reducers = {
-			'App': appState,
+			App: appState,
+			header,
 			accountPage,
 			deposit,
 			withdraw,
@@ -67,6 +71,7 @@ switch (ABpp.config.currentPage){
 	case ABpp.CONSTS.PAGE_MYPOS:{
 		reducers = {
 			App: appState,
+			header,
 			myPosReduce,
 			sidebar,
 			tradeSlip,

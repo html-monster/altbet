@@ -5,7 +5,7 @@ import React from 'react';
 import InputNumber from '../../inputNumber';
 import {OddsConverterObj} from '../../../models/oddsConverter/oddsConverter.js';
 
-{/*// let OddsConverterObj = new OddsConverter('implied_probability');*/}
+// let OddsConverterObj = new OddsConverter('implied_probability');
 
 export default class OrderForm extends React.Component{
 	constructor(props)
@@ -17,6 +17,22 @@ export default class OrderForm extends React.Component{
 		const price = this.state.Side ? 1 - Math.round10(1 - this.state.Price, -2) : this.state.Price;
 		this.state.Sum = Math.round10(price * this.state.Volume, -2);
 		if(this.state.Limit == undefined) this.state.Limit = true;
+
+		// let arr = [];
+		// for(let ii = 0.01; ii <= 0.99; ii += 0.01){
+		// 	arr.push(OddsConverterObj.convertToOtherSystem(ii));
+		// 	// console.log(`${Math.round10(ii, -2)}: `, OddsConverterObj.convertToOtherSystem(ii));
+		// }
+		// arr.push(OddsConverterObj.convertToOtherSystem(0.99));
+		// arr.forEach(function (item) {
+		// 	console.log(OddsConverterObj.convertToImpliedSystem(item));
+		// });
+		// console.log('==================================================================');
+		// OddsConverterObj.convertToImpliedSystem('49/1')
+		// console.log(`49/1`, OddsConverterObj.convertToImpliedSystem('49/1'));
+		// console.log(`11/14`, OddsConverterObj.convertToImpliedSystem('11/14'));
+		// console.log(`43/57`, OddsConverterObj.convertToImpliedSystem('43/57'));
+		// console.log(`18/7`, OddsConverterObj.convertToImpliedSystem('18/7'));
 	}
 
 	// OnBeginAjax()

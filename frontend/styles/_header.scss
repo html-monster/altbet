@@ -11,10 +11,10 @@ header {
     .user-name:after{  top: 6px;  }
   }
   .connect { display: none; width: 10px; height: 10px; background: red; border-radius: 50%; }
-  .user_info{
-    display: none;
-    &.active{  display: block;  }
-  }
+  //.user_info{
+  //  display: none;
+  //  &.active{  display: block;  }
+  //}
   .header_info {
     @include span(last 10.19 of 12);
     display: flex;
@@ -74,11 +74,19 @@ header {
         font-size: 14px;
         color: #fff;
         &.win-lost{
+          &.fadeColorOut .win{  animation-name: fadeColorGreen  }
+          &.fadeColorOut .lost{  animation-name: fadeColorRed  }
           .win{  color: #4dac2e;  }
           .lost{  color: #ff3905;  }
         }
-        &.invested strong{  color: #ef8022; }
-        &.available strong{  color: #1196d4;  }
+        &.invested {
+          &.fadeColorOut strong{  animation-name: fadeColorOrange  }
+          strong{  color: #ef8022; }
+        }
+        &.available {
+          &.fadeColorOut strong{  animation-name: fadeColorBlue  }
+          strong{  color: #1196d4;  }
+        }
         strong {
           font-weight: normal;
           color: #fff;
@@ -171,13 +179,13 @@ header {
       color: #fff;
     }
     .log_in {
-      display: none;
+      display: flex;
       height: 100%;
       align-items: center;
       justify-content: flex-end;
       cursor: pointer;
       position: relative;
-      &.active{  display: flex;  }
+      //&.active{  display: flex;  }
       ul.user-menu{
         display: none;
         width: 177px;
@@ -269,7 +277,7 @@ header {
       }
     }
     .log_out {
-      display: none;
+      display: flex;
       height: 100%;
       align-items: center;
       justify-content: center;
@@ -288,7 +296,7 @@ header {
         height: 25px;
         background: url("#{$pathImage}/sprite.svg") no-repeat -424px -18px;
       }
-      &.active{  display: flex;  }
+      //&.active{  display: flex;  }
       a {
         width: 65px;
         margin-left: 5px;

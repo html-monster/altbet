@@ -171,7 +171,7 @@ export class WebsocketModel
             window.ee.emit('myOrderHistory.update', data.OrdersPositionsHistory.HistoryTradeItems);
         }
         if(data.AccountData) {
-            dataController && dataController.updateHeaderData(data.AccountData);
+            // dataController && dataController.updateHeaderData(data.AccountData);
             window.ee.emit('accountData.update', data.AccountData)
         }
 
