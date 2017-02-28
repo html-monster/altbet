@@ -1,6 +1,11 @@
 .modal { overflow: auto }
 
+.tmpl { display: none; }
+
 .treeview-menu .add-root-cat { color: $color1Green; }
+
+
+@include media-sm { .modal-dialog .modal-content { width: 700px; margin: 30px auto; }}
 
 
 // for status column

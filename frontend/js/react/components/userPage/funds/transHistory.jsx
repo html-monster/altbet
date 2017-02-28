@@ -6,11 +6,15 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import * as actions from '../../../actions/userPage/transHistoryActions';
+import {DateLocalization} from '../../../models/DateLocalization';
+
 
 class TransHistory extends React.Component{
-	constructor()
+	constructor(props)
 	{
 		super();
+
+		props.actions.actionOnLoad();
 	}
 
 	componentDidMount()
@@ -50,6 +54,7 @@ class TransHistory extends React.Component{
 	{
 		const { data, actions } = this.props;
 		// const actions = this.props.actions;
+		const Localization = new DateLocalization;
 
 		return <div className="tab_item history" onClick={this.listSlide.bind(this, false)}>
 			<div className="filter">
@@ -78,6 +83,7 @@ class TransHistory extends React.Component{
 							<th>Date</th>
 							<th>Payment System</th>
 							<th>Amount</th>
+							<th>Status</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -90,9 +96,13 @@ class TransHistory extends React.Component{
 											(data.paymentFilter == item.system || data.paymentFilter == 'All') &&
 											<tr className={item.direction} key={`${item.system}_${item.date}_${item.amount}_${index}`}>
 												<td>{item.direction}</td>
-												<td>{moment(item.date).format('MM/DD/YYYY')}</td>
-												<td><span className={(item.system == 'Visa MC' ? 'VisaMC' : item.system)}>{}</span></td>
+												<td>
+													{moment(item.date).format('MM/DD/YYYY')} <span style={{opacity: 0.7}}>
+													{Localization.unixToLocalDate({timestamp: item.date, format:'HH:mm'})}</span>
+												</td>
+												<td><span className={`payment ${item.system == 'Visa MC' ? 'VisaMC' : item.system}`}>{}</span></td>
 												<td className="amount">${item.amount}</td>
+												<td className={item.status}>{item.status}</td>
 											</tr>
 										)
 									:

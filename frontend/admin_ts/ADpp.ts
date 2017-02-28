@@ -33,7 +33,7 @@ export default class ADpp
         this.controllers['Index'] = IndexController;
         this.controllers['Login'] = LoginController;
 
-        if (location.host == 'localhost') MainConfig.BASE_URL = '/AltBet.Admin';
+        if (location.host == 'localhost' || location.host == '192.168.1.249') MainConfig.BASE_URL = '/AltBet.Admin';
         else MainConfig.BASE_URL = '/Admin';
 
 

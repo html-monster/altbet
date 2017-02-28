@@ -20,9 +20,9 @@ export class TreeModel
         // 0||console.debug( 'data', data, data.getAll('op') );
         var ajaxPromise = (new AjaxSend()).send({
                 formData: inProps.formData,
-                message: `Error while moving category, please, try again`,
-                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_MOVE,
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                message: `Error while moving category, please, reload page (press F5)`,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_MOVE,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 respCodes: [
                     {code: 100, message: `Category “${inProps.name}” moved successfully`},
                     // {code: -101, message: "Some custom error"},
@@ -31,7 +31,7 @@ export class TreeModel
                 {
                     // emulate
                     // 0||console.log( 'data', data );
-                    data = {Error: 200};
+                    // data = {Error: 100};
                     // data.Param1 = "TOR-PHI-3152017"; // id
                     // data.Param1 = "?path=sport&status=approved";
                     // data.Param1 = "?status=New";

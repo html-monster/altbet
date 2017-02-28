@@ -6,7 +6,7 @@ import {
 	ON_YOUR_ORDER_SOCKET_MESSAGE,
 	ON_YOUR_ORDER_DELETE,
 } from "../../constants/ActionTypesYourOrders.js";
-
+import { orderForm } from '../../components/formValidation/validation';
 
 export function actionOnSocketMessage()
 {
@@ -55,6 +55,7 @@ export function actionOnAjaxSend(context, parentContext, e)
 	return (dispatch, getState) =>
 	{
 		e.preventDefault();
+		if(!orderForm(context.refs.orderForm)) return false;
 
 		function OnBeginAjax()
 		{

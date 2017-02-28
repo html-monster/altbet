@@ -123,7 +123,7 @@ const initialState = {
 };
 
 
-export default function tradeSlip(state = initialState, action)
+export default function defaultOrders(state = initialState, action)
 {
 	switch (action.type)
 	{

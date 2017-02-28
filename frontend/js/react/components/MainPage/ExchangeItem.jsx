@@ -48,7 +48,9 @@ export default class ExchangeItem extends React.Component
 
             <div className={"event_info " + data.CategoryIcon}>
                 <span className="date">
-                    {(date = $DateLocalization.fromSharp(data.Symbol.StartDate, 0, {TZOffset: false}).unixToLocalDate({format: 'DD MMM Y hh:mm:ss'})) ? date : ''}
+                    {(date = $DateLocalization.fromSharp(data.Symbol.StartDate, 0, {TZOffset: false}).unixToLocalDate({format: 'DD MMM Y H:mm'})) ? date : ''}
+                    -
+                    {(date = $DateLocalization.fromSharp(data.Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}
                 </span>
                 {data.Symbol.Status == 2 ? <i className="half_time" title="Completed">ht<span>Completed</span></i> : ""}
             </div>
