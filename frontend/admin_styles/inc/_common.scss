@@ -5,6 +5,9 @@
 .treeview-menu .add-root-cat { color: $color1Green; }
 
 
+@include media-sm { .modal-dialog .modal-content { width: 700px; margin: 30px auto; }}
+
+
 // for status column
 .label.label-approved { background-color: #00a65a !important; }
 .label.label-new { background-color: #3c8dbc !important; }

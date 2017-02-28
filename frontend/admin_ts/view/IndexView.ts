@@ -157,7 +157,8 @@ export class IndexView extends BaseView
                 //[{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
         for( let val of globalData.timezone )
         {
-            data.push({id: val.BaseUtcOffset, text: val.DisplayName});
+            // data.push({id: val.BaseUtcOffset, text: val.DisplayName});
+            data.push({id: val.Id, text: val.DisplayName});
         } // endfor
 /*
         // $CBtz.html($("#TPLtz").html());
@@ -328,11 +329,11 @@ export class IndexView extends BaseView
                     "showDropdowns": true,
                     "showWeekNumbers": true,
                     "timePicker": true,
-                    "timePicker24Hour": true,
+                    // "timePicker24Hour": false,
                     timePickerIncrement: 5,
                     "opens": "left",
                     locale: {
-                        format: 'MM/DD/YYYY H:mm'
+                        format: 'MM/DD/YYYY h:mm A'
                     }
                 });
 
@@ -342,7 +343,8 @@ export class IndexView extends BaseView
                 var $CBtz = $("[data-js-cb-timezones]", wrapper);
                 var $width = $CBtz.parent().width();
 
-                for( let val of globalData.timezone ) cbdata.push({id: val.BaseUtcOffset, text: val.DisplayName});
+                // for( let val of globalData.timezone ) cbdata.push({id: val.BaseUtcOffset, text: val.DisplayName});
+                for( let val of globalData.timezone ) cbdata.push({id: val.Id, text: val.DisplayName});
 
                 $CBtz.select2({
                     width: $width,
