@@ -37,7 +37,7 @@ export class Preferences extends React.PureComponent
                         <li>
                             <label className="checkbox change-color">
                                 <strong>Theme color:</strong>
-                                <button className="dark color_pick" title="dark theme"></button>
+                                <button className="dark color_pick" title="dark theme"></button>&nbsp;
                                 <button className="light color_pick" title="light theme"></button>
                             </label>
                         </li>

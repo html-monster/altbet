@@ -32,7 +32,7 @@ export class TabMyOrderHistory extends React.Component
 					<div className="my_position_tab">
 						<div className="wrapper">
 							<div className="my_order_history table_content" id="my_order_history">
-								{ data.length ? 
+								{ data.length ?
 									<table>
 										<thead>
 											<tr>
@@ -48,10 +48,15 @@ export class TabMyOrderHistory extends React.Component
 										{
 											data.map(function (item, key) {
 												let date = new Date(+item.Time.slice(6).slice(0, -2));
+                                                let $handicap = (item.isMirror ? item.Symbol.AwayHandicap : item.Symbol.HomeHandicap);
 												return (
 														<tr className={(item.IsMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))}
 																key={key}>
-															<td>{(item.IsMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}</td>
+															<td>
+															    {(item.IsMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}<span className="muted">{$handicap && ` (${$handicap})`}</span>
+															    <br />
+                                                                <span className="fullname muted">{item.Symbol.HomeName} - {item.Symbol.AwayName}</span>
+															</td>
 															<td>
 																<span className="timestamp help">
 																	<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`} | </span>
