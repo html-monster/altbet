@@ -21,14 +21,64 @@ export const emptyValidation = (value) => {
 	return errors
 };
 
-export const minLengthValidation = (value) => {
-	let errors;
 
-	if (value.length <= 6)
-		errors = 'Min length of ID is 6';
+export const minLengthValidation = (inOpts, inValue) =>
+{
+	let errors;
+	let value;
+	let opts = {
+        size: 6,
+	};
+
+    // user opts
+	if( inValue ) opts = {...opts, ...inOpts};
+	value = inValue || inOpts;
+
+	if (value.length < opts.size)
+		errors = 'Min length is ' + opts.size;
 
 	return errors
 };
+
+
+export const maxLengthValidation = (inOpts, inValue) =>
+{
+	let errors;
+	let value;
+	let opts = {
+        size: 20,
+	};
+
+    // user opts
+	if( inValue ) opts = {...opts, ...inOpts};
+	value = inValue || inOpts;
+
+	if (value.length > opts.size)
+		errors = 'Max length is ' + opts.size;
+
+	return errors
+};
+
+
+export const regexValidation = (inOpts, inValue) =>
+{
+	let errors;
+	let value;
+	let opts = {
+        tmpl: /.*/,
+        message: "All symbols are allowed",
+	};
+
+    // user opts
+	if( inValue ) opts = {...opts, ...inOpts};
+	value = inValue || inOpts;
+    if (!opts.tmpl.test(value))
+		errors = opts.message;
+
+	return errors
+};
+
+
 
 export const netellerSecureId = (value) => {
 	let errors;

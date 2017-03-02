@@ -14,6 +14,7 @@ import EventPage from './containers/EventPage';
 import AccountPage from './containers/AccountPage';
 import PageMyPos from './components/PageMyPos.jsx';
 import Sidebar from './components/Sidebar.jsx';
+import RegisterBox from './containers/RegisterBox.jsx';
 
 
 
@@ -112,6 +113,18 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_EVENT ) {
 			<EventPage />
 		</Provider>,
 	  document.getElementById('DiMPEventPage')
+	  // document.getElementById('DiMPEventPageOld')
+	);
+}
+
+
+// Registration form
+if( true ) {
+	ReactDOM.render(
+		<Provider store={store}>
+			<RegisterBox />
+		</Provider>,
+	  document.getElementById('DiregisterMP')
 	  // document.getElementById('DiMPEventPageOld')
 	);
 }

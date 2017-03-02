@@ -8,7 +8,8 @@ import React from 'react';
 //
 // import * as actions from '../../actions/formValidation';
 
-export default class InputValidation extends React.Component{
+export default class InputValidation extends React.Component
+{
 	constructor(props)
 	{
 		super();
@@ -29,7 +30,9 @@ export default class InputValidation extends React.Component{
 		this.validate(props, this.state.value);
 	}
 
-	shouldComponentUpdate(nextProps){
+
+	shouldComponentUpdate(nextProps)
+	{
 		let state = this.state;
 		const props = this.props;
 		const error = nextProps.input.errors[props.name];
