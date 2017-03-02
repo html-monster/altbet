@@ -7,11 +7,13 @@ import FormValidation from '../../../FormValidation';
 import InputValidation from '../../../formValidation/InputValidation';
 import {minLengthValidation, mailValidation, netellerSecureId} from '../../../formValidation/validation';
 
-export default class NetellerForm extends React.Component{
+export default class NetellerForm extends React.Component
+{
 	constructor()
 	{
 		super();
 	}
+
 	render()
 	{
 		const inputRender = ({ id, className, label, filled, inputLabel, type, meta: { error, dirty }, ...input }) => {

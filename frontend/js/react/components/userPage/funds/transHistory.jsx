@@ -64,9 +64,9 @@ class TransHistory extends React.Component{
 						<span className="input__label-content input__label-content--yoshiko" data-content="Choose date range">Choose date range</span>
 					</label>
 				</span>
-				<div className="payment_filter">
-					<span className="active_filter btn wave" onClick={this.listSlide.bind(this, true)}>{data.paymentFilter}</span>
-					<ul className="payment_list" ref="paymentList" onClick={this.listSlide.bind(this, false)}>
+				<div className="payment_filter select">
+					<span className="active_selection active_filter btn wave" onClick={this.listSlide.bind(this, true)}>{data.paymentFilter}</span>
+					<ul className="select_list" ref="paymentList" onClick={this.listSlide.bind(this, false)}>
 						<li onClick={actions.actionSetPaymentFilter.bind(this, 'All')}>All</li>
 						<li onClick={actions.actionSetPaymentFilter.bind(this, 'Visa MC')}>Visa MC</li>
 						<li onClick={actions.actionSetPaymentFilter.bind(this, 'Skrill')}>Skrill</li>

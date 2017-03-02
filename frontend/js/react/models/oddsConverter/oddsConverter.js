@@ -1,14 +1,14 @@
 /**
  * Created by Htmlbook on 21.12.2016.
  */
-class OddsConverter
+export default class OddsConverter
 {
-    constructor(oddsSystem)
+    constructor()
     {
-        this.FRACTION = 'Fraction';
+        this.FRACTION = 'Fractional';
         this.DECIMAL = 'Decimal';
         this.AMERICAN = 'American';
-		this.oddsSystem = oddsSystem;
+		// this.oddsSystem = oddsSystem;
 
         // switch (oddsSystem){
         //     case FRACTION:
@@ -25,7 +25,7 @@ class OddsConverter
 
 	convertToImpliedSystem(value)
 	{
-		switch (this.oddsSystem){
+		switch (ABpp.config.currentOddSystem){
 			case this.DECIMAL:{
 				value = Math.round10(1 / value, -2);
 				break;
@@ -53,7 +53,7 @@ class OddsConverter
 
 		value = Math.round(value * 100);
 
-		switch (this.oddsSystem){
+		switch (ABpp.config.currentOddSystem){
 			case this.DECIMAL:{
 				value = Math.round10(100 / value, -2);
 				break;
@@ -73,14 +73,21 @@ class OddsConverter
 				break;
 			}
 			default:
-				value = Math.round(value / 100);
+				value = Math.round10(value / 100, -2);
 		}
 		return value;
 	}
 
 	getSystemName()
 	{
-		return this.oddsSystem;
+		return ABpp.config.currentOddSystem;
+	}
+
+	setOddSystem(oddSystem)
+	{
+		// this.oddsSystem = oddSystem;
+		ABpp.config.currentOddSystem = oddSystem;
+		localStorage.setItem('currentOddSystem', oddSystem);
 	}
 
 	_fractionsReduction(numerator, denominator)
@@ -188,4 +195,4 @@ class OddsConverter
 	// 	return Math.round10(ABpp.config.takerFees * volume, -2)
 	// }
 }
-export let OddsConverterObj = new OddsConverter('Fraction');
+// export let OddsConverterObj = new OddsConverter(localStorage.getItem('currentOddSystem') ? localStorage.getItem('currentOddSystem') : 'Implied');

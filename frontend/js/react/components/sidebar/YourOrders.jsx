@@ -5,7 +5,7 @@ import React from 'react';
 import OrderForm from './order/OrderForm.jsx';
 import * as yourOrdersActions from '../../actions/Sidebar/yourOrderActions.js';
 
-class EventOrders extends React.Component
+class YourOrders extends React.Component
 {
 	constructor(props)
 	{
@@ -39,6 +39,7 @@ class EventOrders extends React.Component
 
 	render()
 	{
+		console.log(ABpp.config.currentOddSystem);
 		// let yourOrdersData = this.state.data;
 		let yourOrdersData = this.props.yourOrders;
 		return <div className="tab_item" id="current-orders">
@@ -185,7 +186,7 @@ class OrderItem extends React.Component
 					<strong className="title">Price <span className="price">{data.isMirror ? Math.round10(1 - data.Price, -2) :
 							Math.round10(data.Price, -2)}</span></strong>
 					<strong className="title">Quantity <span className="volume">{data.Volume}</span></strong>
-					<strong className="timestamp help">
+					<strong className="timestamp help balloon_only">
 		 				<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}</span> | <span className="time">{
 						`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
 						<span className="help_message"><strong>MM/DD/YYYY | HH:MM</strong></span>
@@ -227,7 +228,7 @@ export default connect(state => ({
 	dispatch => ({
 		actions: bindActionCreators(yourOrdersActions, dispatch),
 	})
-)(EventOrders)
+)(YourOrders)
 
 {/*<form action="/AltBet/Home/Edit" autoComplete="off" className={className} data-ajax="true" data-ajax-begin="ajaxControllerClass.OnBeginJs"*/}
 			{/*data-ajax-failure="ajaxControllerClass.OnFailureJs" data-ajax-success="ajaxControllerClass.OnSuccessJs" data-ajax-url="/AltBet/Order/Edit"*/}

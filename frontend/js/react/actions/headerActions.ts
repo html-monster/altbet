@@ -7,9 +7,12 @@ import {
 } from '../constants/ActionTypesHeader.js';
 import BaseActions from './BaseActions';
 import { SocketSubscribe } from "../models/SocketSubscribe";
+import OddsConverter from '../models/oddsConverter/oddsConverter.js';
 
 class Actions extends BaseActions
 {
+    OddsConverterObj = new OddsConverter();
+
 	public onSocketMessage()
 	{
 		return (dispatch, getState) =>
@@ -34,9 +37,19 @@ class Actions extends BaseActions
 
 	public changeOddSystem(oddSystem)
 	{
-		return (dispatch, getState) =>
+		return (dispatch) =>
 		{
-
+			localStorage.setItem('currentOddSystem', oddSystem);
+			this.OddsConverterObj.setOddSystem(oddSystem);
+			// console.log(`0.5`, OddsConverterObj.convertToOtherSystem(0.5));
+			// console.log(`0.28`, OddsConverterObj.convertToOtherSystem(0.28));
+			// console.log(`0.67`, OddsConverterObj.convertToOtherSystem(0.67));
+			// console.log(`0.01`, OddsConverterObj.convertToOtherSystem(0.01));
+			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ODD_SYSTEM, {currentOddSystem: oddSystem});
+			dispatch({
+				type: HEADER_CHANGE_ODD_SYSTEM,
+				payload: oddSystem
+			});
 		}
 	}
 }

@@ -8,10 +8,9 @@ import {
 
 
 const initialState = {
-	oddSystem: 'Implied',
+	currentOddSystem: localStorage.getItem('currentOddSystem') ? localStorage.getItem('currentOddSystem') : 'Implied',
 	serverData: appData.headerData
 };
-
 
 export default function header(state = initialState, action)
 {
@@ -21,7 +20,7 @@ export default function header(state = initialState, action)
 			return {...state, serverData: action.payload};
 
 		case HEADER_CHANGE_ODD_SYSTEM:
-			return {...state, oddSystem: action.payload};
+			return {...state, currentOddSystem: action.payload};
 
 		default:
 			return state;

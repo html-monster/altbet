@@ -15,13 +15,30 @@ header {
   //  display: none;
   //  &.active{  display: block;  }
   //}
+  .odds_converter{
+    margin-right: 5px;
+    .active_odd{
+      border: 1px solid #000000;
+      background: linear-gradient(to bottom, #53515e, #292830);
+      &:before{  background-position: -228px -197px;  }
+    }
+    ul.odds_list{
+      border: 1px solid #000000;
+      background: linear-gradient(to bottom, #53515e, #292830);
+    }
+    li{
+      border-bottom: 1px solid #53515e * 0.8;
+      border-top: 1px solid #53515e * 1.2;
+      &:hover{  background: #53515e * 1.2;  }
+      &:active{  background: #53515e * 1.5;  }
+    }
+  }
   .header_info {
     @include span(last 10.19 of 12);
     display: flex;
     align-items: center;
     justify-content: flex-end;
     height: 100%;
-    text-align: right;
     background: linear-gradient(to bottom, #53515e, #292830);
     position: relative;
     .video{
@@ -90,40 +107,6 @@ header {
         strong {
           font-weight: normal;
           color: #fff;
-        }
-      }
-      form.header_form {
-        display: inline-block;
-        padding-right: 10px;
-        .select {
-          &:after{  display: none;  }
-          &:before{  display: none;  }
-          .ddTitle{  background: none;  }
-          .divider{  border: none;  }
-          .ddArrow{  transition: 0.2s ease-out; background: url("#{$pathImage}/sprite.svg") no-repeat -228px -196px;  }
-          .dd.borderRadiusTp .ddArrow{  transform: rotate(180deg);  }
-          .ddChild{
-            top: 50px !important;
-            box-shadow: none;
-            background-color: transparent;
-            ul{  background: #292830;  box-shadow: 0 5px 16px -2px rgba(0, 0, 0, 0.5);  }
-            li{
-              display: block;
-              background: #292830;
-              padding: 5px;
-              background: linear-gradient(to bottom, #373540, #53515e);
-              color: #ffffff;
-              border: none;
-              border-bottom: 1px solid #292830;
-              border-top: 1px solid #53515e;
-              border-radius: 0 0 5px 5px;
-              transition: 0.3s ease-out;
-              &:hover{  background: linear-gradient(to bottom, #53515e, #373540); }
-              &:first-child {  border-top: none;  }
-              &:last-child{  border-radius: 0 0 5px 5px;  }
-              span{  color: #ffffff;  }
-            }
-          }
         }
       }
       a {

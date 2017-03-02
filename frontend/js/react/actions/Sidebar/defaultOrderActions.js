@@ -25,15 +25,8 @@ export function actionOnLoad(that)
 		// 0||console.debug( 'getState().App.instance.addController', getState().App.instance.addController );
 		getState().App.instance.addController('TradeSlip', that);
 		// ABpp.controllers.TradeSlip = this;
-
-		// dispatch({
-		// 	type: ON_DEFAULT_ORDER_DELETE,
-		// 	payload: newOrders
-		// });
 	};
 }
-
-
 
 export function actionOnDeleteOrder(orderContainer, order)
 {

@@ -7,12 +7,15 @@ import React from 'react';
 
 import headerActions from '../actions/headerActions.ts';
 import AnimateOnUpdate from '../components/Animation';
+import OddsConverter from '../models/oddsConverter/oddsConverter.js';
+
 
 class Header extends React.Component
 {
 	constructor()
 	{
 		super();
+		this.OddsConverterObj = new OddsConverter();
 	}
 
 	componentDidMount()
@@ -20,9 +23,19 @@ class Header extends React.Component
 		this.props.actions.onSocketMessage();
 	}
 
+	listSlide(toggle, event)
+	{
+		event.stopPropagation();
+
+		if(toggle)
+			$(this.refs.oddsList).slideToggle(200);
+		else
+			$(this.refs.oddsList).slideUp(200);
+	}
+
 	render()
 	{
-		const { serverData } = this.props;
+		const { actions, serverData } = this.props;
 
 		if(serverData.GainLost){
 			serverData.Profitlost = serverData.GainLost;
@@ -68,13 +81,15 @@ class Header extends React.Component
 				{ ABpp.User.userIdentity ? <a className="my_order btn" href={ABpp.baseUrl + '/eng/home/positions-orders'}>My Positions | Orders</a> : ''}
 				{ ABpp.User.userIdentity ? <a href={ABpp.baseUrl + '/eng/Account#/funds/deposit'} className="btn deposit">Deposit</a> : ''}
 				{/*<button className="price_plan btn">Pricing Plans</button>*/}
-				{/*<form className="header_form">*/}
-					{/*<div className="select">*/}
-						{/*<select className="language img" name="odds" id="change_language" style="width: 80px;">*/}
-							{/*<option value="en" data-title="English">English</option>*/}
-						{/*</select>*/}
-					{/*</div>*/}
-				{/*</form>*/}
+				<div className="odds_converter select">
+					<span className="active_selection active_odd btn wave" onClick={this.listSlide.bind(this, true)}>{this.OddsConverterObj.getSystemName()}</span>
+					<ul className="select_list odds_list" ref="oddsList" onClick={this.listSlide.bind(this, false)}>
+						<li onClick={actions.changeOddSystem.bind(null, 'Implied')}>Implied</li>
+						<li onClick={actions.changeOddSystem.bind(null, 'Decimal')}>Decimal</li>
+						<li onClick={actions.changeOddSystem.bind(null, 'American')}>American</li>
+						<li onClick={actions.changeOddSystem.bind(null, 'Fractional')}>Fractional</li>
+					</ul>
+				</div>
 			</div>
 			<div className="user">
 				{

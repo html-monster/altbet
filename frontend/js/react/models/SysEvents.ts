@@ -8,6 +8,7 @@ export class SysEvents
     public EVENT_TURN_BASIC_MODE = '1';         // turn basic mode on/off (true/false)
     public EVENT_TURN_TRADER_ON = '2';          // turn active trader on/off (true/false)
     public EVENT_CHANGE_ACTIVE_SYMBOL  = '3';   // turn active trader on/off (true/false)
+    public EVENT_CHANGE_ODD_SYSTEM  = 'EVENT_CHANGE_ODD_SYSTEM';   // change odd system
 
     private observers = {};
     private eventsDatas = {};   // save last notify params

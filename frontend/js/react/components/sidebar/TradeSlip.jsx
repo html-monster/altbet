@@ -16,14 +16,14 @@ class TradeSlip extends React.Component
 		super(props);
 		// 0||console.log( 'TradeSlip props', props );
 
-		this.actions = props.defaultOrderActions;
+		this.actions = props.actions;
 	}
 
 
 	componentDidMount()
 	{
 		// __DEV__&&console.debug( 'TradeSlip.props', this.props, this );
-		this.props.defaultOrderActions.actionOnLoad(this);
+		this.props.actions.actionOnLoad(this);
 	}
 
 
@@ -32,17 +32,17 @@ class TradeSlip extends React.Component
 	 */
 	createNewOrder(inData)
 	{
-		this.props.defaultOrderActions.actionOnOrderCreate(inData);
+		this.props.actions.actionOnOrderCreate(inData);
 	}
 
 
 	render()
 	{
         // 0||console.log( 'this.props.data.isAllowAT', this.props.data.isAllowAT );
-		const { data, defaultOrderActions, tradeSlip } = this.props;
+		const { data, actions, tradeSlip } = this.props;
         return <div className="tab_item" id="order">
 
-			<DefaultOrders cmpData={{...tradeSlip, ...data}} data={tradeSlip.orderNewData} actions={defaultOrderActions}/>
+			<DefaultOrders cmpData={{...tradeSlip, ...data}} data={tradeSlip.orderNewData} actions={actions}/>
 
 			{/* // BM: --------------------------------------------------- ACTIVE TRADER ---*/}
 			{
@@ -57,6 +57,6 @@ export default connect(state => ({
 		tradeSlip: state.tradeSlip,
 	}),
 	dispatch => ({
-		defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
+		actions: bindActionCreators(defaultOrderActions, dispatch),
 	})
 )(TradeSlip)

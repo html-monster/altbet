@@ -225,10 +225,10 @@ $(document).ready(function ()
 		$(this).parents('.pass_container').find('input[type=text]').attr('type', 'password').focus();
 	});
 
-	$('.help').mouseenter(function () {
-		$('.help').css('zIndex', 10);
-		$(this).css('zIndex', 80);
-	});
+	// $('.help').mouseenter(function () {
+	// 	$('.help').css('zIndex', 10);
+	// 	$(this).css('zIndex', 80);
+	// });
 
 	$('.page_content_plan a').click(function (e) {
 		var target = $($(this).attr('href'));
