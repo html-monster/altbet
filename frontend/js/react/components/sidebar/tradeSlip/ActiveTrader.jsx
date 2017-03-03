@@ -5,8 +5,8 @@ import React from 'react';
 import AnimateOnUpdate from '../../Animation.jsx';
 import TraderDefaultForm from './activeTrader/traderDefaultForm';
 import TraderSpreadForm from './activeTrader/traderSpreadForm';
-import traderActions from '../../../actions/Sidebar/traderActions.ts';
-import * as defaultOrderActions from '../../../actions/Sidebar/defaultOrderActions';
+import traderActions from '../../../actions/Sidebar/tradeSlip/traderActions';
+import * as defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderActions';
 import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
 // import RebuildServerData from '../../../actions/Sidebar/activeTrader/rebuildServerData';
 

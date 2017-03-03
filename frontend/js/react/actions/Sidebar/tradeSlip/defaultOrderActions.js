@@ -8,25 +8,37 @@ import {
 	ON_DEFAULT_ORDER_CREATE,
 	// ON_DEFAULT_ORDER_AJAX_SEND,
 	ON_TAB_MIRROR_CHANGE,
-} from "../../constants/ActionTypesDefaultOrders.js";
+} from "../../../constants/ActionTypesDefaultOrders";
 // import { ON_ACTIVE_SYMBOL_CHANGED } from '../../constants/ActionTypesSidebar.js';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
-import { orderForm } from '../../components/formValidation/validation';
+import { orderForm } from '../../../components/formValidation/validation';
 
 
 // let OddsConverterObj = new OddsConverter('implied_probability');
 
 
-export function actionOnLoad(that)
-{
-	return (dispatch, getState) =>
-	{
-		// 0||console.debug( 'TSlp load', getState(), that );
-		// 0||console.debug( 'getState().App.instance.addController', getState().App.instance.addController );
-		getState().App.instance.addController('TradeSlip', that);
-		// ABpp.controllers.TradeSlip = this;
-	};
-}
+// export function actionOnLoad(that)
+// {
+// 	return (dispatch, getState) =>
+// 	{
+// 		// 0||console.debug( 'TSlp load', getState(), that );
+// 		// 0||console.debug( 'getState().App.instance.addController', getState().App.instance.addController );
+// 		getState().App.instance.addController('TradeSlip', that);
+// 		// ABpp.controllers.TradeSlip = this;
+// 	};
+// }
+
+
+// export function actionOnLoad(that)
+// {
+// 	return (dispatch, getState) =>
+// 	{
+// 		// 0||console.debug( 'TSlp load', getState(), that );
+// 		// 0||console.debug( 'getState().App.instance.addController', getState().App.instance.addController );
+// 		getState().App.instance.addController('TradeSlip', that);
+// 		// ABpp.controllers.TradeSlip = this;
+// 	}
+// }
 
 export function actionOnDeleteOrder(orderContainer, order)
 {
@@ -42,7 +54,7 @@ export function actionOnDeleteOrder(orderContainer, order)
 			orderId = orderContainer.ID;
 
 		// debugger;
-		let newOrders = getState().tradeSlip.orderNewData.filter(function(itemContainer) {
+		let newOrders = getState().defaultOrders.orderNewData.filter(function(itemContainer) {
 			if(order.Side !== undefined && itemContainer.ID === orderContainer.ID &&
 				itemContainer.isMirror === orderContainer.isMirror){
 
@@ -72,7 +84,7 @@ export function actionOnOrderTypeChange(checkboxProp, formData)
 		let price = $(formData.refs.inputPrice);
 		let quantity = $(formData.refs.inputQuantity);
 		let orderID = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
-		let state = getState().tradeSlip.orderNewData;
+		let state = getState().defaultOrders.orderNewData;
 
 		state.forEach(function (thisItem) {
 			if(orderID == thisItem.ID){
@@ -107,8 +119,7 @@ export function actionOnOrderCreate(newOrder)
 {
 	return (dispatch, getState) =>
 	{
-
-		let state = getState().tradeSlip.orderNewData;
+		let state = getState().defaultOrders.orderNewData;
 		let removedChild;
 		// console.log('newOrder', newOrder);
 		// console.log('state', state);

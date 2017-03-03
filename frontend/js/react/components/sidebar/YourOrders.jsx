@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import OrderForm from './order/OrderForm.jsx';
-import * as yourOrdersActions from '../../actions/Sidebar/yourOrderActions.js';
+import * as yourOrdersActions from '../../actions/Sidebar/yourOrderActions';
 
 class YourOrders extends React.Component
 {
@@ -108,6 +108,12 @@ class GroupingOrder extends React.Component
 
 class OrderItem extends React.Component
 {
+	constructor()
+	{
+		super();
+		this.state = {currentOddSystem: ABpp.config.currentOddSystem}
+	}
+
 	BeforeAjax()
 	{
 		$(this.refs.deleteForm).find('.btn').attr('disabled', true);
@@ -165,12 +171,15 @@ class OrderItem extends React.Component
 		$(this.refs.deletePopUp).fadeOut();
 	}
 
-	// shouldComponentUpdate(nextProps){
-	// 	if(this.props.data.ID == nextProps.data.ID)
-	// 		return false;
-	//
-	// 	return true;
-	// }
+	shouldComponentUpdate(nextProps){
+		if(this.props.data.ID == nextProps.data.ID &&
+			this.state.currentOddSystem == ABpp.config.currentOddSystem)
+			return false;
+
+		this.state.currentOddSystem = ABpp.config.currentOddSystem;
+
+		return true;
+	}
 
 	render()
 	{

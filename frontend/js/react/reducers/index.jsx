@@ -6,8 +6,9 @@ import mainPage from './mainPageReducer';
 import eventPage from './eventPageReducer';
 import accountPage from './accountPageReducer';
 import sidebar from './sidebarReducer';
-import tradeSlip from './sidebar/defaultOrders';
-import activeTrader from './sidebar/activeTrader';
+// import tradeSlip from './sidebar/tradeSlipReducer';
+import defaultOrders from './sidebar/tradeSlip/defaultOrders';
+import activeTrader from './sidebar/tradeSlip/activeTrader';
 import yourOrders from './sidebar/yourOrders';
 import deposit from './userPage/deposit';
 import withdraw from './userPage/withdraw';
@@ -39,7 +40,8 @@ switch (ABpp.config.currentPage){
 			mainPage,
 			myPosReduce,
 			sidebar,
-			tradeSlip,
+			// tradeSlip,
+			defaultOrders,
 			activeTrader,
 			yourOrders
 		};
@@ -51,7 +53,8 @@ switch (ABpp.config.currentPage){
 			header,
 			eventPage,
 			sidebar,
-			tradeSlip,
+			// tradeSlip,
+			defaultOrders,
 			activeTrader,
 			yourOrders
 		};
@@ -74,7 +77,8 @@ switch (ABpp.config.currentPage){
 			header,
 			myPosReduce,
 			sidebar,
-			tradeSlip,
+			// tradeSlip,
+			defaultOrders,
 			activeTrader,
 			yourOrders
 		};
