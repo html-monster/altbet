@@ -39,7 +39,6 @@ class YourOrders extends React.Component
 
 	render()
 	{
-		console.log(ABpp.config.currentOddSystem);
 		// let yourOrdersData = this.state.data;
 		let yourOrdersData = this.props.yourOrders;
 		return <div className="tab_item" id="current-orders">
@@ -129,14 +128,17 @@ class OrderItem extends React.Component
 			defaultMethods.showError('Internal server error, try again later');
 		}
 	}
+
 	onErrorAjax(x, y)
 	{
 		console.log('XMLHTTPRequest object: ', x);
 		console.log('textStatus: ',  y);
 		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 	}
-	deleteOrderHandle()
+
+	deleteOrderHandle(event)
 	{
+		event.preventDefault();
 		defaultMethods.sendAjaxRequest({
 			httpMethod: 'POST',
 			callback: ::this.onSuccessAjax,
@@ -145,26 +147,30 @@ class OrderItem extends React.Component
 			url: ABpp.baseUrl + '/Order/Cancel',
 			context: $(this.refs.deleteForm)});
 	}
+
 	successHandler(serverData)
 	{
 		console.log(serverData);
 	}
+
 	showPopUp(){
 		$(this.refs.deletePopUp).fadeIn();
 	}
+
 	showForm(){
 		$(this.refs.formContainer).slideToggle(200);
 	}
+
 	hidePopUp(){
 		$(this.refs.deletePopUp).fadeOut();
 	}
 
-	shouldComponentUpdate(nextProps){
-		if(this.props.data.ID == nextProps.data.ID)
-			return false;
-
-		return true;
-	}
+	// shouldComponentUpdate(nextProps){
+	// 	if(this.props.data.ID == nextProps.data.ID)
+	// 		return false;
+	//
+	// 	return true;
+	// }
 
 	render()
 	{
@@ -183,8 +189,8 @@ class OrderItem extends React.Component
 		return <div className="order_container not-sort" id={data.ID + '__order'}>
 			<div className={'order_info ' + className}>
 				<div className="container">
-					<strong className="title">Price <span className="price">{data.isMirror ? Math.round10(1 - data.Price, -2) :
-							Math.round10(data.Price, -2)}</span></strong>
+					<strong className="title">Price <span className="price">{data.isMirror ? (Math.round10(1 - data.Price, -2)).toFixed(2) :
+							(Math.round10(data.Price, -2)).toFixed(2)}</span></strong>
 					<strong className="title">Quantity <span className="volume">{data.Volume}</span></strong>
 					<strong className="timestamp help balloon_only">
 		 				<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}</span> | <span className="time">{

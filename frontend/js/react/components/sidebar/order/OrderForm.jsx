@@ -193,23 +193,23 @@ export default class OrderForm extends React.Component{
 		// }
 	}
 
-	shouldComponentUpdate(nextProps, nextState){
-			// console.log(this.props.data, nextProps.data);
-		console.log(this.state.currentOddSystem);
-		console.log(ABpp.config.currentOddSystem);
-		if((JSON.stringify(this.props.data) == JSON.stringify(nextProps.data) &&
-			this.state == nextState && this.state.currentOddSystem == ABpp.config.currentOddSystem)){
-			return false;
-		}
-		// console.log(JSON.stringify(this.props.data));
-		// console.log(JSON.stringify(nextProps.data));
-		if(JSON.stringify(this.props.data) != JSON.stringify(nextProps.data)){
-			this.state.Price = nextProps.data.Price;
-			this.state.Volume = nextProps.data.Volume
-		}
-
-		return true;
-	}
+	// shouldComponentUpdate(nextProps, nextState){
+	// 		// console.log(this.props.data, nextProps.data);
+	// 	console.log(this.state.currentOddSystem);
+	// 	console.log(ABpp.config.currentOddSystem);
+	// 	if((JSON.stringify(this.props.data) == JSON.stringify(nextProps.data) &&
+	// 		this.state == nextState && this.state.currentOddSystem == ABpp.config.currentOddSystem)){
+	// 		return false;
+	// 	}
+	// 	// console.log(JSON.stringify(this.props.data));
+	// 	// console.log(JSON.stringify(nextProps.data));
+	// 	if(JSON.stringify(this.props.data) != JSON.stringify(nextProps.data)){
+	// 		this.state.Price = nextProps.data.Price;
+	// 		this.state.Volume = nextProps.data.Volume
+	// 	}
+	//
+	// 	return true;
+	// }
 
 	componentFocus(){
 		let data = this.props.data;
@@ -442,10 +442,10 @@ export default class OrderForm extends React.Component{
 							''
 					}
 				</div>
-				<div className="error_pop_up">
-					<span>The connection to the server has been lost. Please check your internet connection or try again.</span>
-					<span className="close"><span>{}</span></span>
-				</div>
+				{/*<div className="error_pop_up">*/}
+					{/*<span>The connection to the server has been lost. Please check your internet connection or try again.</span>*/}
+					{/*<span className="close"><span>{}</span></span>*/}
+				{/*</div>*/}
 			</form>
 		)
 	}

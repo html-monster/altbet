@@ -465,7 +465,7 @@ class TraderString extends React.Component {
 				onMouseEnter={spreadHighLightFunc}
 				onMouseLeave={other.traderActions.actionOnSpreadHighLight.bind(null, [])}
 				onClick={spread ? addOrder : null}>
-				<div className={'container' + (!spread ? ' help balloon_only' : '') + (index == 97 || index == 98 ? ' top' : '')}>
+				<div className={'container' + (!spread && ABpp.config.currentOddSystem != 'Implied'? ' help balloon_only' : '') + (index == 97 || index == 98 ? ' top' : '')}>
 					<span className="value">${(data.Price).toFixed(2)}</span>
 					{
 						!!spread && data.Spread == 'mid' &&
@@ -494,7 +494,7 @@ class TraderString extends React.Component {
 						</div>
 					}
 					{
-						!spread &&
+						!spread && ABpp.config.currentOddSystem != 'Implied' &&
 						<span className="help_message">
 							<p>{`${this.OddsConverterObj.getSystemName()} system : ${this.OddsConverterObj.convertToOtherSystem((data.Price).toFixed(2))}`}</p>
 						</span>

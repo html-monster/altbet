@@ -60,7 +60,8 @@ class Sidebar extends React.Component
 	render()
 	{
 		let userIdentity = this.state.globalData.userIdentity;
-		const { actions, sidebar: { autoTradeOn, isAllowAT, traderOn } } = this.props;
+		const { actions, sidebar: { autoTradeOn, currentOddSystem, isAllowAT, traderOn } } = this.props;
+
         // var {traderOn} = this.props.sidebar;
         // if( this.FLAG_LOAD  )
         // {
@@ -114,7 +115,7 @@ class Sidebar extends React.Component
 					<TradeSlip data={{...this.props.sidebar, isAllowAT}} />
 
 					{/* // BM: --------------------------------------------------- YOUR ORDERS ---*/}
-					<YourOrders/>
+					<YourOrders currentOddSystem={currentOddSystem}/>
 				</div>
 
 			</div>
