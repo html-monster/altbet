@@ -12,6 +12,7 @@ import deposit from './userPage/deposit';
 import withdraw from './userPage/withdraw';
 import transHistory from './userPage/transHistory';
 import myPosReduce from './MyPosReducer';
+import registerBox from './registerReducer';
 
 
 let reducers = {};
@@ -30,8 +31,15 @@ let constants = ABpp.ABpp;
 ABpp = ABpp.ABpp.getInstance();
 ABpp.CONSTS = constants;
 
-switch (ABpp.config.currentPage){
-	case  ABpp.CONSTS.PAGE_MAIN:{
+
+const common = {
+	registerBox,
+};
+
+
+switch (ABpp.config.currentPage)
+{
+	case  ABpp.CONSTS.PAGE_MAIN: {
 		reducers = {
 			App: appState,
 			mainPage,
@@ -39,7 +47,8 @@ switch (ABpp.config.currentPage){
 			sidebar,
 			tradeSlip,
 			activeTrader,
-			yourOrders
+			yourOrders,
+			...common,
 		};
 		break;
 	}
@@ -50,7 +59,8 @@ switch (ABpp.config.currentPage){
 			sidebar,
 			tradeSlip,
 			activeTrader,
-			yourOrders
+			yourOrders,
+			...common,
 		};
 		break;
 	}
@@ -60,7 +70,8 @@ switch (ABpp.config.currentPage){
 			accountPage,
 			deposit,
 			withdraw,
-			transHistory
+			transHistory,
+			...common,
 		};
 		break;
 	}
@@ -71,7 +82,8 @@ switch (ABpp.config.currentPage){
 			sidebar,
 			tradeSlip,
 			activeTrader,
-			yourOrders
+			yourOrders,
+			...common,
 		};
 		break;
 	}

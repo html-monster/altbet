@@ -12,6 +12,7 @@ export const mailValidation = (value) => {
 	return errors
 };
 
+
 export const emptyValidation = (value) => {
 	let errors;
 
@@ -41,20 +42,24 @@ export const minLengthValidation = (inOpts, inValue) =>
 };
 
 
-export const maxLengthValidation = (inOpts, inValue) =>
+export const lengthValidation = (inOpts, inValue) =>
 {
 	let errors;
 	let value;
 	let opts = {
-        size: 20,
+        min: 0,
+        max: 20,
 	};
 
     // user opts
+    if (!inOpts.max) inOpts.max = false;
 	if( inValue ) opts = {...opts, ...inOpts};
 	value = inValue || inOpts;
 
-	if (value.length > opts.size)
-		errors = 'Max length is ' + opts.size;
+	if (opts.max && value.length > opts.max)
+		errors = 'Max length is ' + opts.max;
+	if (value.length < opts.min)
+		errors = 'Min length is ' + opts.min;
 
 	return errors
 };
@@ -74,6 +79,17 @@ export const regexValidation = (inOpts, inValue) =>
 	value = inValue || inOpts;
     if (!opts.tmpl.test(value))
 		errors = opts.message;
+
+	return errors
+};
+
+
+export const passwordValidation = (inRef, value) =>
+{
+	let errors;
+
+    var elm = document.getElementById(inRef);
+    if( elm && elm.value != value ) errors = "Password do not match";
 
 	return errors
 };

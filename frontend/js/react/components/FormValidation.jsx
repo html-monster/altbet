@@ -37,6 +37,7 @@ export default class FormValidation extends React.Component{
 
 	serverValidation(data)
 	{
+		0||console.log( 'here', 0 );
 		const {error, message, ...rest} = data;
 		let state = this.state;
 

@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 
 import BaseController from './BaseController';
 import {RegisterForm} from '../components/RegisterForm.jsx';
+import actions from '../actions/registerActions.ts';
 
 
 class RegisterBox extends BaseController
@@ -45,7 +46,7 @@ class RegisterBox extends BaseController
                         </div>
                         <div className="tab_content">
                             <div className="tab_item real">
-                                <RegisterForm />
+                                <RegisterForm onSubmit={this.props.actions.actionFormSubmit} />
                             </div>
                         </div>
                     </div>
@@ -70,7 +71,6 @@ export default connect(
         // test: state.Ttest,
     }),
     dispatch => ({
-        // actions: bindActionCreators(actions, dispatch),
-        // myPositionsActions: bindActionCreators(myPositionsActions, dispatch),
+        actions: bindActionCreators(actions, dispatch),
     })
 )(RegisterBox)
