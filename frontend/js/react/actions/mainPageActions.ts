@@ -7,7 +7,7 @@ import {
 import { WebsocketModel } from '../models/Websocket';
 import { Common } from '../common/Common';
 import BaseActions from './BaseActions';
-import {SocketSubscribe} from "../models/SocketSubscribe";
+import { SocketSubscribe } from "../models/SocketSubscribe";
 
 
 // var __LDEV__ = true;
@@ -63,10 +63,11 @@ class Actions extends BaseActions
 
     /**
      * Create bet form in side bar
+     * @param context - контекст MainPage (для проброски defaultOrderActions)
      * @param props
      * @return {(dispatch:any, getState:any)=>undefined}
      */
-    public actionOnPosPriceClick(props)
+    public actionOnPosPriceClick(context, props)
     {
         let flag = false;
         let qt : any = 0,
@@ -164,11 +165,12 @@ class Actions extends BaseActions
 
         // actionOnOrderCreate(outStruc);
 
-
-        return (dispatch, getState) =>
+        return () =>
         {
+            // console.log(outStruc);
+            context.props.defaultOrderActions.actionOnOrderCreate(outStruc);
             // 0||console.debug( 'getState()', getState() );
-            getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+            // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
             // dispatch({
             //     type: ON_POS_PRICE_CLICK,
             //     payload: {}

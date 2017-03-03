@@ -1,6 +1,8 @@
 /// <reference path="./../.d/common.d.ts" />
 /// <reference path="./../.d/jquery.d.ts" />
 import {SysEvents} from "../react/models/SysEvents";
+// import OddsConverter from '../react/models/oddsConverter/oddsConverter';
+
 declare let globalData : any;
 declare let window : any;
 
@@ -38,8 +40,9 @@ export class ABpp
     public config = {
         currentTheme: null,   // current theme
         currentPage: null,    // current page
+        currentOddSystem: null, // current Odd System
         takerFees: null,      // taker fees
-        makerFees: null,       // maker fees
+        makerFees: null,      // maker fees
         basicMode: true,      // play mode
         tradeOn: false,       // active trader state
     };
@@ -53,6 +56,7 @@ export class ABpp
     public Websocket: WebsocketModel = null;    // websocket object
     public SysEvents: SysEvents = null;         // system events
     public Store = null;                        // redux store
+    // public OddsConverter = null;                        // redux store
 
 
     private static instance = null;
@@ -82,6 +86,9 @@ export class ABpp
 
         // create user
         this.createUser();
+
+        this.config.currentOddSystem = localStorage.getItem('currentOddSystem') ? localStorage.getItem('currentOddSystem') : 'Implied';
+        // this.OddsConverter = new OddsConverter();
 
         // set basic mode from user settings
         this.config.basicMode = this.User.settings.basicMode;

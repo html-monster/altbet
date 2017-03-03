@@ -9,10 +9,10 @@ import {
 	TRADER_ON_ADD_ORDER,
 	TRADER_ON_DELETE_ORDER,
 	TRADER_ON_SPREAD_HIGHLIGHT
-} from '../../constants/ActionTypesActiveTrader';
-import { ON_ACTIVE_SYMBOL_CHANGED } from '../../constants/ActionTypesSidebar.js';
-import BaseActions from '../BaseActions';
-import RebuildServerData from '../Sidebar/activeTrader/rebuildServerData';
+} from '../../../constants/ActionTypesActiveTrader';
+import { ON_ACTIVE_SYMBOL_CHANGED } from '../../../constants/ActionTypesSidebar.js';
+import BaseActions from '../../BaseActions';
+import RebuildServerData from '../../Sidebar/tradeSlip/activeTrader/rebuildServerData';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 
 declare var orderClass;

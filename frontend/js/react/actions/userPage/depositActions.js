@@ -109,8 +109,7 @@ export function actionOnQuantityValidate(values)
 	}
 }
 
-export function actionOnAjaxSend(context, payment,
-								 values, serverValidation, event)
+export function actionOnAjaxSend(context, payment, values, serverValidation, event)
 {
 	return (dispatch, getState) =>
 	{

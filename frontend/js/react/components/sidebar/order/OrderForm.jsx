@@ -3,20 +3,38 @@ import React from 'react';
 // import { connect } from 'react-redux';
 // import * as orderFormActions from '../../../actions/order/orderFormActions.ts';
 import InputNumber from '../../inputNumber';
-import {OddsConverterObj} from '../../../models/oddsConverter/oddsConverter.js';
+import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
 
-{/*// let OddsConverterObj = new OddsConverter('implied_probability');*/}
+// let OddsConverterObj = new OddsConverter('implied_probability');
 
 export default class OrderForm extends React.Component{
 	constructor(props)
 	{
 		super();
 		this.state = {
-			...props.data
+			...props.data,
+			currentOddSystem: ABpp.config.currentOddSystem
 		};
 		const price = this.state.Side ? 1 - Math.round10(1 - this.state.Price, -2) : this.state.Price;
+		this.OddsConverterObj = new OddsConverter();
 		this.state.Sum = Math.round10(price * this.state.Volume, -2);
 		if(this.state.Limit == undefined) this.state.Limit = true;
+
+		// let arr = [];
+		// for(let ii = 0.01; ii <= 0.99; ii += 0.01){
+		// 	arr.push(OddsConverterObj.convertToOtherSystem(ii));
+		// 	// console.log(`${Math.round10(ii, -2)}: `, OddsConverterObj.convertToOtherSystem(ii));
+		// }
+		// arr.push(OddsConverterObj.convertToOtherSystem(0.99));
+		// arr.forEach(function (item) {
+		// 	console.log(OddsConverterObj.convertToImpliedSystem(item));
+		// });
+		// console.log('==================================================================');
+		// OddsConverterObj.convertToImpliedSystem('49/1')
+		// console.log(`49/1`, OddsConverterObj.convertToImpliedSystem('49/1'));
+		// console.log(`11/14`, OddsConverterObj.convertToImpliedSystem('11/14'));
+		// console.log(`43/57`, OddsConverterObj.convertToImpliedSystem('43/57'));
+		// console.log(`18/7`, OddsConverterObj.convertToImpliedSystem('18/7'));
 	}
 
 	// OnBeginAjax()
@@ -156,7 +174,7 @@ export default class OrderForm extends React.Component{
 
 	onTypeChange(checkboxProp)
 	{
-		const price = $(this.refs.inputPrice.refs.input);
+		// const price = $(this.refs.inputPrice.refs.input);
 		const quantity = $(this.refs.inputQuantity.refs.input);
 
 		this.state.Limit = !checkboxProp;
@@ -178,9 +196,10 @@ export default class OrderForm extends React.Component{
 	shouldComponentUpdate(nextProps, nextState){
 			// console.log(this.props.data, nextProps.data);
 		if((JSON.stringify(this.props.data) == JSON.stringify(nextProps.data) &&
-			this.state == nextState)){
+			this.state == nextState && this.state.currentOddSystem == ABpp.config.currentOddSystem)){
 			return false;
 		}
+		this.state.currentOddSystem = ABpp.config.currentOddSystem;
 		// console.log(JSON.stringify(this.props.data));
 		// console.log(JSON.stringify(nextProps.data));
 		if(JSON.stringify(this.props.data) != JSON.stringify(nextProps.data)){
@@ -253,12 +272,28 @@ export default class OrderForm extends React.Component{
 				  noValidate="novalidate" ref="orderForm" data-verify={['Price', 'Volume']}>
 				<div className="container">
 					<div className="price">
-						<label htmlFor={`${orderId}_price`}>
+						<label className={this.OddsConverterObj.getSystemName() != 'Implied' ? 'with_info' : ''} htmlFor={`${orderId}_price`}>
 							{
 								checkboxProp ?
 									'Your price'
 									:
 									'Market price'
+							}
+							{
+								this.OddsConverterObj.getSystemName() != 'Implied' ?
+									<div className="help">
+										<div className="help_message right">
+											<p>
+												{`${this.OddsConverterObj.getSystemName()} system : ${checkboxProp ?
+													+stateData.Price ? this.OddsConverterObj.convertToOtherSystem(stateData.Price) : ''
+													:
+													+data.Price ? this.OddsConverterObj.convertToOtherSystem(stateData.Price) : ''}`}
+
+											</p>
+										</div>
+									</div>
+									:
+									''
 							}
 						</label>
 						<div className="input">
@@ -322,7 +357,7 @@ export default class OrderForm extends React.Component{
 				</div>
 				<div className="container">
 					<div className="fees">
-						<label>
+						<label className="with_info">
 							<span>Max </span>Fees
 							<div className="help">
 								<div className="help_message right">
@@ -336,7 +371,7 @@ export default class OrderForm extends React.Component{
 						</div>
 					</div>
 					<div className="risk">
-						<label>
+						<label className="with_info">
 							Total Cost
 							<div className="help">
 								<div className="help_message right">
@@ -357,7 +392,7 @@ export default class OrderForm extends React.Component{
 						</div>
 					</div>
 					<div className="profit">
-						<label>
+						<label className="with_info">
 							Profitability
 							<div className="help">
 								<div className="help_message right">
@@ -406,10 +441,10 @@ export default class OrderForm extends React.Component{
 							''
 					}
 				</div>
-				<div className="error_pop_up">
-					<span>The connection to the server has been lost. Please check your internet connection or try again.</span>
-					<span className="close"><span>{}</span></span>
-				</div>
+				{/*<div className="error_pop_up">*/}
+					{/*<span>The connection to the server has been lost. Please check your internet connection or try again.</span>*/}
+					{/*<span className="close"><span>{}</span></span>*/}
+				{/*</div>*/}
 			</form>
 		)
 	}

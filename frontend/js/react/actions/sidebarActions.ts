@@ -1,14 +1,16 @@
 import {
+	ON_SIDEBAR_LOAD,
     ON_TRADER_ON,
 	ON_AUTO_TRADE,
 	ALLOW_AT_CH,
 	ON_ACTIVE_SYMBOL_CHANGED,
+	ON_SIDEBAR_ODD_SYS_CHANGE,
 } from '../constants/ActionTypesSidebar.js';
 // import { WebsocketModel } from '../models/Websocket';
 // import { Common } from '../common/Common';
 import BaseActions from './BaseActions';
 import {SocketSubscribe} from "../models/SocketSubscribe";
-
+import OddsConverter from '../models/oddsConverter/oddsConverter';
 
 var __LDEV__ = true;
 // var __LDEV__ = false;
@@ -18,6 +20,18 @@ declare var orderClass;
 
 class Actions extends BaseActions
 {
+	public actionOnLoad()
+	{
+		return (dispatch, getState) =>
+		{
+
+			dispatch({
+				type: ON_SIDEBAR_LOAD,
+				payload: (new OddsConverter()).getSystemName(),
+			});
+		}
+	}
+
     public actionChangeAllowAt(isAllowAT)
     {
         return (dispatch, getState) =>
@@ -29,6 +43,16 @@ class Actions extends BaseActions
         }
     }
 
+	public actionOnOddSystemChange(data) {
+		return (dispatch) =>
+		{
+			console.log(data);
+			dispatch({
+				type: ON_SIDEBAR_ODD_SYS_CHANGE,
+				payload: data.currentOddSystem
+			});
+		}
+	}
 
     public actionOnTraderOnChange(isChecked)
     {
@@ -159,7 +183,7 @@ class Actions extends BaseActions
 		}
 	}
 
-    public actionOnActiveSymbolChanged(props)
+    public  actionOnActiveSymbolChanged(props)
     {
         return (dispatch) =>
         {
