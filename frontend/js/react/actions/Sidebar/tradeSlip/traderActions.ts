@@ -496,7 +496,7 @@ class Actions extends BaseActions
 	{
 		return () =>{
 			event.preventDefault();
-			const { mainData, traderActions } = context.props;
+			const { cmpData: { activeExchange }, traderActions } = context.props;
 
 			function OnBeginAjax()
 			{
@@ -506,7 +506,7 @@ class Actions extends BaseActions
 			function onSuccessAjax()
 			{
 				traderActions.actionRemoveOrderForm();
-				console.log(`Order sending finished: ${mainData.Symbol.Exchange}_${mainData.Symbol.Name}_${mainData.Symbol.Currency}`);
+				console.log(`Order sending finished: ${activeExchange.symbol}`);
 			}
 
 			function onErrorAjax()
