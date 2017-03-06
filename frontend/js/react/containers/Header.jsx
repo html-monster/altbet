@@ -37,7 +37,7 @@ class Header extends React.Component
 	{
 		const { actions, serverData } = this.props;
 
-		if(serverData.GainLost){
+		if(serverData.GainLost != undefined){
 			serverData.Profitlost = serverData.GainLost;
 			serverData.Exposure = serverData.Invested;
 			serverData.Available= serverData.CurrentBalance;
@@ -65,14 +65,14 @@ class Header extends React.Component
 							transitionEnterTimeout={800}
 							data={serverData}
 						>
-								<span className="win-lost animated" data-verify={'Profitlost'}>P/L: <strong className={'animated ' + serverData.Profitlost >= 0 ? 'win' : 'lost'}>
+								<span className="win-lost animated" data-verify={'Profitlost'}>P/L: <strong className={'animated ' + serverData.Profitlost < 0 ? 'lost' : 'win'}>
 									{serverData.Profitlost >= 0 ?
 										`$${(serverData.Profitlost).toFixed(2)}`
 										:
 										`($${(serverData.Profitlost).toFixed(2).toString().replace('-', '')})`}
 									</strong>
 								</span>
-							<span className="invested animated" data-verify={'Exposure'}>Exposure: <strong className="animated">${Math.round10(serverData.Exposure, -2)}</strong></span>
+							<span className="invested animated" data-verify={'Exposure'}>Exposure: <strong className="animated">${(Math.round10(serverData.Exposure, -2)).toFixed(2)}</strong></span>
 							<span className="available animated" data-verify={'Available'}>Available: <strong className="animated">${Math.round10(serverData.Available, -2)}</strong></span>
 						</AnimateOnUpdate>
 						:
