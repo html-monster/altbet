@@ -41,7 +41,7 @@ class ActiveTrader extends React.Component {
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
 		let className = '';
-		// console.log(activeExchange);
+		// console.log(this.props);
 		// className = $active = $activeM = '';
 		// ( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
 
@@ -119,7 +119,7 @@ class ActiveTrader extends React.Component {
 							<button
 								onClick={
 									traderActions.actionAddDefaultOrder.bind(null, this, {
-										direction: 'buy',
+										direction: 'sell',
 										price    : data.Symbol ? Math.round10(1 - data.Symbol.LastAsk, -2) : '',
 										limit    : false
 									}, 'market')}
@@ -131,7 +131,7 @@ class ActiveTrader extends React.Component {
 							<button
 								onClick={
 									traderActions.actionAddDefaultOrder.bind(null, this, {
-										direction: 'sell',
+										direction: 'buy',
 										price    : data.Symbol ? Math.round10(1 - data.Symbol.LastAsk, -2) : '',
 										limit    : false
 									}, 'market')}

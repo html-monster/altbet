@@ -66,7 +66,7 @@ class Header extends React.Component
 							transitionEnterTimeout={800}
 							data={serverData}
 						>
-								<span className="win-lost animated" data-verify={'Profitlost'}>P/L: <strong className={'animated ' + serverData.Profitlost < 0 ? 'lost' : 'win'}>
+								<span className="win-lost animated" data-verify={'Profitlost'}>P/L: <strong className={'animated ' + (serverData.Profitlost < 0 ? 'lost' : 'win')}>
 									{serverData.Profitlost >= 0 ?
 										`$${profitlost}`
 										:
