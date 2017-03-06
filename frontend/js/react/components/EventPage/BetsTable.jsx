@@ -30,11 +30,11 @@ export class BetsTable extends React.Component
 
     render ()
     {
-        var self = this;
-        var {data, typeb, isTraiderOn, exdata} = this.props.data;
-        var $fieldName;
-        var $class = !isTraiderOn ? " clickable" : '';
-        var $type;
+        const self = this;
+        let { defaultOrderActions, data:{ data, typeb, isTraiderOn, exdata } } = this.props;
+        let $class = !isTraiderOn ? " clickable" : '';
+        let $fieldName;
+        let $type;
 
         if( typeb == BetsTable.TYPE_BID )
         {
@@ -100,7 +100,7 @@ export class BetsTable extends React.Component
 								type    : $type,
 								data    : data, // orders
 								exdata  : commProps, // for trader object
-							})}
+							}, defaultOrderActions)}
                             >
 								{/*component="div"
                                  className="button" */}
@@ -114,7 +114,7 @@ export class BetsTable extends React.Component
 									type    : $type,
 									data    : data, // orders
 									exdata  : commProps, // for trader object
-								})}
+								}, defaultOrderActions)}
                             >
                                 <span>{val.Quantity}</span>
                             </td>

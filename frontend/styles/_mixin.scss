@@ -168,7 +168,7 @@
     &:checked ~ span{
       color: $checkbox_label_color;
       &:before{  background: #4dac2e;  }
-      &:after{  top: calc(50% - 3px);  }
+      &:after{  transform: translateY(9px);  }
     }
   }
 }
@@ -210,7 +210,7 @@
     &:checked ~ span{
       color: #000000;
       &:before{  background: url('#{$pathImage}/sprite.svg') no-repeat -284px -64px, linear-gradient(to bottom, #3aab4a, #3aab4a * 0.9);  }
-      &:after{  left: 18px;  }
+      &:after{  transform: translateX(15px);  }
     }
   }
 }

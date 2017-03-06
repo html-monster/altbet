@@ -6,6 +6,7 @@ import BaseController from './BaseController';
 import Chart from '../components/EventPage/Chart';
 import {BetsTable} from '../components/EventPage/BetsTable';
 import * as chartActions from '../actions/EventPage/chartActions.ts';
+import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
 import eventPageActions from '../actions/eventPageActions.ts';
 
 
@@ -86,15 +87,15 @@ class EventPage extends BaseController
 
     render()
     {
-        let {pageEventData: data, socket, isTraiderOn} = this.props.eventPage;
-        let symbol = `${data.SymbolsAndOrders.Symbol.Exchange}_${data.SymbolsAndOrders.Symbol.Name}_${data.SymbolsAndOrders.Symbol.Currency}`;
-        var isMirror = data.IsMirror;
+        const { defaultOrderActions, eventPage: { pageEventData: data, socket, isTraiderOn } } = this.props;
+		const symbol = `${data.SymbolsAndOrders.Symbol.Exchange}_${data.SymbolsAndOrders.Symbol.Name}_${data.SymbolsAndOrders.Symbol.Currency}`;
+        let isMirror = data.IsMirror;
 
-        var buyIndex = 0;
-        var sellIndex = 1;
-        var bidData = [];
-        var askData = [];
-        var ticks = [];
+        let buyIndex = 0;
+        let sellIndex = 1;
+        let bidData = [];
+        let askData = [];
+        let ticks = [];
 
         // form ask and bid orders
 // 0||console.debug( 'socket', socket );
@@ -114,22 +115,22 @@ class EventPage extends BaseController
 // 0||console.debug( 'socket', socket, bidData, askData, ticks );
 
         // form tick html and High/Low prices
-        var maxPrice = 0, minPrice = 100, lastPrice;
+        let maxPrice = 0, minPrice = 100, lastPrice;
         if (socket.bars && socket.bars.Ticks.length)
         {
             ticks = socket.bars.Ticks.slice().reverse();
             lastPrice = " " + ticks[0].Open;
         }
-        var ticksHmtl = ticks.map((item, key) => {
-                var date = new Date(item.Time.replace('/Date(', '').replace(')/', '') * 1);
+        let ticksHmtl = ticks.map((item, key) => {
+                let date = new Date(item.Time.replace('/Date(', '').replace(')/', '') * 1);
                 date = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() +
                     ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':' +
                     (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 
-                var side = isMirror ? !item.Side : item.Side;
+                let side = isMirror ? !item.Side : item.Side;
                 side = side ? 'sell' : 'buy';
 
-                var price = ((isMirror) ? (1 - item.Open).toFixed(2) : item.Open.toFixed(2));
+                let price = ((isMirror) ? (1 - item.Open).toFixed(2) : item.Open.toFixed(2));
 
                 if (price > maxPrice) maxPrice = price;
                 if (price < minPrice) minPrice = price;
@@ -225,30 +226,34 @@ class EventPage extends BaseController
                                    type: 0,
                                    //data: data, // orders
                                    exdata: commProps, // for trader object
-                        })}>Buy</button>
+                        }, defaultOrderActions)}>Buy</button>
                         <button className="btn sell price event" type="button" disabled={isTraiderOn}
                             onClick={() => this.actions.onSellBuyClick({
                                    type: 1,
                                    //data: data, // orders
                                    exdata: commProps, // for trader object
-                        })}>Sell </button>
+                        }, defaultOrderActions)}>Sell </button>
                     </div>
                 </div>
             </div>
             <div id="mainController" className="executed">
                 <div className="executed_orders sell order_create event-content" data-symbol={symbol}>
-                    <BetsTable data={{data: data.IsMirror ? askData : bidData, typeb: BetsTable.TYPE_BID, isTraiderOn, exdata: data}} actions={this.actions} />
+                    <BetsTable data={{data: data.IsMirror ? askData : bidData, typeb: BetsTable.TYPE_BID, isTraiderOn, exdata: data}}
+                               defaultOrderActions={defaultOrderActions}
+                               actions={this.actions} />
                 </div>
                 <div className="executed_orders buy order_create event-content" data-symbol={symbol}>
-                    <BetsTable data={{data: data.IsMirror ? bidData : askData, typeb: BetsTable.TYPE_ASK, isTraiderOn, exdata: data}} actions={this.actions} />
+                    <BetsTable data={{data: data.IsMirror ? bidData : askData, typeb: BetsTable.TYPE_ASK, isTraiderOn, exdata: data}}
+                               defaultOrderActions={defaultOrderActions}
+                               actions={this.actions} />
                 </div>
                 <div className="executed_orders">
                     <table>
                         <thead>
                             <tr>
                                 <th><span>Time & Sales</span></th>
-                                <th></th>
-                                <th></th>
+                                <th>{}</th>
+                                <th>{}</th>
                             </tr>
                         </thead>
                         <tbody>{ticksHmtl}</tbody>
@@ -319,6 +324,7 @@ export default connect(state => ({
     // test: state.Ttest,
 }),
 dispatch => ({
+	defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
     eventPageActions: bindActionCreators(eventPageActions, dispatch),
     chartActions: bindActionCreators(chartActions, dispatch),
 })

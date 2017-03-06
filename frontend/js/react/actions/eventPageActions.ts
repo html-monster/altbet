@@ -50,7 +50,7 @@ class Actions extends BaseActions
 
 
 
-    public onQuantityClick(inProps)
+    public onQuantityClick(inProps, defaultOrderActions)
     {
         return (dispatch, getState) =>
         {
@@ -107,7 +107,8 @@ class Actions extends BaseActions
                 // === Htmlbook === 17-02-09 ===============================================
 
                 // call trade slip action
-                getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+                defaultOrderActions.actionOnOrderCreate(outStruc);
+                // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
 
                 // dispatch({
                 //     type: ON_SOCKET_MESSAGE,
@@ -119,7 +120,7 @@ class Actions extends BaseActions
 
 
 
-    public onPriceClick(inProps)
+    public onPriceClick(inProps, defaultOrderActions)
     {
         return (dispatch, getState) =>
         {
@@ -166,7 +167,8 @@ class Actions extends BaseActions
                 };
                 __LDEV__&&console.debug( 'outStruc', props, outStruc );
 
-                getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+                defaultOrderActions.actionOnOrderCreate(outStruc);
+                // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
 
                 // === Htmlbook === 17-02-09 ===============================================
                 orderClass.tabReturn();
@@ -182,7 +184,7 @@ class Actions extends BaseActions
 
 
 
-    public onSellBuyClick(inProps)
+    public onSellBuyClick(inProps, defaultOrderActions)
     {
         return (dispatch, getState) =>
         {
@@ -214,8 +216,8 @@ class Actions extends BaseActions
                     ]
                 };
                 // __LDEV__&&console.debug( 'outStruc', props, outStruc );
-
-                getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+                defaultOrderActions.actionOnOrderCreate(outStruc);
+                // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
 
                 // dispatch({
                 //     type: ON_SOCKET_MESSAGE,

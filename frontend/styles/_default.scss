@@ -226,7 +226,7 @@ label.disabled{
         &:before{ left: inherit; right: 2px; }
         &:after{ left: inherit; right: 18px; }
       }
-      input:checked ~ span:after { left: inherit; right: 3px; }
+      input:checked ~ span:after { left: inherit; transform: translateX(15px); }
     }
 
 	&>span{
@@ -260,7 +260,7 @@ label.disabled{
 	input{ display: none;
 		&:checked ~ span { color: #000000;
 			&:before{  background: url("#{$pathImage}/sprite.svg") no-repeat -284px -64px, linear-gradient(to bottom, #3aab4a, #3aab4a * 0.9);  }
-			&:after{  left: 18px;  }
+			&:after{  transform: translateX(15px)  }
 		}
 	}
 }
