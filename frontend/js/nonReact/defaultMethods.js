@@ -1,5 +1,15 @@
-class defaultMethods{
-	constructor(){
+class defaultMethods
+{
+	static MESSAGE_TYPES = {
+		Success: 'info',
+        Info: 'info',
+        Warning: 'alert',
+        Error: 'error',
+	};
+
+
+	constructor()
+	{
 		$(document).keyup(function (e) {
 			e = e || event;
 

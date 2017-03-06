@@ -4,7 +4,7 @@
 // declare className : string;
 let spread = 'ask';
 
-export default class RebuildServerData
+export class RebuildServerData
 {
     private Key: string;
     private Price: number;

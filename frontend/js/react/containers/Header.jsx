@@ -36,6 +36,7 @@ class Header extends React.Component
 	render()
 	{
 		const { actions, serverData } = this.props;
+        const profitlost = serverData.Profitlost ? (serverData.Profitlost).toFixed(2) : "";
 
 		if(serverData.GainLost){
 			serverData.Profitlost = serverData.GainLost;
@@ -43,7 +44,7 @@ class Header extends React.Component
 			serverData.Available= serverData.CurrentBalance;
 		}
 
-		return <div className="header_info">
+        return <div className="header_info">
 			{/*<div className="video btn">*/}
 				{/*<span className="title">Watch video</span>*/}
 				{/*<button className="eng btn">Eng</button>*/}
@@ -67,9 +68,9 @@ class Header extends React.Component
 						>
 								<span className="win-lost animated" data-verify={'Profitlost'}>P/L: <strong className={'animated ' + serverData.Profitlost >= 0 ? 'win' : 'lost'}>
 									{serverData.Profitlost >= 0 ?
-										`$${(serverData.Profitlost).toFixed(2)}`
+										`$${profitlost}`
 										:
-										`($${(serverData.Profitlost).toFixed(2).toString().replace('-', '')})`}
+										`($${profitlost.toString().replace('-', '')})`}
 									</strong>
 								</span>
 							<span className="invested animated" data-verify={'Exposure'}>Exposure: <strong className="animated">${Math.round10(serverData.Exposure, -2)}</strong></span>
