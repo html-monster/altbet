@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import OrderForm from './order/OrderForm.jsx';
-import * as yourOrdersActions from '../../actions/Sidebar/yourOrderActions.js';
+import * as yourOrdersActions from '../../actions/Sidebar/yourOrderActions';
 
-class EventOrders extends React.Component
+class YourOrders extends React.Component
 {
 	constructor(props)
 	{
@@ -108,6 +108,12 @@ class GroupingOrder extends React.Component
 
 class OrderItem extends React.Component
 {
+	constructor()
+	{
+		super();
+		this.state = {currentOddSystem: ABpp.config.currentOddSystem}
+	}
+
 	BeforeAjax()
 	{
 		$(this.refs.deleteForm).find('.btn').attr('disabled', true);
@@ -128,14 +134,17 @@ class OrderItem extends React.Component
 			defaultMethods.showError('Internal server error, try again later');
 		}
 	}
+
 	onErrorAjax(x, y)
 	{
 		console.log('XMLHTTPRequest object: ', x);
 		console.log('textStatus: ',  y);
 		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 	}
-	deleteOrderHandle()
+
+	deleteOrderHandle(event)
 	{
+		event.preventDefault();
 		defaultMethods.sendAjaxRequest({
 			httpMethod: 'POST',
 			callback: ::this.onSuccessAjax,
@@ -144,23 +153,30 @@ class OrderItem extends React.Component
 			url: ABpp.baseUrl + '/Order/Cancel',
 			context: $(this.refs.deleteForm)});
 	}
+
 	successHandler(serverData)
 	{
 		console.log(serverData);
 	}
+
 	showPopUp(){
 		$(this.refs.deletePopUp).fadeIn();
 	}
+
 	showForm(){
 		$(this.refs.formContainer).slideToggle(200);
 	}
+
 	hidePopUp(){
 		$(this.refs.deletePopUp).fadeOut();
 	}
 
 	shouldComponentUpdate(nextProps){
-		if(this.props.data.ID == nextProps.data.ID)
+		if(this.props.data.ID == nextProps.data.ID &&
+			this.state.currentOddSystem == ABpp.config.currentOddSystem)
 			return false;
+
+		this.state.currentOddSystem = ABpp.config.currentOddSystem;
 
 		return true;
 	}
@@ -182,10 +198,10 @@ class OrderItem extends React.Component
 		return <div className="order_container not-sort" id={data.ID + '__order'}>
 			<div className={'order_info ' + className}>
 				<div className="container">
-					<strong className="title">Price <span className="price">{data.isMirror ? Math.round10(1 - data.Price, -2) :
-							Math.round10(data.Price, -2)}</span></strong>
+					<strong className="title">Price <span className="price">{data.isMirror ? (Math.round10(1 - data.Price, -2)).toFixed(2) :
+							(Math.round10(data.Price, -2)).toFixed(2)}</span></strong>
 					<strong className="title">Quantity <span className="volume">{data.Volume}</span></strong>
-					<strong className="timestamp help">
+					<strong className="timestamp help balloon_only">
 		 				<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}</span> | <span className="time">{
 						`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
 						<span className="help_message"><strong>MM/DD/YYYY | HH:MM</strong></span>
@@ -227,7 +243,7 @@ export default connect(state => ({
 	dispatch => ({
 		actions: bindActionCreators(yourOrdersActions, dispatch),
 	})
-)(EventOrders)
+)(YourOrders)
 
 {/*<form action="/AltBet/Home/Edit" autoComplete="off" className={className} data-ajax="true" data-ajax-begin="ajaxControllerClass.OnBeginJs"*/}
 			{/*data-ajax-failure="ajaxControllerClass.OnFailureJs" data-ajax-success="ajaxControllerClass.OnSuccessJs" data-ajax-url="/AltBet/Order/Edit"*/}

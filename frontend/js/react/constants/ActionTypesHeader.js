@@ -1,0 +1,5 @@
+/**
+ * Created by Htmlbook on 28.02.2017.
+ */
+export const HEADER_CHANGE_ODD_SYSTEM = 'HEADER_CHANGE_ODD_SYSTEM';
+export const HEADER_ON_SOCKET_MESSAGE = 'HEADER_ON_SOCKET_MESSAGE';

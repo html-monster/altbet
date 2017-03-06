@@ -12,7 +12,7 @@ export default class NewOrder extends React.Component{
 	render()
 	{
 		// console.log(ABpp);
-		let data = this.props.data;
+		const { data } = this.props;
 		let formData = {
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
