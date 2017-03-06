@@ -36,13 +36,14 @@ class Header extends React.Component
 	render()
 	{
 		const { actions, serverData } = this.props;
-        const profitlost = serverData.Profitlost ? (serverData.Profitlost).toFixed(2) : "";
 
 		if(serverData.GainLost != undefined){
 			serverData.Profitlost = serverData.GainLost;
 			serverData.Exposure = serverData.Invested;
 			serverData.Available= serverData.CurrentBalance;
 		}
+        const profitlost = serverData.Profitlost.toFixed(2);
+        
 
         return <div className="header_info">
 			{/*<div className="video btn">*/}
