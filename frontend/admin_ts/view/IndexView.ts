@@ -149,6 +149,7 @@ export class IndexView extends BaseView
         });
 
 
+
         // timezones
         var data = [];
         var $CBtz = $("[data-js-cb-timezones]", form);
@@ -200,7 +201,7 @@ export class IndexView extends BaseView
                 }
         })
         // .val(moment().utcOffset()/60).trigger("change");
-        .val("00:00:00").trigger("change");
+        .val("UTC").trigger("change");
 
 
         // disable/enable on date
@@ -360,7 +361,7 @@ export class IndexView extends BaseView
                             return $state;
                         }
                 })
-                .val("00:00:00").trigger("change");
+                .val("UTC").trigger("change");
 
 
                 $("[data-js=ChkStartDate]", wrapper).click(function () { $(this).find("input").click(); });
