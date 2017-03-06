@@ -12,7 +12,7 @@ import {
 } from '../../../constants/ActionTypesActiveTrader';
 import { ON_ACTIVE_SYMBOL_CHANGED } from '../../../constants/ActionTypesSidebar.js';
 import BaseActions from '../../BaseActions';
-import RebuildServerData from '../../Sidebar/tradeSlip/activeTrader/rebuildServerData';
+import {RebuildServerData} from './activeTrader/rebuildServerData';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 
 declare var orderClass;

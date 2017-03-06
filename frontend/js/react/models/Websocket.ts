@@ -18,8 +18,8 @@ export class WebsocketModel
 
     private noSupportMessage = "Your browser cannot support WebSocket!";
     private connectionString = "ws://localhost:2001/";
-    // private connectionString = "ws://192.168.1.249:2001/";
     // private connectionString = "ws://54.171.212.235:2001/";    // IP
+    // private connectionString = "ws://192.168.1.249:2001/";
 
     private ws = null;
     private SocketSubscribe = null;
@@ -163,8 +163,8 @@ export class WebsocketModel
             // code - тип сообщения (closedmarket|logout|etc)
             // message - текст
             // type - вид сообщения - success|info|warning|error
-            defaultMethods.showWarning(data.Result);
-            __DEV__&&console.log( evt );
+            defaultMethods.showMessage(data.Message, defaultMethods.MESSAGE_TYPES[data.Type]);
+            __DEV__&&console.log( data );
         }
 
         if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn)) window.ee.emit('yourOrders.update', data.CurrentOrders);//myOrdersControllerClass.updateData(data.CurrentOrders);
