@@ -83,7 +83,7 @@ class Header extends React.Component
 				{ ABpp.User.userIdentity ? <a className="my_order btn" href={ABpp.baseUrl + '/eng/home/positions-orders'}>My Positions | Orders</a> : ''}
 				{ ABpp.User.userIdentity ? <a href={ABpp.baseUrl + '/eng/Account#/funds/deposit'} className="btn deposit">Deposit</a> : ''}
 				{/*<button className="price_plan btn">Pricing Plans</button>*/}
-				<div className="odds_converter select">
+				<div className="odds_converter select" title="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Bettor ">
 					<span className="active_selection active_odd btn wave" onClick={this.listSlide.bind(this, true)}>{this.OddsConverterObj.getSystemName()}</span>
 					<ul className="select_list odds_list" ref="oddsList" onClick={this.listSlide.bind(this, false)}>
 						<li onClick={actions.changeOddSystem.bind(null, 'Implied')}>Implied</li>

@@ -5,42 +5,52 @@ export default class OddsConverter
 {
     constructor()
     {
-        this.FRACTION = 'Fractional';
+        this.IMPLIED = 'Implied';
         this.DECIMAL = 'Decimal';
         this.AMERICAN = 'American';
+        this.FRACTION = 'Fractional';
 		// this.oddsSystem = oddsSystem;
-
-        // switch (oddsSystem){
-        //     case FRACTION:
-        //         break;
-        //     case DECIMAL:
-        //         break;
-        //     case AMERICAN:
-        //         break;
-			// default:
-        //         this.calculation = ::this._impliedProbabilityCalculation;
-        //         this.calcBeforeOrderAdd = ::this._impliedProbabilityCalcBeforeAdd;
-        // }
     }
 
-	convertToImpliedSystem(value)
+	convertToAltbetSystem(value)
 	{
 		switch (ABpp.config.currentOddSystem){
+			case this.IMPLIED:{
+				const initialValue = value;
+				value = (value).toString().replace('%', '');
+				// console.log(value, value > 99 || value < 1 || isNaN(value));
+				// TEST ON ERROR
+				if(value > 99 || value < 1 || isNaN(value)) console.error('Wrong value:', initialValue + ', method expect value' +
+					' from 1% to 99%');
+
+				value = Math.round10(value / 100, -2);
+				break;
+			}
 			case this.DECIMAL:{
+				// TEST ON ERROR
+				if(value > 100 || value < 1.01 || isNaN(value)) console.error('Wrong value:', value + ', method expect value' +
+					' from 1.01 to 100');
+
 				value = Math.round10(1 / value, -2);
+				break;
+			}
+			case this.AMERICAN:{
+				// TEST ON ERROR
+				if(value > 9900 || value < -9900 || isNaN(value)) console.error('Wrong value:', value + ', method expect value' +
+					' from -9900 to 9900');
+
+				if(value < 0) value = Math.round10(-value / (-value + 100), -2);
+				else value = Math.round10(100 / (+value + 100), -2);
 				break;
 			}
 			case this.FRACTION:{
 				let numerator = +value.split('/')[0];
 				let denominator = +value.split('/')[1];
-				// console.log(numerator);
-				// console.log(denominator);
+				// TEST ON ERROR
+				if(!numerator || !denominator || isNaN(numerator) || isNaN(denominator)) console.error('Wrong value:', value + ', method expect value' +
+					' fraction something like 2/1');
+
 				value = Math.round10(denominator / (denominator + numerator), -2);
-				break;
-			}
-			case this.AMERICAN:{
-				if(value < 0) value = Math.round10(-value / (-value + 100), -2);
-				else value = Math.round10(100 / (value + 100), -2);
 				break;
 			}
 		}
@@ -49,7 +59,8 @@ export default class OddsConverter
 
     convertToOtherSystem(value)
 	{
-		if(value < 0.01 || value > 0.99) console.error('Conversion method expects value from 0.01 to 0.99');
+		// TEST ON ERROR
+		if(value < 0.01 || value > 0.99) console.error('Wrong value:', value + ', conversion method expects value from 0.01 to 0.99');
 
 		value = Math.round(value * 100);
 
@@ -68,12 +79,16 @@ export default class OddsConverter
 			}
 			case this.AMERICAN:{
 				if (value > 50) 	 value = Math.round(-(value / (100 - value)) * 100);
-				else if (value < 50) value = Math.round(((100 - value) / value) * 100);
+				else if (value < 50) value = '+' + Math.round(((100 - value) / value) * 100);
 				else 				 value = 100;
 				break;
 			}
-			default:
+			case this.IMPLIED:{
 				value = Math.round10(value / 100, -2);
+				break;
+			}
+			default:
+				value = value + '%';
 		}
 		return value;
 	}

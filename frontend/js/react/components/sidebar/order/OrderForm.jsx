@@ -5,7 +5,7 @@ import React from 'react';
 import InputNumber from '../../inputNumber';
 import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
 
-// let OddsConverterObj = new OddsConverter('implied_probability');
+let OddsConverterObj = new OddsConverter();
 
 export default class OrderForm extends React.Component{
 	constructor(props)
@@ -27,14 +27,14 @@ export default class OrderForm extends React.Component{
 		// }
 		// arr.push(OddsConverterObj.convertToOtherSystem(0.99));
 		// arr.forEach(function (item) {
-		// 	console.log(OddsConverterObj.convertToImpliedSystem(item));
+		// 	console.log(OddsConverterObj.convertToAltbetSystem(item));
 		// });
 		// console.log('==================================================================');
-		// OddsConverterObj.convertToImpliedSystem('49/1')
-		// console.log(`49/1`, OddsConverterObj.convertToImpliedSystem('49/1'));
-		// console.log(`11/14`, OddsConverterObj.convertToImpliedSystem('11/14'));
-		// console.log(`43/57`, OddsConverterObj.convertToImpliedSystem('43/57'));
-		// console.log(`18/7`, OddsConverterObj.convertToImpliedSystem('18/7'));
+		// OddsConverterObj.convertToAltbetSystem('49/1');
+		// console.log(`+104`, OddsConverterObj.convertToAltbetSystem('+104'));
+		// console.log(`-233`, OddsConverterObj.convertToAltbetSystem('-233'));
+		// console.log(`1/5`, OddsConverterObj.convertToAltbetSystem('1/5'));
+		// console.log(`-5000`, OddsConverterObj.convertToAltbetSystem('-5000'));
 	}
 
 	// OnBeginAjax()
@@ -272,7 +272,7 @@ export default class OrderForm extends React.Component{
 				  noValidate="novalidate" ref="orderForm" data-verify={['Price', 'Volume']}>
 				<div className="container">
 					<div className="price">
-						<label className={this.OddsConverterObj.getSystemName() != 'Implied' ? 'with_info' : ''} htmlFor={`${orderId}_price`}>
+						<label className="with_info" htmlFor={`${orderId}_price`}>
 							{
 								checkboxProp ?
 									'Your price'
@@ -280,20 +280,17 @@ export default class OrderForm extends React.Component{
 									'Market price'
 							}
 							{
-								this.OddsConverterObj.getSystemName() != 'Implied' ?
-									<div className="help">
-										<div className="help_message right">
-											<p>
-												{`${this.OddsConverterObj.getSystemName()} system : ${checkboxProp ?
-													+stateData.Price ? this.OddsConverterObj.convertToOtherSystem(stateData.Price) : ''
-													:
-													+data.Price ? this.OddsConverterObj.convertToOtherSystem(stateData.Price) : ''}`}
+								<div className="help">
+									<div className="help_message right">
+										<p>
+											{`${this.OddsConverterObj.getSystemName()} odds : ${checkboxProp ?
+												+stateData.Price ? this.OddsConverterObj.convertToOtherSystem(stateData.Price) : ''
+												:
+												+data.Price ? this.OddsConverterObj.convertToOtherSystem(stateData.Price) : ''}`}
 
-											</p>
-										</div>
+										</p>
 									</div>
-									:
-									''
+								</div>
 							}
 						</label>
 						<div className="input">
