@@ -21,12 +21,18 @@ export class WebsocketModel
     // private connectionString = "ws://54.171.212.235:2001/";    // IP
     // private connectionString = "ws://192.168.1.249:2001/";
 
-    private ws = null;
+    private ws = null;                  // socket instance
     private SocketSubscribe = null;
     private callbacks = {};
     private socketData: any = null;
     private lastErrorSendObj = null;    // save send object if socket not connected
     private lastSendObj = null;         // save send last object
+
+
+    constructor()
+    {
+        if (globalData.webSocketUrl) this.connectionString = globalData.webSocketUrl;
+    }
 
 
     public connectSocketServer()
@@ -129,6 +135,12 @@ export class WebsocketModel
 
         return params;
     };
+
+
+    public testClose()
+    {
+        this.ws.close(3001, "manual disconnect");
+    }
 
 
 
@@ -248,6 +260,6 @@ export class WebsocketModel
     private onClose() {
         // defaultMethods.showError('socket closed');
         $("[data-js-connect-label]").fadeIn(200);
-        setTimeout(() => { this.connectSocketServer(); }, 1000);
+        // setTimeout(() => { this.connectSocketServer(); }, 1000);
     }
 }

@@ -67,7 +67,7 @@ class Actions extends BaseActions
 							data: currSymbData,
 							rebuiltServerData: traderActions.actionOnServerDataRebuild(currSymbData, isMirror)}
 					});
-					__DEV__ && console.log('re-render');
+					// __DEV__ && console.log('re-render');
 				}
 				if(state.activeTrader.activeExchange != symbol || state.activeTrader.isMirror != isMirror){
 					setTimeout(() => {traderActions.scrollTo(context, currSymbData, isMirror)}, initialStart ? 400 : 100);

@@ -33,6 +33,21 @@ class Header extends React.Component
 			$(this.refs.oddsList).slideUp(200);
 	}
 
+
+	testSockOpen()
+    {
+        0||console.log( 'manual open' );
+        ABpp.Websocket.connectSocketServer();
+    }
+
+
+	testSockClose()
+    {
+        0||console.log( 'manual close' );
+        ABpp.Websocket.testClose();
+    }
+
+
 	render()
 	{
 		const { actions, serverData } = this.props;
@@ -43,7 +58,7 @@ class Header extends React.Component
 			serverData.Available= serverData.CurrentBalance;
 		}
         const profitlost = serverData.Profitlost.toFixed(2);
-        
+
 
         return <div className="header_info">
 			{/*<div className="video btn">*/}
@@ -80,8 +95,12 @@ class Header extends React.Component
 						:
 						''
 				}
-				{ ABpp.User.userIdentity ? <a className="my_order btn" href={ABpp.baseUrl + '/eng/home/positions-orders'}>My Positions | Orders</a> : ''}
-				{ ABpp.User.userIdentity ? <a href={ABpp.baseUrl + '/eng/Account#/funds/deposit'} className="btn deposit">Deposit</a> : ''}
+				{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockOpen()} title="Connect to socket">C</a> : ''}
+				{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</a> : ''}
+
+
+				{ ABpp.User.isAuthorized() ? <a className="my_order btn" href={ABpp.baseUrl + '/eng/home/positions-orders'}>My Positions | Orders</a> : ''}
+				{ ABpp.User.isAuthorized() ? <a href={ABpp.baseUrl + '/eng/Account#/funds/deposit'} className="btn deposit">Deposit</a> : ''}
 				{/*<button className="price_plan btn">Pricing Plans</button>*/}
 				<div className="odds_converter select">
 					<span className="active_selection active_odd btn wave" onClick={this.listSlide.bind(this, true)}>{this.OddsConverterObj.getSystemName()}</span>
