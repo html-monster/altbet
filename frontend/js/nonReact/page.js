@@ -236,7 +236,7 @@ $(document).ready(function ()
 
 		$('html,body').animate({
 			scrollTop: target.offset().top - 70
-		}, 1000);
+		}, 1000)
 	});
 
 

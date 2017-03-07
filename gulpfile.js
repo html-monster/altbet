@@ -154,7 +154,8 @@ gulp.task('js',function(){
       '!frontend/js/nonReact/access.js', '!frontend/js/nonReact/pageFirst.js'])
     .pipe(sourcemaps.init())
     .pipe(babel({
-      presets: ['es2015']
+      presets: ['es2015', 'stage-0'],
+      plugins: [['transform-class-properties', { "spec": true }]],
     }))
     .pipe($.concat('all.js'))
     // $.uglify(),
