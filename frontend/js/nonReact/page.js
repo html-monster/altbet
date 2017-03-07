@@ -2,7 +2,7 @@ window.ee = new EventEmitter();
 
 
 // BM: for Discuss
-if( appData && appData.pageEventData )
+if( !globalData.landingPage && appData && appData.pageEventData )
 {
     try {
         var disqus_config = function () {
