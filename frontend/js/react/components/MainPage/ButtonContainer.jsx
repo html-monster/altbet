@@ -9,36 +9,35 @@ export default class ButtonContainer extends React.Component
 {
     render()
     {
-        let {isBasicMode, isTraiderOn} = this.props.data;
-
+        const { data:{ isBasicMode, isTraiderOn }, mainContext } = this.props;
         // let $DateLocalization = new DateLocalization();
-        let data = this.props.data;
+        const data = this.props.data;
     // console.log(data);
-        var price;
+        let price, className, emptyBtnName, mirrorClass;
 
         // 0||console.debug( 'this.props.actions', this.props.actions );
 
         if( data.ismirror )
         {
-            var mirrorClass = 'mirror';
-            // var price = (1 - (isBasicMode ? item.Price : item.Price));
+            mirrorClass = 'mirror';
+            // price = (1 - (isBasicMode ? item.Price : item.Price));
         }
         else
         {
-            var mirrorClass = 'real';
-            // var price = isBasicMode ? item.Price : item.Price;
+            mirrorClass = 'real';
+            // price = isBasicMode ? item.Price : item.Price;
         } // endif
 
 
         if( data.type == 'sell' )
         {
-            var className = 'sell';
-            var emptBtnName = 'OFFER';
+            className = 'sell';
+            emptyBtnName = 'OFFER';
         }
         else
         {
-            var className = 'buy';
-            var emptBtnName = 'BID';
+            className = 'buy';
+            emptyBtnName = 'BID';
         } // endif
         // 0||console.debug( 'data', data );
 
@@ -69,7 +68,7 @@ export default class ButtonContainer extends React.Component
                                         transitionEnterTimeout={800}
                                         data={item2}
                                     >
-                                        <button className={`event animated ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this,
+                                        <button className={`event animated ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this, mainContext,
                                                 {
                                                     PosPrice: item.SummaryPositionPrice,
                                                     ismirror: data.ismirror,
@@ -78,7 +77,7 @@ export default class ButtonContainer extends React.Component
                                                     type: data.type == "sell" ? 1 : 2,
                                                     data: data,
                                                 })}
-                                        data-verify="Quantity" disabled={isTraiderOn} title="Click to make order">
+                                                 data-verify="Quantity" disabled={isTraiderOn} title="Click to make order">
                                             <span className="price">{((price = Common.toFixed(data.ismirror ? 1 - price : price, 2))||true) && isBasicMode  ? '$' + price : price}</span>
                                             <span className="volume">{item2.Quantity}</span>
                                             {/*<div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>*/}
@@ -91,7 +90,7 @@ export default class ButtonContainer extends React.Component
                             return html;
                         })
                         : <div className="button">
-                        <button className={`event animated empty ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this,
+                        <button className={`event animated empty ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this, mainContext,
                                 {
                                     isempty: true,
                                     PosPrice: [],
@@ -100,8 +99,8 @@ export default class ButtonContainer extends React.Component
                                     type: data.type == "sell" ? 1 : 2,
                                     data: data,
                                 })}
-                        disabled={isTraiderOn} title="Click to make order">
-                            <span className="price empty">{emptBtnName}</span>
+                                disabled={isTraiderOn} title="Click to make order">
+                            <span className="price empty">{emptyBtnName}</span>
                             <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
                         </button>
                     </div>
@@ -129,10 +128,10 @@ export default class ButtonContainer extends React.Component
     }
 
 
-    _onBtnClick(props)
+    _onBtnClick(mainContext, props)
     {
         // 0||console.debug( 'props', props, this.props.actions );
-        this.props.actions.actionOnPosPriceClick(props);
+        this.props.actions.actionOnPosPriceClick(mainContext, props);
     }
 }
 

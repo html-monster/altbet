@@ -11,9 +11,27 @@ header {
     .user-name:after{  top: 6px;  }
   }
   .connect { display: none; width: 10px; height: 10px; background: red; border-radius: 50%; }
-  .user_info{
-    display: none;
-    &.active{  display: block;  }
+  //.user_info{
+  //  display: none;
+  //  &.active{  display: block;  }
+  //}
+  .odds_converter{
+    margin-right: 5px;
+    .active_odd{
+      border: 1px solid #000000;
+      background: linear-gradient(to bottom, #53515e, #292830);
+      &:before{  background-position: -228px -197px;  }
+    }
+    ul.odds_list{
+      border: 1px solid #000000;
+      background: linear-gradient(to bottom, #53515e, #292830);
+    }
+    li{
+      border-bottom: 1px solid #53515e * 0.8;
+      border-top: 1px solid #53515e * 1.2;
+      &:hover{  background: #53515e * 1.2;  }
+      &:active{  background: #53515e * 1.5;  }
+    }
   }
   .header_info {
     @include span(last 10.19 of 12);
@@ -21,7 +39,6 @@ header {
     align-items: center;
     justify-content: flex-end;
     height: 100%;
-    text-align: right;
     background: linear-gradient(to bottom, #53515e, #292830);
     position: relative;
     .video{
@@ -74,48 +91,22 @@ header {
         font-size: 14px;
         color: #fff;
         &.win-lost{
+          &.fadeColorOut .win{  animation-name: fadeColorGreen  }
+          &.fadeColorOut .lost{  animation-name: fadeColorRed  }
           .win{  color: #4dac2e;  }
           .lost{  color: #ff3905;  }
         }
-        &.invested strong{  color: #ef8022; }
-        &.available strong{  color: #1196d4;  }
+        &.invested {
+          &.fadeColorOut strong{  animation-name: fadeColorOrange  }
+          strong{  color: #ef8022; }
+        }
+        &.available {
+          &.fadeColorOut strong{  animation-name: fadeColorBlue  }
+          strong{  color: #1196d4;  }
+        }
         strong {
           font-weight: normal;
           color: #fff;
-        }
-      }
-      form.header_form {
-        display: inline-block;
-        padding-right: 10px;
-        .select {
-          &:after{  display: none;  }
-          &:before{  display: none;  }
-          .ddTitle{  background: none;  }
-          .divider{  border: none;  }
-          .ddArrow{  transition: 0.2s ease-out; background: url("#{$pathImage}/sprite.svg") no-repeat -228px -196px;  }
-          .dd.borderRadiusTp .ddArrow{  transform: rotate(180deg);  }
-          .ddChild{
-            top: 50px !important;
-            box-shadow: none;
-            background-color: transparent;
-            ul{  background: #292830;  box-shadow: 0 5px 16px -2px rgba(0, 0, 0, 0.5);  }
-            li{
-              display: block;
-              background: #292830;
-              padding: 5px;
-              background: linear-gradient(to bottom, #373540, #53515e);
-              color: #ffffff;
-              border: none;
-              border-bottom: 1px solid #292830;
-              border-top: 1px solid #53515e;
-              border-radius: 0 0 5px 5px;
-              transition: 0.3s ease-out;
-              &:hover{  background: linear-gradient(to bottom, #53515e, #373540); }
-              &:first-child {  border-top: none;  }
-              &:last-child{  border-radius: 0 0 5px 5px;  }
-              span{  color: #ffffff;  }
-            }
-          }
         }
       }
       a {
@@ -171,13 +162,13 @@ header {
       color: #fff;
     }
     .log_in {
-      display: none;
+      display: flex;
       height: 100%;
       align-items: center;
       justify-content: flex-end;
       cursor: pointer;
       position: relative;
-      &.active{  display: flex;  }
+      //&.active{  display: flex;  }
       ul.user-menu{
         display: none;
         width: 177px;
@@ -269,7 +260,7 @@ header {
       }
     }
     .log_out {
-      display: none;
+      display: flex;
       height: 100%;
       align-items: center;
       justify-content: center;
@@ -288,7 +279,7 @@ header {
         height: 25px;
         background: url("#{$pathImage}/sprite.svg") no-repeat -424px -18px;
       }
-      &.active{  display: flex;  }
+      //&.active{  display: flex;  }
       a {
         width: 65px;
         margin-left: 5px;

@@ -7,7 +7,7 @@ import {
 	ON_DEFAULT_ORDER_CREATE,
 	// ON_DEFAULT_ORDER_AJAX_SEND,
 	// ON_TAB_MIRROR_CHANGE,
-} from '../../constants/ActionTypesDefaultOrders.js';
+} from '../../../constants/ActionTypesDefaultOrders.js';
 // console.log(ABpp);
 
 	// mode: ABpp.config.basicMode,

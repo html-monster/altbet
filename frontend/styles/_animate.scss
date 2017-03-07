@@ -10,6 +10,22 @@
 	0% {  opacity: 0;  }
 	100% {  opacity: 1;  }
 }
+@keyframes fadeColorGreen {
+	0% {  color: orange;  }
+	100% {  color: #4dac2e;  }
+}
+@keyframes fadeColorRed {
+	0% {  color: orange;  }
+	100% {  color: #ff3905;  }
+}
+@keyframes fadeColorBlue {
+	0% {  color: orange;  }
+	100% {  color: #3498da;  }
+}
+@keyframes fadeColorOrange {
+	0% {  color: #bab500;  }
+	100% {  color: #ef8022;  }
+}
 @keyframes fadeColorOutSell {
 	0% {  color: #ef4d22;  }
 	100% {  color: orange;  }

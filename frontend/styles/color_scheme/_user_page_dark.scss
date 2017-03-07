@@ -47,11 +47,9 @@ $user_page_balance: #000;
 $user_page_tr_separate: #000000;
 $user_page_payment_list_bg: linear-gradient(to bottom, #53515e, #292830);
 $user_page_arrow: -228px -197px;
-@mixin user_page_separate{
+@mixin user_page_li{
 	border-bottom: 1px solid #53515e * 0.8;
 	border-top: 1px solid #53515e * 1.2;
-}
-@mixin user_page_li_action{
 	&:hover{  background: #53515e * 1.2;  }
 	&:active{  background: #53515e * 1.5;  }
 }

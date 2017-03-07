@@ -5,8 +5,9 @@ import React from 'react';
 import AnimateOnUpdate from '../../Animation.jsx';
 import TraderDefaultForm from './activeTrader/traderDefaultForm';
 import TraderSpreadForm from './activeTrader/traderSpreadForm';
-import traderActions from '../../../actions/Sidebar/traderActions.ts';
-import * as defaultOrderActions from '../../../actions/Sidebar/defaultOrderActions';
+import traderActions from '../../../actions/Sidebar/tradeSlip/traderActions';
+import * as defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderActions';
+import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
 // import RebuildServerData from '../../../actions/Sidebar/activeTrader/rebuildServerData';
 
 class ActiveTrader extends React.Component {
@@ -40,7 +41,7 @@ class ActiveTrader extends React.Component {
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
 		let className = '';
-		// console.log(activeExchange);
+		// console.log(this.props);
 		// className = $active = $activeM = '';
 		// ( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
 
@@ -118,7 +119,7 @@ class ActiveTrader extends React.Component {
 							<button
 								onClick={
 									traderActions.actionAddDefaultOrder.bind(null, this, {
-										direction: 'buy',
+										direction: 'sell',
 										price    : data.Symbol ? Math.round10(1 - data.Symbol.LastAsk, -2) : '',
 										limit    : false
 									}, 'market')}
@@ -130,7 +131,7 @@ class ActiveTrader extends React.Component {
 							<button
 								onClick={
 									traderActions.actionAddDefaultOrder.bind(null, this, {
-										direction: 'sell',
+										direction: 'buy',
 										price    : data.Symbol ? Math.round10(1 - data.Symbol.LastAsk, -2) : '',
 										limit    : false
 									}, 'market')}
@@ -334,6 +335,7 @@ class TraderString extends React.Component {
 	constructor()
 	{
 		super();
+		this.OddsConverterObj = new OddsConverter();
 	}
 
 	// shouldComponentUpdate(nextProps){
@@ -463,7 +465,7 @@ class TraderString extends React.Component {
 				onMouseEnter={spreadHighLightFunc}
 				onMouseLeave={other.traderActions.actionOnSpreadHighLight.bind(null, [])}
 				onClick={spread ? addOrder : null}>
-				<div className="container">
+				<div className={'container help balloon_only' + (index == 97 || index == 98 ? ' top' : '')}>
 					<span className="value">${(data.Price).toFixed(2)}</span>
 					{
 						!!spread && data.Spread == 'mid' &&
@@ -490,6 +492,12 @@ class TraderString extends React.Component {
 								  onMouseLeave={other.traderActions.actionOnSpreadHighLight.bind(null, [])}
 							>Buy</span>
 						</div>
+					}
+					{
+						!spread &&
+						<span className="help_message">
+							<p>{`${this.OddsConverterObj.getSystemName()} odds : ${this.OddsConverterObj.convertToOtherSystem((data.Price).toFixed(2))}`}</p>
+						</span>
 					}
 				</div>
 			</td>

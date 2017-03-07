@@ -9,10 +9,10 @@ import {
 	TRADER_ON_ADD_ORDER,
 	TRADER_ON_DELETE_ORDER,
 	TRADER_ON_SPREAD_HIGHLIGHT
-} from '../../constants/ActionTypesActiveTrader';
-import { ON_ACTIVE_SYMBOL_CHANGED } from '../../constants/ActionTypesSidebar.js';
-import BaseActions from '../BaseActions';
-import RebuildServerData from '../Sidebar/activeTrader/rebuildServerData';
+} from '../../../constants/ActionTypesActiveTrader';
+import { ON_ACTIVE_SYMBOL_CHANGED } from '../../../constants/ActionTypesSidebar.js';
+import BaseActions from '../../BaseActions';
+import {RebuildServerData} from './activeTrader/rebuildServerData';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 
 declare var orderClass;
@@ -67,7 +67,7 @@ class Actions extends BaseActions
 							data: currSymbData,
 							rebuiltServerData: traderActions.actionOnServerDataRebuild(currSymbData, isMirror)}
 					});
-					__DEV__ && console.log('re-render');
+					// __DEV__ && console.log('re-render');
 				}
 				if(state.activeTrader.activeExchange != symbol || state.activeTrader.isMirror != isMirror){
 					setTimeout(() => {traderActions.scrollTo(context, currSymbData, isMirror)}, initialStart ? 400 : 100);
@@ -496,7 +496,7 @@ class Actions extends BaseActions
 	{
 		return () =>{
 			event.preventDefault();
-			const { mainData, traderActions } = context.props;
+			const { cmpData: { activeExchange }, traderActions } = context.props;
 
 			function OnBeginAjax()
 			{
@@ -506,7 +506,7 @@ class Actions extends BaseActions
 			function onSuccessAjax()
 			{
 				traderActions.actionRemoveOrderForm();
-				console.log(`Order sending finished: ${mainData.Symbol.Exchange}_${mainData.Symbol.Name}_${mainData.Symbol.Currency}`);
+				console.log(`Order sending finished: ${activeExchange.symbol}`);
 			}
 
 			function onErrorAjax()

@@ -10,8 +10,8 @@ import {
 	TRADER_ON_ADD_ORDER,
 	TRADER_ON_DELETE_ORDER,
 	TRADER_ON_SPREAD_HIGHLIGHT
-} from '../../constants/ActionTypesActiveTrader';
-import RebuildServerData from '../../actions/Sidebar/activeTrader/rebuildServerData';
+} from '../../../constants/ActionTypesActiveTrader';
+import {RebuildServerData} from '../../../actions/Sidebar/tradeSlip/activeTrader/rebuildServerData';
 
 const initialState = {
 	data: {},

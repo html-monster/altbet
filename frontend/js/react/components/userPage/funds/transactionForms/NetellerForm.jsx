@@ -14,7 +14,6 @@ export default class NetellerForm extends React.Component
 		super();
 	}
 
-
 	render()
 	{
 		const inputRender = ({ id, className, label, filled, inputLabel, type, meta: { error, dirty }, ...input }) => {

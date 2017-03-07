@@ -5,7 +5,7 @@ class AppStateClass{
 					traderCheckbox = $('.left_order .tab input.limit'),
 					autoTrade = $('.left_order .tab input.auto');
 
-0||console.debug( 'stateParams.Mode', stateParams.Mode );
+// 0||console.debug( 'stateParams.Mode', stateParams.Mode );
 			if(stateParams.Mode && stateParams.Mode == 'basic'){
 				modeSwitch.prop('checked', false);
 				globalData.basicMode = true;

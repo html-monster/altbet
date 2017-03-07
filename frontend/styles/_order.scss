@@ -125,7 +125,23 @@
     span.close{  height: 31px; background: url("#{$pathImage}/ico-delete-w.png") no-repeat center #969696;  border-radius: 5px; cursor: pointer; }
     .help{
       right: 0;
-      @include md(1450){  right: -3px;  }
+      &:not(.balloon_only){
+        @include md(1450){  right: -3px;  }
+      }
+      &.balloon_only{
+        &:hover{
+          &:before{  display: block;  }
+          .help_message{  display: block;  }
+        }
+        &:before{  display: none;  visibility: visible; right: calc(50% - 5px);  }
+        .help_message{
+          display: none;
+          visibility: visible;
+          width: 150px;
+          right: calc(50% - 75px);
+          &:after{  right: calc(50% - 5px);  }
+        }
+      }
     }
     .submit_wrapper{
       width: 66.66%;
@@ -466,7 +482,7 @@
         display: table;
         width: 100%;
         table-layout: fixed;
-        overflow: hidden;
+        //overflow: hidden;
       }
       th{
         &:nth-of-type(1){  width: 20%;  }//58px
@@ -547,9 +563,9 @@
             //}
           }
         }
-        &.best_sell, &.best_buy{
-          @include btn-hover;
-        }
+        //&.best_sell, &.best_buy{
+        //  @include btn-hover;
+        //}
         &.best_sell{
           color: #ffffff;
           background-image: linear-gradient(to bottom, #f88447, #ef4d22); font-weight: bold;  }
@@ -1111,6 +1127,7 @@
         text-align: center;
         border: 1px solid $order_sidebar_order_border_color;
         position: relative;
+        &.with_info{  padding-right: 15px;  }
       }
       input {
         height: 31px;

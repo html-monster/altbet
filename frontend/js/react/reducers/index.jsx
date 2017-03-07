@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 
 import appState from './appReducer';
+import header from './headerReducer';
 import mainPage from './mainPageReducer';
 import eventPage from './eventPageReducer';
 import accountPage from './accountPageReducer';
 import sidebar from './sidebarReducer';
-import tradeSlip from './sidebar/defaultOrders';
-import activeTrader from './sidebar/activeTrader';
+// import tradeSlip from './sidebar/tradeSlipReducer';
+import defaultOrders from './sidebar/tradeSlip/defaultOrders';
+import activeTrader from './sidebar/tradeSlip/activeTrader';
 import yourOrders from './sidebar/yourOrders';
 import deposit from './userPage/deposit';
 import withdraw from './userPage/withdraw';
@@ -42,10 +44,12 @@ switch (ABpp.config.currentPage)
 	case  ABpp.CONSTS.PAGE_MAIN: {
 		reducers = {
 			App: appState,
+			header,
 			mainPage,
 			myPosReduce,
 			sidebar,
-			tradeSlip,
+			// tradeSlip,
+			defaultOrders,
 			activeTrader,
 			yourOrders,
 			...common,
@@ -55,9 +59,11 @@ switch (ABpp.config.currentPage)
 	case ABpp.CONSTS.PAGE_EVENT:{
 		reducers = {
 			App: appState,
+			header,
 			eventPage,
 			sidebar,
-			tradeSlip,
+			// tradeSlip,
+			defaultOrders,
 			activeTrader,
 			yourOrders,
 			...common,
@@ -66,7 +72,8 @@ switch (ABpp.config.currentPage)
 	}
 	case ABpp.CONSTS.PAGE_ACCOUNT:{
 		reducers = {
-			'App': appState,
+			App: appState,
+			header,
 			accountPage,
 			deposit,
 			withdraw,
@@ -78,9 +85,11 @@ switch (ABpp.config.currentPage)
 	case ABpp.CONSTS.PAGE_MYPOS:{
 		reducers = {
 			App: appState,
+			header,
 			myPosReduce,
 			sidebar,
-			tradeSlip,
+			// tradeSlip,
+			defaultOrders,
 			activeTrader,
 			yourOrders,
 			...common,

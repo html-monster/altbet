@@ -10,6 +10,7 @@ import { Router, Route, IndexRedirect, hashHistory } from 'react-router'
 import configureStore from './store/configureStore';
 import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
+import Header from './containers/Header';
 import EventPage from './containers/EventPage';
 import AccountPage from './containers/AccountPage';
 import PageMyPos from './components/PageMyPos.jsx';
@@ -32,6 +33,13 @@ ReactDOM.render(
         <RApp />
     </Provider>,
   document.getElementById('DiRoot')
+);
+
+ReactDOM.render(
+	<Provider store={store}>
+		<Header />
+	</Provider>,
+	document.getElementById('DiMPHeader')
 );
 
 

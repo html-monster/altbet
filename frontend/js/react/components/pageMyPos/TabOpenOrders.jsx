@@ -77,7 +77,7 @@ export class TabOpenOrders extends React.Component
                                                             <span className="fullname muted">{item.Symbol.HomeName} - {item.Symbol.AwayName}</span>
                                                         </td>
                                                         <td>
-                                                            <span className="timestamp help">
+                                                            <span className="timestamp">
                                                                 <span className="date">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'DD MMM Y'})}</span>
                                                                 <span className="muted">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: ' hh:mm'})}</span>
                                                             </span>

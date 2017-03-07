@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import BaseController from './BaseController';
 import ExchangeItem from '../components/MainPage/ExchangeItem';
 import mainPageActions from '../actions/MainPageActions.ts';
-
+import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
 
 // class MainPage extends React.Component
 class MainPage extends BaseController
@@ -73,22 +73,22 @@ class MainPage extends BaseController
     render()
     {
         // let isBasicMode = ABpp.config.basicMode;
-        let data = this.props.data;
-        let {activeExchange, isBasicMode, isTraiderOn} = this.props.data;
-        var $Pagination;
+        const data = this.props.data;
+        const { actions, data:{ activeExchange, isBasicMode, isTraiderOn } } = this.props;
+        let $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
-        var urlBase = appData.baseUrl.MainPage;
-let nb = "&nbsp;";
+        let urlBase = appData.baseUrl.MainPage;
+        // let nb = "&nbsp;";
 
         return (
             <div className="nav_items">
                 <div className="wrapper" id="exchange">
                     <div className="tabs">
-                        <span className="tab"><span data-content="Closing soon"></span></span>
-                        <span className="tab"><span data-content="Popular"></span></span>
+                        <span className="tab"><span data-content="Closing soon">{}</span></span>
+                        <span className="tab"><span data-content="Popular">{}</span></span>
                         {/*<span className="tab"><span data-content="Trending"></span></span>*/}
-                        <span className="tab"><span data-content="New"></span></span>
-                        <span className="tab"><span data-content="Movers"></span></span>
+                        <span className="tab"><span data-content="New">{}</span></span>
+                        <span className="tab"><span data-content="Movers">{}</span></span>
                         <div className="mode_wrapper">
                             <label className="mode_switch">
                                 <input defaultChecked={!isBasicMode} id="Mode" name="Mode" type="checkbox" />
@@ -101,7 +101,7 @@ let nb = "&nbsp;";
                         <div className="tab_item">
                             <div className="mp-exchanges">
                                 {data.marketsData.map((item, key) =>
-                                    <ExchangeItem key={key} data={{...item, activeExchange, isBasicMode, isTraiderOn}} actions={this.props.actions} />
+                                    <ExchangeItem key={key} data={{...item, activeExchange, isBasicMode, isTraiderOn}} mainContext={this} actions={actions}/>
                                 )}
                             </div>
                             { $Pagination && $Pagination.LastPage > 1 &&
@@ -109,7 +109,11 @@ let nb = "&nbsp;";
                                     <ul className="pagination_list">
                                         {$Pagination.Pages.map((item, key) => {
                                             return <li key={key} className={(item.Disabled ? "disabled " : "") + (item.IsCurrenPage ? "active" : "")}>
-                                                <a href={urlBase + `/${item.RouteValues.action[0] == '/' ? item.RouteValues.action.slice(1) : item.RouteValues.action}?Page=${item.RouteValues.Page}`} dangerouslySetInnerHTML={{__html: item.Caption}}></a>
+                                                <a  href={urlBase + `/${item.RouteValues.action[0] == '/' ?
+                                                        item.RouteValues.action.slice(1)
+                                                        :
+                                                        item.RouteValues.action}?Page=${item.RouteValues.Page}`}
+                                                    dangerouslySetInnerHTML={{__html: item.Caption}}>{}</a>
                                             </li>
                                         })}
                                     </ul>
@@ -132,7 +136,7 @@ export default connect(
         // test: state.Ttest,
     }),
     dispatch => ({
-        // actions: bindActionCreators(actions, dispatch),
+		defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
         actions: bindActionCreators(mainPageActions, dispatch),
     })
 )(MainPage)

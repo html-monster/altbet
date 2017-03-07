@@ -46,9 +46,8 @@ export class TabMyPos extends React.Component
     render()
     {
         // 0||console.log( 'this.props.route', this.props.route );
-        var {data: positionData, actions} = this.props;
-        var plClass;
-
+        const {data: positionData, actions, defaultOrderActions} = this.props;
+        let plClass;
 
         // filter btn
         var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "2"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '3'} htmlFor={inCatName + "2"} className={inCatName.toLowerCase().replace("-", "_")}><span className="sub_tab">{inCatName}</span></label>];
@@ -142,10 +141,10 @@ export class TabMyPos extends React.Component
                                                                     <td className={'pl ' + plClass}>{(item2.CommonProfitLoss < 0) ? '($' + (item2.CommonProfitLoss).toString().slice(1) + ')' : '$' + item2.CommonProfitLoss}</td>
                                                                     <td>
                                                                         <span className="buy"><button className="buy btn event wave empty btnJs"
-                                                                            onClick={() => actions.actionOnBuySellClick({type: 0, exdata: commProps})}
+                                                                            onClick={() => actions.actionOnBuySellClick({type: 0, exdata: commProps}, defaultOrderActions)}
                                                                         >Buy</button></span>
                                                                         <span className="sell"><button className="sell btn event wave empty btnJs"
-                                                                            onClick={() => actions.actionOnBuySellClick({type: 1, exdata: commProps})}
+                                                                            onClick={() => actions.actionOnBuySellClick({type: 1, exdata: commProps}, defaultOrderActions)}
                                                                         style={{marginLeft : 10}}>Sell</button></span>
                                                                     </td>
                                                                 </tr>

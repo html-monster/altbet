@@ -18,15 +18,21 @@ export class WebsocketModel
 
     private noSupportMessage = "Your browser cannot support WebSocket!";
     private connectionString = "ws://localhost:2001/";
-    // private connectionString = "ws://192.168.1.249:2001/";
     // private connectionString = "ws://54.171.212.235:2001/";    // IP
+    // private connectionString = "ws://192.168.1.249:2001/";
 
-    private ws = null;
+    private ws = null;                  // socket instance
     private SocketSubscribe = null;
     private callbacks = {};
     private socketData: any = null;
     private lastErrorSendObj = null;    // save send object if socket not connected
     private lastSendObj = null;         // save send last object
+
+
+    constructor()
+    {
+        if (globalData.webSocketUrl) this.connectionString = globalData.webSocketUrl;
+    }
 
 
     public connectSocketServer()
@@ -131,6 +137,12 @@ export class WebsocketModel
     };
 
 
+    public testClose()
+    {
+        this.ws.close(3001, "manual disconnect");
+    }
+
+
 
     private disconnectWebSocket()
     {
@@ -163,8 +175,8 @@ export class WebsocketModel
             // code - тип сообщения (closedmarket|logout|etc)
             // message - текст
             // type - вид сообщения - success|info|warning|error
-            defaultMethods.showWarning(data.Result);
-            __DEV__&&console.log( evt );
+            defaultMethods.showMessage(data.Message, defaultMethods.MESSAGE_TYPES[data.Type]);
+            __DEV__&&console.log( data );
         }
 
         if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn)) window.ee.emit('yourOrders.update', data.CurrentOrders);//myOrdersControllerClass.updateData(data.CurrentOrders);
@@ -175,7 +187,7 @@ export class WebsocketModel
             window.ee.emit('myOrderHistory.update', data.OrdersPositionsHistory.HistoryTradeItems);
         }
         if(data.AccountData) {
-            dataController && dataController.updateHeaderData(data.AccountData);
+            // dataController && dataController.updateHeaderData(data.AccountData);
             window.ee.emit('accountData.update', data.AccountData)
         }
 
@@ -248,6 +260,6 @@ export class WebsocketModel
     private onClose() {
         // defaultMethods.showError('socket closed');
         $("[data-js-connect-label]").fadeIn(200);
-        setTimeout(() => { this.connectSocketServer(); }, 1000);
+        // setTimeout(() => { this.connectSocketServer(); }, 1000);
     }
 }

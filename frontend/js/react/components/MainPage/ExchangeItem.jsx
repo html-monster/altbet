@@ -10,10 +10,10 @@ export default class ExchangeItem extends React.Component
     render()
     {
         // let  = ABpp.config.basicMode;
+        const { actions, data:{ activeExchange, isBasicMode, isTraiderOn }, mainContext  } = this.props;
+        const data = this.props.data;
+        const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
-        let {activeExchange, isBasicMode, isTraiderOn} = this.props.data;
-        let data = this.props.data;
-        let symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let date;
 
         // common props for button container
@@ -34,7 +34,7 @@ export default class ExchangeItem extends React.Component
 
         // data.activeExchange.name == data.Symbol.Exchange&&console.debug( 'data.Symbol', data.activeExchange, data.Symbol.Exchange, data.activeExchange.name == data.Symbol.Exchange );
         // activate current exchange
-        var $classActive = '', $classActiveNM = '', $classActiveM = '';
+        let $classActive = '', $classActiveNM = '', $classActiveM = '';
         if( data.activeExchange.name == data.Symbol.Exchange )
         {
             $classActive = ' active';
@@ -48,9 +48,8 @@ export default class ExchangeItem extends React.Component
 
             <div className={"event_info " + data.CategoryIcon}>
                 <span className="date">
-                    {(date = $DateLocalization.fromSharp(data.Symbol.StartDate, 0, {TZOffset: false}).unixToLocalDate({format: 'DD MMM Y H:mm'})) ? date : ''}
-                    -
-                    {(date = $DateLocalization.fromSharp(data.Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}
+                    {(date = $DateLocalization.fromSharp(data.Symbol.StartDate, 0, {TZOffset: false}).unixToLocalDate({format: 'DD MMM Y'})) ? date : ''}
+                    {/*- {(date = $DateLocalization.fromSharp(data.Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                 </span>
                 {data.Symbol.Status == 2 ? <i className="half_time" title="Completed">ht<span>Completed</span></i> : ""}
             </div>
@@ -61,7 +60,7 @@ export default class ExchangeItem extends React.Component
             </div>
             <div className="table not-sort wave waves-effect waves-button"> {/*id="exchange_table"*/}
                 <div className={"event-content" + $classActiveNM} data-symbol={symbol} data-id={data.Symbol.Exchange} data-mirror="0"
-                    onClick={() => {ABpp.config.tradeOn && this.props.actions.exchangeSideClick({name: data.Symbol.Exchange,
+                    onClick={() => {ABpp.config.tradeOn && actions.exchangeSideClick({name: data.Symbol.Exchange,
                         isMirror: false,
                         title: [data.Symbol.HomeName, data.Symbol.AwayName],
                         symbol: symbol,
@@ -76,13 +75,13 @@ export default class ExchangeItem extends React.Component
 
                     <div className="container">
 
-                        <ButtonContainer actions={this.props.actions} data={{
+                        <ButtonContainer actions={actions} mainContext={mainContext} data={{
                             type: 'sell',
                             side: 0,
                             ismirror: false,
                             ...commProps
                         }}/>
-                        <ButtonContainer actions={this.props.actions} data={{
+                        <ButtonContainer actions={actions} mainContext={mainContext} data={{
                             type: 'buy',
                             side: 1,
                             ismirror: false,
@@ -109,7 +108,7 @@ export default class ExchangeItem extends React.Component
 
 
                 <div className={"event-content revers" + $classActiveM} data-symbol={symbol + "_mirror"} data-id={data.Symbol.Exchange} data-mirror="1"
-                    onClick={() => {ABpp.config.tradeOn && this.props.actions.exchangeSideClick({name: data.Symbol.Exchange,
+                    onClick={() => {ABpp.config.tradeOn && actions.exchangeSideClick({name: data.Symbol.Exchange,
                         isMirror: true,
                         title: [data.Symbol.HomeName, data.Symbol.AwayName],
                         symbol: symbol,
@@ -122,7 +121,7 @@ export default class ExchangeItem extends React.Component
                     </h3>
 
                     <div className="container">
-                        <ButtonContainer actions={this.props.actions} data={{
+                        <ButtonContainer actions={actions} mainContext={mainContext} data={{
                             type: 'sell',
                             side: 1,
                             ismirror: true,
@@ -131,7 +130,7 @@ export default class ExchangeItem extends React.Component
                             ...commProps
                         }}/>
 
-                        <ButtonContainer actions={this.props.actions} data={{
+                        <ButtonContainer actions={actions} mainContext={mainContext} data={{
                             type: 'buy',
                             side: 0,
                             ismirror: true,
@@ -146,12 +145,12 @@ export default class ExchangeItem extends React.Component
                     </div>
                 </div>
 
-                <button className="show-schedule" title="Show chart"></button>
+                <button className="show-schedule" title="Show chart">{}</button>
                 <div className="schedule loader not-sort">
                     <div id={"container_" + symbol}></div>
                     {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                 </div>
-                <a href="#" className="add_favorite" title="Add to favorite"></a>
+                <a href="#" className="add_favorite" title="Add to favorite">{}</a>
             </div>
         </div>;
     }
