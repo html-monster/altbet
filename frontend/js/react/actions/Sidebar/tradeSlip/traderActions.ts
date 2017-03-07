@@ -70,7 +70,8 @@ class Actions extends BaseActions
 					// __DEV__ && console.log('re-render');
 				}
 				if(state.activeTrader.activeExchange != symbol || state.activeTrader.isMirror != isMirror){
-					setTimeout(() => {traderActions.scrollTo(context, currSymbData, isMirror)}, initialStart ? 400 : 100);
+					setTimeout(() => {this._scrollTo(context, currSymbData, isMirror)}, initialStart ? 400 : 100);
+					console.log(this._scrollTo);
 					if(initialStart) initialStart = false;
 					dispatch({
 						type: TRADER_ON_EXCHANGE_CHANGE,
@@ -276,7 +277,7 @@ class Actions extends BaseActions
 		return () => {
 			let copyData = $.extend(true, {}, data);
 			let price = 0.99,
-				backendData = this.objectReconstruct(copyData.Orders, isMirror),
+				backendData = this._objectReconstruct(copyData.Orders, isMirror),
 				htmlData = [];
 			// let className = 'ask';
 
@@ -532,7 +533,7 @@ class Actions extends BaseActions
 	 * @param isMirror
 	 * @returns {{}}
 	 */
-	private objectReconstruct(inData, isMirror)
+	private _objectReconstruct(inData, isMirror)
 	{
 		let newData = {};
 
@@ -553,38 +554,35 @@ class Actions extends BaseActions
 		return newData;
 	}
 
-	public scrollTo(context, data, isMirror) {
-		return () =>
-		{
-			const tbody =  $(context.refs.traderBody);
-			if(JSON.stringify(data) != '{}'){
-				let { Symbol: { LastAsk, LastBid } } = data;
-				if(isMirror) {
-					let LastBidOld = LastBid;
+	private _scrollTo(context, data, isMirror) {
+		const tbody =  $(context.refs.traderBody);
+		if(JSON.stringify(data) != '{}'){
+			let { Symbol: { LastAsk, LastBid } } = data;
+			if(isMirror) {
+				let LastBidOld = LastBid;
 
-					if(LastAsk)LastBid = Math.round10(1 - LastAsk, -2);
-					else LastBid = null;
+				if(LastAsk)LastBid = Math.round10(1 - LastAsk, -2);
+				else LastBid = null;
 
-					if(LastBidOld) LastAsk = Math.round10(1 - LastBidOld, -2);
-					else LastAsk = null;
-				}
-
-				let indexBuy = LastBid ? Math.round(99 - LastBid * 100) : 0,
-					indexSell = LastAsk ? Math.round(99 - LastAsk * 100) : 0;
-
-				if(!indexBuy)
-					indexBuy = indexSell;
-				else if(!indexSell)
-					indexSell = indexBuy;
-
-				tbody.animate({scrollTop: (indexBuy + (indexSell - indexBuy) / 2) * 20 - tbody.height() / 2 + 10}, 400);
+				if(LastBidOld) LastAsk = Math.round10(1 - LastBidOld, -2);
+				else LastAsk = null;
 			}
-			else
-				tbody.animate({scrollTop: 980 - tbody.height() / 2}, 200);
 
-			// console.log(tbody.height());
-			// console.log(980 - tbody.height() / 2);
+			let indexBuy = LastBid ? Math.round(99 - LastBid * 100) : 0,
+				indexSell = LastAsk ? Math.round(99 - LastAsk * 100) : 0;
+
+			if(!indexBuy)
+				indexBuy = indexSell;
+			else if(!indexSell)
+				indexSell = indexBuy;
+
+			tbody.animate({scrollTop: (indexBuy + (indexSell - indexBuy) / 2) * 20 - tbody.height() / 2 + 10}, 400);
 		}
+		else
+			tbody.animate({scrollTop: 980 - tbody.height() / 2}, 200);
+
+		// console.log(tbody.height());
+		// console.log(980 - tbody.height() / 2);
 	}
 
 	// public tbodyResize(showFooter){

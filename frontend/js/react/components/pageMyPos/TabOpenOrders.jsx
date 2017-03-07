@@ -28,11 +28,10 @@ export class TabOpenOrders extends React.Component
 
     render()
     {
-        var {data: openOrdersData} = this.props;
-// 0||console.debug( 'openOrdersData', openOrdersData );
-
+        const { data: openOrdersData, yourOrdersActions } = this.props;
+        // 0||console.debug( 'openOrdersData', openOrdersData );
         // filter btn
-        var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "1"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '2'} htmlFor={inCatName + "1"} className={inCatName.toLowerCase().replace("-", "_")}><span className="sub_tab">{inCatName}</span></label>];
+        let filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "1"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '2'} htmlFor={inCatName + "1"} className={inCatName.toLowerCase().replace("-", "_")}><span className="sub_tab">{inCatName}</span></label>];
 
 
         return <div className="tab_item">
@@ -68,7 +67,8 @@ export class TabOpenOrders extends React.Component
                                             {
                                                 openOrdersData.map((item, key) =>
                                                 {
-                                                    let $handicap = (item.isMirror ? item.Symbol.AwayHandicap : item.Symbol.HomeHandicap);
+                                                    const $handicap = (item.isMirror ? item.Symbol.AwayHandicap : item.Symbol.HomeHandicap);
+
                                                     if( this.state.filters[item.Category] ) return <tr key={key} className={(item.isMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))} id={item.ID}>
                                                         <td className="title">
                                                             {(item.isMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}
@@ -95,8 +95,8 @@ export class TabOpenOrders extends React.Component
                                                         </td>
                                                         <td className={item.isPosition ? 'pos' : ''}>{}</td>
                                                         <td>
-                                                            <button className="edit btn wave">Edit</button>
-                                                            <button className="delete btn wave" style={{marginLeft : 10}}>Cancel</button>
+                                                            <button className="edit btn wave" onClick={yourOrdersActions.actionOpenEditForm.bind(null, item.ID)}>Edit</button>
+                                                            <button className="delete btn wave" onClick={yourOrdersActions.actionOpenDeleteForm.bind(null, item.ID)} style={{marginLeft : 10}}>Cancel</button>
                                                         </td>
                                                     </tr>;
                                                 })

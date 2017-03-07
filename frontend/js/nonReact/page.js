@@ -98,7 +98,7 @@ $(document).ready(function ()
 	new activeTraderClass(); //active trader activation
 	new eventPageClass(); //active order on the event page
 
-	new myPosClass(); // activate my pos script
+	// new myPosClass(); // activate my pos script
 
 	new modeSwitchClass(); //mode switch activate
 
