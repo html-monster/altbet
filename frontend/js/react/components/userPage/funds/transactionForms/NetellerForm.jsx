@@ -30,23 +30,24 @@ export default class NetellerForm extends React.Component
 		const inputHidden = ({ type, meta, ...input }) => {
 			return <input type={type} {...input}/>
 		};
-		const formContent = ({ input, error, successMessage, format, data:{ data, plan, depositQuantity, pricePlan }, handleSubmit }) => {
-			return <form action={`${ABpp.baseUrl}/Payment/${format ? 'NetellerOut' : 'NetellerIn'}`}  autoComplete="off" onSubmit={handleSubmit}>
+		const formContent = ({ input, error, successMessage, withdraw, data:{ data, plan, depositQuantity, pricePlan }, handleSubmit }) => {
+			console.log(withdraw);
+			return <form action={`${ABpp.baseUrl}/Payment/${withdraw ? 'NetellerOut' : 'NetellerIn'}`}  autoComplete="off" onSubmit={handleSubmit}>
 				<div className="container">
 					{/* костыль для отмены браузерного автозаполнение полей */}
 					<input type="text" style={{display: 'none'}}/>
 					<input type="password" style={{display: 'none'}}/>
 					{/* =================================================== */}
 					{
-						format ?
-							<InputValidation renderContent={inputRender} id={'neteller_id'} name="email"
+						withdraw ?
+							<InputValidation renderContent={inputRender} id={'neteller_id'} name="Email"
 											 className={'input__field input__field--yoshiko'}
 											 initialValue={data.UserInfo.Email}
 											 label={'E-mail'} type={'text'} filled={data.UserInfo.Email}
 											 validate={mailValidation} input={input}
 											 maxLength="50"/>
 						:
-							<InputValidation renderContent={inputRender} id={'neteller_id'} name="clientId"
+							<InputValidation renderContent={inputRender} id={'neteller_id'} name="ClientId"
 											 className={'input__field input__field--yoshiko'}
 											 initialValue={data.UserInfo.Email}
 											 label={'Neteller ID or e-mail'} type={'text'} filled={data.UserInfo.Email}
@@ -56,8 +57,8 @@ export default class NetellerForm extends React.Component
 
 
 					{
-						!format &&
-						<InputValidation renderContent={inputRender} id={'ntl_sec_id'} name="secureId"
+						!withdraw &&
+						<InputValidation renderContent={inputRender} id={'ntl_sec_id'} name="SecureId"
 										 className={'input__field input__field--yoshiko'}
 										 label={'Secure ID or Authentication Code'} type={'password'}
 										 inputLabel={'password'}
@@ -65,25 +66,25 @@ export default class NetellerForm extends React.Component
 										 maxLength="50"/>
 					}
 					{
-						format &&
+						withdraw &&
 						<InputValidation renderContent={inputRender} id={'neteller_total'}
 										 className={'input__field input__field--yoshiko total number'}
 										 label={'Withdrawal amount'} type={'tel'} filled={depositQuantity}
-										 inputLabel={'total'} name="sum"
+										 inputLabel={'total'} name="Sum"
 										 value={depositQuantity || ''}
 										 disabled={true} input={input}/>
 					}
-					{format && <input type="submit" className="wave btn" defaultValue={'Submit'} />}
-					{format && <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>}
-					{format && <span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>}
+					{withdraw && <input type="submit" className="wave btn" defaultValue={'Submit'} />}
+					{withdraw && <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>}
+					{withdraw && <span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>}
 				</div>
 				{
-					!format &&
+					!withdraw &&
 					<div className="container">
 						<InputValidation renderContent={inputRender} id={'neteller_total'}
 										 className={'input__field input__field--yoshiko total number'}
 										 label={'Deposit amount'} type={'tel'} filled={depositQuantity || pricePlan}
-										 inputLabel={'total'} name="sum"
+										 inputLabel={'total'} name="Sum"
 										 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
 										 disabled={true} input={input}/>
 
@@ -92,7 +93,7 @@ export default class NetellerForm extends React.Component
 						<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
 					</div>
 				}
-				{!format && <InputValidation renderContent={inputHidden} type={'hidden'} name="plan" value={plan} input={input}/>}
+				{!withdraw && <InputValidation renderContent={inputHidden} type={'hidden'} name="Plan" value={plan} input={input}/>}
 				{/*<div className="payment_message approve pop_up" ref="paymentMessage">
 					<div className="pop_up_container">
 						<div className="pop_up_content">
@@ -106,7 +107,7 @@ export default class NetellerForm extends React.Component
 		};
 		return <FormValidation
 			data={this.props.data}
-			format={this.props.format}
+			withdraw={this.props.withdraw}
 			renderContent={formContent}
 			handleSubmit={this.props.onSubmit}
 			serverValidation={true}

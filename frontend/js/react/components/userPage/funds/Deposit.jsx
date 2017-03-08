@@ -6,9 +6,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 
+import Visa from './transactionForms/Visa';
 import NetellerForm from './transactionForms/NetellerForm';
-import EcoPayzForm from './transactionForms/EcoPayzForm';
-import ScrillForm from './transactionForms/ScrillForm';
+import ScrillForm from './transactionForms/SkrillForm';
+import Bitpay from './transactionForms/Bitpay';
 import InputNumber from '../../inputNumber';
 import * as actions from '../../../actions/userPage/depositActions';
 
@@ -71,7 +72,8 @@ class Deposit extends React.Component{
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>250</button>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>500</button>
 				<InputNumber type="tel" className={sumValidation ? 'invalidJs' : ''} value={depositQuantity} hard="true"
-					   onChange={actions.actionOnInputQuantityChange.bind(null, actions)} maxLength="7" autoFocus/>
+							 inputValidate="integer" onChange={actions.actionOnInputQuantityChange.bind(null, actions)}
+							 maxLength="7" autoFocus/>
 				<span className="validation-summary-errors">{sumValidation}</span>
 				<span className="label">$</span>
 			</div>
@@ -189,7 +191,7 @@ class Deposit extends React.Component{
 					<span className="tab btn wave VisaMC" onClick={this.scrollBottom}><span>{}</span></span>
 					<span className="tab btn wave Skrill active" onClick={this.scrollBottom}><span>{}</span></span>
 					<span className="tab btn wave Neteller" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Ecopayz" onClick={this.scrollBottom}><span>{}</span></span>
+					<span className="tab btn wave Bitpay" onClick={this.scrollBottom}><span>{}</span></span>
 				</div>
 				<div className="tab_content">
 					<div className="tab_item payment_tab">
@@ -284,7 +286,7 @@ class Deposit extends React.Component{
 						<NetellerForm data={this.props.deposit} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Neteller')} />
 					</div>
 					<div className="tab_item payment_tab">
-						<EcoPayzForm data={this.props.deposit} onSubmit={actions.actionOnAjaxSend} />
+						<Bitpay data={this.props.deposit} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Bitpay')} />
 					</div>
 				</div>
 			</div>

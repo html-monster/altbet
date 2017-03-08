@@ -126,6 +126,9 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 			case 'Skrill':{
 				onSuccessAjax =  context.props.actions.onSuccessAjaxSkrill.bind(null, context, form, serverValidation);
 				break;}
+			case 'Bitpay':{
+				onSuccessAjax =  context.props.actions.onSuccessAjaxSkrill.bind(null, context, form, serverValidation);
+				break;}
 		}
 
 		const jQAjax = defaultMethods.sendAjaxRequest.bind(null ,{
@@ -137,10 +140,10 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 			beforeSend: OnBeginAjax,
 		});
 		let error = null;
-		if(!values.sum)
+		if(!values.Sum)
 			error = 'Required';
 
-		if(values.sum && values.sum < 10)
+		if(values.Sum && values.Sum < 10)
 			error = 'Minimum deposit is $10';
 
 		// if(values.sum){
@@ -274,7 +277,7 @@ export function onSuccessAjaxNeteller(context, form, serverValidation, data)
 
 export function onSuccessAjaxSkrill(context, form, serverValidation, data)
 {
-	return (dispatch) =>
+	return () =>
 	{
 		__DEV__ && console.log(data);
 		const {Answer: { code }} = data;
@@ -303,3 +306,13 @@ export function onSuccessAjaxSkrill(context, form, serverValidation, data)
 	}
 }
 
+export function onSuccessAjaxBitpay(context, form, serverValidation, data) {
+	return (dispatch) =>
+	{
+		__DEV__ && console.log(data);
+		const {Answer: { code }} = data;
+
+		form.find('[type=submit]').removeAttr('disabled');
+		form.removeClass('loading');
+	}
+}

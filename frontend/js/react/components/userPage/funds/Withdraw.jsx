@@ -5,9 +5,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 
+import Visa from './transactionForms/Visa';
 import NetellerForm from './transactionForms/NetellerForm';
-import EcoPayzForm from './transactionForms/EcoPayzForm';
-import ScrillForm from './transactionForms/ScrillForm';
+import ScrillForm from './transactionForms/SkrillForm';
+import Bitpay from './transactionForms/Bitpay';
 import InputNumber from '../../inputNumber';
 import * as actions from '../../../actions/userPage/withdrawActions';
 
@@ -36,7 +37,7 @@ class Withdraw extends React.Component{
 	{
 		const { approved, data, depositQuantity, sumValidation } = this.props.withdraw;
 		const actions = this.props.actions;
-console.log(actions);
+// console.log(actions);
 		return <div className="tab_item funds">
 			<h3>Withdraw funds</h3>
 			<span className="account_balance">You currently have <span className="value">${Math.round10(data.UserAssets.CurrentBalance, -2)}</span> in your account</span>
@@ -58,7 +59,7 @@ console.log(actions);
 					<span className="tab btn wave VisaMC" onClick={this.scrollBottom}><span>{}</span></span>
 					<span className="tab btn wave Skrill active" onClick={this.scrollBottom}><span>{}</span></span>
 					<span className="tab btn wave Neteller" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Ecopayz" onClick={this.scrollBottom}><span>{}</span></span>
+					<span className="tab btn wave Bitpay" onClick={this.scrollBottom}><span>{}</span></span>
 				</div>
 				<div className="tab_content">
 					<div className="tab_item payment_tab">
@@ -115,7 +116,7 @@ console.log(actions);
 								{/*<input type="submit" className="wave btn" defaultValue={'Submit'} />*/}
 							{/*</div>*/}
 						{/*</form>*/}
-						<ScrillForm data={this.props.withdraw} format={'withdraw'} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Skrill')} />
+						<ScrillForm data={this.props.withdraw} withdraw={true} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Skrill')} />
 					</div>
 					<div className="tab_item payment_tab">
 						{/*<form>*/}
@@ -149,11 +150,11 @@ console.log(actions);
 						{/*</div>*/}
 						{/*<input type="hidden" name="plan" value={plan}/>*/}
 						{/*</form>*/}
-						<NetellerForm data={this.props.withdraw} format={'withdraw'} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Neteller')} />
+						<NetellerForm data={this.props.withdraw} withdraw={true} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Neteller')} />
 						{/*<button className="btn wave approve" onClick={this.lalal}>{'Submit'}</button>*/}
 					</div>
 					<div className="tab_item payment_tab">
-						<EcoPayzForm data={this.props.withdraw} onSubmit={actions.actionOnAjaxSend.bind(null, this)} />
+						<Bitpay data={this.props.withdraw} withdraw={true} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Bitpay')} />
 					</div>
 				</div>
 			</div>
