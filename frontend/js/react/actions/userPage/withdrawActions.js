@@ -94,13 +94,14 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 		const submit = form.find('[type=submit]');
 		let onSuccessAjax;
 
-		switch (payment){
-			case 'Neteller':{
+		switch (payment)
+		{
+			case 'Neteller':
 				onSuccessAjax =  context.props.actions.onSuccessAjaxNeteller.bind(null, context, form, serverValidation);
-				break;}
-			case 'Skrill':{
+				break;
+			case 'Skrill':
 				onSuccessAjax =  context.props.actions.onSuccessAjaxSkrill.bind(null, context, form, serverValidation);
-				break;}
+				break;
 		}
 
 		const jQAjax = defaultMethods.sendAjaxRequest.bind(null ,{

@@ -33,7 +33,6 @@ let constants = ABpp.ABpp;
 ABpp = ABpp.ABpp.getInstance();
 ABpp.CONSTS = constants;
 
-
 const common = {
 	registerBox,
 };
@@ -41,6 +40,12 @@ const common = {
 
 switch (ABpp.config.currentPage)
 {
+	case  ABpp.CONSTS.PAGE_LANDING: {
+		reducers = {
+			registerBox,
+		};
+		break;
+	}
 	case  ABpp.CONSTS.PAGE_MAIN: {
 		reducers = {
 			App: appState,

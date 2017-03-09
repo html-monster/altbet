@@ -4,7 +4,8 @@
 
 import React from 'react';
 
-export default class FormValidation extends React.Component{
+export default class FormValidation extends React.Component
+{
 	constructor()
 	{
 		super();
@@ -37,7 +38,6 @@ export default class FormValidation extends React.Component{
 
 	serverValidation(data)
 	{
-		0||console.log( 'here', 0 );
 		const {error, message, ...rest} = data;
 		let state = this.state;
 

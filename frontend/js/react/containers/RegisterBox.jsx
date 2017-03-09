@@ -46,7 +46,7 @@ class RegisterBox extends BaseController
                         </div>
                         <div className="tab_content">
                             <div className="tab_item real">
-                                <RegisterForm onSubmit={this.props.actions.actionFormSubmit} />
+                                <RegisterForm onSubmit={this.props.actions.actionFormSubmit.bind(null, this)} />
                             </div>
                         </div>
                     </div>
