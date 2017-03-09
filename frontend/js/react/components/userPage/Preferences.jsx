@@ -7,7 +7,7 @@ import React from 'react';
 import {CheckBox} from '../common/CheckBox';
 
 
-export class Preferences extends React.PureComponent
+export default class Preferences extends React.PureComponent
 {
     /**
      * @private

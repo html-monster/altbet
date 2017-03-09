@@ -7,7 +7,7 @@ import React from 'react';
 import {DateLocalization} from '../../models/DateLocalization';
 
 
-export class Settings extends React.PureComponent
+export default class Settings extends React.PureComponent
 {
     render()
     {

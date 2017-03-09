@@ -37,36 +37,7 @@ export default class OrderForm extends React.Component{
 		// console.log(`-5000`, OddsConverterObj.convertToAltbetSystem('-5000'));
 	}
 
-	// OnBeginAjax()
-	// {
-	// 	$(this.refs.orderForm).find('[type=submit]').attr('disabled', true);
-	// }
-	//
-	// onSuccessAjax()
-	// {
-	// 	console.log('Order sending finished: ' + this.props.data.ID);
-	// }
-	//
-	// onErrorAjax()
-	// {
-	// 	$(this.refs.orderForm).find('[type=submit]').removeAttr('disabled');
-	// 	defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
-	// }
-
-	// ajaxSendHandler(e)
-	// {
-	// 	e.preventDefault();
-	// 	defaultMethods.sendAjaxRequest({
-	// 		httpMethod: 'POST',
-	// 		url: this.props.formData.url,
-	// 		callback: ::this.onSuccessAjax,
-	// 		onError: ::this.onErrorAjax,
-	// 		beforeSend: ::this.OnBeginAjax,
-	// 		context: $(this.refs.orderForm)
-	// 	});
-	// }
-
-	onInputIncrement(input, value, event)
+	onInputIncrement(input, value)
 	{
 		const state = this.state;
 		const refs = this.refs;
@@ -389,23 +360,25 @@ export default class OrderForm extends React.Component{
 						</div>
 					</div>
 					<div className="profit">
-						<label className="with_info">
-							Profitability
-							<div className="help">
-								<div className="help_message right">
-									<p>
-										<span>Possible maximum prize if position results in winning outcome<br/>
-											{checkboxProp && 'Formula:'}</span> {
-											checkboxProp && +price && stateData.Volume ? `(1 - ${price}) * ${stateData.Volume}` || '' : ''
-										}
-									</p>
-								</div>
-							</div>
+						<label>
+							Prize
+							{/*Profitability*/}
+							{/*<div className="help">*/}
+								{/*<div className="help_message right">*/}
+									{/*<p>*/}
+										{/*<span>Possible maximum prize if position results in winning outcome<br/>*/}
+											{/*{checkboxProp && 'Formula:'}</span> {*/}
+											{/*checkboxProp && +price && stateData.Volume ? `(1 - ${price}) * ${stateData.Volume}` || '' : ''*/}
+										{/*}*/}
+									{/*</p>*/}
+								{/*</div>*/}
+							{/*</div>*/}
 						</label>
 						<div className="input">
 							<input type="text" className="number" autoComplete="off" ref="inputProfit"
-								   onChange={null} value={checkboxProp && +price && stateData.Volume ? Math.round10((1 - price) * stateData.Volume, -2) || '' : ''}
+								   onChange={null} value={stateData.Volume ? `$${stateData.Volume}` : ''}
 								   disabled />
+							{/*checkboxProp && +price && stateData.Volume ? Math.round10((1 - price) * stateData.Volume, -2) || '' : ''*/}
 						</div>
 					</div>
 				</div>
