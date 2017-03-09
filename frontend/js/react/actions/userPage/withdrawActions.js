@@ -81,7 +81,15 @@ export function actionOnQuantityValidate(values)
 // 		// });
 // 	}
 // }
-
+/**
+ *
+ * @param context - this компонента в которой нахоидтся функция
+ * @param payment string - название платежки
+ * @param values - данные собранные с формы
+ * @param serverValidation - функция обратной связи для серверной валидации
+ * @param event
+ * @returns {function(*, *)}
+ */
 export function actionOnAjaxSend(context, payment, values, serverValidation, event)
 {
 	return (dispatch, getState) =>

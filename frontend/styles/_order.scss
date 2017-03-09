@@ -963,10 +963,8 @@
         left: calc(50% - 7px);
       }
     }
-    .price, .volume{
-      input.number[disabled]{
-        border-right: 1px solid $order_sidebar_order_border_color;
-      }
+    .price, .volume, .fees, .risk, .profit{
+      input.number[disabled]{  border-right: 1px solid $order_sidebar_order_border_color;  }
     }
     .edit{
       //right: 22px;

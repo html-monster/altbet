@@ -12,7 +12,7 @@ import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
 import Header from './containers/Header';
 import EventPage from './containers/EventPage';
-import AccountPage from './containers/AccountPage';
+import UserPage from './containers/UserPage';
 import PageMyPos from './components/PageMyPos';
 import Sidebar from './components/Sidebar';
 
@@ -56,9 +56,9 @@ if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
 			<Router history={hashHistory}>
                 <Route path='/'>
                     <IndexRedirect to="/funds" />
-                    <Route path='/funds(/:tabname)' component={AccountPage} tab="funds" />
-                    <Route path='/preferences' component={AccountPage} tab="pref" />
-                    <Route path='/settings' component={AccountPage} tab="sett" />
+                    <Route path='/funds(/:tabname)' component={UserPage} tab="funds" />
+                    <Route path='/preferences' component={UserPage} tab="pref" />
+                    <Route path='/settings' component={UserPage} tab="sett" />
                 </Route>
 			</Router>
 		</Provider>,
