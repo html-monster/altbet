@@ -32,6 +32,7 @@ let constants = ABpp.ABpp;
 ABpp = ABpp.ABpp.getInstance();
 ABpp.CONSTS = constants;
 
+
 switch (ABpp.config.currentPage){
 	case  ABpp.CONSTS.PAGE_MAIN:{
 		reducers = {
