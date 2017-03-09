@@ -87,7 +87,7 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 	return (dispatch, getState) =>
 	{
 		const { approved } = getState().withdraw;
-		__DEV__ && console.log(values);
+		__DEV__ && console.log('transactionData:', values);
 		// getState().withdraw.form = event.target;
 		const form = $(event.target);
 		const url = $(event.target).attr('action');
@@ -101,6 +101,12 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 			case 'Skrill':{
 				onSuccessAjax =  context.props.actions.onSuccessAjaxSkrill.bind(null, context, form, serverValidation);
 				break;}
+			case 'Bitpay':{
+				onSuccessAjax =  context.props.actions.onSuccessAjaxBitpay.bind(null, context, form, serverValidation);
+				break;}
+			case 'Visa':{
+				onSuccessAjax =  context.props.actions.onSuccessAjaxVisa.bind(null, context, form, serverValidation);
+				break;}
 		}
 
 		const jQAjax = defaultMethods.sendAjaxRequest.bind(null ,{
@@ -113,9 +119,9 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 		});
 		let error = null;
 
-		if(!values.sum) error = 'Required';
+		if(!values.Sum) error = 'Required';
 
-		if(values.sum && values.sum < 10) error = 'Minimum withdraw is $10';
+		if(values.Sum && values.Sum < 10) error = 'Minimum withdraw is $10';
 
 		function OnBeginAjax()
 		{
@@ -269,6 +275,28 @@ export function onSuccessAjaxSkrill(context, form, serverValidation, data)
 		form.removeClass('loading');
 		$(context.refs.paymentMessage).find('.hide').unbind('click');
 		// getState().withdraw.approved = false;
+	}
+}
+
+export function onSuccessAjaxBitpay(context, form, serverValidation, data) {
+	return (dispatch) =>
+	{
+		__DEV__ && console.log(data);
+		const {Answer: { code }} = data;
+
+		form.find('[type=submit]').removeAttr('disabled');
+		form.removeClass('loading');
+	}
+}
+
+export function onSuccessAjaxVisa(context, form, serverValidation, data) {
+	return (dispatch) =>
+	{
+		__DEV__ && console.log(data);
+		const {Answer: { code }} = data;
+
+		form.find('[type=submit]').removeAttr('disabled');
+		form.removeClass('loading');
 	}
 }
 

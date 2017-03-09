@@ -5,9 +5,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 
+import Visa from './transactionForms/Visa';
 import NetellerForm from './transactionForms/NetellerForm';
-import EcoPayzForm from './transactionForms/EcoPayzForm';
-import ScrillForm from './transactionForms/ScrillForm';
+import ScrillForm from './transactionForms/SkrillForm';
+import Bitpay from './transactionForms/Bitpay';
 import InputNumber from '../../inputNumber';
 import * as actions from '../../../actions/userPage/withdrawActions';
 
@@ -36,7 +37,7 @@ class Withdraw extends React.Component{
 	{
 		const { approved, data, depositQuantity, sumValidation } = this.props.withdraw;
 		const actions = this.props.actions;
-console.log(actions);
+// console.log(actions);
 		return <div className="tab_item funds">
 			<h3>Withdraw funds</h3>
 			<span className="account_balance">You currently have <span className="value">${Math.round10(data.UserAssets.CurrentBalance, -2)}</span> in your account</span>
@@ -56,13 +57,13 @@ console.log(actions);
 			<div className="payment_container">
 				<div className="tabs">
 					<span className="tab btn wave VisaMC" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Skrill active" onClick={this.scrollBottom}><span>{}</span></span>
+					<span className="tab btn wave Skrill" onClick={this.scrollBottom}><span>{}</span></span>
 					<span className="tab btn wave Neteller" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Ecopayz" onClick={this.scrollBottom}><span>{}</span></span>
+					<span className="tab btn wave Bitpay" onClick={this.scrollBottom}><span>{}</span></span>
 				</div>
 				<div className="tab_content">
 					<div className="tab_item payment_tab">
-						<form>
+						{/*<form>
 							<div className="container">
 								<span className={'input_animate input--yoshiko'}>
 									<input className="input__field input__field--yoshiko number" id="card_number" type="tel" maxLength="19"/>
@@ -84,76 +85,73 @@ console.log(actions);
 										<span className="input__label-content input__label-content--yoshiko" data-content="CVV">CVV</span>
 									</label>
 									<span className="validation-summary-errors">{}</span>
-
-									{/*<label htmlFor="cvv">CVV</label>*/}
-									{/*<input className="input__field--yoshiko number cvv" id="cvv" type="tel" maxLength="4"/>*/}
-									{/*<span className="validation-summary-errors">{}</span>*/}
 								</span>
 								<input type="submit" className="wave btn" defaultValue={'Submit'}/>
 							</div>
-						</form>
-					</div>
-					<div className="tab_item payment_tab active">
-						{/*<form>*/}
-							{/*<div className="container">*/}
-								{/*<span className={'input_animate input--yoshiko ' + (data.UserInfo.Email ? 'input--filled' : '')}>*/}
-									{/*<input className="input__field input__field--yoshiko" id="skrill_id" type="text" defaultValue={data.UserInfo.Email}/>*/}
-									{/*<label className="input__label input__label--yoshiko" htmlFor="skrill_id">*/}
-										{/*<span className="input__label-content input__label-content--yoshiko" data-content="From Address">From Address</span>*/}
-									{/*</label>*/}
-									{/*<span className="validation-summary-errors">{}</span>*/}
-								{/*</span>*/}
-								{/*<span className={'input_animate input--yoshiko ' + (depositQuantity ? 'input--filled' : '')}>*/}
-									{/*<input className="input__field input__field--yoshiko total number" id="skrill_total" type="tel"*/}
-										   {/*value={depositQuantity ? depositQuantity : ''} onChange={actions.actionOnInputQuantityChange} disabled={true}/>*/}
-									{/*<label className="input__label input__label--yoshiko" htmlFor="skrill_total">*/}
-										{/*<span className="input__label-content input__label-content--yoshiko" data-content="Withdrawal amount">Withdrawal amount</span>*/}
-									{/*</label>*/}
-									{/*<span className="label">$</span>*/}
-									{/*<span className="validation-summary-errors">{}</span>*/}
-								{/*</span>*/}
-								{/*<input type="submit" className="wave btn" defaultValue={'Submit'} />*/}
-							{/*</div>*/}
-						{/*</form>*/}
-						<ScrillForm data={this.props.withdraw} format={'withdraw'} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Skrill')} />
+						</form>*/}
+						<Visa data={this.props.withdraw} withdraw={true} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Visa')} />
 					</div>
 					<div className="tab_item payment_tab">
-						{/*<form>*/}
-						{/*<div className="container">*/}
-						{/*<span className={'input_animate input--yoshiko ' + (data.UserInfo.Email ? 'input--filled' : '')}>*/}
-						{/*<input className="input__field input__field--yoshiko" id="neteller_id" type="text" defaultValue={data.UserInfo.Email}/>*/}
-						{/*<label className="input__label input__label--yoshiko" htmlFor="neteller_id">*/}
-						{/*<span className="input__label-content input__label-content--yoshiko" data-content="Neteller ID or e-mail">Neteller ID or e-mail</span>*/}
-						{/*</label>*/}
-						{/*<span className="validation-summary-errors">{}</span>*/}
-						{/*</span>*/}
-						{/*<span className="input_animate input--yoshiko">*/}
-						{/*<input className="input__field input__field--yoshiko" id="ntl_sec_id" type="password"/>*/}
-						{/*<label className="input__label input__label--yoshiko" htmlFor="ntl_sec_id">*/}
-						{/*<span className="input__label-content input__label-content--yoshiko" data-content="Secure ID or Authentication Code">Secure ID or Authentication Code</span>*/}
-						{/*</label>*/}
-						{/*<span className="validation-summary-errors">Secure ID must be 6 digits</span>*/}
-						{/*</span>*/}
-						{/*</div>*/}
-						{/*<div className="container">*/}
-						{/*<span className={'input_animate input--yoshiko ' + (depositQuantity || pricePlan ? 'input--filled' : '')}>*/}
-						{/*<input className="input__field input__field--yoshiko total number" id="neteller_total" type="tel"*/}
-						{/*value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''} onChange={actions.actionOnInputQuantityChange} disabled={true} />*/}
-						{/*<label className="input__label input__label--yoshiko" htmlFor="neteller_total">*/}
-						{/*<span className="input__label-content input__label-content--yoshiko" data-content="Deposit amount">Deposit amount</span>*/}
-						{/*</label>*/}
-						{/*<span className="label">$</span>*/}
-						{/*<span className="validation-summary-errors">{}</span>*/}
-						{/*</span>*/}
-						{/*<input type="submit" defaultValue={'Submit'} />*/}
-						{/*</div>*/}
-						{/*<input type="hidden" name="plan" value={plan}/>*/}
-						{/*</form>*/}
-						<NetellerForm data={this.props.withdraw} format={'withdraw'} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Neteller')} />
+						{/*<form>
+							<div className="container">
+								<span className={'input_animate input--yoshiko ' + (data.UserInfo.Email ? 'input--filled' : '')}>
+									<input className="input__field input__field--yoshiko" id="skrill_id" type="text" defaultValue={data.UserInfo.Email}/>
+									<label className="input__label input__label--yoshiko" htmlFor="skrill_id">
+										<span className="input__label-content input__label-content--yoshiko" data-content="From Address">From Address</span>
+									</label>
+									<span className="validation-summary-errors">{}</span>
+								</span>
+								<span className={'input_animate input--yoshiko ' + (depositQuantity ? 'input--filled' : '')}>
+									<input className="input__field input__field--yoshiko total number" id="skrill_total" type="tel"
+										   value={depositQuantity ? depositQuantity : ''} onChange={actions.actionOnInputQuantityChange} disabled={true}/>
+									<label className="input__label input__label--yoshiko" htmlFor="skrill_total">
+										<span className="input__label-content input__label-content--yoshiko" data-content="Withdrawal amount">Withdrawal amount</span>
+									</label>
+									<span className="label">$</span>
+									<span className="validation-summary-errors">{}</span>
+								</span>
+								<input type="submit" className="wave btn" defaultValue={'Submit'} />
+							</div>
+						</form>*/}
+						<ScrillForm data={this.props.withdraw} withdraw={true} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Skrill')} />
+					</div>
+					<div className="tab_item payment_tab">
+						{/*<form>
+							<div className="container">
+								<span className={'input_animate input--yoshiko ' + (data.UserInfo.Email ? 'input--filled' : '')}>
+									<input className="input__field input__field--yoshiko" id="neteller_id" type="text" defaultValue={data.UserInfo.Email}/>
+									<label className="input__label input__label--yoshiko" htmlFor="neteller_id">
+										<span className="input__label-content input__label-content--yoshiko" data-content="Neteller ID or e-mail">Neteller ID or e-mail</span>
+									</label>
+									<span className="validation-summary-errors">{}</span>
+								</span>
+								<span className="input_animate input--yoshiko">
+									<input className="input__field input__field--yoshiko" id="ntl_sec_id" type="password"/>
+									<label className="input__label input__label--yoshiko" htmlFor="ntl_sec_id">
+										<span className="input__label-content input__label-content--yoshiko" data-content="Secure ID or Authentication Code">Secure ID or Authentication Code</span>
+									</label>
+									<span className="validation-summary-errors">Secure ID must be 6 digits</span>
+								</span>
+							</div>
+							<div className="container">
+								<span className={'input_animate input--yoshiko ' + (depositQuantity || pricePlan ? 'input--filled' : '')}>
+									<input className="input__field input__field--yoshiko total number" id="neteller_total" type="tel"
+									   value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''} onChange={actions.actionOnInputQuantityChange} disabled={true} />
+									<label className="input__label input__label--yoshiko" htmlFor="neteller_total">
+										<span className="input__label-content input__label-content--yoshiko" data-content="Deposit amount">Deposit amount</span>
+									</label>
+									<span className="label">$</span>
+									<span className="validation-summary-errors">{}</span>
+								</span>
+								<input type="submit" defaultValue={'Submit'} />
+							</div>
+							<input type="hidden" name="plan" value={plan}/>
+						</form>*/}
+						<NetellerForm data={this.props.withdraw} withdraw={true} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Neteller')} />
 						{/*<button className="btn wave approve" onClick={this.lalal}>{'Submit'}</button>*/}
 					</div>
 					<div className="tab_item payment_tab">
-						<EcoPayzForm data={this.props.withdraw} onSubmit={actions.actionOnAjaxSend.bind(null, this)} />
+						<Bitpay data={this.props.withdraw} withdraw={true} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Bitpay')} />
 					</div>
 				</div>
 			</div>
