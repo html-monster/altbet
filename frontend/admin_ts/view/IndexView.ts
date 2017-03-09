@@ -140,11 +140,11 @@ export class IndexView extends BaseView
             "showDropdowns": true,
             "showWeekNumbers": true,
             "timePicker": true,
-            "timePicker24Hour": true,
+            // "timePicker24Hour": true,
             timePickerIncrement: 5,
             "opens": "left",
             locale: {
-                format: 'MM/DD/YYYY H:mm'
+                format: 'MM/DD/YYYY h:mm A'
             }
         });
 
