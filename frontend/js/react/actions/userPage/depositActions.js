@@ -113,7 +113,7 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 {
 	return (dispatch, getState) =>
 	{
-		__DEV__ && console.log(values);
+		__DEV__ && console.log('transactionData:', values);
 		const { approved } = getState().deposit;
 		const form = $(event.target);
 		const submit = $(event.target).find('[type=submit]');
@@ -127,7 +127,10 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 				onSuccessAjax =  context.props.actions.onSuccessAjaxSkrill.bind(null, context, form, serverValidation);
 				break;}
 			case 'Bitpay':{
-				onSuccessAjax =  context.props.actions.onSuccessAjaxSkrill.bind(null, context, form, serverValidation);
+				onSuccessAjax =  context.props.actions.onSuccessAjaxBitpay.bind(null, context, form, serverValidation);
+				break;}
+			case 'Visa':{
+				onSuccessAjax =  context.props.actions.onSuccessAjaxVisa.bind(null, context, form, serverValidation);
 				break;}
 		}
 
@@ -140,11 +143,15 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 			beforeSend: OnBeginAjax,
 		});
 		let error = null;
-		if(!values.Sum)
+		if(!values.Sum){
 			error = 'Required';
+			$('html, body').animate({scrollTop: $('.quantity_control').offset().top - $('header').outerHeight(true)}, 800);
+		}
 
-		if(values.Sum && values.Sum < 10)
+		if(values.Sum && values.Sum < 10){
 			error = 'Minimum deposit is $10';
+			$('html, body').animate({scrollTop: $('.quantity_control').offset().top - $('header').outerHeight(true)}, 800);
+		}
 
 		// if(values.sum){
 		// 	new Promise(resolve => {
@@ -307,6 +314,17 @@ export function onSuccessAjaxSkrill(context, form, serverValidation, data)
 }
 
 export function onSuccessAjaxBitpay(context, form, serverValidation, data) {
+	return (dispatch) =>
+	{
+		__DEV__ && console.log(data);
+		const {Answer: { code }} = data;
+
+		form.find('[type=submit]').removeAttr('disabled');
+		form.removeClass('loading');
+	}
+}
+
+export function onSuccessAjaxVisa(context, form, serverValidation, data) {
 	return (dispatch) =>
 	{
 		__DEV__ && console.log(data);

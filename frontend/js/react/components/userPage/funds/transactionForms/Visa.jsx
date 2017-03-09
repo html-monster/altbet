@@ -1,5 +1,5 @@
 /**
- * Created by Htmlbook on 13.01.2017.
+ * Created by Htmlbook on 08.03.2017.
  */
 
 import React from 'react';
@@ -7,7 +7,7 @@ import React from 'react';
 import FormValidation from '../../../FormValidation';
 import InputValidation from '../../../formValidation/InputValidation';
 
-export default class Bitpay extends React.Component{
+export default class Visa extends React.Component{
 	constructor()
 	{
 		super();
@@ -20,8 +20,8 @@ export default class Bitpay extends React.Component{
 					<label className="input__label input__label--yoshiko" htmlFor={id}>
 						<span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
 					</label>
-					{ inputLabel && <span className="label">$</span> }
-					{ dirty && error && <span className="validation-summary-errors">{error}</span> }
+				{ inputLabel && <span className="label">$</span> }
+				{ dirty && error && <span className="validation-summary-errors">{error}</span> }
 				</span>
 		};
 		const inputHidden = ({ type, meta, ...input }) => {
@@ -32,14 +32,14 @@ export default class Bitpay extends React.Component{
 				<div className="container">
 					{
 						withdraw ?
-							<InputValidation renderContent={inputRender} id={'bitpay_total'}
+							<InputValidation renderContent={inputRender} id={'visa_total'}
 											 className={'input__field input__field--yoshiko total number'}
 											 label={'Withdrawal amount'} type={'tel'} filled={depositQuantity}
 											 inputLabel={'total'} name="Sum"
 											 value={depositQuantity || ''}
 											 disabled={true} input={input}/>
 							:
-							<InputValidation renderContent={inputRender} id={'bitpay_total'}
+							<InputValidation renderContent={inputRender} id={'visa_total'}
 											 className={'input__field input__field--yoshiko total number'}
 											 label={'Deposit amount'} type={'tel'} filled={depositQuantity || pricePlan}
 											 inputLabel={'total'} name="Sum"
@@ -51,7 +51,7 @@ export default class Bitpay extends React.Component{
 					<span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
 					<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
 				</div>
-				<InputValidation renderContent={inputHidden} type={'hidden'} name="PaymentType" value={'BTC'} input={input}/>
+				<InputValidation renderContent={inputHidden} type={'hidden'} name="PaymentType" value={'VSA'} input={input}/>
 				{!withdraw && <InputValidation renderContent={inputHidden} type={'hidden'} name="Plan" value={plan} input={input}/>}
 			</form>
 		};

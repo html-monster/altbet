@@ -87,7 +87,7 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 	return (dispatch, getState) =>
 	{
 		const { approved } = getState().withdraw;
-		__DEV__ && console.log(values);
+		__DEV__ && console.log('transactionData:', values);
 		// getState().withdraw.form = event.target;
 		const form = $(event.target);
 		const url = $(event.target).attr('action');
@@ -102,7 +102,10 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 				onSuccessAjax =  context.props.actions.onSuccessAjaxSkrill.bind(null, context, form, serverValidation);
 				break;}
 			case 'Bitpay':{
-				onSuccessAjax =  context.props.actions.onSuccessAjaxSkrill.bind(null, context, form, serverValidation);
+				onSuccessAjax =  context.props.actions.onSuccessAjaxBitpay.bind(null, context, form, serverValidation);
+				break;}
+			case 'Visa':{
+				onSuccessAjax =  context.props.actions.onSuccessAjaxVisa.bind(null, context, form, serverValidation);
 				break;}
 		}
 
@@ -276,6 +279,17 @@ export function onSuccessAjaxSkrill(context, form, serverValidation, data)
 }
 
 export function onSuccessAjaxBitpay(context, form, serverValidation, data) {
+	return (dispatch) =>
+	{
+		__DEV__ && console.log(data);
+		const {Answer: { code }} = data;
+
+		form.find('[type=submit]').removeAttr('disabled');
+		form.removeClass('loading');
+	}
+}
+
+export function onSuccessAjaxVisa(context, form, serverValidation, data) {
 	return (dispatch) =>
 	{
 		__DEV__ && console.log(data);

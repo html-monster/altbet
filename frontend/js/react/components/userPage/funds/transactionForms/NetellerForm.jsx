@@ -31,7 +31,6 @@ export default class NetellerForm extends React.Component
 			return <input type={type} {...input}/>
 		};
 		const formContent = ({ input, error, successMessage, withdraw, data:{ data, plan, depositQuantity, pricePlan }, handleSubmit }) => {
-			console.log(withdraw);
 			return <form action={`${ABpp.baseUrl}/Payment/${withdraw ? 'NetellerOut' : 'NetellerIn'}`}  autoComplete="off" onSubmit={handleSubmit}>
 				<div className="container">
 					{/* костыль для отмены браузерного автозаполнение полей */}
