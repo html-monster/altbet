@@ -12,7 +12,7 @@ import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
 import Header from './containers/Header';
 import EventPage from './containers/EventPage';
-import UserPage from './containers/UserPage';
+import AccountPage from './containers/UserPage';
 import PageMyPos from './components/PageMyPos';
 import Sidebar from './components/Sidebar';
 
