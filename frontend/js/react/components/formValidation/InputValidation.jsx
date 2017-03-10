@@ -119,17 +119,17 @@ export default class InputValidation extends React.Component
 		// console.log({...actions, ...rest});
 		// console.log(this.props);
 		// console.log(this.state);
-		return(
-			renderContent({meta: {...metaProps, ...metaState}, ...rest, ...state})
-			// renderContent({...actions, ...rest})
-		);
+
+		{/*return <div>{this.props.children}</div>;*/}
+
+		return (renderContent({meta: {...metaProps, ...metaState}, ...rest, ...state}));
 	}
 }
 
 	// validate: React.PropTypes.func,
-InputValidation.propTypes = {
-	renderContent: React.PropTypes.any.isRequired,
-};
+// InputValidation.propTypes = {
+// 	renderContent: React.PropTypes.any.isRequired,
+// };
 
 // export default connect(
 // 	state => ({

@@ -6,6 +6,7 @@ import {
     ON_CHECK_FIELDS,
 } from '../constants/ActionTypesRegister';
 import BaseActions from './BaseActions';
+import {AjaxSend} from '../models/AjaxSend';
 
 
 // var __LDEV__ = true;
@@ -25,10 +26,50 @@ class Actions extends BaseActions
             //     if(!(checkAreement('agreement', $(this)) && checkAreement('agreement_age', $(this)))) {0||console.log( 'here', 2 ); return false;}
             //     0||console.log( 'here', 3 );
             // });
-            0||console.log( 'here 11', context, values, serverValidation, event, p1,  p2);
-            if( (this.checkAreement('agreement', $(this)) && this.checkAreement('agreement_age', $(this))) )
+            0||console.log( 'here 11', context, values, serverValidation, event.target, p1,  p2);
+            const $form = $(event.target);
+            if( (this.checkAreement('agreement', $form) && this.checkAreement('agreement_age', $form)) )
             {
                 0||console.log( 'OK', 1 );
+                const ajaxPromise = (new AjaxSend()).send({
+                    formData: new FormData(<HTMLFormElement>$form[0]),
+                    message: `Error while registering user, please, try again`,
+                    // url: ABpp.baseUrl + $form.attr('action'),
+                    url: $form.attr('action'), // DEBUG: remove it
+                    respCodes: [
+                        {code: 100, message: ""},
+                        // {code: -101, message: "Some custom error"},
+                    ],
+                    beforeChkResponse: (data) =>
+                    {
+                        // DEBUG: emulate
+                        data = {Error: 101};
+                        // data.Param1 = "TOR-PHI-3152017"; // id
+                        // data.Param1 = "?path=sport&status=approved";
+                        // data.Param1 = "?status=New";
+                        // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                        // data.Param3 = "TOR-PHI-3152017"; // id
+
+                        return data;
+                    },
+            });
+
+
+            ajaxPromise.then( result =>
+                {
+                    serverValidation({message: 'The payment is successful'});
+                },
+                result => {
+                    0||console.log( 'result', result, result.code );
+                    switch( result.code )
+                    {
+                        case -101:
+                            0||console.log( 'serVal' );
+                            serverValidation({error: 'User name failed, correct it, please', FirstName: "User name failed"});
+                            break;
+                    }
+                });
+
             }
 
 

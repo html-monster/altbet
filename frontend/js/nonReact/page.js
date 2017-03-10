@@ -1,4 +1,5 @@
 window.ee = new EventEmitter();
+const DS = '/';
 
 
 // BM: for Discuss

@@ -50,14 +50,13 @@ export class RegisterForm extends React.Component
 
     chkBoxRender({ id, meta: { error, dirty }, ...input })
     {
+        const child = input.children;
+        delete input.children;
+
         return <div className="checkbox_container">
-                <input type="checkbox" name={name} id={id} {...input}/><label htmlFor={id}>{this.props.children}</label>
+                <input type="checkbox" name={name} id={id} {...input} checked/><label htmlFor={id}>{child}</label>
             </div>;
     }
-
-
-	render()
-	{
 
 
 /*
@@ -66,7 +65,8 @@ export class RegisterForm extends React.Component
 		};
 */
 
-
+	render()
+	{
 		const formContent = ({ input, error, successMessage, format/*, data:{ data, plan, depositQuantity, pricePlan }*/, handleSubmit }) => {
             //return <form action={`${ABpp.baseUrl}/Account/Register'`} method="post" onSubmit={handleSubmit}>
             return <form action="http://localhost/AltBet.Admin/Category/TestAction" ref="F1regForm" method="post" onSubmit={handleSubmit}>
@@ -182,11 +182,13 @@ export class RegisterForm extends React.Component
 */}
                                     </div>
                                     <hr/>
+                                    <div className={'answer-message' + (error && ' validation-summary-errors')}>{error}</div>
                                     <div className="agreement">
                                         <InputValidation renderContent={this.chkBoxRender} id='agreement' name="agreement" validate={[]} input={input}>
-                                            Agree to the <a href="/conditions.html" className="text_decoration">Terms of Use</a> and <a href="#" className="text_decoration">Privacy Notice</a>
+                                            <span>Agree to the <a href="/conditions.html" className="text_decoration">Terms of Use</a> and <a href="#" className="text_decoration">Privacy Notice</a></span>
                                         </InputValidation>
-                                        <InputValidation renderContent={this.chkBoxRender} id='agreement' name="agreement" validate={[]} input={input}>
+
+                                        <InputValidation renderContent={this.chkBoxRender} id='agreement_age' name="agreement_age" validate={[]} input={input}>
                                             I confirm that I am at least 18 years of age.
                                         </InputValidation>
 
