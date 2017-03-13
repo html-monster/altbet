@@ -21,16 +21,10 @@ class Actions extends BaseActions
         {
             let flag = true;
 
-
-            // $('.sign_up_form form').submit(function () {
-            //     if(!(checkAreement('agreement', $(this)) && checkAreement('agreement_age', $(this)))) {0||console.log( 'here', 2 ); return false;}
-            //     0||console.log( 'here', 3 );
-            // });
-            0||console.log( 'here 11', context, values, serverValidation, event.target, p1,  p2);
+            // 0||console.log( 'here 11', context, values, serverValidation, event.target, p1,  p2);
             const $form = $(event.target);
             if( (this.checkAreement('agreement', $form) && this.checkAreement('agreement_age', $form)) )
             {
-                0||console.log( 'OK', 1 );
                 const ajaxPromise = (new AjaxSend()).send({
                     formData: new FormData(<HTMLFormElement>$form[0]),
                     message: `Error while registering user, please, try again`,
@@ -60,11 +54,10 @@ class Actions extends BaseActions
                     serverValidation({message: 'The payment is successful'});
                 },
                 result => {
-                    0||console.log( 'result', result, result.code );
+                    // 0||console.log( 'result', result, result.code );
                     switch( result.code )
                     {
                         case -101:
-                            0||console.log( 'serVal' );
                             serverValidation({error: 'User name failed, correct it, please', FirstName: "User name failed"});
                             break;
                     }

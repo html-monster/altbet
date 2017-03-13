@@ -121,11 +121,7 @@
       }
     }
   }
-  .tab_content{
-    width: 760px;
-    padding: 30px;
-    border-radius: 4px;
-    background-image: $sign_in_bg;
+  .tab_content { position: relative; padding: 30px; width: 760px; border-radius: 4px; background-image: $sign_in_bg;
     @include scroll;
     .tab_item{
       display: none;
@@ -252,8 +248,10 @@
       border-radius: 4px;
       .submit{  width: 100%;  padding-left: 0; }
     }
+
   }
 
+  .close { position: absolute; right: 20px; top: 20px; width: 16px; height: 16px; z-index: 53; cursor: pointer; cursor: pointer }
   .answer-message { position: relative; margin: -10px 0 10px; text-align: right; }
 }
 #__lpform_f_name, #__lpform_l_name, #__lpform_n_name, #__lpform_c_name, #__lpform_s_name, #__lpform_t_number, #__lpform_e_name, #__lpform_r_pass, #__lpform_r_confirm_pass, #__lpform_answer_icon, #__lpform_currency{

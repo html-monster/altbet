@@ -54,7 +54,7 @@ export class RegisterForm extends React.Component
         delete input.children;
 
         return <div className="checkbox_container">
-                <input type="checkbox" name={name} id={id} {...input} checked/><label htmlFor={id}>{child}</label>
+                <input type="checkbox" name={name} id={id} {...input} defaultChecked={false}/><label htmlFor={id}>{child}</label>
             </div>;
     }
 
@@ -138,7 +138,9 @@ export class RegisterForm extends React.Component
                                                          label="Country" type='text'
                                                          validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z]+$/, message: "Only letters are allowed"}), lengthValidation.bind(null, {min: 3, max: 50})]} input={input}
                                                          hint="Indicate the country of your permanent residence"/>
+                                    </div>
 
+                                    <div className="right_column column">
                                         <InputValidation renderContent={this.inputRender} id='s_name' name="Address"
                                                          className={'input__field input__field--yoshiko'}
                                                          initialValue="Kiev, Frunse, 11"
@@ -151,9 +153,7 @@ export class RegisterForm extends React.Component
                                                          initialValue="0503272223333"
                                                          label="Phone" type='text'
                                                          validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[0-9]+$/, message: "Only digits are allowed"}),  lengthValidation.bind(null, {min: 4, max: 30})]} input={input}/>
-                                    </div>
 
-                                    <div className="right_column column">
                                         <InputValidation renderContent={this.inputRender} id='e_name' name="Email"
                                                          className={'input__field input__field--yoshiko'}
                                                          label="Email Address" type='text'
