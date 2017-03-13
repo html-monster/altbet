@@ -3,6 +3,10 @@
  */
 
 export const emptyValidation = (value) => {
+	let errors;
+
+	if (!value)
+		errors = 'Required';
 
 	return errors
 };
@@ -16,14 +20,14 @@ export const minLengthValidation = (minLength, value) => {
 	return errors
 };
 
-export const maxLengthValidation = (maxLength, value) => {
-	let errors;
-
-	if (value.length > maxLength)
-		errors = `Max length ${maxLength} symbols`;
-
-	return errors
-};
+// export const maxLengthValidation = (maxLength, value) => {
+// 	let errors;
+//
+// 	if (value.length > maxLength)
+// 		errors = `Max length ${maxLength} symbols`;
+//
+// 	return errors
+// };
 
 export const lettersOnlyValidation = (value) => {
 	let errors;
@@ -52,17 +56,18 @@ export const checkOnSpecialSymbolsValidation = (value) => {
 	return errors
 };
 
-export const adressValidation = (value) => {
-	let errors;
+// export const adressValidation = (value) => {
+// 	let errors;
+//
+// 	if (!/^[a-zA-Zа-яА-Я.,-/\d\s]+$/i.test(value))
+// 		errors = 'Invalid email address';
+//
+// 	return errors
+// };
 
-	if (!/^[a-zA-Zа-яА-Я.,-/\d\s]+$/i.test(value))
-		errors = 'Invalid email address';
 
-	return errors
-};
-
-
-export const mailValidation = (value) => {
+export const mailValidation = (value) =>
+{
 	let errors;
 
 	if (!value)
@@ -83,23 +88,23 @@ export const phoneValidation = (value) => {
 };
 
 
-export const minLengthValidation = (inOpts, inValue) =>
-{
-	let errors;
-	let value;
-	let opts = {
-        size: 6,
-	};
-
-    // user opts
-	if( inValue ) opts = {...opts, ...inOpts};
-	value = inValue || inOpts;
-
-	if (value.length < opts.size)
-		errors = 'Min length is ' + opts.size;
-
-	return errors
-};
+// export const minLengthValidation = (inOpts, inValue) =>
+// {
+// 	let errors;
+// 	let value;
+// 	let opts = {
+//         size: 6,
+// 	};
+//
+//     // user opts
+// 	if( inValue ) opts = {...opts, ...inOpts};
+// 	value = inValue || inOpts;
+//
+// 	if (value.length < opts.size)
+// 		errors = 'Min length is ' + opts.size;
+//
+// 	return errors
+// };
 
 
 export const lengthValidation = (inOpts, inValue) =>

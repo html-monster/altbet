@@ -7,7 +7,7 @@ import React from 'react';
 
 import FormValidation from './FormValidation';
 import InputValidation from './formValidation/InputValidation';
-import {passwordValidation, regexValidation, lengthValidation, mailValidation, emptyValidation} from './formValidation/validation';
+import {passwordValidation, regexValidation, lengthValidation, mailValidation, emptyValidation, phoneValidation} from './formValidation/validation';
 
 export class RegisterForm extends React.Component
 {
@@ -17,17 +17,17 @@ export class RegisterForm extends React.Component
 	}
 
 
-    componentDidMount()
-    {
-        if( __DEV__ )
-        {
-            0||console.log( 'emulate here' )
-            setTimeout(() =>
-                {$(".log_out .sign_in").click();
-                    setTimeout(() => $(".register").click(), 500)
-                }, 700)
-        } // endif
-    }
+    // componentDidMount()
+    // {
+    //     if( __DEV__ )
+    //     {
+    //         0||console.log( 'emulate here' )
+    //         setTimeout(() =>
+    //             {$(".log_out .sign_in").click();
+    //                 setTimeout(() => $(".register").click(), 500)
+    //             }, 700)
+    //     } // endif
+    // }
 
 
     inputRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty }, ...input })
@@ -152,7 +152,7 @@ export class RegisterForm extends React.Component
                                                          className={'input__field input__field--yoshiko'}
                                                          initialValue="0503272223333"
                                                          label="Phone" type='text'
-                                                         validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[0-9]+$/, message: "Only digits are allowed"}),  lengthValidation.bind(null, {min: 4, max: 30})]} input={input}/>
+                                                         validate={[emptyValidation, phoneValidation,  lengthValidation.bind(null, {min: 4, max: 30})]} input={input}/>
 
                                         <InputValidation renderContent={this.inputRender} id='e_name' name="Email"
                                                          className={'input__field input__field--yoshiko'}
