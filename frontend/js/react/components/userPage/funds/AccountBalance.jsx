@@ -43,7 +43,7 @@ export default class AccountBalance extends React.Component{
 		// const { data, plan, payYearly, depositQuantity, pricePlan, sumValidation } = this.props.deposit;
 		// const actions = this.props.actions;
 
-		return <div className={"tab_item user_balance " + this.props.active}>
+		return <div className={"tab_item user_balance" + (this.props.active ? ' active' : '')}>
 			<div className="color_map">
 				<ul>
 					<li className="pl">P/L = <span>$0</span></li>

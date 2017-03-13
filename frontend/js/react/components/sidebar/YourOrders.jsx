@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import OrderForm from './order/OrderForm.jsx';
-import * as yourOrdersActions from '../../actions/Sidebar/yourOrderActions';
+import yourOrdersActions from '../../actions/Sidebar/yourOrderActions.ts';
 
 class YourOrders extends React.Component
 {

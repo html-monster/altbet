@@ -12,6 +12,7 @@ import {TabMyOrderHistory} from './pageMyPos/TabHistory';
 import BaseController from '../containers/BaseController';
 import actions from '../actions/ordersPageActions';
 import myPositionsActions from '../actions/OrderPage/myPositionsActions.ts';
+import yourOrdersActions from '../actions/Sidebar/yourOrderActions.ts';
 import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
 // import {Common} from '../common/Common';
 
@@ -59,7 +60,7 @@ class PageMyPos extends BaseController //React.Component
     render()
     {
         const { openOrdersData, positionData, historyData } = this.state.data;
-        const { defaultOrderActions } = this.props;
+        const { defaultOrderActions, yourOrdersActions } = this.props;
         // __DEV__ && console.log( 'PageMyPos props', this.props.route );
 
         // const myOpenOrdersFilters = ['openOrders_Sport', 'openOrders_Finance', 'openOrders_E-sport', 'openOrders_Society'];
@@ -77,7 +78,7 @@ class PageMyPos extends BaseController //React.Component
 
 
                         {/* // BM: --------------------------------------------------- OPENED ORDERS ---*/}
-                        <TabOpenOrders data={openOrdersData}/>
+                        <TabOpenOrders data={openOrdersData} yourOrdersActions={yourOrdersActions}/>
 
                         {/* // BM: --------------------------------------------------- MY POSITIONS ---*/}
                         <TabMyPos data={positionData} defaultOrderActions={defaultOrderActions} actions={this.props.myPositionsActions}/>
@@ -99,6 +100,7 @@ export default connect(
     }),
     dispatch => ({
 		defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
+		yourOrdersActions: bindActionCreators(yourOrdersActions, dispatch),
         actions: bindActionCreators(actions, dispatch),
         myPositionsActions: bindActionCreators(myPositionsActions, dispatch),
     })

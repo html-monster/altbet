@@ -27,6 +27,7 @@ export class WebsocketModel
     private socketData: any = null;
     private lastErrorSendObj = null;    // save send object if socket not connected
     private lastSendObj = null;         // save send last object
+    private testTime = null;
 
 
     constructor()
@@ -51,6 +52,7 @@ export class WebsocketModel
         //appendMessage("* Connecting to server ..<br/>");
         // create a new websocket and connect
         self.ws = new WebSocket(this.connectionString);
+        this.testTime = new Date(); // socket started
 
         //self.ws.
 
@@ -261,5 +263,17 @@ export class WebsocketModel
         // defaultMethods.showError('socket closed');
         $("[data-js-connect-label]").fadeIn(200);
         // setTimeout(() => { this.connectSocketServer(); }, 1000);
+
+        var duration = moment.duration(moment(new Date()).diff(this.testTime));
+        let data = {
+            "StartTime": moment(this.testTime).format("H:mm:s DD MMM"),
+            // "EndTime": moment(moment(this.testTime).diff(new Date())).format("H:mm:s DD MMM"),
+            "EndTime": moment(new Date()).format("H:mm:s DD MMM"),
+            "Duration": `${parseInt(duration.asHours())}h ${parseInt(duration.asMinutes())}m ${parseInt(duration.asSeconds())}s`,
+        };
+        console.group("Socket time debug");
+        // console.groupCollapsed("Debug");
+        console.warn(data);
+        console.groupEnd();
     }
 }

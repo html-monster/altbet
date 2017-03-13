@@ -1,6 +1,67 @@
 /**
  * Created by Htmlbook on 16.01.2017.
  */
+
+export const emptyValidation = (value) => {
+
+	return errors
+};
+
+export const minLengthValidation = (minLength, value) => {
+	let errors;
+
+	if (value.length <= minLength)
+		errors = `Min length ${minLength} symbols`;
+
+	return errors
+};
+
+export const maxLengthValidation = (maxLength, value) => {
+	let errors;
+
+	if (value.length > maxLength)
+		errors = `Max length ${maxLength} symbols`;
+
+	return errors
+};
+
+export const lettersOnlyValidation = (value) => {
+	let errors;
+
+	if (!/^[a-zA-Z]+$/i.test(value))
+		errors = 'Use latin letters only please';
+
+	return errors
+};
+
+export const extendLettersOnlyValidation = (value) => {
+	let errors;
+
+	if (!/^[a-zA-Zа-яА-Я-]+$/i.test(value))
+		errors = 'Use latin letters only please';
+
+	return errors
+};
+
+export const checkOnSpecialSymbolsValidation = (value) => {
+	let errors;
+
+	if (!/^[a-zA-Z.,-/'`()\d\s]+$/i.test(value))
+		errors = 'Not available special symbols like @#$%^~ etc.';
+
+	return errors
+};
+
+export const adressValidation = (value) => {
+	let errors;
+
+	if (!/^[a-zA-Zа-яА-Я.,-/\d\s]+$/i.test(value))
+		errors = 'Invalid email address';
+
+	return errors
+};
+
+
 export const mailValidation = (value) => {
 	let errors;
 
@@ -12,12 +73,11 @@ export const mailValidation = (value) => {
 	return errors
 };
 
-
-export const emptyValidation = (value) => {
+export const phoneValidation = (value) => {
 	let errors;
 
-	if (!value)
-		errors = 'Required';
+	if (!/^[+(\d][\d\s()-.]{3,20}$/i.test(value))
+		errors = 'Invalid phone number';
 
 	return errors
 };

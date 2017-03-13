@@ -168,7 +168,9 @@ export class GroupsTree
 
         var formData = new FormData();
         formData.set('id', node.li_attr["data-id"]);
-        formData.set('position', $("#"+node.id).parent().children("li").index($("#"+node.id)) > node_position ? node_position + 1 : node_position);
+        var pos = $("#"+node.id).parent().children("li").index($("#"+node.id)) > node_position ? node_position + 1 : node_position;
+        formData.set('position', pos);
+        0||console.log( 'pos', pos, node.li_attr["data-id"] );;
 
         (new TreeModel).moveNode({formData, name: node.li_attr["data-name"]}).then( result =>
             {

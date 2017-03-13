@@ -34,7 +34,9 @@ export default class InputNumber extends React.Component{
 			}
 			else{
 				if(code != 13){
-					if(code >= 48 && code <= 57 && (/^[0]/gi.test(event.target.value) && !/^[0][.]/gi.test(event.target.value))) return false;
+					// console.log(event.target.value);
+					if(code >= 48 && code <= 57 && ((event.target.value == '' && /^[0]/gi.test(event.target.value))
+						&& !/^[0][.]/gi.test(event.target.value))) return false;
 					if(code == 46 && /[.]/gi.test(event.target.value)) return false;
 					if(/[.][0-9]{2}/gi.test(event.target.value)) return false;
 					if(code == 46 && event.target.value == '') return false;

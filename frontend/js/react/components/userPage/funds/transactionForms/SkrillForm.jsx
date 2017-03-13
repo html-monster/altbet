@@ -29,43 +29,52 @@ export default class ScrillForm extends React.Component{
 		const inputHidden = ({ type, meta, ...input }) => {
 			return <input type={type} {...input}/>
 		};
-		const formContent = ({ input, error, successMessage, format, data:{ data, plan, depositQuantity, pricePlan }, handleSubmit }) => {
-			return <form action={`${ABpp.baseUrl}/Payment/${format ? 'SkrillOut' : 'SkrillIn'}`}  autoComplete="off" onSubmit={handleSubmit}>
+		const formContent = ({ input, error, successMessage, withdraw, data:{ data, plan, depositQuantity, pricePlan }, handleSubmit }) => {
+			return <form action={`${ABpp.baseUrl}/Payment/${withdraw ? 'SkrillOut' : 'SkrillIn'}`}  autoComplete="off" onSubmit={handleSubmit}>
 				<div className="container">
 					{
-						format ?
-							<InputValidation renderContent={inputRender} id={'skrill_id'} name="email"
+						withdraw ?
+							<InputValidation renderContent={inputRender} id={'skrill_id'} name="Email"
 											 className={'input__field input__field--yoshiko'}
 											 initialValue={data.UserInfo.Email}
 											 label={'From Address'} type={'text'} filled={data.UserInfo.Email}
 											 validate={mailValidation} input={input}
 											 maxLength="50"/>
 							:
-							<InputValidation renderContent={inputRender} id={'skrill_id'} name="clientId"
+							<InputValidation renderContent={inputRender} id={'skrill_id'} name="ClientId"
 											 className={'input__field input__field--yoshiko'}
 											 initialValue={data.UserInfo.Email}
 											 label={'From Address'} type={'text'} filled={data.UserInfo.Email}
 											 validate={mailValidation} input={input}
 											 maxLength="50"/>
 					}
-
-					<InputValidation renderContent={inputRender} id={'neteller_total'}
-									 className={'input__field input__field--yoshiko total number'}
-									 label={'Withdrawal amount'} type={'tel'} filled={depositQuantity}
-									 inputLabel={'total'} name="sum"
-									 value={depositQuantity || ''}
-									 disabled={true} input={input}/>
+					{
+						withdraw ?
+							<InputValidation renderContent={inputRender} id={'skrill_total'}
+											 className={'input__field input__field--yoshiko total number'}
+											 label={'Withdrawal amount'} type={'tel'} filled={depositQuantity}
+											 inputLabel={'total'} name="Sum"
+											 value={depositQuantity || ''}
+											 disabled={true} input={input}/>
+							:
+							<InputValidation renderContent={inputRender} id={'skrill_total'}
+											 className={'input__field input__field--yoshiko total number'}
+											 label={'Deposit amount'} type={'tel'} filled={depositQuantity || pricePlan}
+											 inputLabel={'total'} name="Sum"
+											 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
+											 disabled={true} input={input}/>
+					}
 
 					<input type="submit" className="wave btn" defaultValue={'Submit'} />
 					<span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
 					<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
 				</div>
-				{format && <InputValidation renderContent={inputHidden} type={'hidden'} name="plan" value={plan} input={input}/>}
+				{!withdraw && <InputValidation renderContent={inputHidden} type={'hidden'} name="Plan" value={plan} input={input}/>}
 			</form>
 		};
 		return <FormValidation
 			data={this.props.data}
-			format={this.props.format}
+			withdraw={this.props.withdraw}
 			renderContent={formContent}
 			handleSubmit={this.props.onSubmit}
 			serverValidation={true}

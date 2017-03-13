@@ -3,7 +3,7 @@ const DS = '/';
 
 
 // BM: for Discuss
-if( appData && appData.pageEventData )
+if( !globalData.landingPage && appData && appData.pageEventData )
 {
     try {
         var disqus_config = function () {
@@ -100,7 +100,7 @@ $(document).ready(function ()
 	new activeTraderClass(); //active trader activation
 	new eventPageClass(); //active order on the event page
 
-	new myPosClass(); // activate my pos script
+	// new myPosClass(); // activate my pos script
 
 	new modeSwitchClass(); //mode switch activate
 
@@ -185,7 +185,7 @@ $(document).ready(function ()
 		input.keypress(function () { return false; });
 		input.datepicker({  // remove "hasDatepicker" !!!!!!!!!!!!!!
 			yearRange: "1901:c+0",
-			dateFormat: "d M y",
+			dateFormat: "d M yy",
 			maxDate: "0",
 			minDate: new Date(1, 1 - 1, 1),
 			changeMonth: true,

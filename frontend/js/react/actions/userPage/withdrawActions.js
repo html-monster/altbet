@@ -81,27 +81,40 @@ export function actionOnQuantityValidate(values)
 // 		// });
 // 	}
 // }
-
+/**
+ *
+ * @param context - this компонента в которой нахоидтся функция
+ * @param payment string - название платежки
+ * @param values - данные собранные с формы
+ * @param serverValidation - функция обратной связи для серверной валидации
+ * @param event
+ * @returns {function(*, *)}
+ */
 export function actionOnAjaxSend(context, payment, values, serverValidation, event)
 {
 	return (dispatch, getState) =>
 	{
 		const { approved } = getState().withdraw;
-		__DEV__ && console.log(values);
+		__DEV__ && console.log('transactionData:', values);
 		// getState().withdraw.form = event.target;
 		const form = $(event.target);
 		const url = $(event.target).attr('action');
 		const submit = form.find('[type=submit]');
 		let onSuccessAjax;
 
-		switch (payment)
-		{
-			case 'Neteller':
+		switch (payment){
+			case 'Neteller':{
 				onSuccessAjax =  context.props.actions.onSuccessAjaxNeteller.bind(null, context, form, serverValidation);
-				break;
-			case 'Skrill':
+				break;}
+			case 'Skrill':{
 				onSuccessAjax =  context.props.actions.onSuccessAjaxSkrill.bind(null, context, form, serverValidation);
-				break;
+				break;}
+			case 'Bitpay':{
+				onSuccessAjax =  context.props.actions.onSuccessAjaxBitpay.bind(null, context, form, serverValidation);
+				break;}
+			case 'Visa':{
+				onSuccessAjax =  context.props.actions.onSuccessAjaxVisa.bind(null, context, form, serverValidation);
+				break;}
 		}
 
 		const jQAjax = defaultMethods.sendAjaxRequest.bind(null ,{
@@ -114,9 +127,9 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 		});
 		let error = null;
 
-		if(!values.sum) error = 'Required';
+		if(!values.Sum) error = 'Required';
 
-		if(values.sum && values.sum < 10) error = 'Minimum withdraw is $10';
+		if(values.Sum && values.Sum < 10) error = 'Minimum withdraw is $10';
 
 		function OnBeginAjax()
 		{
@@ -270,6 +283,28 @@ export function onSuccessAjaxSkrill(context, form, serverValidation, data)
 		form.removeClass('loading');
 		$(context.refs.paymentMessage).find('.hide').unbind('click');
 		// getState().withdraw.approved = false;
+	}
+}
+
+export function onSuccessAjaxBitpay(context, form, serverValidation, data) {
+	return (dispatch) =>
+	{
+		__DEV__ && console.log(data);
+		const {Answer: { code }} = data;
+
+		form.find('[type=submit]').removeAttr('disabled');
+		form.removeClass('loading');
+	}
+}
+
+export function onSuccessAjaxVisa(context, form, serverValidation, data) {
+	return (dispatch) =>
+	{
+		__DEV__ && console.log(data);
+		const {Answer: { code }} = data;
+
+		form.find('[type=submit]').removeAttr('disabled');
+		form.removeClass('loading');
 	}
 }
 

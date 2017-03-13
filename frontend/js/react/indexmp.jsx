@@ -10,7 +10,7 @@ import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
 import Header from './containers/Header';
 import EventPage from './containers/EventPage';
-import AccountPage from './containers/AccountPage';
+import AccountPage from './containers/UserPage';
 import PageMyPos from './components/PageMyPos.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import RegisterBox from './containers/RegisterBox.jsx';
@@ -127,8 +127,6 @@ else
 		  // document.getElementById('DiMPEventPageOld')
 		);
 	}
-
-
 } // endif
 
 
