@@ -47,19 +47,19 @@
     color: #ffffff;
     text-align: center;
   }
-  @include user_validation_params;
+  //@include user_validation_params;
   //i {
   //  background-color: transparent !important;
   //}
-  span.valid{
-    display: block;
-    height: 22px;
-    padding: 2px 0;
-    color: #4dac2e;
-    font-size: 12px;
-    border: none;
-    box-shadow: none;
-  }
+  //span.valid{
+  //  display: block;
+  //  height: 22px;
+  //  padding: 2px 0;
+  //  color: #4dac2e;
+  //  font-size: 12px;
+  //  border: none;
+  //  box-shadow: none;
+  //}
   .answer_message{
     font-size: 12px;
     border: none !important;

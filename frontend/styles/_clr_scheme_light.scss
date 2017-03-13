@@ -69,6 +69,20 @@ $breadcrumbs-color: transparentize(#000000, 0.5);
 	}
 }
 
+@mixin input_validation{
+	.invalidJs{
+		color: #ff3905 !important;
+		box-shadow: inset 0 0 10px transparentize(#ff3905, 0.7) !important;
+		border: 1px solid transparentize(#ff3905, 0.7) !important;
+	}
+
+	.validJs{
+		color: #4dac2e !important;
+		box-shadow: inset 0 0 10px transparentize(#4dac2e, 0.7) !important;
+		border: 1px solid transparentize(#4dac2e, 0.7) !important;
+	}
+}
+
 input[type="text"], input[type="email"], input[type="password"], input[type="tel"], textarea {
 	box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.2);
 	&:-webkit-autofill{
