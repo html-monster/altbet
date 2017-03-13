@@ -19,14 +19,14 @@ export const minLengthValidation = (minLength, value) => {
 	return errors
 };
 
-export const maxLengthValidation = (maxLength, value) => {
-	let errors;
-
-	if (value.length > maxLength)
-		errors = `Max length ${maxLength} symbols`;
-
-	return errors
-};
+// export const maxLengthValidation = (maxLength, value) => {
+// 	let errors;
+//
+// 	if (value.length > maxLength)
+// 		errors = `Max length ${maxLength} symbols`;
+//
+// 	return errors
+// };
 
 export const lettersOnlyValidation = (value) => {
 	let errors;
@@ -37,23 +37,23 @@ export const lettersOnlyValidation = (value) => {
 	return errors
 };
 
-export const extendLettersOnlyValidation = (value) => {
-	let errors;
+// export const extendLettersOnlyValidation = (value) => {
+// 	let errors;
+//
+// 	if (!/^[a-zA-Zа-яА-Я-]+$/i.test(value))
+// 		errors = 'Use latin letters only please';
+//
+// 	return errors
+// };
 
-	if (!/^[a-zA-Zа-яА-Я-]+$/i.test(value))
-		errors = 'Use latin letters only please';
-
-	return errors
-};
-
-export const checkOnSpecialSymbolsValidation = (value) => {
-	let errors;
-
-	if (!/^[a-zA-Z.,-/'`()\d\s]+$/i.test(value))
-		errors = 'Not available special symbols like @#$%^~ etc.';
-
-	return errors
-};
+// export const checkOnSpecialSymbolsValidation = (value) => {
+// 	let errors;
+//
+// 	if (!/^[a-zA-Z.,-/'`()\d\s]+$/i.test(value))
+// 		errors = 'Not available special symbols like @#$%^~ etc.';
+//
+// 	return errors
+// };
 
 export const adressValidation = (value) => {
 	let errors;
@@ -83,6 +83,7 @@ export const phoneValidation = (value) => {
 };
 
 
+
 export const netellerSecureId = (value) => {
 	let errors;
 
@@ -92,6 +93,9 @@ export const netellerSecureId = (value) => {
 	return errors
 };
 
+
+
+// злоебучий адский валидатор от Лёхи, Я его не люблю
 export const orderForm = function (context) {
 
 	if($(context).find('[data-log-out]').attr('data-log-out')) return false;

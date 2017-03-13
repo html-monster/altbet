@@ -8,8 +8,8 @@ import { connect } from 'react-redux'
 
 import FormValidation from '../FormValidation';
 import InputValidation from '../formValidation/InputValidation';
-import { emptyValidation, minLengthValidation, maxLengthValidation, lettersOnlyValidation,
-    checkOnSpecialSymbolsValidation, mailValidation, phoneValidation } from '../formValidation/validation';
+import { emptyValidation, lengthValidation, lettersOnlyValidation,
+    regexValidation, mailValidation, phoneValidation } from '../formValidation/validation';
 import {DateLocalization} from '../../models/DateLocalization';
 import settingsActions from '../../actions/userPage/settingsActions';
 
@@ -43,8 +43,7 @@ class Settings extends React.PureComponent
                     <InputValidation renderContent={inputRender} id={'f_name'} name="FirstName"
                                      initialValue={FirstName} info="Your first name as specified in your passport"
                                      label={'First Name'} type={'text'} filled={FirstName}
-                                     validate={[emptyValidation, minLengthValidation.bind(null, 2),
-                                         maxLengthValidation.bind(null, 20), lettersOnlyValidation]}
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]}
                                      input={input} maxLength="20"/>
                     {/*<span className="input_animate input--yoshiko input--filled">
                         <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 2-50 characters"
@@ -63,8 +62,7 @@ class Settings extends React.PureComponent
                     <InputValidation renderContent={inputRender} id={'l_name'} name="LastName"
                                      initialValue={LastName} info="Your second name as specified in your passport"
                                      label={'Last Name'} type={'text'} filled={LastName}
-                                     validate={[emptyValidation, minLengthValidation.bind(null, 2),
-										 maxLengthValidation.bind(null, 20), lettersOnlyValidation]} input={input}
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]} input={input}
                                      maxLength="20"/>
                     {/*<span className="input_animate input--yoshiko  input--filled">
                         <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 2-50 characters"
@@ -84,8 +82,7 @@ class Settings extends React.PureComponent
                     <InputValidation renderContent={inputRender} id={'n_name'} name="UserName"
                                      initialValue={UserName}
                                      label={'User Name'} type={'text'} filled={UserName}
-                                     validate={[emptyValidation, minLengthValidation.bind(null, 2),
-										 maxLengthValidation.bind(null, 20)]} input={input}
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20})]} input={input}
                                      maxLength="20"/>
                     {/*<span className="input_animate input--yoshiko input--filled">
                         <input className="input__field input__field--yoshiko" disabled="disabled" id="n_name" name="UserName" type="text" defaultValue={UserName}/>
@@ -139,8 +136,7 @@ class Settings extends React.PureComponent
                     <InputValidation renderContent={inputRender} id={'c_name'} name="Country"
                                      initialValue={Country} info="Indicate the country of your permanent residence"
                                      label={'Country'} type={'text'} filled={Country}
-                                     validate={[emptyValidation, minLengthValidation.bind(null, 2),
-										 maxLengthValidation.bind(null, 128)]}
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 128})]}
                                      input={input} maxLength="20"/>
                     {/*<span className="input_animate input--yoshiko input--filled">
                         <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 3-50 characters"
@@ -159,8 +155,7 @@ class Settings extends React.PureComponent
                     <InputValidation renderContent={inputRender} id={'s_name'} name="Address"
                                      initialValue={Address} info="Enter address manually"
                                      label={'Address'} type={'text'} filled={Address}
-                                     validate={[emptyValidation, minLengthValidation.bind(null, 2),
-										 maxLengthValidation.bind(null, 200) , checkOnSpecialSymbolsValidation]} input={input}
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 200}), regexValidation.bind(null, {tmpl: /^[a-zA-Z.,-/'`()\d\s]+$/, message: "Not available special symbols like @#$%^~ etc."})]} input={input}
                                      maxLength="200"/>
                     {/*<span className="input_animate input--yoshiko input--filled">
                         <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 3-50 characters"
