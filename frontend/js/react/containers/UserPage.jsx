@@ -25,7 +25,7 @@ class UserPage extends BaseController
     render()
     {
         const staticData = appData.pageAccountData;
-        var $tabHeaderHtml = <div className="user_info">
+        let $tabHeaderHtml = <div className="user_info">
 				<div className="personal_info">
 					<h3 className="mail">{staticData.UserInfo.Email}</h3>
 					<strong>{`${staticData.UserInfo.FirstName} ${staticData.UserInfo.LastName}`}</strong>

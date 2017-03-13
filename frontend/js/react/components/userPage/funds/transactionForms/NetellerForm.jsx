@@ -50,7 +50,7 @@ export default class NetellerForm extends React.Component
 											 className={'input__field input__field--yoshiko'}
 											 initialValue={data.UserInfo.Email}
 											 label={'Neteller ID or e-mail'} type={'text'} filled={data.UserInfo.Email}
-											 validate={minLengthValidation} input={input}
+											 validate={minLengthValidation.bind(null, 6)} input={input}
 											 maxLength="50"/>
 					}
 

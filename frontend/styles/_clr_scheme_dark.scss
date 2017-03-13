@@ -77,6 +77,18 @@ $breadcrumbs-color: transparentize(#ffffff, 0.5);
 	//.highcharts-input-group { display: none; }
 }
 
+@mixin input_validation{
+	.invalidJs{
+		color: #ff3905 !important;
+		border: 1px solid #ff3905 * 0.7 !important;
+	}
+
+	.validJs{
+		color: #4dac2e !important;
+		border: 1px solid #4dac2e * 0.7 !important;
+	}
+}
+
 input[type="text"], input[type="email"], input[type="password"], input[type="tel"], textarea {
 	//box-shadow: inset 0 0 0 50px #292830 * 1.3 !important;
 	&:-webkit-autofill{
@@ -84,6 +96,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
 		border: 1px solid $color-max;
 	}
 }
+
 
 @import "color_scheme/main_page_dark";
 @import "color_scheme/ordred_sidebar_dark";
