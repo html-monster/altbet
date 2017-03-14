@@ -1,7 +1,6 @@
 /**
  * Created by Htmlbook on 16.01.2017.
  */
-
 export const emptyValidation = (value) => {
 	let errors;
 
@@ -38,41 +37,37 @@ export const lettersOnlyValidation = (value) => {
 	return errors
 };
 
-export const extendLettersOnlyValidation = (value) => {
-	let errors;
-
-	if (!/^[a-zA-Zа-яА-Я-]+$/i.test(value))
-		errors = 'Use latin letters only please';
-
-	return errors
-};
-
-export const checkOnSpecialSymbolsValidation = (value) => {
-	let errors;
-
-	if (!/^[a-zA-Z.,-/'`()\d\s]+$/i.test(value))
-		errors = 'Not available special symbols like @#$%^~ etc.';
-
-	return errors
-};
-
-// export const adressValidation = (value) => {
+// export const extendLettersOnlyValidation = (value) => {
 // 	let errors;
 //
-// 	if (!/^[a-zA-Zа-яА-Я.,-/\d\s]+$/i.test(value))
-// 		errors = 'Invalid email address';
+// 	if (!/^[a-zA-Zа-яА-Я-]+$/i.test(value))
+// 		errors = 'Use latin letters only please';
 //
 // 	return errors
 // };
 
+// export const checkOnSpecialSymbolsValidation = (value) => {
+// 	let errors;
+//
+// 	if (!/^[a-zA-Z.,-/'`()\d\s]+$/i.test(value))
+// 		errors = 'Not available special symbols like @#$%^~ etc.';
+//
+// 	return errors
+// };
 
-export const mailValidation = (value) =>
-{
+export const adressValidation = (value) => {
 	let errors;
 
-	if (!value)
-		errors = 'Required';
-	else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value))
+	if (!/^[a-zA-Zа-яА-Я.,-/\d\s]+$/i.test(value))
+		errors = 'Invalid email address';
+
+	return errors
+};
+
+export const mailValidation = (value) => {
+	let errors;
+
+	if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value))
 		errors = 'Invalid email address';
 
 	return errors
@@ -170,6 +165,9 @@ export const netellerSecureId = (value) => {
 	return errors
 };
 
+
+
+// злоебучий адский валидатор от Лёхи, Я его не люблю
 export const orderForm = function (context) {
 
 	if($(context).find('[data-log-out]').attr('data-log-out')) return false;
