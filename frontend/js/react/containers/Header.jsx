@@ -67,7 +67,8 @@ class Header extends React.Component
 				{/*<button className="ru btn">Ru</button>*/}
 			{/*</div>*/}
 			<div className="header_right">
-				<span data-js-connect-label="" className="connect">{}</span>
+				{/*<span data-js-connect-label="" className="connect">{}</span>*/}
+                <button className="btn connect wave waves-effect waves-button" onClick={() => this.testSockOpen()} data-js-connect-label="" title="There is no connection to server now. Click here for reconnect"></button>
 
 				{
 					ABpp.User.userIdentity ?
@@ -95,8 +96,8 @@ class Header extends React.Component
 						:
 						''
 				}
-				{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockOpen()} title="Connect to socket">C</a> : ''}
-				{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</a> : ''}
+				{/*{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockOpen()} title="Connect to socket">C</a> : ''}*/}
+                { ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <button className="btn" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</button> : ''}
 
 
 				{ ABpp.User.isAuthorized() ? <a className="my_order btn" href={ABpp.baseUrl + '/eng/home/positions-orders'}>My Positions | Orders</a> : ''}
