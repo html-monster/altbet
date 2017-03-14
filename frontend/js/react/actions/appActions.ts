@@ -25,24 +25,25 @@ class Actions extends BaseActions
 
 
             // close socket after tab disactivate
-            // Visibility.change(function (e, state)
-            // {
-            //     if( Visibility.state() == 'hidden' )
-            //     {
-            //         // Visibility.closeTimer = setTimeout(() => ABpp.Websocket.disconnectWebSocket(), 10*60*1000);
-            //         0||console.log( 'begin close procc', 0 );
-            //         clearTimeout(Visibility.closeTimer);
-            //         Visibility.closeTimer = setTimeout(() => ABpp.Websocket.disconnectWebSocket(), 2000);
-            //     }
-            //     else if( Visibility.state() == 'visible' )
-            //     {
-            //         0||console.log( 'begin connect procc', ABpp.Websocket );
-            //         ABpp.Websocket.connectSocketServer();
-            //
-            //     } // endif
-            //
-            //
-            // });
+            Visibility.change(function (e, state)
+            {
+                if( Visibility.state() == 'hidden' )
+                {
+                    // Visibility.closeTimer = setTimeout(() => ABpp.Websocket.disconnectWebSocket(), 10*60*1000);
+                    // 0||console.log( 'begin close procc', 0 );
+                    clearTimeout(Visibility.closeTimer);
+                    Visibility.closeTimer = setTimeout(() => ABpp.Websocket.disconnectWebSocket(), 2000);
+                }
+                else if( Visibility.state() == 'visible' )
+                {
+                    clearTimeout(Visibility.closeTimer);
+                    // 0||console.log( 'begin connect procc', ABpp.Websocket.ws.readyState );
+                    if( $.inArray(ABpp.Websocket.ws.readyState, [0,1]) === -1 ) ABpp.Websocket.connectSocketServer();
+
+                } // endif
+
+
+            });
 /*
             dispatch({
                 type: SET_INSTANCE,
