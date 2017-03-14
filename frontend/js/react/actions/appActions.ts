@@ -29,10 +29,10 @@ class Actions extends BaseActions
             {
                 if( Visibility.state() == 'hidden' )
                 {
-                    // Visibility.closeTimer = setTimeout(() => ABpp.Websocket.disconnectWebSocket(), 10*60*1000);
                     // 0||console.log( 'begin close procc', 0 );
                     clearTimeout(Visibility.closeTimer);
-                    Visibility.closeTimer = setTimeout(() => ABpp.Websocket.disconnectWebSocket(), 2000);
+                    Visibility.closeTimer = setTimeout(() => ABpp.Websocket.disconnectWebSocket(), 10*60*1000);
+                    // Visibility.closeTimer = setTimeout(() => ABpp.Websocket.disconnectWebSocket(), 2000);
                 }
                 else if( Visibility.state() == 'visible' )
                 {
