@@ -248,9 +248,11 @@ export class WebsocketModel
         // self.ws.send($('span.user-name').text());
 
         // if was a failed requests before open
-        if( this.lastErrorSendObj )
+        var sendObj = this.lastErrorSendObj || this.lastSendObj || null;
+        // 0||console.log( 'sendObj', sendObj );
+        if( sendObj )
         {
-            self.ws.send(JSON.stringify(this.lastErrorSendObj));
+            self.ws.send(JSON.stringify(sendObj));
             this.lastErrorSendObj = null;
         } // endif
 
@@ -273,7 +275,7 @@ export class WebsocketModel
         };
         console.group("Socket time debug");
         // console.groupCollapsed("Debug");
-        console.warn(data);
+        console.info(data);
         console.groupEnd();
     }
 }
