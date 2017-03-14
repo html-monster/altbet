@@ -22,11 +22,27 @@ class Actions extends BaseActions
             ABpp.Websocket = new WebsocketModel();
             ABpp.Websocket.connectSocketServer();
             globalData.Websocket = ABpp.Websocket; // for debug
-            
-            
-            Visibility.change(function (e, state) {
-                0||console.log( 'Visibility', Visibility.state() );
-            });
+
+
+            // close socket after tab disactivate
+            // Visibility.change(function (e, state)
+            // {
+            //     if( Visibility.state() == 'hidden' )
+            //     {
+            //         // Visibility.closeTimer = setTimeout(() => ABpp.Websocket.disconnectWebSocket(), 10*60*1000);
+            //         0||console.log( 'begin close procc', 0 );
+            //         clearTimeout(Visibility.closeTimer);
+            //         Visibility.closeTimer = setTimeout(() => ABpp.Websocket.disconnectWebSocket(), 2000);
+            //     }
+            //     else if( Visibility.state() == 'visible' )
+            //     {
+            //         0||console.log( 'begin connect procc', ABpp.Websocket );
+            //         ABpp.Websocket.connectSocketServer();
+            //
+            //     } // endif
+            //
+            //
+            // });
 /*
             dispatch({
                 type: SET_INSTANCE,
@@ -35,8 +51,8 @@ class Actions extends BaseActions
 */
         }
     }
-    
-    
+
+
     public setInstance(that)
     {
         return (dispatch, getState) =>
