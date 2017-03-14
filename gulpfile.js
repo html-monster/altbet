@@ -181,9 +181,14 @@ gulp.task('vendor',function(){
         'vendor/daterangepicker/daterangepicker.js',
         // '!vendor/react-15.3.1/build/react.js',
         // '!vendor/react-15.3.1/build/react-dom.js',
-        'frontend/js/nonReact/browserCheck.js']),
+        'frontend/js/nonReact/browserCheck.js',
+
+        'vendor/visibilityjs/lib/visibility.core.js',
+        'vendor/visibilityjs/lib/visibility.timers.js',
+        'vendor/visibilityjs/lib/visibility.fallback.js',
+        ]),
     $.concat('vendors.js'),
-    // $.uglify(),
+    gulpIf(!isDevelopment, $.uglify()),
     // gulp.dest('./public/js'),
     gulp.dest($pathDestServer + '/Scripts/dist'),
 

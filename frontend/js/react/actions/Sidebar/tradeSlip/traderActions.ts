@@ -495,7 +495,7 @@ class Actions extends BaseActions
 
 	public actionOnAjaxSend(context, event)
 	{
-		return () =>{
+		return () => {
 			event.preventDefault();
 			const { cmpData: { activeExchange }, traderActions } = context.props;
 

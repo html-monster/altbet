@@ -26,6 +26,7 @@ export class ABpp
     public static PAGE_EVENT = '2';
     public static PAGE_ACCOUNT = '3';
     public static PAGE_MYPOS = '4';
+    public static PAGE_LANDING = '5';
     public static TAKER_FEES = 0.0086;
     public static MAKER_FEES = 0.0026;
 
@@ -33,7 +34,7 @@ export class ABpp
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
-    public ver = 0.4;
+    public ver = "0.4.1";
 
 
     // application config
@@ -116,6 +117,8 @@ export class ABpp
             return ABpp.PAGE_ACCOUNT;
         else if( globalData.myPosOn )
             return ABpp.PAGE_MYPOS;
+        else if( globalData.landingPage )
+            return ABpp.PAGE_LANDING;
     }
 
 

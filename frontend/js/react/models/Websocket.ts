@@ -109,9 +109,9 @@ export class WebsocketModel
     };
 
 
-    public connectWebSocket() {
-        this.connectSocketServer();
-    };
+    // public connectWebSocket() {
+    //     this.connectSocketServer();
+    // };
 
 
 

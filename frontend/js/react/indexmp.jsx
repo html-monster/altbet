@@ -5,16 +5,15 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRedirect, hashHistory } from 'react-router'
 
-
-
 import configureStore from './store/configureStore';
 import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
 import Header from './containers/Header';
 import EventPage from './containers/EventPage';
 import AccountPage from './containers/UserPage';
-import PageMyPos from './components/PageMyPos';
-import Sidebar from './components/Sidebar';
+import PageMyPos from './components/PageMyPos.jsx';
+import Sidebar from './components/Sidebar.jsx';
+import RegisterBox from './containers/RegisterBox.jsx';
 
 
 
@@ -129,6 +128,16 @@ else
 		);
 	}
 } // endif
+
+
+// Registration form
+ReactDOM.render(
+	<Provider store={store}>
+		<RegisterBox />
+	</Provider>,
+  document.getElementById('DiregisterMP')
+  // document.getElementById('DiMPEventPageOld')
+);
 
 
 
