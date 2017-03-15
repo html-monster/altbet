@@ -1,0 +1,5 @@
+/**
+ * Created by Htmlbook on 15.03.2017.
+ */
+export const SETTING_ON_FILE_LOAD = 'SETTING_ON_FILE_LOAD';
+export const SETTING_CHANGE_PROGRESS_BAR = 'SETTING_CHANGE_PROGRESS_BAR';

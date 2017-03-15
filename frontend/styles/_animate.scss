@@ -1,3 +1,7 @@
+@keyframes progressAnimation{
+	0%{background-position-x:0}
+	to{background-position-x:40px}
+}
 @keyframes animateUpdating {
 	0% {  background-color: orange;  }
 	100% {  background-color: transparent;  }

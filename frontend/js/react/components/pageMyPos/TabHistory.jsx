@@ -58,10 +58,10 @@ export class TabMyOrderHistory extends React.Component
                                                                 <span className="fullname muted">{item.Symbol.HomeName} - {item.Symbol.AwayName}</span>
 															</td>
 															<td>
-																<span className="timestamp help">
-																	<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`} | </span>
+																<span className="balloon_only help">
+																	<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`} </span>
 																	<span className="time">{`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
-																	<span className="help_message"><strong>MM/DD/YYYY | HH:MM</strong></span>
+																	<span className="help_message"><strong>MM/DD/YYYY HH:MM</strong></span>
 																</span>
 															</td>
 															<td className="side">{(item.IsMirror ? (item.Side ? 'Long' : 'Short') : (item.Side ? 'Short' : 'Long'))}</td>

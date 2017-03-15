@@ -1,4 +1,3 @@
-
 ::-webkit-input-placeholder{
   color: #dbdbdb;
 }
@@ -61,17 +60,19 @@ a.text_decoration, a.link{
 
 .nowrap { white-space: nowrap; }
 
-button {
+button, a.button {
   height: 30px;
-  padding: 3px 10px 4px 10px;
+  padding: 4px 12px;
   border-radius: 4px;
   color: #fff;
   outline: none;
   cursor: pointer;
 }
 
-
-
+.btn_green{  background: linear-gradient(to bottom, #84d65b, #4dac2e);  }
+.btn_orange{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
+.btn_blue{  background: linear-gradient(to bottom, #64c9ef, #3498da);  }
+.btn_yellow{  background: linear-gradient(to bottom, #f8b747, #ef8022);  }
 
 select{
   padding: 0 5px;
@@ -380,6 +381,9 @@ input ~ .info{
 @include input_validation;
 
 .close{
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
   &:hover{
     &:before, span:before{  transform: rotate(90deg);  }
     &:after, span:after{  transform: rotate(-90deg);  }
@@ -850,21 +854,29 @@ input ~ .info{
   p{  font-size: 12px;  }
 }
 
-.download{
+.load_btn{
   position: relative;
-  padding-left: 25px;
-  &:after{
+  &:before{
     content: '';
     display: block;
     width: 20px;
     height: 20px;
     position: absolute;
     top: calc(50% - 10px);
-    left: 0;
     background-image: url("#{$pathImage}/sprite.svg");
-    background-position: -18px -206px;
+  }
+  &.left{
+    padding-left: 30px;
+    &:before{  left: 5px;  }
+  }
+  &.right{
+    padding-right: 30px;
+    &:before{  right: 5px;  }
   }
 }
+.upload:before{  background-position: -18px -229px;  }
+.download:before{  background-position: -18px -206px;  }
+
 
 
 .pagination { margin-left: 11%; padding-top: 20px; //margin-bottom: 40px;

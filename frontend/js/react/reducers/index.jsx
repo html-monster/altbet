@@ -6,7 +6,6 @@ import mainPage from './mainPageReducer';
 import eventPage from './eventPageReducer';
 import accountPage from './accountPageReducer';
 import sidebar from './sidebarReducer';
-// import tradeSlip from './sidebar/tradeSlipReducer';
 import defaultOrders from './sidebar/tradeSlip/defaultOrders';
 import activeTrader from './sidebar/tradeSlip/activeTrader';
 import yourOrders from './sidebar/yourOrders';
@@ -14,6 +13,8 @@ import deposit from './userPage/deposit';
 import withdraw from './userPage/withdraw';
 import transHistory from './userPage/transHistory';
 import myPosReduce from './MyPosReducer';
+import accountSetting from './userPage/settingReducer';
+// import tradeSlip from './sidebar/tradeSlipReducer';
 
 
 let reducers = {};
@@ -67,7 +68,8 @@ switch (ABpp.config.currentPage){
 			accountPage,
 			deposit,
 			withdraw,
-			transHistory
+			transHistory,
+			accountSetting
 		};
 		break;
 	}
