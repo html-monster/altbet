@@ -48,10 +48,10 @@ export class TabOpenOrders extends React.Component
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Symbol</th>
+                                        <th>Entry ID</th>
                                         <th>Time</th>
                                         <th>Type</th>
-                                        <th>Quantity</th>
+                                        <th>Entries</th>
                                         <th>Price</th>
                                         <th>Latest</th>
                                         <th>Position</th>

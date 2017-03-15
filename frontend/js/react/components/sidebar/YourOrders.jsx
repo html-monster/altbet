@@ -81,7 +81,7 @@ class GroupingOrder extends React.Component
 							:
 								''
 						}
-						<strong className="current-order up">pos: <span>{data.Positions}</span></strong>
+						<strong className="current-order up"> Total: <span>{data.Positions}</span></strong>
 					</div>
 				</div>
 				{
@@ -198,9 +198,9 @@ class OrderItem extends React.Component
 		return <div className="order_container not-sort" id={data.ID + '__order'}>
 			<div className={'order_info ' + className}>
 				<div className="container">
-					<strong className="title">Price <span className="price">{data.isMirror ? (Math.round10(1 - data.Price, -2)).toFixed(2) :
+					<strong className="title">Amount <span className="price">{data.isMirror ? (Math.round10(1 - data.Price, -2)).toFixed(2) :
 							(Math.round10(data.Price, -2)).toFixed(2)}</span></strong>
-					<strong className="title">Quantity <span className="volume">{data.Volume}</span></strong>
+					<strong className="title">Entries <span className="volume">{data.Volume}</span></strong>
 					<strong className="timestamp help balloon_only">
 		 				<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}</span> | <span className="time">{
 						`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>

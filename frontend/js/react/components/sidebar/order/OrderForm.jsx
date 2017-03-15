@@ -275,7 +275,7 @@ export default class OrderForm extends React.Component{
 						<label className="with_info" htmlFor={`${orderId}_price`}>
 							{
 								checkboxProp ?
-									'Your price'
+									'Amount'
 									:
 									'Market price'
 							}
@@ -313,7 +313,7 @@ export default class OrderForm extends React.Component{
 						</div>
 					</div>
 					<div className="volume">
-						<label htmlFor={`${orderId}_quantity`}>Quantity</label>
+						<label htmlFor={`${orderId}_quantity`}>Entries</label>
 						<div className="input">
 							<InputNumber type="tel" id={`${orderId}_quantity`} className="number" data-validation="123"
 										 maxLength="7" name="Quantity" autoComplete="off"
@@ -333,7 +333,7 @@ export default class OrderForm extends React.Component{
 						</div>
 					</div>
 					<div className="obligations">
-						<label htmlFor={`${orderId}_sum`}>Sum</label>
+						<label htmlFor={`${orderId}_sum`}>Total</label>
 						<div className="input">
 							<InputNumber type="tel" id={`${orderId}_sum`} className="number" data-validation="40.59" hard="true"
 										 onChange={this.onInputChange.bind(this, 'Sum')}
@@ -355,10 +355,10 @@ export default class OrderForm extends React.Component{
 				<div className="container">
 					<div className="fees">
 						<label className="with_info">
-							<span>Max </span>Fees
+							<span>Max Fees</span>
 							<div className="help">
 								<div className="help_message right">
-									<p>Max fees for this order</p>
+									<p>Max Alt.Bet Fees</p>
 								</div>
 							</div>
 						</label>
@@ -369,10 +369,10 @@ export default class OrderForm extends React.Component{
 					</div>
 					<div className="risk">
 						<label className="with_info">
-							Total Cost
+							Pay-to Play Fees
 							<div className="help">
 								<div className="help_message right">
-									<p><span>Combined cost of contracts and  applicable fees<br/>
+									<p><span>Total Pay-to Play Fees<br/>
 										{checkboxProp && 'Formula:'}</span> {checkboxProp ?
 										+stateData.Sum ? `${stateData.Sum} + ${fees}` : ''
 										:
@@ -390,12 +390,13 @@ export default class OrderForm extends React.Component{
 					</div>
 					<div className="profit">
 						<label className="with_info">
-							Profitability
+							Potential Prize
 							<div className="help">
 								<div className="help_message right">
 									<p>
-										<span>Possible maximum prize if position results in winning outcome<br/>
-											{checkboxProp && 'Formula:'}</span> {
+										<span>Potential Prize per Entry in winning outcome<br/>
+											{/*{checkboxProp && 'Formula:'}*/}
+											</span> {
 											checkboxProp && +price && stateData.Volume ? `(1 - ${price}) * ${stateData.Volume}` || '' : ''
 										}
 									</p>

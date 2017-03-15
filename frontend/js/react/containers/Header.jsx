@@ -67,6 +67,16 @@ class Header extends React.Component
 				{/*<button className="ru btn">Ru</button>*/}
 			{/*</div>*/}
 			<div className="header_right">
+        
+        <div className="fast_menu">
+          <a href="/AltBet/eng/home/index" className="btn"><span>Exchange</span> </a>
+          <a href="#"  className="btn"><span className="live_event wave ">Live</span></a>
+          <a href="#" className="btn"><span className="history_event">History</span></a>
+          <a href="/AltBet/eng/footer/TradingRules" className="btn"><span>Rules</span> </a>
+        </div>
+        
+        
+        
 				<span data-js-connect-label="" className="connect">{}</span>
 
 				{

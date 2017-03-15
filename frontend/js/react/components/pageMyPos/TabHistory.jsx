@@ -36,12 +36,12 @@ export class TabMyOrderHistory extends React.Component
 									<table>
 										<thead>
 											<tr>
-												<th>Symbol</th>
+												<th>Entry ID</th>
 												<th>Time</th>
 												<th>Type</th>
-												<th>Quantity</th>
+												<th>Entries</th>
 												<th>Price</th>
-												<th>Fees</th>
+												<th>Pay-to-Play fees</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -64,7 +64,7 @@ export class TabMyOrderHistory extends React.Component
 																	<span className="help_message"><strong>MM/DD/YYYY | HH:MM</strong></span>
 																</span>
 															</td>
-															<td className="side">{(item.IsMirror ? (item.Side ? 'Long' : 'Short') : (item.Side ? 'Short' : 'Long'))}</td>
+															<td className="side">{(item.IsMirror ? (item.Side ? 'Bought' : 'Sold') : (item.Side ? 'Sold' : 'Bought'))}</td>
 															<td className="quantity">{item.Quantity}</td>
 															<td>{(item.IsMirror ? Math.round10(1 - item.Price, -2) : item.Price)}</td>
 															<td><span
