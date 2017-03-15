@@ -135,6 +135,25 @@ header {
       //    margin-right: 5px;
       //  }
       //}
+      .fast_menu{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        position: absolute;
+        left: 15px;
+        height: 70px;
+        a{
+          display: flex;
+          align-items: center;
+          //height: 69px;
+          border-radius: 0;
+          background: none;
+          transition: 0.4s ease-out;
+          &:hover{
+          }
+
+        }
+      }
     }
   }
   .chat{

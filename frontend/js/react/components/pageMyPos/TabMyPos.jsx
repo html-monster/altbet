@@ -50,7 +50,7 @@ export class TabMyPos extends React.Component
         let plClass;
 
         // filter btn
-        var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "2"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '3'} htmlFor={inCatName + "2"} className={inCatName.toLowerCase().replace("-", "_")}><span className="sub_tab">{inCatName}</span></label>];
+        var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "2"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '3'} htmlFor={inCatName + "2"} className={inCatName.toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{inCatName}</span></label>];
 
 
         return <div className="tab_item active">
@@ -67,12 +67,12 @@ export class TabMyPos extends React.Component
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>Symbol</th>
+                                                <th>Entry ID</th>
                                                 <th>Type</th>
-                                                <th>Quantity</th>
+                                                <th>Entries</th>
                                                 <th>Price</th>
                                                 <th><span className="sell">BID</span> | <span className="buy">ASK</span></th>
-                                                <th><span className="profit">Profit</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>
+                                                <th><span className="profit">Winn</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -132,7 +132,7 @@ export class TabMyPos extends React.Component
                                                                         <strong className="title">{item2.EventName} <span className="muted">{item2.EventHandicap && ` (${item2.EventHandicap})`}</span></strong>
                                                                         <span className="hidden symbol_name">{item2.ID}</span>
                                                                     </td>
-                                                                    <td className="side">{(item2.Side ? 'Short' : 'Long')}</td>
+                                                                    <td className="side">{(item2.Side ? 'Sold' : 'Bought')}</td>
                                                                     <td className="quantity">{item2.CommonVolume}</td>
                                                                     <td className="avg_price">{Math.round10(item2.AvgPrice, -2)}</td>
                                                                     <td className="spread">

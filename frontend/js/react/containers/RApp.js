@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 // import Page from '../components/Page'
-import Actions from '../actions/appActions.ts';
+import * as Actions from '../actions/appActions.ts';
 // import * as userActions from '../actions/UserActions';
 
 

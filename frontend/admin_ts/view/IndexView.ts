@@ -634,7 +634,7 @@ export class IndexView extends BaseView
         if( $alias.val() == '' && $name != '' )
         {
             $alias.val($name.split(" ").map((val) => {
-                var $s1 = translit(val.trim(), 5);
+                var $s1 : any = translit(val.trim(), 5);
                 return $s1.replace(/[^a-zA-Z0-9]/g, '').slice(0, 3);
             }).join("").toUpperCase());
         } // endif
