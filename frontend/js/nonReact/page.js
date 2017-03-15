@@ -2,6 +2,16 @@ window.ee = new EventEmitter();
 const DS = '/';
 
 
+/**
+ * Localization function
+ */
+function _t(inStr)
+{
+    return ABpp.Localization.translate(inStr);
+}
+
+
+
 // BM: for Discuss
 if( !globalData.landingPage && appData && appData.pageEventData )
 {

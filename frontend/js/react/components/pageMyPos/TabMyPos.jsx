@@ -88,7 +88,6 @@ export class TabMyPos extends React.Component
                                                     if(item.CommonSymbolProfitLoss < 0) plClass = 'loss';
                                                     else if(item.CommonSymbolProfitLoss > 0) plClass = 'profit';
 
-                                                    0||console.log( 'item.Category', item.Category );
                                                     if( this.state.filters[item.Category] ) return <table key={key} className="pos tmp">
                                                         <thead>
                                                         <tr>

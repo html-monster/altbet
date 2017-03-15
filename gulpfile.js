@@ -85,6 +85,11 @@ lazyRequire('front-css-rev', 'def', './gulpinc/css-rev', {
     manifestPath: $pathDestServer + '/Content',
 });
 
+// BM: ================================================================================================ LOCALIZATION ===
+lazyRequire('localization', 'def', './gulpinc/localization', {
+    src: 'frontend/js/react/localization',
+    dst: $pathDestServer + '/Scripts/dist/localization',
+});
 
 // TODO: is used anymore?
 gulp.task('fonts', function() {
@@ -150,8 +155,13 @@ gulp.task('styles', function() {
 
 
 gulp.task('js',function(){
-    return gulp.src(['frontend/js/nonReact/**/*.js',  '!frontend/js/nonReact/browserCheck.js','!frontend/js/nonReact/test.js',
-      '!frontend/js/nonReact/access.js', '!frontend/js/nonReact/pageFirst.js'])
+    return gulp.src(['frontend/js/nonReact/**/*.js',
+        '!frontend/js/nonReact/browserCheck.js',
+        '!frontend/js/nonReact/test.js',
+        '!frontend/js/nonReact/access.js',
+        '!frontend/js/nonReact/pageFirst.js',
+        '!frontend/js/react/localization/**',
+        ])
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['es2015', 'stage-0'],
@@ -244,7 +254,8 @@ gulp.task('watch-admin', function () {
 gulp.task('watch-front-js-styles', function () {
     gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
     gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));
-    gulp.watch($pathDestServer + '/Scripts/dist/*.*', {delay: 700}, gulp.series('front-js-rev'));
+    gulp.watch('frontend/js/react/localization/*.js', gulp.series('localization'));
+    gulp.watch($pathDestServer + '/Scripts/dist/**/*.*', {delay: 700}, gulp.series('front-js-rev'));
     gulp.watch($pathDestServer + '/Content/dist/*.*', {delay: 700}, gulp.series('front-css-rev'));
 });
 
