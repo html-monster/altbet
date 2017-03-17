@@ -71,7 +71,7 @@ class Actions extends BaseActions
 				}
 				if(state.activeTrader.activeExchange != symbol || state.activeTrader.isMirror != isMirror){
 					setTimeout(() => {this._scrollTo(context, currSymbData, isMirror)}, initialStart ? 400 : 100);
-					console.log(this._scrollTo);
+					// console.log(this._scrollTo);
 					if(initialStart) initialStart = false;
 					dispatch({
 						type: TRADER_ON_EXCHANGE_CHANGE,

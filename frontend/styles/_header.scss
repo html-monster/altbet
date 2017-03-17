@@ -10,11 +10,15 @@ header {
     button, a, .user-name{  font-size: 14px;  }
     .user-name:after{  top: 6px;  }
   }
+
+  // reconntct button
+  .reconnect .help_message { top: 40px }
   .connect { display: none; width: 30px;
     &::after { display: none; }
     &::before { content: ""; display: block; position: absolute; left: 10px; top: 11px; width: 10px; height: 10px; background: red; border-radius: 50%;
       opacity: .8;}
   }
+
   //.user_info{
   //  display: none;
   //  &.active{  display: block;  }

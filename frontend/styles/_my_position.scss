@@ -324,9 +324,6 @@
 				tbody td{
 					padding-left: 5px;
 					&:nth-child(3), &:nth-last-of-type(2){  text-align: center; }
-          .timestamp{
-            position: static;
-          }
 				}
 			}
 		}

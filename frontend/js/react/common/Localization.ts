@@ -20,7 +20,7 @@ export class Localization
     private StringsObj; // phrase object
 
 
-    constructor()
+    private constructor()
     {
         this.StringsObj = new Strings();
     }

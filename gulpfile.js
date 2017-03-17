@@ -165,7 +165,7 @@ gulp.task('js',function(){
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['es2015', 'stage-0'],
-      plugins: [['transform-class-properties', { "spec": true }]],
+      plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
     }))
     .pipe($.concat('all.js'))
     // $.uglify(),

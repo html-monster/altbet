@@ -32,12 +32,12 @@ export default class ButtonContainer extends React.Component
         if( data.type == 'sell' )
         {
             className = 'sell';
-            emptyBtnName = _t('MP.sell');
+            emptyBtnName = _t('sell');
         }
         else
         {
             className = 'buy';
-            emptyBtnName = _t('MP.buy');
+            emptyBtnName = _t('buy');
         } // endif
         // 0||console.debug( 'data', data );
 

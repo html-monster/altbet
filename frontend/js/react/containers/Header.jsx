@@ -77,7 +77,10 @@ class Header extends React.Component
 			</div>
 
 
-                <button className="btn connect wave waves-effect waves-button" onClick={() => this.testSockOpen()} data-js-connect-label="" title="There is no connection to server now. Click here for reconnect"></button>
+				<div className="reconnect help balloon_only">
+                	<button className="btn connect wave waves-effect waves-button" onClick={() => this.testSockOpen()} data-js-connect-label="">{}</button>
+					<div className="help_message w200 ce-bo">There is no connection to server now. <br />Click here for reconnect</div>
+				</div>
 
 				{
 					ABpp.User.userIdentity ?

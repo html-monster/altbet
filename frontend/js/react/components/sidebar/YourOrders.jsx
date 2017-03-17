@@ -63,6 +63,8 @@ class YourOrders extends React.Component
 	}
 }
 
+
+// BM: GroupingOrder
 class GroupingOrder extends React.Component
 {
 	render()
@@ -82,6 +84,14 @@ class GroupingOrder extends React.Component
 								''
 						}
 						<strong className="current-order up"> Total: <span>{data.Positions}</span></strong>
+					</div>
+				</div>
+				<div className="order_info sell">
+					<div className="container">
+						<strong className="amount">Amount</strong>
+						<strong className="qty">Entries</strong>
+						<strong className="dt">Datetime</strong>
+						<div className="button_container"></div>
 					</div>
 				</div>
 				{
@@ -106,6 +116,8 @@ class GroupingOrder extends React.Component
 	}
 }
 
+
+// BM: OrderItem
 class OrderItem extends React.Component
 {
 	constructor()
@@ -198,13 +210,13 @@ class OrderItem extends React.Component
 		return <div className="order_container not-sort" id={data.ID + '__order'}>
 			<div className={'order_info ' + className}>
 				<div className="container">
-					<strong className="title">Amount <span className="price">{data.isMirror ? (Math.round10(1 - data.Price, -2)).toFixed(2) :
+					<strong className="amount"> <span className="price">{data.isMirror ? (Math.round10(1 - data.Price, -2)).toFixed(2) :
 							(Math.round10(data.Price, -2)).toFixed(2)}</span></strong>
-					<strong className="title">Entries <span className="volume">{data.Volume}</span></strong>
-					<strong className="timestamp help balloon_only">
-		 				<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}</span> | <span className="time">{
-						`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
-						<span className="help_message"><strong>MM/DD/YYYY | HH:MM</strong></span>
+					<strong className="qty"> <span className="volume">{data.Volume}</span></strong>
+					<strong className="dt timestamp help balloon_only">
+		 				<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}</span>&nbsp;
+                        <span className="time">{`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
+						<span className="help_message"><strong>MM/DD/YYYY HH:MM</strong></span>
 					</strong>
 					<div className="button_container">
 						<button className="edit" title="edit or change the order" onClick={::this.showForm}>{}</button>

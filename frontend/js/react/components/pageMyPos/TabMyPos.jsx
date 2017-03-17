@@ -6,7 +6,7 @@ import {Dialog} from '../../models/Dialog.ts';
 
 export class TabMyPos extends React.Component
 {
-    filters = {'Sport': 'Sport', 'Economy': 'Economy', 'E-Sport': 'E-Sport', 'Society': 'Society', };
+    filters = {'Sport': 'Fantasy Sport', 'Economy': 'Economy', 'E-Sport': 'E-Sport', 'Society': 'Society', };
 
     constructor(props)
     {
@@ -67,12 +67,12 @@ export class TabMyPos extends React.Component
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>Entry ID</th>
+                                                <th>{_t('Symbol')}</th>
                                                 <th>Type</th>
-                                                <th>Entries</th>
+                                                <th>{_t('Quantity')}</th>
                                                 <th>Price</th>
-                                                <th><span className="sell">BID</span> | <span className="buy">ASK</span></th>
-                                                <th><span className="profit">Winn</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>
+                                                <th><span className="sell">{_t('buy')}</span> | <span className="buy">{_t('ask')}</span></th>
+                                                <th><span className="profit">{_t('Profit')}</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -131,7 +131,7 @@ export class TabMyPos extends React.Component
                                                                         <strong className="title">{item2.EventName} <span className="muted">{item2.EventHandicap && ` (${item2.EventHandicap})`}</span></strong>
                                                                         <span className="hidden symbol_name">{item2.ID}</span>
                                                                     </td>
-                                                                    <td className="side">{(item2.Side ? 'Sold' : 'Bought')}</td>
+                                                                    <td className="side">{(item2.Side ? _t('Sold') : _t('Bought'))}</td>
                                                                     <td className="quantity">{item2.CommonVolume}</td>
                                                                     <td className="avg_price">{Math.round10(item2.AvgPrice, -2)}</td>
                                                                     <td className="spread">

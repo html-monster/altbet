@@ -4,18 +4,26 @@
 
 
 /**
- *  Usa strings for global
+ *  Usa strings, for Global
  */
 class Strings
 {
-    MP = {
-        buy: 'BID',
-        sell: 'OFFER',
-    };
+    buy = 'BID';
+    sell = 'OFFER';
+    ask = 'ASK';
+
     TradeSlip = 'Trade Slip';
     YourOrders = 'Your Orders';
 
-    fileLoad = 'Не удалось загрузить файл, обновите страницу и попробуйте еще раз';
-    fileDeleteError = 'Ошибка удаления файла, обновите страницу и попробуйте еще раз';
-    inviteError = 'Не удалось отправить приглашение пользователю, обновите страницу или попробуйте эту операцию через некоторое время';
+    Symbol = 'Symbol';
+    Quantity = 'Quantity';
+    Fees = 'Fees';
+    Bought = 'Long';
+    Sold = 'Short';
+    Profit = 'Profit';
+    // Amount = 'Amount';
+    // Total = 'Sum';
+    MaxAltBetFees = 'Max fees for this order';
+    // TotalCost = 'Total Cost';
+    Profitability = 'Profitability';
 }

@@ -8,14 +8,22 @@
  */
 class Strings
 {
-    MP = {
-        buy: 'BUY',
-        sell: 'SELL',
-    };
+    buy = 'BUY';
+    sell = 'SELL';
+    ask = 'SELL';
+
     TradeSlip = 'Entry Slip';
     YourOrders = 'Your Entries';
 
-    delconfirm = 'Подтвердите удаление';
-
-    fileLoad = 'Не удалось загрузить файл, обновите страницу и попробуйте еще раз';
+    Symbol = 'Entry ID';
+    Quantity = 'Entries';
+    Fees = 'Pay-to-Play fees';
+    Bought = 'Bought';
+    Sold = 'Sold';
+    Profit = 'Winn';
+    // Amount = 'Amount';
+    // Total = 'Total';
+    MaxAltBetFees = 'Max Alt.Bet Fees';
+    // TotalCost = 'Pay-to Play Fees';
+    Profitability = 'Potential Prize';
 }
