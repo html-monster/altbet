@@ -30,7 +30,7 @@ class Settings extends React.Component
 
     render()
     {
-        const { actions, data: { header, active }, files, loadProgress } = this.props;
+        const { actions, data: { header, active }, files, loadError, loadProgress } = this.props;
         const { FirstName, LastName, UserName, DateOfBirth, Email, Country, Address, Phone } = appData.pageAccountData.UserInfo;
 
 		const inputRender = ({ id, className, info, label, filled, inputLabel, meta: { error, dirty }, ...input }) => {
@@ -48,6 +48,8 @@ class Settings extends React.Component
             Country, Address, Phone }, handleSubmit }) => {
 			return <form action={appData.pageAccountUserInfoUrl} className="setting_form" method="post"
                          noValidate="novalidate" onSubmit={handleSubmit}>
+                    <h3 className="section_user">Personal info</h3>
+                    <hr/>
 
                     <InputValidation renderContent={inputRender} id={'f_name'} name="FirstName"
                                      initialValue={FirstName} info="Your first name as specified in your passport"
@@ -214,8 +216,6 @@ class Settings extends React.Component
             <h2>Settings</h2>
 			{header}
             <div className="column">
-                <h3 className="section_user">Personal info</h3>
-                <hr/>
                 <FormValidation
                     data={this.props.data}
                     userInfo={appData.pageAccountData.UserInfo}
@@ -223,10 +223,10 @@ class Settings extends React.Component
                     handleSubmit={actions.actionAjaxUserDataUpdate}
                     serverValidation={true}
                 />
-                <h3 className="section_user">User files</h3>
-                <hr/>
                 <form action={`${ABpp.baseUrl}/Payment/NetellerOut`} encType="multipart/form-data" className="document_upload"
-                ref="uploadForm">
+                ref="uploadForm" style={{marginTop: 25}}>
+                    <h3 className="section_user">User files</h3>
+                    <hr/>
                     {/*<input type="hidden" defaultValue={'lalalal'} name="lalal"/>*/}
                     <div className="miniatures">
 						{/* <div className="thumbnail">
@@ -271,9 +271,9 @@ class Settings extends React.Component
                                     var name = item.name.split('.');
                                     name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.name;
                                 }
-								return item.fileType != 'load' ? <div className={`thumbnail ${item.fileType == 'image' ? '' : 'doc'}`} key={item.id}>
-                                    <span className="close" title="Remove this file"
-                                          onClick={actions.removeFile.bind(null, item.id)}><span>{}</span></span>
+								return item.fileType != 'load' ? <div className={`thumbnail file ${item.fileType == 'image' ? '' : 'doc'}`} key={item.id}>
+                                    <button className="close" title="Remove this file"
+                                          onClick={actions.ajaxDeleteFile.bind(null, this, item.id)}><span>{}</span></button>
                                     <a href={item.fileUrl} target="_blank">
 										{
 											item.fileType == 'image' ?
@@ -296,11 +296,13 @@ class Settings extends React.Component
 						}
                     </div>
                     <button className="btn btn_green wave upload load_btn left" ref={'uploadButton'} onClick={this.loadFile}>Load file</button>
-                    <input type="file" name="file" accept=".doc,.docx,.xls,.xlsx,.txt,.png,.jpeg,.jpg"
+                    <input type="file" name="file" accept=".doc,.docx,.xls,.xlsx,.txt,.png,.jpeg,.jpg" multiple
                            onChange={actions.onFileChosen.bind(null, this)}
                            style={{visibility: 'hidden'}}
                            ref="uploadData"/>
-                    <span className="answer_message validation-summary-errors">{}</span>
+                    <span className={'answer_message' + (loadError && ' validation-summary-errors')} style={{height: 22}}>
+                        {loadError}
+                    </span>
                 </form>
             </div>
 
