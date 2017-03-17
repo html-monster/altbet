@@ -84,7 +84,7 @@ switch (ABpp.config.currentPage)
 			deposit,
 			withdraw,
 			transHistory,
-			accountSetting
+			accountSetting,
 			...common,
 		};
 		break;
