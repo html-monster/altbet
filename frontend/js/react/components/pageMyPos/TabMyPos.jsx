@@ -6,14 +6,15 @@ import {Dialog} from '../../models/Dialog.ts';
 
 export class TabMyPos extends React.Component
 {
-    filters = {'Sport': 'Sport', 'Economy': 'Economy', 'E-Sport': 'E-Sport', 'Society': 'Society', };
+    filters = {'sport': 'Fantasy Sport', 'economy': 'Economy', 'e-sport': 'E-Sport', 'society': 'Society', };
 
     constructor(props)
     {
         super(props);
 
         var filters = {};
-        Object.keys(this.filters).forEach((item) => { filters[this.filters[item]] = true });
+        Object.keys(this.filters).forEach((item) => { filters[item] = true });
+        0||console.log( 'filters', filters );
         this.state = {filters: filters};
     }
 
@@ -57,22 +58,22 @@ export class TabMyPos extends React.Component
                     <div className="my_position_tab">
                         <div className="wrapper">
                             <div className="filters">
-                                {filterBtn(this.filters['Sport'])}&nbsp;
-                                {filterBtn(this.filters['Economy'])}&nbsp;
-                                {filterBtn(this.filters['E-Sport'])}&nbsp;
-                                {filterBtn(this.filters['Society'])}
+                                {filterBtn(this.filters['sport'])}&nbsp;
+                                {filterBtn(this.filters['economy'])}&nbsp;
+                                {filterBtn(this.filters['e-sport'])}&nbsp;
+                                {filterBtn(this.filters['society'])}
                             </div>
                             <div className="tab_content">
                                 <div className="my_position_container table_content">
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>Entry ID</th>
+                                                <th>{_t('Symbol')}</th>
                                                 <th>Type</th>
-                                                <th>Entries</th>
+                                                <th>{_t('Quantity')}</th>
                                                 <th>Price</th>
-                                                <th><span className="sell">BID</span> | <span className="buy">ASK</span></th>
-                                                <th><span className="profit">Winn</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>
+                                                <th><span className="sell">{_t('buy')}</span> | <span className="buy">{_t('ask')}</span></th>
+                                                <th><span className="profit">{_t('Profit')}</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -88,7 +89,8 @@ export class TabMyPos extends React.Component
                                                     if(item.CommonSymbolProfitLoss < 0) plClass = 'loss';
                                                     else if(item.CommonSymbolProfitLoss > 0) plClass = 'profit';
 
-                                                    if( this.state.filters[item.Category] ) return <table key={key} className="pos tmp">
+0||console.log( 'this.state.filters', this.state.filters,item.Category.toLowerCase() );
+                                                    if( this.state.filters[item.Category.toLowerCase()] ) return <table key={key} className="pos tmp">
                                                         <thead>
                                                         <tr>
                                                             <th className="title">{item.Symbol.HomeName + ' - ' + item.Symbol.AwayName}</th>
@@ -131,7 +133,7 @@ export class TabMyPos extends React.Component
                                                                         <strong className="title">{item2.EventName} <span className="muted">{item2.EventHandicap && ` (${item2.EventHandicap})`}</span></strong>
                                                                         <span className="hidden symbol_name">{item2.ID}</span>
                                                                     </td>
-                                                                    <td className="side">{(item2.Side ? 'Sold' : 'Bought')}</td>
+                                                                    <td className="side">{(item2.Side ? _t('Sold') : _t('Bought'))}</td>
                                                                     <td className="quantity">{item2.CommonVolume}</td>
                                                                     <td className="avg_price">{Math.round10(item2.AvgPrice, -2)}</td>
                                                                     <td className="spread">

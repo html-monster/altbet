@@ -1,6 +1,5 @@
 .order {
   @include span(last 2.6 of 12);
-  //width: 325px;
   height: 100%;
   background: $order_sidebar_bg;
   position: fixed;
@@ -8,9 +7,6 @@
   top: 70px;
   z-index: 99;
   transition: 0.4s ease-out;
-  //&.active {
-  //  right: -20.76796%;
-  //}
   @include wave;
   label{
     color: #000000;
@@ -24,14 +20,6 @@
   .profit, .risk{
     .help_message{  width: 166px;  left: -151px;  }
   }
-  //.order_screening{
-  //  width: 100%;
-  //  height: 100%;
-  //  position: absolute;
-  //  top: 0;
-  //  left: 0;
-  //  z-index: 100;
-  //}
   .wrapper {  text-align: center;  margin-top: 10px;  }
   .left_order > label {
     padding-right: 20px;
@@ -757,35 +745,17 @@
     padding-bottom: 10px;
     &:last-child {  border-bottom: none;  }
     &.sell .my_order{
-      .order-title, .current-order-title{
-        background-color: #fff1f1;
-        //background: linear-gradient(to bottom, #ff6464, #921515);
-      }
+      .order-title, .current-order-title{ background-color: #fff1f1; }
     }
     &.buy .my_order{
-      .order-title, .current-order-title{
-        background-color: #ebf7f9;
-        //background: linear-gradient(to bottom, #2D8A8E, #1A484A);
-      }
+      .order-title, .current-order-title{ background-color: #ebf7f9; }
     }
-    .order_container{
-      border-bottom: 1px solid $order_sidebar_head_separator;
-      position: relative;
+    .order_container{ position: relative; border-bottom: 1px solid $order_sidebar_head_separator;
       &:last-child{  border-bottom: none;  }
-      &:before{
-        content: '';
-        display: block;
-        width: 100%;
-        height: 1px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background: rgba(255, 255, 255, 0.1);
-      }
+      &:before{ content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 1px;
+          background: rgba(255, 255, 255, 0.1); }
     }
-    .order_info{
-      padding: 0 5px 0 15px;
-      position: relative;
+    .order_info { position: relative; padding: 0 5px 0 5px;
       @include md(1400){
         padding: 0;
         padding-left: 5px;
@@ -822,15 +792,10 @@
       color: transparentize(#ffffff, 0.2);
     }
     .timestamp{
-      min-width: 100px;
       font-size: 10px;
       &:before{  right: 9px;  }
       .time{  color: $order_sidebar_current_order_title_color;  }
-      .help_message{
-        width: 160px;
-        top: 25px;
-        right: 4px;
-      }
+      .help_message{ width: 160px; right: 4px; top: 25px; }
     }
     .close{
       float: right;
@@ -880,63 +845,30 @@
         &:after{  transform: rotate(-45deg);  }
       }
     }
-    strong {
-      display: inline-block;
-      padding-right: 6px;
-      font-size: 12px;
-      color: transparentize($order_sidebar_current_order_title_color, 0.5);
-      line-height: 23px;
-      letter-spacing: 0.2px;
-      &.current-order{
-        padding: 0;
-        color: transparentize(#ffffff, 0.2);
+    strong { display: inline-block; font-size: 12px; line-height: 23px; letter-spacing: 0.2px;
+          color: transparentize($order_sidebar_current_order_title_color, 0.5);
+      &.amount { width: 60px; text-align: center }
+      &.qty { width: calc(100% - 204px); text-align: center }
+      &.dt { width: 80px }
+      &.current-order { padding: 0; color: transparentize(#ffffff, 0.2);
         &.up span{  color: #3498da;  }
         &.down span{  color: #ef4d22;  }
       }
-      &.last-price{
-        //margin-top: -1px;
-        //vertical-align: middle;
-        position: absolute;
-        top: calc(50% - 11px);
-        right: 70px;
-        &:before{
-          content: '';
-          display: inline-block;
-          width: 9px;
-          height: 9px;
-          vertical-align: middle;
-          background: url("#{$pathImage}/sprite.svg") no-repeat;
+      &.last-price { position: absolute; right: 70px; top: calc(50% - 11px);
+        &:before{ content: ''; display: inline-block; width: 9px; height: 9px; vertical-align: middle;
+            background: url("#{$pathImage}/sprite.svg") no-repeat; }
+        &.up { color: #1196d4;
+          &:before{ margin-top: -2px; background-position: -234px -155px; }
         }
-        &.up{
-          color: #1196d4;
-          &:before{
-            margin-top: -2px;
-            background-position: -234px -155px;
-            //margin-top: 2px;
-            //margin-right: 2px;
-            //border: 4px solid transparent;
-            //border-bottom: 8px solid #ef4d22;
-          }
-        }
-        &.down{
-          color: #ef4d22;
-          &:before{
-            background-position: -234px -135px;
-            //margin-top: 7px;
-            //margin-right: 2px;
-            //border: 4px solid transparent;
-            //border-top: 8px solid red;
-          }
+        &.down { color: #ef4d22;
+          &:before { background-position: -234px -135px; }
         }
       }
-      .price, .volume {
-        color: $order_sidebar_current_order_title_color;
-        font-family: 'open_sans_bold', sans-serif;
-      }
+      .price, .volume { color: $order_sidebar_current_order_title_color; font-family: 'open_sans_bold', sans-serif; }
     }
     .button_container{
       display: flex;
-      max-width: 44px;
+      width: 44px;
     }
     .edit, .delete{
       //display: flex;
@@ -963,10 +895,8 @@
         left: calc(50% - 7px);
       }
     }
-    .price, .volume{
-      input.number[disabled]{
-        border-right: 1px solid $order_sidebar_order_border_color;
-      }
+    .price, .volume, .fees, .risk, .profit{
+      input.number[disabled]{  border-right: 1px solid $order_sidebar_order_border_color;  }
     }
     .edit{
       //right: 22px;
@@ -1035,7 +965,6 @@
         position: absolute;
         top: 1px;
         right: 1px;
-        cursor: pointer;
       }
     }
     .sell-container form{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));  }
@@ -1118,6 +1047,7 @@
       }
       .col-3 .btn{  display: inline-block;  width: 46%;  background-size: 18px;  vertical-align: bottom;  }
       .cancel{  background: url("#{$pathImage}/ico-delete.png") no-repeat center;  }
+
       label:not(.checkbox){
         display: block;
         width: 100%;
@@ -1129,6 +1059,8 @@
         position: relative;
         &.with_info{  padding-right: 15px;  }
       }
+      .profit label.with_info { padding-right: 0 }
+
       input {
         height: 31px;
         padding-left: 10px;

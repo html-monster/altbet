@@ -67,17 +67,20 @@ class Header extends React.Component
 				{/*<button className="ru btn">Ru</button>*/}
 			{/*</div>*/}
 			<div className="header_right">
-        
-        <div className="fast_menu">
-          <a href="/AltBet/eng/home/index" className="btn"><span>Exchange</span> </a>
-          <a href="#"  className="btn"><span className="live_event wave ">Live</span></a>
-          <a href="#" className="btn"><span className="history_event">History</span></a>
-          <a href="/AltBet/eng/footer/TradingRules" className="btn"><span>Rules</span> </a>
-        </div>
-        
-        
-        
-				<span data-js-connect-label="" className="connect">{}</span>
+
+
+			<div className="fast_menu">
+			  <a href="/AltBet/eng/home/index" className="btn"><span>Exchange</span> </a>
+			  <a href="#"  className="btn"><span className="live_event wave ">Live</span></a>
+			  <a href="#" className="btn"><span className="history_event">History</span></a>
+			  <a href="/AltBet/eng/footer/TradingRules" className="btn"><span>Rules</span> </a>
+			</div>
+
+
+				<div className="reconnect help balloon_only">
+                	<button className="btn connect wave waves-effect waves-button" onClick={() => this.testSockOpen()} data-js-connect-label="">{}</button>
+					<div className="help_message w200 ce-bo">There is no connection to server now. <br />Click here for reconnect</div>
+				</div>
 
 				{
 					ABpp.User.userIdentity ?
@@ -92,24 +95,24 @@ class Header extends React.Component
 							transitionEnterTimeout={800}
 							data={serverData}
 						>
-								<span className="win-lost animated" data-verify={'Profitlost'}>P/L: <strong className={'animated ' + (serverData.Profitlost < 0 ? 'lost' : 'win')}>
+								<span className="win-lost animated" data-verify={"Profitlost"}>Win/Loss: <strong className={'animated ' + (serverData.Profitlost < 0 ? 'lost' : 'win')}>
 									{serverData.Profitlost >= 0 ?
 										`$${profitlost}`
 										:
 										`($${profitlost.toString().replace('-', '')})`}
 									</strong>
 								</span>
-							<span className="invested animated" data-verify={'Exposure'}>Exposure: <strong className="animated">${(Math.round10(serverData.Exposure, -2)).toFixed(2)}</strong></span>
-							<span className="available animated" data-verify={'Available'}>Available: <strong className="animated">${Math.round10(serverData.Available, -2)}</strong></span>
+							<span className="invested animated" data-verify={'Exposure'}>At Stake: <strong className="animated">${(Math.round10(serverData.Exposure, -2)).toFixed(2)}</strong></span>
+							<span className="available animated" data-verify={'Available'}>Balance: <strong className="animated">${Math.round10(serverData.Available, -2)}</strong></span>
 						</AnimateOnUpdate>
 						:
 						''
 				}
-				{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockOpen()} title="Connect to socket">C</a> : ''}
-				{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</a> : ''}
+				{/*{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockOpen()} title="Connect to socket">C</a> : ''}*/}
+                { ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <button className="btn" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</button> : ''}
 
 
-				{ ABpp.User.isAuthorized() ? <a className="my_order btn" href={ABpp.baseUrl + '/eng/home/positions-orders'}>My Positions | Orders</a> : ''}
+				{ ABpp.User.isAuthorized() ? <a className="my_order btn" href={ABpp.baseUrl + '/eng/home/positions-orders'}>My Activity</a> : ''}
 				{ ABpp.User.isAuthorized() ? <a href={ABpp.baseUrl + '/eng/Account#/funds/deposit'} className="btn deposit">Deposit</a> : ''}
 				{/*<button className="price_plan btn">Pricing Plans</button>*/}
 				<div className="odds_converter select" title="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Bettor ">

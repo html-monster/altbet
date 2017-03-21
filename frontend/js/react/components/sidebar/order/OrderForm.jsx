@@ -37,36 +37,7 @@ export default class OrderForm extends React.Component{
 		// console.log(`-5000`, OddsConverterObj.convertToAltbetSystem('-5000'));
 	}
 
-	// OnBeginAjax()
-	// {
-	// 	$(this.refs.orderForm).find('[type=submit]').attr('disabled', true);
-	// }
-	//
-	// onSuccessAjax()
-	// {
-	// 	console.log('Order sending finished: ' + this.props.data.ID);
-	// }
-	//
-	// onErrorAjax()
-	// {
-	// 	$(this.refs.orderForm).find('[type=submit]').removeAttr('disabled');
-	// 	defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
-	// }
-
-	// ajaxSendHandler(e)
-	// {
-	// 	e.preventDefault();
-	// 	defaultMethods.sendAjaxRequest({
-	// 		httpMethod: 'POST',
-	// 		url: this.props.formData.url,
-	// 		callback: ::this.onSuccessAjax,
-	// 		onError: ::this.onErrorAjax,
-	// 		beforeSend: ::this.OnBeginAjax,
-	// 		context: $(this.refs.orderForm)
-	// 	});
-	// }
-
-	onInputIncrement(input, value, event)
+	onInputIncrement(input, value)
 	{
 		const state = this.state;
 		const refs = this.refs;
@@ -275,7 +246,7 @@ export default class OrderForm extends React.Component{
 						<label className="with_info" htmlFor={`${orderId}_price`}>
 							{
 								checkboxProp ?
-									'Amount'
+									'Per Entry'
 									:
 									'Market price'
 							}
@@ -313,7 +284,7 @@ export default class OrderForm extends React.Component{
 						</div>
 					</div>
 					<div className="volume">
-						<label htmlFor={`${orderId}_quantity`}>Entries</label>
+						<label htmlFor={`${orderId}_quantity`}>{_t('Quantity')}</label>
 						<div className="input">
 							<InputNumber type="tel" id={`${orderId}_quantity`} className="number" data-validation="123"
 										 maxLength="7" name="Quantity" autoComplete="off"
@@ -333,7 +304,7 @@ export default class OrderForm extends React.Component{
 						</div>
 					</div>
 					<div className="obligations">
-						<label htmlFor={`${orderId}_sum`}>Total</label>
+						<label htmlFor={`${orderId}_sum`}>Amount</label>
 						<div className="input">
 							<InputNumber type="tel" id={`${orderId}_sum`} className="number" data-validation="40.59" hard="true"
 										 onChange={this.onInputChange.bind(this, 'Sum')}
@@ -355,10 +326,10 @@ export default class OrderForm extends React.Component{
 				<div className="container">
 					<div className="fees">
 						<label className="with_info">
-							<span>Max Fees</span>
+							<span>Fees</span>
 							<div className="help">
 								<div className="help_message right">
-									<p>Max Alt.Bet Fees</p>
+									<p>{_t('MaxAltBetFees')}</p>
 								</div>
 							</div>
 						</label>
@@ -369,9 +340,9 @@ export default class OrderForm extends React.Component{
 					</div>
 					<div className="risk">
 						<label className="with_info">
-							Pay-to Play Fees
+							Total Fees
 							<div className="help">
-								<div className="help_message right">
+								<div className="help_message ri-bo">
 									<p><span>Total Pay-to Play Fees<br/>
 										{checkboxProp && 'Formula:'}</span> {checkboxProp ?
 										+stateData.Sum ? `${stateData.Sum} + ${fees}` : ''
@@ -390,23 +361,24 @@ export default class OrderForm extends React.Component{
 					</div>
 					<div className="profit">
 						<label className="with_info">
-							Potential Prize
-							<div className="help">
+							{_t('Profitability')}
+{/*							<div className="help">
 								<div className="help_message right">
 									<p>
 										<span>Potential Prize per Entry in winning outcome<br/>
-											{/*{checkboxProp && 'Formula:'}*/}
+											/!*{checkboxProp && 'Formula:'}*!/
 											</span> {
 											checkboxProp && +price && stateData.Volume ? `(1 - ${price}) * ${stateData.Volume}` || '' : ''
 										}
 									</p>
 								</div>
-							</div>
+							</div>*/}
 						</label>
 						<div className="input">
 							<input type="text" className="number" autoComplete="off" ref="inputProfit"
-								   onChange={null} value={checkboxProp && +price && stateData.Volume ? Math.round10((1 - price) * stateData.Volume, -2) || '' : ''}
+								   onChange={null} value={stateData.Volume ? `$${stateData.Volume}` : ''}
 								   disabled />
+							{/*checkboxProp && +price && stateData.Volume ? Math.round10((1 - price) * stateData.Volume, -2) || '' : ''*/}
 						</div>
 					</div>
 				</div>

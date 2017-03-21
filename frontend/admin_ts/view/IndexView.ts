@@ -11,6 +11,7 @@ import Dialog from "../component/Dialog";
 import {RadioBtns} from "../component/RadioBtns";
 import {Loading} from "../component/Loading";
 import {translit} from "../component/translit.js";
+import {FormFilters} from "../component/FormFilters";
 import {User} from "../model/User";
 import Common from "../inc/Common";
 
@@ -140,11 +141,11 @@ export class IndexView extends BaseView
             "showDropdowns": true,
             "showWeekNumbers": true,
             "timePicker": true,
-            "timePicker24Hour": true,
+            // "timePicker24Hour": true,
             timePickerIncrement: 5,
             "opens": "left",
             locale: {
-                format: 'MM/DD/YYYY H:mm'
+                format: 'MM/DD/YYYY h:mm A'
             }
         });
 
@@ -569,14 +570,48 @@ export class IndexView extends BaseView
     {
         var $that = $(target);
         var $buttons = $("[data-js-btn-side]", $that);
+
+        var ff = new FormFilters();
+        ff.bindFiltersFn($that);
+
         $buttons.click((ee) =>
         {
             $buttons.removeClass().addClass("btn btn-default");
             var $this = $(ee.target);
             $this.removeClass("btn-default").addClass($this.data("class") + ' active');
-            $("[data-js-wintype]", $that).val($this.data("id"));
-            $("[data-js-wintypestr]", $that).val($this.data("result"));
+            // $("[data-js-wintypestr]", $that).val($this.data("result"));
+
+            // 0||console.log( 'elm', $("[js-side-labels] span", $that).css({fontWidth: ''}).eq($this.data("id")), $this.data("id") );
+            var index = $this.data("id");
+            $("[data-js-side-labels] span", $that).css({fontWeight: ''}).eq(index).css({fontWeight: 'bold'});
+
+            if( index == 1 ) $("[data-js-percent]", $that).val("-1");
+            else $("[data-js-percent]", $that).val($("[data-js-side-labels] [type=text]", $that).val());
+        });
+
+        $("[data-js-side-labels] [type=text]", $that).keyup((ee) =>
+        {
+            $("[data-js-percent]", $that).val($(ee.target).val());
+            $("[data-js-btn-side]", $that).eq(0).click();
         })
+    }
+
+
+
+    public onSetStatusOkClick(inForm)
+    {
+        var $input = $("[data-js-side-labels] [type=text]");
+        var $val = $input.val();
+        $("[data-js-error-message]").text('');
+
+        if( $val != -1 && ($val < 0 || $val > 100) )
+        {
+            $input.focus().select();
+            $("[data-js-error-message]").html('<br/>Selltement value must be between 0 and 100');
+            return false;
+        } // endif
+
+        return true;
     }
 
 

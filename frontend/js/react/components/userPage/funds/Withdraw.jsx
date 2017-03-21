@@ -89,7 +89,8 @@ class Withdraw extends React.Component{
 								<input type="submit" className="wave btn" defaultValue={'Submit'}/>
 							</div>
 						</form>*/}
-						<Visa data={this.props.withdraw} withdraw={true} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Visa')} />
+						{/*<Visa data={this.props.withdraw} withdraw={true} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Visa')} />*/}
+						<p style={{marginLeft: 5}}>Coming soon...</p>
 					</div>
 					<div className="tab_item payment_tab">
 						{/*<form>
@@ -151,7 +152,8 @@ class Withdraw extends React.Component{
 						{/*<button className="btn wave approve" onClick={this.lalal}>{'Submit'}</button>*/}
 					</div>
 					<div className="tab_item payment_tab">
-						<Bitpay data={this.props.withdraw} withdraw={true} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Bitpay')} />
+						{/*<Bitpay data={this.props.withdraw} withdraw={true} onSubmit={actions.actionOnAjaxSend.bind(null, this, 'Bitpay')} />*/}
+						<p style={{marginLeft: 5}}>Coming soon...</p>
 					</div>
 				</div>
 			</div>

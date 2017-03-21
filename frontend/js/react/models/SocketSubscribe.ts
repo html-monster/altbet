@@ -15,6 +15,7 @@ export class SocketSubscribe
     public static AP_ACCOUNT_DATA = '6';
 
     private subscribeParams = { // last subscribe params
+            UserBrowser: "",
             User: "",
             PageName: '',
             ExchangeName: "",
@@ -30,6 +31,7 @@ export class SocketSubscribe
     constructor()
     {
         // init subscribe data
+        this.subscribeParams.UserBrowser = navigator.userAgent;
         this.subscribeParams.User = ABpp.User.login;
         this.subscribeParams.PageName = ABpp.config.currentPage;
     }

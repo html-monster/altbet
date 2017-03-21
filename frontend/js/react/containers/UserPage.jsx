@@ -9,23 +9,23 @@ import { Link } from 'react-router'
 
 import BaseController from './BaseController';
 import Funds from '../components/userPage/Funds';
-import {Preferences} from '../components/userPage/Preferences';
-import {Settings} from '../components/userPage/Settings';
+import Preferences from '../components/userPage/Preferences';
+import Settings from '../components/userPage/Settings';
 
 
-class AccountPage extends BaseController
+class UserPage extends BaseController
 {
     constructor(props)
     {
         super(props);
-        __DEV__ && console.log( 'AccountPage props', props );
+        __DEV__ && console.log( 'UserPage props', props );
     }
 
 
     render()
     {
         const staticData = appData.pageAccountData;
-        var $tabHeaderHtml = <div className="user_info">
+        let $tabHeaderHtml = <div className="user_info">
 				<div className="personal_info">
 					<h3 className="mail">{staticData.UserInfo.Email}</h3>
 					<strong>{`${staticData.UserInfo.FirstName} ${staticData.UserInfo.LastName}`}</strong>
@@ -60,4 +60,4 @@ export default connect(
         // actions: bindActionCreators(actions, dispatch),
         // myPositionsActions: bindActionCreators(myPositionsActions, dispatch),
     })
-)(AccountPage)
+)(UserPage)

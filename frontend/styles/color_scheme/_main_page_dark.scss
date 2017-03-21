@@ -41,7 +41,7 @@ $line1ico: -276px;
 $line2ico: -429px;
 $line3ico: -465px;
 @mixin main_page_event_icon{
-	&.sport:before{  background-position: -68px $line1ico;  }
+	&.sport:before {  background-position: -68px $line1ico;  }
 	&.cybersport:before, &.e_sport:before{  background-position: -186px $line1ico;  }
 	&.economy:before, &.finance:before{  background-position: -107px $line1ico; }
 	&.society:before{  background-position: -27px $line1ico;  }

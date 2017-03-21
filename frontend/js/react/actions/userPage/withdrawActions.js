@@ -81,7 +81,15 @@ export function actionOnQuantityValidate(values)
 // 		// });
 // 	}
 // }
-
+/**
+ *
+ * @param context - this компонента в которой нахоидтся функция
+ * @param payment string - название платежки
+ * @param values - данные собранные с формы
+ * @param serverValidation - функция обратной связи для серверной валидации
+ * @param event
+ * @returns {function(*, *)}
+ */
 export function actionOnAjaxSend(context, payment, values, serverValidation, event)
 {
 	return (dispatch, getState) =>
@@ -183,10 +191,9 @@ export function onSuccessAjaxNeteller(context, form, serverValidation, data)
 				break;}
 			case '556':{
 				serverValidation({error: 'You don`t have enough money in your Alt.bet account'});
-				error = ' ';
 				dispatch({
 					type: WITHDRAW_QUANTITY_VALIDATE,
-					payload: error
+					payload: ' '
 				});
 				break;}
 			case 'Account disabled':{
@@ -206,10 +213,9 @@ export function onSuccessAjaxNeteller(context, form, serverValidation, data)
 				break;}
 			case '20020':{
 				serverValidation({error: 'Insufficient balance to complete the transaction'});
-				error = ' ';
 				dispatch({
 					type: WITHDRAW_QUANTITY_VALIDATE,
-					payload: error
+					payload: ' '
 				});
 				break;}
 			case '20021':{
@@ -243,14 +249,14 @@ export function onSuccessAjaxSkrill(context, form, serverValidation, data)
 	return (dispatch) =>
 	{
 		__DEV__ && console.log(data);
-		const {Answer: { code }} = data;
-		// serverValidation(obj);
-		switch (code) {
-			case '200':{
-				const { transaction: { amount = null } } = data;
-				popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw.message');
+		const { SkrillAnswer: { Code } } = data;
 
-				$(context.refs.paymentMessage).find('.amount').text('$' + (amount / 100));
+		switch (Code) {
+			case '200':{
+				const { amount = null  } = data;
+				if(amount) popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw.message');
+
+				$(context.refs.paymentMessage).find('.amount').text('$' + (amount));
 				serverValidation({message: 'The payment is successful'});
 				break;}
 			case '555':{
@@ -258,14 +264,17 @@ export function onSuccessAjaxSkrill(context, form, serverValidation, data)
 				break;}
 			case '556':{
 				serverValidation({error: 'You don`t have enough money in your Alt.bet account'});
-				error = ' ';
 				dispatch({
 					type: WITHDRAW_QUANTITY_VALIDATE,
-					payload: error
+					payload: ' '
 				});
 				break;}
 			case 'SINGLE_TRN_LIMIT_VIOLATED':{
 				serverValidation({error: 'Maximum amount per payment transaction = EUR 10,000'});
+				dispatch({
+					type: WITHDRAW_QUANTITY_VALIDATE,
+					payload: ' '
+				});
 				break;}
 			default:{
 				serverValidation({error: 'The payment failed. Try again later'});

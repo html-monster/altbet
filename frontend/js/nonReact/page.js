@@ -1,4 +1,15 @@
 window.ee = new EventEmitter();
+const DS = '/';
+
+
+/**
+ * Localization function
+ */
+function _t(inStr)
+{
+    return ABpp.Localization.translate(inStr);
+}
+
 
 
 // BM: for Discuss
@@ -75,6 +86,7 @@ $(document).ready(function ()
 	popUpClass.popUpClose('.sign_in_form a.register', 'fadeOut', '.sign_in_form');
 	popUpClass.popUpClose('.sign_in_form .close', 'fadeOut', '.sign_in_form'); // pop-up login
 	popUpClass.popUpClose('.wrapper_user_page .payment_message .hide', 'hide', '.wrapper_user_page .payment_message'); //payment message
+	popUpClass.popUpClose('.sign_up_form .close', 'fadeOut', '.sign_up_form'); // register
 
 	popUpClass.globalPopUpClose('.warning'); // all warning message
 	popUpClass.globalPopUpClose('.user-menu', 'slideUp', '.log_in'); // login user menu
@@ -183,7 +195,7 @@ $(document).ready(function ()
 		input.keypress(function () { return false; });
 		input.datepicker({  // remove "hasDatepicker" !!!!!!!!!!!!!!
 			yearRange: "1901:c+0",
-			dateFormat: "d M y",
+			dateFormat: "d M yy",
 			maxDate: "0",
 			minDate: new Date(1, 1 - 1, 1),
 			changeMonth: true,
