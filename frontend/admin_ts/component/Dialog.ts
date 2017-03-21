@@ -105,10 +105,13 @@ export default class Dialog
     {
         e.stopPropagation();
 
-        (new Loading).showLoading({targetElm: $('[data-js=loading]', this.options.target), element: $("[data-js=ok]", this.options.target), pic: 2, outerAlign: Loading.ALIGN_OUTER_LEFT, offsetX: 4, position: Loading.POS_INLINE});
+        var $Loading = (new Loading);
+
+        $Loading.showLoading({targetElm: $('[data-js=loading]', this.options.target), element: $("[data-js=ok]", this.options.target), pic: 2, outerAlign: Loading.ALIGN_OUTER_LEFT, offsetX: 4, position: Loading.POS_INLINE});
 
         if (this.options.callbackOK)
             if (this.options.callbackOK(event))
                 $("[data-js=wrapper]", this.options.target).fadeOut(200);
+            else $Loading.hideLoading();
     }
 }
