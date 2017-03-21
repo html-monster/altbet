@@ -249,7 +249,7 @@ export function onSuccessAjaxSkrill(context, form, serverValidation, data)
 	return (dispatch) =>
 	{
 		__DEV__ && console.log(data);
-		const {skrillAnswer: { Code }} = data;
+		const { SkrillAnswer: { Code } } = data;
 
 		switch (Code) {
 			case '200':{
