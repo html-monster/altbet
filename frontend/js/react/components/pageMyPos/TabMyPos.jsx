@@ -6,14 +6,15 @@ import {Dialog} from '../../models/Dialog.ts';
 
 export class TabMyPos extends React.Component
 {
-    filters = {'Sport': 'Fantasy Sport', 'Economy': 'Economy', 'E-Sport': 'E-Sport', 'Society': 'Society', };
+    filters = {'sport': 'Fantasy Sport', 'economy': 'Economy', 'e-sport': 'E-Sport', 'society': 'Society', };
 
     constructor(props)
     {
         super(props);
 
         var filters = {};
-        Object.keys(this.filters).forEach((item) => { filters[this.filters[item]] = true });
+        Object.keys(this.filters).forEach((item) => { filters[item] = true });
+        0||console.log( 'filters', filters );
         this.state = {filters: filters};
     }
 
@@ -57,10 +58,10 @@ export class TabMyPos extends React.Component
                     <div className="my_position_tab">
                         <div className="wrapper">
                             <div className="filters">
-                                {filterBtn(this.filters['Sport'])}&nbsp;
-                                {filterBtn(this.filters['Economy'])}&nbsp;
-                                {filterBtn(this.filters['E-Sport'])}&nbsp;
-                                {filterBtn(this.filters['Society'])}
+                                {filterBtn(this.filters['sport'])}&nbsp;
+                                {filterBtn(this.filters['economy'])}&nbsp;
+                                {filterBtn(this.filters['e-sport'])}&nbsp;
+                                {filterBtn(this.filters['society'])}
                             </div>
                             <div className="tab_content">
                                 <div className="my_position_container table_content">
@@ -88,7 +89,8 @@ export class TabMyPos extends React.Component
                                                     if(item.CommonSymbolProfitLoss < 0) plClass = 'loss';
                                                     else if(item.CommonSymbolProfitLoss > 0) plClass = 'profit';
 
-                                                    if( this.state.filters[item.Category] ) return <table key={key} className="pos tmp">
+0||console.log( 'this.state.filters', this.state.filters,item.Category.toLowerCase() );
+                                                    if( this.state.filters[item.Category.toLowerCase()] ) return <table key={key} className="pos tmp">
                                                         <thead>
                                                         <tr>
                                                             <th className="title">{item.Symbol.HomeName + ' - ' + item.Symbol.AwayName}</th>

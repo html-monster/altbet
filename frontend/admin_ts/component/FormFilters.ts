@@ -36,7 +36,7 @@ export class FormFilters {
         for (var ii in params) {
             params[ii] = params[ii].replace("\\:", "|||");
             var val = params[ii].split(':', 2);
-            val[1].length && (val[1] = val[1].replace("|||", ":"));
+            val[1] && val[1].length && (val[1] = val[1].replace("|||", ":"));
             filters[val[0]] = val[1] ? val[1] : '';
         } // endfor
 

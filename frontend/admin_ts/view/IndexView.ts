@@ -568,11 +568,12 @@ export class IndexView extends BaseView
 
     public onCompleteDialogInit(that, target)
     {
-        // var ff = new FormFilters();
-        // ff.bindFiltersFn($that);
-
         var $that = $(target);
         var $buttons = $("[data-js-btn-side]", $that);
+
+        var ff = new FormFilters();
+        ff.bindFiltersFn($that);
+
         $buttons.click((ee) =>
         {
             $buttons.removeClass().addClass("btn btn-default");
@@ -582,17 +583,35 @@ export class IndexView extends BaseView
 
             // 0||console.log( 'elm', $("[js-side-labels] span", $that).css({fontWidth: ''}).eq($this.data("id")), $this.data("id") );
             var index = $this.data("id");
-            $("[js-side-labels] span", $that).css({fontWeight: ''}).eq(index).css({fontWeight: 'bold'});
+            $("[data-js-side-labels] span", $that).css({fontWeight: ''}).eq(index).css({fontWeight: 'bold'});
 
-            if( index == 1 ) $("[data-js-wintype]", $that).val("-1");
-            else $("[data-js-wintype]", $that).val($("[js-side-labels] [type=text]", $that).val());
+            if( index == 1 ) $("[data-js-percent]", $that).val("-1");
+            else $("[data-js-percent]", $that).val($("[data-js-side-labels] [type=text]", $that).val());
         });
 
-        $("[js-side-labels] [type=text]", $that).keyup((ee) =>
+        $("[data-js-side-labels] [type=text]", $that).keyup((ee) =>
         {
-            $("[data-js-wintype]", $that).val($(ee.target).val());
+            $("[data-js-percent]", $that).val($(ee.target).val());
             $("[data-js-btn-side]", $that).eq(0).click();
         })
+    }
+
+
+
+    public onSetStatusOkClick(inForm)
+    {
+        var $input = $("[data-js-side-labels] [type=text]");
+        var $val = $input.val();
+        $("[data-js-error-message]").text('');
+
+        if( $val != -1 && ($val < 0 || $val > 100) )
+        {
+            $input.focus().select();
+            $("[data-js-error-message]").html('<br/>Selltement value must be between 0 and 100');
+            return false;
+        } // endif
+
+        return true;
     }
 
 
