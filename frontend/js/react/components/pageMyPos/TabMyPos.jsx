@@ -14,7 +14,7 @@ export class TabMyPos extends React.Component
 
         var filters = {};
         Object.keys(this.filters).forEach((item) => { filters[item] = true });
-        0||console.log( 'filters', filters );
+        // 0||console.log( 'filters', filters );
         this.state = {filters: filters};
     }
 
@@ -51,17 +51,17 @@ export class TabMyPos extends React.Component
         let plClass;
 
         // filter btn
-        var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "2"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '3'} htmlFor={inCatName + "2"} className={inCatName.toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{inCatName}</span></label>];
+        var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "2"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '3'} htmlFor={inCatName + "2"} className={this.filters[inCatName].toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{this.filters[inCatName]}</span></label>];
 
 
         return <div className="tab_item active">
                     <div className="my_position_tab">
                         <div className="wrapper">
                             <div className="filters">
-                                {filterBtn(this.filters['sport'])}&nbsp;
-                                {filterBtn(this.filters['economy'])}&nbsp;
-                                {filterBtn(this.filters['e-sport'])}&nbsp;
-                                {filterBtn(this.filters['society'])}
+                                {filterBtn('sport')}&nbsp;
+                                {filterBtn('economy')}&nbsp;
+                                {filterBtn('e-sport')}&nbsp;
+                                {filterBtn('society')}
                             </div>
                             <div className="tab_content">
                                 <div className="my_position_container table_content">
@@ -89,8 +89,8 @@ export class TabMyPos extends React.Component
                                                     if(item.CommonSymbolProfitLoss < 0) plClass = 'loss';
                                                     else if(item.CommonSymbolProfitLoss > 0) plClass = 'profit';
 
-0||console.log( 'this.state.filters', this.state.filters,item.Category.toLowerCase() );
-                                                    if( this.state.filters[item.Category.toLowerCase()] ) return <table key={key} className="pos tmp">
+//0||console.log( 'this.state.filters', this.state.filters,item.Category.toLowerCase() )
+                                                    if( true || this.state.filters[item.Category.toLowerCase()] ) return <table key={key} className="pos tmp">
                                                         <thead>
                                                         <tr>
                                                             <th className="title">{item.Symbol.HomeName + ' - ' + item.Symbol.AwayName}</th>

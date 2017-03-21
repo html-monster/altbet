@@ -339,9 +339,10 @@ export class IndexController extends BaseController
             {
                 var form = $(ee.target).closest('form');
 
+                // check input while settlement
                 if ( type == ExchangeModel.STATUS_SETTLEMENT && !$IndexView.onSetStatusOkClick(form) ) return false;
 
-                0||console.log( 'ok', 0 ); return false;
+                // 0||console.log( 'ok', 0 ); return false;
 
                 // $IndexView.beginDeleteExch();
                 var formData = new FormData(<HTMLFormElement>form[0]);
