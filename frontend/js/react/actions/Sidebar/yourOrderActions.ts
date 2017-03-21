@@ -94,6 +94,7 @@ class Actions extends BaseActions
 			id = `#${id}__order`;
 			const activeFirstTab = this._prepeareToMove(id, 'edit');
 			const scrollPos = $(id)[0].offsetTop + 150;
+			console.log('1: ', scrollPos);
 
 			if(this._checkOnLastElement(id)){
 				$(id).find('.form-container').slideToggle(200, ()=>{
@@ -130,8 +131,9 @@ class Actions extends BaseActions
 		const currentOrders = $('#current-orders');
 		const tab = $('.left_order .tab');
 		const activeTadFirst = tab.eq(0).hasClass('active');
-		const scrollPos = $(id)[0].offsetTop - 33;
+		const scrollPos = $(id)[0].offsetTop - 150;
 
+		console.log('2: ', scrollPos);
 		currentOrders.find('.form-container').slideUp(200);
 		currentOrders.find('.pop_up').fadeOut();
 
@@ -140,21 +142,22 @@ class Actions extends BaseActions
 			tab.removeClass('active');
 			tab.eq(1).addClass('active');
 			currentOrders.fadeIn();
-			if(handle == 'edit' && !this._checkOnLastElement(id)){
-				setTimeout(()=>{
-					currentOrders.animate({scrollTop: scrollPos} , 200);
-				}, 450);
-			}
-			else if(handle == 'delete'){
-				setTimeout(()=>{
-					currentOrders.animate({scrollTop: scrollPos} , 200);
-				}, 450);
-			}
+			// if(handle == 'edit' && !this._checkOnLastElement(id)){
+			// 	setTimeout(()=>{
+			// 		currentOrders.animate({scrollTop: scrollPos} , 200);
+			// 	}, 450);
+			// }
+			// else if(handle == 'delete'){
+			// 	setTimeout(()=>{
+			// 		currentOrders.animate({scrollTop: scrollPos} , 200);
+			// 	}, 450);
+			// }
 		}
-		else{
-			if(handle == 'edit' && !this._checkOnLastElement(id)) currentOrders.animate({scrollTop: scrollPos} , 200);
-			else currentOrders.animate({scrollTop: scrollPos} , 200);
-		}
+		// else{
+			// if(handle == 'edit' && !this._checkOnLastElement(id)) currentOrders.animate({scrollTop: scrollPos} , 200);
+			// else currentOrders.animate({scrollTop: scrollPos} , 200);
+		// }
+		currentOrders.animate({scrollTop: scrollPos} , 200);
 
 		return activeTadFirst;
 	}

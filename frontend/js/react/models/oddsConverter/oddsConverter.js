@@ -84,11 +84,11 @@ export default class OddsConverter
 				break;
 			}
 			case this.IMPLIED:{
-				value = Math.round10(value / 100, -2);
+				value = value + '%';
 				break;
 			}
 			default:
-				value = value + '%';
+				value = Math.round10(value / 100, -2);
 		}
 		return value;
 	}

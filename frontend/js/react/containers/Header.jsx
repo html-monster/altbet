@@ -70,10 +70,10 @@ class Header extends React.Component
 
 
 			<div className="fast_menu">
-			  <a href="/AltBet/eng/home/index" className="btn"><span>Exchange</span> </a>
-			  <a href="#"  className="btn"><span className="live_event wave ">Live</span></a>
-			  <a href="#" className="btn"><span className="history_event">History</span></a>
-			  <a href="/AltBet/eng/footer/TradingRules" className="btn"><span>Rules</span> </a>
+			  <a href="/AltBet/eng/home/index" className="btn wave waves-effect waves-button"><span>Exchange</span> </a>
+			  <a href="#"  className="btn wave waves-effect waves-button"><span className="live_event wave ">Live</span></a>
+			  <a href="#" className="btn wave waves-effect waves-button"><span className="history_event">History</span></a>
+			  <a href="/AltBet/eng/footer/TradingRules" className="btn wave waves-effect waves-button"><span>Rules</span> </a>
 			</div>
 
 
@@ -109,11 +109,11 @@ class Header extends React.Component
 						''
 				}
 				{/*{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockOpen()} title="Connect to socket">C</a> : ''}*/}
-                { ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <button className="btn" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</button> : ''}
+                { ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <button className="btn wave waves-effect waves-button" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</button> : ''}
 
 
-				{ ABpp.User.isAuthorized() ? <a className="my_order btn" href={ABpp.baseUrl + '/eng/home/positions-orders'}>My Activity</a> : ''}
-				{ ABpp.User.isAuthorized() ? <a href={ABpp.baseUrl + '/eng/Account#/funds/deposit'} className="btn deposit">Deposit</a> : ''}
+				{ ABpp.User.isAuthorized() ? <a className="my_order btn wave waves-effect waves-button" href={ABpp.baseUrl + '/eng/home/positions-orders'}>My Activity</a> : ''}
+				{ ABpp.User.isAuthorized() ? <a href={ABpp.baseUrl + '/eng/Account#/funds/deposit'} className="btn deposit wave waves-effect waves-button">Deposit</a> : ''}
 				{/*<button className="price_plan btn">Pricing Plans</button>*/}
 				<div className="odds_converter select" title="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Bettor ">
 					<span className="active_selection active_odd btn wave" onClick={this.listSlide.bind(this, true)}>{this.OddsConverterObj.getSystemName()}</span>
