@@ -11,6 +11,7 @@ import Dialog from "../component/Dialog";
 import {RadioBtns} from "../component/RadioBtns";
 import {Loading} from "../component/Loading";
 import {translit} from "../component/translit.js";
+import {FormFilters} from "../component/FormFilters";
 import {User} from "../model/User";
 import Common from "../inc/Common";
 
@@ -567,6 +568,9 @@ export class IndexView extends BaseView
 
     public onCompleteDialogInit(that, target)
     {
+        // var ff = new FormFilters();
+        // ff.bindFiltersFn($that);
+
         var $that = $(target);
         var $buttons = $("[data-js-btn-side]", $that);
         $buttons.click((ee) =>
@@ -574,8 +578,20 @@ export class IndexView extends BaseView
             $buttons.removeClass().addClass("btn btn-default");
             var $this = $(ee.target);
             $this.removeClass("btn-default").addClass($this.data("class") + ' active');
-            $("[data-js-wintype]", $that).val($this.data("id"));
-            $("[data-js-wintypestr]", $that).val($this.data("result"));
+            // $("[data-js-wintypestr]", $that).val($this.data("result"));
+
+            // 0||console.log( 'elm', $("[js-side-labels] span", $that).css({fontWidth: ''}).eq($this.data("id")), $this.data("id") );
+            var index = $this.data("id");
+            $("[js-side-labels] span", $that).css({fontWeight: ''}).eq(index).css({fontWeight: 'bold'});
+
+            if( index == 1 ) $("[data-js-wintype]", $that).val("-1");
+            else $("[data-js-wintype]", $that).val($("[js-side-labels] [type=text]", $that).val());
+        });
+
+        $("[js-side-labels] [type=text]", $that).keyup((ee) =>
+        {
+            $("[data-js-wintype]", $that).val($(ee.target).val());
+            $("[data-js-btn-side]", $that).eq(0).click();
         })
     }
 

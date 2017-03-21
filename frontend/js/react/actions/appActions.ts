@@ -39,10 +39,7 @@ class Actions extends BaseActions
                     clearTimeout(Visibility.closeTimer);
                     // 0||console.log( 'begin connect procc', ABpp.Websocket.ws.readyState );
                     if( $.inArray(ABpp.Websocket.ws.readyState, [0,1]) === -1 ) ABpp.Websocket.connectSocketServer();
-
                 } // endif
-
-
             });
 /*
             dispatch({
