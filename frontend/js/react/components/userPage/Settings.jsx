@@ -260,34 +260,37 @@ class Settings extends React.Component
                          </a>
                          </div>*/}
 						{
-							files.map((item) =>
-							{
-							    if(item.fileType != 'load'){
-                                    var name = item.name.split('.');
-                                    name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.name;
-                                }
-								return item.fileType != 'load' ? <div className={`thumbnail file ${item.fileType == 'image' ? '' : 'doc'}`} key={item.id}>
-                                    <button className="close" title="Remove this file"
-                                          onClick={actions.ajaxDeleteFile.bind(null, this, item.id)}><span>{}</span></button>
-                                    <a href={item.fileUrl} target="_blank">
-										{
-											item.fileType == 'image' ?
-                                                <img src={item.thumbUrl} alt={name}/>
-												:
-                                                <span className={`thumb_icon ${item.extension}`}>{}</span>
-										}
-                                        <span className="link link_text">{name}</span>
-                                    </a>
-                                </div>
-                                :
-                                <div className="thumbnail loading" key={item.id}>
-                                    {/*<span className="close" title="Cancel loading"><span>{}</span></span>*/}
-                                    <div className="progress_wrp">
-                                        <div className="progress_bar" style={{width: loadProgress + '%'}}></div>
-                                        <div className="status">{loadProgress}%</div>
+							files.length ?
+                                files.map((item) =>
+                                {
+                                    if(item.fileType != 'load'){
+                                        var name = item.name.split('.');
+                                        name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.name;
+                                    }
+                                    return item.fileType != 'load' ? <div className={`thumbnail file ${item.fileType == 'image' ? '' : 'doc'}`} key={item.id}>
+                                        <button className="close" title="Remove this file"
+                                              onClick={actions.ajaxDeleteFile.bind(null, this, item.id)}><span>{}</span></button>
+                                        <a href={item.fileUrl} target="_blank">
+                                            {
+                                                item.fileType == 'image' ?
+                                                    <img src={item.thumbUrl} alt={name}/>
+                                                    :
+                                                    <span className={`thumb_icon ${item.extension}`}>{}</span>
+                                            }
+                                            <span className="link link_text">{name}</span>
+                                        </a>
                                     </div>
-                                </div>
-							})
+                                    :
+                                    <div className="thumbnail loading" key={item.id}>
+                                        {/*<span className="close" title="Cancel loading"><span>{}</span></span>*/}
+                                        <div className="progress_wrp">
+                                            <div className="progress_bar" style={{width: loadProgress + '%'}}></div>
+                                            <div className="status">{loadProgress}%</div>
+                                        </div>
+                                    </div>
+                                })
+                                :
+                                <p>Add your documents files</p>
 						}
                     </div>
                     <button className="btn btn_green wave upload load_btn left" ref={'uploadButton'} onClick={this.loadFile}>Load file</button>
