@@ -25,6 +25,7 @@ header {
   //}
   .odds_converter{
     margin-right: 5px;
+    color: #fff;
     .active_odd{
       border: 1px solid #000000;
       background: linear-gradient(to bottom, #53515e, #292830);
@@ -281,6 +282,7 @@ header {
             padding-right: 12px;
             button{
               display: inline-block;
+              padding: 0;
               width: 20px;
               height: 20px;
               margin: 0;

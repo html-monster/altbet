@@ -386,14 +386,14 @@
             display: block;
             width: 100%;
             height: 30px;
-            background: url("#{$pathImage}/logos_sprite.svg");
-            background-size: 420px;
+            background: url("#{$pathImage}/payment_logos_sprite.png") no-repeat;
+            background-size: 150px;
           }
-          &.Skrill span{  background-position: 24px -65px;  }
-          &.Neteller span{  background-position: -6px -15px;  }
-          &.Ecopayz span{  background-position: 10px -123px;  }
-          &.VisaMC span{  background-position: 21px -165px;  }
-          &.Bitpay span{  background-position: 10px -273px;  }
+          &.Skrill span{  background-position: 44px -48px;  }
+          &.Neteller span{  background-position: 13px -1px;  }
+          //&.Ecopayz span{  background-position: 10px -123px;  }
+          &.VisaMC span{  background-position: 27px -92px;  }
+          &.Bitpay span{  background-position: 20px -142px;  }
           //span{
           //  display: block;
           //  width: 16px;
@@ -581,16 +581,19 @@
           width: 120%;
           height: 30px;
           transform: scale(0.8, 0.8);
-          background: url("#{$pathImage}/logos_sprite.svg");
           position: absolute;
           top: calc(50% - 14px);
-          left: -9px;  }
+          left: -9px;
+          background: url("#{$pathImage}/payment_logos_sprite.png") no-repeat;
+          background-size: 150px;
+        }
       }
       span.payment{
-        &.VisaMC{  background-position: -26px -180px;  }
-        &.Skrill{  background-position: -23px -72px;  }
-        &.Neteller{  background-position: -23px -19px;  }
-        &.EcoPayz{  background-position: -22px -132px;  }
+        &.VisaMC{  background-position: -6px -92px;  }
+        &.Skrill{  background-position: -5px -48px;  }
+        &.Neteller{  background-position: -4px -1px;  }
+        &.Bitpay{  background-position: -6px -143px;  }
+        //&.EcoPayz{  background-position: -22px -132px;  }
       }
       .csv{  display: inline-block; margin: 15px 0;  }
     }

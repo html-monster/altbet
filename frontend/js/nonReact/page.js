@@ -90,6 +90,7 @@ $(document).ready(function ()
 
 	popUpClass.globalPopUpClose('.warning'); // all warning message
 	popUpClass.globalPopUpClose('.user-menu', 'slideUp', '.log_in'); // login user menu
+	popUpClass.globalPopUpClose('.odds_list', 'slideUp', '.odds_converter'); // login user menu
 	popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_in_form a.register', '.first_page_wrapper .join',
 	'#ui-datepicker-div', '.ui-corner-all'); // pop-up registration
 	popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in', 'header .deposit',

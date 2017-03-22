@@ -34,16 +34,24 @@ export default class InputNumber extends React.Component{
 			}
 			else{
 				if(code != 13){
+					let selection = event.target.selectionStart;
 					// console.log(event.target.value);
+					// console.log(code >= 48 && code <= 57 && ((event.target.value == '' && /^[0]/gi.test(event.target.value))
+					// 	&& !/^[0][.]/gi.test(event.target.value)));
+					if(props.inputValidate == 'price' && !/^[$][0][.][0-9]{0,1}/gi.test(event.target.value)
+						&& selection > 2) return false;
 					if(code >= 48 && code <= 57 && ((event.target.value == '' && /^[0]/gi.test(event.target.value))
-						&& !/^[0][.]/gi.test(event.target.value))) return false;
+						&& !/^[0][.]/gi.test(event.target.value))){
+						// console.log(2);
+						return false;
+					}
 					if(code == 46 && /[.]/gi.test(event.target.value)) return false;
-					if(/[.][0-9]{2}/gi.test(event.target.value)) return false;
+					if(/[.][0-9]{2}/gi.test(event.target.value) && selection > event.target.value.length - 3) return false;
 					if(code == 46 && event.target.value == '') return false;
 
 					if(!(code == 46 || code >= 48 && code <= 57 || code >= 8 && code <= 9
 						|| code == 27 || code == 37 || code == 39)) return false;
-
+// console.log(1);
 				}
 			}
 		}
@@ -60,7 +68,7 @@ export default class InputNumber extends React.Component{
 
 		// if(nextProps.inputValidate == 'integer')
 		if (nextProps.inputValidate == 'price' && !/^[0][.][0-9]{0,1}/gi.test(nextProps.value)) {
-			// if(!/^[0][.][0-9]{0,1}/gi.test(nextProps.value)) return true;
+			if(!/^[0][.][0-9]{0,1}/gi.test(nextProps.value)) return true;
 			// console.log(value);
 			// console.log(nextProps.value);
 			this.state.value = value;
@@ -97,8 +105,9 @@ export default class InputNumber extends React.Component{
 
 	render()
 	{
-		const { onContextMenu, value, onChange, inputValidate, hard, ...rest } = this.props;
+		const { onContextMenu, value, onChange, inputValidate, hard, label, ...rest } = this.props;
 		return <input type="tel" ref={'input'} onChange={::this.onInputChange} onPaste={(event) => {event.preventDefault()}}
-					  onContextMenu={::this.onContextMenu}  value={this.state.value} {...rest} />
+					  onContextMenu={::this.onContextMenu}
+					  value={label && this.state.value ? '$' + this.state.value: this.state.value} {...rest} />
 	}
 }

@@ -100,7 +100,7 @@ class Actions extends BaseActions
 
 
             $.ajax({
-                url: `${ABpp.baseUrl}/Account/uploadImage`,
+                url: `${ABpp.baseUrl}/Account/UploadImage`,
                 type: 'POST',
                 // Form data
                 data: new FormData(context.refs.uploadForm),
@@ -224,7 +224,7 @@ class Actions extends BaseActions
 
             defaultMethods.sendAjaxRequest({
                 httpMethod: 'POST',
-                url       : `${ABpp.baseUrl}/Account/deleteImage`,
+                url       : `${ABpp.baseUrl}/Account/DeleteImage`,
                 data      : {id},
                 callback  : onSuccessAjax,
                 onError   : onErrorAjax,
