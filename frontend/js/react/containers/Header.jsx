@@ -128,7 +128,7 @@ class Header extends React.Component
 			<div className="user">
 				{
 					ABpp.User.userIdentity ?
-						<div className="log_in">
+						<div className="log_in active">
 							<ul className="user-menu">
 								<li>
 									<strong className="change-color">
@@ -140,13 +140,15 @@ class Header extends React.Component
 								<li><a href={ABpp.baseUrl + '/Account'}>Account</a></li>
 								<li><a href={ABpp.baseUrl + '/Account/Logout'}>Log out</a></li>
 							</ul>
+{/*
 							<span className="count_message">
-								{/*<span className="count">99</span>*/}
+								/!*<span className="count">99</span>*!/
 							</span>
+*/}
 							<span className="user-name">{ABpp.User.login}</span>
 						</div>
 						:
-						<div className="log_out">
+						<div className="log_out active">
 							<a href="#login" className="sign_in">Join/Login</a>
 							<div className="change-color">
 								<strong>Theme color</strong>
