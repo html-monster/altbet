@@ -95,6 +95,7 @@ header {
       align-items: center;
       height: 40px;
       padding-left: 5px;
+      padding-right: 5px;
       border-right: 1px solid #54545a;
       .user_info {
         display: none;
@@ -226,7 +227,7 @@ header {
   .user {
     height: 100%;
     padding-right: 15px;
-    padding-left: 10px;
+    padding-left: 15px;
     position: relative;
     &:before{
       content: '';
@@ -244,13 +245,13 @@ header {
       color: #fff;
     }
     .log_in {
-      display: flex;
+      display: none;
       height: 100%;
       align-items: center;
       justify-content: flex-end;
       cursor: pointer;
       position: relative;
-      //&.active{  display: flex;  }
+      &.active{  display: flex;  }
       ul.user-menu{
         display: none;
         width: 177px;
@@ -343,7 +344,7 @@ header {
       }
     }
     .log_out {
-      display: flex;
+      display: none;
       height: 100%;
       align-items: center;
       justify-content: center;
@@ -362,7 +363,7 @@ header {
         height: 25px;
         background: url("#{$pathImage}/sprite.svg") no-repeat -424px -18px;
       }
-      //&.active{  display: flex;  }
+      &.active{  display: flex;  }
       a {
         width: 65px;
         margin-left: 5px;

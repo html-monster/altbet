@@ -20,7 +20,7 @@ class Strings
     Fees = 'Pay-to-Play fees';
     Bought = 'Bought';
     Sold = 'Sold';
-    Profit = 'Winn';
+    Profit = 'Win';
     // Amount = 'Amount';
     // Total = 'Total';
     MaxAltBetFees = 'Max Alt.Bet Fees';
