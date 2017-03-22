@@ -225,7 +225,7 @@ class Settings extends React.Component
                 />
                 <form action={`${ABpp.baseUrl}/Payment/NetellerOut`} encType="multipart/form-data" className="document_upload"
                 ref="uploadForm" style={{marginTop: 25}}>
-                    <h3 className="section_user">User files</h3>
+                    <h3 className="section_user">Your files</h3>
                     <hr/>
                     {/*<input type="hidden" defaultValue={'lalalal'} name="lalal"/>*/}
                     <div className="miniatures">
