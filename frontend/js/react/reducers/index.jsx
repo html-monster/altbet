@@ -15,6 +15,7 @@ import transHistory from './userPage/transHistory';
 import myPosReduce from './MyPosReducer';
 import accountSetting from './userPage/settingReducer';
 // import tradeSlip from './sidebar/tradeSlipReducer';
+import registerBox from './registerReducer';
 
 
 let reducers = {};
@@ -33,8 +34,20 @@ let constants = ABpp.ABpp;
 ABpp = ABpp.ABpp.getInstance();
 ABpp.CONSTS = constants;
 
-switch (ABpp.config.currentPage){
-	case  ABpp.CONSTS.PAGE_MAIN:{
+const common = {
+	registerBox,
+};
+
+
+switch (ABpp.config.currentPage)
+{
+	case  ABpp.CONSTS.PAGE_LANDING: {
+		reducers = {
+			registerBox,
+		};
+		break;
+	}
+	case  ABpp.CONSTS.PAGE_MAIN: {
 		reducers = {
 			App: appState,
 			header,
@@ -44,7 +57,8 @@ switch (ABpp.config.currentPage){
 			// tradeSlip,
 			defaultOrders,
 			activeTrader,
-			yourOrders
+			yourOrders,
+			...common,
 		};
 		break;
 	}
@@ -57,7 +71,8 @@ switch (ABpp.config.currentPage){
 			// tradeSlip,
 			defaultOrders,
 			activeTrader,
-			yourOrders
+			yourOrders,
+			...common,
 		};
 		break;
 	}
@@ -69,7 +84,8 @@ switch (ABpp.config.currentPage){
 			deposit,
 			withdraw,
 			transHistory,
-			accountSetting
+			accountSetting,
+			...common,
 		};
 		break;
 	}
@@ -82,7 +98,8 @@ switch (ABpp.config.currentPage){
 			// tradeSlip,
 			defaultOrders,
 			activeTrader,
-			yourOrders
+			yourOrders,
+			...common,
 		};
 		break;
 	}

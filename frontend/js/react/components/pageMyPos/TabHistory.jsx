@@ -36,12 +36,12 @@ export class TabMyOrderHistory extends React.Component
 									<table>
 										<thead>
 											<tr>
-												<th>Symbol</th>
+												<th>{_t('Symbol')}</th>
 												<th>Time</th>
 												<th>Type</th>
-												<th>Quantity</th>
+												<th>{_t('Quantity')}</th>
 												<th>Price</th>
-												<th>Fees</th>
+												<th>{_t('Fees')}</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -58,13 +58,13 @@ export class TabMyOrderHistory extends React.Component
                                                                 <span className="fullname muted">{item.Symbol.HomeName} - {item.Symbol.AwayName}</span>
 															</td>
 															<td>
-																<span className="balloon_only help">
-																	<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`} </span>
+																<span className="timestamp help balloon_only">
+																	<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}</span>&nbsp;&nbsp;
 																	<span className="time">{`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
-																	<span className="help_message"><strong>MM/DD/YYYY HH:MM</strong></span>
+																	<span className="help_message ce-bo"><strong>MM/DD/YYYY&nbsp;&nbsp;HH:MM</strong></span>
 																</span>
 															</td>
-															<td className="side">{(item.IsMirror ? (item.Side ? 'Long' : 'Short') : (item.Side ? 'Short' : 'Long'))}</td>
+															<td className="side">{(item.IsMirror ? (item.Side ? _t('Bought') : _t('Sold')) : (item.Side ? _t('Sold') : _t('Bought')))}</td>
 															<td className="quantity">{item.Quantity}</td>
 															<td>{(item.IsMirror ? Math.round10(1 - item.Price, -2) : item.Price)}</td>
 															<td><span

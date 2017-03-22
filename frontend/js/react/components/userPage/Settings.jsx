@@ -8,8 +8,8 @@ import { connect } from 'react-redux'
 
 import FormValidation from '../FormValidation';
 import InputValidation from '../formValidation/InputValidation';
-import { emptyValidation, minLengthValidation, maxLengthValidation, lettersOnlyValidation,
-    checkOnSpecialSymbolsValidation, mailValidation, phoneValidation } from '../formValidation/validation';
+import { emptyValidation, lengthValidation, lettersOnlyValidation,
+    regexValidation, mailValidation, phoneValidation } from '../formValidation/validation';
 import {DateLocalization} from '../../models/DateLocalization';
 import settingsActions from '../../actions/userPage/settingsActions';
 
@@ -54,8 +54,7 @@ class Settings extends React.Component
                     <InputValidation renderContent={inputRender} id={'f_name'} name="FirstName"
                                      initialValue={FirstName} info="Your first name as specified in your passport"
                                      label={'First Name'} type={'text'} filled={FirstName}
-                                     validate={[emptyValidation, minLengthValidation.bind(null, 2),
-                                         maxLengthValidation.bind(null, 20), lettersOnlyValidation]}
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]}
                                      input={input} maxLength="20"/>
                     {/*<span className="input_animate input--yoshiko input--filled">
                         <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 2-50 characters"
@@ -74,8 +73,7 @@ class Settings extends React.Component
                     <InputValidation renderContent={inputRender} id={'l_name'} name="LastName"
                                      initialValue={LastName} info="Your second name as specified in your passport"
                                      label={'Last Name'} type={'text'} filled={LastName}
-                                     validate={[emptyValidation, minLengthValidation.bind(null, 2),
-										 maxLengthValidation.bind(null, 20), lettersOnlyValidation]} input={input}
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]} input={input}
                                      maxLength="20"/>
                     {/*<span className="input_animate input--yoshiko  input--filled">
                         <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 2-50 characters"
@@ -95,8 +93,7 @@ class Settings extends React.Component
                     <InputValidation renderContent={inputRender} id={'n_name'} name="UserName"
                                      initialValue={UserName}
                                      label={'User Name'} type={'text'} filled={UserName}
-                                     validate={[emptyValidation, minLengthValidation.bind(null, 2),
-										 maxLengthValidation.bind(null, 20)]} input={input}
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20})]} input={input}
                                      maxLength="20"/>
                     {/*<span className="input_animate input--yoshiko input--filled">
                         <input className="input__field input__field--yoshiko" disabled="disabled" id="n_name" name="UserName" type="text" defaultValue={UserName}/>
@@ -150,8 +147,7 @@ class Settings extends React.Component
                     <InputValidation renderContent={inputRender} id={'c_name'} name="Country"
                                      initialValue={Country} info="Indicate the country of your permanent residence"
                                      label={'Country'} type={'text'} filled={Country}
-                                     validate={[emptyValidation, minLengthValidation.bind(null, 2),
-										 maxLengthValidation.bind(null, 128)]}
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 128})]}
                                      input={input} maxLength="20"/>
                     {/*<span className="input_animate input--yoshiko input--filled">
                         <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 3-50 characters"
@@ -170,8 +166,7 @@ class Settings extends React.Component
                     <InputValidation renderContent={inputRender} id={'s_name'} name="Address"
                                      initialValue={Address} info="Enter address manually"
                                      label={'Address'} type={'text'} filled={Address}
-                                     validate={[emptyValidation, minLengthValidation.bind(null, 2),
-										 maxLengthValidation.bind(null, 200) , checkOnSpecialSymbolsValidation]} input={input}
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 200}), regexValidation.bind(null, {tmpl: /^[a-zA-Z.,-/'`()\d\s]+$/, message: "Not available special symbols like @#$%^~ etc."})]} input={input}
                                      maxLength="200"/>
                     {/*<span className="input_animate input--yoshiko input--filled">
                         <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 3-50 characters"
@@ -265,34 +260,37 @@ class Settings extends React.Component
                          </a>
                          </div>*/}
 						{
-							files.map((item) =>
-							{
-							    if(item.fileType != 'load'){
-                                    var name = item.name.split('.');
-                                    name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.name;
-                                }
-								return item.fileType != 'load' ? <div className={`thumbnail file ${item.fileType == 'image' ? '' : 'doc'}`} key={item.id}>
-                                    <button className="close" title="Remove this file"
-                                          onClick={actions.ajaxDeleteFile.bind(null, this, item.id)}><span>{}</span></button>
-                                    <a href={item.fileUrl} target="_blank">
-										{
-											item.fileType == 'image' ?
-                                                <img src={item.thumbUrl} alt={name}/>
-												:
-                                                <span className={`thumb_icon ${item.extension}`}>{}</span>
-										}
-                                        <span className="link link_text">{name}</span>
-                                    </a>
-                                </div>
-                                :
-                                <div className="thumbnail loading" key={item.id}>
-                                    {/*<span className="close" title="Cancel loading"><span>{}</span></span>*/}
-                                    <div className="progress_wrp">
-                                        <div className="progress_bar" style={{width: loadProgress + '%'}}></div>
-                                        <div className="status">{loadProgress}%</div>
+							files.length ?
+                                files.map((item) =>
+                                {
+                                    if(item.fileType != 'load'){
+                                        var name = item.name.split('.');
+                                        name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.name;
+                                    }
+                                    return item.fileType != 'load' ? <div className={`thumbnail file ${item.fileType == 'image' ? '' : 'doc'}`} key={item.id}>
+                                        <button className="close" title="Remove this file"
+                                              onClick={actions.ajaxDeleteFile.bind(null, this, item.id)}><span>{}</span></button>
+                                        <a href={item.fileUrl} target="_blank">
+                                            {
+                                                item.fileType == 'image' ?
+                                                    <img src={item.thumbUrl} alt={name}/>
+                                                    :
+                                                    <span className={`thumb_icon ${item.extension}`}>{}</span>
+                                            }
+                                            <span className="link link_text">{name}</span>
+                                        </a>
                                     </div>
-                                </div>
-							})
+                                    :
+                                    <div className="thumbnail loading" key={item.id}>
+                                        {/*<span className="close" title="Cancel loading"><span>{}</span></span>*/}
+                                        <div className="progress_wrp">
+                                            <div className="progress_bar" style={{width: loadProgress + '%'}}></div>
+                                            <div className="status">{loadProgress}%</div>
+                                        </div>
+                                    </div>
+                                })
+                                :
+                                <p>Add your documents files</p>
 						}
                     </div>
                     <button className="btn btn_green wave upload load_btn left" ref={'uploadButton'} onClick={this.loadFile}>Load file</button>

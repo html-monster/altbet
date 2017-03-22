@@ -131,10 +131,12 @@ class MainPage extends BaseController
 // __DEV__&&console.debug( 'connect', connect );
 
 export default connect(
-    state => ({
+    state => {
+        return ({
         data: state.mainPage,
         // test: state.Ttest,
-    }),
+    })
+    },
     dispatch => ({
 		defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
         actions: bindActionCreators(mainPageActions, dispatch),

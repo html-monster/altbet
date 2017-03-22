@@ -19,14 +19,14 @@ export const minLengthValidation = (minLength, value) => {
 	return errors
 };
 
-export const maxLengthValidation = (maxLength, value) => {
-	let errors;
-
-	if (value.length > maxLength)
-		errors = `Max length ${maxLength} symbols`;
-
-	return errors
-};
+// export const maxLengthValidation = (maxLength, value) => {
+// 	let errors;
+//
+// 	if (value.length > maxLength)
+// 		errors = `Max length ${maxLength} symbols`;
+//
+// 	return errors
+// };
 
 export const lettersOnlyValidation = (value) => {
 	let errors;
@@ -37,23 +37,23 @@ export const lettersOnlyValidation = (value) => {
 	return errors
 };
 
-export const extendLettersOnlyValidation = (value) => {
-	let errors;
+// export const extendLettersOnlyValidation = (value) => {
+// 	let errors;
+//
+// 	if (!/^[a-zA-Zа-яА-Я-]+$/i.test(value))
+// 		errors = 'Use latin letters only please';
+//
+// 	return errors
+// };
 
-	if (!/^[a-zA-Zа-яА-Я-]+$/i.test(value))
-		errors = 'Use latin letters only please';
-
-	return errors
-};
-
-export const checkOnSpecialSymbolsValidation = (value) => {
-	let errors;
-
-	if (!/^[a-zA-Z.,-/'`()\d\s]+$/i.test(value))
-		errors = 'Not available special symbols like @#$%^~ etc.';
-
-	return errors
-};
+// export const checkOnSpecialSymbolsValidation = (value) => {
+// 	let errors;
+//
+// 	if (!/^[a-zA-Z.,-/'`()\d\s]+$/i.test(value))
+// 		errors = 'Not available special symbols like @#$%^~ etc.';
+//
+// 	return errors
+// };
 
 export const adressValidation = (value) => {
 	let errors;
@@ -83,6 +83,79 @@ export const phoneValidation = (value) => {
 };
 
 
+// export const minLengthValidation = (inOpts, inValue) =>
+// {
+// 	let errors;
+// 	let value;
+// 	let opts = {
+//         size: 6,
+// 	};
+//
+//     // user opts
+// 	if( inValue ) opts = {...opts, ...inOpts};
+// 	value = inValue || inOpts;
+//
+// 	if (value.length < opts.size)
+// 		errors = 'Min length is ' + opts.size;
+//
+// 	return errors
+// };
+
+
+export const lengthValidation = (inOpts, inValue) =>
+{
+	let errors;
+	let value;
+	let opts = {
+        min: 0,
+        max: 20,
+	};
+
+    // user opts
+    if (!inOpts.max) inOpts.max = false;
+	if( inValue ) opts = {...opts, ...inOpts};
+	value = inValue || inOpts;
+
+	if (opts.max && value.length > opts.max)
+		errors = 'Max length is ' + opts.max;
+	if (value.length < opts.min)
+		errors = 'Min length is ' + opts.min;
+
+	return errors
+};
+
+
+export const regexValidation = (inOpts, inValue) =>
+{
+	let errors;
+	let value;
+	let opts = {
+        tmpl: /.*/,
+        message: "All symbols are allowed",
+	};
+
+    // user opts
+	if( inValue ) opts = {...opts, ...inOpts};
+	value = inValue || inOpts;
+    if (!opts.tmpl.test(value))
+		errors = opts.message;
+
+	return errors
+};
+
+
+export const passwordValidation = (inRef, value) =>
+{
+	let errors;
+
+    var elm = document.getElementById(inRef);
+    if( elm && elm.value != value ) errors = "Password do not match";
+
+	return errors
+};
+
+
+
 export const netellerSecureId = (value) => {
 	let errors;
 
@@ -92,6 +165,9 @@ export const netellerSecureId = (value) => {
 	return errors
 };
 
+
+
+// злоебучий адский валидатор от Лёхи, Я его не люблю
 export const orderForm = function (context) {
 
 	if($(context).find('[data-log-out]').attr('data-log-out')) return false;

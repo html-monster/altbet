@@ -37,14 +37,14 @@ export default class ScrillForm extends React.Component{
 							<InputValidation renderContent={inputRender} id={'skrill_id'} name="Email"
 											 className={'input__field input__field--yoshiko'}
 											 initialValue={data.UserInfo.Email}
-											 label={'From Address'} type={'text'} filled={data.UserInfo.Email}
+											 label={'E-mail'} type={'text'} filled={data.UserInfo.Email}
 											 validate={mailValidation} input={input}
 											 maxLength="50"/>
 							:
 							<InputValidation renderContent={inputRender} id={'skrill_id'} name="ClientId"
 											 className={'input__field input__field--yoshiko'}
 											 initialValue={data.UserInfo.Email}
-											 label={'From Address'} type={'text'} filled={data.UserInfo.Email}
+											 label={'E-mail'} type={'text'} filled={data.UserInfo.Email}
 											 validate={mailValidation} input={input}
 											 maxLength="50"/>
 					}

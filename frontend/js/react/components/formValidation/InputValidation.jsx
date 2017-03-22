@@ -8,7 +8,8 @@ import React from 'react';
 //
 // import * as actions from '../../actions/formValidation';
 
-export default class InputValidation extends React.Component{
+export default class InputValidation extends React.Component
+{
 	constructor(props)
 	{
 		super();
@@ -29,7 +30,9 @@ export default class InputValidation extends React.Component{
 		this.validate(props, this.state.value);
 	}
 
-	shouldComponentUpdate(nextProps){
+
+	shouldComponentUpdate(nextProps)
+	{
 		let state = this.state;
 		const props = this.props;
 		const error = nextProps.input.errors[props.name];
@@ -116,17 +119,17 @@ export default class InputValidation extends React.Component{
 		// console.log({...actions, ...rest});
 		// console.log(this.props);
 		// console.log(this.state);
-		return(
-			renderContent({meta: {...metaProps, ...metaState}, ...rest, ...state})
-			// renderContent({...actions, ...rest})
-		);
+
+		{/*return <div>{this.props.children}</div>;*/}
+
+		return (renderContent({meta: {...metaProps, ...metaState}, ...rest, ...state}));
 	}
 }
 
 	// validate: React.PropTypes.func,
-InputValidation.propTypes = {
-	renderContent: React.PropTypes.any.isRequired,
-};
+// InputValidation.propTypes = {
+// 	renderContent: React.PropTypes.any.isRequired,
+// };
 
 // export default connect(
 // 	state => ({

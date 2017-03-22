@@ -7,6 +7,76 @@ import {
     ADD_CONTROLLER,
 } from "../constants/ActionTypesRApp.js";
 
+import BaseActions from './BaseActions';
+import {WebsocketModel} from '../models/Websocket';
+
+
+
+class Actions extends BaseActions
+{
+    public actionOnLoad()
+    {
+        return (dispatch, getState) =>
+        {
+            // activate websocket
+            ABpp.Websocket = new WebsocketModel();
+            ABpp.Websocket.connectSocketServer();
+            globalData.Websocket = ABpp.Websocket; // for debug
+
+
+            // close socket after tab disactivate
+            Visibility.change(function (e, state)
+            {
+                if( Visibility.state() == 'hidden' )
+                {
+                    // 0||console.log( 'begin close procc', 0 );
+                    clearTimeout(Visibility.closeTimer);
+                    Visibility.closeTimer = setTimeout(() => ABpp.Websocket.disconnectWebSocket(), 10*60*1000);
+                    // Visibility.closeTimer = setTimeout(() => ABpp.Websocket.disconnectWebSocket(), 2000);
+                }
+                else if( Visibility.state() == 'visible' )
+                {
+                    clearTimeout(Visibility.closeTimer);
+                    // 0||console.log( 'begin connect procc', ABpp.Websocket.ws.readyState );
+                    if( $.inArray(ABpp.Websocket.ws.readyState, [0,1]) === -1 ) ABpp.Websocket.connectSocketServer();
+                } // endif
+            });
+/*
+            dispatch({
+                type: SET_INSTANCE,
+                payload: that
+            });
+*/
+        }
+    }
+
+
+    public setInstance(that)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: SET_INSTANCE,
+                payload: that
+            });
+        }
+    }
+
+
+    public addController(name, that)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ADD_CONTROLLER,
+                payload: {name, that}
+            });
+        }
+    }
+}
+
+
+export default (new Actions()).export();
 
 // class RAppActions
 // {
@@ -23,28 +93,3 @@ import {
 //     }
 // }
 // export default RAppActions;
-
-
-export function setInstance(that)
-{
-    return (dispatch, getState) =>
-    {
-        dispatch({
-            type: SET_INSTANCE,
-            payload: that
-        });
-    }
-}
-
-
-export function addController(name, that)
-{
-    return (dispatch, getState) =>
-    {
-        dispatch({
-            type: ADD_CONTROLLER,
-            payload: {name, that}
-        });
-    }
-}
-

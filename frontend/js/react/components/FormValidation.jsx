@@ -4,7 +4,8 @@
 
 import React from 'react';
 
-export default class FormValidation extends React.Component{
+export default class FormValidation extends React.Component
+{
 	constructor()
 	{
 		super();

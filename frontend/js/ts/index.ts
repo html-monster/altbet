@@ -8,9 +8,9 @@ declare let window : any;
 
 
 import { User } from "../react/models/User";
-import { WebsocketModel } from "../react/models/Websocket";
+import { Localization } from "../react/common/Localization";
 
-// declare var WebsocketModel: WebsocketModel;
+declare const WebsocketModel: any;
 
 // local dev option
 // __LDEV__ = true;
@@ -26,6 +26,7 @@ export class ABpp
     public static PAGE_EVENT = '2';
     public static PAGE_ACCOUNT = '3';
     public static PAGE_MYPOS = '4';
+    public static PAGE_LANDING = '5';
     public static TAKER_FEES = 0.0086;
     public static MAKER_FEES = 0.0026;
 
@@ -33,7 +34,7 @@ export class ABpp
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
-    public ver = 0.4;
+    public ver = "0.4.1";
 
 
     // application config
@@ -53,10 +54,11 @@ export class ABpp
     public actions : any = {};
 
     public User: User = null;                   // user entity
-    public Websocket: WebsocketModel = null;    // websocket object
+    public Websocket = null;                    // websocket object
     public SysEvents: SysEvents = null;         // system events
     public Store = null;                        // redux store
     // public OddsConverter = null;                        // redux store
+    public Localization = null;                 // localization module
 
 
     private static instance = null;
@@ -97,6 +99,9 @@ export class ABpp
         // set curr ver
         globalData.AppVersion = this.ver; // for debug only
         this.baseUrl = globalData.rootUrl.slice(0, -1);
+
+
+        this.Localization = Localization;
     }
 
 
@@ -116,6 +121,8 @@ export class ABpp
             return ABpp.PAGE_ACCOUNT;
         else if( globalData.myPosOn )
             return ABpp.PAGE_MYPOS;
+        else if( globalData.landingPage )
+            return ABpp.PAGE_LANDING;
     }
 
 

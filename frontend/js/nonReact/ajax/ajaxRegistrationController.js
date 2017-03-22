@@ -1,18 +1,20 @@
 class ajaxRegistrationControllerClass{
-	constructor(){
-		$('.sign_up_form form').submit(function () {
-			if(!(checkAreement('agreement', $(this)) && checkAreement('agreement_age', $(this)))) return false;
-		});
-		function checkAreement(item, context){
-			if(context.find(`#${item}`).prop('checked')) return true;
-			else{
-				context.find(`.agreement label[for=${item}]`).addClass('animated shake');
-				setTimeout(() => {
-					context.find(`.agreement label[for=${item}]`).removeClass('animated shake');
-				}, 500);
-				return false;
-			}
-		}
+	constructor()
+	{
+		// $('.sign_up_form form').submit(function () {
+		// 	if(!(checkAreement('agreement', $(this)) && checkAreement('agreement_age', $(this)))) {0||console.log( 'here', 2 ); return false;}
+		// 	0||console.log( 'here', 3 );
+		// });
+		// function checkAreement(item, context){
+		// 	if(context.find(`#${item}`).prop('checked')) return true;
+		// 	else{
+		// 		context.find(`.agreement label[for=${item}]`).addClass('animated shake');
+		// 		setTimeout(() => {
+		// 			context.find(`.agreement label[for=${item}]`).removeClass('animated shake');
+		// 		}, 500);
+		// 		return false;
+		// 	}
+		// }
 	}
 	static OnBeginJs(){
 		let object = defaultMethods.objectFromArray(this.data.split('&'));

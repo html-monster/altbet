@@ -58,6 +58,7 @@
     "babel": "*",
     "babel-core": "*",
     "babel-loader": "*",
+    "babel-plugin-remove-comments": "^2.0.0",
     "babel-plugin-transform-class-properties": "^6.22.0",
     "babel-plugin-transform-runtime": "*",
     "babel-preset-es2015": "*",

@@ -101,12 +101,12 @@ class Sidebar extends React.Component
 			}
 			<div className="wrapper">
 				<div className="tabs">
-					<span className="tab active">Trade Slip</span>
+					<span className="tab active">{_t('TradeSlip')}</span>
 					{
 						ABpp.User.userIdentity ?
-							<span className="tab js-tab2">Your Orders</span>
+							<span className="tab js-tab2">{_t('YourOrders')}</span>
 							:
-							<span className="tab js-tab2" data-disabled={true}>Your Orders</span>
+							<span className="tab js-tab2" data-disabled={true}>{_t('YourOrders')}</span>
 					}
 				</div>
 				<div className="tab_content order-content">

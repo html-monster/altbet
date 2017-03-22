@@ -9,7 +9,7 @@ import {
 
 const initialState = {
 	currentOddSystem: localStorage.getItem('currentOddSystem') ? localStorage.getItem('currentOddSystem') : 'Implied',
-	serverData: appData.headerData
+	serverData: appData ? appData.headerData : null,
 };
 
 export default function header(state = initialState, action)

@@ -1,7 +1,7 @@
 .content {
   @include span(7.6 of 12);
   @include push (1.8 of 12);
-  margin-top: 45px;
+  margin-top: 80px;
   padding: 15px;
   position: relative;
   .nav_items {
@@ -78,7 +78,7 @@
         @include main_page_tab_icon;
       }
     }
-    .tab_content{  padding-top: 80px;  }
+    .tab_content{  padding-top: 50px;  }
     .ui-state-highlight{
       height: 102px;
       border: 1px dashed #fcefa1;

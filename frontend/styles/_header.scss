@@ -10,7 +10,15 @@ header {
     button, a, .user-name{  font-size: 14px;  }
     .user-name:after{  top: 6px;  }
   }
-  .connect { display: none; width: 10px; height: 10px; background: red; border-radius: 50%; }
+
+  // reconntct button
+  .reconnect .help_message { top: 40px }
+  .connect { display: none; width: 30px;
+    &::after { display: none; }
+    &::before { content: ""; display: block; position: absolute; left: 10px; top: 11px; width: 10px; height: 10px; background: red; border-radius: 50%;
+      opacity: .8;}
+  }
+
   //.user_info{
   //  display: none;
   //  &.active{  display: block;  }
@@ -81,32 +89,83 @@ header {
 
     }
     .header_right {
+      flex-direction: row;
       display: flex;
       align-items: center;
       height: 40px;
       padding-left: 5px;
+      padding-right: 5px;
       border-right: 1px solid #54545a;
-      span {
-        margin: 0 5px;
-        font-size: 14px;
-        color: #fff;
-        &.win-lost{
-          &.fadeColorOut .win{  animation-name: fadeColorGreen  }
-          &.fadeColorOut .lost{  animation-name: fadeColorRed  }
-          .win{  color: #4dac2e;  }
-          .lost{  color: #ff3905;  }
+      .user_info {
+        display: none;
+        &.active {
+          display: flex;
         }
-        &.invested {
-          &.fadeColorOut strong{  animation-name: fadeColorOrange  }
-          strong{  color: #ef8022; }
-        }
-        &.available {
-          &.fadeColorOut strong{  animation-name: fadeColorBlue  }
-          strong{  color: #1196d4;  }
-        }
-        strong {
-          font-weight: normal;
+        span {
+          padding: 0 10px;
+          font-size: 14px;
           color: #fff;
+          position: relative;
+          &.win-lost {
+            border-right: 1px solid #54545a;
+            &.fadeColorOut .win {
+              animation-name: fadeColorGreen
+            }
+            &.fadeColorOut .lost {
+              animation-name: fadeColorRed
+            }
+            .win {
+              color: #4dac2e;
+            }
+            .lost {
+              color: #ff3905;
+            }
+          }
+          &.invested {
+            border-right: 1px solid #54545a;
+            &.fadeColorOut strong {
+              animation-name: fadeColorOrange
+            }
+            strong {
+              color: #ef8022;
+            }
+            &:before {
+              content: '';
+              display: block;
+              width: 1px;
+              height: 40px;
+              background: #292830;
+              position: absolute;
+              top: 0;
+              left: -2px;
+            }
+          }
+          &.available {
+            &.fadeColorOut strong {
+              animation-name: fadeColorBlue
+            }
+            strong {
+              color: #1196d4;
+            }
+            &:before {
+              content: '';
+              display: block;
+              width: 1px;
+              height: 40px;
+              background: #292830;
+              position: absolute;
+              top: 0;
+              left: -2px;
+            }
+          }
+
+          strong {
+            font-weight: normal;
+            color: #fff;
+            display: block;
+
+
+          }
         }
       }
       a {
@@ -117,18 +176,41 @@ header {
         border-radius: 4px;
         background-image: linear-gradient(to bottom, #f8b747, #ef8022);
         vertical-align: middle;
-        &.my_order{  margin-left: 5px;  }
-        &.deposit{   background-image: linear-gradient(to bottom, #84d65b, #4dac2e); }
+        &.my_order {
+          margin-left: 5px;
+        }
+        &.deposit {
+          background-image: linear-gradient(to bottom, #84d65b, #4dac2e);
+        }
       }
-      button {
-        display: inline-block;
-        padding: 5px 16px;
-        height: auto;
-        background: linear-gradient(to bottom, #64c9ef, #3498da);
-        margin-right: 15px;
-        vertical-align: middle;
-        @include md(1420) {
-          margin-right: 5px;
+      //button {
+      //  display: inline-block;
+      //  padding: 5px 16px;
+      //  height: auto;
+      //  background: linear-gradient(to bottom, #64c9ef, #3498da);
+      //  margin-right: 15px;
+      //  vertical-align: middle;
+      //  @include md(1420) {
+      //    margin-right: 5px;
+      //  }
+      //}
+      .fast_menu {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        position: absolute;
+        left: 15px;
+        height: 70px;
+        a {
+          display: flex;
+          align-items: center;
+          //height: 69px;
+          border-radius: 0;
+          background: none;
+          transition: 0.4s ease-out;
+          &:hover {
+          }
+
         }
       }
     }
@@ -144,7 +226,7 @@ header {
   .user {
     height: 100%;
     padding-right: 15px;
-    padding-left: 10px;
+    padding-left: 15px;
     position: relative;
     &:before{
       content: '';
@@ -162,13 +244,13 @@ header {
       color: #fff;
     }
     .log_in {
-      display: flex;
+      display: none;
       height: 100%;
       align-items: center;
       justify-content: flex-end;
       cursor: pointer;
       position: relative;
-      //&.active{  display: flex;  }
+      &.active{  display: flex;  }
       ul.user-menu{
         display: none;
         width: 177px;
@@ -260,7 +342,7 @@ header {
       }
     }
     .log_out {
-      display: flex;
+      display: none;
       height: 100%;
       align-items: center;
       justify-content: center;
@@ -279,7 +361,7 @@ header {
         height: 25px;
         background: url("#{$pathImage}/sprite.svg") no-repeat -424px -18px;
       }
-      //&.active{  display: flex;  }
+      &.active{  display: flex;  }
       a {
         width: 65px;
         margin-left: 5px;
