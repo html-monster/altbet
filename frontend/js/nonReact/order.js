@@ -110,13 +110,13 @@ class orderClass{
 				e = e || window.e;
 				let code = e.which ||e.charCode || e.keyCode;
 				if($(this).parents('.price').length || $(this).hasClass('spreader')){
-					if($(this)[0].selectionStart == 2){
+					if($(this)[0].selectionStart == 3){
 						if(code == 37 || code == 8){
 							return false;
 						}
 					}
-					else if($(this)[0].selectionStart < 2)
-						$(this).val('0.')
+					else if($(this)[0].selectionStart < 3)
+						$(this).val('$0.')
 				}
 			});
 
@@ -141,7 +141,7 @@ class orderClass{
 						message.fadeIn(200);
 						return false;
 					}
-					else if($(this).val().length > 1){
+					else if($(this).val().length > 2){
 						message.fadeOut(200);
 					}
 					if($(this).val() == ''){
@@ -153,7 +153,7 @@ class orderClass{
 							message.fadeOut(200);
 						}
 					}
-					else if($(this).val().length == 1){
+					else if($(this).val().length == 2){
 						if(code	 != 46){
 							message.fadeIn(200);
 							return false;
@@ -173,7 +173,7 @@ class orderClass{
 					}
 				}
 				if($(this).parents('.volume').length){
-					if((code	 < 46 || code	 > 57 || code	 == 47 || code	 == 46) && condition){
+					if((code < 46 || code > 57 || code == 47 || code == 46) && condition){
 						message.fadeIn(200);
 						return false;
 					}
