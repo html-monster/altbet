@@ -218,11 +218,10 @@ class Settings extends React.Component
                     handleSubmit={actions.actionAjaxUserDataUpdate}
                     serverValidation={true}
                 />
-                <form action={`${ABpp.baseUrl}/Payment/NetellerOut`} encType="multipart/form-data" className="document_upload"
+                <form action={`${ABpp.baseUrl}/Account/UploadImage`} encType="multipart/form-data" className="document_upload"
                 ref="uploadForm" style={{marginTop: 25}}>
                     <h3 className="section_user">Your files</h3>
                     <hr/>
-                    {/*<input type="hidden" defaultValue={'lalalal'} name="lalal"/>*/}
                     <div className="miniatures">
 						{/* <div className="thumbnail">
                          <span className="close" title="Remove this file"><span>{}</span></span>
@@ -261,27 +260,29 @@ class Settings extends React.Component
                          </div>*/}
 						{
 							files.length ?
-                                files.map((item) =>
+                                files.map((item, index) =>
                                 {
-                                    if(item.fileType != 'load'){
-                                        var name = item.name.split('.');
-                                        name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.name;
+                                    const extension = item.ContentType.split('/');
+                                    if(item.ContentType != 'load'){
+                                        var name = item.Name.split('.');
+                                        name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.Name;
                                     }
-                                    return item.fileType != 'load' ? <div className={`thumbnail file ${item.fileType == 'image' ? '' : 'doc'}`} key={item.id}>
-                                        <button className="close" title="Remove this file"
-                                              onClick={actions.ajaxDeleteFile.bind(null, this, item.id)}><span>{}</span></button>
-                                        <a href={item.fileUrl} target="_blank">
-                                            {
-                                                item.fileType == 'image' ?
-                                                    <img src={item.thumbUrl} alt={name}/>
-                                                    :
-                                                    <span className={`thumb_icon ${item.extension}`}>{}</span>
-                                            }
-                                            <span className="link link_text">{name}</span>
-                                        </a>
-                                    </div>
+                                    return item.ContentType != 'load' ?
+                                        <div className={`thumbnail file ${extension[0] == 'image' ? '' : 'doc'}`} key={index}>
+                                            <button className="close" title="Remove this file"
+                                                  onClick={actions.ajaxDeleteFile.bind(null, this, name)}><span>{}</span></button>
+                                            <a href={item.Url} target="_blank">
+                                                {
+                                                    extension[0] == 'image' ?
+                                                        <img src={item.Url} alt={name}/>
+                                                        :
+                                                        <span className={`thumb_icon ${extension[1]}`}>{}</span>
+                                                }
+                                                <span className="link link_text">{}</span>
+                                            </a>
+                                        </div>
                                     :
-                                    <div className="thumbnail loading" key={item.id}>
+                                    <div className="thumbnail loading" key={index}>
                                         {/*<span className="close" title="Cancel loading"><span>{}</span></span>*/}
                                         <div className="progress_wrp">
                                             <div className="progress_bar" style={{width: loadProgress + '%'}}></div>
@@ -294,7 +295,7 @@ class Settings extends React.Component
 						}
                     </div>
                     <button className="btn btn_green wave upload load_btn left" ref={'uploadButton'} onClick={this.loadFile}>Load file</button>
-                    <input type="file" name="file" accept=".doc,.docx,.xls,.xlsx,.txt,.png,.jpeg,.jpg" multiple
+                    <input type="file" name="file" accept=".doc,.docx,.xls,.xlsx,.txt,.png,.jpeg,.jpg"
                            onChange={actions.onFileChosen.bind(null, this)}
                            style={{visibility: 'hidden'}}
                            ref="uploadData"/>

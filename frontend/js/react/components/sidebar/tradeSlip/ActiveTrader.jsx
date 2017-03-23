@@ -431,7 +431,8 @@ class TraderString extends React.Component {
 				transitionEnterTimeout={800}
 				data={data}
 		>
-			<td className={'my_offers my_size animated'} data-verify={'ParticularUserQuantityBuy'}>
+			<td className={'my_offers my_size animated'} data-verify={'ParticularUserQuantityBuy'}
+				draggable={!!data.ParticularUserQuantityBuy}>
 					<span className="value">
 						{
 							data.ParticularUserQuantityBuy || ''
@@ -451,6 +452,7 @@ class TraderString extends React.Component {
 						:
 						null
 				}
+				draggable={!!data.ParticularUserQuantityBuy}
 			>
 				<span className="container">
 					<span className="value">
@@ -513,6 +515,7 @@ class TraderString extends React.Component {
 						:
 						null
 				}
+				draggable={!!data.ParticularUserQuantitySell}
 			>
 				<span className="container">
 					<span className="value">
@@ -522,7 +525,8 @@ class TraderString extends React.Component {
 					</span>
 				</span>
 			</td>
-			<td className={'my_bids my_size animated'} data-verify="ParticularUserQuantitySell">
+			<td className={'my_bids my_size animated'} data-verify="ParticularUserQuantitySell"
+				draggable={!!data.ParticularUserQuantitySell}>
 				<span className="value">
 					{
 						data.ParticularUserQuantitySell || ''
