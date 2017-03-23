@@ -24,13 +24,6 @@ class RegisterBox extends BaseController
     }
 
 
-    /** @private */
-    _onCloseClick()
-    {
-
-    }
-
-
     render()
     {
         return <div className="pop_up_container">
@@ -52,7 +45,7 @@ class RegisterBox extends BaseController
                         </div>
                         <div className="tab_content">
                             <div className="tab_item real">
-                                <span className="close" onClick={this._onCloseClick}><span></span></span>
+                                <span className="close"><span></span></span>
 
                                 <RegisterForm onSubmit={this.props.actions.actionFormSubmit.bind(null, this)} />
                             </div>

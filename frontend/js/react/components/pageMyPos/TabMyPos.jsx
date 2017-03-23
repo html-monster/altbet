@@ -14,7 +14,6 @@ export class TabMyPos extends React.Component
 
         var filters = {};
         Object.keys(this.filters).forEach((item) => { filters[item] = true });
-        // 0||console.log( 'filters', filters );
         this.state = {filters: filters};
     }
 
