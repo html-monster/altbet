@@ -463,10 +463,28 @@ input ~ .info{
 //  }
 //}
 
-.select{
+.select {
   position: relative;
   color: $main-color;
-  .active_selection{
+  .active_selection {
+    &.select__field {
+      width: 100%;
+      height: 38px;
+      padding: 3px 15px 0;
+      border-radius: 4px;
+      border: 1px solid #000;
+      background: #292830;
+      color: $reg_title;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+
+      transition: background-color 0.3s, border-color 0.3s;
+      //@include reg_input_color;
+      //&[disabled]{
+      //  & ~ .info{  display: none;  }
+      //  color: transparentize($main-color, 0.3);
+      //}
+    }
+
     display: block;
     width: 120px;
     height: 33px;
@@ -699,6 +717,7 @@ input ~ .info{
   color: #37343b;
   -webkit-appearance: none; /* for box shadows to show on iOS */
 }
+
 
 .input__field:focus {
   outline: none;

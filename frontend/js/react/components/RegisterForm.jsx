@@ -11,6 +11,7 @@ import InputValidation from './formValidation/InputValidation';
 import {passwordValidation, regexValidation, lengthValidation, mailValidation, emptyValidation, phoneValidation} from './formValidation/validation';
 import {DropBox} from './common/DropBox';
 
+
 export class RegisterForm extends React.Component
 {
 	constructor(props)
@@ -19,17 +20,17 @@ export class RegisterForm extends React.Component
 	}
 
 
-    componentDidMount()
-    {
-        if( __DEV__ )
-        {
-            0||console.log( 'emulate here' )
-            setTimeout(() =>
-                {$(".log_out .sign_in").click();
-                    setTimeout(() => $(".register").click(), 500)
-                }, 700)
-        } // endif
-    }
+    // componentDidMount()
+    // {
+    //     if( __DEV__ )
+    //     {
+    //         0||console.log( 'emulate here' )
+    //         setTimeout(() =>
+    //             {$(".log_out .sign_in").click();
+    //                 setTimeout(() => $(".register").click(), 500)
+    //             }, 700)
+    //     } // endif
+    // }
 
 
     inputRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty }, ...input })
@@ -58,6 +59,17 @@ export class RegisterForm extends React.Component
         return <div className="checkbox_container">
                 <input type="checkbox" name={name} id={id} {...input} defaultChecked={false}/><label htmlFor={id}>{child}</label>
             </div>;
+    }
+
+    dropBoxRender({ id, label, meta: { error, dirty }, ...input })
+    {
+        return <span className="input_animate input--yoshiko">
+                { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
+                <DropBox className="" name={name} items={['var 1', 'var 2', 'var 3', 'var 4', ]} />
+                <label className="input__label input__label--yoshiko" htmlFor={id}>
+                    <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
+                </label>
+            </span>
     }
 
 
@@ -124,15 +136,13 @@ export class RegisterForm extends React.Component
                 </div>
 
                 <div className="right_column column">
-                    <InputValidation renderContent={this.inputRender} id='c_name' name="Country"
+                    <InputValidation renderContent={this.dropBoxRender} id='c_name' name="Country"
                                      className={'input__field input__field--yoshiko'}
-                                     initialValue="Ukraine"
                                      label="Country" type='text'
                                      validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z]+$/, message: "Only letters are allowed"}), lengthValidation.bind(null, {min: 3, max: 50})]} input={input}
                                      hint="Indicate the country of your permanent residence"/>
 
                     {/*<ul className="select_list odds_list" ref="oddsList" onClick={this.listSlide.bind(this, false)}>*/}
-                    <DropBox className="select" />
 
 {/*
 <input autocomplete="off" class="input__field input__field--yoshiko" data-val="true" data-val-length="Email can not exceed 128 characters" data-val-length-max="128" data-val-regex="Incorrect Email address" data-val-regex-pattern="^([a-z0-9_-]+.)*[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+)*.[a-z]{2,6}$" data-val-required="Email is required" id="e_name" maxlength="128" name="Email" type="email" value="">
