@@ -51,7 +51,7 @@ export default class InputNumber extends React.Component{
 
 					if(!(code == 46 || code >= 48 && code <= 57 || code >= 8 && code <= 9
 						|| code == 27 || code == 37 || code == 39)) return false;
-// console.log(1);
+
 				}
 			}
 		}
