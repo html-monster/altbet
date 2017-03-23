@@ -311,7 +311,8 @@ export default class OrderForm extends React.Component{
 							<InputNumber type="tel" id={`${orderId}_sum`} className="number" data-validation="40.59" hard={true}
 										 onChange={this.onInputChange.bind(this, 'Sum')}
 										 onKeyDown={this.onInputKeyDown.bind(this, 'Sum')}
-										 value={checkboxProp ? (stateData.Sum) || '' : ''} label={true}
+										 value={checkboxProp ? (!stateData.Sum ||stateData.Sum == '0.00' ? '' : stateData.Sum) : ''}
+										 label={true}
 										 maxLength="8" autoComplete="off" disabled={!(checkboxProp)} ref="inputSum"/>
 							<div className="warning" style={{display: 'none'}}><p>Minimal available value 0.01</p></div>
 							{
