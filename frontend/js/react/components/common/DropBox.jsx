@@ -46,7 +46,7 @@ export class DropBox extends React.Component
         // var {className, name} = this.props.data
 
         return <div className={`select ` + this.props.className + (this.state.isopened ? " -opened" : "")}>
-                    <span className="active_selection btn wave select__field" onClick={this._listSlide.bind(this, true)}>test</span>
+                    <span className="active_selection btn wave select__field" onClick={this._listSlide.bind(this, true)}>test<i>{}</i></span>
                     <ul className="select_list" ref="dropList" onClick={this._listSlide.bind(this, false)}>
                         {
                             this.props.items.map((val, key) => <li key={key}>{val}</li>)
