@@ -112,7 +112,7 @@ class Header extends React.Component
                 { ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <button className="btn wave waves-effect waves-button" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</button> : ''}
 
 
-				{ ABpp.User.isAuthorized() ? <a className="my_order btn wave waves-effect waves-button" href={ABpp.baseUrl + '/eng/home/positions-orders'}>My Activity</a> : ''}
+				{ ABpp.User.isAuthorized() ? <a className="my_order btn wave waves-effect waves-button" href={globalData.Urls.MyActivity}>My Activity</a> : ''}
 				{ ABpp.User.isAuthorized() ? <a href={ABpp.baseUrl + '/eng/Account#/funds/deposit'} className="btn deposit wave waves-effect waves-button">Deposit</a> : ''}
 				{/*<button className="price_plan btn">Pricing Plans</button>*/}
 				<div className="odds_converter select" title="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Bettor ">
@@ -128,7 +128,7 @@ class Header extends React.Component
 			<div className="user">
 				{
 					ABpp.User.userIdentity ?
-						<div className="log_in">
+						<div className="log_in active">
 							<ul className="user-menu">
 								<li>
 									<strong className="change-color">
@@ -140,13 +140,15 @@ class Header extends React.Component
 								<li><a href={ABpp.baseUrl + '/Account'}>Account</a></li>
 								<li><a href={ABpp.baseUrl + '/Account/Logout'}>Log out</a></li>
 							</ul>
+{/*
 							<span className="count_message">
-								{/*<span className="count">99</span>*/}
+								/!*<span className="count">99</span>*!/
 							</span>
+*/}
 							<span className="user-name">{ABpp.User.login}</span>
 						</div>
 						:
-						<div className="log_out">
+						<div className="log_out active">
 							<a href="#login" className="sign_in">Join/Login</a>
 							<div className="change-color">
 								<strong>Theme color</strong>

@@ -57,7 +57,7 @@ class Actions extends BaseActions
         {
             let loadFileData = event.target.files;
             let extension, fileSize = 0, valid = true;
-            const sizeLimit = 4000000;
+            const sizeLimit = 2000000;
             const loadId = (new Date).getTime();
 
             dispatch({
@@ -73,10 +73,10 @@ class Actions extends BaseActions
                 return false;
             }
             $(loadFileData).each(function() {
-                extension = (this.name).split('.');
-                extension = extension[extension.length - 1];
-                if(extension != 'jpg' && extension != 'jpeg' && extension != 'png' && extension != 'doc' && extension != 'docx'
-                && extension != 'xls' && extension != 'xlsx' && extension != 'txt'){
+                extension = (this.type).split('/')[1];
+                // extension = extension[extension.length - 1];
+                if(extension != 'jpg' && extension != 'jpeg' && extension != 'png'){
+                    //&& extension != 'doc' && extension != 'docx' && extension != 'xls' && extension != 'xlsx' && extension != 'txt'
                     dispatch({
                         type: SETTING_LOAD_FILE_ERROR,
                         payload: `${this.name} is unsupported file type`,
@@ -89,7 +89,7 @@ class Actions extends BaseActions
 
             if(!valid) return valid;
 
-            if(fileSize >= 4000000){
+            if(fileSize >= sizeLimit){
                 dispatch({
                     type: SETTING_LOAD_FILE_ERROR,
                     payload: `You have ${loadFileData.length} file(s) with total size ${Math.round10(fileSize / 1000000, 
@@ -98,43 +98,42 @@ class Actions extends BaseActions
                 return false;
             }
 
-
-            $.ajax({
-                url: `${ABpp.baseUrl}/Account/uploadImage`,
-                type: 'POST',
-                // Form data
-                data: new FormData(context.refs.uploadForm),
-                cache: false,
-                contentType: false,
-                processData: false,
-                xhr: function()
-                {
-                    let myXhr = $.ajaxSettings.xhr();
-                    if (myXhr.upload) {
-                        context.props.actions.addFile([{
-                            id: loadId,
-                            fileType: 'load'
-                        }]);
-                        myXhr.upload.addEventListener('progress', function(event) {
-                            let percent = 0;
-                            let position = event.loaded || event.position;
-                            let total = event.total;
-                            if (event.lengthComputable) {
-                                percent = Math.ceil(position / total * 100);
-                            }
-                            dispatch({
-                                type: SETTING_CHANGE_PROGRESS_BAR,
-                                payload: percent,
+            if (fileSize)
+                $.ajax({
+                    url: `${ABpp.baseUrl}/Account/UploadImage`,
+                    type: 'POST',
+                    data: new FormData(context.refs.uploadForm),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    xhr: function()
+                    {
+                        let myXhr = $.ajaxSettings.xhr();
+                        if (myXhr.upload) {
+                            context.props.actions.addFile({
+                                Name: loadId,
+                                ContentType: 'load'
                             });
-                        } , false);
-                    }
-                    return myXhr;
-                },
-                mimeType:"multipart/form-data",
-                success,
-                error,
-                beforeSend
-            });
+                            myXhr.upload.addEventListener('progress', function(event) {
+                                let percent = 0;
+                                let position = event.loaded || event.position;
+                                let total = event.total;
+                                if (event.lengthComputable) {
+                                    percent = Math.ceil(position / total * 100);
+                                }
+                                dispatch({
+                                    type: SETTING_CHANGE_PROGRESS_BAR,
+                                    payload: percent,
+                                });
+                            } , false);
+                        }
+                        return myXhr;
+                    },
+                    mimeType:"multipart/form-data",
+                    success,
+                    error,
+                    beforeSend
+                });
 
             function error()
             {
@@ -154,12 +153,50 @@ class Actions extends BaseActions
 
             function success(answer)
             {
-                // data - сделать обработку ошибок от сервера
+                answer = JSON.parse(answer);
+                __DEV__ && console.log(answer);
+
+                switch (answer.ErrorCode){
+                    case 200:{
+                        context.props.actions.addFile(answer);
+                        break;
+                    }
+                    case 100:{
+                        context.props.actions.removeFile(loadId);
+                        __DEV__ && console.error('You tried to load empty files object');
+                        break;
+                    }
+                    case 101:{
+                        context.props.actions.removeFile(loadId);
+                        dispatch({
+                            type: SETTING_LOAD_FILE_ERROR,
+                            payload: `${this.name} is unsupported file type`,
+                        });
+                        break;
+                    }
+                    case 102:{
+                        context.props.actions.removeFile(loadId);
+                        dispatch({
+                            type: SETTING_LOAD_FILE_ERROR,
+                            payload: `You have ${loadFileData.length} file(s) with total size ${Math.round10(fileSize / 1000000,
+                                -2)} MB , Allowed size is ${Math.round10(sizeLimit / 1000000, -2)} MB, Try smaller file`,
+                        });
+                        break;
+                    }
+                    case 103:{
+                        context.props.actions.removeFile(loadId);
+                        dispatch({
+                            type: SETTING_LOAD_FILE_ERROR,
+                            payload: `File ${this.name} has not been saved. Try again or reload the page, or try again later`,
+                        });
+                        break;
+                    }
+                }
+
                 dispatch({
                     type: SETTING_CHANGE_PROGRESS_BAR,
                     payload: 0,
                 });
-                context.props.actions.addFile(answer);
                 $(context.refs.uploadButton).removeAttr('disabled');
             }
 
@@ -196,13 +233,13 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            let newArr = items[0].fileType == 'load' ?
+            console.log('newItems:', items);
+            let newArr = items.ContentType == 'load' ?
                 getState().accountSetting.files.slice()
                 :
                 getState().accountSetting.files.slice(0, -1);
 
             newArr = newArr.concat(items);
-            console.log('newItems:', items);
             console.log('newArr:', newArr);
             dispatch({
                 type: SETTING_ON_FILE_LOAD,
@@ -215,6 +252,8 @@ class Actions extends BaseActions
     {
         return (dispatch) =>
         {
+            0||console.log( 'id', id );
+
             const button = event.target;
             event.preventDefault();
             dispatch({
@@ -224,8 +263,8 @@ class Actions extends BaseActions
 
             defaultMethods.sendAjaxRequest({
                 httpMethod: 'POST',
-                url       : `${ABpp.baseUrl}/Account/deleteImage`,
-                data      : {id},
+                url       : `${ABpp.baseUrl}/Account/DeleteImage`,
+                data      : {Name: id},
                 callback  : onSuccessAjax,
                 onError   : onErrorAjax,
                 beforeSend: OnBeginAjax,
@@ -258,7 +297,7 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            let newArr = getState().accountSetting.files.slice().filter((item) => id != item.id);
+            let newArr = getState().accountSetting.files.slice().filter((item) => id != item.Name);
 
             dispatch({
                 type: SETTING_ON_FILE_LOAD,

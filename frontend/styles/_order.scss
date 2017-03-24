@@ -498,6 +498,9 @@
         &.my_offers.animated{
           position: relative;
         }
+        //&.size, &.my_bids, &.my_offers{
+        //  &[draggable=true] span:after{  border: 1px dashed #565656;  }
+        //}
         &.size.animated .value,
         &.my_bids.animated .value,
         &.my_offers.animated .value {

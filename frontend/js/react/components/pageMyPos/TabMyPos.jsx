@@ -14,7 +14,6 @@ export class TabMyPos extends React.Component
 
         var filters = {};
         Object.keys(this.filters).forEach((item) => { filters[item] = true });
-        // 0||console.log( 'filters', filters );
         this.state = {filters: filters};
     }
 
@@ -59,9 +58,9 @@ export class TabMyPos extends React.Component
                         <div className="wrapper">
                             <div className="filters">
                                 {filterBtn('sport')}&nbsp;
-                                {filterBtn('economy')}&nbsp;
-                                {filterBtn('e-sport')}&nbsp;
-                                {filterBtn('society')}
+                                {/*{filterBtn('economy')}&nbsp;*/}
+                                {filterBtn('e-sport')}
+                                {/*{filterBtn('society')}*/}
                             </div>
                             <div className="tab_content">
                                 <div className="my_position_container table_content">
@@ -90,7 +89,7 @@ export class TabMyPos extends React.Component
                                                     else if(item.CommonSymbolProfitLoss > 0) plClass = 'profit';
 
 //0||console.log( 'this.state.filters', this.state.filters,item.Category.toLowerCase() )
-                                                    if( true || this.state.filters[item.Category.toLowerCase()] ) return <table key={key} className="pos tmp">
+                                                    if( this.state.filters[item.Category.toLowerCase()] ) return <table key={key} className="pos tmp">
                                                         <thead>
                                                         <tr>
                                                             <th className="title">{item.Symbol.HomeName + ' - ' + item.Symbol.AwayName}</th>
