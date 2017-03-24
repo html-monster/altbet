@@ -33,11 +33,13 @@
 	&.ava {  background: transparentize(#1196d4, 0.5);  }
 }
 $user_page_tr_separate: #000000;
-$user_page_payment_list_bg: linear-gradient(to bottom, #53515e, #292830);
-$user_page_arrow: -228px -197px;
+$active_selection_bg: //linear-gradient(to bottom, #53515e, #292830);
+ 	linear-gradient(to bottom, #45434c, #292830);
+$dropbox_list_bg: #292830;
+//$user_page_arrow: -228px -197px;
 @mixin user_page_li{
-	border-bottom: 1px solid #53515e * 0.8;
-	border-top: 1px solid #53515e * 1.2;
+	//border-bottom: 1px solid #53515e * 0.8;
+	border-top: 1px solid #31303c;
 	&:hover{  background: #53515e * 1.2;  }
 	&:active{  background: #53515e * 1.5;  }
 }

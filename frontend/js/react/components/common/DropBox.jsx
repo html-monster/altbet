@@ -43,9 +43,9 @@ export class DropBox extends React.Component
     {
         // todo: сделать анимашку треугольника
 
-        // var {className, name} = this.props.data;
+        // var {className, name} = this.props.data
 
-        return <div className={`select ` + this.props.className + (this.state.isopened ? " opened" : "")}>
+        return <div className={`select ` + this.props.className + (this.state.isopened ? " -opened" : "")}>
                     <span className="active_selection btn wave select__field" onClick={this._listSlide.bind(this, true)}>test</span>
                     <ul className="select_list" ref="dropList" onClick={this._listSlide.bind(this, false)}>
                         {

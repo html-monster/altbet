@@ -463,72 +463,23 @@ input ~ .info{
 //  }
 //}
 
-.select {
-  position: relative;
-  color: $main-color;
-  .active_selection {
-    &.select__field {
-      width: 100%;
-      height: 38px;
-      padding: 3px 15px 0;
-      border-radius: 4px;
-      border: 1px solid #000;
-      background: #292830;
-      color: $reg_title;
-      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-
-      transition: background-color 0.3s, border-color 0.3s;
-      //@include reg_input_color;
-      //&[disabled]{
-      //  & ~ .info{  display: none;  }
-      //  color: transparentize($main-color, 0.3);
-      //}
+.select { position: relative; color: $main-color;
+  &.-opened .active_selection:before { transform: rotateX(180deg) translate(0, 5px); /*top: 16px;  border-bottom: 4px solid lighten(#53515e, 20%); border-top: 0;*/ }
+  .active_selection { display: block; margin: 0 !important; padding: 0 38px 0 10px; width: 120px; height: 33px; line-height: 31px;
+      border-radius: 4px; font-size: 16px !important; border: 1px solid $user_page_tr_separate; background: $active_selection_bg; cursor: pointer;
+    &:before { content: ''; display: block; position: absolute; right: 12px; top: 17px;
+        border: 5px solid transparent; border-top: 4px solid lighten(#53515e, 20%); transition: transform .3s;
+    }
+    &.active { border-radius: 4px 4px 0 0; }
+    &.select__field { padding: 3px 15px 0; width: 100%; height: 38px; border-radius: 4px; border: 1px solid #000; color: $reg_title;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3); transition: background-color 0.3s, border-color 0.3s;
     }
 
-    display: block;
-    width: 120px;
-    height: 33px;
-    padding: 0 38px 0 10px;
-    margin: 0 !important;
-    border: 1px solid $user_page_tr_separate;
-    border-radius: 4px;
-    background: $user_page_payment_list_bg;
-    font-size: 16px !important;
-    line-height: 31px;
-    cursor: pointer;
-    //color: $main-color;
-    //overflow: inherit;
-    &:before{
-      content: '';
-      display: block;
-      width: 15px;
-      height: 15px;
-      position: absolute;
-      top: calc(50% - 7.5px);
-      right: 10px;
-      background: url("#{$pathImage}/sprite.svg") no-repeat;
-      background-position: $user_page_arrow;
-    }
-    &.active{  border-radius: 4px 4px 0 0;  }
   }
-  ul.select_list{
-    display: none;
-    position: absolute;
-    z-index: 2;
-    width: 100%;
-    border: 1px solid $user_page_tr_separate;
-    border-top: none;
-    border-radius: 0 0 4px 4px;
-    background: $user_page_payment_list_bg;
-    box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.5);
+  ul.select_list { display: none; position: absolute; width: 100%; border: 1px solid $user_page_tr_separate; border-top: none;
+      border-radius: 4px; background: $dropbox_list_bg; box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.5); z-index: 2;
   }
-  li{
-    padding: 2px 10px;
-    transition: 0.2s ease-out;
-    cursor: pointer;
-    @include user_page_li;
-    &:last-of-type{  border-bottom: none;  }
-  }
+  li { padding: 2px 10px; transition: 0.2s ease-out; cursor: pointer; @include user_page_li; }
 }
 
 .timestamp{
