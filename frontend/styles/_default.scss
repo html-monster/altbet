@@ -464,7 +464,7 @@ input ~ .info{
 //}
 
 .select { position: relative; color: $main-color;
-  &.-opened .active_selection:before { transform: rotateX(180deg) translate(0, 5px); /*top: 16px;  border-bottom: 4px solid lighten(#53515e, 20%); border-top: 0;*/ }
+  &.-opened .active_selection:before { transform: rotateX(180deg) translate(0, 5px);  }
   .active_selection { display: block; margin: 0 !important; padding: 0 38px 0 10px; width: 120px; height: 33px; line-height: 31px;
       border-radius: 4px; font-size: 16px !important; border: 1px solid $user_page_tr_separate; background: $active_selection_bg; cursor: pointer;
     &:before { content: ''; display: block; position: absolute; right: 12px; top: 17px;
