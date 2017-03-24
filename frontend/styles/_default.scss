@@ -469,7 +469,7 @@ input ~ .info{
   }
   .active_selection { display: block; margin: 0 !important; padding: 0 38px 0 10px; width: 120px; height: 33px; line-height: 31px;
       border-radius: 4px; font-size: 16px !important; border: 1px solid $user_page_tr_separate; background: $active_selection_bg; cursor: pointer;
-    i { display: block; position: absolute; right: 16px; top: 16px; width: 5px; height: 4px; transition: transform .3s;
+    i { display: block; position: absolute; right: 16px; top: calc(50% - 2px); width: 5px; height: 4px; transition: transform .3s;
       &::before { content: ''; display: block; position: absolute; left: 0; top: 0;
           border: 5px solid transparent; border-top: 4px solid lighten(#53515e, 20%);
       }
