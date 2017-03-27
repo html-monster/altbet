@@ -36,7 +36,7 @@ class ActiveTrader extends React.Component {
 		// 0||console.log( 'activeExchange', activeExchange );
 		// const { activeString, showDefaultOrder } = this.state;
 		const { data, ...info } = this.props;
-		const { cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
+		const { dragPrevPrice, tdHtml, cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
 			rebuiltServerData, spread, quantity, traderActions } = this.props;
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
@@ -311,6 +311,9 @@ class ActiveTrader extends React.Component {
 						</tr>
 					</thead>
 					<tbody ref={'traderBody'}>
+						<tr className="visible" dangerouslySetInnerHTML={{__html: tdHtml}}>
+
+						</tr>
 						{
 							rebuiltServerData.map((item, index) =>
 								<TraderString
@@ -337,6 +340,18 @@ class TraderString extends React.Component {
 		super();
 		this.OddsConverterObj = new OddsConverter();
 	}
+
+	onDragOver(event)
+	{
+		this.props.dragPrevPrice && event.preventDefault();
+		if(this.props.dragPrevPrice) $(event.currentTarget).addClass('drag_place');
+	}
+
+	onDragLeave(event)
+	{
+		if(this.props.dragPrevPrice) $(event.currentTarget).removeClass('drag_place');
+	}
+
 
 	// shouldComponentUpdate(nextProps){
 		// const currentData = this.props.data;
@@ -371,11 +386,12 @@ class TraderString extends React.Component {
 	render()
 	{
 		// const { traderActions, activeString, data, mainData, index, inputQuantityContext, isMirror, quantity } = this.props;
-		const { data, cmpData: { autoTradeOn }, index, orderInfo: {...info}, spreadHighLight, quantity, spread, ...other } = this.props;
+		const { data, dragPrevPrice, cmpData: { autoTradeOn }, index, orderInfo: {...info}, spreadHighLight, quantity, spread, ...other } = this.props;
 		// const {  showDefaultOrder  } = this.state;
 		// console.log(this.props);
 		const spreadPricePos = Math.round10(data.Price + +spread, -2);
 		const spreadPriceNeg = Math.round10(data.Price - spread, -2);
+		const dragAvailable = !!data.ParticularUserQuantityBuy || !!data.ParticularUserQuantitySell;
 		let className = '';
 		let addOrder = null;
 		let spreadHighLightFunc = null;
@@ -422,18 +438,24 @@ class TraderString extends React.Component {
 
 		return <AnimateOnUpdate
 				component="tr"
-				className="visible"
+				className={`visible`}
 				transitionName={{
 					enter: 'fadeOut',
 				}}
 				transitionAppear={false}
 				transitionLeave={false}
 				transitionEnterTimeout={800}
+				onDragOver={::this.onDragOver}
+				onDragLeave={::this.onDragLeave}
+				onDrop={other.traderActions.onDrop.bind(null, data.Price)}
+				ref={'tr'}
 				data={data}
 		>
 			<td className={'my_offers my_size animated'} data-verify={'ParticularUserQuantityBuy'}
-				draggable={!!data.ParticularUserQuantityBuy}>
-					<span className="value">
+				//draggable={!!data.ParticularUserQuantityBuy}
+				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, data.Price) : null}
+				onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}>
+					<span className="value" draggable={!!data.ParticularUserQuantityBuy}>
 						{
 							data.ParticularUserQuantityBuy || ''
 						}
@@ -452,10 +474,12 @@ class TraderString extends React.Component {
 						:
 						null
 				}
-				draggable={!!data.ParticularUserQuantityBuy}
+				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, data.Price) : null}
+				onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
+				//draggable={!!data.ParticularUserQuantityBuy}
 			>
-				<span className="container">
-					<span className="value">
+				<span className="container" draggable={!!data.ParticularUserQuantityBuy}>
+					<span className="value" draggable={!!data.ParticularUserQuantityBuy}>
 						{
 							data.QuantityBuy || ''
 						}
@@ -515,10 +539,12 @@ class TraderString extends React.Component {
 						:
 						null
 				}
-				draggable={!!data.ParticularUserQuantitySell}
+				//draggable={!!data.ParticularUserQuantitySell}
+				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, data.Price) : null}
+				onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
 			>
-				<span className="container">
-					<span className="value">
+				<span className="container" draggable={!!data.ParticularUserQuantitySell}>
+					<span className="value" draggable={!!data.ParticularUserQuantitySell}>
 						{
 							data.QuantitySell || ''
 						}
@@ -526,8 +552,11 @@ class TraderString extends React.Component {
 				</span>
 			</td>
 			<td className={'my_bids my_size animated'} data-verify="ParticularUserQuantitySell"
-				draggable={!!data.ParticularUserQuantitySell}>
-				<span className="value">
+			//	draggable={!!data.ParticularUserQuantitySell}
+				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, data.Price) : null}
+				onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
+			>
+				<span className="value" draggable={!!data.ParticularUserQuantitySell}>
 					{
 						data.ParticularUserQuantitySell || ''
 					}

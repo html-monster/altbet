@@ -99,9 +99,8 @@ class Actions extends BaseActions
             }
 
             if (fileSize)
-                $.ajax({
+                defaultMethods.sendAjaxRequest({
                     url: `${ABpp.baseUrl}/Account/UploadImage`,
-                    type: 'POST',
                     data: new FormData(context.refs.uploadForm),
                     cache: false,
                     contentType: false,
@@ -129,9 +128,9 @@ class Actions extends BaseActions
                         }
                         return myXhr;
                     },
-                    mimeType:"multipart/form-data",
-                    success,
-                    error,
+                    mimeType: "multipart/form-data",
+                    callback: success,
+                    onError: error,
                     beforeSend
                 });
 
@@ -153,7 +152,6 @@ class Actions extends BaseActions
 
             function success(answer)
             {
-                answer = JSON.parse(answer);
                 __DEV__ && console.log(answer);
 
                 switch (answer.ErrorCode){
