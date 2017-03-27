@@ -116,7 +116,7 @@ class Header extends React.Component
 				{ ABpp.User.isAuthorized() ? <a href={ABpp.baseUrl + '/eng/Account#/funds/deposit'} className="btn deposit wave waves-effect waves-button">Deposit</a> : ''}
 				{/*<button className="price_plan btn">Pricing Plans</button>*/}
 				<div className="odds_converter select" title="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Bettor ">
-					<span className="active_selection active_odd btn wave" onClick={this.listSlide.bind(this, true)}>{this.OddsConverterObj.getSystemName()}</span>
+					<span className="active_selection active_odd btn wave" onClick={this.listSlide.bind(this, true)}>{this.OddsConverterObj.getSystemName()}<i>{}</i></span>
 					<ul className="select_list odds_list" ref="oddsList" onClick={this.listSlide.bind(this, false)}>
 						<li onClick={actions.changeOddSystem.bind(null, 'Implied')}>Implied</li>
 						<li onClick={actions.changeOddSystem.bind(null, 'Decimal')}>Decimal</li>
