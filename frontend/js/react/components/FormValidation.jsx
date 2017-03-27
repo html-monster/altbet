@@ -68,6 +68,7 @@ export default class FormValidation extends React.Component
 		state.submited = true;
 		state.errorMessage = '';
 		state.successMessage = '';
+		// 0||console.log( 'here', 0 );
 		this.setState(state);
 		for (let elem in state.errors) {
 			if(state.errors[elem]){

@@ -61,11 +61,11 @@ export class RegisterForm extends React.Component
             </div>;
     }
 
-    dropBoxRender({ id, label, meta: { error, dirty }, ...input })
+    dropBoxRender({ id, label, hint, items, name, initLabel, meta: { error, dirty }, ...input })
     {
         return <span className="input_animate input--yoshiko">
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
-                <DropBox className="" name={name} items={['var 1', 'var 2', 'var 3', 'var 4', ]} />
+                <DropBox className="" name={name} items={items} initLabel={initLabel} hint={hint} input={input} />
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
                     <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                 </label>
@@ -138,8 +138,10 @@ export class RegisterForm extends React.Component
                 <div className="right_column column">
                     <InputValidation renderContent={this.dropBoxRender} id='c_name' name="Country"
                                      className={'input__field input__field--yoshiko'}
-                                     label="Country" type='text'
-                                     validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z]+$/, message: "Only letters are allowed"}), lengthValidation.bind(null, {min: 3, max: 50})]} input={input}
+                                     label="Country"
+                                     items={[{key: 'Ukraine', val: 'ua'}, {key: 'Poland', val: 'po'}, {key: 'Germany', val: 'ge'}, {key: 'United kingdom', val: 'uk'}]}
+                                     initLabel="Select country"
+                                     validate={[emptyValidation]} input={input}
                                      hint="Indicate the country of your permanent residence"/>
 
                     {/*<ul className="select_list odds_list" ref="oddsList" onClick={this.listSlide.bind(this, false)}>*/}
