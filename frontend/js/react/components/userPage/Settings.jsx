@@ -264,9 +264,8 @@ class Settings extends React.Component
                                 {
                                     const extension = item.ContentType.split('/');
                                     if(item.ContentType != 'load'){
-                                        //var name = item.Name.split('.');
-                                        //name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.Name;
-                                        //name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : ;
+                                        var name = item.Name.split('.');
+                                        name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.Name;
                                     }
                                     return item.ContentType != 'load' ?
                                         <div className={`thumbnail file ${extension[0] == 'image' ? '' : 'doc'}`} key={index}>

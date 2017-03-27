@@ -268,7 +268,7 @@ export default class OrderForm extends React.Component{
 						</label>
 						<div className="input">
 							<InputNumber type="tel" id={`${orderId}_price`} className="number" data-validation="0.33"
-										 maxLength="5" name="LimitPrice" autoComplete="off"
+										 maxLength="5" autoComplete="off"
 										 onChange={this.onInputChange.bind(this, 'Price')}
 										 onKeyDown={this.onInputKeyDown.bind(this, 'Price')}
 										 value={checkboxProp ? stateData.Price : data.Price}
@@ -386,6 +386,7 @@ export default class OrderForm extends React.Component{
 					</div>
 				</div>
 				{data.ID ? <input name="ID" type="hidden" value={data.ID}/> : ''}
+				<input name="LimitPrice" type="hidden" value={checkboxProp ? stateData.Price : data.Price}/>
 				<input name="Symbol" type="hidden" className="symbol" value={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}/>
 				<input name="isMirror" type="hidden" className="mirror" value={data.isMirror}/>
 				<input name="Side" type="hidden" className="side" value={(className)[0].toUpperCase() + (className).slice(1)}/>
