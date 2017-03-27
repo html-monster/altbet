@@ -252,7 +252,7 @@ class Actions extends BaseActions
     {
         return (dispatch) =>
         {
-            0||console.log( 'id', id );
+            __DEV__ && console.log('id', id);
 
             const button = event.target;
             event.preventDefault();
