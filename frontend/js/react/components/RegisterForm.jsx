@@ -20,17 +20,17 @@ export class RegisterForm extends React.Component
 	}
 
 
-    componentDidMount()
-    {
-        if( __DEV__ )
-        {
-            0||console.log( 'emulate here' )
-            setTimeout(() =>
-                {$(".log_out .sign_in").click();
-                    setTimeout(() => $(".register").click(), 500)
-                }, 700)
-        } // endif
-    }
+    // componentDidMount()
+    // {
+    //     if( __DEV__ )
+    //     {
+    //         0||console.log( 'emulate here' )
+    //         setTimeout(() =>
+    //             {$(".log_out .sign_in").click();
+    //                 setTimeout(() => $(".register").click(), 500)
+    //             }, 700)
+    //     } // endif
+    // }
 
 
     inputRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty }, ...input })

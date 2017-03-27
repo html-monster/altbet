@@ -36,10 +36,17 @@ export default class InputValidation extends React.Component
 		let state = this.state;
 		const props = this.props;
 		const error = nextProps.input.errors[props.name];
+		// console.log(nextProps.value);
+		// console.log(state.value);
 		if(nextProps.value != undefined){
+
+			if(nextProps.value != state.value && nextProps.validate)
+				this.onChangeProgrammatically(nextProps.value);
+
 			state.value = nextProps.value;
 			if(nextProps.name) nextProps.input.setValues({[nextProps.name]: nextProps.value || ''});
 		}
+
 		if(props.validate && nextProps.input.submited) {
 			this.validate(state.value);
 			state.meta.dirty = true;
@@ -69,13 +76,25 @@ export default class InputValidation extends React.Component
 		this.setState(state)
 	}
 
-	onChange(event)
+	onChangeProgrammatically(value)
 	{
 		let state = this.state;
 		const props = this.props;
 
 		state.meta.dirty = true;
+
+		this.validate(this.props, value);
+	}
+
+	onChange(event)
+	{
+		let state = this.state;
+		const props = this.props;
+		const valueClass = defaultMethods.getClass(event);
+
+		state.meta.dirty = true;
 		state.value = event.target.value;
+
 		this.validate(this.props, state.value);
 		this.setState(state);
 		if(props.name) props.input.setValues({[props.name]: state.value});
@@ -84,6 +103,7 @@ export default class InputValidation extends React.Component
 	validate(props, value)
 	{
 		if(props.name) props.input.setValues({[props.name]: value});
+
 		if(props.validate) {
 			let state = this.state;
 

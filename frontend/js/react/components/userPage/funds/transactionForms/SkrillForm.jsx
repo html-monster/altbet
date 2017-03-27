@@ -6,7 +6,7 @@ import React from 'react';
 
 import FormValidation from '../../../FormValidation';
 import InputValidation from '../../../formValidation/InputValidation';
-import {minLengthValidation, mailValidation, netellerSecureId} from '../../../formValidation/validation';
+import {minLengthValidation, mailValidation} from '../../../formValidation/validation';
 
 export default class ScrillForm extends React.Component{
 	constructor()
