@@ -43,7 +43,7 @@ export class DropBox extends React.Component
 
     render()
     {
-        const { name, items, input, hint } = this.props;
+        const { name, items, input, hint, onCustomChange } = this.props;
         var dboxVal, dboxKey;
         delete input.value;
 
@@ -57,11 +57,11 @@ export class DropBox extends React.Component
         {
             dboxKey = this.initLabel;
         }
-
-
+		onCustomChange(dboxVal);
+console.log(input);
 // 0||console.log( 'input', input );
         return <div className={`select ` + this.props.className + (this.state.isopened ? " -opened" : "")} title={hint}>
-                    <input ref="dboxVal" type="hidden" name={name} value={dboxVal} {...input}/>
+                    <input ref="dboxVal" type="hidden" name={name} {...input}/>
                     <span className="active_selection btn wave select__field" onClick={this._listSlide.bind(this, true)}>{dboxKey}<i>{}</i></span>
                     <ul className="select_list" ref="dropList" onClick={this._listSlide.bind(this, false)}>
                         {

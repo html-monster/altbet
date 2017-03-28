@@ -61,11 +61,12 @@ export class RegisterForm extends React.Component
             </div>;
     }
 
-    dropBoxRender({ id, label, hint, items, name, initLabel, meta: { error, dirty }, ...input })
+    dropBoxRender({ id, label, hint, items, name, initLabel, meta: { dirty, error, onCustomChange }, ...input })
     {
         return <span className="input_animate input--yoshiko">
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
-                <DropBox className="" name={name} items={items} initLabel={initLabel} hint={hint} input={input} />
+                <DropBox className="" name={name} items={items} initLabel={initLabel} hint={hint} input={input}
+						 onCustomChange={onCustomChange} />
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
                     <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                 </label>
