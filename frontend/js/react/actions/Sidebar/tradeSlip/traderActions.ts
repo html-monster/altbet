@@ -629,6 +629,7 @@ class Actions extends BaseActions
 	{
 		return (dispatch) =>
 		{
+			event.dataTransfer.setData('text/plain', 'anything');
 			const target = event.currentTarget;
 			// let tdHtml = $(event.currentTarget).clone();
 			// console.log(event.currentTarget.offsetWidth);
@@ -652,7 +653,7 @@ class Actions extends BaseActions
 		}
 	}
 
-	public onDragEnd(event)
+	public onDragEnd()
 	{
 		return (dispatch) =>
 		{
@@ -664,24 +665,25 @@ class Actions extends BaseActions
 		}
 	}
 
-	public onDrop(price)
+	public onDrop(price, event)
 	{
 		return (dispatch, getState) =>
 		{
+			event.preventDefault();
 			const { activeExchange, dragPrevPrice } = getState().activeTrader;
 			console.log(price);
 			console.log(getState().activeTrader.dragPrevPrice);
-			if(dragPrevPrice != price){
-				console.log(getState().activeTrader);
-				defaultMethods.sendAjaxRequest({
-					httpMethod: 'POST',
-					url       : `${ABpp.baseUrl}/Order/Edit`,
-					data      : {prevPrice: dragPrevPrice, nextPrice: price, activeExchange},
-					callback  : onSuccessAjax,
-					onError   : onErrorAjax,
-				});
-
-			}
+			// if(dragPrevPrice != price){
+			// 	console.log(getState().activeTrader);
+			// 	defaultMethods.sendAjaxRequest({
+			// 		httpMethod: 'POST',
+			// 		url       : `${ABpp.baseUrl}/Order/Edit`,
+			// 		data      : {prevPrice: dragPrevPrice, nextPrice: price, activeExchange},
+			// 		callback  : onSuccessAjax,
+			// 		onError   : onErrorAjax,
+			// 	});
+            //
+			// }
 			function onErrorAjax()
 			{
 				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');

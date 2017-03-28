@@ -420,6 +420,7 @@
 			}
 			td{
 				user-select: none;
+				-webkit-user-drag: element;
 				transition: 0s;
 				&:nth-of-type(1){  width: 60px;  }
 				&:nth-of-type(5){  width: 68px; }
@@ -517,6 +518,7 @@
 				&.best_buy{
 					color: #ffffff;
 					background-image: linear-gradient(to bottom, #64c9ef, #3498da); font-weight: bold;  }
+
 			}
 		}
 		#order_content{
