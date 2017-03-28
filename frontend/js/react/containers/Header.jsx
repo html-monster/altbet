@@ -8,6 +8,7 @@ import React from 'react';
 import headerActions from '../actions/headerActions.ts';
 import AnimateOnUpdate from '../components/Animation';
 import OddsConverter from '../models/oddsConverter/oddsConverter.js';
+import {DropBox} from '../components/common/DropBox';
 
 
 class Header extends React.Component
@@ -115,7 +116,10 @@ class Header extends React.Component
 				{ ABpp.User.isAuthorized() ? <a className="my_order btn wave waves-effect waves-button" href={globalData.Urls.MyActivity}>My Activity</a> : ''}
 				{ ABpp.User.isAuthorized() ? <a href={ABpp.baseUrl + '/eng/Account#/funds/deposit'} className="btn deposit wave waves-effect waves-button">Deposit</a> : ''}
 				{/*<button className="price_plan btn">Pricing Plans</button>*/}
-				<div className="odds_converter select" title="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Bettor ">
+				{/*<DropBox className="odds_converter" name={name} items={this._setCurrOddItem([{key: 'Implied', val: 'Implied'}, {key: 'Decimal', val: 'Decimal'}, {key: 'American', val: 'American'}, {key: 'Fractional', val: 'Fractional'}])} hint="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Bettor" afterChoose={(props) => actions.changeOddSystem(props.val)} />*/}
+				<DropBox className="odds_converter" name={name} items={this._setCurrOddItem([{val: 'Implied'}, {val: 'Decimal'}, {val: 'American'}, {val: 'Fractional'}])} hint="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Bettor" afterChoose={(props) => actions.changeOddSystem(props.val)} />
+
+{/*				<div className="odds_converter select" title="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Bettor ">
 					<span className="active_selection active_odd btn wave" onClick={this.listSlide.bind(this, true)}>{this.OddsConverterObj.getSystemName()}<i>{}</i></span>
 					<ul className="select_list odds_list" ref="oddsList" onClick={this.listSlide.bind(this, false)}>
 						<li onClick={actions.changeOddSystem.bind(null, 'Implied')}>Implied</li>
@@ -123,7 +127,7 @@ class Header extends React.Component
 						<li onClick={actions.changeOddSystem.bind(null, 'American')}>American</li>
 						<li onClick={actions.changeOddSystem.bind(null, 'Fractional')}>Fractional</li>
 					</ul>
-				</div>
+				</div>*/}
 			</div>
 			<div className="user">
 				{
@@ -161,6 +165,22 @@ class Header extends React.Component
 			</div>
 			{/*<button className="chat">{}</button>*/}
 		</div>
+	}
+
+
+	_setCurrOddItem(inItems)
+	{
+		inItems.every((vv,kk) =>
+		{
+			if( vv.key == this.OddsConverterObj.getSystemName() )
+			{
+				inItems[kk].selected = true;
+				return ;
+			} // endif
+			return true;
+		});
+
+		return inItems;
 	}
 }
 

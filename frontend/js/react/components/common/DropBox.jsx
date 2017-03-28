@@ -5,6 +5,14 @@
 import React from 'react';
 
 
+/**
+ * @param className - class name of the container
+ * @param name - name of hidden field (for the forms)
+ * @param items: {key - shows in dropbox items (notrequired if key==val), val - sets hidden field value, selected - initial selected item (notrequired)}
+ * @param initLabel - if no selected items - sets the text of dropdown
+ * @param hint - onHover tip
+ * @param afterChoose - callback for after dropbox item click
+ */
 export class DropBox extends React.Component
 {
     closeSlideFunc = null;
@@ -26,7 +34,8 @@ export class DropBox extends React.Component
             // currItem = 0;
             for( let ii = 0, countii = $items.length; ii < countii; ii++ )
             {
-                if( $items[ii].selected ) { currItem = ii; break; }
+                if (!$items[ii].key == undefined) $items[ii].key = $items[ii].val;
+                if( $items[ii].selected ) { currItem = ii; }
             } // endfor
         } // endif
 
@@ -43,9 +52,11 @@ export class DropBox extends React.Component
 
     render()
     {
-        const { name, items, input, hint } = this.props;
+        var { name, items, input, hint } = this.props;
         var dboxVal, dboxKey;
-        delete input.value;
+
+        if( input ) delete input.value;
+        else input = {};
 
         var $currItem = this.state.currItem;
         // 0||console.log( '$currItem', $currItem );
@@ -62,7 +73,7 @@ export class DropBox extends React.Component
 // 0||console.log( 'input', input );
         return <div className={`select ` + this.props.className + (this.state.isopened ? " -opened" : "")} title={hint}>
                     <input ref="dboxVal" type="hidden" name={name} value={dboxVal} {...input}/>
-                    <span className="active_selection btn wave select__field" onClick={this._listSlide.bind(this, true)}>{dboxKey}<i>{}</i></span>
+                    <span className="active_selection btn wave" onClick={this._listSlide.bind(this, true)}>{dboxKey}<i>{}</i></span>
                     <ul className="select_list" ref="dropList" onClick={this._listSlide.bind(this, false)}>
                         {
                             items.map((val, key) => <li className={key == $currItem ? "active" : ""} key={key} data-val={val.val} onClick={this._listSelect.bind(this, key)}>{val.key}</li>)
@@ -101,6 +112,7 @@ export class DropBox extends React.Component
 
     /**
      * @private
+     * On dropbox item click
      */
     _listSelect(key, event)
 	{
@@ -114,6 +126,14 @@ export class DropBox extends React.Component
         }*/ // endif
 
         this.setState({...this.state, currItem: key, isopened: false});
+
+        if( this.props.afterChoose )
+        {
+            this.props.afterChoose(this.props.items[key]);
+        }
+        else
+        {
+        } // endif
 
         this._listClose(false);
 	}
