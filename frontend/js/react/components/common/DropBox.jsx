@@ -37,8 +37,7 @@ export class DropBox extends React.Component
     componentDidMount()
     {
         // bind native change prop
-        $(this.refs.dboxVal).change((ee) => this.props.input.onChange(ee));
-        // $(this.refs.dboxVal).change(() => 0||console.log( 'here ch', 0 ));
+        // $(this.refs.dboxVal).change((ee) => this.props.input.onChange(ee));
     }
 
 
@@ -60,9 +59,9 @@ export class DropBox extends React.Component
         }
 
 
-// 0||console.log( 'input', input ); //{...input}
+// 0||console.log( 'input', input );
         return <div className={`select ` + this.props.className + (this.state.isopened ? " -opened" : "")} title={hint}>
-                    <input ref="dboxVal" type="hidden" name={name} value={dboxVal} />
+                    <input ref="dboxVal" type="hidden" name={name} value={dboxVal} {...input}/>
                     <span className="active_selection btn wave select__field" onClick={this._listSlide.bind(this, true)}>{dboxKey}<i>{}</i></span>
                     <ul className="select_list" ref="dropList" onClick={this._listSlide.bind(this, false)}>
                         {
@@ -108,12 +107,11 @@ export class DropBox extends React.Component
 		// event.stopPropagation();
 
         // call onChange for hidden field for validation
-        if( this.props.input && this.props.input.onChange )
+/*        if( this.props.input && this.props.input.onChange )
         {
             this.refs.dboxVal.value = this.props.items[key].val;
             $(this.refs.dboxVal).change();
-        } // endif
-        // this.props.input.onChange(event);
+        }*/ // endif
 
         this.setState({...this.state, currItem: key, isopened: false});
 

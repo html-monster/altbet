@@ -22,6 +22,8 @@
 
 
 ## Plugins
+- React pluging (https://react.parts/web)
+-- Time picker (http://react-component.github.io/time-picker)
 - Waves (http://fian.my.id/Waves/#start)
 - AdminLTE (https://almsaeedstudio.com/themes/AdminLTE/pages/UI/buttons.html)
 - Handlebar (http://handlebarsjs.com/)
