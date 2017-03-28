@@ -79,7 +79,7 @@ export default class InputValidation extends React.Component
 	onChangeProgrammatically(value)
 	{
 		let state = this.state;
-		const props = this.props;
+		// const props = this.props;
 
 		state.meta.dirty = true;
 
@@ -90,7 +90,6 @@ export default class InputValidation extends React.Component
 	{
 		let state = this.state;
 		const props = this.props;
-		const valueClass = defaultMethods.getClass(event);
 
 		state.meta.dirty = true;
 		state.value = event.target.value;
@@ -141,8 +140,7 @@ export default class InputValidation extends React.Component
 		// console.log(this.state);
 
 		{/*return <div>{this.props.children}</div>;*/}
-
-		return (renderContent({meta: {...metaProps, ...metaState}, ...rest, ...state}));
+		return (renderContent({meta: {onCustomChange: ::this.onChangeProgrammatically, ...metaProps, ...metaState}, ...rest, ...state}));
 	}
 }
 
