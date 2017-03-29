@@ -26,10 +26,11 @@ class tabsClass{
             let ii = 1;
             items.find(animated_row).css('display', 'none'); //'.content_bet'
             items.hide().eq($(this).index()).show().find(animated_row).each(function(){
-                $(this).delay(50 * ii).css({display: 'flex', opacity: 0, marginTop: '10px'}).animate({
-                    opacity: '1',
-                    marginTop: '2px'
-                }, 300);
+                $(this).delay(100 * ii).addClass('list-animate animate');
+                // .css({display: 'flex', opacity: 0, marginTop: '10px'}).animate({
+                //     opacity: '1',
+                //     marginTop: '2px'
+                // }, 300);
                 ii++;
             });
             ii = 1;
@@ -45,7 +46,7 @@ class tabsClass{
 			itemsAnimation(items);
         }).eq(0).addClass("active");
 
-        itemsAnimation($(container).find('.tab_item'));
+        setTimeout(() => itemsAnimation($(container).find('.tab_item')), 2000);
 	}
 
 	// static tabFilter(filterContainer){

@@ -102,7 +102,7 @@ export class RegisterForm extends React.Component
 
                     <InputValidation renderContent={this.inputRender} id='n_name' name="NickName"
                                      className={'input__field input__field--yoshiko'}
-                                     initialValue="FedoryakaBest"
+                                     // initialValue="FedoryakaBest"
                                      label="User Name" type='text'
                                      validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
                                      hint="User's login allow to use symbols such as: symbols, digits, dot, underscore, dash"/>
@@ -110,7 +110,7 @@ export class RegisterForm extends React.Component
                     <InputValidation renderContent={this.inputRender} id='e_name' name="Email"
                                      className={'input__field input__field--yoshiko'}
                                      label="Email Address" type='text'
-                                     initialValue="zz@xx.com"
+                                     // initialValue="zz@xx.com"
                                      validate={[emptyValidation, mailValidation, lengthValidation.bind(null, {max: 128})]} input={input}
                                      hint="Specify your valid email. A message with registration
                                         confirmation will be sent at that address. Also that address
@@ -118,14 +118,14 @@ export class RegisterForm extends React.Component
 
                     <InputValidation renderContent={this.inputRender} id='user_b_day' name="DateOfBirth"
                                      className={'input__field input__field--yoshiko datePickerJs'}
-                                     initialValue="2 Mar 01"
+                                     // initialValue="2 Mar 01"
                                      label="Date of birth" type='text'
                                      validate={[emptyValidation]} input={input}/>
 
 
                     <InputValidation renderContent={this.inputRender} id='r_pass' name="Password"
                                      className={'input__field input__field--yoshiko'}
-                                     initialValue="123"
+                                     // initialValue="123"
                                      label="Password" type='password'
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20})]} input={input}/>
 

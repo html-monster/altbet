@@ -73,7 +73,11 @@ $(document).ready(function ()
 	// tabsClass.tabsChange('.top_reg'); // page registration
 	// tabsClass.tabsChange('.wrapper_user_page'); // page registration
 
-	tabsClass.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
+
+	// анимация рынков на главной
+	// tabsClass.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
+	$(".nav_items").find('.wrapper .tab').eq(0).addClass("active");
+
 
 	popUpClass.popUpOpen('.log_out .sign_in', '.sign_in_form', '#login-email'); // pop-up login
 	popUpClass.popUpOpen('[data-log-out]', '.sign_in_form', '#login-email');
