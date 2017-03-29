@@ -63,6 +63,8 @@ class YourOrders extends React.Component
 	}
 }
 
+
+// BM: GroupingOrder
 class GroupingOrder extends React.Component
 {
 	render()
@@ -81,7 +83,15 @@ class GroupingOrder extends React.Component
 							:
 								''
 						}
-						<strong className="current-order up">pos: <span>{data.Positions}</span></strong>
+						<strong className="current-order up"> Total: <span>{data.Positions}</span></strong>
+					</div>
+				</div>
+				<div className="order_info">
+					<div className="container">
+						<strong className="amount">Amount</strong>
+						<strong className="qty">Entries</strong>
+						<strong className="dt">Datetime</strong>
+						<div className="button_container"></div>
 					</div>
 				</div>
 				{
@@ -106,6 +116,8 @@ class GroupingOrder extends React.Component
 	}
 }
 
+
+// BM: OrderItem
 class OrderItem extends React.Component
 {
 	constructor()
@@ -198,13 +210,13 @@ class OrderItem extends React.Component
 		return <div className="order_container not-sort" id={data.ID + '__order'}>
 			<div className={'order_info ' + className}>
 				<div className="container">
-					<strong className="title">Price <span className="price">{data.isMirror ? (Math.round10(1 - data.Price, -2)).toFixed(2) :
+					<strong className="amount"> <span className="price">{data.isMirror ? (Math.round10(1 - data.Price, -2)).toFixed(2) :
 							(Math.round10(data.Price, -2)).toFixed(2)}</span></strong>
-					<strong className="title">Quantity <span className="volume">{data.Volume}</span></strong>
-					<strong className="timestamp help balloon_only">
-		 				<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}</span> | <span className="time">{
-						`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
-						<span className="help_message"><strong>MM/DD/YYYY | HH:MM</strong></span>
+					<strong className="qty"> <span className="volume">{data.Volume}</span></strong>
+					<strong className="dt timestamp help balloon_only">
+		 				<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}</span>&nbsp;
+                        <span className="time">{`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
+						<span className="help_message"><strong>MM/DD/YYYY HH:MM</strong></span>
 					</strong>
 					<div className="button_container">
 						<button className="edit" title="edit or change the order" onClick={::this.showForm}>{}</button>
@@ -244,56 +256,3 @@ export default connect(state => ({
 		actions: bindActionCreators(yourOrdersActions, dispatch),
 	})
 )(YourOrders)
-
-{/*<form action="/AltBet/Home/Edit" autoComplete="off" className={className} data-ajax="true" data-ajax-begin="ajaxControllerClass.OnBeginJs"*/}
-			{/*data-ajax-failure="ajaxControllerClass.OnFailureJs" data-ajax-success="ajaxControllerClass.OnSuccessJs" data-ajax-url="/AltBet/Order/Edit"*/}
-			{/*method="post" noValidate="novalidate">*/}
-	{/*<div className="container">*/}
-		{/*<div className="price ">*/}
-			{/*<label>Your price</label>*/}
-			{/*<div className="input">*/}
-				{/*<input className="number" data-validation="0.33" maxLength="4" name="LimitPrice" type="text" autoComplete="off" defaultValue={data.Price}/>*/}
-				{/*<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>*/}
-				{/*<div className="regulator">*/}
-					{/*<span className="plus" title="Press Arrow Up">{}</span>*/}
-					{/*<span className="minus" title="Press Arrow Down">{}</span>*/}
-				{/*</div>*/}
-			{/*</div>*/}
-		{/*</div>*/}
-		{/*<div className="volume ">*/}
-			{/*<label>Quantity</label>*/}
-			{/*<div className="input">*/}
-				{/*<input className="number" data-validation="123" maxLength="7" name="Quantity" type="text" autoComplete="off" defaultValue={data.Volume}/>*/}
-				{/*<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>*/}
-				{/*<div className="regulator">*/}
-					{/*<span className="plus" title="Press Arrow Up">{}</span>*/}
-					{/*<span className="minus" title="Press Arrow Down">{}</span>*/}
-				{/*</div>*/}
-			{/*</div>*/}
-		{/*</div>*/}
-		{/*<div className="order_type ">*/}
-			{/*<div className="obligations">*/}
-				{/*<label>Sum</label>*/}
-				{/*<div className="input">*/}
-					{/*<input type="text" className="number" data-validation="40.59" maxLength="7" autoComplete="off"/>*/}
-					{/*<div className="warning" style={{display: 'none'}}><p>Minimal available value 0.01</p></div>*/}
-					{/*<div className="regulator">*/}
-						{/*<span className="plus" title="Press Arrow Up">{}</span>*/}
-						{/*<span className="minus" title="Press Arrow Down">{}</span>*/}
-					{/*</div>*/}
-				{/*</div>*/}
-			{/*</div>*/}
-		{/*</div>*/}
-	{/*</div>*/}
-	{/*<input name="ID" type="hidden" value={data.ID}/>*/}
-	{/*<input name="Symbol" type="hidden" value={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}/>*/}
-	{/*<input name="isMirror" type="hidden" value={data.isMirror}/>*/}
-	{/*<input name="Side" type="hidden" value={(className)[0].toUpperCase() + (className).slice(1)}/>*/}
-	{/*<div className="container">*/}
-		{/*<label className="checkbox">*/}
-			{/*<input name="OrderType" type="checkbox" value="true" defaultChecked={true}/>*/}
-			{/*<input name="OrderType" type="hidden" value="false"/><span>Limit</span>*/}
-		{/*</label>*/}
-		{/*<input type="submit" className={`btn ${className}`} value={className} style={{textTransform: 'uppercase'}}/>*/}
-	{/*</div>*/}
-{/*</form>*/}

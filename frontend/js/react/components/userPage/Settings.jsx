@@ -14,11 +14,23 @@ import {DateLocalization} from '../../models/DateLocalization';
 import settingsActions from '../../actions/userPage/settingsActions';
 
 
-class Settings extends React.PureComponent
+class Settings extends React.Component
 {
+    loadFile(event)
+    {
+		event.preventDefault();
+		event.target.nextSibling.click();
+    }
+
+    // onFileChosen(event)
+    // {
+    //     //limit size 4888995
+    //     console.dir(event.target.files[0]);
+    // }
+
     render()
     {
-        const { actions, data: { header, active } } = this.props;
+        const { actions, data: { header, active }, files, loadError, loadProgress } = this.props;
         const { FirstName, LastName, UserName, DateOfBirth, Email, Country, Address, Phone } = appData.pageAccountData.UserInfo;
 
 		const inputRender = ({ id, className, info, label, filled, inputLabel, meta: { error, dirty }, ...input }) => {
@@ -34,12 +46,11 @@ class Settings extends React.PureComponent
 
 		const formContent = ({ input, error, successMessage, userInfo:{ FirstName, LastName, UserName, DateOfBirth, Email,
             Country, Address, Phone }, handleSubmit }) => {
-			return <div className="column">
+			return <form action={appData.pageAccountUserInfoUrl} className="setting_form" method="post"
+                         noValidate="novalidate" onSubmit={handleSubmit}>
                     <h3 className="section_user">Personal info</h3>
                     <hr/>
-                    <form action={appData.pageAccountUserInfoUrl} className="setting_form" data-ajax-failure="ajaxUserDataUpdate.OnFailureJs"
-                          data-ajax-success="ajaxUserDataUpdate.OnSuccessJs" data-ajax-url={appData.pageAccountUserInfoUrl}
-                          id="form1" method="post" noValidate="novalidate" onSubmit={handleSubmit}>
+
                     <InputValidation renderContent={inputRender} id={'f_name'} name="FirstName"
                                      initialValue={FirstName} info="Your first name as specified in your passport"
                                      label={'First Name'} type={'text'} filled={FirstName}
@@ -193,20 +204,106 @@ class Settings extends React.PureComponent
                         <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
 						<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
                     </span>
-                </form>
-            </div>
+            </form>
 		};
 
         return <div className={"tab_item settings " + (active ? "active" : "")}>
-                <h2>Settings</h2>
-                {header}
-            <FormValidation
-                data={this.props.data}
-                userInfo={appData.pageAccountData.UserInfo}
-                renderContent={formContent}
-                handleSubmit={actions.actionAjaxUserDataUpdate}
-                serverValidation={true}
-            />
+            <h2>Settings</h2>
+			{header}
+            <div className="column">
+                <FormValidation
+                    data={this.props.data}
+                    userInfo={appData.pageAccountData.UserInfo}
+                    renderContent={formContent}
+                    handleSubmit={actions.actionAjaxUserDataUpdate}
+                    serverValidation={true}
+                />
+                <form action={`${ABpp.baseUrl}/Account/UploadImage`} encType="multipart/form-data" className="document_upload"
+                ref="uploadForm" style={{marginTop: 25}}>
+                    <h3 className="section_user">User files</h3>
+                    <hr/>
+                    <div className="miniatures">
+						{/* <div className="thumbnail">
+                         <span className="close" title="Remove this file"><span>{}</span></span>
+                         <a href="#" target="_blank">
+                         <img src="Images/event_page_chart_b.jpg" alt=""/>
+                         <span className="link link_text">Some.jpg</span>
+                         </a>
+                         </div>
+                         <div className="thumbnail">
+                         <span className="close" title="Remove this file"><span>{}</span></span>
+                         <a href="#" target="_blank">
+                         <img src="Images/curacao_logo.png" alt=""/>
+                         <span className="link link_text">Some.png</span>
+                         </a>
+                         </div>
+                         <div className="thumbnail doc">
+                         <span className="close" title="Remove this file"><span>{}</span></span>
+                         <a href="#" target="_blank">
+                         <span className="thumb_icon txt">{}</span>
+                         <span className="link link_text">Some.txt</span>
+                         </a>
+                         </div>
+                         <div className="thumbnail doc">
+                         <span className="close" title="Remove this file"><span>{}</span></span>
+                         <a href="#" target="_blank">
+                         <span className="thumb_icon doc">{}</span>
+                         <span className="link link_text">Some.doc</span>
+                         </a>
+                         </div>
+                         <div className="thumbnail doc">
+                         <span className="close" title="Remove this file"><span>{}</span></span>
+                         <a href="#" target="_blank">
+                         <span className="thumb_icon xls">{}</span>
+                         <span className="link link_text">Some.xls</span>
+                         </a>
+                         </div>*/}
+						{
+							files.length ?
+                                files.map((item, index) =>
+                                {
+                                    const extension = item.ContentType.split('/');
+                                    if(item.ContentType != 'load'){
+                                        var name = item.Name.split('.');
+                                        name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.Name;
+                                    }
+                                    return item.ContentType != 'load' ?
+                                        <div className={`thumbnail file ${extension[0] == 'image' ? '' : 'doc'}`} key={index}>
+                                            <button className="close" title="Remove this file"
+                                                  onClick={actions.ajaxDeleteFile.bind(null, this, item.Name)}><span>{}</span></button>
+                                            <a href={item.Url} target="_blank">
+                                                {
+                                                    extension[0] == 'image' ?
+                                                        <img src={item.Url} alt={name}/>
+                                                        :
+                                                        <span className={`thumb_icon ${extension[1]}`}>{}</span>
+                                                }
+                                                <span className="link link_text">{}</span>
+                                            </a>
+                                        </div>
+                                    :
+                                    <div className="thumbnail loading" key={index}>
+                                        {/*<span className="close" title="Cancel loading"><span>{}</span></span>*/}
+                                        <div className="progress_wrp">
+                                            <div className="progress_bar" style={{width: loadProgress + '%'}}></div>
+                                            <div className="status">{loadProgress}%</div>
+                                        </div>
+                                    </div>
+                                })
+                                :
+                                <p>Add your documents files</p>
+						}
+                    </div>
+                    <button className="btn btn_green wave upload load_btn left" ref={'uploadButton'} onClick={this.loadFile}>Load file</button>
+                    <input type="file" name="file" accept=".doc,.docx,.xls,.xlsx,.txt,.png,.jpeg,.jpg"
+                           onChange={actions.onFileChosen.bind(null, this)}
+                           style={{visibility: 'hidden'}}
+                           ref="uploadData"/>
+                    <span className={'answer_message' + (loadError && ' validation-summary-errors')} style={{height: 22}}>
+                        {loadError}
+                    </span>
+                </form>
+            </div>
 
 
             <form action={appData.pageAccountChangePassUrl}
@@ -243,7 +340,7 @@ class Settings extends React.PureComponent
                 </span>
                 <span className="input_animate input--yoshiko">
                     <input type="submit" value="ChangePassword" id="submit" className="btn wave"/>
-                    <span className="answer_message"></span>
+                    <span className="answer_message">{}</span>
                 </span>
             </form>
         </div>;
@@ -252,11 +349,9 @@ class Settings extends React.PureComponent
 
 export default connect(
 	state => ({
-		// data: state.myPosReduce,
-		// test: state.Ttest,
+        ...state.accountSetting
 	}),
 	dispatch => ({
 		actions: bindActionCreators(settingsActions, dispatch),
-		// myPositionsActions: bindActionCreators(myPositionsActions, dispatch),
 	})
 )(Settings)

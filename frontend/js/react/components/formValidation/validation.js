@@ -3,7 +3,6 @@
  */
 export const emptyValidation = (value) => {
 	let errors;
-
 	if (!value)
 		errors = 'Required';
 
@@ -167,14 +166,14 @@ export const netellerSecureId = (value) => {
 
 
 
-// злоебучий адский валидатор от Лёхи, Я его не люблю
+// злоебучий адский валидатор от Лёхи, Я его люблю
 export const orderForm = function (context) {
 
 	if($(context).find('[data-log-out]').attr('data-log-out')) return false;
 
-	let price = +$(context).find('.price input').val(),
+	let price = +(($(context).find('.price input').val()).replace('$', '')),
 		volume = +$(context).find('.volume input').val(),
-		sum = +$(context).find('.obligations input').val(),
+		sum = +(($(context).find('.obligations input').val()).replace('$', '')),
 		checkboxProp = $(context).find('input[type="checkbox"]').length ? $(context).find('input[type="checkbox"]').prop('checked') : 1;
 
 	if(!ABpp.User.userIdentity){

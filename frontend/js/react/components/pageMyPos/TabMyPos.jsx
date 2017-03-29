@@ -6,21 +6,21 @@ import {Dialog} from '../../models/Dialog.ts';
 
 export class TabMyPos extends React.Component
 {
-    filters = {'Sport': 'Sport', 'Economy': 'Economy', 'E-Sport': 'E-Sport', 'Society': 'Society', };
+    filters = {'fantasy sport': 'Fantasy Sport', 'economy': 'Economy', 'e-sport': 'E-Sport', 'society': 'Society', };
 
     constructor(props)
     {
         super(props);
 
         var filters = {};
-        Object.keys(this.filters).forEach((item) => { filters[this.filters[item]] = true });
+        Object.keys(this.filters).forEach((item) => { filters[item] = true });
         this.state = {filters: filters};
     }
 
 
     _onFilterChange(ee)
     {
-        // 0||console.log( 'ee', ee.target, ee.target.dataset, this.state );
+        0||console.log( 'ee', ee.target, ee.target.dataset, this.state );
         // 0||console.log( 'this.state.filters[ee.target.dataset.filter]', this.state.filters[ee.target.dataset.filter], this.state );
         this.state.filters[ee.target.dataset.filter] = !this.state.filters[ee.target.dataset.filter];
         this.setState({...this.state});
@@ -50,29 +50,29 @@ export class TabMyPos extends React.Component
         let plClass;
 
         // filter btn
-        var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "2"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '3'} htmlFor={inCatName + "2"} className={inCatName.toLowerCase().replace("-", "_")}><span className="sub_tab">{inCatName}</span></label>];
+        var filterBtn = (inCatName, $ca) => [<input key={inCatName + "22"} id={$ca = inCatName.replace(" ", "_").replace("-", "_") + "22"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '23'} htmlFor={$ca} className={this.filters[inCatName].toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{this.filters[inCatName]}</span></label>];
 
 
         return <div className="tab_item active">
                     <div className="my_position_tab">
                         <div className="wrapper">
                             <div className="filters">
-                                {filterBtn(this.filters['Sport'])}&nbsp;
-                                {filterBtn(this.filters['Economy'])}&nbsp;
-                                {filterBtn(this.filters['E-Sport'])}&nbsp;
-                                {filterBtn(this.filters['Society'])}
+                                {filterBtn('fantasy sport')}&nbsp;
+                                {/*{filterBtn('economy')}&nbsp;*/}
+                                {filterBtn('e-sport')}
+                                {/*{filterBtn('society')}*/}
                             </div>
                             <div className="tab_content">
                                 <div className="my_position_container table_content">
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>Symbol</th>
+                                                <th>{_t('Symbol')}</th>
                                                 <th>Type</th>
-                                                <th>Quantity</th>
+                                                <th>{_t('Quantity')}</th>
                                                 <th>Price</th>
-                                                <th><span className="sell">BID</span> | <span className="buy">ASK</span></th>
-                                                <th><span className="profit">Profit</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>
+                                                <th><span className="sell">{_t('buy')}</span> | <span className="buy">{_t('ask')}</span></th>
+                                                <th><span className="profit">{_t('Profit')}</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -88,8 +88,8 @@ export class TabMyPos extends React.Component
                                                     if(item.CommonSymbolProfitLoss < 0) plClass = 'loss';
                                                     else if(item.CommonSymbolProfitLoss > 0) plClass = 'profit';
 
-                                                    0||console.log( 'item.Category', item.Category );
-                                                    if( this.state.filters[item.Category] ) return <table key={key} className="pos tmp">
+//0||console.log( 'this.state.filters', this.state.filters,item.Category.toLowerCase() )
+                                                    if( this.state.filters[item.Category.toLowerCase()] ) return <table key={key} className="pos tmp">
                                                         <thead>
                                                         <tr>
                                                             <th className="title">{item.Symbol.HomeName + ' - ' + item.Symbol.AwayName}</th>
@@ -132,7 +132,7 @@ export class TabMyPos extends React.Component
                                                                         <strong className="title">{item2.EventName} <span className="muted">{item2.EventHandicap && ` (${item2.EventHandicap})`}</span></strong>
                                                                         <span className="hidden symbol_name">{item2.ID}</span>
                                                                     </td>
-                                                                    <td className="side">{(item2.Side ? 'Short' : 'Long')}</td>
+                                                                    <td className="side">{(item2.Side ? _t('Sold') : _t('Bought'))}</td>
                                                                     <td className="quantity">{item2.CommonVolume}</td>
                                                                     <td className="avg_price">{Math.round10(item2.AvgPrice, -2)}</td>
                                                                     <td className="spread">

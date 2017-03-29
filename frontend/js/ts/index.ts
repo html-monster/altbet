@@ -1,5 +1,8 @@
 /// <reference path="./../.d/common.d.ts" />
 /// <reference path="./../.d/jquery.d.ts" />
+
+// import "babel-polyfill";
+
 import {SysEvents} from "../react/models/SysEvents";
 // import OddsConverter from '../react/models/oddsConverter/oddsConverter';
 
@@ -8,9 +11,9 @@ declare let window : any;
 
 
 import { User } from "../react/models/User";
-import { WebsocketModel } from "../react/models/Websocket";
+import { Localization } from "../react/common/Localization";
 
-// declare var WebsocketModel: WebsocketModel;
+declare const WebsocketModel: any;
 
 // local dev option
 // __LDEV__ = true;
@@ -54,10 +57,11 @@ export class ABpp
     public actions : any = {};
 
     public User: User = null;                   // user entity
-    public Websocket: WebsocketModel = null;    // websocket object
+    public Websocket = null;                    // websocket object
     public SysEvents: SysEvents = null;         // system events
     public Store = null;                        // redux store
     // public OddsConverter = null;                        // redux store
+    public Localization = null;                 // localization module
 
 
     private static instance = null;
@@ -98,6 +102,9 @@ export class ABpp
         // set curr ver
         globalData.AppVersion = this.ver; // for debug only
         this.baseUrl = globalData.rootUrl.slice(0, -1);
+
+
+        this.Localization = Localization;
     }
 
 

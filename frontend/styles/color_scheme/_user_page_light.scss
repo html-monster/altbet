@@ -1,4 +1,3 @@
-$user_page_balance: #dce1e6;
 @mixin payment_input_shadow{
 	box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.2);
 }
@@ -36,8 +35,9 @@ $user_page_balance: #dce1e6;
 	&.ava {  background: transparentize(#1196d4, 0.8);  }
 }
 $user_page_tr_separate: #afb5bb;
-$user_page_payment_list_bg: linear-gradient(to top, #bdc0cd, #ffffff);
-$user_page_arrow: -228px -212px;
+$active_selection_bg: linear-gradient(to top, #bdc0cd, #ffffff);
+$dropbox_list_bg: #bdc0cd;
+//$user_page_arrow: -228px -212px;
 @mixin user_page_li{
 	border-bottom: 1px solid #bdc0cd;
 	border-top: 1px solid #fff;

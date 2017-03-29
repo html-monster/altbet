@@ -16,7 +16,12 @@ module.exports = {
         {
             // var scssOpts = {outputStyle: options.isDevelopment ? 'compact' : 'compressed'};
 
-            return gulp.src(options.src + '/*.*')
+            return gulp.src(options.src + '/**/*.*')
+                // .pipe($.notify(function (file) {
+                //     0||console.log( "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options) );
+                //     var options = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
+                //     return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options);
+                // }))
                 .pipe(RevAll.revision({
                     fileNameManifest: "js-assets.json",
                     transformFilename: function (file, hash) {

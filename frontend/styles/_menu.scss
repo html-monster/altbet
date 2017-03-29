@@ -5,10 +5,11 @@
   left: 0;
   z-index: 101;
   height: 100%;
-  padding-top: 12px;
+  padding-top: 10px;
   background: linear-gradient(to bottom, #3a3943, #292830);
   overflow: hidden;
   .menu-btn{
+    display: none;
     width: 50px;
     height: 50px;
     float: left;
@@ -19,13 +20,13 @@
   .logo-container {
     display: flex;
     align-items: center;
-    width: 150px;
+    width: 160px;
     height: 50px;
     padding-left: 15px;
     border-left: 1px solid #292830;
     a {
       display: block;
-      width: 150px;
+      width: 160px;
       height: 50px;
       background: url("#{$pathImage}/sprite.svg") no-repeat -11px -17px;
     }

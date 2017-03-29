@@ -22,7 +22,7 @@ export default class NewOrder extends React.Component{
 			<div className="order-title">
 				<h3>{data.EventTitle}</h3>
 				<span className="close" onClick={this.props.onDeleteOrderHandler}><span>{}</span></span>
-				<strong className="current-order up">pos: <span>{data.Positions}</span></strong>
+				<strong className="current-order up">Entries: <span>{data.Positions}</span></strong>
 			</div>
 			{
 				data.Orders.map((item) =>

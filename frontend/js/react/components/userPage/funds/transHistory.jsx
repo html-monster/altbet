@@ -111,7 +111,7 @@ class TransHistory extends React.Component{
 					</tbody>
 				</table>
 			</div>
-			<a href={`${ABpp.baseUrl}/payment/export2csv`} className="csv link download" target="_blank">Download CSV</a>
+			<a href={`${ABpp.baseUrl}/payment/export2csv`} className="csv link load_btn left download" target="_blank">Download CSV</a>
 		</div>
 	}
 }

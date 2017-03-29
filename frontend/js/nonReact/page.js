@@ -2,6 +2,16 @@ window.ee = new EventEmitter();
 const DS = '/';
 
 
+/**
+ * Localization function
+ */
+function _t(inStr)
+{
+    return ABpp.Localization.translate(inStr);
+}
+
+
+
 // BM: for Discuss
 if( !globalData.landingPage && appData && appData.pageEventData )
 {
@@ -63,7 +73,11 @@ $(document).ready(function ()
 	// tabsClass.tabsChange('.top_reg'); // page registration
 	// tabsClass.tabsChange('.wrapper_user_page'); // page registration
 
-	tabsClass.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
+
+	// анимация рынков на главной
+	// tabsClass.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
+	$(".nav_items").find('.wrapper .tab').eq(0).addClass("active");
+
 
 	popUpClass.popUpOpen('.log_out .sign_in', '.sign_in_form', '#login-email'); // pop-up login
 	popUpClass.popUpOpen('[data-log-out]', '.sign_in_form', '#login-email');
@@ -80,6 +94,7 @@ $(document).ready(function ()
 
 	popUpClass.globalPopUpClose('.warning'); // all warning message
 	popUpClass.globalPopUpClose('.user-menu', 'slideUp', '.log_in'); // login user menu
+	popUpClass.globalPopUpClose('.odds_list', 'slideUp', '.odds_converter'); // login user menu
 	popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_in_form a.register', '.first_page_wrapper .join',
 	'#ui-datepicker-div', '.ui-corner-all'); // pop-up registration
 	popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in', 'header .deposit',

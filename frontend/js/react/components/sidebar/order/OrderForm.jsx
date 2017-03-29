@@ -46,7 +46,9 @@ export default class OrderForm extends React.Component{
 		if(input == 'Sum' && +state.Price){
 			const price = state.Side ? 1 - state.Price : state.Price;
 			const sum = Math.round10(+state[input] + value, -2);
-			state[input] = sum;
+
+			if(sum > 0 && sum <= 9999999) state[input] = sum;
+
 			input = 'Volume';
 			value = Math.round(sum / price);
 			refs.inputSum.refs.input.focus();
@@ -69,7 +71,7 @@ export default class OrderForm extends React.Component{
 					state[input] = value;
 
 				const price = state.Side ? 1 - value : value;
-				state['Sum'] =  Math.round10(state.Volume * price, -2);
+				state['Sum'] =  (Math.round10(state.Volume * price, -2)).toFixed(2);
 				refs.inputPrice.refs.input.focus();
 			}
 			else{
@@ -87,7 +89,7 @@ export default class OrderForm extends React.Component{
 					else
 						refs.inputSum.refs.input.focus();
 
-					state['Sum'] = value;
+					state['Sum'] = value.toFixed(2);
 					// state[input] = value;
 				}
 
@@ -112,7 +114,7 @@ export default class OrderForm extends React.Component{
 	onInputChange(input, event)
 	{
 		const state = this.state;
-		const inputValue = event.target.value;
+		const inputValue = ((event.target.value).replace('$', ''));
 		let value;
 		if(input == 'Sum' && +state.Price){
 			value = Math.round(+inputValue / (state.Side ? 1 - state.Price : state.Price));
@@ -124,7 +126,7 @@ export default class OrderForm extends React.Component{
 			state[input] = value;
 			const price = state.Side ? 1 - value : value;
 			value = Math.round10(state.Volume * price, -2);
-			if(inputValue != '0.') state['Sum'] = value;
+			if(inputValue != '0.') state['Sum'] = value.toFixed(2);
 			// console.dir(event.handler);
 		}
 		else{
@@ -134,7 +136,7 @@ export default class OrderForm extends React.Component{
 				state[input] = value;
 				value = Math.round10(value * price, -2);
 			}
-			state['Sum'] = value;
+			state['Sum'] = value.toFixed(2);
 		}
 		// console.log(value);
 		// state[input] = value || '';
@@ -236,7 +238,7 @@ export default class OrderForm extends React.Component{
 		const price = stateData.Side ? Math.round10(1 - stateData.Price, -2) : stateData.Price;
 		// const sum = +price && (/[0-9]+|[.][0-9]+/gi.test(data.Sum) || !data.Sum) ? Math.round10(price * data.Volume, -2) : data.Sum;
 		const fees = Math.round10(ABpp.config.takerFees * stateData.Volume, -2);
-
+// console.log(stateData.Sum);
 		return (
 			<form action={formData.url} className={className + (ABpp.config.basicMode ? ' basic_mode' : '') + ' animated'} autoComplete="off"
 				  onSubmit={actions.actionOnAjaxSend.bind(null, this, containerData)} method="post"
@@ -246,7 +248,7 @@ export default class OrderForm extends React.Component{
 						<label className="with_info" htmlFor={`${orderId}_price`}>
 							{
 								checkboxProp ?
-									'Your price'
+									'Per Entry'
 									:
 									'Market price'
 							}
@@ -266,11 +268,11 @@ export default class OrderForm extends React.Component{
 						</label>
 						<div className="input">
 							<InputNumber type="tel" id={`${orderId}_price`} className="number" data-validation="0.33"
-										 maxLength="4" name="LimitPrice" autoComplete="off"
+										 maxLength="5" autoComplete="off"
 										 onChange={this.onInputChange.bind(this, 'Price')}
 										 onKeyDown={this.onInputKeyDown.bind(this, 'Price')}
 										 value={checkboxProp ? stateData.Price : data.Price}
-										 key={checkboxProp}
+										 key={checkboxProp} hard={true} label={true}
 										 disabled={!(checkboxProp)} ref="inputPrice" inputValidate = 'price'/>
 							<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
 							{
@@ -284,7 +286,7 @@ export default class OrderForm extends React.Component{
 						</div>
 					</div>
 					<div className="volume">
-						<label htmlFor={`${orderId}_quantity`}>Quantity</label>
+						<label htmlFor={`${orderId}_quantity`}>{_t('Quantity')}</label>
 						<div className="input">
 							<InputNumber type="tel" id={`${orderId}_quantity`} className="number" data-validation="123"
 										 maxLength="7" name="Quantity" autoComplete="off"
@@ -304,13 +306,14 @@ export default class OrderForm extends React.Component{
 						</div>
 					</div>
 					<div className="obligations">
-						<label htmlFor={`${orderId}_sum`}>Sum</label>
+						<label htmlFor={`${orderId}_sum`}>Amount</label>
 						<div className="input">
-							<InputNumber type="tel" id={`${orderId}_sum`} className="number" data-validation="40.59" hard="true"
+							<InputNumber type="tel" id={`${orderId}_sum`} className="number" data-validation="40.59" hard={true}
 										 onChange={this.onInputChange.bind(this, 'Sum')}
 										 onKeyDown={this.onInputKeyDown.bind(this, 'Sum')}
-										 value={checkboxProp ? stateData.Sum || '' : ''}
-										 maxLength="7" autoComplete="off" disabled={!(checkboxProp)} ref="inputSum"/>
+										 value={checkboxProp ? (!stateData.Sum ||stateData.Sum == '0.00' ? '' : stateData.Sum) : ''}
+										 label={true}
+										 maxLength="8" autoComplete="off" disabled={!(checkboxProp)} ref="inputSum"/>
 							<div className="warning" style={{display: 'none'}}><p>Minimal available value 0.01</p></div>
 							{
 								<div className="regulator" style={style}>
@@ -326,24 +329,24 @@ export default class OrderForm extends React.Component{
 				<div className="container">
 					<div className="fees">
 						<label className="with_info">
-							<span>Max </span>Fees
+							<span>Fees</span>
 							<div className="help">
 								<div className="help_message right">
-									<p>Max fees for this order</p>
+									<p>{_t('MaxAltBetFees')}</p>
 								</div>
 							</div>
 						</label>
 						<div className="input">
 							<input type="text" className="number" autoComplete="off" ref="inputFees"
-								   onChange={null} value={stateData.Volume ? fees || '' : ''} disabled/>
+								   onChange={null} value={stateData.Volume ? '$' + fees || '' : ''} disabled/>
 						</div>
 					</div>
 					<div className="risk">
 						<label className="with_info">
-							Total Cost
+							Total Fees
 							<div className="help">
 								<div className="help_message right">
-									<p><span>Combined cost of contracts and  applicable fees<br/>
+									<p><span>Total Pay-to Play Fees<br/>
 										{checkboxProp && 'Formula:'}</span> {checkboxProp ?
 										+stateData.Sum ? `${stateData.Sum} + ${fees}` : ''
 										:
@@ -354,25 +357,25 @@ export default class OrderForm extends React.Component{
 						<div className="input">
 							<input type="text" className="number" autoComplete="off" ref="inputRisk"
 								   onChange={null} value={checkboxProp ?
-									   +stateData.Sum ? Math.round10(+stateData.Sum + fees, -2) : ''
+									   +stateData.Sum ? '$' + Math.round10(+stateData.Sum + fees, -2) : ''
 									   :
 									   ''} disabled/>
 						</div>
 					</div>
 					<div className="profit">
-						<label>
-							Prize
-							{/*Profitability*/}
-							{/*<div className="help">*/}
-								{/*<div className="help_message right">*/}
-									{/*<p>*/}
-										{/*<span>Possible maximum prize if position results in winning outcome<br/>*/}
-											{/*{checkboxProp && 'Formula:'}</span> {*/}
-											{/*checkboxProp && +price && stateData.Volume ? `(1 - ${price}) * ${stateData.Volume}` || '' : ''*/}
-										{/*}*/}
-									{/*</p>*/}
-								{/*</div>*/}
-							{/*</div>*/}
+						<label className="with_info">
+							{_t('Profitability')}
+{/*							<div className="help">
+								<div className="help_message right">
+									<p>
+										<span>Potential Prize per Entry in winning outcome<br/>
+											/!*{checkboxProp && 'Formula:'}*!/
+											</span> {
+											checkboxProp && +price && stateData.Volume ? `(1 - ${price}) * ${stateData.Volume}` || '' : ''
+										}
+									</p>
+								</div>
+							</div>*/}
 						</label>
 						<div className="input">
 							<input type="text" className="number" autoComplete="off" ref="inputProfit"
@@ -383,6 +386,7 @@ export default class OrderForm extends React.Component{
 					</div>
 				</div>
 				{data.ID ? <input name="ID" type="hidden" value={data.ID}/> : ''}
+				<input name="LimitPrice" type="hidden" value={checkboxProp ? stateData.Price : data.Price}/>
 				<input name="Symbol" type="hidden" className="symbol" value={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}/>
 				<input name="isMirror" type="hidden" className="mirror" value={data.isMirror}/>
 				<input name="Side" type="hidden" className="side" value={(className)[0].toUpperCase() + (className).slice(1)}/>

@@ -19,6 +19,7 @@ class Actions extends BaseActions
         var self = this;
         return (dispatch, getState) =>
         {
+            __DEV__ && console.log('registrationAjax:', values);
             let flag = true;
 
             // 0||console.log( 'here 11', context, values, serverValidation, event.target, p1,  p2);

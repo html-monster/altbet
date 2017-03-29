@@ -77,7 +77,7 @@ class Deposit extends React.Component{
 				<span className="validation-summary-errors">{sumValidation}</span>
 				<span className="label">$</span>
 			</div>
-			<div className="recommended_block">
+			{/*<div className="recommended_block">
 				<h4>Also the subscription is recommended</h4>
 				<button className="btn wave" onClick={::this.plansToggle}>{this.state.toggle} Pricing plans</button>
 			</div>
@@ -180,7 +180,7 @@ class Deposit extends React.Component{
 					<button className={'btn color wave waves-effect waves-button' + (!payYearly ? ' active' : '')} onClick={actions.actionOnPeriodChange.bind(null, this, false)}>Pay monthly</button>
 					<button className={'btn color wave waves-effect waves-button' + (payYearly ? ' active' : '')} onClick={actions.actionOnPeriodChange.bind(null, this, true)}>Pay yearly</button>
 				</div>
-			</div>
+			</div>*/}
 			<div className="total_container" ref="total">
 				<span>Deposit amount: <span className="value">{depositQuantity ? '$' + depositQuantity : '$0'}</span></span>
 				<span>Price of plan: <span className="value">{pricePlan ? '$' + pricePlan : '$0'}</span></span>

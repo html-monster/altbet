@@ -7,6 +7,7 @@ $default-button-bg: #211e25;
 $active_bg: linear-gradient(to top, #bdc0cd, #ffffff);
 $bg_color: linear-gradient(to bottom, #53515e, #292830);
 $color-max: #000;
+$border_color: #000;
 
 $grad_top: #53515e;
 $grad_bottom: #292830;
@@ -21,7 +22,7 @@ $warning_message_arrow: #3a3943;
 
 @mixin separator{
 	border-top: 1px solid #17161b;
-	border-bottom: 1px solid #3b3a44;
+	border-bottom: 1px solid #484753;
 }
 
 @mixin regulator{

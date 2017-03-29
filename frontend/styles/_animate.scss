@@ -1,3 +1,11 @@
+@keyframes zoomIn {
+	0% {  opacity: 0;  transform: scale3d(.3,.3,.3)  }
+	50% {  opacity: 1  }
+}
+@keyframes progressAnimation{
+	0%{background-position-x:0}
+	to{background-position-x:40px}
+}
 @keyframes animateUpdating {
 	0% {  background-color: orange;  }
 	100% {  background-color: transparent;  }

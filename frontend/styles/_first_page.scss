@@ -23,7 +23,7 @@ header.first_page {
       display: block;
       width: 150px;
       height: 50px;
-      background: url("#{$pathImage}/sprite.svg") no-repeat -19px -17px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -10px -17px;
     }
   }
   .page_menu {
@@ -232,29 +232,31 @@ header.first_page {
       border-radius: 7px;
     }
     &.sport_video {
-      left: calc(50% - 383px);
-      top: calc(50% - 211px);
+      left: calc(50% - 393px);
+      top: calc(50% - 108px);
     }
-    &.finance_video {
-      width: 383px;
-      left: calc(50% - 384px);
-      top: calc(50% + 1px);
-    }
+    //&.finance_video {
+    //  width: 383px;
+    //  left: calc(50% - 384px);
+    //  top: calc(50% + 1px);
+    //}
     &.esport_video {
       width: 383px;
-      left: calc(50% - 2px);
-      top: calc(50% - 211px);
+      left: calc(50% + 11px);
+
+      top: calc(50% - 106px);
     }
-    &.society_video {
-      width: 383px;
-      left: calc(50% - 2px);
-      top: calc(50% + 1px);
-    }
+    //&.society_video {
+    //  width: 383px;
+    //  left: calc(50% - 2px);
+    //  top: calc(50% + 1px);
+    //}
   }
   #main_category {
     .wrapper {
       .container_up,
       .container_down {
+        position: relative;
         display: flex;
         justify-content: center;
         .item_category {
@@ -267,7 +269,7 @@ header.first_page {
           border-radius: 6px;
           &:nth-child(1) {
             background: linear-gradient(to bottom, transparentize(#f5515f, 0.75), transparentize(#9f041b, 0.75));
-            margin-right: 2px;
+            margin-right: 26px;
             &:hover {
               background: linear-gradient(to bottom, transparentize(#f5515f, 0.6), transparentize(#9f041b, 0.6));
             }
@@ -290,11 +292,15 @@ header.first_page {
             font-weight: bold;
             color: #fff;
             z-index: 20;
+            &.soon{
+              top: 47px;
+              font-size: 16px;
+            }
           }
         }
       }
       .container_down {
-        position: relative;
+
         margin-top: 2px;
         .item_category {
           &:nth-child(1) {
@@ -314,13 +320,14 @@ header.first_page {
     }
     .join, .join_link {
       position: absolute;
-      top: -30px;
+      bottom: - 80px;
       left: calc(50% - 95px);
       width: 190px;
       height: 54px;
       border: solid 2px #313038;
       border-radius: 89px;
-      background-color: #34323a;
+      //background-color: #34323a;
+      background-image: linear-gradient(to bottom, #64c9ef, #3498da);
       color: #fff;
       font-family: OpenSans, sans-serif;
       font-size: 18px;
@@ -515,61 +522,61 @@ header.first_page {
   }
 }
 
-#pricing {
-  .content {
-    //margin-top: 7%;
-    .wrapp_price {
-      display: flex;
-      margin: 0 auto;
-      width: 1200px;
-      color: $main-color;
-      .item {
-        margin: 0;
-        padding: 10px;
-        position: relative;
-        background: none;
-        border: none;
-        border-left: 1px solid transparentize(#ffffff, 0.8);
-        button.purchase {
-          margin: 15px auto;
-          width: 80%;
-          height: 50px;
-          border-radius: 40px;
-          background: $main-bg;
-          cursor: pointer;
-
-        }
-        &:nth-child(1) {
-          border: none;
-          ul {
-            height: 224.09px;
-          }
-          .purchase {
-            background: linear-gradient(to bottom, transparentize(#e4e9ee, 0.7), transparentize(#DCE1E6, 0.7));
-
-          }
-        }
-        &:nth-child(2) {
-          .purchase {
-            background: linear-gradient(to bottom, transparentize(#e19132, 0.1), transparentize(#CD7F32, 0.2));
-
-          }
-        }
-        &:nth-child(3) {
-          .purchase {
-            background: linear-gradient(to bottom, transparentize(#9e9d9d, 0.1), transparentize(#8e8d8d, 0.2));
-
-          }
-        }
-        &:nth-child(4) {
-          .purchase {
-            background: linear-gradient(to bottom, transparentize(#e0bb39, 0.1), transparentize(#d3af37, 0.2));
-          }
-        }
-      }
-    }
-  }
-}
+//#pricing {
+//  .content {
+//    //margin-top: 7%;
+//    .wrapp_price {
+//      display: flex;
+//      margin: 0 auto;
+//      width: 1200px;
+//      color: $main-color;
+//      .item {
+//        margin: 0;
+//        padding: 10px;
+//        position: relative;
+//        background: none;
+//        border: none;
+//        border-left: 1px solid transparentize(#ffffff, 0.8);
+//        button.purchase {
+//          margin: 15px auto;
+//          width: 80%;
+//          height: 50px;
+//          border-radius: 40px;
+//          background: $main-bg;
+//          cursor: pointer;
+//
+//        }
+//        &:nth-child(1) {
+//          border: none;
+//          ul {
+//            height: 224.09px;
+//          }
+//          .purchase {
+//            background: linear-gradient(to bottom, transparentize(#e4e9ee, 0.7), transparentize(#DCE1E6, 0.7));
+//
+//          }
+//        }
+//        &:nth-child(2) {
+//          .purchase {
+//            background: linear-gradient(to bottom, transparentize(#e19132, 0.1), transparentize(#CD7F32, 0.2));
+//
+//          }
+//        }
+//        &:nth-child(3) {
+//          .purchase {
+//            background: linear-gradient(to bottom, transparentize(#9e9d9d, 0.1), transparentize(#8e8d8d, 0.2));
+//
+//          }
+//        }
+//        &:nth-child(4) {
+//          .purchase {
+//            background: linear-gradient(to bottom, transparentize(#e0bb39, 0.1), transparentize(#d3af37, 0.2));
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
 
 .price_plan_form {
   .pop_up_content {
@@ -727,16 +734,13 @@ body {
   }
   &.fp-viewing-thirdPage-slide3 .main_bg {
     transform: translateY(-350px);
-
   }
   &.fp-viewing-fourthPage-slide4 .main_bg {
     transform: translateY(-525px);
-
   }
-  &.fp-viewing-lastPage-slide5 .main_bg {
-    transform: translateY(-700px);
-
-  }
+  //&.fp-viewing-lastPage-slide5 .main_bg {
+  //  transform: translateY(-525px);
+  //}
 }
 
 /*!

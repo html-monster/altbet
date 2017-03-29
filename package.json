@@ -12,7 +12,7 @@
   "dependencies": {
     "assets-webpack-plugin": "^3.2.0",
     "autoprefixer": "^6.2.3",
-    "babel-polyfill": "*",
+    "babel-polyfill": "^6.23.0",
     "babel-runtime": "*",
     "browser-sync": "^2.11.0",
     "classnames": "^2.2.3",
@@ -58,6 +58,7 @@
     "babel": "*",
     "babel-core": "*",
     "babel-loader": "*",
+    "babel-plugin-remove-comments": "^2.0.0",
     "babel-plugin-transform-class-properties": "^6.22.0",
     "babel-plugin-transform-runtime": "*",
     "babel-preset-es2015": "*",

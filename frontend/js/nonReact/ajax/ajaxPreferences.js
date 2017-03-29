@@ -2,10 +2,10 @@ class ajaxPreferencesClass{
 	static onSuccessAjax(e){
 		let message = $('.wrapper_user_page .preferences .answer_message');
 		if(e){
-			message.removeClass('valid').addClass('validation-summary-errors').text(e);
+			message.removeClass('validJs').addClass('validation-summary-errors').text(e);
 		}
 		else
-			message.removeClass('validation-summary-errors').addClass('valid').text('Your data has been successfully updated');
+			message.removeClass('validation-summary-errors').addClass('validJs').text('Your data has been successfully updated');
 
 		setTimeout(() => {
 			message.removeClass('valid validation-summary-errors').text('');
