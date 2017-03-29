@@ -625,12 +625,13 @@ class Actions extends BaseActions
 		}
 	}
 
-	public onDragStart(price, event)
+	public onDragStart(dragSide, price, event)
 	{
 		return (dispatch) =>
 		{
 			event.dataTransfer.setData('text/plain', 'anything');
 			const target = event.currentTarget;
+			$(event.currentTarget).addClass('drag_start');
 			// let tdHtml = $(event.currentTarget).clone();
 			// console.log(event.currentTarget.offsetWidth);
 			// console.log(tdHtml[0].offsetWidth);
@@ -644,11 +645,11 @@ class Actions extends BaseActions
 				zIndex: 4
 			};
 			// tdHtml.css(styles);
-			console.log(price);
+			// console.log(price);
 			// getState().activeTrader.dragPrevPrice = price;
 			dispatch({
 				type: TRADER_ON_DRAG,
-				payload: {dragPrevPrice: price}
+				payload: {dragPrevPrice: price, dragSide}
 			});
 		}
 	}
@@ -657,10 +658,11 @@ class Actions extends BaseActions
 	{
 		return (dispatch) =>
 		{
-			$('tr.visible').removeClass('drag_place');
+			$('tr.visible').removeClass('drag_place sell buy');
+			$('td.drag_start').removeClass('drag_start');
 			dispatch({
 				type: TRADER_ON_DRAG,
-				payload: {dragPrevPrice: 0, }//tdHtml: ''
+				payload: { dragPrevPrice: null, dragSide: null }//tdHtml: ''
 			});
 		}
 	}
@@ -671,19 +673,19 @@ class Actions extends BaseActions
 		{
 			event.preventDefault();
 			const { activeExchange, dragPrevPrice } = getState().activeTrader;
-			console.log(price);
-			console.log(getState().activeTrader.dragPrevPrice);
-			// if(dragPrevPrice != price){
-			// 	console.log(getState().activeTrader);
-			// 	defaultMethods.sendAjaxRequest({
-			// 		httpMethod: 'POST',
-			// 		url       : `${ABpp.baseUrl}/Order/Edit`,
-			// 		data      : {prevPrice: dragPrevPrice, nextPrice: price, activeExchange},
-			// 		callback  : onSuccessAjax,
-			// 		onError   : onErrorAjax,
-			// 	});
-            //
-			// }
+			// console.log(price);
+			// console.log(getState().activeTrader.dragPrevPrice);
+			if(dragPrevPrice != price){
+				// console.log(getState().activeTrader);
+				defaultMethods.sendAjaxRequest({
+					httpMethod: 'POST',
+					url       : `${ABpp.baseUrl}/Order/Edit`,
+					data      : {prevPrice: dragPrevPrice, nextPrice: price, activeExchange},
+					callback  : onSuccessAjax,
+					onError   : onErrorAjax,
+				});
+			}
+
 			function onErrorAjax()
 			{
 				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');

@@ -385,11 +385,23 @@
 					display: block;
 					&.drag_place{
 						position: relative;
-						background: transparentize($color3About, 0.82) !important;
+						&.sell{
+							td:nth-of-type(2){  border-right: 1px dashed $color3About;  }
+							td:nth-of-type(3), td:nth-of-type(4),
+							td:nth-of-type(5){  background: transparentize($color3About, 0.82) !important;  }
+							td:last-of-type{
+								&:before, &:after{  left: 40%;  }
+							}
+						}
+						&.buy{
+							td:nth-of-type(3){  border-right: 1px dashed $color3About;  }
+							td:nth-of-type(1), td:nth-of-type(2),
+							td:nth-of-type(3){  background: transparentize($color3About, 0.82) !important;  }
+						}
 						td:last-of-type{
 							&:before, &:after{
 								content: '';
-								width: 100%;
+								width: 60%;
 								height: 1px;
 								position: absolute;
 								left: 0;
@@ -519,6 +531,18 @@
 					color: #ffffff;
 					background-image: linear-gradient(to bottom, #64c9ef, #3498da); font-weight: bold;  }
 
+				&.drag_start{
+					position: relative;
+					&:after{
+						content: '';
+						width: 100%;
+						height: 100%;
+						position: absolute;
+						top: 0;
+						left: 0;
+						border: 1px dashed $color3About;
+					}
+				}
 			}
 		}
 		#order_content{
@@ -534,9 +558,7 @@
 			box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.5);
 			font-weight: normal;
 			transition: 0.5s ease-out;
-			&.animated{
-				animation-duration: 0.5s;
-			}
+			&.animated{  animation-duration: 0.5s;  }
 			&.active{
 				//transform: translateY(5px);
 				//margin-top: 0 !important;

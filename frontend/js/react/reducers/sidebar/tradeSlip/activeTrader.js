@@ -16,7 +16,10 @@ import {RebuildServerData} from '../../../actions/Sidebar/tradeSlip/activeTrader
 
 const initialState = {
 	data: {},
-	dragPrevPrice: 0,
+	dragData:{
+		dragPrevPrice: null,
+		dragSide: null
+	},
 	isMirror: 0,
 	rebuiltServerData:[],
 	spread: '',
