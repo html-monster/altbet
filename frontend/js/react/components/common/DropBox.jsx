@@ -11,7 +11,8 @@ import React from 'react';
  * @param items: {key - shows in dropbox items (notrequired if key==val), val - sets hidden field value, selected - initial selected item (notrequired)}
  * @param initLabel - if no selected items - sets the text of dropdown
  * @param hint - onHover tip
- * @param afterChoose - callback for after dropbox item click
+ * @param afterChoose(listItem:object) - callback for after dropbox item click
+ * @param onCustomChange(value:string) - input validation integration callback
  */
 export class DropBox extends React.Component
 {
@@ -25,7 +26,7 @@ export class DropBox extends React.Component
         super(props);
 
         // find dropBox selected element
-        var currItem = null;
+        var currItem = null, currItemVal = '';
         var $items = props.items;
         if (props.initLabel) this.initLabel = props.initLabel;
 
@@ -34,12 +35,15 @@ export class DropBox extends React.Component
             // currItem = 0;
             for( let ii = 0, countii = $items.length; ii < countii; ii++ )
             {
-                if (!$items[ii].key == undefined) $items[ii].key = $items[ii].val;
-                if( $items[ii].selected ) { currItem = ii; }
+                if ($items[ii].key == undefined) $items[ii].key = $items[ii].val;
+                if( $items[ii].selected ) {
+                    currItem = ii;
+                    currItemVal = $items[ii].val;
+                }
             } // endfor
         } // endif
 
-        this.state = { isopened: false, currItem: currItem };
+        this.state = { isopened: false, currItem, items: $items, currItemVal };
     }
 
 
@@ -52,31 +56,29 @@ export class DropBox extends React.Component
 
     render()
     {
-        const { name, items, input, hint, onCustomChange } = this.props;
-        var dboxVal, dboxKey;
+        var { name, input, hint } = this.props;
+        var { items, currItem, currItemVal } = this.state;
+        var dboxKey;
 
         if( input ) delete input.value;
         else input = {};
 
-        var $currItem = this.state.currItem;
-        // 0||console.log( '$currItem', $currItem );
-        if ( $currItem != null ) {
-            dboxVal = items[$currItem].val;
-            dboxKey = items[$currItem].key;
+        // 0||console.log( 'currItem', currItem );
+        if ( currItem != null ) {
+            dboxKey = items[currItem].key;
         }
         else
         {
             dboxKey = this.initLabel;
         }
-		onCustomChange(dboxVal);
-console.log(input);
+
 // 0||console.log( 'input', input );
         return <div className={`select ` + this.props.className + (this.state.isopened ? " -opened" : "")} title={hint}>
-                    <input ref="dboxVal" type="hidden" name={name} value={dboxVal} {...input}/>
+                    <input ref="dboxVal" type="hidden" name={name} value={currItemVal} {...input}/>
                     <span className="active_selection btn wave" onClick={this._listSlide.bind(this, true)}>{dboxKey}<i>{}</i></span>
                     <ul className="select_list" ref="dropList" onClick={this._listSlide.bind(this, false)}>
                         {
-                            items.map((val, key) => <li className={key == $currItem ? "active" : ""} key={key} data-val={val.val} onClick={this._listSelect.bind(this, key)}>{val.key}</li>)
+                            items.map((val, key) => <li className={key == currItem ? "active" : ""} key={key} data-val={val.val} onClick={this._listSelect.bind(this, key)}>{val.key}</li>)
                         }
                     </ul>
                 </div>
@@ -117,6 +119,7 @@ console.log(input);
     _listSelect(key, event)
 	{
 		// event.stopPropagation();
+        var { onCustomChange, afterChoose } = this.props;
 
         // call onChange for hidden field for validation
 /*        if( this.props.input && this.props.input.onChange )
@@ -125,15 +128,15 @@ console.log(input);
             $(this.refs.dboxVal).change();
         }*/ // endif
 
-        this.setState({...this.state, currItem: key, isopened: false});
+        this.setState({...this.state, currItem: key, isopened: false, currItemVal: this.state.items[key].val});
 
-        if( this.props.afterChoose )
-        {
-            this.props.afterChoose(this.props.items[key]);
-        }
-        else
-        {
-        } // endif
+
+        // validation integration
+		onCustomChange && onCustomChange(this.state.items[key].val);
+
+
+        // after click callback
+        afterChoose && afterChoose(this.state.items[key]);
 
         this._listClose(false);
 	}

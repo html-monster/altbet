@@ -18,21 +18,34 @@ class tabsClass{
 	}
 
 
+	// анимация рынков на главной
 	static tabsChangeAnimate(container, animated_row){
-		$(container).find('.wrapper .tab').click(function () { //$(".nav_items .wrapper .tab")
+
+        var itemsAnimation = function (items)
+        {
+            let ii = 1;
+            items.find(animated_row).css('display', 'none'); //'.content_bet'
+            items.hide().eq($(this).index()).show().find(animated_row).each(function(){
+                $(this).delay(50 * ii).css({display: 'flex', opacity: 0, marginTop: '10px'}).animate({
+                    opacity: '1',
+                    marginTop: '2px'
+                }, 300);
+                ii++;
+            });
+            ii = 1;
+        };
+
+
+        $(container).find('.wrapper .tab').click(function ()
+        {
+			let items = $(container).find('.tab_item');
+
 			$(container).find('.wrapper .tab').removeClass("active").eq($(this).index()).addClass("active");
-			let item = $(container).find('.tab_item'),
-					ii = 1;
-			item.find(animated_row).css('display', 'none'); //'.content_bet'
-			item.hide().eq($(this).index()).show().find(animated_row).each(function(){
-				$(this).delay(50 * ii).css({display: 'flex', opacity: 0, marginTop: '10px'}).animate({
-					opacity: '1',
-					marginTop: '2px'
-				}, 300);
-				ii++;
-			});
-			ii = 1;
-		}).eq(0).addClass("active");
+
+			itemsAnimation(items);
+        }).eq(0).addClass("active");
+
+        itemsAnimation($(container).find('.tab_item'));
 	}
 
 	// static tabFilter(filterContainer){

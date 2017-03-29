@@ -172,10 +172,10 @@ class Header extends React.Component
 	{
 		inItems.every((vv,kk) =>
 		{
-			if( vv.key == this.OddsConverterObj.getSystemName() )
+			if( vv.val == this.OddsConverterObj.getSystemName() )
 			{
 				inItems[kk].selected = true;
-				return ;
+				return false;
 			} // endif
 			return true;
 		});
