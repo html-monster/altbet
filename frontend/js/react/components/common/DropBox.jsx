@@ -58,7 +58,7 @@ export class DropBox extends React.Component
             dboxKey = this.initLabel;
         }
 		onCustomChange(dboxVal);
-console.log(input);
+
 // 0||console.log( 'input', input );
         return <div className={`select ` + this.props.className + (this.state.isopened ? " -opened" : "")} title={hint}>
                     <input ref="dboxVal" type="hidden" name={name} {...input}/>

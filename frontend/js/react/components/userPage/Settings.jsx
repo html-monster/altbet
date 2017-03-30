@@ -220,7 +220,7 @@ class Settings extends React.Component
                 />
                 <form action={`${ABpp.baseUrl}/Account/UploadImage`} encType="multipart/form-data" className="document_upload"
                 ref="uploadForm" style={{marginTop: 25}}>
-                    <h3 className="section_user">User files</h3>
+                    <h3 className="section_user">Your files</h3>
                     <hr/>
                     <div className="miniatures">
 						{/* <div className="thumbnail">

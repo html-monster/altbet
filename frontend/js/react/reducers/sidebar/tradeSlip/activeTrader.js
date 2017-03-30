@@ -9,12 +9,17 @@ import {
 	TRADER_ON_SPREAD_CHANGE,
 	TRADER_ON_ADD_ORDER,
 	TRADER_ON_DELETE_ORDER,
-	TRADER_ON_SPREAD_HIGHLIGHT
+	TRADER_ON_SPREAD_HIGHLIGHT,
+	TRADER_ON_DRAG
 } from '../../../constants/ActionTypesActiveTrader';
 import {RebuildServerData} from '../../../actions/Sidebar/tradeSlip/activeTrader/rebuildServerData';
 
 const initialState = {
 	data: {},
+	dragData:{
+		dragPrevPrice: null,
+		dragSide: null
+	},
 	isMirror: 0,
 	rebuiltServerData:[],
 	spread: '',
@@ -66,8 +71,12 @@ export default function activeTrader(state = initialState, action)
 		case TRADER_ON_SPREAD_HIGHLIGHT:
 			return {...state, spreadHighLight: action.payload};
 
+		case TRADER_ON_DRAG:
+			return {...state, ...action.payload};
+
 		default:
 			return state
 	}
 
 }
+
