@@ -97,6 +97,7 @@ export class SocketSubscribe
             // CurrentOrders: "0",
             PaginationNumber: appData.pageNum || "1",
             CategoryPath: path, //sport/american-football
+            Sort: appData.sortType || "closingsoon",
             // CategoryPath: '',
         };
 

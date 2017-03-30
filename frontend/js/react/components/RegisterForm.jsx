@@ -12,25 +12,56 @@ import {passwordValidation, regexValidation, lengthValidation, mailValidation, e
 import {DropBox} from './common/DropBox';
 
 
-export class RegisterForm extends React.Component
+export class RegisterForm extends React.PureComponent
 {
+    countries = [];
+
 	constructor(props)
 	{
 		super(props);
+
+
+        // fill country data
+        try {
+		    const $countries = JSON.parse(appData.Registration.countries);
+		    for( let val of $countries.countries  )
+		    {
+                let item;
+                if( typeof val == "object" )
+                {
+                    let key = Object.keys(val)[0];
+                    item = {val: key, regions: val[key]['States']};
+                }
+                else
+                {
+                    item = {val: val};
+                } // endif
+
+                if (appData.Registration.current == val) item.selected = true;
+
+                this.countries.push(item);
+		    } // endfor
+
+
+        } catch (e) {
+            this.countries = [];
+        }
 	}
 
 
-    // componentDidMount()
-    // {
-    //     if( __DEV__ )
-    //     {
-    //         0||console.log( 'emulate here' )
-    //         setTimeout(() =>
-    //             {$(".log_out .sign_in").click();
-    //                 setTimeout(() => $(".register").click(), 500)
-    //             }, 700)
-    //     } // endif
-    // }
+/*
+    componentDidMount()
+    {
+        if( __DEV__ )
+        {
+            0||console.log( 'emulate here' )
+            setTimeout(() =>
+                {$(".log_out .sign_in").click();
+                    setTimeout(() => $(".register").click(), 500)
+                }, 700)
+        } // endif
+    }
+*/
 
 
     inputRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty }, ...input })
@@ -66,7 +97,7 @@ export class RegisterForm extends React.Component
         return <span className="input_animate input--yoshiko">
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 <DropBox className="" name={name} items={items} initLabel={initLabel} hint={hint} input={input}
-						 onCustomChange={onCustomChange} />
+						 onCustomChange={onCustomChange} options={{maxHeight: 250}} />
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
                     <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                 </label>
@@ -140,7 +171,7 @@ export class RegisterForm extends React.Component
                     <InputValidation renderContent={this.dropBoxRender} id='c_name' name="Country"
                                      className={'input__field input__field--yoshiko'}
                                      label="Country"
-                                     items={[{key: 'Ukraine', val: 'ua'}, {key: 'Poland', val: 'po'}, {key: 'Germany', val: 'ge'}, {key: 'United kingdom', val: 'uk'}]}
+                                     items={this.countries}
                                      initLabel="Select country"
                                      validate={[emptyValidation]} input={input}
                                      hint="Indicate the country of your permanent residence"/>

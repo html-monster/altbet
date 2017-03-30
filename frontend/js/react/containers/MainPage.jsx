@@ -84,11 +84,11 @@ class MainPage extends BaseController
             <div className="nav_items">
                 <div className="wrapper" id="exchange">
                     <div className="tabs">
-                        <span className="tab"><span data-content="Closing soon">{}</span></span>
-                        <span className="tab"><span data-content="Popular">{}</span></span>
+                        <span className="tab"><a href="?sort=closingsoon"><span data-content="Closing soon">{}</span></a></span>
+                        <span className="tab"><a href="?sort=popular"><span data-content="Popular">{}</span></a></span>
                         {/*<span className="tab"><span data-content="Trending"></span></span>*/}
-                        <span className="tab"><span data-content="New">{}</span></span>
-                        <span className="tab"><span data-content="Movers">{}</span></span>
+                        <span className="tab"><a href="?sort=new"><span data-content="New">{}</span></a></span>
+                        <span className="tab"><a href="?sort=movers"><span data-content="Movers">{}</span></a></span>
                         <div className="mode_wrapper">
                             <label className="mode_switch">
                                 <input defaultChecked={!isBasicMode} id="Mode" name="Mode" type="checkbox" />
