@@ -23,23 +23,11 @@ header {
   //  display: none;
   //  &.active{  display: block;  }
   //}
-  .odds_converter{
-    margin-right: 5px;
-    color: #fff;
-    .active_odd{
-      border: 1px solid #000000;
-      background: linear-gradient(to bottom, #53515e, #292830);
-      &:before{  background-position: -228px -197px;  }
-    }
-    ul.odds_list{
-      border: 1px solid #000000;
-      background: linear-gradient(to bottom, #53515e, #292830);
-    }
-    li{
-      border-bottom: 1px solid #53515e * 0.8;
-      border-top: 1px solid #53515e * 1.2;
-      &:hover{  background: #53515e * 1.2;  }
-      &:active{  background: #53515e * 1.5;  }
+  .odds_converter { margin-right: 5px; width: 121px;
+    .active_selection { height: 36px; background: linear-gradient(to bottom, #53515e, #292830); }
+    li { border-top: 1px solid #53515e * 1.2;
+      //&:hover{  background: #53515e * 1.2;  }
+      //&:active{  background: #53515e * 1.5;  }
     }
   }
   .header_info {
@@ -201,6 +189,7 @@ header {
         justify-content: flex-start;
         position: absolute;
         left: 15px;
+        top: 0;
         height: 70px;
         a {
           display: flex;

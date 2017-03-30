@@ -54,6 +54,7 @@ else
 		  document.getElementById('DiMPMainpage')
 		);
 	}
+
 	if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
 		ReactDOM.render(
 			<Provider store={store}>

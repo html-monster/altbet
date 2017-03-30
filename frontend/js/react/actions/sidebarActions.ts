@@ -46,7 +46,7 @@ class Actions extends BaseActions
 	public actionOnOddSystemChange(data) {
 		return (dispatch) =>
 		{
-			console.log(data);
+			// console.log(data);
 			dispatch({
 				type: ON_SIDEBAR_ODD_SYS_CHANGE,
 				payload: data.currentOddSystem
