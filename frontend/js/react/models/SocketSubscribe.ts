@@ -95,9 +95,10 @@ export class SocketSubscribe
             ExchangeName: props.exchange,
             ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
             // CurrentOrders: "0",
-            PaginationNumber: appData.pageNum || "1",
+            PaginationNumber: appData.urlQuery.pageNum || "1",
             CategoryPath: path, //sport/american-football
-            Sort: appData.sortType || "closingsoon",
+            Sort: appData.urlQuery.sortType || "closingsoon",
+            Filter: appData.urlQuery.filter || "closingsoon",
             // CategoryPath: '',
         };
 
