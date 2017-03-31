@@ -11,7 +11,7 @@ import {
 const initialState = {
 	loadProgress: 0,
 	loadError: '',
-	files: appData.pageAccountData.jsonImageInfo
+	files: globalData.userPageOn ? appData.pageAccountData.jsonImageInfo : null
 };
 
 export default function accountSetting(state = initialState, action)
