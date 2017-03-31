@@ -36,7 +36,7 @@ class ActiveTrader extends React.Component {
 		// 0||console.log( 'activeExchange', activeExchange );
 		// const { activeString, showDefaultOrder } = this.state;
 		const { data, ...info } = this.props;
-		const { cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
+		const { dragPrevPrice, tdHtml, cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
 			rebuiltServerData, spread, quantity, traderActions } = this.props;
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
@@ -65,7 +65,7 @@ class ActiveTrader extends React.Component {
 		return <div className="active_trader" id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
-			{
+			{/*{
 				ABpp.config.currentPage != 2 ?
 					<div className="event_title">
 						<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}
@@ -83,7 +83,7 @@ class ActiveTrader extends React.Component {
 					</div>
 					:
 					''
-			}
+			}*/}
 			<table className="info">
 				<tbody>
 					<tr>
@@ -311,6 +311,9 @@ class ActiveTrader extends React.Component {
 						</tr>
 					</thead>
 					<tbody ref={'traderBody'}>
+						<tr className="visible" dangerouslySetInnerHTML={{__html: tdHtml}}>
+
+						</tr>
 						{
 							rebuiltServerData.map((item, index) =>
 								<TraderString
@@ -337,6 +340,20 @@ class TraderString extends React.Component {
 		super();
 		this.OddsConverterObj = new OddsConverter();
 	}
+
+	onDragOver(event)
+	{
+		const { dragPrevPrice, dragSide } = this.props;
+		dragPrevPrice && event.preventDefault();
+		if(dragPrevPrice) $(event.currentTarget).addClass('drag_place' + (dragSide === 'sell' ? ' sell' : ' buy'));
+	}
+
+	onDragLeave(event)
+	{
+		// if(this.props.dragPrevPrice) $(event.currentTarget).removeClass('drag_place');
+		if(this.props.dragPrevPrice) $('tr.visible').removeClass('drag_place sell buy');
+	}
+
 
 	// shouldComponentUpdate(nextProps){
 		// const currentData = this.props.data;
@@ -371,22 +388,23 @@ class TraderString extends React.Component {
 	render()
 	{
 		// const { traderActions, activeString, data, mainData, index, inputQuantityContext, isMirror, quantity } = this.props;
-		const { data, cmpData: { autoTradeOn }, index, orderInfo: {...info}, spreadHighLight, quantity, spread, ...other } = this.props;
+		const { data, dragPrevPrice, dropActiveString, cmpData: { autoTradeOn }, index, orderInfo: {...info}, spreadHighLight, quantity, spread, ...other } = this.props;
 		// const {  showDefaultOrder  } = this.state;
 		// console.log(this.props);
 		const spreadPricePos = Math.round10(data.Price + +spread, -2);
 		const spreadPriceNeg = Math.round10(data.Price - spread, -2);
+		const dragAvailable = !!data.ParticularUserQuantityBuy || !!data.ParticularUserQuantitySell;
 		let className = '';
 		let addOrder = null;
 		let spreadHighLightFunc = null;
 		// spread && console.log(data.BidValue < data.Price);
 		if(+spread){
-			if(data.Spread == 'mid'){
+			if(data.Spread === 'mid'){
 				className = ' active';
 				addOrder = other.traderActions.actionShowDirectionConfirm.bind(null, index);
 				spreadHighLightFunc = other.traderActions.actionOnSpreadHighLight.bind(null, [spreadPriceNeg, spreadPricePos])
 			}
-			else if (data.AskValue && data.Spread == 'ask' && data.Price <= Math.round10(data.AskValue + +spread, -2)){
+			else if (data.AskValue && data.Spread === 'ask' && data.Price <= Math.round10(data.AskValue + +spread, -2)){
 				className = ' active';
 				addOrder = other.traderActions.actionAddSpreadOrder.bind(null, this, {
 					direction: data.Spread,
@@ -394,7 +412,7 @@ class TraderString extends React.Component {
 				}, index);
 				spreadHighLightFunc = other.traderActions.actionOnSpreadHighLight.bind(null, [spreadPriceNeg])
 			}
-			else if(!data.AskValue && data.Spread == 'ask' && data.Price <= Math.round10(data.BidValue + +spread, -2)){
+			else if(!data.AskValue && data.Spread === 'ask' && data.Price <= Math.round10(data.BidValue + +spread, -2)){
 				className = ' active';
 				addOrder = other.traderActions.actionAddSpreadOrder.bind(null, this, {
 					direction: data.Spread,
@@ -402,7 +420,7 @@ class TraderString extends React.Component {
 				}, index);
 				spreadHighLightFunc = other.traderActions.actionOnSpreadHighLight.bind(null, [spreadPriceNeg])
 			}
-			else if (data.BidValue && data.Spread == 'bid' && data.Price >= Math.round10(data.BidValue - spread, -2)){
+			else if (data.BidValue && data.Spread === 'bid' && data.Price >= Math.round10(data.BidValue - spread, -2)){
 				className = ' active';
 				addOrder = other.traderActions.actionAddSpreadOrder.bind(null, this, {
 					direction: data.Spread,
@@ -410,7 +428,7 @@ class TraderString extends React.Component {
 				}, index);
 				spreadHighLightFunc = other.traderActions.actionOnSpreadHighLight.bind(null, [spreadPricePos])
 			}
-			else if(!data.BidValue && data.Spread == 'bid' && data.Price >= Math.round10(data.AskValue - spread, -2)){
+			else if(!data.BidValue && data.Spread === 'bid' && data.Price >= Math.round10(data.AskValue - spread, -2)){
 				className = ' active';
 				addOrder = other.traderActions.actionAddSpreadOrder.bind(null, this, {
 					direction: data.Spread,
@@ -422,18 +440,24 @@ class TraderString extends React.Component {
 
 		return <AnimateOnUpdate
 				component="tr"
-				className="visible"
+				className={`visible`}
 				transitionName={{
 					enter: 'fadeOut',
 				}}
 				transitionAppear={false}
 				transitionLeave={false}
 				transitionEnterTimeout={800}
+				onDragOver={::this.onDragOver}
+				onDragLeave={::this.onDragLeave}
+				onDrop={other.traderActions.onDrop.bind(null, data.Price)}
+				ref={'tr'}
 				data={data}
 		>
 			<td className={'my_offers my_size animated'} data-verify={'ParticularUserQuantityBuy'}
-				draggable={!!data.ParticularUserQuantityBuy}>
-					<span className="value">
+				draggable={!!data.ParticularUserQuantityBuy}
+				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, 'buy', data.Price) : null}
+				onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}>
+					<span className="value" draggable={!!data.ParticularUserQuantityBuy}>
 						{
 							data.ParticularUserQuantityBuy || ''
 						}
@@ -452,10 +476,12 @@ class TraderString extends React.Component {
 						:
 						null
 				}
+				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, 'buy', data.Price) : null}
+				onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
 				draggable={!!data.ParticularUserQuantityBuy}
 			>
-				<span className="container">
-					<span className="value">
+				<span className="container" draggable={!!data.ParticularUserQuantityBuy}>
+					<span className="value" draggable={!!data.ParticularUserQuantityBuy}>
 						{
 							data.QuantityBuy || ''
 						}
@@ -463,16 +489,16 @@ class TraderString extends React.Component {
 				</span>
 			</td>
 			{/*${data.ClassName}*/}
-			<td className={`price_value${data.Bid ? ' best_buy' : ''}${data.Ask ? ' best_sell' : ''}${className}${spreadHighLight[0] == data.Price || spreadHighLight[1] == data.Price ? ' hovered' : ''}`}
+			<td className={`price_value${data.Bid ? ' best_buy' : ''}${data.Ask ? ' best_sell' : ''}${className}${spreadHighLight[0] === data.Price || spreadHighLight[1] === data.Price ? ' hovered' : ''}`}
 				onMouseEnter={spreadHighLightFunc}
 				onMouseLeave={other.traderActions.actionOnSpreadHighLight.bind(null, [])}
 				onClick={spread ? addOrder : null}>
-				<div className={'container help balloon_only' + (index == 97 || index == 98 ? ' top' : '')}>
+				<div className={'container help balloon_only' + (index === 97 || index === 98 ? ' top' : '')}>
 					<span className="value">${(data.Price).toFixed(2)}</span>
 					{
-						!!spread && data.Spread == 'mid' &&
+						!!spread && data.Spread === 'mid' &&
 
-						<div className={'spread_confirm' + (index == info.activeString && info.showDirectionConfirm ? ' active' : '')}>
+						<div className={'spread_confirm' + (index === info.activeString && info.showDirectionConfirm ? ' active' : '')}>
 							<span className="sell confirm_button"
 								  onClick={
 									  other.traderActions.actionAddSpreadOrder.bind(null, this, {
@@ -516,9 +542,11 @@ class TraderString extends React.Component {
 						null
 				}
 				draggable={!!data.ParticularUserQuantitySell}
+				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, 'sell', data.Price) : null}
+				onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
 			>
-				<span className="container">
-					<span className="value">
+				<span className="container" draggable={!!data.ParticularUserQuantitySell}>
+					<span className="value" draggable={!!data.ParticularUserQuantitySell}>
 						{
 							data.QuantitySell || ''
 						}
@@ -526,8 +554,11 @@ class TraderString extends React.Component {
 				</span>
 			</td>
 			<td className={'my_bids my_size animated'} data-verify="ParticularUserQuantitySell"
-				draggable={!!data.ParticularUserQuantitySell}>
-				<span className="value">
+				draggable={!!data.ParticularUserQuantitySell}
+				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, 'sell', data.Price) : null}
+				onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
+			>
+				<span className="value" draggable={!!data.ParticularUserQuantitySell}>
 					{
 						data.ParticularUserQuantitySell || ''
 					}
@@ -535,7 +566,7 @@ class TraderString extends React.Component {
 			</td>
 			<td>
 				{
-					!autoTradeOn && index == info.activeString && quantity &&
+					!autoTradeOn && index === info.activeString && quantity &&
 
 					(
 						(info.showDefaultOrder &&

@@ -99,9 +99,8 @@ class Actions extends BaseActions
             }
 
             if (fileSize)
-                $.ajax({
+                defaultMethods.sendAjaxRequest({
                     url: `${ABpp.baseUrl}/Account/UploadImage`,
-                    type: 'POST',
                     data: new FormData(context.refs.uploadForm),
                     cache: false,
                     contentType: false,
@@ -129,9 +128,9 @@ class Actions extends BaseActions
                         }
                         return myXhr;
                     },
-                    mimeType:"multipart/form-data",
-                    success,
-                    error,
+                    mimeType: "multipart/form-data",
+                    callback: success,
+                    onError: error,
                     beforeSend
                 });
 
@@ -153,8 +152,7 @@ class Actions extends BaseActions
 
             function success(answer)
             {
-                answer = JSON.parse(answer);
-                __DEV__ && console.log(answer);
+                __DEV__ && console.log('answer:', answer);
 
                 switch (answer.ErrorCode){
                     case 200:{
@@ -233,14 +231,12 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            console.log('newItems:', items);
             let newArr = items.ContentType == 'load' ?
                 getState().accountSetting.files.slice()
                 :
                 getState().accountSetting.files.slice(0, -1);
 
             newArr = newArr.concat(items);
-            console.log('newArr:', newArr);
             dispatch({
                 type: SETTING_ON_FILE_LOAD,
                 payload: newArr,
@@ -270,10 +266,20 @@ class Actions extends BaseActions
                 beforeSend: OnBeginAjax,
             });
 
-            function onSuccessAjax(data)
+            function onSuccessAjax(answer)
             {
-                // data - сделать обработку ошибок от сервера
-                context.props.actions.removeFile(id);
+                __DEV__ && console.log(answer);
+                switch (answer){
+                    case 100:
+                        dispatch({
+                            type: SETTING_LOAD_FILE_ERROR,
+                            payload: `Deleting file failed. Try again or reload the page or try again later`,
+                        });
+                        break;
+                    case 200:
+                        context.props.actions.removeFile(id);
+
+                }
                 $(button).removeAttr('disabled');
             }
 
