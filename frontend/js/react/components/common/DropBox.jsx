@@ -36,7 +36,7 @@ export class DropBox extends React.Component
 
 
         // prepare items
-        $items = this._prepareItems($items);
+        [$items, currItem] = this._prepareItems($items);
 
 
         this.options = {...this.options, ...props.options};
@@ -180,6 +180,6 @@ export class DropBox extends React.Component
             } // endfor
         } // endif
 
-        return $items;
+        return [$items, currItem];
     }
 }
