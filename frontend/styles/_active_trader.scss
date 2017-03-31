@@ -13,7 +13,7 @@
 			left: 0;
 			z-index: 100;
 		}
-		.event_title{
+		/*.event_title{
 			display: flex;
 			.event_name{
 				width: 50%;
@@ -27,7 +27,7 @@
 				overflow: hidden;
 				@include trader_event_name;
 			}
-		}
+		}*/
 		.active_trader_footer{
 			position: fixed;
 			bottom: 2px;

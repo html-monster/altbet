@@ -612,7 +612,7 @@ class Actions extends BaseActions
 	// 	}, delay);
 	// };
 
-	public actionOnTabMirrorClick(context, isMirror)
+	/*public actionOnTabMirrorClick(context, isMirror)
 	{
 		return (dispatch, getState) =>
 		{
@@ -623,7 +623,7 @@ class Actions extends BaseActions
 				payload: {isMirror}
 			});
 		}
-	}
+	}*/
 
 	public onDragStart(dragSide, price, event)
 	{
