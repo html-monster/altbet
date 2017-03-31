@@ -589,10 +589,10 @@
         }
       }
       span.payment{
-        &.VisaMC{  background-position: -6px -92px;  }
+        &.VisaSkrill{  background-position: -6px -92px;  }
         &.Skrill{  background-position: -5px -48px;  }
         &.Neteller{  background-position: -4px -1px;  }
-        &.Bitpay{  background-position: -6px -143px;  }
+        &.BitpaySkrill{  background-position: -6px -143px;  }
         //&.EcoPayz{  background-position: -22px -132px;  }
       }
       .csv{  display: inline-block; margin: 15px 0;  }
