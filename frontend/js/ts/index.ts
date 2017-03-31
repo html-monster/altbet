@@ -1,5 +1,8 @@
 /// <reference path="./../.d/common.d.ts" />
 /// <reference path="./../.d/jquery.d.ts" />
+
+// import "babel-polyfill";
+
 import {SysEvents} from "../react/models/SysEvents";
 // import OddsConverter from '../react/models/oddsConverter/oddsConverter';
 
@@ -34,7 +37,7 @@ export class ABpp
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
-    public ver = "0.4.1";
+    public ver = "0.5";
 
 
     // application config

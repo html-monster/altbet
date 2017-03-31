@@ -5,14 +5,14 @@ import {DateLocalization} from '../../models/DateLocalization';
 
 export class TabOpenOrders extends React.Component
 {
-    filters = {'Sport': 'Sport', 'Economy': 'Economy', 'E-Sport': 'E-Sport', 'Society': 'Society', };
+    filters = {'fantasy sport': 'Fantasy Sport', 'economy': 'Economy', 'e-sport': 'E-Sport', 'society': 'Society', };
 
     constructor(props)
     {
         super(props);
 
         var filters = {};
-        Object.keys(this.filters).forEach((item) => { filters[this.filters[item]] = true });
+        Object.keys(this.filters).forEach((item) => { filters[item] = true });
         this.state = {filters: filters};
     }
 
@@ -31,17 +31,17 @@ export class TabOpenOrders extends React.Component
         const { data: openOrdersData, yourOrdersActions } = this.props;
         // 0||console.debug( 'openOrdersData', openOrdersData );
         // filter btn
-        let filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "1"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '2'} htmlFor={inCatName + "1"} className={inCatName.toLowerCase().replace("-", "_")}><span className="sub_tab">{inCatName}</span></label>];
+        var filterBtn = (inCatName, $ca) => [<input key={inCatName + "11"} id={$ca = inCatName.replace(" ", "_").replace("-", "_") + "11"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '13'} htmlFor={$ca} className={this.filters[inCatName].toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{this.filters[inCatName]}</span></label>];
 
 
         return <div className="tab_item">
             <div className="my_position_tab">
                 <div className="wrapper">
                     <div className="filters">
-                        {filterBtn(this.filters['Sport'])}&nbsp;
-                        {filterBtn(this.filters['Economy'])}&nbsp;
-                        {filterBtn(this.filters['E-Sport'])}&nbsp;
-                        {filterBtn(this.filters['Society'])}
+                        {filterBtn('fantasy sport')}&nbsp;
+                        {/*{filterBtn(this.filters['Economy'])}&nbsp;*/}
+                        {filterBtn('e-sport')}
+                        {/*{filterBtn(this.filters['Society'])}*/}
                     </div>
                     <div className="tab_content">
                         <div className="open_orders table_content">
@@ -69,7 +69,7 @@ export class TabOpenOrders extends React.Component
                                                 {
                                                     const $handicap = (item.isMirror ? item.Symbol.AwayHandicap : item.Symbol.HomeHandicap);
 
-                                                    if( this.state.filters[item.Category] ) return <tr key={key} className={(item.isMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))} id={item.ID}>
+                                                    if( this.state.filters[item.Category.toLowerCase()] ) return <tr key={key} className={(item.isMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))} id={item.ID}>
                                                         <td className="title">
                                                             {(item.isMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}
                                                             <span className="muted">{$handicap && ` (${$handicap})`}</span>

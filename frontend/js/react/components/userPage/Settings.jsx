@@ -263,17 +263,17 @@ class Settings extends React.Component
                                 files.map((item, index) =>
                                 {
                                     const extension = item.ContentType.split('/');
-                                    if(item.ContentType != 'load'){
+                                    if(item.ContentType !== 'load'){
                                         var name = item.Name.split('.');
                                         name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.Name;
                                     }
-                                    return item.ContentType != 'load' ?
-                                        <div className={`thumbnail file ${extension[0] == 'image' ? '' : 'doc'}`} key={index}>
+                                    return item.ContentType !== 'load' ?
+                                        <div className={`thumbnail file ${extension[0] === 'image' ? '' : 'doc'}`} key={index}>
                                             <button className="close" title="Remove this file"
-                                                  onClick={actions.ajaxDeleteFile.bind(null, this, name)}><span>{}</span></button>
+                                                  onClick={actions.ajaxDeleteFile.bind(null, this, item.Name)}><span>{}</span></button>
                                             <a href={item.Url} target="_blank">
                                                 {
-                                                    extension[0] == 'image' ?
+                                                    extension[0] === 'image' ?
                                                         <img src={item.Url} alt={name}/>
                                                         :
                                                         <span className={`thumb_icon ${extension[1]}`}>{}</span>
@@ -285,7 +285,7 @@ class Settings extends React.Component
                                     <div className="thumbnail loading" key={index}>
                                         {/*<span className="close" title="Cancel loading"><span>{}</span></span>*/}
                                         <div className="progress_wrp">
-                                            <div className="progress_bar" style={{width: loadProgress + '%'}}></div>
+                                            <div className="progress_bar" style={{width: loadProgress + '%'}}>{}</div>
                                             <div className="status">{loadProgress}%</div>
                                         </div>
                                     </div>
@@ -295,7 +295,8 @@ class Settings extends React.Component
 						}
                     </div>
                     <button className="btn btn_green wave upload load_btn left" ref={'uploadButton'} onClick={this.loadFile}>Load file</button>
-                    <input type="file" name="file" accept=".doc,.docx,.xls,.xlsx,.txt,.png,.jpeg,.jpg"
+                    <input type="file" name="file" accept=".png,.jpeg,.jpg"
+                           //.doc,.docx,.xls,.xlsx,.txt,
                            onChange={actions.onFileChosen.bind(null, this)}
                            style={{visibility: 'hidden'}}
                            ref="uploadData"/>

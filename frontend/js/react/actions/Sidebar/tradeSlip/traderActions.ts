@@ -612,7 +612,7 @@ class Actions extends BaseActions
 	// 	}, delay);
 	// };
 
-	public actionOnTabMirrorClick(context, isMirror)
+	/*public actionOnTabMirrorClick(context, isMirror)
 	{
 		return (dispatch, getState) =>
 		{
@@ -622,6 +622,79 @@ class Actions extends BaseActions
 				type: ON_ACTIVE_SYMBOL_CHANGED,
 				payload: {isMirror}
 			});
+		}
+	}*/
+
+	public onDragStart(dragSide, price, event)
+	{
+		return (dispatch) =>
+		{
+			event.dataTransfer.setData('text/plain', 'anything');
+			const target = event.currentTarget;
+			$(event.currentTarget).addClass('drag_start');
+			// let tdHtml = $(event.currentTarget).clone();
+			// console.log(event.currentTarget.offsetWidth);
+			// console.log(tdHtml[0].offsetWidth);
+			// console.log(tdHtml.width());
+			let styles = {
+				display: 'block',
+				width: target.offsetWidth,
+				position: 'fixed',
+				top: 50 + '%',
+				right: 27,
+				zIndex: 4
+			};
+			// tdHtml.css(styles);
+			// console.log(price);
+			// getState().activeTrader.dragPrevPrice = price;
+			dispatch({
+				type: TRADER_ON_DRAG,
+				payload: {dragPrevPrice: price, dragSide}
+			});
+		}
+	}
+
+	public onDragEnd()
+	{
+		return (dispatch) =>
+		{
+			$('tr.visible').removeClass('drag_place sell buy');
+			$('td.drag_start').removeClass('drag_start');
+			dispatch({
+				type: TRADER_ON_DRAG,
+				payload: { dragPrevPrice: null, dragSide: null }//tdHtml: ''
+			});
+		}
+	}
+
+	public onDrop(price, event)
+	{
+		return (dispatch, getState) =>
+		{
+			event.preventDefault();
+			const { activeExchange, dragPrevPrice } = getState().activeTrader;
+			// console.log(price);
+			// console.log(getState().activeTrader.dragPrevPrice);
+			if(dragPrevPrice != price){
+				// console.log(getState().activeTrader);
+				defaultMethods.sendAjaxRequest({
+					httpMethod: 'POST',
+					url       : `${ABpp.baseUrl}/Order/Edit`,
+					data      : {prevPrice: dragPrevPrice, nextPrice: price, activeExchange},
+					callback  : onSuccessAjax,
+					onError   : onErrorAjax,
+				});
+			}
+
+			function onErrorAjax()
+			{
+				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+			}
+
+			function onSuccessAjax(answer)
+			{
+				__DEV__ && console.log(answer);
+			}
 		}
 	}
 

@@ -65,7 +65,7 @@ class ActiveTrader extends React.Component {
 		return <div className="active_trader" id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
-			{
+			{/*{
 				ABpp.config.currentPage != 2 ?
 					<div className="event_title">
 						<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}
@@ -83,7 +83,7 @@ class ActiveTrader extends React.Component {
 					</div>
 					:
 					''
-			}
+			}*/}
 			<table className="info">
 				<tbody>
 					<tr>
@@ -399,12 +399,12 @@ class TraderString extends React.Component {
 		let spreadHighLightFunc = null;
 		// spread && console.log(data.BidValue < data.Price);
 		if(+spread){
-			if(data.Spread == 'mid'){
+			if(data.Spread === 'mid'){
 				className = ' active';
 				addOrder = other.traderActions.actionShowDirectionConfirm.bind(null, index);
 				spreadHighLightFunc = other.traderActions.actionOnSpreadHighLight.bind(null, [spreadPriceNeg, spreadPricePos])
 			}
-			else if (data.AskValue && data.Spread == 'ask' && data.Price <= Math.round10(data.AskValue + +spread, -2)){
+			else if (data.AskValue && data.Spread === 'ask' && data.Price <= Math.round10(data.AskValue + +spread, -2)){
 				className = ' active';
 				addOrder = other.traderActions.actionAddSpreadOrder.bind(null, this, {
 					direction: data.Spread,
@@ -412,7 +412,7 @@ class TraderString extends React.Component {
 				}, index);
 				spreadHighLightFunc = other.traderActions.actionOnSpreadHighLight.bind(null, [spreadPriceNeg])
 			}
-			else if(!data.AskValue && data.Spread == 'ask' && data.Price <= Math.round10(data.BidValue + +spread, -2)){
+			else if(!data.AskValue && data.Spread === 'ask' && data.Price <= Math.round10(data.BidValue + +spread, -2)){
 				className = ' active';
 				addOrder = other.traderActions.actionAddSpreadOrder.bind(null, this, {
 					direction: data.Spread,
@@ -420,7 +420,7 @@ class TraderString extends React.Component {
 				}, index);
 				spreadHighLightFunc = other.traderActions.actionOnSpreadHighLight.bind(null, [spreadPriceNeg])
 			}
-			else if (data.BidValue && data.Spread == 'bid' && data.Price >= Math.round10(data.BidValue - spread, -2)){
+			else if (data.BidValue && data.Spread === 'bid' && data.Price >= Math.round10(data.BidValue - spread, -2)){
 				className = ' active';
 				addOrder = other.traderActions.actionAddSpreadOrder.bind(null, this, {
 					direction: data.Spread,
@@ -428,7 +428,7 @@ class TraderString extends React.Component {
 				}, index);
 				spreadHighLightFunc = other.traderActions.actionOnSpreadHighLight.bind(null, [spreadPricePos])
 			}
-			else if(!data.BidValue && data.Spread == 'bid' && data.Price >= Math.round10(data.AskValue - spread, -2)){
+			else if(!data.BidValue && data.Spread === 'bid' && data.Price >= Math.round10(data.AskValue - spread, -2)){
 				className = ' active';
 				addOrder = other.traderActions.actionAddSpreadOrder.bind(null, this, {
 					direction: data.Spread,

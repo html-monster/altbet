@@ -334,17 +334,19 @@ textarea.input__field--yoshiko{
 }
 
 .input__field--yoshiko:focus ~ .input__label--yoshiko,
+.select ~ .input__label--yoshiko,
 .input--filled .input__label--yoshiko {
   transform: translate3d(0, 0, 0);
   padding-left: 5px;
 }
 
 .input__field--yoshiko:focus ~ .input__label--yoshiko .input__label-content--yoshiko,
+.select ~ .input__label--yoshiko .input__label-content--yoshiko,
 .input--filled .input__label-content--yoshiko {
   transform: translate3d(0, 100%, 0);
 }
 
-.input__field--yoshiko[disabled] ~ .input__label--yoshiko .input__label-content--yoshiko{
+.input__field--yoshiko[disabled] ~ .input__label--yoshiko .input__label-content--yoshiko {
   color: transparentize(#8b8c8b, 0.6);
 }
 
