@@ -100,7 +100,7 @@ class Header extends React.Component
 									{serverData.Profitlost >= 0 ?
 										`$${profitlost}`
 										:
-										`($${profitlost.toString().replace('-', '')})`}
+										`($${Math.abs(profitlost)})`}
 									</strong>
 								</span>
 							<span className="invested animated" data-verify={'Exposure'}>At Stake: <strong className="animated">${(Math.round10(serverData.Exposure, -2)).toFixed(2)}</strong></span>
@@ -110,7 +110,7 @@ class Header extends React.Component
 						''
 				}
 				{/*{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockOpen()} title="Connect to socket">C</a> : ''}*/}
-                { ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <button className="btn wave waves-effect waves-button" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</button> : ''}
+                { ABpp.User.isAuthorized() && ABpp.User.login === 'bot' ? <button className="btn wave waves-effect waves-button" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</button> : ''}
 
 
 				{ ABpp.User.isAuthorized() ? <a className="my_order btn wave waves-effect waves-button" href={globalData.Urls.MyActivity}>My Activity</a> : ''}

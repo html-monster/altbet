@@ -102,16 +102,17 @@ class orderClass{
 			// 	}
 			// 	return true;
 			// });
-			order.on('focus','input', function () {
-				$(this).next('.warning').fadeOut(200);
-			});
+			// order.on('focus','input', function () {
+			// 	$(this).next('.warning').fadeOut(200);
+			// });
 
 			order.on('keydown', 'input.number', function (e) {
 				e = e || window.e;
 				let code = e.which ||e.charCode || e.keyCode;
+				$(this).next('.warning').fadeOut(200);
 				if($(this).parents('.price').length || $(this).hasClass('spreader')){
-					if($(this)[0].selectionStart == 3){
-						if(code == 37 || code == 8){
+					if($(this)[0].selectionStart === 3){
+						if(code === 37 || code === 8){
 							return false;
 						}
 					}
@@ -132,73 +133,78 @@ class orderClass{
 				e = e || window.e;
 				let code = e.which ||e.charCode || e.keyCode,
 						message = $(this).next('.warning'),
-						condition = code != 13 && code != 8 && code != 9 && code != 37 && code != 39;
+						condition = code !== 13 && code !== 8 && code !== 9 && code !== 37 && code !== 39;
 
-				// if(code == 13)
+				// console.log(code);
+				// if(code === 13)
 				// 	$(this).parents('form').submit();
-				if($(this).parents('.price').length || $(this).parents('.input').find('.spreader').length){
-					if((code < 46 || code > 57 || code == 47) && condition){
-						message.fadeIn(200);
-						return false;
+				// $(this).next('.warning').fadeOut(200);
+				if(code !== 38 && code !== 40)
+				{
+					if($(this).parents('.price').length || $(this).parents('.input').find('.spreader').length){
+						if((code < 46 || code > 57 || code === 47) && condition){
+							message.fadeIn(200);
+							return false;
+						}
+						else if($(this).val().length > 2){
+							message.fadeOut(200);
+						}
+						if($(this).val() === ''){
+							if(code	 !== 48){
+								message.fadeIn(200);
+								return false;
+							}
+							else{
+								message.fadeOut(200);
+							}
+						}
+						else if($(this).val().length === 2){
+							if(code	 !== 46){
+								message.fadeIn(200);
+								return false;
+							}
+							else{
+								message.fadeOut(200);
+							}
+						}
+						else{
+							if(code	 === 46 ){
+								message.fadeIn(200);
+								return false;
+							}
+							else{
+								message.fadeOut(200);
+							}
+						}
 					}
-					else if($(this).val().length > 2){
-						message.fadeOut(200);
-					}
-					if($(this).val() == ''){
-						if(code	 != 48){
+					if($(this).parents('.volume').length){
+						if((code < 46 || code > 57 || code === 47 || code === 46) && condition){
 							message.fadeIn(200);
 							return false;
 						}
 						else{
 							message.fadeOut(200);
 						}
-					}
-					else if($(this).val().length == 2){
-						if(code	 != 46){
-							message.fadeIn(200);
+						if(code === 48 && $(this)[0].selectionStart === 0)
 							return false;
-						}
-						else{
-							message.fadeOut(200);
-						}
 					}
-					else{
-						if(code	 == 46 ){
-							message.fadeIn(200);
-							return false;
-						}
-						else{
-							message.fadeOut(200);
-						}
-					}
-				}
-				if($(this).parents('.volume').length){
-					if((code < 46 || code > 57 || code == 47 || code == 46) && condition){
-						message.fadeIn(200);
-						return false;
-					}
-					else{
-						message.fadeOut(200);
-					}
-					if(code == 48 && $(this)[0].selectionStart == 0)
-						return false;
-				}
-				if($(this).parents('.obligations').length){
-					let val = $(this).val().split('.');
+					if($(this).parents('.obligations').length){
+						let val = $(this).val().split('.');
 
-					if((code < 46 || code > 57 || code == 47) && condition){
-						message.fadeIn(200);
-					}
-					else{
-						message.fadeOut(200);
-					}
-					if(val.length == 2){
-						if(code	 == 46)
-							return false;
+						if((code < 46 || code > 57 || code === 47) && condition){
+							message.fadeIn(200);
+						}
+						else{
+							message.fadeOut(200);
+						}
+						if(val.length === 2){
+							if(code	 === 46)
+								return false;
 
-						if(val[1].length > 2){
-							val[1] = val[1].slice(0, 1);
-							$(this).val($(this).val().split('.')[0] + '.' + val[1]);
+							if(val[1].length > 2){
+								val[1] = val[1].slice(0, 1);
+								$(this).val($(this).val().split('.')[0] + '.' + val[1]);
+							}
 						}
 					}
 				}

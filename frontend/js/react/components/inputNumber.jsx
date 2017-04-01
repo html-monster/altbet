@@ -23,38 +23,38 @@ export default class InputNumber extends React.Component{
 		const props = this.props;
 		const code = event.which || event.charCode || event.keyCode;
 
-		if(props.hard){
-			if(props.inputValidate === 'integer'){
-				if(code !== 13){
-					if(code === 48 && event.target.selectionStart === 0) return false;
-
-					if(!(code >= 48 && code <= 57 || code >= 8 && code <= 9
-						|| code === 27 || code === 37 || code === 39)) return false;
-				}
-			}
-			else{
-				if(code !== 13){
-					let selection = event.target.selectionStart;
-					// console.log(event.target.value);
-					// console.log(code >= 48 && code <= 57 && ((event.target.value === '' && /^[0]/gi.test(event.target.value))
-					// 	&& !/^[0][.]/gi.test(event.target.value)));
-					if(props.inputValidate === 'price' && !/^[$][0][.][0-9]{0,1}/gi.test(event.target.value)
-						&& selection > 2) return false;
-					if(code >= 48 && code <= 57 && ((event.target.value === '' && /^[0]/gi.test(event.target.value))
-						&& !/^[0][.]/gi.test(event.target.value))){
-						// console.log(2);
-						return false;
-					}
-					if(code === 46 && /[.]/gi.test(event.target.value)) return false;
-					if(/[.][0-9]{2}/gi.test(event.target.value) && selection > event.target.value.length - 3) return false;
-					if(code === 46 && event.target.value === '') return false;
-
-					if(!(code === 46 || code >= 48 && code <= 57 || code >= 8 && code <= 9
-						|| code === 27 || code === 37 || code === 39)) return false;
-
-				}
-			}
-		}
+		// if(props.hard){
+		// 	if(props.inputValidate === 'integer'){
+		// 		if(code !== 13){
+		// 			if(code === 48 && event.target.selectionStart === 0) return false;
+		//
+		// 			if(!(code >= 48 && code <= 57 || code >= 8 && code <= 9
+		// 				|| code === 27 || code === 37 || code === 39)) return false;
+		// 		}
+		// 	}
+		// 	else{
+		// 		if(code !== 13){
+		// 			let selection = event.target.selectionStart;
+		// 			// console.log(event.target.value);
+		// 			// console.log(code >= 48 && code <= 57 && ((event.target.value === '' && /^[0]/gi.test(event.target.value))
+		// 			// 	&& !/^[0][.]/gi.test(event.target.value)));
+		// 			if(props.inputValidate === 'price' && !/^[$][0][.][0-9]{0,1}/gi.test(event.target.value)
+		// 				&& selection > 2) return false;
+		// 			if(code >= 48 && code <= 57 && ((event.target.value === '' && /^[0]/gi.test(event.target.value))
+		// 				&& !/^[0][.]/gi.test(event.target.value))){
+		// 				// console.log(2);
+		// 				return false;
+		// 			}
+		// 			if(code === 46 && /[.]/gi.test(event.target.value)) return false;
+		// 			if(/[.][0-9]{2}/gi.test(event.target.value) && selection > event.target.value.length - 3) return false;
+		// 			if(code === 46 && event.target.value === '') return false;
+		//
+		// 			if(!(code === 46 || code >= 48 && code <= 57 || code >= 8 && code <= 9
+		// 				|| code === 27 || code === 37 || code === 39)) return false;
+		//
+		// 		}
+		// 	}
+		// }
 	}
 
 	onInputChange(event)
@@ -82,7 +82,7 @@ export default class InputNumber extends React.Component{
 			return true;
 		}
 		else if((/[.][0-9]{3}|[.]{2}|[0-9]+[.][0-9]+[.]|^[0][0-9]|[^0-9.]+/gi.test(nextProps.value)
-			|| nextProps.value === '.') && nextProps.value != ''){
+			|| nextProps.value === '.') && nextProps.value !== ''){
 			if(/[.][0-9]{3}|[.]{2}|[0-9]+[.][0-9]+[.]|^[0][0-9]|[^0-9.]+/gi.test(nextProps.value)) return true;
 			this.state.value = value;
 			return true;
