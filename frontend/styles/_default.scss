@@ -769,6 +769,6 @@ input ~ .info{
 
 
 
-.list-animate2 { display: flex !important; /*margin-top: 10px;*/ transform: translate(0, 10px); opacity: 0; transition: opacity 8s, margin 1s, transform .9s;
-  &.animate { transform: translate(0, 2px); /*margin-top: 2px !important;*/ opacity: 1; }
+.list-animate2 { display: flex !important; transform: translate(0, 20px); opacity: 0; transition: opacity .3s, margin 1s, transform .3s;
+  &.animate2 { transform: translate(0, 2px); opacity: 1; }
 }
