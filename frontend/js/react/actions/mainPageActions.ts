@@ -187,10 +187,14 @@ class Actions extends BaseActions
             // set init
             // 0||console.log( 'inProps', inProps );
             // === Htmlbook === 17-02-09 ===============================================
-            let symbol = getState().activeTrader.data.Symbol;
-            symbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
+            // let symbol = getState().activeTrader.data.Symbol;
+            // let symbol = getState().activeTrader.data.Symbol;
+            // symbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
+            
+            const aexch = getState().mainPage.activeExchange;
 
-            if(symbol !== inProps.symbol || getState().activeTrader.isMirror != inProps.isMirror){
+            if( aexch.name !== inProps.name || aexch.isMirror != inProps.isMirror )
+            {
                 ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror, symbol: inProps.symbol});
                 ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
 
