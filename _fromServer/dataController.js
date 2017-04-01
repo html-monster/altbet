@@ -88,7 +88,7 @@
                 // container.append(emptyButton);
             }
             // console.log(data);
-            if(data && globalData.userIdentity == 'True'){
+            if(data && globalData.userIdentity === 'True'){
                 // console.log(event.tagData.Positions);
                 // console.log(data.Positions);
                 if(event[0].tagData.Positions !== data.Positions){
@@ -100,7 +100,7 @@
                 if(event[0].tagData.GainLoss !== data.GainLoss){
                     if(data.GainLoss < 0)
                         event.find('.pl span').removeClass('win').addClass('lose').text('($' + (data.GainLoss).toFixed(2).toString().slice(1) + ')');
-                    else if(data.GainLoss == 0)
+                    else if(data.GainLoss === 0)
                         event.find('.pl span').removeClass('lose win').text('$' + (data.GainLoss).toFixed(2));
                     else
                         event.find('.pl span').removeClass('lose').addClass('win').text('$' + (data.GainLoss).toFixed(2));
@@ -120,10 +120,10 @@
 
         container.find('button').addClass('empty').attr(disebled);
         container.find('.volume').remove();
-        if (container.find('button .price').text() != caption) container.find('button').addClass('fadeOut').find('.price').text(caption);
+        if (container.find('button .price').text() !== caption) container.find('button').addClass('fadeOut').find('.price').text(caption);
 
         container.find('button').each(function () {
-            if ($(this).index() != 0) $(this).remove();
+            if ($(this).index() !== 0) $(this).remove();
         });
 
         setTimeout(function () {
@@ -151,7 +151,7 @@
     var createButtons = function (data, symbolId, side, real, container) {
         // var buttons = [];
 
-        if (real == 'mirror') {
+        if (real === 'mirror') {
             data.SummaryPositionPrice.reverse();
         }
 
@@ -184,7 +184,7 @@
             objLength = data.SummaryPositionPrice.length,
             flag = 0,
             disebled = ($('.trader input').prop('checked')) ? 'disabled' : '',
-            html = '<button class="event animated ' + side + ' ' + (real == 'real' ? '' : ' mirror') + '" ' +
+            html = '<button class="event animated ' + side + ' ' + (real === 'real' ? '' : ' mirror') + '" ' +
                     disebled + '><span class="price"></span><span class="volume"></span><div class="symbolName" style="display: none">' +
                     symbolId + '</div></button>';
 
@@ -218,8 +218,8 @@
 
             self.Price = (real == "real") ? self.Price : (1 - self.Price);
             price = ($('.mode_switch input').prop('checked')) ? self.Price.toFixed(2) : '$' + self.Price.toFixed(2);
-            if ((button.find('.price').text()).replace('$', '') != self.Price.toFixed(2) ||
-                button.find('.volume').text() != self.Quantity) {
+            if ((button.find('.price').text()).replace('$', '') !== self.Price.toFixed(2) ||
+                button.find('.volume').text() !== self.Quantity) {
 
                 button.addClass('fadeOut').find('.price').text(price);
                 if (button.find('.volume').length)
@@ -279,22 +279,22 @@
             var ticks = null;
 
             $(activeOrders).each(function (index, value) {
-                if (this.Symbol.Exchange + '_' + this.Symbol.Name + '_' + this.Symbol.Currency == identificator) {
+                if (this.Symbol.Exchange + '_' + this.Symbol.Name + '_' + this.Symbol.Currency === identificator) {
                     data = value;
                     ticks = bars[index];
                 }
             });
 
             $(bars).each(function () {
-                if (this.Symbol.Exchange + '_' + this.Symbol.Name + '_' + this.Symbol.Currency == identificator) {
+                if (this.Symbol.Exchange + '_' + this.Symbol.Name + '_' + this.Symbol.Currency === identificator) {
                     ticks = this;
                 }
             });
 
-            if (data != null && data.Orders.length != 0) {
+            if (data != null && data.Orders.length !== 0) {
                 var buyIndex = 0;
                 var sellIndex = 1;
-                if (data.Orders[0].Side == 1) {
+                if (data.Orders[0].Side === 1) {
                     buyIndex = 1;
                     sellIndex = 0;
                 }
