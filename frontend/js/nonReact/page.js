@@ -205,7 +205,8 @@ $(document).ready(function ()
 			minDate: new Date(1, 1 - 1, 1),
 			changeMonth: true,
 			changeYear: true,
-			showAnim: 'slideDown'
+			showAnim: 'slideDown',
+			onClose: (p1, p2) => 0||console.log( 'p1', p1, p2 )
 		});
 
 		//validation =======================================================================================================
