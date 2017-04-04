@@ -24,8 +24,8 @@ export default class Preferences extends React.PureComponent
 
     render()
     {
-        var {IsMode, IsBettor, IsTrade} = appData.pageAccountData.Account;
-        var {header, active} = this.props.data;
+        const {IsMode, IsBettor, IsTrade} = appData.pageAccountData.Account;
+        const {header, active} = this.props.data;
 
         return <div className={"tab_item preferences " + (active ? "active" : "")}>
                 <h2>Preferences</h2>
@@ -37,8 +37,8 @@ export default class Preferences extends React.PureComponent
                         <li>
                             <label className="checkbox change-color">
                                 <strong>Theme color:</strong>
-                                <button className="dark color_pick" title="dark theme"></button>&nbsp;
-                                <button className="light color_pick" title="light theme"></button>
+                                <button className="dark color_pick" title="dark theme">{}</button>&nbsp;
+                                <button className="light color_pick" title="light theme">{}</button>
                             </label>
                         </li>
                     </ul>
@@ -68,7 +68,7 @@ export default class Preferences extends React.PureComponent
                         </ul>
                         <div className="input_animate input--yoshiko">
                             <input type="submit" value="Submit" className="btn wave"/>
-                            <span className="answer_message"></span>
+                            <span className="answer_message">{}</span>
                         </div>
                     </form>
                 </div>

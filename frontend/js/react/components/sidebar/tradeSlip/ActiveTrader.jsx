@@ -486,7 +486,7 @@ class TraderString extends React.Component {
 				data-verify={'ParticularUserQuantityBuy'}
 				draggable={!!data.ParticularUserQuantityBuy}
 				onClick={!!data.ParticularUserQuantityBuy ? other.traderActions.deleteOrders.bind(null, this, data.Price) : null}
-				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, 'buy', data.Price) : null}
+				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, this, 'buy', data.Price) : null}
 				// onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
 				>
 					<span className="value" draggable={!!data.ParticularUserQuantityBuy}>
@@ -495,7 +495,7 @@ class TraderString extends React.Component {
 						}
 					</span>
 				{
-					!!data.ParticularUserQuantityBuy ? <button className="delete">{}</button> : ''
+					!!data.ParticularUserQuantityBuy ? <button className="close_red">{}</button> : ''
 				}
 			</td>
 
@@ -511,7 +511,7 @@ class TraderString extends React.Component {
 						:
 						null
 				}
-				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, 'buy', data.Price) : null}
+				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, this, 'buy', data.Price) : null}
 				// onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
 				draggable={!!data.ParticularUserQuantityBuy}
 			>
@@ -577,7 +577,7 @@ class TraderString extends React.Component {
 						null
 				}
 				draggable={!!data.ParticularUserQuantitySell}
-				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, 'sell', data.Price) : null}
+				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, this, 'sell', data.Price) : null}
 				// onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
 			>
 				<span className="container" draggable={!!data.ParticularUserQuantitySell}>
@@ -592,7 +592,7 @@ class TraderString extends React.Component {
 				data-verify="ParticularUserQuantitySell"
 				draggable={!!data.ParticularUserQuantitySell}
 				onClick={!!data.ParticularUserQuantitySell ? other.traderActions.deleteOrders.bind(null, this, data.Price) : null}
-				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, 'sell', data.Price) : null}
+				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, this, 'sell', data.Price) : null}
 				// onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
 			>
 				<span className="value" draggable={!!data.ParticularUserQuantitySell}>
@@ -601,7 +601,7 @@ class TraderString extends React.Component {
 					}
 				</span>
 				{
-					!!data.ParticularUserQuantitySell ? <button className="delete">{}</button> : ''
+					!!data.ParticularUserQuantitySell ? <button className="close_red">{}</button> : ''
 				}
 			</td>
 			<td>
