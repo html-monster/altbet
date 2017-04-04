@@ -38,8 +38,8 @@ $active_selection_bg: //linear-gradient(to bottom, #53515e, #292830);
 $dropbox_list_bg: #292830;
 //$user_page_arrow: -228px -197px;
 @mixin user_page_li{ // for dropBox list
-	//border-bottom: 1px solid #53515e * 0.8;
-	border-top: 1px solid #31303c;
+	border-top: 1px solid #53515e * 1.2;
+	border-bottom: 1px solid #000;
 	&:hover{  background: #31303c * 1.2;  }
-	&.active {  background: #31303c * 1.5;  }
+	&:active {  background: #31303c * 1.5;  }
 }

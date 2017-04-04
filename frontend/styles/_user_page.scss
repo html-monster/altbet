@@ -466,16 +466,8 @@
     }
     .history{
       .filter{  display: flex;  }
-      .payment_filter{
-        margin-top: 27px;
-        margin-left: 10px;
-        position: relative;
-      }
-      .active_filter{
-        width: 150px;
-        height: 38.78px;
-        line-height: 38px;
-      }
+      .payment_filter{  margin-top: 27px;  margin-left: 10px;  position: relative;  }
+      .active_filter{  width: 150px;  height: 38.78px;  }
       //.active_filter{
       //  display: block;
       //  width: 150px;
