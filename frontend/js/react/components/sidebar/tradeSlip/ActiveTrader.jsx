@@ -318,7 +318,7 @@ class ActiveTrader extends React.Component {
 								</div>
 								:
 								<div className="container">
-									<p>Confirm, please, removal of all orders for this price:
+									<p>Confirm the removal of all orders for this price, please:
 										<span className="value"> ${(orderInfo.price).toFixed(2)}</span></p>
 									<div className="button_container">
 										<button className="btn wave yes waves-effect waves-button"
