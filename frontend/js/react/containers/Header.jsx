@@ -52,6 +52,7 @@ class Header extends React.Component
 	render()
 	{
 		const { actions, serverData } = this.props;
+        let $filter = appData.urlQuery ? appData.urlQuery.filter : '';
 
 		if(serverData.GainLost != undefined){
 			serverData.Profitlost = serverData.GainLost;
@@ -72,7 +73,7 @@ class Header extends React.Component
 
 				<div className="fast_menu">
 				  <a href={globalData.Urls.Home} className="btn wave waves-effect waves-button"><span>Exchange</span> </a>
-				  <a href={globalData.Urls.Home + "?filter=live"}  className={"btn wave waves-effect waves-button" + appData.urlQuery.filter == 'live' ? ' active' : ''}><span className="live_event wave ">Live</span></a>
+				  <a href={globalData.Urls.Home + "?filter=live"}  className={"btn wave waves-effect waves-button" + ($filter == 'live' ? ' active' : '')}><span className="live_event wave ">Live</span></a>
 				  <a href="#" className="btn wave waves-effect waves-button"><span className="history_event">History</span></a>
 				  <a href={globalData.Urls.TradingRules} className="btn wave waves-effect waves-button"><span>Rules</span> </a>
 				</div>
@@ -100,7 +101,7 @@ class Header extends React.Component
 									{serverData.Profitlost >= 0 ?
 										`$${profitlost}`
 										:
-										`($${profitlost.toString().replace('-', '')})`}
+										`($${Math.abs(profitlost)})`}
 									</strong>
 								</span>
 							<span className="invested animated" data-verify={'Exposure'}>At Stake: <strong className="animated">${(Math.round10(serverData.Exposure, -2)).toFixed(2)}</strong></span>
@@ -110,7 +111,7 @@ class Header extends React.Component
 						''
 				}
 				{/*{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockOpen()} title="Connect to socket">C</a> : ''}*/}
-                { ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <button className="btn wave waves-effect waves-button" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</button> : ''}
+                { ABpp.User.isAuthorized() && ABpp.User.login === 'bot' ? <button className="btn wave waves-effect waves-button" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</button> : ''}
 
 
 				{ ABpp.User.isAuthorized() ? <a className="my_order btn wave waves-effect waves-button" href={globalData.Urls.MyActivity}>My Activity</a> : ''}

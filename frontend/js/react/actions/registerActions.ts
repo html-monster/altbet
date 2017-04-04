@@ -26,8 +26,11 @@ class Actions extends BaseActions
             const $form = $(event.target);
             if( (this.checkAreement('agreement', $form) && this.checkAreement('agreement_age', $form)) )
             {
+                let formData = new FormData(<HTMLFormElement>$form[0]);
+                formData.set('State', "");
+
                 const ajaxPromise = (new AjaxSend()).send({
-                    formData: new FormData(<HTMLFormElement>$form[0]),
+                    formData: formData,
                     message: `Error while registering user, please, try again`,
                     // url: ABpp.baseUrl + $form.attr('action'),
                     url: $form.attr('action'), // DEBUG: remove it

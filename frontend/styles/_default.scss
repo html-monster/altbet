@@ -67,6 +67,14 @@ button, a.button {
   color: #fff;
   outline: none;
   cursor: pointer;
+  &.delete{
+    display: block;
+    width: 15px;
+    height: 15px;
+    min-height: 10px;
+    padding: 0;
+    background: url("#{$pathImage}/sprite.svg") no-repeat -48px -137px;
+  }
 }
 
 .btn_green{  background: linear-gradient(to bottom, #84d65b, #4dac2e);  }
@@ -425,49 +433,49 @@ input ~ .info{
   }
 }
 
-//.select{
-//  display: inline-block;
-//  position: relative;
-//  vertical-align: middle;
-//  &:before{
-//    content: '';
-//    display: block;
-//    width: 16px;
-//    height: 16px;
-//    background: url("#{$pathImage}/dropdown/dd_arrow.gif") no-repeat;
-//    position: absolute;
-//    top: 22%;
-//    right: 4px;
-//  }
-//  &:after{
-//    content: '';
-//    display: block;
-//    height: 29px;
-//    position: absolute;
-//    top: 0;
-//    right: 20px;
-//    border-left: 1px solid #c3c3c3;
-//    border-right: 1px solid #fff;
-//  }
-//  select{
-//    height: 30px;
-//    padding: 5px;
-//    padding-right: 30px;
-//    margin-right: 3px;
-//    border: 1px solid #d7d7d8;
-//    border-radius: 3px;
-//    //color: #fff;
-//    font-size: 12px;
-//    background: linear-gradient(to Top, #B8BBBD, #E3E4E5);
-//    &.img{  padding-left: 30px;  }
-//  }
-//}
+/*.select{
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  &:before{
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url("#{$pathImage}/dropdown/dd_arrow.gif") no-repeat;
+    position: absolute;
+    top: 22%;
+    right: 4px;
+  }
+  &:after{
+    content: '';
+    display: block;
+    height: 29px;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    border-left: 1px solid #c3c3c3;
+    border-right: 1px solid #fff;
+  }
+  select{
+    height: 30px;
+    padding: 5px;
+    padding-right: 30px;
+    margin-right: 3px;
+    border: 1px solid #d7d7d8;
+    border-radius: 3px;
+    //color: #fff;
+    font-size: 12px;
+    background: linear-gradient(to Top, #B8BBBD, #E3E4E5);
+    &.img{  padding-left: 30px;  }
+  }
+}*/
 
 .select { position: relative; color: $main-color;
   &.-opened .active_selection i { transform: rotateX(180deg);
-    &::before { top: 0px; }
+    &::before { top: 0; }
   }
-  .active_selection { display: block; margin: 0 !important; padding: 3px 30px 0 15px; width: 100%; height: 38px; line-height: 31px;
+  .active_selection { display: block; margin: 0 !important; padding: 0 30px 0 10px; width: 100%; height: 38px; line-height: 36px;
       border-radius: 4px; color: $reg_title; font-size: 16px !important; border: 1px solid $user_page_tr_separate; background: $active_selection_bg;
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3); transition: background-color 0.3s, border-color 0.3s; cursor: pointer;
     i { display: block; position: absolute; right: 16px; top: calc(50% - 2px); width: 5px; height: 4px; transition: transform .3s;
@@ -478,10 +486,11 @@ input ~ .info{
     &.active { border-radius: 4px 4px 0 0; }
   }
   ul { display: none; position: absolute; width: 100%; max-height: 250px; border: 1px solid $user_page_tr_separate; border-top: none;
-      border-radius: 4px; background: $dropbox_list_bg; box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.5); z-index: 2; overflow-y: auto;
+      border-radius: 4px; background: $active_selection_bg; box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.5); z-index: 2; overflow-y: auto;
       @include scroll;
   }
   li { padding: 2px 35px 2px 10px; transition: 0.2s ease-out; cursor: pointer; @include user_page_li; }
+  li:last-of-type{  border-bottom: none;  }
 }
 
 

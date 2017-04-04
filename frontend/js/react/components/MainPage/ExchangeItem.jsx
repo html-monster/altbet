@@ -35,7 +35,7 @@ export default class ExchangeItem extends React.Component
         // data.activeExchange.name == data.Symbol.Exchange&&console.debug( 'data.Symbol', data.activeExchange, data.Symbol.Exchange, data.activeExchange.name == data.Symbol.Exchange );
         // activate current exchange
         let $classActive = '', $classActiveNM = '', $classActiveM = '';
-        if( data.activeExchange.name == data.Symbol.Exchange )
+        if( data.activeExchange.name === data.Symbol.Exchange )
         {
             $classActive = ' active';
             if( !data.activeExchange.isMirror ) $classActiveNM = ' active';
@@ -51,11 +51,11 @@ export default class ExchangeItem extends React.Component
                     {(date = $DateLocalization.fromSharp(data.Symbol.StartDate, 0, {TZOffset: false}).unixToLocalDate({format: 'DD MMM Y'})) ? date : ''}
                     {/*- {(date = $DateLocalization.fromSharp(data.Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                 </span>
-                {data.Symbol.Status == 2 ? <i className="half_time" title="Completed">ht<span>Completed</span></i> : ""}
+                {data.Symbol.Status === 2 ? <i className="half_time" title="Completed">ht<span>Completed</span></i> : ""}
             </div>
             <div className="content_title command">
-                <h2>{data.Symbol.HomeName} {(data.Symbol.HomePoints != null) ? <span>({data.Symbol.HomePoints})</span> : '' }</h2>
-                <h2>{data.Symbol.AwayName} {(data.Symbol.AwayPoints != null) ? <span>({data.Symbol.AwayPoints})</span> : ''}</h2>
+                <h2>{data.Symbol.HomeName} {(data.Symbol.HomePoints !== null) ? <span>({data.Symbol.HomePoints})</span> : '' }</h2>
+                <h2>{data.Symbol.AwayName} {(data.Symbol.AwayPoints !== null) ? <span>({data.Symbol.AwayPoints})</span> : ''}</h2>
                 <span className="symbol_name hidden">{symbol}</span>
             </div>
             <div className="table not-sort wave waves-effect waves-button"> {/*id="exchange_table"*/}
@@ -69,7 +69,7 @@ export default class ExchangeItem extends React.Component
                 {/*<div className="event-content" data-symbol={symbol} onClick={this._onEventContentClick.bind(this, data)}>*/}
                     <h3 className="event-title">
                         <span className="title">{data.Symbol.HomeName}</span>
-                        <span>{(data.Symbol.HomeHandicap != null ? (data.Symbol.HomeHandicap > 0 ? " +" + data.Symbol.HomeHandicap : " " + data.Symbol.HomeHandicap) : false)}</span>
+                        <span>{(data.Symbol.HomeHandicap !== null ? (data.Symbol.HomeHandicap > 0 ? " +" + data.Symbol.HomeHandicap : " " + data.Symbol.HomeHandicap) : false)}</span>
                         <a href={ABpp.baseUrl + data.CategoryUrl + "0"}>see more</a>
                     </h3>
 
@@ -92,13 +92,16 @@ export default class ExchangeItem extends React.Component
                         <div className="pl mode_info_js">
                             {
                                 function() {
-                                    if( data.Positions != 0 )
+                                    if( data.Positions !== 0 )
                                     {
                                         let $class;
                                         if (data.GainLoss < 0) $class = 'lose';
                                         else if (data.GainLoss > 0) $class = 'win';
 
-                                        return <strong style={{'marginTop': 3}}>P/L: <span className={$class}>(${data.GainLoss ? Math.abs(data.GainLoss) : 0})</span></strong>;
+                                        return <strong style={{'marginTop': 3}}>P/L: <span className={$class}>{data.GainLoss ?
+											data.GainLoss < 0 ? `($${Math.abs(data.GainLoss)})` :  '$' + data.GainLoss
+											:
+                                            '$' + 0}</span></strong>;
                                     } // endif
                                 }()
                             }
@@ -116,7 +119,7 @@ export default class ExchangeItem extends React.Component
                 >
                     <h3 className="event-title">
                         <span className="title">{data.Symbol.AwayName}</span>
-                        <span>{(data.Symbol.AwayHandicap != null ? (data.Symbol.AwayHandicap > 0 ? " +" + data.Symbol.AwayHandicap : " " + data.Symbol.AwayHandicap) : "")}</span>
+                        <span>{(data.Symbol.AwayHandicap !== null ? (data.Symbol.AwayHandicap > 0 ? " +" + data.Symbol.AwayHandicap : " " + data.Symbol.AwayHandicap) : "")}</span>
                         <a href={ABpp.baseUrl + data.CategoryUrl + "1"}>see more</a>
                     </h3>
 
@@ -147,7 +150,7 @@ export default class ExchangeItem extends React.Component
 
                 <button className="show-schedule" title="Show chart">{}</button>
                 <div className="schedule loader not-sort">
-                    <div id={"container_" + symbol}></div>
+                    <div id={"container_" + symbol}>{}</div>
                     {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                 </div>
                 <a href="#" className="add_favorite" title="Add to favorite">{}</a>

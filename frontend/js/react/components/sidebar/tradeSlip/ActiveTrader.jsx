@@ -36,7 +36,7 @@ class ActiveTrader extends React.Component {
 		// 0||console.log( 'activeExchange', activeExchange );
 		// const { activeString, showDefaultOrder } = this.state;
 		const { data, ...info } = this.props;
-		const { dragPrevPrice, tdHtml, cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
+		const { dragPrevPrice, dragNextPrice, popUpShow, cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
 			rebuiltServerData, spread, quantity, traderActions } = this.props;
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
@@ -238,7 +238,7 @@ class ActiveTrader extends React.Component {
 					<tr>
 						<td>
 							{
-								!autoTradeOn && orderInfo.activeString == 'limit' && orderInfo.showDefaultOrder && quantity &&
+								!autoTradeOn && orderInfo.activeString === 'limit' && orderInfo.showDefaultOrder && quantity &&
 
 								<TraderDefaultForm
 									activeString={orderInfo.activeString}
@@ -300,7 +300,39 @@ class ActiveTrader extends React.Component {
 				</table>
 			</div>
 			<div className={'table_limit' + (quantity ? ' clickable' : '')}>
-				<table className={'limit' + ($.browser.webkit ? ' webkit' : '') + (quantity ? ' clickable' : '')}>
+				{
+					popUpShow &&
+					<div className={`confirm_window middle animated fadeIn`}>
+						{
+							dragNextPrice ?
+								<div className="container">
+									<p>Confirm, please, your transfer of all orders from <span className="value">${dragPrevPrice} </span>
+										to <span className="value">${dragNextPrice}</span></p>
+									<div className="button_container">
+										<button className="btn wave yes waves-effect waves-button"
+												onClick={traderActions.onDragConfirm.bind(null, true)}>Yes</button>
+										<button className="btn wave no waves-effect waves-button"
+												onClick={traderActions.onDragConfirm.bind(null, false)}>No</button>
+									</div>
+
+								</div>
+								:
+								<div className="container">
+									<p>Confirm, please, removal of all orders for this price:
+										<span className="value"> ${(orderInfo.price).toFixed(2)}</span></p>
+									<div className="button_container">
+										<button className="btn wave yes waves-effect waves-button"
+												onClick={traderActions.onDeleteConfirm.bind(null, true)}>Yes</button>
+										<button className="btn wave no waves-effect waves-button"
+												onClick={traderActions.onDeleteConfirm.bind(null, false)}>No</button>
+									</div>
+
+								</div>
+						}
+					</div>
+				}
+				<table className={'limit' + ($.browser.webkit ? ' webkit' : '') + (quantity ? ' clickable' : '') +
+				(popUpShow ? ' blocked' : '')}>
 					<thead>
 						<tr>
 							<th>My Bids</th>
@@ -311,9 +343,6 @@ class ActiveTrader extends React.Component {
 						</tr>
 					</thead>
 					<tbody ref={'traderBody'}>
-						<tr className="visible" dangerouslySetInnerHTML={{__html: tdHtml}}>
-
-						</tr>
 						{
 							rebuiltServerData.map((item, index) =>
 								<TraderString
@@ -449,19 +478,25 @@ class TraderString extends React.Component {
 				transitionEnterTimeout={800}
 				onDragOver={::this.onDragOver}
 				onDragLeave={::this.onDragLeave}
-				onDrop={other.traderActions.onDrop.bind(null, data.Price)}
+				onDrop={other.traderActions.onDrop.bind(null, this, data.Price)}
 				ref={'tr'}
 				data={data}
 		>
-			<td className={'my_offers my_size animated'} data-verify={'ParticularUserQuantityBuy'}
+			<td className={'my_offers my_size animated' + (!!data.ParticularUserQuantityBuy ? ' clickable' : '')}
+				data-verify={'ParticularUserQuantityBuy'}
 				draggable={!!data.ParticularUserQuantityBuy}
+				onClick={!!data.ParticularUserQuantityBuy ? other.traderActions.deleteOrders.bind(null, this, data.Price) : null}
 				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, 'buy', data.Price) : null}
-				onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}>
+				// onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
+				>
 					<span className="value" draggable={!!data.ParticularUserQuantityBuy}>
 						{
 							data.ParticularUserQuantityBuy || ''
 						}
 					</span>
+				{
+					!!data.ParticularUserQuantityBuy ? <button className="delete">{}</button> : ''
+				}
 			</td>
 
 			<td className={'size buy size_buy animated ' + (data.Bid ? 'best_buy' : '') + (quantity ? ' clickable' : '')}
@@ -477,7 +512,7 @@ class TraderString extends React.Component {
 						null
 				}
 				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, 'buy', data.Price) : null}
-				onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
+				// onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
 				draggable={!!data.ParticularUserQuantityBuy}
 			>
 				<span className="container" draggable={!!data.ParticularUserQuantityBuy}>
@@ -543,7 +578,7 @@ class TraderString extends React.Component {
 				}
 				draggable={!!data.ParticularUserQuantitySell}
 				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, 'sell', data.Price) : null}
-				onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
+				// onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
 			>
 				<span className="container" draggable={!!data.ParticularUserQuantitySell}>
 					<span className="value" draggable={!!data.ParticularUserQuantitySell}>
@@ -553,16 +588,21 @@ class TraderString extends React.Component {
 					</span>
 				</span>
 			</td>
-			<td className={'my_bids my_size animated'} data-verify="ParticularUserQuantitySell"
+			<td className={'my_bids my_size animated'  + (!!data.ParticularUserQuantitySell ? ' clickable' : '')}
+				data-verify="ParticularUserQuantitySell"
 				draggable={!!data.ParticularUserQuantitySell}
+				onClick={!!data.ParticularUserQuantitySell ? other.traderActions.deleteOrders.bind(null, this, data.Price) : null}
 				onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, 'sell', data.Price) : null}
-				onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
+				// onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
 			>
 				<span className="value" draggable={!!data.ParticularUserQuantitySell}>
 					{
 						data.ParticularUserQuantitySell || ''
 					}
 				</span>
+				{
+					!!data.ParticularUserQuantitySell ? <button className="delete">{}</button> : ''
+				}
 			</td>
 			<td>
 				{
