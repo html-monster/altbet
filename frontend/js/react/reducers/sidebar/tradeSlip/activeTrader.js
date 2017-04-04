@@ -18,7 +18,9 @@ const initialState = {
 	data: {},
 	dragData:{
 		dragPrevPrice: null,
-		dragSide: null
+		dragNextPrice: null,
+		dragSide: null,
+		popUpShow: false
 	},
 	isMirror: 0,
 	rebuiltServerData:[],

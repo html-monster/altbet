@@ -56,6 +56,38 @@
 				}
 			}
 		}
+		.confirm_window{
+			width: 100%;
+			padding: 10px;
+			position: absolute;
+			top: 150px;
+			left: 0;
+			z-index: 10;
+			text-align: center;
+			font-size: 12px;
+			animation-duration: 0.4s;
+			&.middle{  top: calc(50% - 58px);  }
+			//&.active{  visibility: visible;  }
+			@include order_sidebar_confirm_window;
+			span{
+				//display: block;
+				//margin-bottom: 10px;
+				font-size: 14px;
+				&.value{  color: $color-blue;  }
+			}
+			button{
+				width: auto;
+				margin: 0 5px;
+				border-radius: 6px;
+				font-size: 12px;
+			}
+			.button_container{
+				display: flex;
+				justify-content: center;
+				margin-top: 10px;
+			}
+			&.active{  top: -74px;  }
+		}
 		.submit_wrapper{
 			width: 66.66%;
 			i.submit{
@@ -98,29 +130,17 @@
 					}
 				}
 				#order_content{  margin: 0;  }
-				.confirm_window{
-					width: 100%;
-					padding: 10px;
-					position: absolute;
-					top: 150px;
-					left: 0;
-					z-index: 10;
-					text-align: center;
-					@include order_sidebar_confirm_window;
-					&.active{  top: -74px;  }
-					//&:before{
-					//  content: '';
-					//  display: block;
-					//  width: calc(100% + 20px);
-					//  height: calc(100% + 20px);
-					//  background: linear-gradient(to bottom, #53515e, #292830);
-					//  border-radius: 4px;
-					//  position: absolute;
-					//  top: -10px;
-					//  left: -10px;
-					//  z-index: -1;
-					//}
-				}
+				//.confirm_window{
+				//	width: 100%;
+				//	padding: 10px;
+				//	position: absolute;
+				//	top: 150px;
+				//	left: 0;
+				//	z-index: 10;
+				//	text-align: center;
+				//	@include order_sidebar_confirm_window;
+				//	&.active{  top: -74px;  }
+				//}
 				tr{
 					//&:first-of-type td:last-of-type{  border-top: 1px solid #313d62;  }
 					@include trader_spread_separator;
@@ -210,6 +230,7 @@
 				border-left: none;
 				border-bottom: none;
 				//position: relative;
+				&:hover .delete{  opacity: 1;  }
 				&.label{
 					height: 24px;
 					@include trader_label;
@@ -256,7 +277,24 @@
 						@include trader_spread_button;
 					}
 				}
-				//&[rowspan]{  width: 34%;  }
+				&.my_bids, &.my_offers{
+					&.clickable:after{
+						content: '';
+						display: block;
+						width: 100%;
+						height: 100%;
+						position: absolute;
+						top: 0;
+						left: 0;
+						opacity: 0;
+						background: transparentize(#000, 0.7);
+						transition: 0.2s ease-out;
+					}
+					&:active:after{  opacity: 1;  }
+				}
+				&.my_bids .delete{  right: 0;  }
+				&.my_offers .delete{  left: 0;  }
+					//&[rowspan]{  width: 34%;  }
 				a{
 					display: block;
 					padding: 2px 5px;
@@ -277,6 +315,16 @@
 					&:last-of-type{
 						border-left: 1px solid $trader_button_separator;
 					}
+				}
+				.delete{
+					width: 15px;
+					height: 15px;
+					position: absolute;
+					top: calc(50% - 8px);
+					min-height: 10px;
+					border: none !important;
+					opacity: 0;
+					transition: 0.2s ease-out;
 				}
 				&.cancel_all{  background-image: linear-gradient(to bottom, #646470, #34343d); a{  color: #ffffff;} } //#a3a3a3
 				&.close_out{  background-image: linear-gradient(to bottom, #f88447, #ef4d22); a{color: #fff;}  }
@@ -343,14 +391,23 @@
 				height: calc(100% - 28px);
 				position: absolute;
 				top: 28px;
+				right: calc(20% + 3px);
 				transform: scaleX(0);
 				opacity: $order_sidebar_activation_column_opacity;
 				transition: 0.4s ease-out;
-			}
-			&:before{
-				right: calc(20% + 3px);
-				//transform: translateX(50%) scaleX(0.01);
 				background: #ffcbc2;
+				//transform: translateX(50%) scaleX(0.01);
+			}
+			&.blocked:after{
+				content: '';
+				display: block;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 9;
+				background: transparentize(#000, 0.5);
 			}
 			&.clickable{
 				&:before{

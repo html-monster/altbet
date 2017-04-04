@@ -333,7 +333,7 @@ class Actions extends BaseActions
 			return htmlData;		}
 	}
 
-	public actionAddDefaultOrder(context, data, index)
+		public actionAddDefaultOrder(context, data, index)
 	{
 		return (dispatch, getState) => {
 			if(getState().sidebar.autoTradeOn)
@@ -654,33 +654,20 @@ class Actions extends BaseActions
 		}
 	}
 
-	public onDragEnd()
-	{
-		return (dispatch) =>
-		{
-			$('tr.visible').removeClass('drag_place sell buy');
-			$('td.drag_start').removeClass('drag_start');
-			dispatch({
-				type: TRADER_ON_DRAG,
-				payload: { dragPrevPrice: null, dragSide: null }//tdHtml: ''
-			});
-		}
-	}
-
-	public onDrop(price, event)
+	public onDragConfirm(confirm)
 	{
 		return (dispatch, getState) =>
 		{
-			event.preventDefault();
-			const { activeExchange, dragPrevPrice } = getState().activeTrader;
-			// console.log(price);
-			// console.log(getState().activeTrader.dragPrevPrice);
-			if(dragPrevPrice != price){
-				// console.log(getState().activeTrader);
+			const symbol = getState().activeTrader.data.Symbol;
+			const { dragPrevPrice, dragNextPrice } = getState().activeTrader;
+			const ExchangeSymbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
+
+			if(confirm)
+			{
 				defaultMethods.sendAjaxRequest({
 					httpMethod: 'POST',
-					url       : `${ABpp.baseUrl}/Order/Edit`,
-					data      : {prevPrice: dragPrevPrice, nextPrice: price, activeExchange},
+					url       : `${ABpp.baseUrl}/OrderController/Edit`,
+					data      : { PrevPrice: dragPrevPrice, NextPrice: dragNextPrice, Symbol: ExchangeSymbol },
 					callback  : onSuccessAjax,
 					onError   : onErrorAjax,
 				});
@@ -694,6 +681,102 @@ class Actions extends BaseActions
 			function onSuccessAjax(answer)
 			{
 				__DEV__ && console.log(answer);
+			}
+
+			$('tr.visible').removeClass('drag_place sell buy');
+			$('td.drag_start').removeClass('drag_start');
+			dispatch({
+				type: TRADER_ON_DRAG,
+				payload: { dragPrevPrice: null, dragNextPrice: null, dragSide: null, popUpShow: false }
+			});
+		}
+	}
+
+	public onDrop(context, price, event)
+	{
+		return (dispatch, getState) =>
+		{
+			event.preventDefault();
+			const { dragPrevPrice } = getState().activeTrader;
+
+			if(dragPrevPrice != price){
+				if(getState().sidebar.autoTradeOn){
+					dispatch({
+						type: TRADER_ON_DRAG,
+						payload: { dragNextPrice: price }
+					});
+					context.props.traderActions.onDragConfirm(true);
+				}
+				else{
+					dispatch({
+						type: TRADER_ON_DRAG,
+						payload: { dragNextPrice: price, popUpShow: true }
+					});
+				}
+			}
+			else{
+				$('tr.visible').removeClass('drag_place sell buy');
+				$('td.drag_start').removeClass('drag_start');
+				dispatch({
+					type: TRADER_ON_DRAG,
+					payload: { dragNextPrice: null, dragPrevPrice: null, dragSide: null, popUpShow: false }
+				});
+			}
+		}
+	}
+
+	public onDeleteConfirm(confirm) {
+		return (dispatch, getState) => {
+
+			const symbol = getState().activeTrader.data.Symbol;
+			const { popUpShow, orderInfo: { price } } = getState().activeTrader;
+			const ExchangeSymbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
+
+			if(confirm){
+				defaultMethods.sendAjaxRequest({
+					httpMethod: 'POST',
+					url       : `${ABpp.baseUrl}/OrderController/Delete`,
+					data      : { Price: price, Symbol: ExchangeSymbol },
+					callback  : onSuccessAjax,
+					onError   : onErrorAjax,
+				});
+			}
+
+			function onErrorAjax()
+			{
+				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+			}
+
+			function onSuccessAjax(answer)
+			{
+				__DEV__ && console.log(answer);
+			}
+
+			if(popUpShow){
+				dispatch({
+					type: TRADER_ON_DRAG,
+					payload: { popUpShow: false }
+				});
+			}
+		}
+	}
+
+	public deleteOrders(context, price)
+	{
+		return (dispatch, getState) => {
+
+			dispatch({
+				type: TRADER_ON_DELETE_ORDER,
+				payload: { price }
+			});
+			if(getState().sidebar.autoTradeOn){
+				context.props.traderActions.onDeleteConfirm(price);
+			}
+			else{
+				dispatch({
+					type: TRADER_ON_DRAG,
+					payload: { popUpShow: true }
+				});
 			}
 		}
 	}

@@ -101,7 +101,7 @@ export default class ExchangeItem extends React.Component
                                         return <strong style={{'marginTop': 3}}>P/L: <span className={$class}>{data.GainLoss ?
 											data.GainLoss < 0 ? `($${Math.abs(data.GainLoss)})` :  '$' + data.GainLoss
 											:
-                                            0}</span></strong>;
+                                            '$' + 0}</span></strong>;
                                     } // endif
                                 }()
                             }

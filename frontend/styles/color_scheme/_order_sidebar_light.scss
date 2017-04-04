@@ -48,20 +48,7 @@ $order_sidebar_activation_column_opacity: 0.2;
 		border: 1px solid $order_sidebar_head_separator * 0.8;
 		border-radius: 4px;
 	}
-	span{
-		display: block;
-		margin-bottom: 10px;
-		font-size: 14px;
-	}
-	.button_container{
-		display: flex;
-		justify-content: center;
-	}
 	button{
-		width: auto;
-		margin: 0 5px;
-		border-radius: 6px;
-		font-size: 12px;
 		&.yes{  background: linear-gradient(to bottom, #f8b747, #ef8022);  }
 		&.no{  background: linear-gradient(to top, #bdc0cd, #ffffff);  color: #211e25;  }
 	}
