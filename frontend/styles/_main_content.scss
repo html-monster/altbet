@@ -1,11 +1,44 @@
+.h-lup { position: relative; margin: 0 10px; height: 0; border-radius: 6px; z-index: 2; clear: both;
+      /*overflow: hidden;*/ transition: 0.4s ease-out;
+  @include chart;
+  &.active { padding-top: 10px; height: 400px; }
+  &:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 0;
+      background: $main_page_gif no-repeat center $main_page_tab_color_active; }
+  &.loader:after{  height: 100%;  }
+
+  &.active &__tab { opacity: 1 }
+  &__tab { position: absolute; top: -21px; font-size: 13px; color: #fff; opacity: 0; transition: opacity .5s;
+    &_1 { right: 50%; margin-right: 145px }
+    &_2 { left: 50%; margin-left: 145px }
+    &.active { color: #fff; text-shadow: 0 0 16px #bdc0cd; font-weight: bold }
+  }
+  &__tab_content { padding-top: 10px !important; overflow: hidden }
+  &__lineup { padding: 0 10px }
+
+  svg {  max-width: 100% !important;  }
+  img{  width: 100%;  }
+}
+
+.l-team { float: left; width: calc(50% - 1px); color: #bdc0cd;
+  &:first-of-type { padding-right: 5px }
+  &__title { margin: 5px 0 0 0; padding-bottom: 5px; border-bottom: 1px solid darken(#bdc0cd, 20%); text-align: left; font-size: 14px; font-weight: bold }
+  &__team { width: 100%; border-collapse: separate; border-spacing: 3px; font-size: 13px;
+    tr:hover td { text-shadow: 0 0 10px #bdc0cd }
+    .pl { padding-left: 5px; text-align: left; }
+  }
+  &__total { margin-top: 10px; padding-top: 10px; border-top: 1px solid darken(#bdc0cd, 20%); font-size: 14px; text-align: left }
+}
+
+
 .content {
+
   @include span(7.6 of 12);
   @include push (1.8 of 12);
   margin-top: 80px;
   padding: 15px;
   position: relative;
   .nav_items {
-    .mode_wrapper{
+    .mode_wrapper {
       display: flex;
       align-items: center;
       width: 145px;
@@ -566,31 +599,6 @@
             top: 12px;
           }
         }
-      }
-      .schedule{
-        //display: none;
-        height: 0;
-        margin: 0 10px;
-        position: relative;
-        z-index: 2;
-        clear: both;
-        overflow: hidden;
-        transition: 0.4s ease-out;
-        &:after{
-          content: '';
-          display: block;
-          width: 100%;
-          height: 0;
-          background: $main_page_gif no-repeat center $main_page_tab_color_active;
-          position: absolute;
-          top: 0;
-          left: 0;
-        }
-        &.active{  height: 400px;  }
-        &.loader:after{  height: 100%;  }
-        svg{  max-width: 100% !important;  }
-        @include chart;
-        img{  width: 100%;  }
       }
     }
   }

@@ -109,7 +109,7 @@ gulp.task('styles', function() {
         }))
       }))
       .pipe(gulpIf(isDevelopment, sourcemaps.init()))
-      .pipe(sass({outputStyle: "compact"}))
+      .pipe(sass({outputStyle: "compact"})) //compact compressed
       .pipe(autoprefixer({
         browsers: ['last 4 versions']
       }))
