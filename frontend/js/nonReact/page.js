@@ -119,7 +119,7 @@ $(document).ready(function ()
 
 	new modeSwitchClass(); //mode switch activate
 
-	new themeChangeClass();
+	// new themeChangeClass();
 	// (function changeSelect(){
 	// 	try {
 	// 		$("body select").msDropDown();

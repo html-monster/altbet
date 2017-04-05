@@ -31,11 +31,12 @@ class Settings extends React.Component
     render()
     {
         const { actions, data: { header, active }, files, loadError, loadProgress } = this.props;
-        const { FirstName, LastName, UserName, DateOfBirth, Email, Country, Address, Phone } = appData.pageAccountData.UserInfo;
+        const { Country, Address, Phone } = appData.pageAccountData.UserInfo;
 
 		const inputRender = ({ id, className, info, label, filled, inputLabel, meta: { error, dirty }, ...input }) => {
 			return  <span className={'input_animate input--yoshiko input--filled' + (filled ? ' input--filled' : '')}>
-                        <input className={`input__field input__field--yoshiko ${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} {...input}/>
+                        <input className={`input__field input__field--yoshiko ${className ? className : ''}
+                         ${dirty && (error ? ' invalidJs' : ' validJs')}`} {...input}/>
                         <label className="input__label input__label--yoshiko" htmlFor={id}>
                             <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                         </label>
@@ -198,7 +199,7 @@ class Settings extends React.Component
                         <span className="validation-summary-errors">{}</span>
                     </span>*/}
 
-                    <span className="input_animate input--yoshiko">
+                    <span className="input_animate input--yoshiko submit_container">
                         <input type="submit" value="Submit" className="btn wave"/>
                         {/*<span className="answer_message"></span>*/}
                         <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
@@ -339,7 +340,7 @@ class Settings extends React.Component
                     </label>
                     <span className="validation-summary-errors">{}</span>
                 </span>
-                <span className="input_animate input--yoshiko">
+                <span className="input_animate input--yoshiko submit_container">
                     <input type="submit" value="ChangePassword" id="submit" className="btn wave"/>
                     <span className="answer_message">{}</span>
                 </span>

@@ -306,8 +306,9 @@ class ActiveTrader extends React.Component {
 						{
 							dragNextPrice ?
 								<div className="container">
-									<p>Confirm, please, your transfer of all orders from <span className="value">${dragPrevPrice} </span>
-										to <span className="value">${dragNextPrice}</span></p>
+									<p>Confirm, please, your transfer of all orders from <span className="value">
+										${(dragPrevPrice).toFixed(2)} </span> to
+										<span className="value"> ${(dragNextPrice).toFixed(2)}</span></p>
 									<div className="button_container">
 										<button className="btn wave yes waves-effect waves-button"
 												onClick={traderActions.onDragConfirm.bind(null, true)}>Yes</button>

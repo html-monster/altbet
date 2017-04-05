@@ -379,7 +379,7 @@ input ~ .info{
   }
 }
 
-.validation-summary-errors{
+.invalid_message, .validation-summary-errors{
   display: block;
   height: 22px;
 	padding: 2px 0;

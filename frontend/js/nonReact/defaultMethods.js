@@ -213,11 +213,11 @@ class defaultMethods
 	 */
 	static sendAjaxRequest({httpMethod = 'POST', callback = null, onError = null, beforeSend = null, url, context = null,
 		data = null, dataType = 'json', ...rest}) {
-		if(!data && callback) data = context.serialize();
 		if(!data && !context) {
-			console.error('для ajax нужно передать данные или контекст вызова');
+			console.error('для ajax нужно передать data или context вызова');
 			return false;
 		}
+		if(!data && callback) data = context.serialize();
 		// 0||console.log( 'here', callback, url );
 		// callback();
 		$.ajax({
