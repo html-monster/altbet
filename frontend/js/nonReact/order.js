@@ -23,7 +23,7 @@ class orderClass{
 			// BM: переключатель табов в EP
 			$(".left_order .wrapper .tab").click(function ()
 			{
-				let flagCO = $(this).index() == 1;
+				let flagCO = $(this).index() === 1;
 				ABpp.Websocket.sendSubscribe(flagCO, window.SocketSubscribe.CURRENT_ORDERS);
 
 
@@ -31,7 +31,7 @@ class orderClass{
 
 				if($(this).attr('data-disabled')) return false;
 
-				if($(this).index() == 0){
+				if($(this).index() === 0){
 					if($('#ChkLimit').prop('checked')) globalData.tradeOn = true;
 					globalData.myOrdersOn = false;
 				}
@@ -45,9 +45,10 @@ class orderClass{
 
 			$(window).resize(function () {
 				windowWidth = window.innerWidth;
-				orderSidebarHeight = windowHeight - substructionHeight;
+				windowHeight = window.innerHeight;
 				if(windowWidth > 1200){
 					windowHeight = window.innerHeight;
+					orderSidebarHeight = windowHeight - substructionHeight;
 					orderContent.css('max-height', orderSidebarHeight);
 					currentOrders.css('max-height', orderSidebarHeight);
 				}

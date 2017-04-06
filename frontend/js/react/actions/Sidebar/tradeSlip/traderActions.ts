@@ -625,7 +625,7 @@ class Actions extends BaseActions
 		}
 	}*/
 
-	public onDragStart(dragSide, price, event)
+	public onDragStart(context, dragSide, price, event)
 	{
 		return (dispatch) =>
 		{
@@ -651,6 +651,8 @@ class Actions extends BaseActions
 				type: TRADER_ON_DRAG,
 				payload: {dragPrevPrice: price, dragSide}
 			});
+			context.props.traderActions.actionHideDirectionConfirm();
+			context.props.traderActions.actionRemoveOrderForm();
 		}
 	}
 
@@ -773,6 +775,8 @@ class Actions extends BaseActions
 				context.props.traderActions.onDeleteConfirm(price);
 			}
 			else{
+				context.props.traderActions.actionHideDirectionConfirm();
+				context.props.traderActions.actionRemoveOrderForm();
 				dispatch({
 					type: TRADER_ON_DRAG,
 					payload: { popUpShow: true }

@@ -67,7 +67,7 @@ button, a.button {
   color: #fff;
   outline: none;
   cursor: pointer;
-  &.delete{
+  &.close_red{
     display: block;
     width: 15px;
     height: 15px;
@@ -379,7 +379,7 @@ input ~ .info{
   }
 }
 
-.validation-summary-errors{
+.invalid_message, .validation-summary-errors{
   display: block;
   height: 22px;
 	padding: 2px 0;
