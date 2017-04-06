@@ -554,10 +554,13 @@ input ~ .info{
 // BM: new dialog
 .dialog-win { @extend .pop_up;
   &__container { @extend .pop_up_container }
-  &__content { @extend .pop_up_content; position: relative; display: block; margin-top: 25%; padding: 10px; background: #211e25;
+  &__inner { overflow: hidden; overflow-y: auto; }
+  &__content { @extend .pop_up_content; position: relative; margin-top: 25%; padding: 10px; background: #211e25;
       border-radius: 4px; border: 1px solid #000; text-align: center;
     &::before { content: ''; position: absolute; display: block; top: -10px; left: -10px; width: calc(100% + 20px); height: calc(100% + 20px); z-index: -1;
         background: linear-gradient(to bottom, #53515e, #292830); box-shadow: 0 0 20px -1px rgba(0, 0, 0, 0.5); border-radius: 4px; }
+    &_full { display: flex; margin-top: auto; width: 90%; height: 90%;
+    }
   }
   &__message { color: #53515e; }
   &__buttons { display: flex; justify-content: center; }
@@ -766,6 +769,9 @@ input ~ .info{
     }
   }
 }
+
+
+.b-clear { clear: both }
 
 
 

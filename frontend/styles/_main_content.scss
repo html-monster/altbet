@@ -1,5 +1,6 @@
+// lineuppage area
 .h-lup { position: relative; margin: 0 10px; height: 0; border-radius: 6px; z-index: 2; clear: both;
-      /*overflow: hidden;*/ transition: 0.4s ease-out;
+      transition: 0.4s ease-out;
   @include chart;
   &.active { padding-top: 10px; height: 400px; }
   &:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 0;
@@ -13,21 +14,40 @@
     &.active { color: #fff; text-shadow: 0 0 16px #bdc0cd; font-weight: bold }
   }
   &__tab_content { padding-top: 10px !important; overflow: hidden }
-  &__lineup { padding: 0 10px }
 
   svg {  max-width: 100% !important;  }
   img{  width: 100%;  }
 }
 
-.l-team { float: left; width: calc(50% - 1px); color: #bdc0cd;
-  &:first-of-type { padding-right: 5px }
+
+
+
+// Lineup page teams
+.l-lup { padding: 0 10px;
+  &__rules { font-size: 11px; text-align: right; }
+  &__link { color: $main-color }
+}
+.l-team { float: left; width: calc(50% - 1px); color: #bdc0cd; font-size: 13px;
+  &:nth-of-type(1), &:nth-of-type(4) { padding-right: 5px }
   &__title { margin: 5px 0 0 0; padding-bottom: 5px; border-bottom: 1px solid darken(#bdc0cd, 20%); text-align: left; font-size: 14px; font-weight: bold }
-  &__team { width: 100%; border-collapse: separate; border-spacing: 3px; font-size: 13px;
-    tr:hover td { text-shadow: 0 0 10px #bdc0cd }
+  &__team { width: 100%; border-collapse: separate; border-spacing: 3px;
+    td { font-size: 12px; vertical-align: top; }
+    tr:hover td { text-shadow: 0 0 10px #bdc0cd; cursor: pointer }
+    .pos { position: relative }
     .pl { padding-left: 5px; text-align: left; }
   }
   &__total { margin-top: 10px; padding-top: 10px; border-top: 1px solid darken(#bdc0cd, 20%); font-size: 14px; text-align: left }
 }
+
+// player info block
+//.l-team__team tr:hover .b-pl-info { display: block; }
+.l-team__team tr:active .b-pl-info { visibility: visible; opacity: 1 }
+.b-pl-info { position: absolute; left: 0; top: 100%; padding: 10px; border: 1px solid #494949;
+      text-align: right; background: #28272F; text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
+  &__main-inf {  }
+  &__statistic { font-size: 12px; }
+}
+
 
 
 .content {
