@@ -110,16 +110,15 @@ export default class Preferences extends React.Component
 					<section className="section">
 						<h3 className="section_user">General</h3>
 						<hr/>
-						<ul className="preferences_list color_scheme_switch">
-							<li>
+						<ul className="preferences_list">
+							<li className="color_scheme_switch">
 								<label className="change-color">
-									<strong>Theme color:</strong>
 									<button className={'dark color_pick' + (globalData.theme === 'dark' ? ' active' : '')} title="dark theme">{}</button>&nbsp;
 									<button className={'light color_pick' + (globalData.theme === 'light' ? ' active' : '')} title="light theme">{}</button>
+									<strong className="label">Theme color:</strong>
 								</label>
+								<br />
 							</li>
-						</ul>
-						<ul className="preferences_list">
 							<li>
 								{/*<input id="IsMode" type="checkbox" checked={this.state.IsMode} onChange={this._onChkChange.bind(this, "IsMode")}/>*/}
 								{/*@Html.CheckBoxFor(m=>m.IsMode, new { @checked = Model.IsMode })*/}
@@ -138,7 +137,23 @@ export default class Preferences extends React.Component
 								</CheckBox>
 							</li>
 						</ul>
+
+{/*
+						<ul className="preferences_list color_scheme_switch">
+							<li>
+								<label className="change-color">
+									<strong>Theme color:</strong>
+									<button className={'dark color_pick' + (globalData.theme === 'dark' ? ' active' : '')} title="dark theme">{}</button>&nbsp;
+									<button className={'light color_pick' + (globalData.theme === 'light' ? ' active' : '')} title="light theme">{}</button>
+								</label>
+							</li>
+						</ul>
+*/}
+
 					</section>
+
+					<br />
+					<br />
 					<section className="section">
 						<h3 className="section_user">Mail Preferences</h3>
 						<hr/>

@@ -589,18 +589,11 @@
     }
   }
   .preferences {
-      //.mode_switch {
-      //  @include checkbox_horizontal;
-      //}
-    //.preferences_list{  display: block;  }
-    //.preferences_list li {  height: 22px;  }
-    .color_scheme_switch label{
-      display: block;
-      padding-top: 5px;
-      height: 100%;
-      cursor: default;
+    .color_scheme_switch { position: relative; margin-bottom: 10px; height: auto !important;
+      label { display: inline-block; }
     }
-		.preferences_list{
+
+    .preferences_list{
       display: inline-block;
       width: 100%;
       li{  height: 22px;  }
@@ -626,6 +619,7 @@
         transition: 0.4s ease-out;
 			}
 		}
+
     i{  width: 275px;  }
   }
   i.btn{  width: 100%;  }
