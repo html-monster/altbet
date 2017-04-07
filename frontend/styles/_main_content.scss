@@ -13,7 +13,7 @@
     &_2 { left: 50%; margin-left: 145px }
     &.active { color: #fff; text-shadow: 0 0 16px #bdc0cd; font-weight: bold }
   }
-  &__tab_content { padding-top: 10px !important; overflow: hidden }
+  &__tab_content { position: relative; padding-top: 10px !important; overflow: hidden }
 
   svg {  max-width: 100% !important;  }
   img{  width: 100%;  }
@@ -24,7 +24,7 @@
 
 // Lineup page teams
 .l-lup { padding: 0 10px;
-  &__rules { font-size: 11px; text-align: right; }
+  &__rules { position: absolute; right: 15px; font-size: 11px; }
   &__link { color: $main-color }
 }
 .l-team { float: left; width: calc(50% - 1px); color: #bdc0cd; font-size: 13px;
@@ -46,6 +46,21 @@
       text-align: right; background: #28272F; text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
   &__main-inf {  }
   &__statistic { font-size: 12px; }
+}
+
+
+// rules & scoring
+.l-rules { @include scroll; padding: 10px 15px 15px; text-align: left; overflow: hidden; overflow-y: auto; }
+.h-rns { display: table-cell; width: 100%;
+  &__tabs { width: 30%; min-width: 300px; }
+  &__tab_content { display: flex; padding-bottom: 35px; height: 100%; color: #bdc0cd;
+    a { color: #3498da; position: relative;
+      &:hover::after { left: 0; width: 100%; }
+      &::after { content: ''; display: block; position: absolute; left: 50%; bottom: -1px; width: 0; height: 1px;
+          background: linear-gradient(to right, transparent, #3498da, transparent); transition: all .3s ease-out;
+      }
+    }
+  }
 }
 
 

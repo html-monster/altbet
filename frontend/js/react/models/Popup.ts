@@ -56,7 +56,7 @@ export class Popup
 
         $("[data-js-wrapper]", $wrapper).click(function(e) { self.onWrapperClick(e, this) });
         // cancel btn
-        // $("[data-js-btn2]", $wrapper).click(function(e) { self.onBtn2Click(e, this) });
+        $("[data-js-close]", $wrapper).click(() => this.close());
         // yes btn
         // $("[data-js-btn1]", $wrapper).click(function(e) { self.onBtn1Click(e, this) });
 
