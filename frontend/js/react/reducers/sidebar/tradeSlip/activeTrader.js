@@ -17,8 +17,8 @@ import {RebuildServerData} from '../../../actions/Sidebar/tradeSlip/activeTrader
 const initialState = {
 	data: {},
 	dragData:{
-		dragPrevPrice: null,
-		dragNextPrice: null,
+		// dragPrevPrice: null,
+		// dragNextPrice: null,
 		dragSide: null,
 		popUpShow: false
 	},
@@ -74,7 +74,7 @@ export default function activeTrader(state = initialState, action)
 			return {...state, spreadHighLight: action.payload};
 
 		case TRADER_ON_DRAG:
-			return {...state, ...action.payload};
+			return {...state, dragData: {...state.dragData, ...action.payload}};
 
 		default:
 			return state
