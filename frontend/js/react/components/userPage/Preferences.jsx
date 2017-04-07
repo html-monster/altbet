@@ -17,7 +17,8 @@ export default class Preferences extends React.Component
 		this.state = {
 			answerMessage: '',
 			answerClass: null,
-			loading: false
+			loading: false,
+			radioButtonsDisabled: true
 		}
 	}
 
@@ -78,6 +79,11 @@ export default class Preferences extends React.Component
 		}
 	}
 
+	radioButtonsDisabling(event)
+	{
+		this.setState({...this.state, radioButtonsDisabled: event.currentTarget.checked})
+	}
+
     /**
      * @private
      */
@@ -95,7 +101,7 @@ export default class Preferences extends React.Component
     {
         const { IsMode, IsBettor, IsTrade } = appData.pageAccountData.Account;
         const { header, active } = this.props.data;
-        const { answerMessage, answerClass, loading } = this.state;
+        const { answerMessage, answerClass, loading, radioButtonsDisabled } = this.state;
 
         return <div className={"tab_item preferences " + (active ? "active" : "")}>
                 <h2>Preferences</h2>
@@ -113,7 +119,7 @@ export default class Preferences extends React.Component
 						<ul className="preferences_list color_scheme_switch">
 							<li>
 								<label className="change-color">
-									<strong>Theme color:</strong>
+									<strong className="label">Theme color:</strong>
 									<button className={'dark color_pick' + (globalData.theme === 'dark' ? ' active' : '')} title="dark theme">{}</button>&nbsp;
 									<button className={'light color_pick' + (globalData.theme === 'light' ? ' active' : '')} title="light theme">{}</button>
 								</label>
@@ -124,46 +130,68 @@ export default class Preferences extends React.Component
 								{/*<input id="IsMode" type="checkbox" checked={this.state.IsMode} onChange={this._onChkChange.bind(this, "IsMode")}/>*/}
 								{/*@Html.CheckBoxFor(m=>m.IsMode, new { @checked = Model.IsMode })*/}
 								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "IsMode", checked: IsMode}}>
-									<strong className="label">Expert mode on:</strong>
+									<strong className="label">Expert mode:</strong>
 								</CheckBox>
 							</li>
 							<li>
 								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "IsBettor", checked: IsBettor}}>
-									<strong className="label">Active bettor on:</strong>
+									<strong className="label">Active bettor:</strong>
 								</CheckBox>
 							</li>
 							<li>
 								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "IsTrade", checked: IsTrade}}>
-									<strong className="label">Auto trade on:</strong>
+									<strong className="label">Auto trade:</strong>
 								</CheckBox>
 							</li>
 						</ul>
 					</section>
 					<section className="section">
-						<h3 className="section_user">Mail Preferences</h3>
+						<h3 className="section_user">Email Notifications:</h3>
 						<hr/>
+						<h4>Alt.Bet Promotions</h4>
 						<ul className="preferences_list">
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: IsBettor}}>
-									<strong className="label" style={{paddingRight: 20}}>
-										Send me news and offers:
-										{/*<span className="help">*/}
-											{/*<span className="help_message"><strong>Subscribe to Alt.bet news and offers</strong></span>*/}
-										{/*</span>*/}
-									</strong>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailSettings[MailNews]", checked: IsBettor}}>
+									<strong className="label">Send me Alt.Bet news and offers:</strong>
 								</CheckBox>
-								{/*Новости и придложения от нашего сайта*/}
+							</li>
+						</ul>
+						<h4>Gameday Updates</h4>
+						<ul className="preferences_list">
+							<li>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailSettings[MailUpdates]", checked: IsBettor}}>
+									<strong className="label">Send me updates on my upcoming games:</strong>
+								</CheckBox>
 							</li>
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNotification", checked: IsBettor}}>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailSettings[MailActivity]", checked: radioButtonsDisabled}}
+										  onChange={::this.radioButtonsDisabling}>
 									<strong className="label" style={{paddingRight: 20}}>
-										Send me results of my bets:
-										{/*<span className="help">*/}
-											{/*<span className="help_message"><strong></strong></span>*/}
-										{/*</span>*/}
+										Send me information on my activity:
+										<span className="help">
+											<span className="help_message w200">
+												<strong>You will receive information on your played orders</strong>
+											</span>
+										</span>
 									</strong>
 								</CheckBox>
-								{/*прислать результаты сыгранных ставок*/}
+								<div className={'container' + (radioButtonsDisabled ? '' : ' inactive')} style={{marginLeft: 10}}>
+									<label className="radio_button">
+										<input type="radio" name="MailSettings[MailFrequency]" value={'daily'}
+											   disabled={!radioButtonsDisabled}/>
+										<span>daily</span>
+									</label>
+									<label className="radio_button">
+										<input type="radio" name="MailSettings[MailFrequency]" value={'weekly'} defaultChecked={true}
+											   disabled={!radioButtonsDisabled}/>
+										<span>weekly</span>
+									</label>
+									<label className="radio_button">
+										<input type="radio" name="MailSettings[MailFrequency]" value={'monthly'}
+											   disabled={!radioButtonsDisabled}/>
+										<span>monthly</span>
+									</label>
+								</div>
 							</li>
 						</ul>
 					</section>
