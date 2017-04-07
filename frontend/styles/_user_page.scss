@@ -25,15 +25,14 @@
     li {
       padding-right: 10px;
       transition: 0.1s ease-out;
-      &.active, &:hover {
-        a { color: #3498da; }
-      }
+      &.active, &:hover { a { color: #3498da; } }
     }
     a {
       color: $main-color;
       transition: 0.1s ease-out;
     }
   }
+  .inactive{  opacity: 0.3;  }
   form.loading{
     input[type=submit] {  background-image: url("#{$pathImage}/payment-load.gif");  }
   }
@@ -113,24 +112,18 @@
         //  }
         //}
       }
-      h3{
-        &.section_user {
-          display: block;
-          //color: #fff;
-          opacity: 0.8;
-          margin: 20px 0 10px;
-          padding-bottom: 10px;
-          //border-bottom: 1px solid #fff;
-        }
-        &.mail{  font-weight: normal;  }
-      }
       h2 {
         margin-bottom: 55px;
         font-size: 24px;
         font-weight: normal;
-        color: $main_color;
         border-bottom: 1px solid $main_color;
       }
+      h3{
+          opacity: 0.8;
+          margin: 20px 0 10px;
+          padding-bottom: 10px;
+      }
+      h4{  margin: 15px 0 5px; font-weight: normal;  }
     }
 
 		.input_animate{  display: block;  height: 75.97px;  }
@@ -602,8 +595,10 @@
 				position: relative;
 				&>span{  position: relative;  }
         &.checkbox{  padding-left: 367px;  }
-        &.change-color strong{
-          color: $main-color;
+        &.radio_button{  padding-left: 0; }
+        &.change-color{
+          height: 44px;
+          strong{  color: $color-min;  }
         }
 			}
       input:checked ~ strong{
