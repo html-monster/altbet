@@ -489,7 +489,7 @@
 			}
 			td{
 				user-select: none;
-				-webkit-user-drag: element;
+				//-webkit-user-drag: element;
 				transition: 0s;
 				&:nth-of-type(1){  width: 60px;  }
 				&:nth-of-type(5){  width: 68px; }
