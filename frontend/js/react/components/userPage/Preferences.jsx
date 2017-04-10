@@ -151,7 +151,7 @@ export default class Preferences extends React.Component
 						<h4>Alt.Bet Promotions</h4>
 						<ul className="preferences_list">
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailSettings[MailNews]", checked: IsBettor}}>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: IsBettor}}>
 									<strong className="label">Send me Alt.Bet news and offers:</strong>
 								</CheckBox>
 							</li>
@@ -159,12 +159,12 @@ export default class Preferences extends React.Component
 						<h4>Gameday Updates</h4>
 						<ul className="preferences_list">
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailSettings[MailUpdates]", checked: IsBettor}}>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailUpdates", checked: IsBettor}}>
 									<strong className="label">Send me updates on my upcoming games:</strong>
 								</CheckBox>
 							</li>
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailSettings[MailActivity]", checked: radioButtonsDisabled}}
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailActivity", checked: radioButtonsDisabled}}
 										  onChange={::this.radioButtonsDisabling}>
 									<strong className="label" style={{paddingRight: 20}}>
 										Send me information on my activity:
@@ -177,17 +177,17 @@ export default class Preferences extends React.Component
 								</CheckBox>
 								<div className={'container' + (radioButtonsDisabled ? '' : ' inactive')} style={{marginLeft: 10}}>
 									<label className="radio_button">
-										<input type="radio" name="MailSettings[MailFrequency]" value={'daily'}
+										<input type="radio" name="MailFrequency" value={'daily'}
 											   disabled={!radioButtonsDisabled}/>
 										<span>daily</span>
 									</label>
 									<label className="radio_button">
-										<input type="radio" name="MailSettings[MailFrequency]" value={'weekly'} defaultChecked={true}
+										<input type="radio" name="MailFrequency" value={'weekly'} defaultChecked={true}
 											   disabled={!radioButtonsDisabled}/>
 										<span>weekly</span>
 									</label>
 									<label className="radio_button">
-										<input type="radio" name="MailSettings[MailFrequency]" value={'monthly'}
+										<input type="radio" name="MailFrequency" value={'monthly'}
 											   disabled={!radioButtonsDisabled}/>
 										<span>monthly</span>
 									</label>
