@@ -1,3 +1,36 @@
+var gLineupPageData = {
+	team1: [
+			{pos: "FWD", name: "John Doe", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"}, plInfo: {action: "FG 6 TYds 8.6 int 1"}},
+			{pos: "FWD", name: "Romelu Lukaku", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+			{pos: "FWD", name: "Zlatan Ibrahimovic", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+			{pos: "FWD", name: "Juan Mata", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+			{pos: "MID", name: "Marcus Rashford", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+			{pos: "MID", name: "Paul Pogba", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+			{pos: "MID", name: "Anthony Martial", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+			{pos: "DEF", name: "Jamie Vardy", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+			{pos: "DEF", name: "Wayne Rooney", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+			{pos: "GK", name: "Riyad Mahrez", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+		],
+	t1TotScore: 126,
+	t1Diff: "+32",
+	team2: [
+			{ pos: "FWD", name: "Gareth Barry", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"} },
+			{ pos: "FWD", name: "Paul Robinson", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"} },
+			{ pos: "FWD", name: "Eric Bailly", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"} },
+			{ pos: "MID", name: "Robbie Brady", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"} },
+			{ pos: "MID", name: "Chris Brunt", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"} },
+			{ pos: "MID", name: "Ashley Williams", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"} },
+			{ pos: "DEF", name: "Isaac Success", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"} },
+			{ pos: "DEF", name: "Jake Livermore", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"} },
+			{ pos: "DEF", name: "Marouane Fellaini", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"} },
+			{ pos: "GK", name: "Morgan Schneiderlin", status: "Act", fppg: 24.7, score: 15.9, timeEnd: moment(Date.now()).add(Math.floor(Math.random() * (108 - 31 + 1)) + 2, 'm'), plInfo: {action: "FG 6 TYds 8.6 int 1"} },
+		],
+	t2TotScore: 158,
+	t2Diff: "-32",
+};
+
+
+
 $(document).ready(function () {
 	if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){
 		var flag = 0,

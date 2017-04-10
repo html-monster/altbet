@@ -1,20 +1,8 @@
-class tabsClass{
-	constructor(){
-		this.defaultTab = function () {
-			let tab = $('.tab');
-
-
-			// BM: change active tab
-			tab.click(function ()
-			{
-				let tabContainer = $(this).parent(),
-						itemContainer = tabContainer.next();
-				if(!($(this).attr('data-disabled'))){
-					tabContainer.children('.tab').removeClass("active").eq($(this).index()).addClass("active");
-					itemContainer.children('.tab_item').removeClass('active').hide().eq($(this).index()).fadeIn();
-				}
-			});
-		}();
+class tabsClass
+{
+	constructor()
+	{
+		this.apply();
 	}
 
 
@@ -49,16 +37,28 @@ class tabsClass{
         setTimeout(() => itemsAnimation($(container).find('.tab_item')), 2000);
 	}
 
-	// static tabFilter(filterContainer){
-	// 	$(filterContainer).find('input[type="checkbox"]').change(function(){
-	// 		let current_div = $('#'+$(this).val());
-	// 	0||console.log( 'here', 0 );
-    //
-	// 		if($(this).is(':checked'))
-	// 			current_div.addClass('active');
-	// 		else
-	// 			current_div.removeClass('active');
-	// 	});
-	// }
+
+    /**
+     * @public
+     */
+	apply(context)
+	{
+		context = context ? $(context) : $('body');
+
+		let tab = $('.tab', context);
+
+		// BM: change active tab
+		tab.click(function ()
+		{
+			let tabContainer = $(this).parent();
+			let itemContainer = tabContainer.next();
+
+			if( !($(this).attr('data-disabled')) )
+			{
+				tabContainer.children('.tab').removeClass("active").eq($(this).index()).addClass("active");
+				itemContainer.children('.tab_item').removeClass('active').hide().eq($(this).index()).fadeIn();
+			}
+		});
+	}
 }
 

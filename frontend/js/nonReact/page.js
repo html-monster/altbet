@@ -153,31 +153,6 @@ $(document).ready(function ()
 		});
 	})();
 
-	$('.show-schedule').click(function(){ // show chart on the main page
-		$(this).toggleClass('active')
-					 .next().toggleClass('active');
-		$(this).parents('.table').toggleClass('active');
-		if($(this).hasClass('active'))
-			$(this).parents('.content_bet').find('.content_title').css('max-height', 'inherit');
-		else{
-			setTimeout(() => {
-				$(this).parents('.content_bet').find('.content_title').removeAttr('style');
-			}, 400);
-		}
-
-		if($('.show-schedule').hasClass('active'))
-			globalData.MainCharOn = true;
-		else
-			globalData.MainCharOn = false;
-
-		// var schedule = $(this).next();
-		// setTimeout(function(){
-		// 	schedule.addClass('loader');
-		// }, 400);
-		// setTimeout(function(){
-		// 	schedule.removeClass('loader');
-		// }, 1000);
-	});
 
 	// $('.schedule').sortable('disabled') ; //drug disable
 
