@@ -737,7 +737,7 @@ class Actions extends BaseActions
 			if(confirm){
 				defaultMethods.sendAjaxRequest({
 					httpMethod: 'POST',
-					url       : `${ABpp.baseUrl}/OrderController/Delete`,
+					url       : `${ABpp.baseUrl}/Order/DragAndDropCancel`,
 					data      : { OldPrice: price, Symbol: ExchangeSymbol, Side: dragSide, isMirror },
 					callback  : onSuccessAjax,
 					onError   : onErrorAjax,
