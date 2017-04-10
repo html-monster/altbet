@@ -53,7 +53,7 @@ export class Popup extends React.PureComponent
 
         ReactDOM.render(
             <div className="dialog-win" data-js-popup-win="" /*style={{display: 'block'}}*/>
-                <div className="dialog-win__container" data-js-wrapper="wrapper">
+                <div className="dialog-win__container" onClick={(ee) => $(ee.target).data('js-wrapper') == 'wrapper' && this.props.closeFunc()} data-js-wrapper="wrapper">
                     <div className="dialog-win__content dialog-win__content_full">
                         <div className="dialog-win__close close" onClick={this.props.closeFunc}>{}</div>
                         <div className="dialog-win__inner" data-js-content="">

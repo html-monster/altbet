@@ -202,11 +202,6 @@ export default class ExchangeItem extends React.PureComponent
      */
     onLineupOpen(that)
     {
-        0||console.log( 'here', 0 );
-
-        // this.onLineupOpen($("[data-js-lineup].active"));
-
-
         var $that = $(that);
 
 		$that.toggleClass('active')
@@ -216,7 +211,7 @@ export default class ExchangeItem extends React.PureComponent
         var $contentTitle = $that.closest('.content_bet').find('.content_title');
 		if ($that.hasClass('active'))
         {
-            $that.next().css('height', $that.next().find("[data-js-team]").height() + 20);
+            $that.next().css('height', $that.next().find("[data-js-team]").height() + 40);
             $contentTitle.css('max-height', 'inherit');
         }
 		else

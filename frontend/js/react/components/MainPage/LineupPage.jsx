@@ -127,7 +127,7 @@ export class LineupPage extends React.Component
 
                 { this.state.isPopupVisible &&
                     <Popup closeFunc={::this._onClose}>
-                        <Tabs>
+                        <Tabs className="h-rns" tabsClass="h-tab1">
                             {
                                 [
                                     "Info",
@@ -517,7 +517,26 @@ export class LineupPage extends React.Component
                                         </div>
 
                                     </div>,
-                                    <p key="tab2content">Some her</p>
+                                    <div key="tab2content">
+                                        <div className="list">
+                                            <ul>
+                                                {
+                                                    function () { for (var ret = [], ii = 1, countii = this.entities.length / 2; ii <= countii; ii++ )
+                                                        ret.push(<li key={"li1" + ii}>{ii}. {this.entities[ii-1]}</li>);
+                                                    return ret; }.bind(this)()
+                                                }
+                                            </ul>
+                                        </div>
+                                        <div className="list">
+                                            <ul>
+                                                {
+                                                    function () { for (var ret = [], countii = this.entities.length, ii = countii / 2 + 1; ii <= countii; ii++ )
+                                                        ret.push(<li key={"li2" + ii}>{ii}. {this.entities[ii-1]}</li>);
+                                                    return ret; }.bind(this)()
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
                                 ]
                             }
                         </Tabs>

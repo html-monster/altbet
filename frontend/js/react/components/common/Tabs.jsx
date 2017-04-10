@@ -9,6 +9,8 @@ export class Tabs extends React.PureComponent
 {
     popup = null;
 
+    uniq = (new Date()).getTime();
+
     constructor() {
         super();
     }
@@ -16,31 +18,32 @@ export class Tabs extends React.PureComponent
 
     componentDidMount()
     {
-        // active
+        $(this.refs.tab1).addClass("active");
+        $(this.refs.tab_item1).addClass("active");
     }
 
 
     render()
     {
-        return (
-            <div className="h-rns h-tab1">
+        const { className, tabsClass } = this.props;
 
-                <div className="h-rns__tabs tabs h-tab1__tabs">
+        return (
+            <div className={`${className} ${tabsClass}`} data-js-tabs={this.uniq}>
+
+                <div className={`${tabsClass}__tabs tabs`}>
                     {
                         function () { for (var ret = [], ii = 1, countii = this.props.children.length / 2; ii <= countii; ii++ )
-                            ret.push(<div key={"tab" + ii} className={`h-tab1__tab`} onClick={::this._onTabClick}>{ this.props.children[ii-1] }</div>);
+                            ret.push(<div key={"tab" + ii} ref={"tab" + ii} className={`${tabsClass}__tab tab js-tab`} onClick={::this._onTabClick}>{ this.props.children[ii-1] }</div>);
                         return ret; }.bind(this)()
                     }
                 </div>
 
-                <div className="h-rns__tab_content tab_content">
-                    <div className="l-rules tab_item" style={{display: 'block'}}>
-                        { this.props.children[2] }
-                    </div>
-
-                    <div className="l-scoring tab_item" data-js-entities="">
-                        { this.props.children[3] }
-                    </div>
+                <div className={`${tabsClass}__tab_content tab_content`}>
+                    {
+                        function () { for (var ret = [], jj = 1, countii = this.props.children.length, ii = countii / 2 + 1; ii <= countii; ii++, jj++ )
+                            ret.push(<div key={"tab_item" + jj} ref={"tab_item" + jj} className={`${tabsClass}__tab_item tab_item tab_item${jj} js-tab_item`}>{ this.props.children[ii-1] }</div>);
+                        return ret; }.bind(this)()
+                    }
                 </div>
 
             </div>
@@ -54,8 +57,8 @@ export class Tabs extends React.PureComponent
 
         if( !($(ee.target).attr('data-disabled')) )
         {
-            tabContainer.children('.tab').removeClass("active").eq($(ee.target).index()).addClass("active");
-            itemContainer.children('.tab_item').removeClass('active').hide().eq($(ee.target).index()).fadeIn();
+            tabContainer.children('.js-tab').removeClass("active").eq($(ee.target).index()).addClass("active");
+            itemContainer.children('.js-tab_item').removeClass('active').hide().eq($(ee.target).index()).fadeIn();
         }
     }
 }
