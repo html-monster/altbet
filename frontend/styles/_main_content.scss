@@ -28,7 +28,7 @@
   &__link { color: $main-color }
 }
 .l-team { float: left; width: calc(50% - 1px); color: #bdc0cd; font-size: 13px;
-  &:nth-of-type(1), &:nth-of-type(4) { padding-right: 5px }
+  &:nth-of-type(2), &:nth-of-type(5) { padding-right: 5px }
   &__title { margin: 5px 0 0 0; padding-bottom: 5px; border-bottom: 1px solid darken(#bdc0cd, 20%); text-align: left; font-size: 14px; font-weight: bold }
   &__team { width: 100%; border-collapse: separate; border-spacing: 3px;
     td { font-size: 12px; vertical-align: top; }

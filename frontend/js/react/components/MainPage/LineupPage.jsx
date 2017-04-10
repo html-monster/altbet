@@ -56,6 +56,7 @@ export class LineupPage extends React.Component
                                 <th>{}</th>
                                 <th>Pos</th>
                                 <th className="pl">Name</th>
+                                <th>Team</th>
                                 <th>Status</th>
                                 <th>FPPG</th>
                                 <th>Score</th>
@@ -72,7 +73,7 @@ export class LineupPage extends React.Component
                                             <div className="b-pl-info__statistic">{itm.plInfo.action}</div>
                                         </div>
                                     </td>
-                                    <td className="pl">{itm.name}</td><td>{itm.status}</td><td>{itm.fppg}</td><td>{itm.score}</td>
+                                    <td className="pl">{itm.name}</td><td>{itm.team.toUpperCase()}</td><td>{itm.status}</td><td>{itm.fppg}</td><td>{itm.score}</td>
                                     <td title="Time remaining">{moment(moment(itm.timeEnd).diff(Date.now())).format("HH:mm")}</td>
                                 </tr>)
                             }
@@ -87,6 +88,7 @@ export class LineupPage extends React.Component
                                 <th>{}</th>
                                 <th>Pos</th>
                                 <th className="pl">Name</th>
+                                <th>Team</th>
                                 <th>Status</th>
                                 <th>FPPG</th>
                                 <th>Score</th>
@@ -102,7 +104,7 @@ export class LineupPage extends React.Component
                                             <div className="b-pl-info__statistic">{itm.plInfo.action}</div>
                                         </div>
                                     </td>
-                                    <td className="pl">{itm.name}</td><td>{itm.status}</td><td>{itm.fppg}</td><td>{itm.score}</td>
+                                    <td className="pl">{itm.name}</td><td>{itm.team.toUpperCase()}</td><td>{itm.status}</td><td>{itm.fppg}</td><td>{itm.score}</td>
                                     <td title="Time remaining">{moment(moment(itm.timeEnd).diff(Date.now())).format("HH:mm")}</td>
                                 </tr>)
                             }
