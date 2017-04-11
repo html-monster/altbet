@@ -53,6 +53,7 @@ class Header extends React.Component
 	{
 		const { actions, serverData } = this.props;
         let $filter = appData.urlQuery ? appData.urlQuery.filter : '';
+console.log(serverData);
 
 		if(serverData.GainLost !== undefined){
 			serverData.Profitlost = serverData.GainLost;
@@ -61,7 +62,6 @@ class Header extends React.Component
 		}
         const profitlost = serverData.Profitlost.toFixed(2);
 
-console.log(globalData.theme);
         return <div className="header_info">
 			{/*<div className="video btn">*/}
 				{/*<span className="title">Watch video</span>*/}
