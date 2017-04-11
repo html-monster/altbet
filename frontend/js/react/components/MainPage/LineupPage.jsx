@@ -47,7 +47,7 @@ export class LineupPage extends React.Component
 
 
         return <div className={"l-lup " + className} data-js-team="">
-                <div className="l-lup__rules"><a href="#" className="l-lup__link text_decoration" onClick={::this._onRaSClick}>Rules & scoring</a></div>
+                <div className="l-lup__rules"><a href="#" className="l-lup__link text_decoration" onClick={::this._onRaSClick}>Rules & Scoring</a></div>
                 <div className="l-team">
                     <div className="l-team__title">Arsenal (+27.1)</div>
                     <table className="l-team__team">
@@ -131,7 +131,7 @@ export class LineupPage extends React.Component
                             {
                                 [
                                     "Info",
-                                    "Entities",
+                                    "Entries",
                                     <div key="tab1content" className="page_wrapper">
                                         <h1>Terms and Conditions</h1>
 

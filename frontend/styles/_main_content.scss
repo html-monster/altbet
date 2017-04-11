@@ -15,7 +15,9 @@
   }
   &__tab_content { position: relative; padding-top: 10px !important; overflow: hidden }
 
-  svg {  max-width: 100% !important;  }
+  .highcharts-tab { text-align: center; }
+  .highcharts-container { display: inline-block; }
+  svg { width: 100% !important;  }
   img{  width: 100%;  }
 }
 

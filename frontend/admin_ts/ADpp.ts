@@ -13,7 +13,7 @@ import { MainConfig } from "./inc/MainConfig";
 import {User} from "./model/User";
 import {IndexController} from "./controller/IndexController";
 import {LoginController} from "./controller/LoginController";
-// import {RadioBtns} from "./component/RadioBtns";
+import {FeedController} from "./controller/FeedController";
 
 
 export default class ADpp
@@ -32,6 +32,7 @@ export default class ADpp
         this.controllers['Exchanges'] = Exchanges;
         this.controllers['Index'] = IndexController;
         this.controllers['Login'] = LoginController;
+        this.controllers['Feed'] = FeedController;
 
         if (location.host == 'localhost' || location.host == '192.168.1.249') MainConfig.BASE_URL = '/AltBet.Admin';
         else MainConfig.BASE_URL = '/Admin';

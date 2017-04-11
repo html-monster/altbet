@@ -185,7 +185,7 @@ export default class ExchangeItem extends React.PureComponent
                     <div className="h-lup__tab_content tab_content">
                         <LineupPage className="tab_item" exdata={exdata} data={this.data} />
 
-                        <div className="tab_item" id={"container_" + symbol}>{}</div>
+                        <div className="tab_item highcharts-tab" id={"container_" + symbol} data-js-highchart="">{}</div>
                         {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                     </div>
                 </div>
@@ -211,7 +211,10 @@ export default class ExchangeItem extends React.PureComponent
         var $contentTitle = $that.closest('.content_bet').find('.content_title');
 		if ($that.hasClass('active'))
         {
-            $that.next().css('height', $that.next().find("[data-js-team]").height() + 40);
+            let height = $that.next().find("[data-js-team]").height();
+            height = height > 400 ? height : 400;
+
+            $that.next().css('height', height + 40);
             $contentTitle.css('max-height', 'inherit');
         }
 		else
