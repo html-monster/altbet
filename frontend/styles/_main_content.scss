@@ -77,9 +77,10 @@
 .content {
   @include span(7.6 of 12);
   @include push (1.8 of 12);
-  margin-top: 80px;
+  margin-top: 70px;
   padding: 15px;
   position: relative;
+  color: $main-color;
   .nav_items {
     .mode_wrapper {
       display: flex;

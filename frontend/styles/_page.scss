@@ -1,4 +1,10 @@
 //$colorAbout: $colorAbout;
+.container_bg{
+	padding: 20px;
+	background: $sign_in_bg;
+	border-radius: 6px;
+}
+
 .content.page{
 	padding: 15px;
 	color: $color2About;

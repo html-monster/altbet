@@ -182,12 +182,12 @@ export default class Preferences extends React.Component
 										<span>daily</span>
 									</label>
 									<label className="radio_button">
-										<input type="radio" name="MailFrequency" value={'weekly'} defaultChecked={true}
+										<input type="radio" name="MailFrequency]" value={'weekly'} defaultChecked={true}
 											   disabled={!radioButtonsDisabled}/>
 										<span>weekly</span>
 									</label>
 									<label className="radio_button">
-										<input type="radio" name="MailFrequency" value={'monthly'}
+										<input type="radio" name="MailFrequency]" value={'monthly'}
 											   disabled={!radioButtonsDisabled}/>
 										<span>monthly</span>
 									</label>
