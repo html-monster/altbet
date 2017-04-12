@@ -7,8 +7,10 @@ $default-button-bg: #211e25;
 $active_bg: linear-gradient(to top, #bdc0cd, #ffffff);
 $bg_color: linear-gradient(to bottom, #53515e, #292830);
 $color-max: #000;
+$color-min: #fff;
 $border_color: #000;
 
+$bg_grad: linear-gradient(to bottom, #53515e, #292830);
 $grad_top: #53515e;
 $grad_bottom: #292830;
 $checkbox_bg: #53525d;
@@ -58,12 +60,9 @@ $breadcrumbs-bg: linear-gradient(to bottom, #53515e, #292830);
 $breadcrumbs-color: transparentize(#ffffff, 0.5);
 
 @mixin chart{
+	& { background: linear-gradient(to bottom, #211e25, #292830); }
 	svg > text:last-of-type{  visibility: hidden;  }
-	.highcharts-container{
-		padding-top: 10px;
-		border-radius: 6px;
-		background: linear-gradient(to bottom, #211e25, #292830);
-	}
+	//.highcharts-container{
 	rect.highcharts-background{
 		fill: transparent;
 	}

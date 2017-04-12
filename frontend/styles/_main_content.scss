@@ -1,11 +1,103 @@
+// lineuppage area
+.h-lup { position: relative; margin: 0 10px; height: 0; border-radius: 6px; z-index: 2; clear: both;
+      transition: 0.4s ease-out;
+  @include chart;
+  &.active { padding-top: 10px; height: 400px; }
+  &:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 0;
+      background: $main_page_gif no-repeat center $main_page_tab_color_active; }
+  &.loader:after{  height: 100%;  }
+
+  &__tab {  display: inline-block;  width: 103px; position: absolute; top: -19px; line-height: 21px; font-size: 13px;
+    color: #fff;  transition: color 0.4s ease-out; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
+    &_1 { right: 50%;
+      margin-right: 1px;
+      padding-left: 29px;
+      padding-right: 26px;
+      @include main_page_lineup_button;
+    }
+    &_2 {
+      left: 50%;
+      margin-left: 1px;
+      padding-left: 26px;
+      padding-right: 29px;
+      @include main_page_chart_button;
+    }
+    &:hover{  color: $color-blue;  }
+    &.active {
+      color: $color-blue;
+      //text-shadow: 0 0 16px $color-blue;
+      //font-weight: bold;
+    }
+  }
+  &__tab_content { position: relative; padding-top: 10px !important; overflow: hidden }
+
+  svg {  max-width: 100% !important;  }
+  img{  width: 100%;  }
+}
+
+
+
+
+// Lineup page teams
+.l-lup { padding: 0 10px;
+  &__rules { position: absolute; right: 15px; font-size: 11px; }
+  &__link { color: $main-color }
+}
+.l-team { float: left; width: calc(50% - 1px); /*color: #bdc0cd;*/ font-size: 13px;
+  &:nth-of-type(2), &:nth-of-type(5) { padding-right: 5px }
+  &:nth-of-type(3), &:nth-of-type(6) { padding-left: 5px }
+  &__title { margin: 5px 0 0 0; padding-bottom: 5px; border-bottom: 1px solid darken(#bdc0cd, 20%); text-align: left; font-size: 14px; font-weight: bold }
+  &__team { width: 100%; border-collapse: separate; border-spacing: 3px;
+    td, th { font-size: 12px; vertical-align: top; }
+    tr:hover td { text-shadow: 0 0 10px #bdc0cd; cursor: pointer }
+    .pos { position: relative }
+    .pl { padding-left: 5px; text-align: left; }
+  }
+  &__total { margin-top: 10px; padding-top: 10px; border-top: 1px solid darken(#bdc0cd, 20%); font-size: 14px; text-align: left }
+}
+
+// player info block
+//.l-team__team tr:hover .b-pl-info { display: block; }
+.l-team__team tr:active .b-pl-info { visibility: visible; opacity: 1 }
+.b-pl-info { position: absolute; left: 0; top: 100%; padding: 10px;
+      text-align: right;  text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
+      @include main_page_lineup_hind;
+  &__main-inf {  }
+  &__statistic { font-size: 12px; }
+}
+
+
+// rules & scoring
+.h-rns { display: table-cell; width: 100%;
+  .tabs { width: 30%; min-width: 300px; }
+  .tab_content { display: flex; padding-bottom: 35px; height: 100%; color: #bdc0cd;
+    a { color: #3498da; position: relative;
+      &:hover::after { left: 0; width: 100%; }
+      &::after { content: ''; display: block; position: absolute; left: 50%; bottom: -1px; width: 0; height: 1px;
+          background: linear-gradient(to right, transparent, #3498da, transparent); transition: all .3s ease-out;
+      }
+    }
+  }
+  .tab_item { margin-top: 20px }
+  .tab_item1 { @include scroll; padding: 10px 15px 15px; text-align: left; overflow: hidden; overflow-y: auto; }
+  .tab_item2 { width: 100%;
+    .list { display: inline-block; width: 50%; text-align: center; }
+    ul { display: inline-block; }
+    li { padding-bottom: 10px; text-align: left; }
+  }
+}
+
+
+
 .content {
   @include span(7.6 of 12);
   @include push (1.8 of 12);
-  margin-top: 80px;
+  margin-top: 70px;
   padding: 15px;
   position: relative;
+  color: $main-color;
   .nav_items {
-    .mode_wrapper{
+    .mode_wrapper {
       display: flex;
       align-items: center;
       width: 145px;
@@ -493,29 +585,32 @@
             }
           }
           .pl, .pos{
-            width: 145px;
-            height: 22px;
+            width: 225px;
+            height: 23px;
             //padding-top: 4px;
             //visibility: hidden;
             position: absolute;
             bottom: -45px;
             font-size: 12px;
             color: $main-color;
-            background: url("#{$pathImage}/sprite.svg") no-repeat;
+            background: url("#{$pathImage}/sprite_components.svg") no-repeat;
             overflow: hidden;
             strong{
               display: block;
-              margin-top: -25px;
+              width: 104px;
+              margin-top: 3px;
+              transform: translateY(-20px);
               transition: 0.2s ease-out;
             }
           }
           .pl{
-            padding-left: 25px;
+            padding-left: 34px;
             padding-right: 30px;
-            right: -6px;
+            right: -5px;
             background-position: $main_page_event_info_pl_bg;
             //.profit{  color: #4dac2e;  }
             //.loss{  color: #ff3905;  }
+            strong{  float: left;  }
             span{
               &.win{  color: #4dac2e;  }
               &.lose{  color: #ff3905;  }
@@ -526,6 +621,7 @@
             padding-left: 30px;
             left: -6px;
             background-position: $main_page_event_info_pos_bg;
+            strong{  float: right;  }
             span{
               color: $main_page_pos_color;
             }
@@ -540,7 +636,7 @@
         position: absolute;
         left: calc(50% - 20px);
         top: 108px;
-        z-index: 2;
+        z-index: 4;
         cursor: pointer;
         background: $main_page_event_chart_button;
         transition: 0.4s ease-out;
@@ -567,33 +663,9 @@
           }
         }
       }
-      .schedule{
-        //display: none;
-        height: 0;
-        margin: 0 10px;
-        position: relative;
-        z-index: 2;
-        clear: both;
-        overflow: hidden;
-        transition: 0.4s ease-out;
-        &:after{
-          content: '';
-          display: block;
-          width: 100%;
-          height: 0;
-          background: $main_page_gif no-repeat center $main_page_tab_color_active;
-          position: absolute;
-          top: 0;
-          left: 0;
-        }
-        &.active{  height: 400px;  }
-        &.loader:after{  height: 100%;  }
-        svg{  max-width: 100% !important;  }
-        @include chart;
-        img{  width: 100%;  }
-      }
     }
   }
+  .mp-exchanges{  padding-top: 5px;  }
   .tab_item:first-child {
     display: block;
   }

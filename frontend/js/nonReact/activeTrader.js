@@ -702,11 +702,11 @@ class activeTraderClass{
 
 		if(tbody.hasClass('scroll_dis')) return false;
 
-		if(indexBuy == -1 && indexSell == -1)
+		if(indexBuy === -1 && indexSell === -1)
 			indexSell = 49;
-		if(indexBuy == -1)
+		if(indexBuy === -1)
 			indexBuy = indexSell;
-		else if(indexSell == -1)
+		else if(indexSell === -1)
 			indexSell = indexBuy;
 
 		center = center ? 0 : (indexSell - indexBuy) / 2;
@@ -881,13 +881,12 @@ class activeTraderClass{
 	 * @param showFooter bool включен футер или нет
 	 */
 	static tbodyResize(showFooter){
-		var windowHeight = window.innerHeight,
+		let windowHeight = window.innerHeight,
 				footer = $('footer'),
 				footerHeight = footer.outerHeight(),
 				tbody = $('.left_order table.limit tbody'),
 				delay = 400;
 		// order = $('#order');
-
 		if(showFooter) delay = 0;
 
 		// order.css('overflow-y', 'hidden');
@@ -895,6 +894,9 @@ class activeTraderClass{
 			let orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight(true) + $('header').outerHeight(true)),
 				eventTitleHeight = $('.active_trader .event_title').length ? 35 : 0,
 				activeTraderHeight = orderSidebarHeight - (eventTitleHeight + 214);
+		// console.log(orderSidebarHeight);
+		// console.log(eventTitleHeight);
+		// console.log(activeTraderHeight);
 
 			if(footer.hasClass('active')){
 				tbody.css('max-height', activeTraderHeight - footerHeight);

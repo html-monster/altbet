@@ -2,11 +2,32 @@ import React from 'react';
 
 import ButtonContainer from './ButtonContainer';
 import {DateLocalization} from './../../models/DateLocalization';
+import {LineupPage} from './LineupPage';
 // import {Common} from './../../common/Common';
 
 
-export default class ExchangeItem extends React.Component
+export default class ExchangeItem extends React.PureComponent
 {
+    constructor(props)
+    {
+        super(props)
+
+        // эмуляция времени игроков
+        this.data = gLineupPageData;
+    }
+
+
+    componentDidMount()
+    {
+	    $('[data-js-lineup]:not(.has-click)').click((ee) =>
+	    {
+            if (!$(ee.target).hasClass('active') && $('[data-js-lineup].active').length) this.onLineupOpen('[data-js-lineup].active');
+            this.onLineupOpen(ee.target);
+	    }).addClass('has-click');
+	    // 0||console.log( '999999999999999', $('.show-schedule') );
+    }
+
+
     render()
     {
         // let  = ABpp.config.basicMode;
@@ -14,7 +35,6 @@ export default class ExchangeItem extends React.Component
         const data = this.props.data;
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
-        let date;
 
         // common props for button container
         let commProps = {
@@ -43,12 +63,20 @@ export default class ExchangeItem extends React.Component
         } // endif
 
 
+        // exdata for lineup
+        var date = $DateLocalization.fromSharp(data.Symbol.StartDate, 0, {TZOffset: false});
+        const exdata = {HomeAlias: data.Symbol.HomeAlias,
+            AwayAlias: data.Symbol.AwayAlias,
+            StartDate: data.Symbol.StartDate ? date : null, // moment obj
+        };
+
+
         return <div className={"content_bet not-sort categoryFilterJs" + (isBasicMode ? " basic_mode_js" : "") + $classActive + (isTraiderOn ? " clickable" : "")} id={symbol}>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
             <input name={data.Symbol.Status} type="hidden" value="inprogress" />
 
             <div className={"event_info " + data.CategoryIcon}>
                 <span className="date">
-                    {(date = $DateLocalization.fromSharp(data.Symbol.StartDate, 0, {TZOffset: false}).unixToLocalDate({format: 'DD MMM Y'})) ? date : ''}
+                    {(date = date.unixToLocalDate({format: 'DD MMM Y'})) ? date : ''}
                     {/*- {(date = $DateLocalization.fromSharp(data.Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                 </span>
                 {data.Symbol.Status === 2 ? <i className="half_time" title="Completed">ht<span>Completed</span></i> : ""}
@@ -92,13 +120,13 @@ export default class ExchangeItem extends React.Component
                         <div className="pl mode_info_js">
                             {
                                 function() {
-                                    if( data.Positions !== 0 )
+                                    if( data.Positions )
                                     {
                                         let $class;
                                         if (data.GainLoss < 0) $class = 'lose';
                                         else if (data.GainLoss > 0) $class = 'win';
 
-                                        return <strong style={{'marginTop': 3}}>P/L: <span className={$class}>{data.GainLoss ?
+                                        return <strong style={{transform: `translateY(0)`}}>P/L: <span className={$class}>{data.GainLoss ?
 											data.GainLoss < 0 ? `($${Math.abs(data.GainLoss)})` :  '$' + data.GainLoss
 											:
                                             '$' + 0}</span></strong>;
@@ -143,19 +171,59 @@ export default class ExchangeItem extends React.Component
                         }}/>
 
                         <div className="pos mode_info_js">
-                            <strong style={data.Positions != 0 ? {'marginTop': 3} : {}}>Pos: <span>{data.Positions != 0 && data.Positions}</span></strong>
+                            <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>Pos: <span>{data.Positions && data.Positions}</span></strong>
                         </div>
                     </div>
                 </div>
 
-                <button className="show-schedule" title="Show chart">{}</button>
-                <div className="schedule loader not-sort">
-                    <div id={"container_" + symbol}>{}</div>
-                    {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
+                <button className="show-schedule" data-js-lineup="" title="Show chart">{}</button>
+                <div className="h-lup schedule loader not-sort">
+                    <div className="tabs">
+                        <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info">Lineups</div>
+                        <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info">Chart</div>
+                    </div>
+                    <div className="h-lup__tab_content tab_content">
+                        <LineupPage className="tab_item" exdata={exdata} data={this.data} />
+
+                        <div className="tab_item" id={"container_" + symbol}>{}</div>
+                        {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
+                    </div>
                 </div>
                 <a href="#" className="add_favorite" title="Add to favorite">{}</a>
             </div>
         </div>;
+    }
+
+
+    /**
+     * show chart on the main page
+     * @private
+     * @param that - opener
+     */
+    onLineupOpen(that)
+    {
+        var $that = $(that);
+
+		$that.toggleClass('active')
+					 .next().toggleClass('active');
+		$that.closest('.table').toggleClass('active');
+
+        var $contentTitle = $that.closest('.content_bet').find('.content_title');
+		if ($that.hasClass('active'))
+        {
+            $that.next().css('height', $that.next().find("[data-js-team]").height() + 40);
+            $contentTitle.css('max-height', 'inherit');
+        }
+		else
+		{
+            $that.next().removeAttr('style');
+			setTimeout(() => { $contentTitle.removeAttr('style'); }, 400);
+		}
+
+		if($('[data-js-lineup]').hasClass('active'))
+			globalData.MainCharOn = true;
+		else
+			globalData.MainCharOn = false;
     }
 }
 
