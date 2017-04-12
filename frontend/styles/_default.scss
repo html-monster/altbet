@@ -625,7 +625,7 @@ input ~ .info{
 // BM: new dialog
 .dialog-win { @extend .pop_up;
   &__close { position: absolute; right: 10px; top: 10px;
-    &::before, &::after { width: 3px }
+    //&::before, &::after { width: 3px }
   }
   &__container { @extend .pop_up_container }
   &__inner { display: flex; width: 100% }

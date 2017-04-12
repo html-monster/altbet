@@ -136,10 +136,8 @@ export class LineupPage extends React.Component
                                         <h1>Terms and Conditions</h1>
 
                                         <p>
-                                            If you have any questions or concerns take a look at our <a href="faq.html">
-                                            frequently asked
-                                            questions
-                                        </a>
+                                            If you have any questions or concerns take a look at our
+                                            <a href="faq.html"> frequently asked questions </a>
                                             or get in touch with us.
                                         </p>
                                         <ul className="page_content_plan">

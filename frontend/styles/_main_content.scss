@@ -7,11 +7,27 @@
       background: $main_page_gif no-repeat center $main_page_tab_color_active; }
   &.loader:after{  height: 100%;  }
 
-  &.active &__tab { opacity: 1 }
-  &__tab { position: absolute; top: -21px; font-size: 13px; color: #fff; opacity: 0; transition: opacity .5s;
-    &_1 { right: 50%; margin-right: 145px }
-    &_2 { left: 50%; margin-left: 145px }
-    &.active { color: #fff; text-shadow: 0 0 16px #bdc0cd; font-weight: bold }
+  &__tab {  display: inline-block;  width: 103px; position: absolute; top: -19px; line-height: 21px; font-size: 13px;
+    color: #fff;  transition: color 0.4s ease-out; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
+    &_1 { right: 50%;
+      margin-right: 1px;
+      padding-left: 29px;
+      padding-right: 26px;
+      @include main_page_lineup_button;
+    }
+    &_2 {
+      left: 50%;
+      margin-left: 1px;
+      padding-left: 26px;
+      padding-right: 29px;
+      @include main_page_chart_button;
+    }
+    &:hover{  color: $color-blue;  }
+    &.active {
+      color: $color-blue;
+      //text-shadow: 0 0 16px $color-blue;
+      //font-weight: bold;
+    }
   }
   &__tab_content { position: relative; padding-top: 10px !important; overflow: hidden }
 
@@ -29,7 +45,7 @@
   &__rules { position: absolute; right: 15px; font-size: 11px; }
   &__link { color: $main-color }
 }
-.l-team { float: left; width: calc(50% - 1px); color: #bdc0cd; font-size: 13px;
+.l-team { float: left; width: calc(50% - 1px); /*color: #bdc0cd;*/ font-size: 13px;
   &:nth-of-type(2), &:nth-of-type(5) { padding-right: 5px }
   &:nth-of-type(3), &:nth-of-type(6) { padding-left: 5px }
   &__title { margin: 5px 0 0 0; padding-bottom: 5px; border-bottom: 1px solid darken(#bdc0cd, 20%); text-align: left; font-size: 14px; font-weight: bold }
@@ -45,8 +61,9 @@
 // player info block
 //.l-team__team tr:hover .b-pl-info { display: block; }
 .l-team__team tr:active .b-pl-info { visibility: visible; opacity: 1 }
-.b-pl-info { position: absolute; left: 0; top: 100%; padding: 10px; border: 1px solid #494949;
-      text-align: right; background: #28272F; text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
+.b-pl-info { position: absolute; left: 0; top: 100%; padding: 10px;
+      text-align: right;  text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
+      @include main_page_lineup_hind;
   &__main-inf {  }
   &__statistic { font-size: 12px; }
 }
@@ -570,29 +587,32 @@
             }
           }
           .pl, .pos{
-            width: 145px;
-            height: 22px;
+            width: 225px;
+            height: 23px;
             //padding-top: 4px;
             //visibility: hidden;
             position: absolute;
             bottom: -45px;
             font-size: 12px;
             color: $main-color;
-            background: url("#{$pathImage}/sprite.svg") no-repeat;
+            background: url("#{$pathImage}/sprite_components.svg") no-repeat;
             overflow: hidden;
             strong{
               display: block;
-              margin-top: -25px;
+              width: 104px;
+              margin-top: 3px;
+              transform: translateY(-20px);
               transition: 0.2s ease-out;
             }
           }
           .pl{
-            padding-left: 25px;
+            padding-left: 34px;
             padding-right: 30px;
-            right: -6px;
+            right: -5px;
             background-position: $main_page_event_info_pl_bg;
             //.profit{  color: #4dac2e;  }
             //.loss{  color: #ff3905;  }
+            strong{  float: left;  }
             span{
               &.win{  color: #4dac2e;  }
               &.lose{  color: #ff3905;  }
@@ -603,6 +623,7 @@
             padding-left: 30px;
             left: -6px;
             background-position: $main_page_event_info_pos_bg;
+            strong{  float: right;  }
             span{
               color: $main_page_pos_color;
             }
@@ -617,7 +638,7 @@
         position: absolute;
         left: calc(50% - 20px);
         top: 108px;
-        z-index: 2;
+        z-index: 4;
         cursor: pointer;
         background: $main_page_event_chart_button;
         transition: 0.4s ease-out;

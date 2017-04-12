@@ -53,7 +53,6 @@ class Header extends React.Component
 	{
 		const { actions, serverData } = this.props;
         let $filter = appData.urlQuery ? appData.urlQuery.filter : '';
-console.log(serverData);
 
 		if(serverData.GainLost !== undefined){
 			serverData.Profitlost = serverData.GainLost;
@@ -73,7 +72,7 @@ console.log(serverData);
 
 				<div className="fast_menu">
 				  <a href={globalData.Urls.Home} className="btn wave waves-effect waves-button"><span>Exchange</span> </a>
-				  <a href={globalData.Urls.Home + "?filter=live"}  className={"btn wave waves-effect waves-button" + ($filter == 'live' ? ' active' : '')}><span className="live_event wave ">Live</span></a>
+				  <a href={globalData.Urls.Home + "?filter=live"}  className={"btn wave waves-effect waves-button" + ($filter === 'live' ? ' active' : '')}><span className="live_event wave ">Live</span></a>
 				  <a href="#" className="btn wave waves-effect waves-button"><span className="history_event">History</span></a>
 				  <a href={globalData.Urls.TradingRules} className="btn wave waves-effect waves-button"><span>Rules</span> </a>
 				</div>
