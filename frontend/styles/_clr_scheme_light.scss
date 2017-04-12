@@ -59,7 +59,7 @@ $warning_message_arrow: #ffffff;
 $breadcrumbs-bg: #ffffff;
 $breadcrumbs-color: transparentize(#000000, 0.5);
 
-@mixin chart{
+@mixin chartEP {
 	svg > text:last-of-type{  visibility: hidden;  }
 	.highcharts-container{
 		padding-top: 10px;
@@ -70,6 +70,9 @@ $breadcrumbs-color: transparentize(#000000, 0.5);
 	rect.highcharts-background{
 		fill: transparent;
 	}
+}
+@mixin chartMP {
+	@include chartEP;
 }
 
 @mixin input_validation{

@@ -18,9 +18,14 @@ import Common from "../inc/Common";
 
 export class FeedView extends BaseView
 {
-    constructor()
+    private Model = null;
+
+
+    constructor(inModel)
     {
         super();
+
+        this.Model = inModel;
     }
 
 
@@ -37,7 +42,12 @@ export class FeedView extends BaseView
      */
     public initAllSports()
     {
-        let data = Common.feelDropDown(globalData.AllSport);
+        let data = [];
+        for( let ii = 0, countii = globalData.AllSport.length; ii < countii; ii++ )
+        {
+            data.push({id: globalData.AllSport[ii], text: globalData.AllSport[ii]});
+        } // endfor
+
         data.unshift({id: '-100', text: '- choose sport -'});
 
 
@@ -52,6 +62,32 @@ export class FeedView extends BaseView
             //         if (state.id < 0) var $state = $('<span class="icon noicon">' + state.text + '</span>');
             //         return $state;
             //     }
-        }).val("-100").trigger("change");
+        }).on("select2:select", (ee) => this.onSportsSelect(ee)).val("-100").trigger("change");
+
+
+        var queryString = window.location.search || '';
+        var keyValPairs = [];
+        var params      = {};
+        queryString     = queryString.substr(1);
+
+        if (queryString.length)
+        {
+           keyValPairs = queryString.split('&');
+           for (let pairNum in keyValPairs)
+           {
+              var key = keyValPairs[pairNum].split('=')[0];
+              if (!key.length) continue;
+              if (typeof params[key] === 'undefined')
+                 params[key] = "";
+              params[key] = keyValPairs[pairNum].split('=')[1];
+           }
+        }
+        0||console.log( 'window.location.search', window.location.search, params );
+    }
+
+
+    private onSportsSelect(ee)
+    {
+        0||console.log( '$(ee.target).val()', $(ee.target).val() );
     }
 }

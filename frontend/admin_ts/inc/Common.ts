@@ -13,30 +13,26 @@ export default class Common
     }
 
 
-    /**
-     * @param Array inData
-     * @return Array
-     */
-    public static feelDropDown(inData) : any
+    public static getUrlParams(inStr)
     {
-        var data = [];
+        var queryString = window.location.search || '';
+        var keyValPairs = [];
+        var params      = {};
+        queryString     = queryString.substr(1);
 
-        if( Array.isArray(inData) )
+        if (queryString.length)
         {
-            for( let ii = 0, countii = inData.length; ii < countii; ii++ )
-            {
-                data.push({id: ii, text: inData[ii]});
-            } // endfor
+           keyValPairs = queryString.split('&');
+           for (let pairNum in keyValPairs)
+           {
+              var key = keyValPairs[pairNum].split('=')[0];
+              if (!key.length) continue;
+              if (typeof params[key] === 'undefined')
+                 params[key] = "";
+              params[key] = keyValPairs[pairNum].split('=')[1];
+           }
         }
-        else
-        {
-            for( let ii in inData )
-            {
-                let val = inData[ii];
-                data.push({id: ii, text: val});
-            } // endfor
-        } // endif
 
-        return data;
+        return params;
     }
 }

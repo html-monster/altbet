@@ -4,13 +4,13 @@
 
 import BaseController from "./BaseController";
 import {FeedView} from "../view/FeedView";
+import {FeedModel} from "../model/FeedModel";
 // import Dialog from "../component/Dialog";
 // import {FormCheckers} from "../component/FormCheckers";
 // import {MainConfig} from "../inc/MainConfig";
 // import {InfoMessage} from "../component/InfoMessage";
 // import {messageBox, AlertBox} from "../component/AlertBox";
 // import {User} from "../model/User";
-// import ExchangeModel from "../model/ExchangeModel";
 
 
 export class FeedController extends BaseController
@@ -25,7 +25,7 @@ export class FeedController extends BaseController
     {
         var self = this;
 
-        let $FeedView = (new FeedView());
+        let $FeedView = (new FeedView(new FeedModel()));
         $FeedView.init();
 
 
