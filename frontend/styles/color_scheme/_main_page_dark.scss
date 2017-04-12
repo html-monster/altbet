@@ -81,10 +81,22 @@ $line3ico: -465px;
 	box-shadow: 0 0 15px 0 transparentize($link-color * 0.5, 0.2);
 }
 $main_page_event_opacity: 0.3;
-$main_page_event_info_pl_bg: -396px -516px;
-$main_page_event_info_pos_bg: -445px -516px;
+$main_page_event_info_pl_bg: -23px -24px;
+$main_page_event_info_pos_bg: -175px -24px;
 @mixin pricing_plans_separate{
 	border-left: 1px solid #211e25 * 1.4;
 	border-right: 1px solid #211e25 * 0.6;
 	&:last-child h2{  color: #4dac2e;   }
+}
+@mixin main_page_lineup_hind{
+	border: 1px solid #494949;
+	background: #28272F;
+}
+@mixin main_page_lineup_button{
+	background-position: -30px -115px;
+	&:active{  background-position: -30px -149px;  }
+}
+@mixin main_page_chart_button{
+	background-position: -117px -115px;
+	&:active{  background-position: -117px -149px;  }
 }

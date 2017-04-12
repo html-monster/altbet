@@ -56,11 +56,10 @@ export class LineupPage extends React.Component
                                 <th>{}</th>
                                 <th>Pos</th>
                                 <th className="pl">Name</th>
-                                <th>Team</th>
                                 <th>Status</th>
                                 <th>FPPG</th>
                                 <th>Score</th>
-                                <th title="Time remaining">Time</th>
+                                <th title="Estimated Time Remaining">ETR</th>
                             </tr>
                             {
                                 data.team1.map((itm, key) =>
@@ -73,8 +72,8 @@ export class LineupPage extends React.Component
                                             <div className="b-pl-info__statistic">{itm.plInfo.action}</div>
                                         </div>
                                     </td>
-                                    <td className="pl">{itm.name}</td><td>{itm.team.toUpperCase()}</td><td>{itm.status}</td><td>{itm.fppg}</td><td>{itm.score}</td>
-                                    <td title="Time remaining">{moment(moment(itm.timeEnd).diff(Date.now())).format("HH:mm")}</td>
+                                    <td className="pl"><strong>{itm.name} ({itm.team.toUpperCase()})</strong></td><td>{itm.status}</td><td>{itm.fppg}</td><td><strong>{itm.score}</strong></td>
+                                    <td title="Estimated Time Remaining">{moment(moment(itm.timeEnd).diff(Date.now())).format("HH:mm")}</td>
                                 </tr>)
                             }
                         </tbody>
@@ -88,11 +87,10 @@ export class LineupPage extends React.Component
                                 <th>{}</th>
                                 <th>Pos</th>
                                 <th className="pl">Name</th>
-                                <th>Team</th>
                                 <th>Status</th>
                                 <th>FPPG</th>
                                 <th>Score</th>
-                                <th title="Time remaining">Time</th>
+                                <th title="Estimated Time Remaining">ETR</th>
                             </tr>
                             {
                                 data.team2.map((itm, key) => <tr key={key}>
@@ -104,8 +102,8 @@ export class LineupPage extends React.Component
                                             <div className="b-pl-info__statistic">{itm.plInfo.action}</div>
                                         </div>
                                     </td>
-                                    <td className="pl">{itm.name}</td><td>{itm.team.toUpperCase()}</td><td>{itm.status}</td><td>{itm.fppg}</td><td>{itm.score}</td>
-                                    <td title="Time remaining">{moment(moment(itm.timeEnd).diff(Date.now())).format("HH:mm")}</td>
+                                    <td className="pl"><strong>{itm.name} ({itm.team.toUpperCase()})</strong></td><td>{itm.status}</td><td>{itm.fppg}</td><td><strong>{itm.score}</strong></td>
+                                    <td title="Estimated Time Remaining">{moment(moment(itm.timeEnd).diff(Date.now())).format("HH:mm")}</td>
                                 </tr>)
                             }
                         </tbody>
@@ -138,10 +136,8 @@ export class LineupPage extends React.Component
                                         <h1>Terms and Conditions</h1>
 
                                         <p>
-                                            If you have any questions or concerns take a look at our <a href="faq.html">
-                                            frequently asked
-                                            questions
-                                        </a>
+                                            If you have any questions or concerns take a look at our
+                                            <a href="faq.html"> frequently asked questions </a>
                                             or get in touch with us.
                                         </p>
                                         <ul className="page_content_plan">
@@ -548,8 +544,10 @@ export class LineupPage extends React.Component
     }
 
 
-    _onRaSClick()
+    _onRaSClick(ee)
     {
+        ee.preventDefault();
+
         this.setState({...this.state, isPopupVisible: true})
 /*
         var contentHtml = $("[data-js-rules]").html();

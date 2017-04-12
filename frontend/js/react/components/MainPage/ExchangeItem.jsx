@@ -120,13 +120,13 @@ export default class ExchangeItem extends React.PureComponent
                         <div className="pl mode_info_js">
                             {
                                 function() {
-                                    if( data.Positions !== 0 )
+                                    if( data.Positions )
                                     {
                                         let $class;
                                         if (data.GainLoss < 0) $class = 'lose';
                                         else if (data.GainLoss > 0) $class = 'win';
 
-                                        return <strong style={{'marginTop': 3}}>P/L: <span className={$class}>{data.GainLoss ?
+                                        return <strong style={{transform: `translateY(0)`}}>P/L: <span className={$class}>{data.GainLoss ?
 											data.GainLoss < 0 ? `($${Math.abs(data.GainLoss)})` :  '$' + data.GainLoss
 											:
                                             '$' + 0}</span></strong>;
@@ -171,7 +171,7 @@ export default class ExchangeItem extends React.PureComponent
                         }}/>
 
                         <div className="pos mode_info_js">
-                            <strong style={data.Positions != 0 ? {'marginTop': 3} : {}}>Pos: <span>{data.Positions != 0 && data.Positions}</span></strong>
+                            <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>Pos: <span>{data.Positions && data.Positions}</span></strong>
                         </div>
                     </div>
                 </div>
@@ -179,7 +179,7 @@ export default class ExchangeItem extends React.PureComponent
                 <button className="show-schedule" data-js-lineup="" title="Show chart">{}</button>
                 <div className="h-lup schedule loader not-sort">
                     <div className="tabs">
-                        <div className="h-lup__tab h-lup__tab_1 tab" title="Show teams info">Lineups</div>
+                        <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info">Lineups</div>
                         <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info">Chart</div>
                     </div>
                     <div className="h-lup__tab_content tab_content">
