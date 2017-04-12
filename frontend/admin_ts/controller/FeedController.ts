@@ -3,7 +3,7 @@
  */
 
 import BaseController from "./BaseController";
-// import {IndexView} from "../view/IndexView";
+import {FeedView} from "../view/FeedView";
 // import Dialog from "../component/Dialog";
 // import {FormCheckers} from "../component/FormCheckers";
 // import {MainConfig} from "../inc/MainConfig";
@@ -18,7 +18,6 @@ export class FeedController extends BaseController
     constructor()
     {
         super();
-
     }
 
 
@@ -26,12 +25,12 @@ export class FeedController extends BaseController
     {
         var self = this;
 
-        // let indexView = (new IndexView);
-        // indexView.init();
+        let $FeedView = (new FeedView());
+        $FeedView.init();
 
 
         // edit click
-        $('[data-js=tabl-exch]').on('click', '.js-btn-crud[data-type=edit]', function (e) { self.onEditControlClick(e, this); });
+        // $('[data-js=tabl-exch]').on('click', '.js-btn-crud[data-type=edit]', function (e) { self.onEditControlClick(e, this); });
     }
 
 
