@@ -18,8 +18,9 @@ export default class Preferences extends React.Component
 			answerMessage: '',
 			answerClass: null,
 			loading: false,
-			radioButtonsDisabled: true
-		}
+			radioButtonsDisabled: appData.pageAccountData.Account.MailActivity,
+			serverData: appData.pageAccountData.Account
+		};
 	}
 
 	sendData(event)
@@ -99,7 +100,7 @@ export default class Preferences extends React.Component
 
     render()
     {
-        const { IsMode, IsBettor, IsTrade } = appData.pageAccountData.Account;
+        const { IsMode, IsBettor, IsTrade, MailActivity, MailFrequency, MailNews, MailUpdates } = this.state.serverData;
         const { header, active } = this.props.data;
         const { answerMessage, answerClass, loading, radioButtonsDisabled } = this.state;
 
@@ -151,7 +152,7 @@ export default class Preferences extends React.Component
 						<h4>Alt.Bet Promotions</h4>
 						<ul className="preferences_list">
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: IsBettor}}>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: MailNews}}>
 									<strong className="label">Send me Alt.Bet news and offers:</strong>
 								</CheckBox>
 							</li>
@@ -159,7 +160,7 @@ export default class Preferences extends React.Component
 						<h4>Gameday Updates</h4>
 						<ul className="preferences_list">
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailUpdates", checked: IsBettor}}>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailUpdates", checked: MailUpdates}}>
 									<strong className="label">Send me updates on my upcoming games:</strong>
 								</CheckBox>
 							</li>
@@ -178,16 +179,19 @@ export default class Preferences extends React.Component
 								<div className={'container' + (radioButtonsDisabled ? '' : ' inactive')} style={{marginLeft: 10}}>
 									<label className="radio_button">
 										<input type="radio" name="MailFrequency" value={'daily'}
+											   defaultChecked={MailFrequency === 'daily' || MailFrequency === 'never'}
 											   disabled={!radioButtonsDisabled}/>
 										<span>daily</span>
 									</label>
 									<label className="radio_button">
-										<input type="radio" name="MailFrequency]" value={'weekly'} defaultChecked={true}
+										<input type="radio" name="MailFrequency" value={'weekly'}
+											   defaultChecked={MailFrequency === 'weekly'}
 											   disabled={!radioButtonsDisabled}/>
 										<span>weekly</span>
 									</label>
 									<label className="radio_button">
-										<input type="radio" name="MailFrequency]" value={'monthly'}
+										<input type="radio" name="MailFrequency" value={'monthly'}
+											   defaultChecked={MailFrequency === 'monthly'}
 											   disabled={!radioButtonsDisabled}/>
 										<span>monthly</span>
 									</label>
