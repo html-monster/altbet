@@ -3,6 +3,8 @@
  */
 import React from 'react';
 
+import OrderForm from '../../order/OrderForm';
+
 export default class TraderDefaultForm extends React.Component {
 
 	constructor()
@@ -21,7 +23,14 @@ export default class TraderDefaultForm extends React.Component {
 					id="order_content"
 					key={direction}
 		>
-			<div className={direction == 'sell' ? 'sell-container' : 'buy-container'}>
+			<div className={direction === 'sell' ? 'sell-container' : 'buy-container'}>
+				{/*<OrderForm*/}
+					{/*data={item}*/}
+					{/*containerData={data}*/}
+					{/*formData={{url: ABpp.baseUrl + (limit ? '/Order/Create' : '/Order/MarketTrading')}}*/}
+					{/*onOrderDelete={null}*/}
+					{/*actions={traderActions}*/}
+				{/*/>*/}
 				<form action={ABpp.baseUrl + (limit ? '/Order/Create' : '/Order/MarketTrading')}
 					  autoComplete="off"
 					  onSubmit={traderActions.actionOnAjaxSend.bind(null, this)}

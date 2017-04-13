@@ -43,7 +43,7 @@ class YourOrders extends React.Component
 		let yourOrdersData = this.props.yourOrders;
 		return <div className="tab_item" id="current-orders">
 			{
-				ABpp.User.login != "" ?
+				ABpp.User.login ?
 					yourOrdersData.yourOrders.length ?
 						yourOrdersData.yourOrders.map((item, index) =>
 						<GroupingOrder
@@ -51,7 +51,7 @@ class YourOrders extends React.Component
 								indexGr={index}
 								allData={yourOrdersData}
 								data={item}
-								onOrderDelete={::this.props.actions.actionOnYourOrderDelete}
+								//onOrderDelete={::this.props.actions.actionOrderDelete}
 								actions={this.props.actions}
 						/>)
 					:
@@ -69,8 +69,9 @@ class GroupingOrder extends React.Component
 {
 	render()
 	{
-		let data = this.props.data;
-		let onOrderDelete = this.props.onOrderDelete;
+		const { actions, data } = this.props;
+		// let data = this.props.data;
+		// let onOrderDelete = this.props.onOrderDelete;
 
 		return <div className="order_content" id={data.ID}>
 			<div className="my_order">
@@ -78,7 +79,7 @@ class GroupingOrder extends React.Component
 					<div className="container">
 						<h3>{data.Symbol}</h3>
 						{
-							(data.LastSide != null) ?
+							(data.LastSide) ?
 								<strong className={`last-price ${data.LastSide ? 'down' : 'up'}`}>{data.LastPrice}</strong>
 							:
 								''
@@ -98,10 +99,10 @@ class GroupingOrder extends React.Component
 						data.Orders.map((item) =>
 							<OrderItem
 									key={item.ID}
-									allData={data}
+									//allData={data}
 									data={item}
-									onDelete={onOrderDelete.bind(null, item, this.props.indexGr)}
-									actions={this.props.actions}
+									onDelete={actions.actionOrderDelete.bind(null, item, this.props.indexGr)}
+									actions={actions}
 							/>
 						)
 				}
@@ -126,51 +127,6 @@ class OrderItem extends React.Component
 		this.state = {currentOddSystem: ABpp.config.currentOddSystem}
 	}
 
-	BeforeAjax()
-	{
-		$(this.refs.deleteForm).find('.btn').attr('disabled', true);
-	}
-	onSuccessAjax(data)
-	{
-		data = data.split('_');
-		let id = '#' + data[0] + '__order';
-
-		if(data[1] === 'True'){
-			console.log($(id).parents('.order_content').find('h3').text() + ' order is deleted');
-
-			this.props.onDelete();
-		}
-		else{
-			console.log($(id).parents('.order_content').find('h3').text() + ' order isn\'t deleted');
-			$(this.refs.deleteForm).find('.btn').removeAttr('disabled');
-			defaultMethods.showError('Internal server error, try again later');
-		}
-	}
-
-	onErrorAjax(x, y)
-	{
-		console.log('XMLHTTPRequest object: ', x);
-		console.log('textStatus: ',  y);
-		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
-	}
-
-	deleteOrderHandle(event)
-	{
-		event.preventDefault();
-		defaultMethods.sendAjaxRequest({
-			httpMethod: 'POST',
-			callback: ::this.onSuccessAjax,
-			onError: ::this.onErrorAjax,
-			beforeSend: ::this.BeforeAjax,
-			url: ABpp.baseUrl + '/Order/Cancel',
-			context: $(this.refs.deleteForm)});
-	}
-
-	successHandler(serverData)
-	{
-		console.log(serverData);
-	}
-
 	showPopUp(){
 		$(this.refs.deletePopUp).fadeIn();
 	}
@@ -193,10 +149,16 @@ class OrderItem extends React.Component
 		return true;
 	}
 
+	// successHandler(serverData)
+	// {
+	// 	console.log(serverData);
+	// }
+
 	render()
 	{
+		const { actions } = this.props;
 		let data = this.props.data;
-		const allData = this.props.allData;
+		//const allData = this.props.allData;
 		const date = new Date(+data.Time.slice(6).slice(0, -2));
 		const formData = {
 			url: ABpp.baseUrl + '/Order/Edit',
@@ -227,7 +189,7 @@ class OrderItem extends React.Component
 				<div className="pop_up" ref="deletePopUp">
 					<div className="confirmation">
 						<form action="/AltBet/eng/Order/Cancel" method="post"
-									noValidate="novalidate" onSubmit={::this.deleteOrderHandle} ref="deleteForm">
+									noValidate="novalidate" onSubmit={actions.actionOrderDeleteAjax.bind(null, this)} ref="deleteForm">
 							<input name="id" type="hidden" value={data.ID}/>
 							<button className="yes btn">Delete</button>
 						</form>
@@ -237,11 +199,11 @@ class OrderItem extends React.Component
 			</div>
 			<div className={`form-container ${className}-container`} ref="formContainer">
 				<OrderForm
-						allData={allData}
+						//allData={allData}
 						data={data}
 						formData={formData}
-						onAjaxSuccess={::this.successHandler}
-						actions={this.props.actions}
+						//onAjaxSuccess={::this.successHandler}
+						actions={actions}
 				/>
 			</div>
 		</div>

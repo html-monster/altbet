@@ -223,6 +223,8 @@ export default class OrderForm extends React.Component{
 	{
 		const stateData = this.state;
 		const { actions, containerData, data, formData, onOrderDelete } = this.props;
+		// console.log('containerData:', containerData);
+		// console.log('data:', data);
 		let className = data.Side ? 'sell' : 'buy';
 		let orderId;
 		const checkboxProp = (data.Limit === undefined) ?
@@ -245,7 +247,7 @@ export default class OrderForm extends React.Component{
 		// const price = stateData.Side ? Math.round10(1 - stateData.Price, -2) : stateData.Price;
 		// const sum = +price && (/[0-9]+|[.][0-9]+/gi.test(data.Sum) || !data.Sum) ? Math.round10(price * data.Volume, -2) : data.Sum;
 		const fees = Math.round10(ABpp.config.takerFees * stateData.Volume, -2);
-// console.log(stateData.Price, data.Price);
+
 		return (
 			<form action={formData.url} className={className + (ABpp.config.basicMode ? ' basic_mode' : '') + ' animated'} autoComplete="off"
 				  onSubmit={actions.actionOnAjaxSend.bind(null, this, containerData)} method="post"

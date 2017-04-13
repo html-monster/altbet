@@ -200,7 +200,7 @@ class Settings extends React.Component
                     </span>*/}
 
                     <span className="input_animate input--yoshiko submit_container">
-                        <input type="submit" value="Submit" className="btn wave"/>
+                        <input type="submit" value="Submit" className="btn wave submit"/>
                         {/*<span className="answer_message"></span>*/}
                         <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
 						<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
@@ -341,7 +341,7 @@ class Settings extends React.Component
                     <span className="validation-summary-errors">{}</span>
                 </span>
                 <span className="input_animate input--yoshiko submit_container">
-                    <input type="submit" value="ChangePassword" id="submit" className="btn wave"/>
+                    <input type="submit" value="ChangePassword" id="submit" className="btn wave submit"/>
                     <span className="answer_message">{}</span>
                 </span>
             </form>

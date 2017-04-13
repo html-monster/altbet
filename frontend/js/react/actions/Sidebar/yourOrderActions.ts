@@ -36,7 +36,7 @@ class Actions extends BaseActions
 		}
 	}
 
-	public actionOnYourOrderDelete(order, indexGr)
+	public actionOrderDelete(order, indexGr)
 	{
 		return (dispatch, getState) =>
 		{
@@ -50,6 +50,56 @@ class Actions extends BaseActions
 				type: ON_YOUR_ORDER_DELETE,
 				payload: newData
 			});
+		}
+	}
+
+	public actionOrderDeleteAjax(context, event)
+	{
+		return (dispatch, getState) =>
+		{
+			event.preventDefault();
+			const form = $(context.refs.deleteForm);
+
+			function BeforeAjax()
+			{
+				form.addClass('loading');
+				form.find('[type=submit]').attr('disabled', 'true');
+			}
+
+			function onSuccessAjax(data)
+			{
+				data = data.split('_');
+				let id = '#' + data[0] + '__order';
+
+				if(data[1] === 'True'){
+					console.log($(id).parents('.order_content').find('h3').text() + ' order is deleted');
+
+					context.props.onDelete();
+				}
+				else{
+					console.log($(id).parents('.order_content').find('h3').text() + ' order isn\'t deleted');
+					form.find('[type=submit]').removeAttr('disabled');
+					form.removeClass('loading');
+					defaultMethods.showError('Internal server error, try again later');
+				}
+			}
+
+			function onErrorAjax(x, y)
+			{
+				form.find('[type=submit]').removeAttr('disabled');
+				form.removeClass('loading');
+				__DEV__ && console.log('XMLHTTPRequest object: ', x);
+				__DEV__ && console.log('textStatus: ',  y);
+				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+			}
+
+			defaultMethods.sendAjaxRequest({
+				httpMethod: 'POST',
+				callback: onSuccessAjax,
+				onError: onErrorAjax,
+				beforeSend: BeforeAjax,
+				url: ABpp.baseUrl + '/Order/Cancel',
+				context: form});
 		}
 	}
 

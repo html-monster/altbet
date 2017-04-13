@@ -36,8 +36,8 @@ class DefaultOrders extends React.Component
 				data={orderNewData}
 			>
 				{
-					(orderNewData && orderNewData.length == 0) ?
-						<p id="default_order_info" className="default_order_info animated">{ABpp.User.login != "" ? "MAKE YOUR SELECTION(S) ON THE LEFT BY CLICKING ON THE PRICES. OR TURN ON ACTIVE BETTOR ABOVE." : "You must login to make orders"}</p>
+					(orderNewData && !orderNewData.length) ?
+						<p id="default_order_info" className="default_order_info animated">{ABpp.User.login ? "MAKE YOUR SELECTION(S) ON THE LEFT BY CLICKING ON THE PRICES. OR TURN ON ACTIVE BETTOR ABOVE." : "You must login to make orders"}</p>
 						:
 						/* // BM: --------------------------------------------------- NEW ORDER ---*/
 						orderNewData.map((item) =>

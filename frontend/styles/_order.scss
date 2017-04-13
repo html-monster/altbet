@@ -172,11 +172,11 @@
     }
     .sell{
       left: calc(100% + 1px);
-      background-image: linear-gradient(to bottom, #f88447, #ef4d22);
+      background: linear-gradient(to bottom, #f88447, #ef4d22);
     }
     .buy{
       right: calc(100% + 1px);
-      background-image: linear-gradient(to bottom, #64c9ef, #3498da);
+      background: linear-gradient(to bottom, #64c9ef, #3498da);
     }
     &.active{
       //span.confirm_button{
@@ -600,8 +600,8 @@
         border-left: none;
         cursor: pointer;
         transition: 0.4s ease-out;
-        &.sell{  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
-        &.buy{  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
+        &.sell{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
+        &.buy{  background: linear-gradient(to bottom, #64c9ef, #3498da);  }
       }
     }
   }

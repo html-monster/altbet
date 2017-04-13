@@ -12,7 +12,7 @@ export default class NewOrder extends React.Component{
 	render()
 	{
 		// console.log(ABpp);
-		const { data } = this.props;
+		const { actions, data } = this.props;
 		let formData = {
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
@@ -44,9 +44,10 @@ export default class NewOrder extends React.Component{
 							data={item}
 							containerData={data}
 							formData={formData}
+							formSubmit={actions.actionOnAjaxSend.bind(null, this, data)}
 							onOrderDelete={this.props.onDeleteOrderHandler.bind(null, item)}
-							actions={this.props.actions}
-							data-verify={['Price', 'Volume']}
+							actions={actions}
+							//data-verify={['Price', 'Volume']}
 						/>
 					</AnimateOnUpdate>
 				)
