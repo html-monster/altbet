@@ -13,6 +13,7 @@ export class SocketSubscribe
     public static TRADER_ON = '2';
     public static CURRENT_ORDERS = '4';
     public static AP_ACCOUNT_DATA = '6';
+    public static MP_CHARTS_SYMBOL = '7';
 
     private subscribeParams = { // last subscribe params
             UserBrowser: "",
@@ -23,6 +24,7 @@ export class SocketSubscribe
             CurrentOrders: "0",
             PaginationNumber: '1',
             CategoryPath: '', //sport/american-football
+            MainPageChartsSymbol: "",
         };
     private subscribeData = {};     // data from subscribers
 
@@ -47,6 +49,7 @@ export class SocketSubscribe
         switch( type )
         {
             case SocketSubscribe.MP_SYMBOLS_AND_ORDERS : ret = this.setSymbolsAndOrders(data); break;
+            case SocketSubscribe.MP_CHARTS_SYMBOL : ret = this.setMpChartsSymbol(data); break;
             case SocketSubscribe.AP_ACCOUNT_DATA : ret = this.setAccountData(data); break;
             case SocketSubscribe.EP_ACTIVE_ORDER : ret = this.setActiveOrder(data); break;
             case SocketSubscribe.MYP_ORDERS_POSITIONS_HISTORY : ret = this.setOrdersPositionsHistory(data); break;
@@ -218,6 +221,23 @@ export class SocketSubscribe
         // 0||console.debug( 'receiveActiveOrderFixData', inData, params, activeOrders );
         return {ActiveOrders: activeOrders, Bars: bars};
     }
+
+
+
+    /**
+     * set main page chart open
+     * @param props
+     */
+    private setMpChartsSymbol(props)
+    {
+        props = { ...this.subscribeParams,
+            ExchangeName: props.exchange ? props.exchange : this.subscribeParams.ExchangeName,
+            ActiveTrader: props.tradeOn ? "1" : "0",
+        };
+
+        return props;
+    }
+
 }
 
 window.SocketSubscribe = SocketSubscribe;

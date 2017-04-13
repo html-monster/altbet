@@ -202,6 +202,8 @@ export default class ExchangeItem extends React.PureComponent
      */
     onLineupOpen(that)
     {
+        ABpp.Websocket.sendSubscribe({exchange: this.props.data.Symbol.Exchange}, SocketSubscribe.MP_CHARTS_SYMBOL);
+
         var $that = $(that);
 
 		$that.toggleClass('active')
