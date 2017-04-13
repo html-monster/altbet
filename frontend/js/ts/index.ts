@@ -64,6 +64,7 @@ export class ABpp
     public Store = null;                        // redux store
     // public OddsConverter = null;                        // redux store
     public Localization = null;                 // localization module
+    public Chart = null;                        // EP chart
 
 
     private static instance = null;

@@ -20,6 +20,7 @@ export function actionChartTypeChange(checked)
 export function actionChartMount()
 {
     let ChartObj = new Chart();
+    ABpp.Chart = ChartObj;
     // Listen for chart data
     window.ee.addListener('EventPage.Chart.setData', function (data)
     {
