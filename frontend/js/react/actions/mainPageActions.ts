@@ -10,8 +10,8 @@ import BaseActions from './BaseActions';
 import { SocketSubscribe } from "../models/SocketSubscribe";
 
 
-// var __LDEV__ = true;
-let __LDEV__ = false;
+var __LDEV__ = !true;
+
 declare let orderClass;
 
 class Actions extends BaseActions
@@ -190,7 +190,7 @@ class Actions extends BaseActions
             // let symbol = getState().activeTrader.data.Symbol;
             // let symbol = getState().activeTrader.data.Symbol;
             // symbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
-            
+
             const aexch = getState().mainPage.activeExchange;
 
             if( aexch.name !== inProps.name || aexch.isMirror != inProps.isMirror )
@@ -347,6 +347,27 @@ class Actions extends BaseActions
                 type: type,
                 payload: data,
             });
+        };
+    }
+
+
+    /**
+     * set active symbol on main page
+     * @param inProps
+     * @param context
+     */
+    public actionSetChartsSymbol(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            // let state = getState().mainPage;
+
+            ABpp.Websocket.sendSubscribe({exchange: inProps.exchange}, SocketSubscribe.MP_CHARTS_SYMBOL);
+
+            // dispatch({
+            //     type: type,
+            //     payload: data,
+            // });
         };
     }
 }

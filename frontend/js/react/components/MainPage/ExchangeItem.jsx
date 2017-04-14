@@ -10,22 +10,28 @@ export default class ExchangeItem extends React.PureComponent
 {
     constructor(props)
     {
-        super(props)
+        super(props);
+        // __DEV__&&console.debug( 'ExchangeItem.props.data', this.props.data );
 
         // эмуляция времени игроков
         this.data = gLineupPageData;
     }
 
 
+/*
     componentDidMount()
     {
-	    $('[data-js-lineup]:not(.has-click)').click((ee) =>
-	    {
-            if (!$(ee.target).hasClass('active') && $('[data-js-lineup].active').length) this.onLineupOpen('[data-js-lineup].active');
-            this.onLineupOpen(ee.target);
-	    }).addClass('has-click');
-	    // 0||console.log( '999999999999999', $('.show-schedule') );
+        0||console.log( 'this.props.data.Symbol.Exchange', this.props.data.Symbol.Exchange );
+        // var self = this;
+        //
+	    // $('[data-js-lineup]:not(.has-click)').click((ee) =>
+	    // {
+         //    // 0||console.log( 'this.props.data.Symbol.Exchange', this.props.data.Symbol.Exchange );
+         //    if (!$(ee.target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1).bind(self);
+         //    this.lineupOpen(ee.target);
+	    // }).addClass('has-click');
     }
+*/
 
 
     render()
@@ -176,7 +182,7 @@ export default class ExchangeItem extends React.PureComponent
                     </div>
                 </div>
 
-                <button className="show-schedule" data-js-lineup="" title="Show chart">{}</button>
+                <button className="show-schedule" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenClick}>{}</button>
                 <div className="h-lup schedule loader not-sort">
                     <div className="tabs">
                         <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info">Lineups</div>
@@ -196,14 +202,23 @@ export default class ExchangeItem extends React.PureComponent
 
 
     /**
+     * @private
+     */
+    onLPOpenClick(ee)
+    {
+        if (!$(ee.target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);
+        this.lineupOpen(ee.target);
+    }
+
+
+    /**
      * show chart on the main page
      * @private
      * @param that - opener
+     * @param isCLose Boolean - need if just close
      */
-    onLineupOpen(that)
+    lineupOpen(that, isCLose)
     {
-        ABpp.Websocket.sendSubscribe({exchange: this.props.data.Symbol.Exchange}, SocketSubscribe.MP_CHARTS_SYMBOL);
-
         var $that = $(that);
 
 		$that.toggleClass('active')
@@ -213,6 +228,10 @@ export default class ExchangeItem extends React.PureComponent
         var $contentTitle = $that.closest('.content_bet').find('.content_title');
 		if ($that.hasClass('active'))
         {
+            // set subscribe for chart data
+            this.props.actions.actionSetChartsSymbol({exchange: this.props.data.Symbol.Exchange});
+
+
             let height = $that.next().find("[data-js-team]").height();
             height = height > 400 ? height : 400;
 
@@ -221,6 +240,9 @@ export default class ExchangeItem extends React.PureComponent
         }
 		else
 		{
+            // set unsubscribe from chart data if close btn click
+            if (!isCLose) this.props.actions.actionSetChartsSymbol({exchange: ""});
+
             $that.next().removeAttr('style');
 			setTimeout(() => { $contentTitle.removeAttr('style'); }, 400);
 		}

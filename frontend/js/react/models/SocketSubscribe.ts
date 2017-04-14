@@ -231,8 +231,7 @@ export class SocketSubscribe
     private setMpChartsSymbol(props)
     {
         props = { ...this.subscribeParams,
-            ExchangeName: props.exchange ? props.exchange : this.subscribeParams.ExchangeName,
-            ActiveTrader: props.tradeOn ? "1" : "0",
+            MainPageChartsSymbol: props.exchange,
         };
 
         return props;
