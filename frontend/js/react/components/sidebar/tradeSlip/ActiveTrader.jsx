@@ -151,7 +151,7 @@ class ActiveTrader extends React.Component {
 									index={'market'}
 									mainData={data}
 									quantity={quantity}
-									inputQuantityContext={this}
+									traderContext={this}
 									{...info}
 									{...orderInfo}
 								/>
@@ -245,7 +245,7 @@ class ActiveTrader extends React.Component {
 									index={'limit'}
 									mainData={data}
 									quantity={quantity}
-									inputQuantityContext={this}
+									traderContext={this}
 									{...info}
 									{...orderInfo}
 								/>
@@ -352,7 +352,7 @@ class ActiveTrader extends React.Component {
 									mainData={data}
 									orderInfo={orderInfo}
 									index={index}
-									inputQuantityContext={this}
+									traderContext={this}
 									{...info}
 								/>
 							)

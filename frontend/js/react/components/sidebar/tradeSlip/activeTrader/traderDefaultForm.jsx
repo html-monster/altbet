@@ -14,9 +14,9 @@ export default class TraderDefaultForm extends React.Component {
 
 	render()
 	{
-		const { activeString, cmpData: { activeExchange }, direction, price, limit, index, inputQuantityContext,
+		const { activeString, cmpData: { activeExchange }, direction, price, limit, index, traderContext,
 			isMirror, traderActions, quantity } = this.props;
-		// console.log(this.props);
+		console.log('this.props:', this.props);
 		// let orderFormStyle = {position: 'absolute', left: 0, zIndex: 10, marginTop: 10};
 
 		return <div className={'order_content default animated' + (index == activeString || !index ? ' fadeInUp' : '')}
@@ -28,7 +28,6 @@ export default class TraderDefaultForm extends React.Component {
 					{/*data={item}*/}
 					{/*containerData={data}*/}
 					{/*formData={{url: ABpp.baseUrl + (limit ? '/Order/Create' : '/Order/MarketTrading')}}*/}
-					{/*onOrderDelete={null}*/}
 					{/*actions={traderActions}*/}
 				{/*/>*/}
 				<form action={ABpp.baseUrl + (limit ? '/Order/Create' : '/Order/MarketTrading')}
@@ -49,16 +48,16 @@ export default class TraderDefaultForm extends React.Component {
 							<label>Quantity</label>
 							<div className="input">
 								<input autoComplete="off" className="number quantity" data-validation="123"
-									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, inputQuantityContext)}
-									   onChange={traderActions.actionOnQuantityChange.bind(null, inputQuantityContext)}
+									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, traderContext)}
+									   onChange={traderActions.actionOnQuantityChange.bind(null, traderContext)}
 									   maxLength="8" name="Quantity"
 									   type="text" ref={'inputQuantity'} value={quantity}/>
 								<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>
 								<div className="regulator">
 									<span className="plus" title="Press Arrow Up"
-										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, 1)}>{}</span>
+										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, traderContext, 1)}>{}</span>
 									<span className="minus" title="Press Arrow Down"
-										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, -1)}>{}</span>
+										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, traderContext, -1)}>{}</span>
 								</div>
 							</div>
 						</div>
@@ -68,7 +67,7 @@ export default class TraderDefaultForm extends React.Component {
 								<input type="text" className="number" data-validation="40.59" maxLength="8"
 									   value={
 									   	limit ?
-												direction == 'sell' ? Math.round10((1 - price) * quantity, -2) : Math.round10(price * quantity, -2)
+												direction === 'sell' ? Math.round10((1 - price) * quantity, -2) : Math.round10(price * quantity, -2)
 											:
 												''
 									   }

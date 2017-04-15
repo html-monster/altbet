@@ -45,7 +45,7 @@ class DefaultOrders extends React.Component
 								allData={orderNewData}
 								data={item}
 								key={`${item.ID}-${item.isMirror}-${item.Price}-${item.Volume}`}
-								onDeleteOrderHandler={actions.actionOnDeleteOrder.bind(this, item)}
+								//onDeleteOrderHandler={actions.actionOnDeleteOrder.bind(this, item)}
 								actions={actions}
 							/>
 						)

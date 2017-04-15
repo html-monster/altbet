@@ -140,7 +140,7 @@ class OrderItem extends React.Component
 	}
 
 	shouldComponentUpdate(nextProps){
-		if(this.props.data.ID === nextProps.data.ID &&
+		if(this.props.data.ID === nextProps.data.ID && this.props.data.Volume === nextProps.data.Volume &&
 			this.state.currentOddSystem === ABpp.config.currentOddSystem)
 			return false;
 
@@ -199,11 +199,23 @@ class OrderItem extends React.Component
 			</div>
 			<div className={`form-container ${className}-container`} ref="formContainer">
 				<OrderForm
-						//allData={allData}
-						data={data}
-						formData={formData}
-						//onAjaxSuccess={::this.successHandler}
-						actions={actions}
+					formUrl={formData.url}
+					id={data.ID}
+					limit={true}
+					side={(data.isMirror) ?
+						data.Side ? 'buy' : 'sell'
+						:
+						data.Side ? 'sell' : 'buy'}
+					price={data.Price}
+					quantity={data.Volume}
+					isMirror={data.isMirror}
+					symbol={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}
+					newOrder={false}
+					showDeleteButton={false}
+					onSubmit={actions.actionOnAjaxSend.bind(null, formData.url)}
+						//data={data}
+						//formData={formData}
+						//actions={actions}
 				/>
 			</div>
 		</div>

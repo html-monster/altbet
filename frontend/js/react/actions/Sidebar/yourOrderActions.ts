@@ -55,7 +55,7 @@ class Actions extends BaseActions
 
 	public actionOrderDeleteAjax(context, event)
 	{
-		return (dispatch, getState) =>
+		return () =>
 		{
 			event.preventDefault();
 			const form = $(context.refs.deleteForm);
@@ -103,36 +103,39 @@ class Actions extends BaseActions
 		}
 	}
 
-	public actionOnAjaxSend(context, parentContext, e)
+	public actionOnAjaxSend(formUrl, event)
 	{
 		return () =>
 		{
-			e.preventDefault();
-			if(!orderForm(context.refs.orderForm)) return false;
+			event.preventDefault();
+
+			const form = event.currentTarget;
+
+			if(!orderForm(form)) return false;
 
 			function OnBeginAjax()
 			{
-				$(context.refs.orderForm).find('[type=submit]').attr('disabled', 'true');
+				$(form).find('[type=submit]').attr('disabled', 'true');
 			}
 
 			function onSuccessAjax()
 			{
-				console.log('Order sending finished: ' + context.props.data.ID);
+				console.log('Order sending finished: ' + $(form).find('[name=ID]').val());
 			}
 
 			function onErrorAjax()
 			{
-				$(context.refs.orderForm).find('[type=submit]').removeAttr('disabled');
+				$(form).find('[type=submit]').removeAttr('disabled');
 				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 			}
 
 			defaultMethods.sendAjaxRequest({
 				httpMethod: 'POST',
-				url: context.props.formData.url,
+				url: formUrl,
 				callback: onSuccessAjax,
 				onError: onErrorAjax,
 				beforeSend: OnBeginAjax,
-				context: $(context.refs.orderForm)
+				context: $(form)
 			});
 		}
 	}

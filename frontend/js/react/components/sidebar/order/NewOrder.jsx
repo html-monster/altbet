@@ -21,15 +21,18 @@ export default class NewOrder extends React.Component{
 		return <div className="order_content new animated">
 			<div className="order-title">
 				<h3>{data.EventTitle}</h3>
-				<span className="close" onClick={this.props.onDeleteOrderHandler}><span>{}</span></span>
+				<span className="close" onClick={actions.actionOnDeleteOrder.bind(null, data)}><span>{}</span></span>
 				<strong className="current-order up">Entries: <span>{data.Positions}</span></strong>
 			</div>
 			{
 				data.Orders.map((item) =>
-					<AnimateOnUpdate
+				{
+					const symbol = `${item.Symbol.Exchange}_${item.Symbol.Name}_${item.Symbol.Currency}`;
+
+					return <AnimateOnUpdate
 						component="div"
 						className={item.Side ? 'sell-container' : 'buy-container' + ' form_container'}
-						key={`${item.Symbol.Exchange}_${item.Symbol.Name}_${item.Symbol.Currency}_${item.Side}`}
+						key={`${symbol}_${item.Side}`}
 						transitionName={{
 							appear: 'fadeInAnimation',
 							enter: 'fadeInAnimation'
@@ -41,16 +44,30 @@ export default class NewOrder extends React.Component{
 						data={item}
 					>
 						<OrderForm
-							data={item}
-							containerData={data}
-							formData={formData}
-							formSubmit={actions.actionOnAjaxSend.bind(null, this, data)}
-							onOrderDelete={this.props.onDeleteOrderHandler.bind(null, item)}
-							actions={actions}
+							formUrl={formData.url}
+							id={`${symbol}_${item.Side}_${item.isMirror}`}
+							limit={item.Limit}
+							side={item.Side ? 'sell' : 'buy'}
+							price={item.Price}
+							quantity={item.Volume}
+							isMirror={item.isMirror}
+							symbol={symbol}
+							newOrder={true}
+							showDeleteButton={true}
+							onSubmit={actions.actionOnAjaxSend.bind(null, actions, {...item, formUrl: formData.url})}
+							onDelete={actions.actionOnDeleteOrder.bind(null, item)}
+							onTypeChange={actions.actionOnOrderTypeChange.bind(null, item)}
+							// data={{...data, ...item}}
+							//containerData={data}
+							// formData={formData}
+							// formSubmit={actions.actionOnAjaxSend.bind(null, this, data)}
+							// onOrderDelete={this.props.onDeleteOrderHandler.bind(null, item)}
+							// actions={actions}
+							// showDeleteButton={true}
 							//data-verify={['Price', 'Volume']}
 						/>
 					</AnimateOnUpdate>
-				)
+				})
 			}
 		</div>
 	}
