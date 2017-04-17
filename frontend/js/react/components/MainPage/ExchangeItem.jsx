@@ -6,12 +6,14 @@ import {LineupPage} from './LineupPage';
 // import {Common} from './../../common/Common';
 
 
-export default class ExchangeItem extends React.PureComponent
+export default class ExchangeItem extends React.Component
 {
     constructor(props)
     {
         super(props);
         // __DEV__&&console.debug( 'ExchangeItem.props.data', this.props.data );
+
+        this.state = {isLPOpen: false};
 
         // эмуляция времени игроков
         this.data = gLineupPageData;
@@ -182,11 +184,11 @@ export default class ExchangeItem extends React.PureComponent
                     </div>
                 </div>
 
-                <button className="show-schedule" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenClick}>{}</button>
+                <button ref="LPOpenBtn" className="show-schedule" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenCloseClick}>{}</button>
                 <div className="h-lup schedule loader not-sort">
-                    <div className="tabs">
-                        <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info">Lineups</div>
-                        <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info">Chart</div>
+                    <div className={`tabs ${this.state.isLPOpen ? "h-lup__tabs__opened" : ""}`}>
+                        <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick()}>Lineups</div>
+                        <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info" onClick={::this.onLPOpenClick}>Chart</div>
                     </div>
                     <div className="h-lup__tab_content tab_content">
                         <LineupPage className="tab_item" exdata={exdata} data={this.data} />
@@ -204,10 +206,24 @@ export default class ExchangeItem extends React.PureComponent
     /**
      * @private
      */
-    onLPOpenClick(ee)
+    onLPOpenClick()
     {
-        if (!$(ee.target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);
-        this.lineupOpen(ee.target);
+        this.setState({...this.state, isLPOpen: true});
+        this.onLPOpenCloseClick()
+    }
+
+
+    /**
+     * @private
+     */
+    onLPOpenCloseClick()
+    {
+        this.setState({...this.state, isLPOpen: !this.state.isLPOpen});
+
+
+        let target = this.refs.LPOpenBtn;
+        if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);
+        this.lineupOpen(target);
     }
 
 
