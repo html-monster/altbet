@@ -13,7 +13,7 @@ export default class Common
     }
 
 
-    public static getUrlParams(inStr)
+    public static getUrlParams()
     {
         var queryString = window.location.search || '';
         var keyValPairs = [];

@@ -187,7 +187,7 @@ export default class ExchangeItem extends React.Component
                 <button ref="LPOpenBtn" className="show-schedule" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenCloseClick}>{}</button>
                 <div className="h-lup schedule loader not-sort">
                     <div className={`tabs ${this.state.isLPOpen ? "h-lup__tabs__opened" : ""}`}>
-                        <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick()}>Lineups</div>
+                        <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
                         <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info" onClick={::this.onLPOpenClick}>Chart</div>
                     </div>
                     <div className="h-lup__tab_content tab_content">
@@ -208,8 +208,7 @@ export default class ExchangeItem extends React.Component
      */
     onLPOpenClick()
     {
-        this.setState({...this.state, isLPOpen: true});
-        this.onLPOpenCloseClick()
+        this.state.isLPOpen||this.onLPOpenCloseClick();
     }
 
 
@@ -219,7 +218,6 @@ export default class ExchangeItem extends React.Component
     onLPOpenCloseClick()
     {
         this.setState({...this.state, isLPOpen: !this.state.isLPOpen});
-
 
         let target = this.refs.LPOpenBtn;
         if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);

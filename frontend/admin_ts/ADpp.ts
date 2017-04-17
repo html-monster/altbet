@@ -41,6 +41,7 @@ export default class ADpp
         // init current controller (sets in razor views)
         if( globalData && globalData.controller )
         {
+            // 0||console.log( 'this.controllers[globalData.controller.name]', this.controllers[globalData.controller.name] );
             this.currentController = new this.controllers[globalData.controller.name]();
         } // endif;
 
