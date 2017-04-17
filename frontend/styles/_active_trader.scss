@@ -163,7 +163,10 @@
 						a{  cursor: pointer;  }
 						.order_content:active{  box-shadow: none;  }
 					}
-					&.button.quantity .waves-ripple{  display: block;  }
+					&.button.quantity{
+						button{  padding: 4px 5px;  }
+						.waves-ripple{  display: block;  }
+					}
 					//&:not(.clickable) .waves-ripple{  display: none;  }
 					&.clickable{  @include btn-hover;  }
 					&.market_button{
@@ -622,11 +625,20 @@
 				//visibility: visible;
 				//opacity: 1 !important;
 			}
-			&.spread i.submit{
-				width: 100%;
-				height: 100%;
-				position: relative;
-				z-index: 1;
+			&.spread{
+				.delete{
+					width: 33.33%;
+					height: 31px;
+					position: relative;
+					border-left: none;
+					border-bottom: none;
+				}
+				i.submit{
+					width: 100%;
+					height: 100%;
+					position: relative;
+					z-index: 1;
+				}
 			}
 			form{
 				margin-bottom: 0;
@@ -634,16 +646,10 @@
 			}
 			input{
 				text-align: center;
-				padding-right: 5px;
+				//padding-right: 5px;
 			}
-			.delete{
-				width: 33.33%;
-				height: 31px;
-				position: relative;
-				border-left: none;
-				border-bottom: none;
-			}
-			@include trader_order_delete;
+			.help{  right: 3px;  }
+			//@include trader_order_delete;
 		}
 	}
 }

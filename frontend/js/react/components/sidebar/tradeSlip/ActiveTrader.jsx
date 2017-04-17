@@ -120,7 +120,7 @@ class ActiveTrader extends React.Component {
 								onClick={
 									traderActions.actionAddDefaultOrder.bind(null, this, {
 										direction: 'sell',
-										price    : data.Symbol ? Math.round10(1 - data.Symbol.LastAsk, -2) : '',
+										price    : data.Symbol ? ask : '',
 										limit    : false
 									}, 'market')}
 								disabled={!quantity || !bid}>
@@ -132,7 +132,7 @@ class ActiveTrader extends React.Component {
 								onClick={
 									traderActions.actionAddDefaultOrder.bind(null, this, {
 										direction: 'buy',
-										price    : data.Symbol ? Math.round10(1 - data.Symbol.LastAsk, -2) : '',
+										price    : data.Symbol ? bid : '',
 										limit    : false
 									}, 'market')}
 								disabled={!quantity || !ask}>

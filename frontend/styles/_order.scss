@@ -250,6 +250,11 @@
       .time{  color: $order_sidebar_current_order_title_color;  }
       .help_message{ width: 160px; right: 4px; top: 25px; }
     }
+    .basic_mode{
+      .switch{  display: none;  }
+      i.submit{  width: 100%;  }
+      [type=submit]{  border-right: none;  }
+    }
     .close{
       float: right;
       margin-top: 4px;

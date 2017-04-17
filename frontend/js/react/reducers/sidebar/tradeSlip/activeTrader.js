@@ -46,7 +46,6 @@ for(let ii = 1; ii <= 99; ii++)
 
 export default function activeTrader(state = initialState, action)
 {
-	let orderInfo;
 	switch (action.type)
 	{
 		case TRADER_ON_QUANTITY_CHANGE:
@@ -59,16 +58,13 @@ export default function activeTrader(state = initialState, action)
 			return {...state, data: action.payload.data, rebuiltServerData: action.payload.rebuiltServerData };
 
 		case TRADER_ON_EXCHANGE_CHANGE:
-			let newState = Object.assign(state, action.payload);
-			return {...newState};
+			return {...state, ...action.payload};
 
 		case TRADER_ON_ADD_ORDER:
-			orderInfo = Object.assign(state.orderInfo, {...action.payload});
-			return {...state, orderInfo: {...orderInfo} };
+			return {...state, orderInfo: {...state.orderInfo, ...action.payload} };
 
 		case TRADER_ON_DELETE_ORDER:
-			orderInfo = Object.assign(state.orderInfo, {...action.payload});
-			return {...state, orderInfo: {...orderInfo}};
+			return {...state, orderInfo: {...state.orderInfo, ...action.payload}};
 
 		case TRADER_ON_SPREAD_HIGHLIGHT:
 			return {...state, spreadHighLight: action.payload};
