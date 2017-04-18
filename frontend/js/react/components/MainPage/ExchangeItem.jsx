@@ -123,22 +123,15 @@ export default class ExchangeItem extends React.PureComponent
                             Orders: data.Orders,
                             ...commProps
                         }}/>
-                        <div className="pl mode_info_js">
-                            {
-                                function() {
-                                    if( data.Positions )
-                                    {
-                                        let $class;
-                                        if (data.GainLoss < 0) $class = 'lose';
-                                        else if (data.GainLoss > 0) $class = 'win';
-
-                                        return <strong style={{transform: `translateY(0)`}}>P/L: <span className={$class}>{data.GainLoss ?
-											data.GainLoss < 0 ? `($${Math.abs(data.GainLoss)})` :  '$' + data.GainLoss
+                        <div className={'pl mode_info_js' + (data.Positions ? ' active' : '')}>
+                            <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>P/L:
+                                <span className={(data.GainLoss < 0 ? 'lose' : '') + (data.GainLoss > 0 ? 'win' : '')}>
+                                        {data.GainLoss ?
+											data.GainLoss < 0 ? ` ($${Math.abs(data.GainLoss)})` :  '$' + data.GainLoss
 											:
-                                            '$' + 0}</span></strong>;
-                                    } // endif
-                                }()
-                            }
+											' $' + 0}
+                                </span>
+                            </strong>
                         </div>
                     </div>
                 </div>
@@ -176,7 +169,7 @@ export default class ExchangeItem extends React.PureComponent
                             ...commProps
                         }}/>
 
-                        <div className="pos mode_info_js">
+                        <div className={'pos mode_info_js' + (data.Positions ? ' active' : '')}>
                             <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>Pos: <span>{data.Positions && data.Positions}</span></strong>
                         </div>
                     </div>

@@ -39,6 +39,7 @@ export default class Preferences extends React.Component
 		{
 			if(error){
 				this.setState({
+					...this.state,
 					answerMessage: error,
 					answerClass: 'invalid_message',
 					loading: false
@@ -46,6 +47,7 @@ export default class Preferences extends React.Component
 			}
 			else
 				this.setState({
+					...this.state,
 					answerMessage: 'Your data has been successfully updated',
 					answerClass: 'validJs',
 					loading: false
@@ -64,6 +66,8 @@ export default class Preferences extends React.Component
 		{
 			this.setState({
 				...this.state,
+				answerMessage: '',
+				answerClass: '',
 				loading: true
 			});
 		}
@@ -71,6 +75,7 @@ export default class Preferences extends React.Component
 		function onErrorAjax(x, y)
 		{
 			this.setState({
+				...this.state,
 				answerMessage: 'The connection to the server has been lost. Please check your internet connection or try again.',
 				answerClass: 'invalid_message',
 				loading: false

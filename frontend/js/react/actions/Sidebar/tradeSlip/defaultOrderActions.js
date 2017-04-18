@@ -40,23 +40,23 @@ import { orderForm } from '../../../components/formValidation/validation';
 // 	}
 // }
 
-export function actionOnDeleteOrder(orderContainer, order)
+export function actionOnDeleteOrder(order)
 {
 	return (dispatch, getState) =>
 	{
-		// console.log(orderContainer);
-		// console.log(order);
+		// console.log('orderContainer:', orderContainer);
+		// console.log('order:', order);
 
 		let orderId;
 		if(order.Side !== undefined)
 			orderId = order.Side;
 		else
-			orderId = orderContainer.ID;
+			orderId = order.ID;
 
 		// debugger;
 		let newOrders = getState().defaultOrders.orderNewData.filter(function(itemContainer) {
-			if(order.Side !== undefined && itemContainer.ID === orderContainer.ID &&
-				itemContainer.isMirror === orderContainer.isMirror){
+			if(order.Side !== undefined && itemContainer.ID === `${order.Symbol.Exchange}_${order.Symbol.Name}_${order.Symbol.Currency}` &&
+				itemContainer.isMirror === order.isMirror){
 
 				itemContainer.Orders = itemContainer.Orders.filter((item) => item.Side !== orderId);
 				if(itemContainer.Orders.length)
@@ -65,7 +65,7 @@ export function actionOnDeleteOrder(orderContainer, order)
 					return false;
 			}
 			else
-				return itemContainer.ID !== orderId || itemContainer.isMirror !== orderContainer.isMirror;
+				return itemContainer.ID !== orderId || itemContainer.isMirror !== order.isMirror;
 		});
 		// console.log(newOrders);
 
@@ -184,7 +184,7 @@ export function actionOnAjaxSend(context, parentData, e)
 
 		function onSuccessAjax()
 		{
-			context.props.actions.actionOnDeleteOrder(parentData, context.props.data);
+			context.props.actions.actionOnDeleteOrder( context.props.data);
 			__DEV__ && console.log(`Order sending finished: ${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`);
 		}
 

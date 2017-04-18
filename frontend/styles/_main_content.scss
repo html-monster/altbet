@@ -587,27 +587,31 @@
             }
           }
           .pl, .pos{
-            width: 225px;
-            height: 23px;
+            width: 108px;
+            height: 37px;
             //padding-top: 4px;
             //visibility: hidden;
             position: absolute;
             bottom: -45px;
-            font-size: 12px;
+            font-size: 11px;
+						line-height: 16px;
             color: $main-color;
             background: url("#{$pathImage}/sprite_components.svg") no-repeat;
             overflow: hidden;
+            transition: 0.4s ease-out;
+            transform: scaleY(0.55) translateY(14px);
+            &.active{  transform: none;  }
             strong{
               display: block;
-              width: 104px;
-              margin-top: 3px;
+              width: 102px;
+              //margin-top: 3px;
               transform: translateY(-20px);
               transition: 0.2s ease-out;
             }
           }
           .pl{
-            padding-left: 34px;
-            padding-right: 30px;
+            padding-left: 13px;
+            padding-right: 0;
             right: -5px;
             background-position: $main_page_event_info_pl_bg;
             //.profit{  color: #4dac2e;  }
@@ -619,8 +623,8 @@
             }
           }
           .pos{
-            padding-right: 25px;
-            padding-left: 30px;
+            padding-right: 13px;
+            padding-left: 0;
             left: -6px;
             background-position: $main_page_event_info_pos_bg;
             strong{  float: right;  }
