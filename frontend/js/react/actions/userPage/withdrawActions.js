@@ -249,37 +249,41 @@ export function onSuccessAjaxSkrill(context, form, serverValidation, data)
 	return (dispatch) =>
 	{
 		__DEV__ && console.log(data);
-		const { SkrillAnswer: { Code } } = data;
+		if(data.SkrillAnswer){
+			const { SkrillAnswer: { Code } } = data;
 
-		switch (Code) {
-			case '200':{
-				const { amount = null  } = data;
-				if(amount) popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw.message');
+			switch (Code) {
+				case '200':{
+					const { amount = null  } = data;
+					if(amount) popUpClass.nativePopUpOpen('.wrapper_user_page .withdraw.message');
 
-				$(context.refs.paymentMessage).find('.amount').text('$' + (amount));
-				serverValidation({message: 'The payment is successful'});
-				break;}
-			case '555':{
-				serverValidation({error: 'The payment failed. Please reload the page or try again later'});
-				break;}
-			case '556':{
-				serverValidation({error: 'You don`t have enough money in your Alt.bet account'});
-				dispatch({
-					type: WITHDRAW_QUANTITY_VALIDATE,
-					payload: ' '
-				});
-				break;}
-			case 'SINGLE_TRN_LIMIT_VIOLATED':{
-				serverValidation({error: 'Maximum amount per payment transaction = EUR 10,000'});
-				dispatch({
-					type: WITHDRAW_QUANTITY_VALIDATE,
-					payload: ' '
-				});
-				break;}
-			default:{
-				serverValidation({error: 'The payment failed. Try again later'});
+					$(context.refs.paymentMessage).find('.amount').text('$' + (amount));
+					serverValidation({message: 'The payment is successful'});
+					break;}
+				case '555':{
+					serverValidation({error: 'The payment failed. Please reload the page or try again later'});
+					break;}
+				case '556':{
+					serverValidation({error: 'You don`t have enough money in your Alt.bet account'});
+					dispatch({
+						type: WITHDRAW_QUANTITY_VALIDATE,
+						payload: ' '
+					});
+					break;}
+				case 'SINGLE_TRN_LIMIT_VIOLATED':{
+					serverValidation({error: 'Maximum amount per payment transaction = EUR 10,000'});
+					dispatch({
+						type: WITHDRAW_QUANTITY_VALIDATE,
+						payload: ' '
+					});
+					break;}
+				default:{
+				}
 			}
 		}
+		else
+			serverValidation({error: 'The payment failed. Try again later'});
+		
 		form.find('[type=submit]').removeAttr('disabled');
 		form.removeClass('loading');
 		$(context.refs.paymentMessage).find('.hide').unbind('click');

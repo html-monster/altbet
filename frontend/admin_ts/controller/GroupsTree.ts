@@ -98,7 +98,7 @@ export class GroupsTree
         // 0||console.debug( '$(".sidebar-menu .js-treeview.active")', $(".sidebar-menu .treeview.active") );
 
         // open category tree for default
-        $(".js-tree-menu-item").click();
+        // $(".js-tree-menu-item").click()
 
 
 

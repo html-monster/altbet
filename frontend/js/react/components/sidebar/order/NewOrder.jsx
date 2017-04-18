@@ -12,16 +12,17 @@ export default class NewOrder extends React.Component{
 	render()
 	{
 		// console.log(ABpp);
-		const { data } = this.props;
+		const { actions, data } = this.props;
 		let formData = {
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
 		};
+		// console.log('data:', data);
 
 		return <div className="order_content new animated">
 			<div className="order-title">
 				<h3>{data.EventTitle}</h3>
-				<span className="close" onClick={this.props.onDeleteOrderHandler}><span>{}</span></span>
+				<span className="close" onClick={actions.actionOnDeleteOrder.bind(this, data)}><span>{}</span></span>
 				<strong className="current-order up">Entries: <span>{data.Positions}</span></strong>
 			</div>
 			{
@@ -44,7 +45,7 @@ export default class NewOrder extends React.Component{
 							data={item}
 							containerData={data}
 							formData={formData}
-							onOrderDelete={this.props.onDeleteOrderHandler.bind(null, item)}
+							onOrderDelete={actions.actionOnDeleteOrder.bind(this, item)}
 							actions={this.props.actions}
 							data-verify={['Price', 'Volume']}
 						/>

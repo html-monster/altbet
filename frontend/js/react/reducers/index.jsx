@@ -103,6 +103,23 @@ switch (ABpp.config.currentPage)
 		};
 		break;
 	}
+	case ABpp.CONSTS.PAGE_STATIC:{
+		reducers = {
+			App: appState,
+			header,
+			...common,
+		};
+		break;
+	}
+	case ABpp.CONSTS.PAGE_ANSWER:{
+		reducers = {
+			App: appState,
+			header,
+			...common,
+		};
+		break;
+	}
+
 }
 
 export default combineReducers(reducers);

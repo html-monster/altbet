@@ -211,12 +211,13 @@ class defaultMethods
 	 * @param context - форма с которой идет вызов(нужна для серилизации данных)
 	 * @param data - сформированный объект данных для отправки
 	 */
-	static sendAjaxRequest({httpMethod = 'POST', callback = null, onError = null, beforeSend = null, url, context = null, data = null, dataType = 'json'}) {
-		if(!data && callback) data = context.serialize();
+	static sendAjaxRequest({httpMethod = 'POST', callback = null, onError = null, beforeSend = null, url, context = null,
+		data = null, dataType = 'json', ...rest}) {
 		if(!data && !context) {
-			console.error('для ajax нужно передать данные или контекст вызова');
+			console.error('для ajax нужно передать data или context вызова');
 			return false;
 		}
+		if(!data && callback) data = context.serialize();
 		// 0||console.log( 'here', callback, url );
 		// callback();
 		$.ajax({
@@ -226,7 +227,8 @@ class defaultMethods
 			data: data,
 			success: callback,
 			error: onError,
-			beforeSend: beforeSend
+			beforeSend: beforeSend,
+			...rest
 		});
 	}
 }

@@ -6,7 +6,7 @@ import {Dialog} from '../../models/Dialog.ts';
 
 export class TabMyPos extends React.Component
 {
-    filters = {'sport': 'Fantasy Sport', 'economy': 'Economy', 'e-sport': 'E-Sport', 'society': 'Society', };
+    filters = {'fantasy sport': 'Fantasy Sport', 'economy': 'Economy', 'e-sport': 'E-Sport', 'society': 'Society', };
 
     constructor(props)
     {
@@ -20,7 +20,7 @@ export class TabMyPos extends React.Component
 
     _onFilterChange(ee)
     {
-        // 0||console.log( 'ee', ee.target, ee.target.dataset, this.state );
+        0||console.log( 'ee', ee.target, ee.target.dataset, this.state );
         // 0||console.log( 'this.state.filters[ee.target.dataset.filter]', this.state.filters[ee.target.dataset.filter], this.state );
         this.state.filters[ee.target.dataset.filter] = !this.state.filters[ee.target.dataset.filter];
         this.setState({...this.state});
@@ -50,14 +50,14 @@ export class TabMyPos extends React.Component
         let plClass;
 
         // filter btn
-        var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "2"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '3'} htmlFor={inCatName + "2"} className={this.filters[inCatName].toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{this.filters[inCatName]}</span></label>];
+        var filterBtn = (inCatName, $ca) => [<input key={inCatName + "22"} id={$ca = inCatName.replace(" ", "_").replace("-", "_") + "22"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '23'} htmlFor={$ca} className={this.filters[inCatName].toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{this.filters[inCatName]}</span></label>];
 
 
         return <div className="tab_item active">
                     <div className="my_position_tab">
                         <div className="wrapper">
                             <div className="filters">
-                                {filterBtn('sport')}&nbsp;
+                                {filterBtn('fantasy sport')}&nbsp;
                                 {/*{filterBtn('economy')}&nbsp;*/}
                                 {filterBtn('e-sport')}
                                 {/*{filterBtn('society')}*/}

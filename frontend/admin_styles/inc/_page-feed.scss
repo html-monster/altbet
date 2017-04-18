@@ -1,0 +1,64 @@
+//@keyframes fadeInGreen {
+//	0% {  background-color: transparent; color: #000; }
+//	100% {  background-color: $color1Green; color: #fff; }
+//}
+//@keyframes fadeOutGreen {
+//	0% {  background-color: $color1Green; color: #fff; }
+//	100% {  background-color: transparent; color: #000; }
+//}
+//@keyframes fadeInBlue {
+//	0% {  background-color: transparent; color: #000; }
+//	100% {  background-color: $color2Blue; color: #fff; }
+//}
+//@keyframes fadeOutBlue{
+//	0% {  background-color: $color2Blue; color: #fff; }
+//	100% {  background-color: transparent; color: #000; }
+//}
+
+.page-Feed {
+  .content-wrapper {
+    .box-body { overflow: visible }
+
+    .exchanges { margin-top: 20px;
+      tr:hover {
+        td { background-color: #f5f5f5; }
+        .controls { opacity: 1; }
+      }
+      .controls { width: 80px; opacity: .3; }
+      //.icon {
+      //  a { border-bottom: 1px dotted lighten($colorFont, 20%); color: $colorFont;
+      //    &:hover { border-bottom-style: solid }
+      //  }
+      //}
+      //& > tbody + tbody {
+      //    border-top: 0;
+      //}
+      //tbody {
+      //  &.js-opened {
+      //    tr.exch-row td
+      //    { background: rgba(60, 141, 188, 0.26) }
+      //    tr.details td
+      //    { background: rgba(60, 141, 188, 0.15) }
+      //  }
+      //}
+      //tr.details td { padding: 0; line-height: 1px; border-top: 0; background: #F2F2F2;
+      //  div.details { display: none; line-height: 18px; padding: 8px; }
+      //}
+      //tr.added td, tr.edited td { position: relative; animation: fadeInGreen 1s; background-color: $color1Green; color: #fff; }
+      //tr.edited td { animation: fadeInBlue 1s; background-color: $color2Blue;
+      //  //&:first-child::after { content: 'added'; position: absolute; left: 1px; bottom: 1px; font-size: 10px; color: #fff; }
+      //}
+      //tr.added.animated td, tr.edited.animated td { animation: fadeOutGreen 1s; background-color: transparent; color: #000; }
+      //tr.edited.animated td { animation: fadeOutBlue 1s; }
+      //.dropdown-menu { left: auto; right: 0; }
+    }
+
+    .icon { @include box(i,r); padding-right: 17px;
+      &::before { @include box(n,a,16 16 px); content: ''; right: 0; top: 3px; background: url("#{$theme-path-pic}/sprite-01.svg") 0 0 no-repeat; background-size: 64px }
+      &.active::before { display: inline-block; }
+      &.Desc::before { background-position: -16px 0 }
+      //a { color: #000; }
+    }
+  }
+}
+

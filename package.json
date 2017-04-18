@@ -5,14 +5,15 @@
     "gulp": "./node_modules/gulp/bin/gulp.js",
     "devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 9090 --host localhost",
     "webpack": "webpack",
-    "webpackDEV": "webpack --watch --watch-aggregate-timeout 300 --COMMENT=\"DEBUG=true(set in environment)\""
+    "webpackDEV": "webpack --watch --watch-aggregate-timeout 300 --COMMENT=\"DEBUG=true(set in environment)\"",
+    "webpackBuild": "webpack --config webpackinc/webpack.config.build.js --COMMENT=\"NODE_ENV=production(set in environment)\""
   },
   "author": "Aleksey",
   "license": "ISC",
   "dependencies": {
     "assets-webpack-plugin": "^3.2.0",
     "autoprefixer": "^6.2.3",
-    "babel-polyfill": "*",
+    "babel-polyfill": "^6.23.0",
     "babel-runtime": "*",
     "browser-sync": "^2.11.0",
     "classnames": "^2.2.3",
@@ -89,7 +90,8 @@
     "webpack-hot-middleware": "^2.6.4",
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-notifier": "*",
-    "webpack-stream": "^3.1.0"
+    "webpack-stream": "^3.1.0",
+    "webpack-uglify-js-plugin": "^1.1.9"
   },
   "name": "altbet",
   "version": "1.0.0",

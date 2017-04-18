@@ -1,5 +1,8 @@
 /// <reference path="./../.d/common.d.ts" />
 /// <reference path="./../.d/jquery.d.ts" />
+
+// import "babel-polyfill";
+
 import {SysEvents} from "../react/models/SysEvents";
 // import OddsConverter from '../react/models/oddsConverter/oddsConverter';
 
@@ -22,11 +25,13 @@ declare const WebsocketModel: any;
  */
 export class ABpp
 {
-    public static PAGE_MAIN = '1';
-    public static PAGE_EVENT = '2';
-    public static PAGE_ACCOUNT = '3';
-    public static PAGE_MYPOS = '4';
-    public static PAGE_LANDING = '5';
+    public static PAGE_MAIN = 'PAGE_MAIN';
+    public static PAGE_EVENT = 'PAGE_EVENT';
+    public static PAGE_ACCOUNT = 'PAGE_ACCOUNT';
+    public static PAGE_MYPOS = 'PAGE_MYPOS';
+    public static PAGE_LANDING = 'PAGE_LANDING';
+    public static PAGE_STATIC = 'PAGE_STATIC';
+    public static PAGE_ANSWER = 'PAGE_ANSWER';
     public static TAKER_FEES = 0.0086;
     public static MAKER_FEES = 0.0026;
 
@@ -34,7 +39,7 @@ export class ABpp
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
-    public ver = "0.4.1";
+    public ver = "0.5.1";
 
 
     // application config
@@ -59,6 +64,7 @@ export class ABpp
     public Store = null;                        // redux store
     // public OddsConverter = null;                        // redux store
     public Localization = null;                 // localization module
+    public Chart = null;                        // EP chart
 
 
     private static instance = null;
@@ -123,6 +129,10 @@ export class ABpp
             return ABpp.PAGE_MYPOS;
         else if( globalData.landingPage )
             return ABpp.PAGE_LANDING;
+        else if( globalData.actionName === "getstaticpage" )
+            return ABpp.PAGE_STATIC;
+        else if( globalData.answerPageOn )
+            return ABpp.PAGE_ANSWER;
     }
 
 

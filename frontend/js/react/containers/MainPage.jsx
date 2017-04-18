@@ -80,15 +80,24 @@ class MainPage extends BaseController
         let urlBase = appData.baseUrl.MainPage;
         // let nb = "&nbsp;";
 
+
+        // sort tabs data
+        const currSort = appData.urlQuery.sortType;
+        const $tabs = {closingsoon: 'Closing soon', popular: 'Popular', new: 'New', movers: 'Movers'};
+
+
         return (
             <div className="nav_items">
                 <div className="wrapper" id="exchange">
-                    <div className="tabs">
-                        <span className="tab"><span data-content="Closing soon">{}</span></span>
-                        <span className="tab"><span data-content="Popular">{}</span></span>
-                        {/*<span className="tab"><span data-content="Trending"></span></span>*/}
-                        <span className="tab"><span data-content="New">{}</span></span>
-                        <span className="tab"><span data-content="Movers">{}</span></span>
+                    <div className="stattabs">
+                        {
+                            Object.keys($tabs).map((val, key) => <a href={"?sort=" + val} key={val} className={"stab" + (val == currSort || !currSort && !key ? " active" : '')}><span data-content={$tabs[val]}>{}</span></a>)
+                        }
+                        {/*<span className="stab"><a href="?sort=closingsoon"><span data-content="Closing soon">{}</span></a></span>
+                        <span className="stab"><a href="?sort=popular"><span data-content="Popular">{}</span></a></span>
+                        <span className="stab"><span data-content="Trending"></span></span>
+                        <span className="stab"><a href="?sort=new"><span data-content="New">{}</span></a></span>
+                        <span className="stab"><a href="?sort=movers"><span data-content="Movers">{}</span></a></span>*/}
                         <div className="mode_wrapper">
                             <label className="mode_switch">
                                 <input defaultChecked={!isBasicMode} id="Mode" name="Mode" type="checkbox" />
@@ -112,7 +121,7 @@ class MainPage extends BaseController
                                                 <a  href={urlBase + `/${item.RouteValues.action[0] == '/' ?
                                                         item.RouteValues.action.slice(1)
                                                         :
-                                                        item.RouteValues.action}?Page=${item.RouteValues.Page}`}
+                                                        item.RouteValues.action}?page=${item.RouteValues.Page}` + (currSort ? "&sort=" + currSort : '')}
                                                     dangerouslySetInnerHTML={{__html: item.Caption}}>{}</a>
                                             </li>
                                         })}

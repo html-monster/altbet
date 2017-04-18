@@ -5,7 +5,7 @@ import {DateLocalization} from '../../models/DateLocalization';
 
 export class TabOpenOrders extends React.Component
 {
-    filters = {'sport': 'Fantasy Sport', 'economy': 'Economy', 'e-sport': 'E-Sport', 'society': 'Society', };
+    filters = {'fantasy sport': 'Fantasy Sport', 'economy': 'Economy', 'e-sport': 'E-Sport', 'society': 'Society', };
 
     constructor(props)
     {
@@ -31,14 +31,14 @@ export class TabOpenOrders extends React.Component
         const { data: openOrdersData, yourOrdersActions } = this.props;
         // 0||console.debug( 'openOrdersData', openOrdersData );
         // filter btn
-        var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "2"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '3'} htmlFor={inCatName + "2"} className={this.filters[inCatName].toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{this.filters[inCatName]}</span></label>];
+        var filterBtn = (inCatName, $ca) => [<input key={inCatName + "11"} id={$ca = inCatName.replace(" ", "_").replace("-", "_") + "11"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '13'} htmlFor={$ca} className={this.filters[inCatName].toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{this.filters[inCatName]}</span></label>];
 
 
         return <div className="tab_item">
             <div className="my_position_tab">
                 <div className="wrapper">
                     <div className="filters">
-                        {filterBtn('sport')}&nbsp;
+                        {filterBtn('fantasy sport')}&nbsp;
                         {/*{filterBtn(this.filters['Economy'])}&nbsp;*/}
                         {filterBtn('e-sport')}
                         {/*{filterBtn(this.filters['Society'])}*/}

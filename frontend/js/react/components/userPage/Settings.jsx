@@ -31,11 +31,12 @@ class Settings extends React.Component
     render()
     {
         const { actions, data: { header, active }, files, loadError, loadProgress } = this.props;
-        const { FirstName, LastName, UserName, DateOfBirth, Email, Country, Address, Phone } = appData.pageAccountData.UserInfo;
+        const { Country, Address, Phone } = appData.pageAccountData.UserInfo;
 
 		const inputRender = ({ id, className, info, label, filled, inputLabel, meta: { error, dirty }, ...input }) => {
 			return  <span className={'input_animate input--yoshiko input--filled' + (filled ? ' input--filled' : '')}>
-                        <input className={`input__field input__field--yoshiko ${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} {...input}/>
+                        <input className={`input__field input__field--yoshiko ${className ? className : ''}
+                         ${dirty && (error ? ' invalidJs' : ' validJs')}`} {...input}/>
                         <label className="input__label input__label--yoshiko" htmlFor={id}>
                             <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                         </label>
@@ -198,7 +199,7 @@ class Settings extends React.Component
                         <span className="validation-summary-errors">{}</span>
                     </span>*/}
 
-                    <span className="input_animate input--yoshiko">
+                    <span className="input_animate input--yoshiko submit_container">
                         <input type="submit" value="Submit" className="btn wave"/>
                         {/*<span className="answer_message"></span>*/}
                         <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
@@ -220,7 +221,7 @@ class Settings extends React.Component
                 />
                 <form action={`${ABpp.baseUrl}/Account/UploadImage`} encType="multipart/form-data" className="document_upload"
                 ref="uploadForm" style={{marginTop: 25}}>
-                    <h3 className="section_user">User files</h3>
+                    <h3 className="section_user">Your files</h3>
                     <hr/>
                     <div className="miniatures">
 						{/* <div className="thumbnail">
@@ -263,18 +264,17 @@ class Settings extends React.Component
                                 files.map((item, index) =>
                                 {
                                     const extension = item.ContentType.split('/');
-                                    if(item.ContentType != 'load'){
-                                        //var name = item.Name.split('.');
-                                        //name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.Name;
-                                        //name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : ;
+                                    if(item.ContentType !== 'load'){
+                                        var name = item.Name.split('.');
+                                        name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.Name;
                                     }
-                                    return item.ContentType != 'load' ?
-                                        <div className={`thumbnail file ${extension[0] == 'image' ? '' : 'doc'}`} key={index}>
+                                    return item.ContentType !== 'load' ?
+                                        <div className={`thumbnail file ${extension[0] === 'image' ? '' : 'doc'}`} key={index} title={name}>
                                             <button className="close" title="Remove this file"
                                                   onClick={actions.ajaxDeleteFile.bind(null, this, item.Name)}><span>{}</span></button>
                                             <a href={item.Url} target="_blank">
                                                 {
-                                                    extension[0] == 'image' ?
+                                                    extension[0] === 'image' ?
                                                         <img src={item.Url} alt={name}/>
                                                         :
                                                         <span className={`thumb_icon ${extension[1]}`}>{}</span>
@@ -286,7 +286,7 @@ class Settings extends React.Component
                                     <div className="thumbnail loading" key={index}>
                                         {/*<span className="close" title="Cancel loading"><span>{}</span></span>*/}
                                         <div className="progress_wrp">
-                                            <div className="progress_bar" style={{width: loadProgress + '%'}}></div>
+                                            <div className="progress_bar" style={{width: loadProgress + '%'}}>{}</div>
                                             <div className="status">{loadProgress}%</div>
                                         </div>
                                     </div>
@@ -296,7 +296,8 @@ class Settings extends React.Component
 						}
                     </div>
                     <button className="btn btn_green wave upload load_btn left" ref={'uploadButton'} onClick={this.loadFile}>Load file</button>
-                    <input type="file" name="file" accept=".doc,.docx,.xls,.xlsx,.txt,.png,.jpeg,.jpg"
+                    <input type="file" name="file" accept=".png,.jpeg,.jpg"
+                           //.doc,.docx,.xls,.xlsx,.txt,
                            onChange={actions.onFileChosen.bind(null, this)}
                            style={{visibility: 'hidden'}}
                            ref="uploadData"/>
@@ -339,7 +340,7 @@ class Settings extends React.Component
                     </label>
                     <span className="validation-summary-errors">{}</span>
                 </span>
-                <span className="input_animate input--yoshiko">
+                <span className="input_animate input--yoshiko submit_container">
                     <input type="submit" value="ChangePassword" id="submit" className="btn wave"/>
                     <span className="answer_message">{}</span>
                 </span>
