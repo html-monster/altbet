@@ -12,15 +12,15 @@
     color: #fff;  transition: color 0.4s ease-out; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
     &_1 { right: 50%;
       margin-right: 1px;
-      padding-left: 29px;
-      padding-right: 26px;
+      padding-left: 16px;
+      padding-right: 13px;
       @include main_page_lineup_button;
     }
     &_2 {
       left: 50%;
       margin-left: 1px;
-      padding-left: 26px;
-      padding-right: 29px;
+      padding-left: 13px;
+      padding-right: 16px;
       @include main_page_chart_button;
     }
     &:hover{  color: $color-blue;  }
@@ -590,6 +590,7 @@
             position: absolute;
             bottom: -45px;
             font-size: 11px;
+						font-weight: normal;
 						line-height: 16px;
             color: $main-color;
             background: url("#{$pathImage}/sprite_components.svg") no-repeat;
@@ -603,6 +604,7 @@
               //margin-top: 3px;
               transform: translateY(-20px);
               transition: 0.2s ease-out;
+							font-weight: normal;
             }
           }
           .pl{
