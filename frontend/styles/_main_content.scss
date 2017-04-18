@@ -7,6 +7,7 @@
       background: $main_page_gif no-repeat center $main_page_tab_color_active; }
   &.loader:after{  height: 100%;  }
 
+  &__tabs__opened &__tab.active { color: $color-blue; }
   &__tab {  display: inline-block;  width: 103px; position: absolute; top: -19px; line-height: 21px; font-size: 13px;
     color: #fff;  transition: color 0.4s ease-out; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
     &_1 { right: 50%;
@@ -23,11 +24,6 @@
       @include main_page_chart_button;
     }
     &:hover{  color: $color-blue;  }
-    &.active {
-      color: $color-blue;
-      //text-shadow: 0 0 16px $color-blue;
-      //font-weight: bold;
-    }
   }
   &__tab_content { position: relative; padding-top: 10px !important; overflow: hidden }
 

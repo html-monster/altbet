@@ -63,31 +63,13 @@ export class FeedView extends BaseView
             //         return $state;
             //     }
         }).on("select2:select", (ee) => this.onSportsSelect(ee)).val("-100").trigger("change");
-
-
-        var queryString = window.location.search || '';
-        var keyValPairs = [];
-        var params      = {};
-        queryString     = queryString.substr(1);
-
-        if (queryString.length)
-        {
-           keyValPairs = queryString.split('&');
-           for (let pairNum in keyValPairs)
-           {
-              var key = keyValPairs[pairNum].split('=')[0];
-              if (!key.length) continue;
-              if (typeof params[key] === 'undefined')
-                 params[key] = "";
-              params[key] = keyValPairs[pairNum].split('=')[1];
-           }
-        }
-        0||console.log( 'window.location.search', window.location.search, params );
     }
 
 
     private onSportsSelect(ee)
     {
-        0||console.log( '$(ee.target).val()', $(ee.target).val() );
+        let params = Common.getUrlParams();
+
+        0||console.log( '$(ee.target).val()', $(ee.target).val(), params );
     }
 }
