@@ -226,7 +226,7 @@ header {
     height: 44px;
     margin-right: -1px;
     border-radius: 0;
-    background: url("#{$pathImage}/sprite.svg") no-repeat -219px -13px, url("#{$pathImage}/chat.png") no-repeat 0 7px/ contain;
+    background: url("#{$pathImage}/sprite.svg") no-repeat -219px -13px, url("#{$pathImage}/chat.png") no-repeat 0 7px contain;
   }
   .user {
     height: 100%;
