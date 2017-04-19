@@ -65,6 +65,14 @@ class MainPage extends BaseController
         ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, function(props) {self.props.actions.actionOnActiveSymbolChanged(props, self)});
 
 
+
+
+
+        setTimeout(() => {
+            this._itemsAnimation('.nav_items', '.content_bet');
+            $(this.refs.wrapper).addClass('loaded');
+        }, 2000);
+
         // Waves.init();
         // Waves.attach('.wave:not([disabled])', ['waves-button']);
     }
@@ -87,7 +95,7 @@ class MainPage extends BaseController
 
 
         return (
-            <div className="nav_items">
+            <div ref="wrapper" className="nav_items">
                 <div className="wrapper" id="exchange">
                     <div className="stattabs">
                         {
@@ -134,6 +142,28 @@ class MainPage extends BaseController
             </div>
         );
         // return <Chart data={this.props.MainPage} actions={this.props.chartActions} />
+    }
+
+
+    _itemsAnimation(inWrapper, inAnimatedRow)
+    {
+        let ii = 1;
+        inWrapper = $(inWrapper);
+
+        inWrapper.find(inAnimatedRow).css('display', 'none'); //'.content_bet'
+        // items.hide().eq($(this).index()).show().find(animated_row).each(function(){
+        inWrapper.show().find(inAnimatedRow).each(function(){
+            $(this).addClass('list-animate2');
+            setInterval(() => {
+                $(this).addClass('animate2'); // /*.delay(100 * ii)*/.animate({}, 1500, function() { $(this).addClass('animate2') });
+            }, 100 * ii);
+            ii++;
+            // .css({display: 'flex', opacity: 0, marginTop: '10px'}).animate({
+            //     opacity: '1',
+            //     marginTop: '2px'
+            // }, 300);
+        });
+        ii = 1;
     }
 }
 

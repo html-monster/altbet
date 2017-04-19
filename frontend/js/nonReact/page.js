@@ -75,7 +75,7 @@ $(document).ready(function ()
 
 
 	// анимация рынков на главной
-	tabsClass.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
+	// tabsClass.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
 	// $(".nav_items").find('.wrapper .tab').eq(0).addClass("active");
 
 

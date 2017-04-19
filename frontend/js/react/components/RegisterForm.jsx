@@ -4,7 +4,7 @@
 
 
 import React from 'react';
-
+import Select from 'react-select';
 
 import FormValidation from './FormValidation';
 import InputValidation from './formValidation/InputValidation';
@@ -51,14 +51,14 @@ export class RegisterForm extends React.PureComponent
 
     componentDidMount()
     {
-        // if( __DEV__ )
-        // {
-        //     0||console.log( 'emulate here' )
-        //     setTimeout(() =>
-        //         {$(".log_out .sign_in").click();
-        //             setTimeout(() => $(".register").click(), 500)
-        //         }, 700)
-        // } // endif
+        if( __DEV__ )
+        {
+            0||console.log( 'emulate here' )
+            setTimeout(() =>
+                {$(".log_out .sign_in").click();
+                    setTimeout(() => $(".register").click(), 500)
+                }, 700)
+        } // endif
 
 
         var { onCustomChange } = this.props;
@@ -114,6 +114,7 @@ export class RegisterForm extends React.PureComponent
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 <DropBox className="" name={name} items={items} initLabel={initLabel} hint={hint} input={input}
 						 onCustomChange={onCustomChange} options={{maxHeight: 250}} />
+
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
                     <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                 </label>
@@ -191,6 +192,11 @@ export class RegisterForm extends React.PureComponent
                                      validate={[emptyValidation]} input={input}
                                      hint="Indicate the country of your permanent residence"/>
 
+                    <Select name="form-field-name" /*value="one"*/ options={[
+                            {value: 'one', label: 'One'},
+                            {value: 'two', label: 'Two'}
+                        ]}
+                    onChange={(val) => 0||console.log( 'selected val', val )}/>
                     {/*<ul className="select_list odds_list" ref="oddsList" onClick={this.listSlide.bind(this, false)}>*/}
 
 {/*
