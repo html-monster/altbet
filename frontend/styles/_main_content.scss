@@ -173,6 +173,7 @@
       height: 102px;
       border: 1px dashed #fcefa1;
     }
+
     .content_bet {
       display: flex;
       align-items: stretch;
@@ -189,22 +190,6 @@
 			&.ui-sortable-handle .content_title{  cursor: move;  }
       &.clickable{
         .waves-ripple{  display: block;;  }
-        .content_title{
-          //&:hover + .table{
-          //  .event-content:first-child h3.event-title{  color: transparentize($link-color, 0.4);  }
-          //}
-          //&:after{
-          //  content: '';
-          //  display: block;
-          //  width: 2px;
-          //  height: 100%;
-          //  position: absolute;
-          //  top: 0;
-          //  z-index: 5;
-          //  opacity: 0;
-          //  box-shadow: 0 0 15px 0 transparentize($link-color * 0.5, 1);
-          //}
-        }
         .content_title, .table{  transition: 0.4s ease-out;  }
         &:not(.event-content):hover{
           //.event-content:first-child h3.event-title{  color: transparentize($link-color, 0.4);  }
@@ -321,41 +306,20 @@
       }
       .help{  right: -8px;  }
       .help_message{  width: 210px;  }
-      .event_info{
-        width: calc(24% - 20px);
-        position: absolute;
-        left: 10px;
-        top: 10px;
-        z-index: 1;
-        text-align: left;
-        &:before{
-          content: '';
-          display: inline-block;
-          width: 24px;
-          height: 22px;
-          margin-right: 5px;
-          background: url("#{$pathImage}/sprite.svg") no-repeat;
-        }
+
+      .event_info { position: absolute; left: 10px; top: 10px; width: calc(24% - 20px); text-align: left; z-index: 1;
+        &:before { content: ''; display: inline-block; margin-right: 5px; width: 24px; height: 22px; background: url("#{$pathImage}/sprite.svg") no-repeat; }
         @include main_page_event_icon;
-        span {
-          font-size: 12px;
-          display: inline-block;
-          margin-right: 5px;
-          vertical-align: top;
-          &.date{
-						width: auto;
-						height: auto;
-						color: $main-color;
-						position: relative;
-						&:after{  display: none;  }
-						span{
-							width: 100px;
-							right: 0;
-						}
-					}
+        span { display: inline-block; margin-right: 5px; font-size: 12px; vertical-align: top;
+          &.date { position: relative; width: auto; height: auto; color: $main-color;
+              &:after{  display: none;  }
+              span { right: 0; width: 100px; }
+          }
           &.time{  color: $main-color-darker;  }
         }
-        i { float: right; padding: 3px 7px; line-height: 12px; color: #ffffff; border-radius: 4px; font-style: normal; font-weight: 700;
+
+        // not used do not delete
+        /*i { float: right; padding: 3px 7px; line-height: 12px; color: #ffffff; border-radius: 4px; font-style: normal; font-weight: 700;
             font-size: 12px; vertical-align: top;
           &.live{  background-image: linear-gradient(to bottom, #84d65b, #4dac2e);  }
           &.half_time{  color: transparent; background-image: linear-gradient(to bottom, $clr1Status, $clr1Status * 0.9); }
@@ -370,8 +334,12 @@
               //span{  display: none;  }
             }
           }
-        }
+        }*/
       }
+
+      .event_info_bottom { position: absolute; right: 0; bottom: 5px; padding: 0 5px 2px 5px; font-size: 11px;
+          background: #211e25; border-radius: 5px 0 0 5px; z-index: 1; }
+
       .content_title, .table{
         display: inline-block;
       }
@@ -385,31 +353,14 @@
         margin-right: 2px;
         border-radius: 6px 0 0 6px;
         @include main_page_event_bg;
-        &.command{
-          padding: 30px 10px 20px 30px;
-          position: relative;
-          &:before{
-            content: '';
-            width: 20px;
-            height: 18px;
-            position: absolute;
-            top: calc(50% - 3px);
-            left: 10px;
-            background: url("#{$pathImage}/sprite.svg") no-repeat -27px -356px;
-          }
-          h2{
-            &:before{
-              content: '';
-              display: block;
-              height: 10px;
-              width: 15px;
-              position: absolute;
-              top: calc(50% - 5px);
-              left: -19px;
-              background: url("#{$pathImage}/sprite.svg") no-repeat;
-            }
-            &:first-of-type:before{  background-position: -27px -346px;  }
-            &:last-of-type:before{  background-position: -27px -372px;  }
+        &.command { position: relative; padding: 30px 10px 30px 30px;
+          .inner { display: block; }
+          .vs { position: relative; left: -20px; top: -8px; height: 1px; color: #5f626c; font-size: 12px; text-align: left; }
+          h2 { font-size: 13px;
+            &:before { content: ''; display: block; position: absolute; left: -19px; width: 15px; height: 10px;
+                background: url("#{$pathImage}/sprite.svg") no-repeat; }
+            &:first-of-type:before{ bottom: 5px; background-position: -27px -346px;  }
+            &:last-of-type:before{ top: 5px; background-position: -27px -372px;  }
           }
         }
       }
