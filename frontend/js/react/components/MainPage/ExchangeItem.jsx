@@ -6,26 +6,34 @@ import {LineupPage} from './LineupPage';
 // import {Common} from './../../common/Common';
 
 
-export default class ExchangeItem extends React.PureComponent
+export default class ExchangeItem extends React.Component
 {
     constructor(props)
     {
-        super(props)
+        super(props);
+        // __DEV__&&console.debug( 'ExchangeItem.props.data', this.props.data );
+
+        this.state = {isLPOpen: false};
 
         // эмуляция времени игроков
         this.data = gLineupPageData;
     }
 
 
+/*
     componentDidMount()
     {
-	    $('[data-js-lineup]:not(.has-click)').click((ee) =>
-	    {
-            if (!$(ee.target).hasClass('active') && $('[data-js-lineup].active').length) this.onLineupOpen('[data-js-lineup].active');
-            this.onLineupOpen(ee.target);
-	    }).addClass('has-click');
-	    // 0||console.log( '999999999999999', $('.show-schedule') );
+        0||console.log( 'this.props.data.Symbol.Exchange', this.props.data.Symbol.Exchange );
+        // var self = this;
+        //
+	    // $('[data-js-lineup]:not(.has-click)').click((ee) =>
+	    // {
+         //    // 0||console.log( 'this.props.data.Symbol.Exchange', this.props.data.Symbol.Exchange );
+         //    if (!$(ee.target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1).bind(self);
+         //    this.lineupOpen(ee.target);
+	    // }).addClass('has-click');
     }
+*/
 
 
     render()
@@ -117,22 +125,15 @@ export default class ExchangeItem extends React.PureComponent
                             Orders: data.Orders,
                             ...commProps
                         }}/>
-                        <div className="pl mode_info_js">
-                            {
-                                function() {
-                                    if( data.Positions )
-                                    {
-                                        let $class;
-                                        if (data.GainLoss < 0) $class = 'lose';
-                                        else if (data.GainLoss > 0) $class = 'win';
-
-                                        return <strong style={{transform: `translateY(0)`}}>P/L: <span className={$class}>{data.GainLoss ?
-											data.GainLoss < 0 ? `($${Math.abs(data.GainLoss)})` :  '$' + data.GainLoss
+                        <div className={'pl mode_info_js' + (data.Positions ? ' active' : '')}>
+                            <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>P/L:
+                                <span className={(data.GainLoss < 0 ? 'lose' : '') + (data.GainLoss > 0 ? 'win' : '')}>
+                                        {data.GainLoss ?
+											data.GainLoss < 0 ? ` ($${Math.abs(data.GainLoss)})` :  '$' + data.GainLoss
 											:
-                                            '$' + 0}</span></strong>;
-                                    } // endif
-                                }()
-                            }
+											' $' + 0}
+                                </span>
+                            </strong>
                         </div>
                     </div>
                 </div>
@@ -170,22 +171,22 @@ export default class ExchangeItem extends React.PureComponent
                             ...commProps
                         }}/>
 
-                        <div className="pos mode_info_js">
+                        <div className={'pos mode_info_js' + (data.Positions ? ' active' : '')}>
                             <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>Pos: <span>{data.Positions && data.Positions}</span></strong>
                         </div>
                     </div>
                 </div>
 
-                <button className="show-schedule" data-js-lineup="" title="Show chart">{}</button>
+                <button ref="LPOpenBtn" className="show-schedule" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenCloseClick}>{}</button>
                 <div className="h-lup schedule loader not-sort">
-                    <div className="tabs">
-                        <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info">Lineups</div>
-                        <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info">Chart</div>
+                    <div className={`tabs ${this.state.isLPOpen ? "h-lup__tabs__opened" : ""}`}>
+                        <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
+                        <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info" onClick={::this.onLPOpenClick}>Chart</div>
                     </div>
                     <div className="h-lup__tab_content tab_content">
                         <LineupPage className="tab_item" exdata={exdata} data={this.data} />
 
-                        <div className="tab_item" id={"container_" + symbol}>{}</div>
+                        <div className="tab_item highcharts-tab" id={"container_" + symbol} data-js-highchart="">{}</div>
                         {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                     </div>
                 </div>
@@ -196,11 +197,34 @@ export default class ExchangeItem extends React.PureComponent
 
 
     /**
+     * @private
+     */
+    onLPOpenClick()
+    {
+        this.state.isLPOpen||this.onLPOpenCloseClick();
+    }
+
+
+    /**
+     * @private
+     */
+    onLPOpenCloseClick()
+    {
+        this.setState({...this.state, isLPOpen: !this.state.isLPOpen});
+
+        let target = this.refs.LPOpenBtn;
+        if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);
+        this.lineupOpen(target);
+    }
+
+
+    /**
      * show chart on the main page
      * @private
      * @param that - opener
+     * @param isCLose Boolean - need if just close
      */
-    onLineupOpen(that)
+    lineupOpen(that, isCLose)
     {
         var $that = $(that);
 
@@ -211,11 +235,21 @@ export default class ExchangeItem extends React.PureComponent
         var $contentTitle = $that.closest('.content_bet').find('.content_title');
 		if ($that.hasClass('active'))
         {
-            $that.next().css('height', $that.next().find("[data-js-team]").height() + 40);
+            // set subscribe for chart data
+            this.props.actions.actionSetChartsSymbol({exchange: this.props.data.Symbol.Exchange});
+
+
+            let height = $that.next().find("[data-js-team]").height();
+            height = height > 400 ? height : 400;
+
+            $that.next().css('height', height + 40);
             $contentTitle.css('max-height', 'inherit');
         }
 		else
 		{
+            // set unsubscribe from chart data if close btn click
+            if (!isCLose) this.props.actions.actionSetChartsSymbol({exchange: ""});
+
             $that.next().removeAttr('style');
 			setTimeout(() => { $contentTitle.removeAttr('style'); }, 400);
 		}

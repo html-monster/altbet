@@ -19,7 +19,7 @@ declare var window;
 
 import { Generator } from './Generator' ;
 
-var __LDEV__ = false;
+var __LDEV__ = true;
 
 
 /**
@@ -230,7 +230,7 @@ export class Chart
                         text: '15m',
                         // dataGrouping: {
                         //     units: [
-                        //         ['minute', [15]]
+                        //         ['minute', [1]]
                         //     ]
                         // }
                     }, {
@@ -291,7 +291,7 @@ export class Chart
                 },
                 minorTickLength: 0,
                 tickLength: 0,
-                events: {
+/*                events: {
                     // afterSetExtremes: function (e) {
                     //     var min = this.min;
                     //     var max = this.max;
@@ -308,7 +308,7 @@ export class Chart
                     //     self.redraw();
                     //     //this.chart.xAxis[1].setExtremes(this.min, this.max);
                     // }
-                }
+                }*/
             },
             yAxis: {
                 labels: {
@@ -321,11 +321,11 @@ export class Chart
                 endOnTick: false,
                 maxPadding: 0.2,
                 minPadding: 0.1,
-                title: {
+/*                title: {
                     text: ''
-                }
+                }*/
             },
-            events: {
+/*            events: {
                 load: function () {
                     self.redraw();
                     //createLabel(this, "How do I move this center and under the legend.");
@@ -333,7 +333,7 @@ export class Chart
                 // redraw: function () {
                 //     redraw();
                 // }
-            },
+            },*/
             data: [],
         },
 /*        {
@@ -418,6 +418,7 @@ export class Chart
                 let end = moment.unix(val.x/1000);
                 let duration = moment.duration(end.diff(moment.unix(firstGrDate/1000)));
                 let minDiff = duration.asMinutes();
+                // BM: true to remove grouping
                 if( jj == -1 || minDiff > inGr )
                 {
                     jj++;
@@ -609,7 +610,8 @@ export class Chart
             $('#' + container).bind('mouseleave', function (e) { self.showHighlights(e, 1) });
 
 
-            Highcharts.Point.prototype.highlight = function (event, data, isClose = 0) {
+            Highcharts.Point.prototype.highlight = function (event, data, isClose = 0)
+            {
                 //this.onMouseOver(); // Show the hover marker
                 //this.series.chart.tooltip.refresh(this); // Show the tooltip
                 if (!data) return;
@@ -617,14 +619,6 @@ export class Chart
                 // var localDate = new Date(data.date + new Date().getTimezoneOffset() * 60 * 1000);
 
                 var $label = '<b>Time:</b> ' + //('0' + localDate.getMonth() + 1).slice(-2) +
-// //                        '-' + ('0' + localDate.getDate()).slice(-2) +
-// //                        '-' + localDate.getFullYear() +
-//                     ' ' + ('0' + localDate.getMonth()).slice(-2) +
-//                     '/' + ('0' + localDate.getDay()).slice(-2) +
-//                     '/' + ('0' + localDate.getFullYear()).slice(-2) +
-//                     ' ' + ('0' + localDate.getHours()).slice(-2) +
-//                     ':' + ('0' + localDate.getMinutes()).slice(-2) +
-//                     ':' + ('0' + localDate.getSeconds()).slice(-2) + ' ' +
                     (new DateLocalization()).unixToLocalDate({timestamp: data.date, format: "d MMM YY h:mm:ss "}) +
                     '<b>Vol:</b> ' + data.volume.toString().substr(0, 3) + '  <br/> ' +
                     '<b>Close:</b> ' + parseFloat("0" + data.close).toFixed(2).substr(1, 3) + ' ' +
@@ -683,11 +677,12 @@ export class Chart
                             enabled: false,
                             // approximation: 'average',
                             // forced: true,
-                            // units: [
-                            //     ['minute', [1, 5, 15]],
-                            //     ['hour', [1]],
-                            //     ['day', [1]],
-                            // ],
+                        //     units: [
+                        //         // ['minute', [1]],
+                        //         ['minute', [1, 5, 15]],
+                        //         ['hour', [1]],
+                        //         ['day', [1]],
+                        //     ],
                         }
                     },
                     spline: {
@@ -704,23 +699,23 @@ export class Chart
                         }
                     },
                     column: {
-                        // dataGrouping: {
+                        dataGrouping: {
                         //     approximation: 'sum',
-                        //     enabled: true,
+                            enabled: false,
                         //     forced: true,
                         //     units: [
                         //         ['minute', [1, 3, 10, 30]],
                         //         ['hour', [2]]
                         //     ],
-                        // },
-                        grouping: true,
+                        },
+                        grouping: false,
                         borderWidth: 0,
-                        events: {
+/*                        events: {
                             // mouseOut: function() {
                             //     0||console.debug( 'mousout' );
                             //     redraw();
                             // }
-                        }
+                        }*/
                     },
                 },
                 xAxis: self.chartData[0].xAxis,
@@ -806,8 +801,8 @@ export class Chart
             } // endif
 
             this.chartContainer = $('<div class="chart"></div>');
-                this.chartContainer.appendTo('#' + container);
-                this.chartContainer = this.chartContainer.highcharts(chartsOptions);
+            this.chartContainer.appendTo('#' + container);
+            this.chartContainer = this.chartContainer.highcharts(chartsOptions);
 
             // start gen virtual point
             self.Generator.start(self);
@@ -849,8 +844,8 @@ export class Chart
 
 
         // setGrouping();
-
         // redraw();
+
 
         // $('.highcharts-input-group').remove();
         self.activateGroupBtns();
@@ -880,6 +875,7 @@ export class Chart
     {
         // 0||console.debug( 'clicked', that.classList[1][2] );
         this.groupData(this.groups[that.classList[1][2]]);
+
         // this.setChartData(this.dataGrouped); // in restart !
         this.Generator.restart();
         // setTimeout(() =>
@@ -920,12 +916,10 @@ export class Chart
                         // stop generator
                         if (additionalValues.length) { self.Generator.cancel(); }
 
-                        // __LDEV__&&console.debug( 'this.currData, inData', self.currData, inData, additionalValues, key);
-        // return 1;
 
                         $(additionalValues).each(function ()
                         {
-                            0||console.warn( 'Update chart (add points)', additionalValues );
+                            __LDEV__&&console.warn( 'Update chart (add points)', additionalValues );
                             self.addPoint(additionalValues);
                             self.setChartData(self.dataGrouped);
 
@@ -1040,84 +1034,47 @@ export class Chart
 
 
 
-    private showHighlights(e, isClose = 0)
+    private showHighlights(ee, isClose = 0)
     {
         // TODO: через индекс
         $(Highcharts.charts).each(function ()
         {
             try {
-                var event = this.pointer.normalize(e.originalEvent); // Find coordinates within the chart
+                var event = this.pointer.normalize(ee.originalEvent); // Find coordinates within the chart
                 var point = this.series[0].searchPoint(event, true); // Get the hovered point
 
                 // if (point && point.dataGroup)
                 if (point)
                 {
                     var x1 = point.x;
-                    // var { dataGroup , pointAttr , clientX ,dist ,distX ,getLabelConfig ,highlight ,importEvents ,index ,options ,series ,plotX ,plotY ,state ,x ,y} = point;
-                    // let debug = { dataGroup , pointAttr , clientX ,dist ,distX ,getLabelConfig ,highlight ,importEvents ,index ,options ,series ,plotX ,plotY ,state ,x ,y};
-// __LDEV__&&console.debug( 'point', debug );
-
 
                     let optionalParams = point.series.options.data;
-                    // 0 ||console.debug( 'point.series', point.series );
-                    // let extremes = Highcharts.charts[0].series[0].xAxis.getExtremes();
                     let min = Infinity, xx;
-                    // __LDEV__&&console.debug( 'min > 2', min > 2 );
+
                     // search nearest
                     for( var ii in optionalParams )
                     {
                         var val = optionalParams[ii];
-                        // if( ii == index) 0||console.debug( 'index', val );
-                        // if( val.x == x ) 0||console.debug( 'series', val );
                         if( Math.abs(val.x - x1) < min ) { min = Math.abs(val.x - x1); xx = ii; }
 
                     } // endfor
-                    // __LDEV__&&console.debug( 'min,', min,  xx);
 
                     // if virtual
                     if( point.series.options.data[xx].virtual ) xx--;
-                    // __LDEV__&&console.debug( 'Highcharts.charts[0].series[0].xAxis.getExtremes()', extremes );
 
-                    // var open = point.series.options.data[point.dataGroup.start].y;
-                    // var close = point.series.options.data[point.dataGroup.start + point.dataGroup.length - 1].y;
-                    // var high = 0;
-                    // var low = 65535;
-                            var data = {
-                                date: point.series.options.data[xx].x,
-                                open: point.series.options.data[xx].open,// Highcharts.charts[0].series[0].data[currentIndex - 1],
-                                high: point.series.options.data[xx].max,
-                                low: point.series.options.data[xx].min,
-                                close: point.series.options.data[xx].close, //Highcharts.charts[0].series[0].data[currentIndex + 1],
-                                volume: point.series.options.data[xx].vol
-                            };
-// __LDEV__&&console.debug( 'point.series.options.data[index].x', point.series.options.data[xx].x );
-                    // for (var i = point.group.start; i < point.dataGroup.start + point.dataGroup.length; i++) {
-                    //     if (point.series.options.data[i].y > high)
-                    //         high = point.series.options.data[i].y;
-                    //
-                    //     if (point.series.options.data[i].y < low)
-                    //         low = point.series.options.data[i].y;
-                    // }
-                    //
-                    // if (Highcharts.charts[0].series[0].searchPoint(event, true))
-                    // {
-                    //     if (open < 1) {
-                    //         // var yy = 0; //Highcharts.charts[0].series[1].searchPoint(event, true);
-                    //         // var yy = Highcharts.charts[0].series[0].searchPoint(event, true);
-                    //         // var data = {
-                    //         //     date: Highcharts.charts[0].series[0].searchPoint(event, true).x,
-                    //         //     open: open.toString().slice(1),// Highcharts.charts[0].series[0].data[currentIndex - 1],
-                    //         //     high: high.toString().slice(1),
-                    //         //     low: low.toString().slice(1),
-                    //         //     close: close.toString().slice(1), //Highcharts.charts[0].series[0].data[currentIndex + 1],
-                    //         //     volume: yy ? yy['y'] : 0
-                    //
-                    //     }
-                    // }
-                    point.highlight(e, data, isClose);
+                    var data = {
+                        date: point.series.options.data[xx].x,
+                        open: point.series.options.data[xx].open,// Highcharts.charts[0].series[0].data[currentIndex - 1],
+                        high: point.series.options.data[xx].max,
+                        low: point.series.options.data[xx].min,
+                        close: point.series.options.data[xx].close, //Highcharts.charts[0].series[0].data[currentIndex + 1],
+                        volume: point.series.options.data[xx].vol
+                    };
+
+                    point.highlight(ee, data, isClose);
                 }
             } catch (e) {
-                __DEV__&&console.warn( 'e', e );
+                __LDEV__&&console.warn( 'e', e );
             }
         });
     }

@@ -269,7 +269,7 @@ class Settings extends React.Component
                                         name = /[\wа-яА-Я]{18}/gi.test(name[0]) ? `${name[0].slice(0, 18)}...${name[1]}` : item.Name;
                                     }
                                     return item.ContentType !== 'load' ?
-                                        <div className={`thumbnail file ${extension[0] === 'image' ? '' : 'doc'}`} key={index}>
+                                        <div className={`thumbnail file ${extension[0] === 'image' ? '' : 'doc'}`} key={index} title={name}>
                                             <button className="close" title="Remove this file"
                                                   onClick={actions.ajaxDeleteFile.bind(null, this, item.Name)}><span>{}</span></button>
                                             <a href={item.Url} target="_blank">

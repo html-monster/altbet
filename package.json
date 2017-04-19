@@ -6,7 +6,7 @@
     "devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 9090 --host localhost",
     "webpack": "webpack",
     "webpackDEV": "webpack --watch --watch-aggregate-timeout 300 --COMMENT=\"DEBUG=true(set in environment)\"",
-    "webpackBuild": "webpack --config webpackinc/webpack.config.build.js"
+    "webpackBuild": "webpack --config webpackinc/webpack.config.build.js --COMMENT=\"NODE_ENV=production(set in environment)\""
   },
   "author": "Aleksey",
   "license": "ISC",

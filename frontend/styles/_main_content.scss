@@ -1,12 +1,13 @@
 // lineuppage area
 .h-lup { position: relative; margin: 0 10px; height: 0; border-radius: 6px; z-index: 2; clear: both;
       transition: 0.4s ease-out;
-  @include chart;
+  @include chartMP;
   &.active { padding-top: 10px; height: 400px; }
   &:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 0;
       background: $main_page_gif no-repeat center $main_page_tab_color_active; }
   &.loader:after{  height: 100%;  }
 
+  &__tabs__opened &__tab.active { color: $color-blue; }
   &__tab {  display: inline-block;  width: 103px; position: absolute; top: -19px; line-height: 21px; font-size: 13px;
     color: #fff;  transition: color 0.4s ease-out; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
     &_1 { right: 50%;
@@ -23,15 +24,12 @@
       @include main_page_chart_button;
     }
     &:hover{  color: $color-blue;  }
-    &.active {
-      color: $color-blue;
-      //text-shadow: 0 0 16px $color-blue;
-      //font-weight: bold;
-    }
   }
   &__tab_content { position: relative; padding-top: 10px !important; overflow: hidden }
 
-  svg {  max-width: 100% !important;  }
+  .highcharts-tab { text-align: center; }
+  .highcharts-container { display: inline-block; }
+  svg { width: 100% !important;  }
   img{  width: 100%;  }
 }
 
@@ -585,27 +583,31 @@
             }
           }
           .pl, .pos{
-            width: 225px;
-            height: 23px;
+            width: 108px;
+            height: 37px;
             //padding-top: 4px;
             //visibility: hidden;
             position: absolute;
             bottom: -45px;
-            font-size: 12px;
+            font-size: 11px;
+						line-height: 16px;
             color: $main-color;
             background: url("#{$pathImage}/sprite_components.svg") no-repeat;
             overflow: hidden;
+            transition: 0.4s ease-out;
+            transform: scaleY(0.55) translateY(14px);
+            &.active{  transform: none;  }
             strong{
               display: block;
-              width: 104px;
-              margin-top: 3px;
+              width: 102px;
+              //margin-top: 3px;
               transform: translateY(-20px);
               transition: 0.2s ease-out;
             }
           }
           .pl{
-            padding-left: 34px;
-            padding-right: 30px;
+            padding-left: 13px;
+            padding-right: 0;
             right: -5px;
             background-position: $main_page_event_info_pl_bg;
             //.profit{  color: #4dac2e;  }
@@ -617,8 +619,8 @@
             }
           }
           .pos{
-            padding-right: 25px;
-            padding-left: 30px;
+            padding-right: 13px;
+            padding-left: 0;
             left: -6px;
             background-position: $main_page_event_info_pos_bg;
             strong{  float: right;  }
