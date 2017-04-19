@@ -18,13 +18,13 @@
 	}
 	.container{  display: flex;  }
   .chart_container { position: relative;
-    .chk-chart-type { position: absolute; right: 13px; top: 13px }
     width: 67.66%;
     margin-bottom: 10px;
-		margin-right: 10px;
+    margin-right: 10px;
     padding: 15px;
     background: $bg_color;
     border-radius: 4px;
+    .chk-chart-type { position: absolute; right: 13px; top: 13px }
 		& .chart { background: $main_page_gif no-repeat center; }
 		.chart {
 			height: 455px;
@@ -54,7 +54,7 @@
 				height: 100% !important;
 			}
 		}
-		@include chart;
+		@include chartEP;
 		.chart .highcharts-input-group { display: none; }
   }
   .event_info {
@@ -67,18 +67,9 @@
         background: $bg_color;
         border-radius: 5px;
         overflow: hidden;
-        .current_price {
-					padding-top: 15px;
-          color: $event_page_color;
-					@include event_page_current_price;
-          .title{
-            font-size: 12px;
-            opacity: 0.8;
-          }
-          .value{
-            font-size: 14px;
-            font-weight: 600;
-          }
+        .current_price { padding-top: 15px; line-height: 18px; color: $event_page_color; font-size: 12px; @include event_page_current_price;
+          .title { opacity: 0.8; }
+          .value { font-weight: 600; }
         }
       }
       .price_scope{

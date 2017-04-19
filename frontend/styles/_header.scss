@@ -15,8 +15,8 @@ header {
   .reconnect .help_message { top: 40px }
   .connect { display: none; width: 30px;
     &::after { display: none; }
-    &::before { content: ""; display: block; position: absolute; left: 10px; top: 11px; width: 10px; height: 10px; background: red; border-radius: 50%;
-      opacity: .8;}
+    &::before { content: ""; display: block; position: absolute; left: 10px; top: 11px; width: 10px; height: 10px;
+      background: red; border-radius: 50%;  opacity: .8;}
   }
 
   //.user_info{
@@ -24,11 +24,14 @@ header {
   //  &.active{  display: block;  }
   //}
   .odds_converter { margin-right: 5px; width: 121px;
-    .active_selection { height: 36px; background: linear-gradient(to bottom, #53515e, #292830); }
-    li { border-top: 1px solid #53515e * 1.2;
-      //&:hover{  background: #53515e * 1.2;  }
-      //&:active{  background: #53515e * 1.5;  }
-    }
+    .active_selection { height: 36px;  padding-top: 3px;  line-height: 30px; color: #ffffff;
+      background: linear-gradient(to bottom, #53515e, #292830); border: 1px solid #000000; }
+    ul{  background: linear-gradient(to bottom, #45434c, #292830); border: 1px solid #000  }
+    li {  color: #ffffff;
+      border-top: 1px solid #53515e * 1.2;
+      border-bottom: 1px solid #000;
+      &:hover{  background: #31303c * 1.2;  }
+      &:active {  background: #31303c * 1.5;  } }
   }
   .header_info {
     @include span(last 10.19 of 12);
@@ -194,13 +197,16 @@ header {
         a {
           display: flex;
           align-items: center;
-          //height: 69px;
-          border-radius: 0;
-          background: none;
-          transition: 0.4s ease-out;
-          &:hover {
+          background: linear-gradient(to bottom, #53515e, #292830);
+          transition: 0.2s ease-out;
+          border-radius: 4px;
+          color: #fff;
+          height: 31px;
+          &.active {
+            color: #000;
+            background: #ffffff;
+            box-shadow: inset 0 -30px 20px -8px rgba(0, 0, 0, 0.3);
           }
-
         }
       }
     }
@@ -211,7 +217,7 @@ header {
     height: 44px;
     margin-right: -1px;
     border-radius: 0;
-    background: url("#{$pathImage}/sprite.svg") no-repeat -219px -13px, url("#{$pathImage}/chat.png") no-repeat 0 7px/ contain;
+    background: url("#{$pathImage}/sprite.svg") no-repeat -219px -13px, url("#{$pathImage}/chat.png") no-repeat 0 7px contain;
   }
   .user {
     height: 100%;

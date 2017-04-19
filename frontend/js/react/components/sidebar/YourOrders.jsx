@@ -91,7 +91,7 @@ class GroupingOrder extends React.Component
 						<strong className="amount">Amount</strong>
 						<strong className="qty">Entries</strong>
 						<strong className="dt">Datetime</strong>
-						<div className="button_container"></div>
+						<div className="button_container">{}</div>
 					</div>
 				</div>
 				{
@@ -135,7 +135,7 @@ class OrderItem extends React.Component
 		data = data.split('_');
 		let id = '#' + data[0] + '__order';
 
-		if(data[1] == 'True'){
+		if(data[1] === 'True'){
 			console.log($(id).parents('.order_content').find('h3').text() + ' order is deleted');
 
 			this.props.onDelete();
@@ -184,8 +184,8 @@ class OrderItem extends React.Component
 	}
 
 	shouldComponentUpdate(nextProps){
-		if(this.props.data.ID == nextProps.data.ID &&
-			this.state.currentOddSystem == ABpp.config.currentOddSystem)
+		if(this.props.data.ID === nextProps.data.ID &&
+			this.state.currentOddSystem === ABpp.config.currentOddSystem)
 			return false;
 
 		this.state.currentOddSystem = ABpp.config.currentOddSystem;
@@ -196,13 +196,14 @@ class OrderItem extends React.Component
 	render()
 	{
 		let data = this.props.data;
-		let allData = this.props.allData;
-		let date = new Date(+data.Time.slice(6).slice(0, -2));
-		let formData = {
+		const allData = this.props.allData;
+		const date = new Date(+data.Time.slice(6).slice(0, -2));
+		const formData = {
 			url: ABpp.baseUrl + '/Order/Edit',
 			action: 'edit'
 		};
-		let className = (data.isMirror) ?
+		data.Price = data.isMirror ? (Math.round10(1 - data.Price, -2)).toFixed(2) : (Math.round10(data.Price, -2)).toFixed(2);
+		const className = (data.isMirror) ?
 											data.Side ? 'buy' : 'sell'
 										:
 											data.Side ? 'sell' : 'buy';
@@ -210,8 +211,7 @@ class OrderItem extends React.Component
 		return <div className="order_container not-sort" id={data.ID + '__order'}>
 			<div className={'order_info ' + className}>
 				<div className="container">
-					<strong className="amount"> <span className="price">{data.isMirror ? (Math.round10(1 - data.Price, -2)).toFixed(2) :
-							(Math.round10(data.Price, -2)).toFixed(2)}</span></strong>
+					<strong className="amount"> <span className="price">{data.Price}</span></strong>
 					<strong className="qty"> <span className="volume">{data.Volume}</span></strong>
 					<strong className="dt timestamp help balloon_only">
 		 				<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}</span>&nbsp;

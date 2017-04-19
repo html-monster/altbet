@@ -20,6 +20,10 @@ export class DropBox extends React.Component
     currItem = null;
     initLabel = "Select item";
 
+    options = {
+        maxHeight: 250,
+    };
+
 
     constructor(props)
     {
@@ -30,18 +34,12 @@ export class DropBox extends React.Component
         var $items = props.items;
         if (props.initLabel) this.initLabel = props.initLabel;
 
-        if( $items.length )
-        {
-            // currItem = 0;
-            for( let ii = 0, countii = $items.length; ii < countii; ii++ )
-            {
-                if ($items[ii].key == undefined) $items[ii].key = $items[ii].val;
-                if( $items[ii].selected ) {
-                    currItem = ii;
-                    currItemVal = $items[ii].val;
-                }
-            } // endfor
-        } // endif
+
+        // prepare items
+        [$items, currItem] = this._prepareItems($items);
+
+
+        this.options = {...this.options, ...props.options};
 
         this.state = { isopened: false, currItem, items: $items, currItemVal };
     }
@@ -51,6 +49,11 @@ export class DropBox extends React.Component
     {
         // bind native change prop
         // $(this.refs.dboxVal).change((ee) => this.props.input.onChange(ee));
+
+        var hUl = $(this.refs.dropList).outerHeight();
+        var hLi = $(this.refs.dropList).find('li').outerHeight();
+        var hh = parseInt(hUl / hLi) * hLi;
+        __DEV__&&console.debug( 'hUl', hUl, hh, $(this.refs.dropList) );
     }
 
 
@@ -152,5 +155,31 @@ export class DropBox extends React.Component
 			$(this.refs.dropList).stop().slideDown(200);
 		else
 			$(this.refs.dropList).stop().slideUp(200);
+    }
+
+
+
+    /**
+     * @private
+     */
+	_prepareItems(inItems)
+    {
+        let currItem = null, currItemVal = '';
+
+        let $items = inItems;
+        if( $items.length )
+        {
+            // currItem = 0;
+            for( let ii = 0, countii = $items.length; ii < countii; ii++ )
+            {
+                if ($items[ii].key == undefined) $items[ii].key = $items[ii].val;
+                if( $items[ii].selected ) {
+                    currItem = ii;
+                    currItemVal = $items[ii].val;
+                }
+            } // endfor
+        } // endif
+
+        return [$items, currItem];
     }
 }

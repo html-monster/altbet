@@ -1,11 +1,101 @@
+// lineuppage area
+.h-lup { position: relative; margin: 0 10px; height: 0; border-radius: 6px; z-index: 2; clear: both;
+      transition: 0.4s ease-out;
+  @include chartMP;
+  &.active { padding-top: 10px; height: 400px; }
+  &:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 0;
+      background: $main_page_gif no-repeat center $main_page_tab_color_active; }
+  &.loader:after{  height: 100%;  }
+
+  &__tabs__opened &__tab.active { color: $color-blue; }
+  &__tab {  display: inline-block;  width: 103px; position: absolute; top: -19px; line-height: 21px; font-size: 13px;
+    color: #fff;  transition: color 0.4s ease-out; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
+    &_1 { right: 50%;
+      margin-right: 1px;
+      padding-left: 16px;
+      padding-right: 13px;
+      @include main_page_lineup_button;
+    }
+    &_2 {
+      left: 50%;
+      margin-left: 1px;
+      padding-left: 13px;
+      padding-right: 16px;
+      @include main_page_chart_button;
+    }
+    &:hover{  color: $color-blue;  }
+  }
+  &__tab_content { position: relative; padding-top: 10px !important; overflow: hidden }
+
+  .highcharts-tab { text-align: center; }
+  .highcharts-container { display: inline-block; }
+  svg { width: 100% !important;  }
+  img{  width: 100%;  }
+}
+
+
+
+
+// Lineup page teams
+.l-lup { padding: 0 10px;
+  &__rules { position: absolute; right: 15px; font-size: 11px; }
+  &__link { color: $main-color }
+}
+.l-team { float: left; width: calc(50% - 1px); /*color: #bdc0cd;*/ font-size: 13px;
+  &:nth-of-type(2), &:nth-of-type(5) { padding-right: 5px }
+  &:nth-of-type(3), &:nth-of-type(6) { padding-left: 5px }
+  &__title { margin: 5px 0 0 0; padding-bottom: 5px; border-bottom: 1px solid darken(#bdc0cd, 20%); text-align: left; font-size: 14px; font-weight: bold }
+  &__team { width: 100%; border-collapse: separate; border-spacing: 3px;
+    td, th { font-size: 12px; vertical-align: top; }
+    tr:hover td { text-shadow: 0 0 10px #bdc0cd; cursor: pointer }
+    .pos { position: relative }
+    .pl { padding-left: 5px; text-align: left; }
+  }
+  &__total { margin-top: 10px; padding-top: 10px; border-top: 1px solid darken(#bdc0cd, 20%); font-size: 14px; text-align: left }
+}
+
+// player info block
+//.l-team__team tr:hover .b-pl-info { display: block; }
+.l-team__team tr:active .b-pl-info { visibility: visible; opacity: 1 }
+.b-pl-info { position: absolute; left: 0; top: 100%; padding: 10px;
+      text-align: right;  text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
+      @include main_page_lineup_hind;
+  &__main-inf {  }
+  &__statistic { font-size: 12px; }
+}
+
+
+// rules & scoring
+.h-rns { display: table-cell; width: 100%;
+  .tabs { width: 30%; min-width: 300px; }
+  .tab_content { display: flex; padding-bottom: 35px; height: 100%; color: #bdc0cd;
+    a { color: #3498da; position: relative;
+      &:hover::after { left: 0; width: 100%; }
+      &::after { content: ''; display: block; position: absolute; left: 50%; bottom: -1px; width: 0; height: 1px;
+          background: linear-gradient(to right, transparent, #3498da, transparent); transition: all .3s ease-out;
+      }
+    }
+  }
+  .tab_item { margin-top: 20px }
+  .tab_item1 { @include scroll; padding: 10px 15px 15px; text-align: left; overflow: hidden; overflow-y: auto; }
+  .tab_item2 { width: 100%;
+    .list { display: inline-block; width: 50%; text-align: center; }
+    ul { display: inline-block; }
+    li { padding-bottom: 10px; text-align: left; }
+  }
+}
+
+
+
 .content {
   @include span(7.6 of 12);
   @include push (1.8 of 12);
-  margin-top: 80px;
+  margin-top: 70px;
   padding: 15px;
   position: relative;
+  color: $main-color;
   .nav_items {
-    .mode_wrapper{
+    .mode_wrapper {
       display: flex;
       align-items: center;
       width: 145px;
@@ -37,7 +127,7 @@
         }
       }
     }
-    .tabs {
+    .stattabs {
       width: 63.33%;
       padding: 15px;
       background: $main-bg;
@@ -45,7 +135,7 @@
       top: 70px;
       left: 15%;
       z-index: 93;
-      span.tab {
+      a.stab {
         display: inline-block;
         margin-right: 10px;
         padding: 0 15px;
@@ -83,6 +173,7 @@
       height: 102px;
       border: 1px dashed #fcefa1;
     }
+
     .content_bet {
       display: flex;
       align-items: stretch;
@@ -99,22 +190,6 @@
 			&.ui-sortable-handle .content_title{  cursor: move;  }
       &.clickable{
         .waves-ripple{  display: block;;  }
-        .content_title{
-          //&:hover + .table{
-          //  .event-content:first-child h3.event-title{  color: transparentize($link-color, 0.4);  }
-          //}
-          //&:after{
-          //  content: '';
-          //  display: block;
-          //  width: 2px;
-          //  height: 100%;
-          //  position: absolute;
-          //  top: 0;
-          //  z-index: 5;
-          //  opacity: 0;
-          //  box-shadow: 0 0 15px 0 transparentize($link-color * 0.5, 1);
-          //}
-        }
         .content_title, .table{  transition: 0.4s ease-out;  }
         &:not(.event-content):hover{
           //.event-content:first-child h3.event-title{  color: transparentize($link-color, 0.4);  }
@@ -231,41 +306,20 @@
       }
       .help{  right: -8px;  }
       .help_message{  width: 210px;  }
-      .event_info{
-        width: calc(24% - 20px);
-        position: absolute;
-        left: 10px;
-        top: 10px;
-        z-index: 1;
-        text-align: left;
-        &:before{
-          content: '';
-          display: inline-block;
-          width: 24px;
-          height: 22px;
-          margin-right: 5px;
-          background: url("#{$pathImage}/sprite.svg") no-repeat;
-        }
+
+      .event_info { position: absolute; left: 10px; top: 10px; width: calc(24% - 20px); text-align: left; z-index: 1;
+        &:before { content: ''; display: inline-block; margin-right: 5px; width: 24px; height: 22px; background: url("#{$pathImage}/sprite.svg") no-repeat; }
         @include main_page_event_icon;
-        span {
-          font-size: 12px;
-          display: inline-block;
-          margin-right: 5px;
-          vertical-align: top;
-          &.date{
-						width: auto;
-						height: auto;
-						color: $main-color;
-						position: relative;
-						&:after{  display: none;  }
-						span{
-							width: 100px;
-							right: 0;
-						}
-					}
+        span { display: inline-block; margin-right: 5px; font-size: 12px; vertical-align: top;
+          &.date { position: relative; width: auto; height: auto; color: $main-color;
+              &:after{  display: none;  }
+              span { right: 0; width: 100px; }
+          }
           &.time{  color: $main-color-darker;  }
         }
-        i { float: right; padding: 3px 7px; line-height: 12px; color: #ffffff; border-radius: 4px; font-style: normal; font-weight: 700;
+
+        // not used do not delete
+        /*i { float: right; padding: 3px 7px; line-height: 12px; color: #ffffff; border-radius: 4px; font-style: normal; font-weight: 700;
             font-size: 12px; vertical-align: top;
           &.live{  background-image: linear-gradient(to bottom, #84d65b, #4dac2e);  }
           &.half_time{  color: transparent; background-image: linear-gradient(to bottom, $clr1Status, $clr1Status * 0.9); }
@@ -280,8 +334,12 @@
               //span{  display: none;  }
             }
           }
-        }
+        }*/
       }
+
+      .event_info_bottom { position: absolute; right: 0; bottom: 5px; padding: 0 5px 2px 5px; font-size: 11px;
+          background: #211e25; border-radius: 5px 0 0 5px; z-index: 1; }
+
       .content_title, .table{
         display: inline-block;
       }
@@ -295,31 +353,14 @@
         margin-right: 2px;
         border-radius: 6px 0 0 6px;
         @include main_page_event_bg;
-        &.command{
-          padding: 30px 10px 20px 30px;
-          position: relative;
-          &:before{
-            content: '';
-            width: 20px;
-            height: 18px;
-            position: absolute;
-            top: calc(50% - 3px);
-            left: 10px;
-            background: url("#{$pathImage}/sprite.svg") no-repeat -27px -356px;
-          }
-          h2{
-            &:before{
-              content: '';
-              display: block;
-              height: 10px;
-              width: 15px;
-              position: absolute;
-              top: calc(50% - 5px);
-              left: -19px;
-              background: url("#{$pathImage}/sprite.svg") no-repeat;
-            }
-            &:first-of-type:before{  background-position: -27px -346px;  }
-            &:last-of-type:before{  background-position: -27px -372px;  }
+        &.command { position: relative; padding: 30px 10px 30px 30px;
+          .inner { display: block; }
+          .vs { position: relative; left: -20px; top: -8px; height: 1px; color: #5f626c; font-size: 12px; text-align: left; }
+          h2 { font-size: 13px;
+            &:before { content: ''; display: block; position: absolute; left: -19px; width: 15px; height: 10px;
+                background: url("#{$pathImage}/sprite.svg") no-repeat; }
+            &:first-of-type:before{ bottom: 5px; background-position: -27px -346px;  }
+            &:last-of-type:before{ top: 5px; background-position: -27px -372px;  }
           }
         }
       }
@@ -493,39 +534,49 @@
             }
           }
           .pl, .pos{
-            width: 145px;
-            height: 22px;
+            width: 108px;
+            height: 37px;
             //padding-top: 4px;
             //visibility: hidden;
             position: absolute;
             bottom: -45px;
-            font-size: 12px;
+            font-size: 11px;
+						font-weight: normal;
+						line-height: 16px;
             color: $main-color;
-            background: url("#{$pathImage}/sprite.svg") no-repeat;
+            background: url("#{$pathImage}/sprite_components.svg") no-repeat;
             overflow: hidden;
+            transition: 0.4s ease-out;
+            transform: scaleY(0.55) translateY(14px);
+            &.active{  transform: none;  }
             strong{
               display: block;
-              margin-top: -25px;
+              width: 102px;
+              //margin-top: 3px;
+              transform: translateY(-20px);
               transition: 0.2s ease-out;
+							font-weight: normal;
             }
           }
           .pl{
-            padding-left: 25px;
-            padding-right: 30px;
-            right: -6px;
+            padding-left: 13px;
+            padding-right: 0;
+            right: -5px;
             background-position: $main_page_event_info_pl_bg;
             //.profit{  color: #4dac2e;  }
             //.loss{  color: #ff3905;  }
+            strong{  float: left;  }
             span{
               &.win{  color: #4dac2e;  }
               &.lose{  color: #ff3905;  }
             }
           }
           .pos{
-            padding-right: 25px;
-            padding-left: 30px;
+            padding-right: 13px;
+            padding-left: 0;
             left: -6px;
             background-position: $main_page_event_info_pos_bg;
+            strong{  float: right;  }
             span{
               color: $main_page_pos_color;
             }
@@ -540,7 +591,7 @@
         position: absolute;
         left: calc(50% - 20px);
         top: 108px;
-        z-index: 2;
+        z-index: 4;
         cursor: pointer;
         background: $main_page_event_chart_button;
         transition: 0.4s ease-out;
@@ -567,33 +618,9 @@
           }
         }
       }
-      .schedule{
-        //display: none;
-        height: 0;
-        margin: 0 10px;
-        position: relative;
-        z-index: 2;
-        clear: both;
-        overflow: hidden;
-        transition: 0.4s ease-out;
-        &:after{
-          content: '';
-          display: block;
-          width: 100%;
-          height: 0;
-          background: $main_page_gif no-repeat center $main_page_tab_color_active;
-          position: absolute;
-          top: 0;
-          left: 0;
-        }
-        &.active{  height: 400px;  }
-        &.loader:after{  height: 100%;  }
-        svg{  max-width: 100% !important;  }
-        @include chart;
-        img{  width: 100%;  }
-      }
     }
   }
+  .mp-exchanges{  padding-top: 5px;  }
   .tab_item:first-child {
     display: block;
   }

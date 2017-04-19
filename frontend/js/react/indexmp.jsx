@@ -26,10 +26,7 @@ const store = configureStore();
 ABpp.Store = store;
 
 
-if( globalData.landingPage )
-{
-}
-else
+if( !globalData.landingPage  )
 {
 	ReactDOM.render(
 		<Provider store={store}>
@@ -46,7 +43,7 @@ else
 	);
 
 
-	if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MAIN ) {
+	if( ABpp.config.currentPage === ABpp.CONSTS.PAGE_MAIN ) {
 		ReactDOM.render(
 			<Provider store={store}>
 				<MainPage />
@@ -55,7 +52,7 @@ else
 		);
 	}
 
-	if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_ACCOUNT ) {
+	if( ABpp.config.currentPage === ABpp.CONSTS.PAGE_ACCOUNT) {
 		ReactDOM.render(
 			<Provider store={store}>
 				<Router history={hashHistory}>
@@ -77,7 +74,7 @@ else
 		// 	document.getElementById('withdraw')
 		// );
 	}
-	else{
+	else if(ABpp.config.currentPage !== ABpp.CONSTS.PAGE_STATIC && ABpp.config.currentPage !== ABpp.CONSTS.PAGE_ANSWER){
 		ReactDOM.render(
 			<Provider store={store}>
 				<Sidebar
@@ -90,7 +87,7 @@ else
 	}
 
 
-	if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_MYPOS ) {
+	if( ABpp.config.currentPage === ABpp.CONSTS.PAGE_MYPOS ) {
 		// рендерим PageMyPos
 		ReactDOM.render(
 			<Provider store={store}>
@@ -119,7 +116,7 @@ else
 
 
 	// для OLD поменять здесь MP и взять EventPage.jsx.old
-	if( ABpp.config.currentPage == ABpp.CONSTS.PAGE_EVENT ) {
+	if( ABpp.config.currentPage === ABpp.CONSTS.PAGE_EVENT ) {
 		ReactDOM.render(
 			<Provider store={store}>
 				<EventPage />

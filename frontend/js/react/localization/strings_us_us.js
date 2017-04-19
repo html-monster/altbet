@@ -2,7 +2,6 @@
  * Created by VlaSakh on 08.08.2016.
  */
 
-
 /**
  *  Usa strings, for America
  */

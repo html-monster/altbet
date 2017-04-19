@@ -74,10 +74,21 @@ $main_page_event_chart_button: url("#{$pathImage}/sprite.svg") no-repeat -166px 
 	box-shadow: none;
 }
 $main_page_event_opacity: 0.2;
-$main_page_event_info_pl_bg: -396px -566px;
-$main_page_event_info_pos_bg: -445px -566px;
+$main_page_event_info_pl_bg: -300px -10px;
+$main_page_event_info_pos_bg: -428px -10px;
 @mixin pricing_plans_separate{
 	border-right: 1px solid #dce1e6 * 0.95;
 	&:last-child h2{  color: #e5e4e2; text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);  }
 }
-
+@mixin main_page_lineup_hind{
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+	background: #fff;
+}
+@mixin main_page_lineup_button{
+	background-position: -226px -115px;
+	&:active{  background-position: -226px -149px;  }
+}
+@mixin main_page_chart_button{
+	background-position: -306px -115px;
+	&:active{  background-position: -306px -149px;  }
+}

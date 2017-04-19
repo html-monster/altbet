@@ -119,7 +119,7 @@ $(document).ready(function ()
 
 	new modeSwitchClass(); //mode switch activate
 
-	new themeChangeClass();
+	// new themeChangeClass();
 	// (function changeSelect(){
 	// 	try {
 	// 		$("body select").msDropDown();
@@ -153,31 +153,6 @@ $(document).ready(function ()
 		});
 	})();
 
-	$('.show-schedule').click(function(){ // show chart on the main page
-		$(this).toggleClass('active')
-					 .next().toggleClass('active');
-		$(this).parents('.table').toggleClass('active');
-		if($(this).hasClass('active'))
-			$(this).parents('.content_bet').find('.content_title').css('max-height', 'inherit');
-		else{
-			setTimeout(() => {
-				$(this).parents('.content_bet').find('.content_title').removeAttr('style');
-			}, 400);
-		}
-
-		if($('.show-schedule').hasClass('active'))
-			globalData.MainCharOn = true;
-		else
-			globalData.MainCharOn = false;
-
-		// var schedule = $(this).next();
-		// setTimeout(function(){
-		// 	schedule.addClass('loader');
-		// }, 400);
-		// setTimeout(function(){
-		// 	schedule.removeClass('loader');
-		// }, 1000);
-	});
 
 	// $('.schedule').sortable('disabled') ; //drug disable
 
@@ -205,7 +180,8 @@ $(document).ready(function ()
 			minDate: new Date(1, 1 - 1, 1),
 			changeMonth: true,
 			changeYear: true,
-			showAnim: 'slideDown'
+			showAnim: 'slideDown',
+			onClose: (p1, p2) => 0||console.log( 'p1', p1, p2 )
 		});
 
 		//validation =======================================================================================================

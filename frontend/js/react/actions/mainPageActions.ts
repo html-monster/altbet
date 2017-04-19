@@ -10,8 +10,8 @@ import BaseActions from './BaseActions';
 import { SocketSubscribe } from "../models/SocketSubscribe";
 
 
-// var __LDEV__ = true;
-let __LDEV__ = false;
+var __LDEV__ = !true;
+
 declare let orderClass;
 
 class Actions extends BaseActions
@@ -186,21 +186,31 @@ class Actions extends BaseActions
         {
             // set init
             // 0||console.log( 'inProps', inProps );
-            ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror, symbol: inProps.symbol});
-            ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
-
             // === Htmlbook === 17-02-09 ===============================================
-            if($('#ChkLimit').prop('checked')) globalData.tradeOn = true;
-            orderClass.tabReturn();
-            $('#active_trader').addClass('loading');
-            // === Htmlbook === 17-02-09 ===============================================
+            // let symbol = getState().activeTrader.data.Symbol;
+            // let symbol = getState().activeTrader.data.Symbol;
+            // symbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
 
-            // call common part
-            let ret = this.exchangeSide(inProps);
-            dispatch({
-                type: ret.type,
-                payload: ret.data,
-            });
+            const aexch = getState().mainPage.activeExchange;
+
+            if( aexch.name !== inProps.name || aexch.isMirror != inProps.isMirror )
+            {
+                ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror, symbol: inProps.symbol});
+                ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
+
+                if($('#ChkLimit').prop('checked')) globalData.tradeOn = true;
+                orderClass.tabReturn();
+                // console.log(inProps.symbol);
+                $('#active_trader').addClass('loading');
+                // === Htmlbook === 17-02-09 ===============================================
+
+                // call common part
+                let ret = this.exchangeSide(inProps);
+                dispatch({
+                    type: ret.type,
+                    payload: ret.data,
+                });
+            }
         };
     }
 
@@ -337,6 +347,27 @@ class Actions extends BaseActions
                 type: type,
                 payload: data,
             });
+        };
+    }
+
+
+    /**
+     * set active symbol on main page
+     * @param inProps
+     * @param context
+     */
+    public actionSetChartsSymbol(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            // let state = getState().mainPage;
+
+            ABpp.Websocket.sendSubscribe({exchange: inProps.exchange}, SocketSubscribe.MP_CHARTS_SYMBOL);
+
+            // dispatch({
+            //     type: type,
+            //     payload: data,
+            // });
         };
     }
 }

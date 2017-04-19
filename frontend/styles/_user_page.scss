@@ -25,18 +25,18 @@
     li {
       padding-right: 10px;
       transition: 0.1s ease-out;
-      &.active, &:hover {
-        a { color: #3498da; }
-      }
+      &.active, &:hover { a { color: #3498da; } }
     }
     a {
       color: $main-color;
       transition: 0.1s ease-out;
     }
   }
+  .inactive{  opacity: 0.3;  }
   form.loading{
     input[type=submit] {  background-image: url("#{$pathImage}/payment-load.gif");  }
   }
+  .submit_container{  margin-bottom: 35px;  }
   input[type=submit]{
     width: 100%;
     padding: 7px 6px;
@@ -112,30 +112,21 @@
         //  }
         //}
       }
-      h3{
-        &.section_user {
-          display: block;
-          //color: #fff;
-          opacity: 0.8;
-          margin: 10px 0;
-          padding-bottom: 10px;
-          //border-bottom: 1px solid #fff;
-        }
-        &.mail{  font-weight: normal;  }
-      }
       h2 {
         margin-bottom: 55px;
         font-size: 24px;
         font-weight: normal;
-        color: $main_color;
         border-bottom: 1px solid $main_color;
       }
+      h3{
+          opacity: 0.8;
+          margin: 20px 0 10px;
+          padding-bottom: 10px;
+      }
+      h4{  margin: 15px 0 5px; font-weight: normal;  }
     }
 
-		.input_animate{
-			display: block;
-      height: 75.97px;
-		}
+		.input_animate{  display: block;  height: 75.97px;  }
 
     hr {
       clear: both;
@@ -194,10 +185,10 @@
       box-shadow: inset 0 10px 30px -5px rgba(0, 0, 0, 0.2);
       position: relative;
       overflow: hidden;
-      strong {
+      //strong {
         //position: absolute;
         //top: -25px;
-      }
+      //}
       span {
         display: flex;
         align-items: center;
@@ -466,16 +457,8 @@
     }
     .history{
       .filter{  display: flex;  }
-      .payment_filter{
-        margin-top: 27px;
-        margin-left: 10px;
-        position: relative;
-      }
-      .active_filter{
-        width: 150px;
-        height: 38.78px;
-        line-height: 38px;
-      }
+      .payment_filter{  margin-top: 27px;  margin-left: 10px;  position: relative;  }
+      .active_filter{  width: 150px;  height: 38.78px;  }
       //.active_filter{
       //  display: block;
       //  width: 150px;
@@ -589,39 +572,40 @@
         }
       }
       span.payment{
-        &.VisaMC{  background-position: -6px -92px;  }
+        &.VisaSkrill{  background-position: -6px -92px;  }
         &.Skrill{  background-position: -5px -48px;  }
         &.Neteller{  background-position: -4px -1px;  }
-        &.Bitpay{  background-position: -6px -143px;  }
+        &.BitpaySkrill{  background-position: -6px -143px;  }
         //&.EcoPayz{  background-position: -22px -132px;  }
       }
       .csv{  display: inline-block; margin: 15px 0;  }
     }
   }
   .preferences {
-      //.mode_switch {
-      //  @include checkbox_horizontal;
-      //}
-    form .preferences_list li {  height: 22px;  }
-    .color_scheme_switch label{
-      display: block;
-      padding-top: 5px;
-      height: 100%;
-      cursor: default;
+    .color_scheme_switch { position: relative; margin-bottom: 10px; height: auto !important;
+      label { display: inline-block; }
     }
-		.preferences_list{
+
+    .preferences_list{
+      display: inline-block;
+      width: 100%;
+      li{  height: 22px;  }
 			label{
-				padding-left: 200px;
+				padding-left: 325px;
 				position: relative;
 				&>span{  position: relative;  }
-        &.change-color strong{
-          color: $main-color;
+        &.checkbox{  padding-left: 367px;  }
+        &.radio_button{  padding-left: 0; }
+        &.change-color{
+          height: 44px;
+          strong{  color: $color-min;  }
         }
 			}
       input:checked ~ strong{
         color: $checkbox_label_color;
       }
-			strong{
+      .help_message strong{  font-size: 12px;  }
+			.label{
 				font-weight: normal;
 				font-size: 14px;
 				position: absolute;
@@ -630,6 +614,7 @@
         transition: 0.4s ease-out;
 			}
 		}
+
     i{  width: 275px;  }
   }
   i.btn{  width: 100%;  }

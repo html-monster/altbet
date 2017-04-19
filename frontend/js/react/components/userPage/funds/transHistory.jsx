@@ -89,18 +89,18 @@ class TransHistory extends React.Component{
 					<tbody>
 						{
 							(data.transHistory.filter((item)=>(data.rangeFilter.from <= item.date && data.rangeFilter.to >= item.date) &&
-							(data.paymentFilter == item.system || data.paymentFilter == 'All')).length)
+							(data.paymentFilter === item.system || data.paymentFilter === 'All')).length)
 									?
 										data.transHistory.map((item, index) =>
 											(data.rangeFilter.from <= item.date && data.rangeFilter.to >= item.date) &&
-											(data.paymentFilter == item.system || data.paymentFilter == 'All') &&
+											(data.paymentFilter === item.system || data.paymentFilter === 'All') &&
 											<tr className={item.direction} key={`${item.system}_${item.date}_${item.amount}_${index}`}>
 												<td>{item.direction}</td>
 												<td>
 													{moment(item.date).format('MM/DD/YYYY')} <span style={{opacity: 0.7}}>
 													{Localization.unixToLocalDate({timestamp: item.date, format:'HH:mm'})}</span>
 												</td>
-												<td><span className={`payment ${item.system == 'Visa MC' ? 'VisaMC' : item.system}`}>{}</span></td>
+												<td><span className={`payment ${item.system}`}>{}</span></td>
 												<td className="amount">${item.amount}</td>
 												<td className={item.status}>{item.status}</td>
 											</tr>

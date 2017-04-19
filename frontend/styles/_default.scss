@@ -49,6 +49,11 @@ body>.wrapper{
   }
 }
 
+h1{
+  font-size: 35px;
+  text-transform: uppercase;
+}
+
 a, span{  transition: 0.4s ease-out;  }
 
 label{  cursor: pointer;  }
@@ -60,6 +65,8 @@ a.text_decoration, a.link{
 
 .nowrap { white-space: nowrap; }
 
+
+// BM: buttons
 button, a.button {
   height: 30px;
   padding: 4px 12px;
@@ -67,12 +74,21 @@ button, a.button {
   color: #fff;
   outline: none;
   cursor: pointer;
+  &.close_red{
+    display: block;
+    width: 15px;
+    height: 15px;
+    min-height: 10px;
+    padding: 0;
+    background: url("#{$pathImage}/sprite.svg") no-repeat -47px -137px;
+  }
 }
 
 .btn_green{  background: linear-gradient(to bottom, #84d65b, #4dac2e);  }
 .btn_orange{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
 .btn_blue{  background: linear-gradient(to bottom, #64c9ef, #3498da);  }
 .btn_yellow{  background: linear-gradient(to bottom, #f8b747, #ef8022);  }
+
 
 select{
   padding: 0 5px;
@@ -135,7 +151,7 @@ form.sending{
     background-image: url("#{$pathImage}/ajax-loader-balls.gif");
   }
 }
-.clear{
+.clear {
   display: none;
   width: 14px;
   height: 14px;
@@ -182,10 +198,12 @@ i.wave{  display: inline-block;  font-style: normal; border-radius: 4px; }
     pointer-events: none;
   }
 }
+
 .wave{
   transform: translateZ(0);
   //-webkit-mask-image: -webkit-radial-gradient(circle,#fff 100%,#000 100%);
 }
+
 .show_password {
   display: inline-block;
   width: 20px;
@@ -203,7 +221,7 @@ label.disabled{
   & > span:before, & > span:after{  opacity: 0.5;  }
 }
 
-// Common horizontal check box
+// BM: Common horizontal check box
 .checkbox_horizontal { position: relative; padding-left: 35px; cursor: pointer;
     // for green-brown checkbox
     input:not(:checked) ~ .label b { font-weight: bold; }
@@ -266,6 +284,51 @@ label.disabled{
 	}
 }
 
+// BM: radio_button
+.radio_button{
+  cursor: default;
+  span{
+    padding-left: 22px;
+    padding-right: 10px;
+    color: transparentize($checkbox_label_color, 0.5);
+    font-size: 12px;
+    position: relative;
+    transition: 0.4s ease-out;
+    cursor: pointer;
+    user-select: none;
+    &:before, &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      border-radius: 50%;
+    }
+    &:before{
+      width: 16px;
+      height: 16px;
+      top: 0;
+      left: 0;
+      background: linear-gradient(to bottom, #84d65b, #4dac2e);
+    }
+    &:after{
+      width: 8px;
+      height: 8px;
+      top: 4px;
+      left: 4px;
+      background: linear-gradient(to bottom, #ffffff, #d7d7d7);
+      box-shadow: 0 0 10px -1px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: 0.4s ease-out;
+    }
+  }
+  input{  display: none;  }
+  input[disabled] ~ span{  cursor: default;  }
+  input:checked ~ span{
+    color: $checkbox_label_color;
+    &:after{  opacity: 1;  }
+  }
+}
+
+// BM: input
 .input{
   display: inline-block;
   position: relative;
@@ -371,7 +434,7 @@ input ~ .info{
   }
 }
 
-.validation-summary-errors{
+.invalid_message, .validation-summary-errors{
   display: block;
   height: 22px;
 	padding: 2px 0;
@@ -425,49 +488,49 @@ input ~ .info{
   }
 }
 
-//.select{
-//  display: inline-block;
-//  position: relative;
-//  vertical-align: middle;
-//  &:before{
-//    content: '';
-//    display: block;
-//    width: 16px;
-//    height: 16px;
-//    background: url("#{$pathImage}/dropdown/dd_arrow.gif") no-repeat;
-//    position: absolute;
-//    top: 22%;
-//    right: 4px;
-//  }
-//  &:after{
-//    content: '';
-//    display: block;
-//    height: 29px;
-//    position: absolute;
-//    top: 0;
-//    right: 20px;
-//    border-left: 1px solid #c3c3c3;
-//    border-right: 1px solid #fff;
-//  }
-//  select{
-//    height: 30px;
-//    padding: 5px;
-//    padding-right: 30px;
-//    margin-right: 3px;
-//    border: 1px solid #d7d7d8;
-//    border-radius: 3px;
-//    //color: #fff;
-//    font-size: 12px;
-//    background: linear-gradient(to Top, #B8BBBD, #E3E4E5);
-//    &.img{  padding-left: 30px;  }
-//  }
-//}
+/*.select{
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  &:before{
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url("#{$pathImage}/dropdown/dd_arrow.gif") no-repeat;
+    position: absolute;
+    top: 22%;
+    right: 4px;
+  }
+  &:after{
+    content: '';
+    display: block;
+    height: 29px;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    border-left: 1px solid #c3c3c3;
+    border-right: 1px solid #fff;
+  }
+  select{
+    height: 30px;
+    padding: 5px;
+    padding-right: 30px;
+    margin-right: 3px;
+    border: 1px solid #d7d7d8;
+    border-radius: 3px;
+    //color: #fff;
+    font-size: 12px;
+    background: linear-gradient(to Top, #B8BBBD, #E3E4E5);
+    &.img{  padding-left: 30px;  }
+  }
+}*/
 
 .select { position: relative; color: $main-color;
   &.-opened .active_selection i { transform: rotateX(180deg);
-    &::before { top: 0px; }
+    &::before { top: 0; }
   }
-  .active_selection { display: block; margin: 0 !important; padding: 3px 30px 0 15px; width: 100%; height: 38px; line-height: 31px;
+  .active_selection { display: block; margin: 0 !important; padding: 0 30px 0 10px; width: 100%; height: 38px; line-height: 36px;
       border-radius: 4px; color: $reg_title; font-size: 16px !important; border: 1px solid $user_page_tr_separate; background: $active_selection_bg;
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3); transition: background-color 0.3s, border-color 0.3s; cursor: pointer;
     i { display: block; position: absolute; right: 16px; top: calc(50% - 2px); width: 5px; height: 4px; transition: transform .3s;
@@ -477,10 +540,12 @@ input ~ .info{
     }
     &.active { border-radius: 4px 4px 0 0; }
   }
-  ul.select_list { display: none; position: absolute; width: 100%; border: 1px solid $user_page_tr_separate; border-top: none;
-      border-radius: 4px; background: $dropbox_list_bg; box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.5); z-index: 2;
+  ul { display: none; position: absolute; width: 100%; max-height: 250px; border: 1px solid $user_page_tr_separate; border-top: none;
+      border-radius: 4px; background: $active_selection_bg; box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.5); z-index: 2; overflow-y: auto;
+      @include scroll;
   }
   li { padding: 2px 35px 2px 10px; transition: 0.2s ease-out; cursor: pointer; @include user_page_li; }
+  li:last-of-type{  border-bottom: none;  }
 }
 
 
@@ -535,7 +600,9 @@ input ~ .info{
 
 .template{  display: none;  }
 
-.tab{
+
+// BM: tabs
+.tab {
   transition: 0.4s ease-out;
   cursor: pointer;
   user-select: none;
@@ -546,17 +613,38 @@ input ~ .info{
   &.active{  display: block;  }
 }
 
+
+// BM: tabs variant like AT
+.h-tab1 {
+  &__tabs { margin: 0 auto; border-radius: 4px; }
+  &__tab { display: inline-block; width: calc(50% - 1px); height: 35px; line-height: 33px; color: #fff; font-size: 14px;
+      border: 1px solid #fff; border-radius: 4px 0 0 4px; vertical-align: top;
+    &.active { background-image: linear-gradient(to top, #bdc0cd, #ffffff); border: none; color: #211e25; }
+  }
+  &__tab:last-child { border-radius: 0 4px 4px 0; border-left: none; }
+}
+
+
+
 .pop_up { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; }
 .pop_up_container { display: flex; height: 100%; }
 .pop_up_content { margin: auto; padding: 15px; background: $bg_color; border-radius: 6px; }
 
+
 // BM: new dialog
 .dialog-win { @extend .pop_up;
+  &__close { position: absolute; right: 10px; top: 10px;
+    //&::before, &::after { width: 3px }
+  }
   &__container { @extend .pop_up_container }
-  &__content { @extend .pop_up_content; position: relative; display: block; margin-top: 25%; padding: 10px; background: #211e25;
+  &__inner { display: flex; width: 100% }
+  //@include scroll;
+  &__content { @extend .pop_up_content; position: relative; margin-top: 25%; padding: 10px; background: #211e25;
       border-radius: 4px; border: 1px solid #000; text-align: center;
     &::before { content: ''; position: absolute; display: block; top: -10px; left: -10px; width: calc(100% + 20px); height: calc(100% + 20px); z-index: -1;
         background: linear-gradient(to bottom, #53515e, #292830); box-shadow: 0 0 20px -1px rgba(0, 0, 0, 0.5); border-radius: 4px; }
+    &_full { display: flex; margin-top: auto; width: 90%; height: 90%;
+    }
   }
   &__message { color: #53515e; }
   &__buttons { display: flex; justify-content: center; }
@@ -607,49 +695,8 @@ input ~ .info{
   }
 }
 
-.dd{
-  height: 30px;
-  border: none;
-  &.borderRadius .ddTitle{
-    border-radius: 5px;
-  }
-  input{  display: none !important;  }
-  .ddTitle{
-    height: 30px;
-    background: linear-gradient(to Top, #B8BBBD, #E3E4E5);
-    span{margin: 0!important;}
-  }
-  .ddTitleText{
-    text-align: left;
-    img{  width: 16px;  height: 11px;  margin-top: -3px;  background-image: url("#{$pathImage}/dropdown/flagssprite_small.png");
-      background-repeat: no-repeat;  background-size: 80px 583px; border-radius: 0!important;}
-  }
-  .divider{  height: 30px;right: 20px;  }
-  .ddArrow{  top: 22%;  }
-  &.ddcommon{
-    .ddChild{
-      width: 100%;
-      left: 0;
-      box-shadow: none;
-      border: none;
-      ul{
-        //border: 1px solid #dadada;
-        box-shadow: 5px 5px 5px -5px #888888;
-        border-radius: 0 0 5px 5px;
-        max-height: 245px;
-        @include scroll;
-      }
-      li{
-        text-align: left;
-        border-left: 1px solid #dadada;
-        border-right: 1px solid #dadada;
-        img{  width: 16px;  height: 11px;  background-image: url("#{$pathImage}/dropdown/flagssprite_small.png");
-          background-repeat: no-repeat;  background-size: 80px 583px; border-radius: 0!important;}
-      }
-    }
-  }
-}
 
+// BM: input
 .input_animate {
   position: relative;
   display: inline-block;
@@ -748,7 +795,7 @@ input ~ .info{
 .download:before{  background-position: -18px -206px;  }
 
 
-
+// BM: pagination
 .pagination { margin-left: 11%; padding-top: 20px; //margin-bottom: 40px;
   .pagination_list { display: flex; justify-content: center;
     li { margin-left: 1px; width: 40px; height: 40px; border-radius: 4px; border: 1px solid #211e25;
@@ -765,6 +812,9 @@ input ~ .info{
     }
   }
 }
+
+
+.b-clear { clear: both }
 
 
 

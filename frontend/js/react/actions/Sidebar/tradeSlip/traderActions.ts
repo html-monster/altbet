@@ -8,7 +8,8 @@ import {
 	TRADER_ON_SPREAD_CHANGE,
 	TRADER_ON_ADD_ORDER,
 	TRADER_ON_DELETE_ORDER,
-	TRADER_ON_SPREAD_HIGHLIGHT
+	TRADER_ON_SPREAD_HIGHLIGHT,
+	TRADER_ON_DRAG
 } from '../../../constants/ActionTypesActiveTrader';
 import { ON_ACTIVE_SYMBOL_CHANGED } from '../../../constants/ActionTypesSidebar.js';
 import BaseActions from '../../BaseActions';
@@ -332,7 +333,7 @@ class Actions extends BaseActions
 			return htmlData;		}
 	}
 
-	public actionAddDefaultOrder(context, data, index)
+		public actionAddDefaultOrder(context, data, index)
 	{
 		return (dispatch, getState) => {
 			if(getState().sidebar.autoTradeOn)
@@ -611,17 +612,180 @@ class Actions extends BaseActions
 	// 	}, delay);
 	// };
 
-	public actionOnTabMirrorClick(context, isMirror)
+	/*public actionOnTabMirrorClick(context, isMirror)
 	{
 		return (dispatch, getState) =>
 		{
 			$(context.refs .activeTrader).addClass('loading');
 			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: getState().sidebar.activeExchange.name, isMirror: isMirror, symbol: getState().sidebar.activeExchange.symbol});
 			dispatch({
-				// type: ON_TAB_MIRROR_CHANGE,
 				type: ON_ACTIVE_SYMBOL_CHANGED,
 				payload: {isMirror}
 			});
+		}
+	}*/
+
+	// public onDragStart(context, dragSide, price, event)
+	// {
+	// 	return (dispatch) =>
+	// 	{
+	// 		event.dataTransfer.setData('text/plain', 'anything');
+	// 		const target = event.currentTarget;
+	// 		$(event.currentTarget).addClass('drag_start');
+	// 		// let tdHtml = $(event.currentTarget).clone();
+	// 		// console.log(event.currentTarget.offsetWidth);
+	// 		// console.log(tdHtml[0].offsetWidth);
+	// 		// console.log(tdHtml.width());
+	// 		let styles = {
+	// 			display: 'block',
+	// 			width: target.offsetWidth,
+	// 			position: 'fixed',
+	// 			top: 50 + '%',
+	// 			right: 27,
+	// 			zIndex: 4
+	// 		};
+	// 		// tdHtml.css(styles);
+	// 		// console.log(price);
+	// 		// getState().activeTrader.dragPrevPrice = price;
+	// 		dispatch({
+	// 			type: TRADER_ON_DRAG,
+	// 			payload: {dragPrevPrice: price, dragSide}
+	// 		});
+	// 		context.props.traderActions.actionHideDirectionConfirm();
+	// 		context.props.traderActions.actionRemoveOrderForm();
+	// 	}
+	// }
+
+	// public onDragConfirm(confirm)
+	// {
+	// 	return (dispatch, getState) =>
+	// 	{
+	// 		const symbol = getState().activeTrader.data.Symbol;
+	// 		const { dragPrevPrice, dragNextPrice } = getState().activeTrader;
+	// 		const ExchangeSymbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
+    //
+	// 		if(confirm)
+	// 		{
+	// 			defaultMethods.sendAjaxRequest({
+	// 				httpMethod: 'POST',
+	// 				url       : `${ABpp.baseUrl}/OrderController/Edit`,
+	// 				data      : { PrevPrice: dragPrevPrice, NextPrice: dragNextPrice, Symbol: ExchangeSymbol },
+	// 				callback  : onSuccessAjax,
+	// 				onError   : onErrorAjax,
+	// 			});
+	// 		}
+    //
+	// 		function onErrorAjax()
+	// 		{
+	// 			defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+	// 		}
+    //
+	// 		function onSuccessAjax(answer)
+	// 		{
+	// 			__DEV__ && console.log(answer);
+	// 		}
+    //
+	// 		$('tr.visible').removeClass('drag_place sell buy');
+	// 		$('td.drag_start').removeClass('drag_start');
+	// 		dispatch({
+	// 			type: TRADER_ON_DRAG,
+	// 			payload: { dragPrevPrice: null, dragNextPrice: null, dragSide: null, popUpShow: false }
+	// 		});
+	// 	}
+	// }
+
+	// public onDrop(context, price, event)
+	// {
+	// 	return (dispatch, getState) =>
+	// 	{
+	// 		event.preventDefault();
+	// 		const { dragPrevPrice } = getState().activeTrader;
+    //
+	// 		if(dragPrevPrice != price){
+	// 			if(getState().sidebar.autoTradeOn){
+	// 				dispatch({
+	// 					type: TRADER_ON_DRAG,
+	// 					payload: { dragNextPrice: price }
+	// 				});
+	// 				context.props.traderActions.onDragConfirm(true);
+	// 			}
+	// 			else{
+	// 				dispatch({
+	// 					type: TRADER_ON_DRAG,
+	// 					payload: { dragNextPrice: price, popUpShow: true }
+	// 				});
+	// 			}
+	// 		}
+	// 		else{
+	// 			$('tr.visible').removeClass('drag_place sell buy');
+	// 			$('td.drag_start').removeClass('drag_start');
+	// 			dispatch({
+	// 				type: TRADER_ON_DRAG,
+	// 				payload: { dragNextPrice: null, dragPrevPrice: null, dragSide: null, popUpShow: false }
+	// 			});
+	// 		}
+	// 	}
+	// }
+
+	public onDeleteConfirm(confirm) {
+		return (dispatch, getState) => {
+
+			const symbol = getState().activeTrader.data.Symbol;
+			const { dragData: { dragSide, popUpShow }, orderInfo: { price }, isMirror } = getState().activeTrader;
+			const ExchangeSymbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
+
+			if(confirm){
+				defaultMethods.sendAjaxRequest({
+					httpMethod: 'POST',
+					url       : `${ABpp.baseUrl}/Order/DragAndDropCancel`,
+					data      : { OldPrice: price, Symbol: ExchangeSymbol, Side: dragSide, isMirror },
+					callback  : onSuccessAjax,
+					onError   : onErrorAjax,
+				});
+			}
+
+			function onErrorAjax()
+			{
+				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+			}
+
+			function onSuccessAjax(answer)
+			{
+				__DEV__ && console.log(answer);
+			}
+
+			if(popUpShow){
+				dispatch({
+					type: TRADER_ON_DRAG,
+					payload: { popUpShow: false }
+				});
+			}
+		}
+	}
+
+	public deleteOrders(context, price, Side)
+	{
+		return (dispatch, getState) => {
+
+			dispatch({
+				type: TRADER_ON_DELETE_ORDER,
+				payload: { price }
+			});
+			dispatch({
+				type: TRADER_ON_DRAG,
+				payload: { dragSide: Side }
+			});
+			if(getState().sidebar.autoTradeOn){
+				context.props.traderActions.onDeleteConfirm(price);
+			}
+			else{
+				context.props.traderActions.actionHideDirectionConfirm();
+				context.props.traderActions.actionRemoveOrderForm();
+				dispatch({
+					type: TRADER_ON_DRAG,
+					payload: { popUpShow: true }
+				});
+			}
 		}
 	}
 }

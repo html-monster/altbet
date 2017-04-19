@@ -12,25 +12,72 @@ import {passwordValidation, regexValidation, lengthValidation, mailValidation, e
 import {DropBox} from './common/DropBox';
 
 
-export class RegisterForm extends React.Component
+export class RegisterForm extends React.PureComponent
 {
+    countries = [];
+
 	constructor(props)
 	{
 		super(props);
+
+
+        // fill country data
+        try {
+		    const $countries = JSON.parse(appData.Registration.countries);
+		    for( let val of $countries.countries  )
+		    {
+                let item;
+                if( typeof val == "object" )
+                {
+                    let key = Object.keys(val)[0];
+                    item = {val: key, regions: val[key]['States']};
+                }
+                else
+                {
+                    item = {val: val};
+                } // endif
+
+                if (appData.Registration.current == val) item.selected = true;
+
+                this.countries.push(item);
+		    } // endfor
+
+
+        } catch (e) {
+            this.countries = [];
+        }
 	}
 
 
-    // componentDidMount()
-    // {
-    //     if( __DEV__ )
-    //     {
-    //         0||console.log( 'emulate here' )
-    //         setTimeout(() =>
-    //             {$(".log_out .sign_in").click();
-    //                 setTimeout(() => $(".register").click(), 500)
-    //             }, 700)
-    //     } // endif
-    // }
+    componentDidMount()
+    {
+        // if( __DEV__ )
+        // {
+        //     0||console.log( 'emulate here' )
+        //     setTimeout(() =>
+        //         {$(".log_out .sign_in").click();
+        //             setTimeout(() => $(".register").click(), 500)
+        //         }, 700)
+        // } // endif
+
+
+        var { onCustomChange } = this.props;
+
+		let input = $( "input.js-dateofbirth" );
+		input.keyup(() => false);
+		input.keydown(() => false);
+		input.keypress(() => false);
+		input.datepicker({
+			yearRange: "1901:c+0",
+			dateFormat: "d M yy",
+			maxDate: "0",
+			minDate: new Date(1, 1 - 1, 1),
+			changeMonth: true,
+			changeYear: true,
+			showAnim: 'slideDown',
+			onClose: (p1, p2) => 0||console.log( 'p1', p1, p2 )
+		});
+    }
 
 
     inputRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty }, ...input })
@@ -66,7 +113,7 @@ export class RegisterForm extends React.Component
         return <span className="input_animate input--yoshiko">
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 <DropBox className="" name={name} items={items} initLabel={initLabel} hint={hint} input={input}
-						 onCustomChange={onCustomChange} />
+						 onCustomChange={onCustomChange} options={{maxHeight: 250}} />
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
                     <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                 </label>
@@ -83,8 +130,8 @@ export class RegisterForm extends React.Component
 	render()
 	{
 		const formContent = ({ input, error, successMessage, format/*, data:{ data, plan, depositQuantity, pricePlan }*/, handleSubmit }) => {
-            //return <form action={`${ABpp.baseUrl}/Account/Register'`} method="post" onSubmit={handleSubmit}>
-            return <form action="http://localhost/AltBet.Admin/Category/TestAction" ref="F1regForm" method="post" onSubmit={handleSubmit}>
+            //return <form action="http://localhost/AltBet.Admin/Category/TestAction" ref="F1regForm" method="post" onSubmit={handleSubmit}>
+            return <form action={`${ABpp.baseUrl}/Account/Register`} ref="F1regForm" method="post" onSubmit={handleSubmit}>
                 <div className="left_column column">
 {/*                    <InputValidation renderContent={this.inputRender} id='f_name' name="FirstName"
                                      className={'input__field input__field--yoshiko'}
@@ -102,7 +149,7 @@ export class RegisterForm extends React.Component
 
                     <InputValidation renderContent={this.inputRender} id='n_name' name="NickName"
                                      className={'input__field input__field--yoshiko'}
-                                     // initialValue="FedoryakaBest"
+                                     //initialValue="FedoryakaBest"
                                      label="User Name" type='text'
                                      validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
                                      hint="User's login allow to use symbols such as: symbols, digits, dot, underscore, dash"/>
@@ -110,28 +157,27 @@ export class RegisterForm extends React.Component
                     <InputValidation renderContent={this.inputRender} id='e_name' name="Email"
                                      className={'input__field input__field--yoshiko'}
                                      label="Email Address" type='text'
-                                     // initialValue="zz@xx.com"
+                                     //initialValue="zz@xx.com"
                                      validate={[emptyValidation, mailValidation, lengthValidation.bind(null, {max: 128})]} input={input}
                                      hint="Specify your valid email. A message with registration
                                         confirmation will be sent at that address. Also that address
                                         will be used for communication with you"/>
 
                     <InputValidation renderContent={this.inputRender} id='user_b_day' name="DateOfBirth"
-                                     className={'input__field input__field--yoshiko datePickerJs'}
-                                     // initialValue="2 Mar 01"
+                                     className={'input__field input__field--yoshiko js-dateofbirth'}
+                                     //initialValue="2 Mar 01"
                                      label="Date of birth" type='text'
                                      validate={[emptyValidation]} input={input}/>
 
 
                     <InputValidation renderContent={this.inputRender} id='r_pass' name="Password"
                                      className={'input__field input__field--yoshiko'}
-                                     // initialValue="123"
+                                     //initialValue="123"
                                      label="Password" type='password'
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20})]} input={input}/>
 
-                    <InputValidation renderContent={this.inputRender} id='r_confirm_pass' name="Password"
+                    <InputValidation renderContent={this.inputRender} id='r_confirm_pass' name="ComparePassword"
                                      className={'input__field input__field--yoshiko'}
-                                     //initialValue="123"
                                      label="Confirm Password" type='password'
                                      validate={[emptyValidation, passwordValidation.bind(null, "r_pass")]} input={input}/>
                 </div>
@@ -140,7 +186,7 @@ export class RegisterForm extends React.Component
                     <InputValidation renderContent={this.dropBoxRender} id='c_name' name="Country"
                                      className={'input__field input__field--yoshiko'}
                                      label="Country"
-                                     items={[{key: 'Ukraine', val: 'ua'}, {key: 'Poland', val: 'po'}, {key: 'Germany', val: 'ge'}, {key: 'United kingdom', val: 'uk'}]}
+                                     items={this.countries}
                                      initLabel="Select country"
                                      validate={[emptyValidation]} input={input}
                                      hint="Indicate the country of your permanent residence"/>

@@ -29,7 +29,7 @@ const $ = require('gulp-load-plugins')();
 
 const named = require('vinyl-named');
 
-const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV == 'development';
+const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 
 function lazyRequire(taskName, inTaskName, path, options)
@@ -109,7 +109,7 @@ gulp.task('styles', function() {
         }))
       }))
       .pipe(gulpIf(isDevelopment, sourcemaps.init()))
-      .pipe(sass({outputStyle: "compact"}))
+      .pipe(sass({outputStyle: "compact"})) //compact compressed
       .pipe(autoprefixer({
         browsers: ['last 4 versions']
       }))

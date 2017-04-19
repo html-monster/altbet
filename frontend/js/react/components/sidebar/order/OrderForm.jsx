@@ -18,7 +18,7 @@ export default class OrderForm extends React.Component{
 		const price = this.state.Side ? 1 - Math.round10(1 - this.state.Price, -2) : this.state.Price;
 		this.OddsConverterObj = new OddsConverter();
 		this.state.Sum = Math.round10(price * this.state.Volume, -2);
-		if(this.state.Limit == undefined) this.state.Limit = true;
+		if(this.state.Limit === undefined) this.state.Limit = true;
 
 		// let arr = [];
 		// for(let ii = 0.01; ii <= 0.99; ii += 0.01){
@@ -43,7 +43,7 @@ export default class OrderForm extends React.Component{
 		const refs = this.refs;
 
 		// console.log(refs.inputSum.refs.input);
-		if(input == 'Sum' && +state.Price){
+		if(input === 'Sum' && +state.Price){
 			const price = state.Side ? 1 - state.Price : state.Price;
 			const sum = Math.round10(+state[input] + value, -2);
 
@@ -62,7 +62,7 @@ export default class OrderForm extends React.Component{
 		}
 		else{
 			value = Math.round10(+state[input] + value, -2);
-			if(input == 'Price'){
+			if(input === 'Price'){
 				if(value <= 0)
 					state[input] = value = 0.01;
 				else if(value > 0.99)
@@ -80,7 +80,7 @@ export default class OrderForm extends React.Component{
 				else if(value > 9999999)
 					state[input] = 9999999;
 				else{
-					if(input == 'Volume'){
+					if(input === 'Volume'){
 						const price = state.Side ? 1 - state.Price : state.Price;
 						state[input] = value;
 						value = Math.round10(value * price, -2);
@@ -103,12 +103,12 @@ export default class OrderForm extends React.Component{
 		const code = event.which || event.charCode || event.keyCode;
 
 
-		if(code == 38){
+		if(code === 38){
 			event.preventDefault();
-			this.onInputIncrement(input, input == 'Price' ? 0.01 : 1, event);
+			this.onInputIncrement(input, input === 'Price' ? 0.01 : 1, event);
 		}
-		else if(code == 40)
-			this.onInputIncrement(input, input == 'Price' ? -0.01 : -1, event)
+		else if(code === 40)
+			this.onInputIncrement(input, input === 'Price' ? -0.01 : -1, event)
 	}
 
 	onInputChange(input, event)
@@ -116,22 +116,22 @@ export default class OrderForm extends React.Component{
 		const state = this.state;
 		const inputValue = ((event.target.value).replace('$', ''));
 		let value;
-		if(input == 'Sum' && +state.Price){
+		if(input === 'Sum' && +state.Price){
 			value = Math.round(+inputValue / (state.Side ? 1 - state.Price : state.Price));
 			state['Volume'] = value;
 			state[input] = inputValue;
 		}
-		else if(input == 'Price'){
+		else if(input === 'Price'){
 			value = inputValue;
 			state[input] = value;
 			const price = state.Side ? 1 - value : value;
 			value = Math.round10(state.Volume * price, -2);
-			if(inputValue != '0.') state['Sum'] = value.toFixed(2);
+			if(inputValue !== '0.') state['Sum'] = value.toFixed(2);
 			// console.dir(event.handler);
 		}
 		else{
 			value = inputValue;
-			if(input == 'Volume'){
+			if(input === 'Volume'){
 				const price = state.Side ? 1 - state.Price : state.Price;
 				state[input] = value;
 				value = Math.round10(value * price, -2);
@@ -147,40 +147,47 @@ export default class OrderForm extends React.Component{
 
 	onTypeChange(checkboxProp)
 	{
-		// const price = $(this.refs.inputPrice.refs.input);
+		const price = $(this.refs.inputPrice.refs.input);
 		const quantity = $(this.refs.inputQuantity.refs.input);
 
 		this.state.Limit = !checkboxProp;
 		this.setState(this.state);
+// console.log(price);
+// console.log(quantity);
+		if (!checkboxProp) {
 
-		// if (!checkboxProp) {
-		//
-		// 	setTimeout(function () {
-		// 		price.focus();
-		// 		price[0].selectionStart = 4;
-		// 	}, 300);
-		// }
-		// else {
+			// setTimeout(function () {
+				price.focus();
+				price[0].selectionStart = 5;
+			// }, 300);
+		}
+		else {
 			quantity.focus();
 			quantity[0].selectionStart = quantity.val().length;
-		// }
+		}
 	}
 
 	shouldComponentUpdate(nextProps, nextState){
 			// console.log(this.props.data, nextProps.data);
-		if((JSON.stringify(this.props.data) == JSON.stringify(nextProps.data) &&
-			this.state == nextState && this.state.currentOddSystem == ABpp.config.currentOddSystem)){
+		if((JSON.stringify(this.props.data) === JSON.stringify(nextProps.data) &&
+			this.state === nextState && this.state.currentOddSystem === ABpp.config.currentOddSystem)){
 			return false;
 		}
 		this.state.currentOddSystem = ABpp.config.currentOddSystem;
 		// console.log(JSON.stringify(this.props.data));
 		// console.log(JSON.stringify(nextProps.data));
-		if(JSON.stringify(this.props.data) != JSON.stringify(nextProps.data)){
+		if(JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)){
 			this.state.Price = nextProps.data.Price;
 			this.state.Volume = nextProps.data.Volume
 		}
 
 		return true;
+	}
+
+	onPriceFocus()
+	{
+		if(this.props.data.NewOrder) this.props.actions.actionOnOrderTypeChange(false, this);
+		else this.onTypeChange(false)
 	}
 
 	componentFocus(){
@@ -189,7 +196,7 @@ export default class OrderForm extends React.Component{
 		if(data.NewOrder){
 			let dom = this.refs;
 
-			if(data.Limit && data.Price == '0.'){
+			if(data.Limit){//&& data.Price === '0.'
 				dom.inputPrice.refs.input.focus();
 			}
 			else
@@ -203,7 +210,7 @@ export default class OrderForm extends React.Component{
 		// const state = this.state;
 		// console.log(state);
 		// console.log(prevState);
-		if(data.Price != prevData.Price || data.Volume != prevData.Volume || data.Limit != prevData.Limit){
+		if(data.Price !== prevData.Price || data.Volume !== prevData.Volume || data.Limit !== prevData.Limit){
 			this.componentFocus();
 		}
 	}
@@ -218,7 +225,7 @@ export default class OrderForm extends React.Component{
 		const { actions, containerData, data, formData, onOrderDelete } = this.props;
 		let className = data.Side ? 'sell' : 'buy';
 		let orderId;
-		const checkboxProp = (data.Limit == undefined) ?
+		const checkboxProp = (data.Limit === undefined) ?
 			stateData.Limit
 			:
 			data.Limit;
@@ -235,10 +242,10 @@ export default class OrderForm extends React.Component{
 		else{
  			orderId = data.Symbol ? `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}_${data.Side}_${data.isMirror}` : ''
 		}
-		const price = stateData.Side ? Math.round10(1 - stateData.Price, -2) : stateData.Price;
+		// const price = stateData.Side ? Math.round10(1 - stateData.Price, -2) : stateData.Price;
 		// const sum = +price && (/[0-9]+|[.][0-9]+/gi.test(data.Sum) || !data.Sum) ? Math.round10(price * data.Volume, -2) : data.Sum;
 		const fees = Math.round10(ABpp.config.takerFees * stateData.Volume, -2);
-// console.log(stateData.Sum);
+// console.log(stateData.Price, data.Price);
 		return (
 			<form action={formData.url} className={className + (ABpp.config.basicMode ? ' basic_mode' : '') + ' animated'} autoComplete="off"
 				  onSubmit={actions.actionOnAjaxSend.bind(null, this, containerData)} method="post"
@@ -267,22 +274,21 @@ export default class OrderForm extends React.Component{
 							}
 						</label>
 						<div className="input">
-							<InputNumber type="tel" id={`${orderId}_price`} className="number" data-validation="0.33"
+							<InputNumber type="tel" id={`${orderId}_price`} className="number"
 										 maxLength="5" autoComplete="off"
 										 onChange={this.onInputChange.bind(this, 'Price')}
 										 onKeyDown={this.onInputKeyDown.bind(this, 'Price')}
+										 onFocus={::this.onPriceFocus}
 										 value={checkboxProp ? stateData.Price : data.Price}
-										 key={checkboxProp} hard={true} label={true}
-										 disabled={!(checkboxProp)} ref="inputPrice" inputValidate = 'price'/>
+										 hard={true} label={true}
+										 ref="inputPrice" inputValidate = 'price'/>
 							<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
-							{
-								<div className="regulator" style={style}>
+							<div className="regulator">
 									<span className="plus" onClick={this.onInputIncrement.bind(this, 'Price', 0.01)}
 										  title="Press Arrow Up">{}</span>
-									<span className="minus" onClick={this.onInputIncrement.bind(this, 'Price', -0.01)}
-										  title="Press Arrow Down">{}</span>
-								</div>
-							}
+								<span className="minus" onClick={this.onInputIncrement.bind(this, 'Price', -0.01)}
+									  title="Press Arrow Down">{}</span>
+							</div>
 						</div>
 					</div>
 					<div className="volume">

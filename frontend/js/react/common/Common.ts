@@ -12,7 +12,7 @@ export class Common
      * @param precision
      * @return {string}
      */
-    public static toFixed(value, precision) : any {
+    public static toFixed(value, precision = 2) : any {
         return (Math.round(value * 100) / 100).toFixed(precision);
     }
 

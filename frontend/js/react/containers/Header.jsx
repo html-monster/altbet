@@ -52,14 +52,14 @@ class Header extends React.Component
 	render()
 	{
 		const { actions, serverData } = this.props;
+        let $filter = appData.urlQuery ? appData.urlQuery.filter : '';
 
-		if(serverData.GainLost != undefined){
+		if(serverData.GainLost !== undefined){
 			serverData.Profitlost = serverData.GainLost;
 			serverData.Exposure = serverData.Invested;
 			serverData.Available= serverData.CurrentBalance;
 		}
         const profitlost = serverData.Profitlost.toFixed(2);
-
 
         return <div className="header_info">
 			{/*<div className="video btn">*/}
@@ -72,7 +72,7 @@ class Header extends React.Component
 
 				<div className="fast_menu">
 				  <a href={globalData.Urls.Home} className="btn wave waves-effect waves-button"><span>Exchange</span> </a>
-				  <a href="#"  className="btn wave waves-effect waves-button"><span className="live_event wave ">Live</span></a>
+				  <a href={globalData.Urls.Home + "?filter=live"}  className={"btn wave waves-effect waves-button" + ($filter === 'live' ? ' active' : '')}><span className="live_event wave ">Live</span></a>
 				  <a href="#" className="btn wave waves-effect waves-button"><span className="history_event">History</span></a>
 				  <a href={globalData.Urls.TradingRules} className="btn wave waves-effect waves-button"><span>Rules</span> </a>
 				</div>
@@ -100,7 +100,7 @@ class Header extends React.Component
 									{serverData.Profitlost >= 0 ?
 										`$${profitlost}`
 										:
-										`($${profitlost.toString().replace('-', '')})`}
+										`($${Math.abs(profitlost)})`}
 									</strong>
 								</span>
 							<span className="invested animated" data-verify={'Exposure'}>At Stake: <strong className="animated">${(Math.round10(serverData.Exposure, -2)).toFixed(2)}</strong></span>
@@ -110,7 +110,7 @@ class Header extends React.Component
 						''
 				}
 				{/*{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockOpen()} title="Connect to socket">C</a> : ''}*/}
-                { ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <button className="btn wave waves-effect waves-button" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</button> : ''}
+                { ABpp.User.isAuthorized() && ABpp.User.login === 'bot' ? <button className="btn wave waves-effect waves-button" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</button> : ''}
 
 
 				{ ABpp.User.isAuthorized() ? <a className="my_order btn wave waves-effect waves-button" href={globalData.Urls.MyActivity}>My Activity</a> : ''}
@@ -137,8 +137,8 @@ class Header extends React.Component
 								<li>
 									<strong className="change-color">
 										Theme color
-										<button className="dark color_pick" title="dark theme">{}</button>
-										<button className="light color_pick" title="light theme">{}</button>
+										<button className={'dark color_pick' + (globalData.theme === 'dark' ? ' active' : '')} title="dark theme">{}</button>
+										<button className={'light color_pick' + (globalData.theme === 'light' ? ' active' : '')} title="light theme">{}</button>
 									</strong>
 								</li>
 								<li><a href={ABpp.baseUrl + '/Account'}>Account</a></li>
@@ -156,9 +156,9 @@ class Header extends React.Component
 							<a href="#login" className="sign_in">Join/Login</a>
 							<div className="change-color">
 								<strong>Theme color</strong>
-								<button className="dark color_pick" title="dark theme">{}</button>
+								<button className={'dark color_pick' + (globalData.theme === 'dark' ? ' active' : '')} title="dark theme">{}</button>
 								{' '}
-								<button className="light color_pick" title="light theme">{}</button>
+								<button className={'light color_pick' + (globalData.theme === 'light' ? ' active' : '')} title="light theme">{}</button>
 							</div>
 						</div>
 				}

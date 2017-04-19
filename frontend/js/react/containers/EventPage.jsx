@@ -96,6 +96,7 @@ class EventPage extends BaseController
         let bidData = [];
         let askData = [];
         let ticks = [];
+        let StatusEvent = data.SymbolsAndOrders.Symbol.StatusEvent;
 
         // form ask and bid orders
 // 0||console.debug( 'socket', socket );
@@ -108,6 +109,7 @@ class EventPage extends BaseController
             } // endif
             if (socket.activeOrders.Orders[buyIndex]) bidData = socket.activeOrders.Orders[buyIndex].SummaryPositionPrice;
             if (socket.activeOrders.Orders[sellIndex]) askData = socket.activeOrders.Orders[sellIndex].SummaryPositionPrice;
+            StatusEvent = socket.activeOrders.Symbol.StatusEvent;
         } // endif
             // if (appData.pageEventData.IsMirror && side == 'sell') data.SummaryPositionPrice.reverse();
             // if (!appData.pageEventData.IsMirror && side == 'buy') data.SummaryPositionPrice.reverse();
@@ -186,6 +188,11 @@ class EventPage extends BaseController
                             <div className="current_price">
                                 <span className="title">Last Price:</span>
                                 <span className="value">{lastPrice}</span>
+                                { StatusEvent &&
+                                    [ <br />,
+                                    <span className="title">Event status: </span>,
+                                    <span className="value">{StatusEvent}</span>]
+                                }
                             </div>
                         </div>
                         <div className="price_scope">

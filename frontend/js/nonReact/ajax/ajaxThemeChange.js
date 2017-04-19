@@ -1,7 +1,10 @@
 class ajaxThemeChangeClass{
 	constructor(){
 		let data = {};
-		$('.change-color button').click(function () {
+		$('.change-color button').click(function (event)
+		{
+			event.preventDefault();
+
 			if($(this).hasClass('dark') && !$(this).parent().find('.dark').hasClass('active')){
 				data.Theme = 'dark';
 			}
@@ -11,7 +14,7 @@ class ajaxThemeChangeClass{
 			else
 				return false;
 
-			if(globalData.userIdentity == 'True')
+			if(globalData.userIdentity === 'True')
 				defaultMethods.sendAjaxRequest({
 					httpMethod: 'POST',
 					callback: onSuccessAjax,
