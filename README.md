@@ -19,6 +19,7 @@
 - Loaders (http://preloaders.net/en/free)
 - Translit (https://github.com/xguest/iso_9_js)
 - React-router (https://github.com/ReactTraining/react-router)
+- Zendesk (https://developer.zendesk.com/embeddables/docs/widget/api)
 
 
 ## Plugins
