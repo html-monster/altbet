@@ -15,6 +15,8 @@ import {
 import {RebuildServerData} from '../../../actions/Sidebar/tradeSlip/activeTrader/rebuildServerData';
 
 const initialState = {
+	activeExchange: null,
+	activeExchangeSymbol: null,
 	data: {},
 	dragData:{
 		// dragPrevPrice: null,
@@ -30,8 +32,10 @@ const initialState = {
 	orderInfo: {
 		activeString: null,
 		direction: null,
+		focusOn: true,
 		limit: true,
 		price: null,
+		outputOrder: false,
 		showSpreadOrder: false,
 		showDefaultOrder: false,
 		showDirectionConfirm: false
@@ -49,7 +53,7 @@ export default function activeTrader(state = initialState, action)
 	switch (action.type)
 	{
 		case TRADER_ON_QUANTITY_CHANGE:
-			return {...state, quantity: action.payload};
+			return {...state, quantity: action.payload, orderInfo: {...state.orderInfo, focusOn: false}};
 
 		case TRADER_ON_SPREAD_CHANGE:
 			return {...state, spread: action.payload};

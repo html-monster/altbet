@@ -574,6 +574,12 @@ input ~ .info{
   border-radius: 5px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
   z-index: 81;
+  &.right{
+    left: auto;
+    right: 0;
+    &:before{  left: 88px;  }
+    &:after{  left: 83px;  }
+  }
   &:before{
     content: '';
     display: block;

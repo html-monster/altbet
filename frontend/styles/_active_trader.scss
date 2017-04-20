@@ -206,12 +206,12 @@
 						border: none;
 						@include trader_regulator;
 					}
-					.warning{
-						left: auto;
-						right: 2px;
-						&:before{  left: 75px;  }
-						&:after{  left: 71px;  }
-					}
+					//.warning{
+					//	left: auto;
+					//	right: 2px;
+					//	&:before{  left: 75px;  }
+					//	&:after{  left: 71px;  }
+					//}
 				}
 				input{
 					&::-webkit-input-placeholder {  color: #ffffff;  }
@@ -618,6 +618,7 @@
 			box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.5);
 			font-weight: normal;
 			transition: 0.5s ease-out;
+			&.empty{  top: 18px;  }
 			&.animated{  animation-duration: 0.5s;  }
 			&.active{
 				//transform: translateY(5px);

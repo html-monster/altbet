@@ -14,12 +14,13 @@ export default class TraderDefaultForm extends React.Component {
 
 	render()
 	{
-		const { activeString, cmpData: { activeExchange }, direction, price, limit, index, traderContext,
+		const { activeString, cmpData: { activeExchange }, direction, focusOn, price, limit, index, traderContext,
 			isMirror, traderActions, quantity } = this.props;
 		// console.log('this.props:', this.props);
 		// let orderFormStyle = {position: 'absolute', left: 0, zIndex: 10, marginTop: 10};
 
-		return <div className={'order_content default animated' + (index === activeString || !index ? ' fadeInUp' : '')}
+		return <div className={'order_content default animated' + (index === activeString || !index ? ' fadeInUp' : '') +
+					(price === '0.' ? ' empty' : '')}
 					id="order_content"
 					key={direction}
 		>
@@ -36,7 +37,8 @@ export default class TraderDefaultForm extends React.Component {
 					newOrder={true}
 					orderMode={'basic'}
 					showDeleteButton={true}
-					focus={'quantity'}
+					//focus={'quantity'}
+					focusOn={focusOn}
 					onSubmit={traderActions.actionOnAjaxSend.bind(null, this)}
 					onDelete={traderActions.actionRemoveOrderForm}
 					// onTypeChange={traderActions.actionOnOrderTypeChange.bind(null, data)}

@@ -36,7 +36,7 @@ class ActiveTrader extends React.Component {
 		// 0||console.log( 'activeExchange', activeExchange );
 		// const { activeString, showDefaultOrder } = this.state;
 		const { data, ...info } = this.props;
-		const { dragData: { popUpShow }, cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
+		const { activeExchangeSymbol, dragData: { popUpShow }, cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
 			rebuiltServerData, spread, quantity, traderActions } = this.props;
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
@@ -44,7 +44,9 @@ class ActiveTrader extends React.Component {
 		// console.log(this.props);
 		// className = $active = $activeM = '';
 		// ( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
-
+		
+		console.log('activeExchange:', activeExchange.isMirror);
+		console.log('isMirror:', isMirror);
         let gainLoss = data && data.GainLoss ? data.GainLoss : '';
         if (data) {
             if (gainLoss < 0)
@@ -120,8 +122,9 @@ class ActiveTrader extends React.Component {
 								onClick={
 									traderActions.actionAddDefaultOrder.bind(null, this, {
 										direction: 'sell',
-										price    : data.Symbol ? ask : '',
-										limit    : false
+										price    : data.Symbol ? bid : '',
+										limit    : false,
+										outputOrder: false
 									}, 'market')}
 								disabled={!quantity || !bid}>
 								Buy MKT
@@ -132,8 +135,9 @@ class ActiveTrader extends React.Component {
 								onClick={
 									traderActions.actionAddDefaultOrder.bind(null, this, {
 										direction: 'buy',
-										price    : data.Symbol ? bid : '',
-										limit    : false
+										price    : data.Symbol ? ask : '',
+										limit    : false,
+										outputOrder: false
 									}, 'market')}
 								disabled={!quantity || !ask}>
 								Sell MKT
@@ -144,7 +148,8 @@ class ActiveTrader extends React.Component {
 					<tr>
 						<td>
 							{
-								!autoTradeOn && orderInfo.activeString === 'market' && orderInfo.showDefaultOrder && quantity &&
+								(orderInfo.outputOrder || !autoTradeOn) && orderInfo.activeString === 'market' && orderInfo.showDefaultOrder && quantity &&
+								activeExchangeSymbol === activeExchange.symbol && isMirror == activeExchange.isMirror &&
 
 								<TraderDefaultForm
 									activeString={orderInfo.activeString}
@@ -159,7 +164,7 @@ class ActiveTrader extends React.Component {
 						</td>
 					</tr>
 					<tr>
-						<td className="label"><span>Quantity</span></td>
+						<td className="label"><span>No. of Entries</span></td>
 						<td className="volume quantity">
 							<div className="input">
 								<button className="clear" onClick={traderActions.actionOnQuantityClear.bind(null, this)}>{}</button>
@@ -179,7 +184,7 @@ class ActiveTrader extends React.Component {
 									   onKeyDown={traderActions.actionOnButtonSpreadRegulator.bind(null, this)}
 									   onChange={traderActions.actionOnSpreadChange.bind(null, this)}
 									   value={spread} ref={'inputSpread'} disabled={!quantity}/>
-								<div className="warning" style={{display: 'none'}}>
+								<div className="warning right" style={{display: 'none'}}>
 									<p>Available value from 0.01 to 0.99</p>
 								</div>
 								{
@@ -208,7 +213,8 @@ class ActiveTrader extends React.Component {
 								traderActions.actionAddDefaultOrder.bind(null, this, {
 									direction: 'buy',
 									price    : bid,
-									limit    : true
+									limit    : true,
+									outputOrder: false
 								}, 'limit')}
 								disabled={!quantity || !bid}>
 								Join BID <span className="price">
@@ -223,7 +229,8 @@ class ActiveTrader extends React.Component {
 								traderActions.actionAddDefaultOrder.bind(null, this, {
 									direction: 'sell',
 									price    : ask,
-									limit    : true
+									limit    : true,
+									outputOrder: false
 								}, 'limit')}
 								disabled={!quantity || !ask}>
 								<span className="price">
@@ -238,7 +245,8 @@ class ActiveTrader extends React.Component {
 					<tr>
 						<td>
 							{
-								!autoTradeOn && orderInfo.activeString === 'limit' && orderInfo.showDefaultOrder && quantity &&
+								(orderInfo.outputOrder || !autoTradeOn) && orderInfo.activeString === 'limit' && orderInfo.showDefaultOrder && quantity &&
+								activeExchangeSymbol === activeExchange.symbol && isMirror == activeExchange.isMirror &&
 
 								<TraderDefaultForm
 									activeString={orderInfo.activeString}
@@ -332,6 +340,20 @@ class ActiveTrader extends React.Component {
 						 }
 					</div>
 				}
+				{
+					(orderInfo.outputOrder || !autoTradeOn) && orderInfo.activeString === 'empty' && orderInfo.showDefaultOrder &&
+					activeExchangeSymbol === activeExchange.symbol && isMirror == activeExchange.isMirror &&
+
+					<TraderDefaultForm
+						activeString={orderInfo.activeString}
+						index={'empty'}
+						mainData={data}
+						quantity={quantity}
+						traderContext={this}
+						{...info}
+						{...orderInfo}
+					/>
+				}
 				<table className={'limit' + ($.browser.webkit ? ' webkit' : '') + (quantity ? ' clickable' : '') +
 				(popUpShow ? ' blocked' : '')}>
 					<thead>
@@ -418,7 +440,8 @@ class TraderString extends React.Component {
 	render()
 	{
 		// const { traderActions, activeString, data, mainData, index, inputQuantityContext, isMirror, quantity } = this.props;
-		const { data, dragPrevPrice, dropActiveString, cmpData: { autoTradeOn }, index, orderInfo: {...info}, spreadHighLight, quantity, spread, ...other } = this.props;
+		const { activeExchangeSymbol, data, dragPrevPrice, dropActiveString, cmpData: { autoTradeOn, activeExchange }, index,
+			isMirror, orderInfo: {...info}, spreadHighLight, quantity, spread, ...other } = this.props;
 		// const {  showDefaultOrder  } = this.state;
 		// console.log(this.props);
 		const spreadPricePos = Math.round10(data.Price + +spread, -2);
@@ -476,7 +499,7 @@ class TraderString extends React.Component {
 				}}
 				transitionAppear={false}
 				transitionLeave={false}
-				transitionEnterTimeout={800}
+				transitionEnterTimeout={4800}
 				// onDragOver={::this.onDragOver}
 				// onDragLeave={::this.onDragLeave}
 				// onDrop={other.traderActions.onDrop.bind(null, this, data.Price)}
@@ -507,7 +530,8 @@ class TraderString extends React.Component {
 						other.traderActions.actionAddDefaultOrder.bind(null, this, {
 							direction: 'buy',
 							price: data.Price,
-							limit: true
+							limit: true,
+							outputOrder: false
 						}, index)
 						:
 						null
@@ -572,7 +596,8 @@ class TraderString extends React.Component {
 						other.traderActions.actionAddDefaultOrder.bind(null, this, {
 							direction: 'sell',
 							price: data.Price,
-							limit: true
+							limit: true,
+							outputOrder: false
 						}, index)
 						:
 						null
@@ -607,7 +632,8 @@ class TraderString extends React.Component {
 			</td>
 			<td>
 				{
-					!autoTradeOn && index === info.activeString && quantity &&
+					(info.outputOrder || !autoTradeOn) && index === info.activeString && quantity &&
+					activeExchangeSymbol === activeExchange.symbol && isMirror == activeExchange.isMirror &&
 
 					(
 						(info.showDefaultOrder &&

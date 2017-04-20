@@ -21,6 +21,7 @@ let OddsConverterObj = new OddsConverter();
  *  orderMode - string, can be: 'expert', 'basic', 'normal'
  *  showDeleteButton - boolean
  *  focus - string, turn on or off focus on price or quantity input; can be: 'price', 'quantity', 'normal'
+ *  focusOn - boolean, put focus on input or not
  *  onSubmit - function
  *  onDelete - function
  *  onTypeChange - function
@@ -31,7 +32,8 @@ export default class OrderForm extends React.Component{
 	{
 		super();
 		this.state = {
-			focus: 'normal',
+			focus: 'normal', // свойство показывающее в какое поле надо поставить фокус
+			focusOn: true, // надо ли вообще ставить фокус
 			currentOddSystem: ABpp.config.currentOddSystem,
 			...props
 		};
@@ -117,6 +119,8 @@ export default class OrderForm extends React.Component{
 
 			}
 		}
+		state.focusOn = false;
+
 		this.setState(state)
 	}
 
@@ -169,6 +173,8 @@ export default class OrderForm extends React.Component{
 		// console.log(value);
 		// state[input] = value || '';
 		// console.log(state[input]);
+		state.focusOn = false;
+
 		this.setState(state);
 
 	}
@@ -191,9 +197,10 @@ export default class OrderForm extends React.Component{
 
 	shouldComponentUpdate(nextProps, nextState)
 	{
-		// console.log(this.props.data, nextProps.data);
-		// console.log('this.state:', this.state);
-		// console.log('nextState:', nextState);
+		// console.log(this.props.limit, nextProps.limit);
+		// console.log(JSON.stringify(this.props) === JSON.stringify(nextProps));
+		// console.log('this.state:', this.state.quantity);
+		// console.log('nextState:', nextState.quantity);
 		if((JSON.stringify(this.props) === JSON.stringify(nextProps) &&
 			this.state === nextState && this.state.currentOddSystem === ABpp.config.currentOddSystem))
 		{
@@ -202,10 +209,13 @@ export default class OrderForm extends React.Component{
 		this.state.currentOddSystem = ABpp.config.currentOddSystem;
 		// console.log(JSON.stringify(this.props.data));
 		// console.log(JSON.stringify(nextProps.data));
-		if(this.props.price !== nextProps.price || this.props.quantity !== nextProps.quantity)
+		if(this.props.price !== nextProps.price || this.props.quantity !== nextProps.quantity
+			|| this.props.limit !== nextProps.limit || this.props.focusOn !== nextProps.focusOn)
 		{
 			this.state.price = nextProps.price;
-			this.state.quantity = nextProps.quantity
+			this.state.quantity = nextProps.quantity;
+			this.state.limit = nextProps.limit;
+			if(nextProps.focusOn !== undefined) this.state.focusOn = nextProps.focusOn
 		}
 
 		return true;
@@ -227,34 +237,37 @@ export default class OrderForm extends React.Component{
 
 	componentFocus()
 	{
-		const { focus, limit } = this.state;
+		const { focus, focusOn, limit } = this.state;
 		const price = this.refs.inputPrice.refs.input;
 		const quantity = this.refs.inputQuantity.refs.input;
 
-		switch (focus){
-			case 'price':
-				price.focus();
-				break;
-			case 'quantity':
-				quantity.focus();
-				break;
-			default:
-				if (limit) price.focus();
-				else quantity.focus();
+		if(focusOn){
+			switch (focus){
+				case 'price':
+					price.focus();
+					break;
+				case 'quantity':
+					quantity.focus();
+					break;
+				default:
+					if (limit) price.focus();
+					else quantity.focus();
+			}
 		}
 	}
 
-	componentDidUpdate(prevProps)
+	componentDidUpdate(prevProps, prevState)
 	{
 		const props = this.props;
 		// const state = this.state;
-		// console.log(props);
-		// console.log(prevProps);
-		// console.log(state);
-		// console.log(prevState);
-		// if(props.price !== prevProps.price || props.quantity !== prevProps.quantity || props.limit !== prevProps.limit){
-		// 	this.componentFocus();
-		// }
+		// console.log('props.quantity:', props.quantity);
+		// console.log('prevProps.quantity:', prevProps.quantity);
+		// console.log('state.quantity:', state.quantity);
+		// console.log('prevState.quantity:', prevState.quantity);
+		if(props.price !== prevProps.price || (props.quantity !== prevProps.quantity /*&& props.quantity !== state.quantity*/)
+			|| props.limit !== prevProps.limit){
+			this.componentFocus();
+		}
 	}
 
 	componentDidMount()
@@ -362,7 +375,7 @@ export default class OrderForm extends React.Component{
 										 value={checkboxProp ? (!stateData.sum ||stateData.sum === '0.00' ? '' : stateData.sum) : ''}
 										 label={true}
 										 maxLength="8" autoComplete="off" disabled={!(checkboxProp)} ref="inputSum"/>
-							<div className="warning" style={{display: 'none'}}><p>Minimal available value 0.01</p></div>
+							<div className="warning right" style={{display: 'none'}}><p>Minimal available value 0.01</p></div>
 							{
 								<div className="regulator" style={style}>
 									<span className="plus" onClick={this.onInputIncrement.bind(this, 'sum', 1)}

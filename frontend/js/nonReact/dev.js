@@ -123,7 +123,7 @@ $(document).ready(function () {
 			$(this).attr('id', 'event_' + orderId++ + '_order');
 		});
 	}
-	$('.schedule').mousedown(function (e) {
+	$('.schedule, .show-schedule').mousedown(function (e) {
 		e.stopPropagation();
 	});
 	$('a.favorite').click(function (e) {

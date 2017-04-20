@@ -14,6 +14,7 @@ import {
 import { ON_ACTIVE_SYMBOL_CHANGED } from '../../../constants/ActionTypesSidebar.js';
 import BaseActions from '../../BaseActions';
 import {RebuildServerData} from './activeTrader/rebuildServerData';
+import { orderForm } from '../../../components/formValidation/validation';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 
 declare var orderClass;
@@ -41,7 +42,8 @@ class Actions extends BaseActions
 				// let symbol = $('.active_trader').attr('id');
 				// if(!symbol) return;
 				// symbol = symbol.slice(7);
-				const symbol = state.sidebar.activeExchange.name;
+				const name = state.sidebar.activeExchange.name;
+				const symbol = state.sidebar.activeExchange.symbol;
 
 				let currSymbData : any = {};
 
@@ -49,7 +51,7 @@ class Actions extends BaseActions
 					// let currentSymbol = `${this.Symbol.Exchange}_${this.Symbol.Name}_${this.Symbol.Currency}`;
 					let currentSymbol = this.Symbol.Exchange;
 
-					if(symbol == currentSymbol) {
+					if(name == currentSymbol) {
 						currSymbData = this;
 						return false;
 					}
@@ -70,7 +72,7 @@ class Actions extends BaseActions
 					});
 					// __DEV__ && console.log('re-render');
 				}
-				if(state.activeTrader.activeExchange != symbol || state.activeTrader.isMirror != isMirror){
+				if(state.activeTrader.activeExchange != name || state.activeTrader.isMirror != isMirror){
 					setTimeout(() => {this._scrollTo(context, currSymbData, isMirror)}, initialStart ? 400 : 100);
 					// console.log(this._scrollTo);
 					if(initialStart) initialStart = false;
@@ -78,11 +80,12 @@ class Actions extends BaseActions
 						type: TRADER_ON_EXCHANGE_CHANGE,
 						payload: {
 							isMirror: isMirror,
-							activeExchange: symbol
+							activeExchange: name,
+							activeExchangeSymbol: symbol
 						}
 					});
 					context.props.traderActions.actionHideDirectionConfirm();
-					context.props.traderActions.actionRemoveOrderForm();
+					// context.props.traderActions.actionRemoveOrderForm();
 					$(context.refs.activeTrader).removeClass('loading');
 					// state.activeTrader.activeExchange = symbol;
 				}
@@ -136,8 +139,10 @@ class Actions extends BaseActions
 		{
 			const code = event.which || event.charCode || event.keyCode;
 
-			if(code == 38)
+			if(code == 38){
+                event.preventDefault();
 				context.props.traderActions.actionOnButtonQuantityChange(context, 1);
+            }
 			else if(code == 40)
 				context.props.traderActions.actionOnButtonQuantityChange(context, -1)
 		}
@@ -148,7 +153,7 @@ class Actions extends BaseActions
 		return (dispatch, getState) =>
 		{
 			const closeButton = $(context.refs.inputQuantity).prev('.clear');
-			const sum = +getState().activeTrader.quantity + quantity;
+			const sum =  +getState().activeTrader.quantity + quantity >= 0 ? +getState().activeTrader.quantity + quantity : 0;
 			closeButton.show();
 			setTimeout(() => {
 				closeButton.addClass('active');
@@ -345,17 +350,25 @@ class Actions extends BaseActions
 
 	public actionAddDefaultOrder(context, data, index)
 	{
-		return (dispatch, getState) => {
-			if(getState().sidebar.autoTradeOn)
+		return (dispatch, getState) => 
+		{
+			// console.log('index:', index);
+			if(context && getState().sidebar.autoTradeOn)
 				context.props.traderActions.actionOnAjaxAutoTrade(context, data);
 			else{
+                dispatch({
+                    type: TRADER_ON_QUANTITY_CHANGE,
+                    payload: data.quantity ? data.quantity : getState().activeTrader.quantity
+                });
 				dispatch({
 					type: TRADER_ON_ADD_ORDER,
 					payload: {
 						activeString: index,
 						direction:  data.direction,
+                        focusOn: true,
 						price: data.price,
 						limit:  data.limit,
+						outputOrder: data.outputOrder || false,
 						showDirectionConfirm:  false,
 						showDefaultOrder:  true,
 						showSpreadOrder:  false,
@@ -450,6 +463,7 @@ class Actions extends BaseActions
 				url = globalData.rootUrl + 'Order/MarketTrading';
 
 			ajaxData.Side = (direction)[0].toUpperCase() + (direction).slice(1);
+			context.props.traderActions.actionRemoveOrderForm();
 
 			defaultMethods.sendAjaxRequest({
 				httpMethod: 'POST',
@@ -516,6 +530,8 @@ class Actions extends BaseActions
 		{
 			event.preventDefault();
 			const { cmpData: { activeExchange }, traderActions } = context.props;
+
+            if(!orderForm(event.currentTarget)) return false;
 
 			function OnBeginAjax()
 			{

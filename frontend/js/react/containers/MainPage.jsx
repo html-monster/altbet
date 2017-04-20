@@ -6,6 +6,7 @@ import BaseController from './BaseController';
 import ExchangeItem from '../components/MainPage/ExchangeItem';
 import mainPageActions from '../actions/MainPageActions.ts';
 import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
+import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 
 // class MainPage extends React.Component
 class MainPage extends BaseController
@@ -61,7 +62,7 @@ class MainPage extends BaseController
 
         // subscribe on tader on/off
         /** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, function() {self.props.actions.OnOffBasicMode(ABpp.config.basicMode)});
-        ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_TRADER_ON, function() {self.props.actions.actionOnTraiderOnChanged(ABpp.config.tradeOn, self)});
+        ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_TRADER_ON, function() {self.props.actions.actionOnTraiderOnChanged(`ABpp.config.tradeOn`, self)});
         ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, function(props) {self.props.actions.actionOnActiveSymbolChanged(props, self)});
 
 
@@ -79,7 +80,6 @@ class MainPage extends BaseController
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
         let urlBase = appData.baseUrl.MainPage;
         // let nb = "&nbsp;";
-
 
         // sort tabs data
         const currSort = appData.urlQuery.sortType;
@@ -118,7 +118,7 @@ class MainPage extends BaseController
                                     <ul className="pagination_list">
                                         {$Pagination.Pages.map((item, key) => {
                                             return <li key={key} className={(item.Disabled ? "disabled " : "") + (item.IsCurrenPage ? "active" : "")}>
-                                                <a  href={urlBase + `/${item.RouteValues.action[0] == '/' ?
+                                                <a  href={urlBase + `/${item.RouteValues.action[0] === '/' ?
                                                         item.RouteValues.action.slice(1)
                                                         :
                                                         item.RouteValues.action}?page=${item.RouteValues.Page}` + (currSort ? "&sort=" + currSort : '')}
@@ -147,6 +147,7 @@ export default connect(
     })
     },
     dispatch => ({
+        traderActions: bindActionCreators(traderActions, dispatch),
 		defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
         actions: bindActionCreators(mainPageActions, dispatch),
     })
