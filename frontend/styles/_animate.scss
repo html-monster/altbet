@@ -111,8 +111,8 @@
 .fadeInAnimation {  animation-name: fadeIn;  }
 .fadeOutAnimation {  animation-name: fadeOut;  }
 .shake {  animation-name: shake;  }
-.fadeOut span:after {  animation-name: animateUpdating;  }
-.fadeOut:before {  animation-name: animateUpdating;  }
+.fadeOut-active span:after {  animation-name: animateUpdating;  }
+.fadeOut-active:before {  animation-name: animateUpdating;  }
 .rubberBand {  animation-name: rubberBand;  }
 .animated{
 	animation-duration: 1s;

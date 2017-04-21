@@ -45,8 +45,6 @@ class ActiveTrader extends React.Component {
 		// className = $active = $activeM = '';
 		// ( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
 		
-		console.log('activeExchange:', activeExchange.isMirror);
-		console.log('isMirror:', isMirror);
         let gainLoss = data && data.GainLoss ? data.GainLoss : '';
         if (data) {
             if (gainLoss < 0)
@@ -499,7 +497,7 @@ class TraderString extends React.Component {
 				}}
 				transitionAppear={false}
 				transitionLeave={false}
-				transitionEnterTimeout={4800}
+				transitionEnterTimeout={800}
 				// onDragOver={::this.onDragOver}
 				// onDragLeave={::this.onDragLeave}
 				// onDrop={other.traderActions.onDrop.bind(null, this, data.Price)}
