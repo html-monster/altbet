@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import BaseController from './BaseController';
-import mainPageActions from '../actions/MainPageActions.ts';
+import Actions from '../actions/NewFeedExchangeActions.ts';
 import {DropBox} from '../components/common/DropBox';
 import {PlayersTable} from '../components/NewFeedExchange/PlayersTable';
 import {Team1} from '../components/NewFeedExchange/Team1';
@@ -14,36 +14,25 @@ class NewFeedExchange extends BaseController
     constructor(props)
     {
         super(props);
-        const { Players } = this.props.data.AppData;
+        const { Players } = this.props.data;
 
         __DEV__&&console.debug( 'this.props', props );
 
-        this.state = {Players, PlayersTeam1: [], PlayersTeam2: []};
+        // this.state = {Players, PlayersTeam1: [], PlayersTeam2: []};
     }
 
 
-    addToTeam1(plName, plTeam)
+    componentDidUpdate()
     {
-        for( let ii in this.state.Players )
-        {
-            let val = this.state.Players[ii];
-
-            if( val ) 
-            {
-            }
-            else
-            {
-            } // endif
-        } // endfor
+        __DEV__&&console.debug( 'this.props', this.props );
     }
-
 
 
     render()
     {
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
-        const { actions, data: {AppData: AppData} } = this.props;
-        const { Players, PlayersTeam1, PlayersTeam2 } = this.state;
+        const { actions, data: AppData } = this.props;
+        const { Players, PlayersTeam1, PlayersTeam2 } = this.props.data;
 
         var items = [];
 
@@ -72,7 +61,7 @@ class NewFeedExchange extends BaseController
                                 <div className="box-body" >
                                     <div className="form-group">
                                         <label>Event start date</label>
-                                        <div className="">{moment(AppData.StartDate).format('DD MMM Y')}</div>
+                                        <div className="">{moment(AppData.StartDate).format('DD MMM Y H:mm A')}</div>
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +86,7 @@ class NewFeedExchange extends BaseController
                                         <label>Event</label>
                                         <DropBox name="selected-state" items={items = Object.keys(AppData.TimeEvent).map((key) =>
                                                 { return {value: key, label: AppData.TimeEvent[key]}}
-                                            )} autofocus clearable={true} disabled={false} value={items[0]} searchable={true} afterChange={(newValue) => { false || console.log( 'selected val', newValue ) }}/>
+                                            )} clearable={false} value={items[0]} searchable={true} afterChange={actions.actionChangeEvent}/>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +96,10 @@ class NewFeedExchange extends BaseController
                             <div className="col-sm-6">
                                 <div className="box-body" >
                                     <div className="form-group">
-                                        <PlayersTable data={Players} team1={AppData.Team1name} team2={AppData.Team2name} />
+                                        <PlayersTable data={Players}
+                                            team1={AppData.Team1name} team2={AppData.Team2name}
+                                            t1pos={PlayersTeam1.positions} t2pos={PlayersTeam2.positions}
+                                        actions={actions} />
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +108,7 @@ class NewFeedExchange extends BaseController
                                     <div className="col-xs-12">
                                         <div className="box-body" >
                                             <div className="form-group">
-                                                <Team1 data={PlayersTeam1} teamNum="1" />
+                                                <Team1 data={PlayersTeam1.players} actions={actions} teamNum="1" />
                                             </div>
                                         </div>
                                     </div>
@@ -126,7 +118,7 @@ class NewFeedExchange extends BaseController
                                     <div className="col-xs-12">
                                         <div className="box-body" >
                                             <div className="form-group">
-                                                <Team1 data={PlayersTeam2} teamNum="2" />
+                                                <Team1 data={PlayersTeam2.players} actions={actions} teamNum="2" />
                                             </div>
                                         </div>
                                     </div>
@@ -165,6 +157,6 @@ export default connect(
     })
     },
     dispatch => ({
-        actions: bindActionCreators(mainPageActions, dispatch),
+        actions: bindActionCreators(Actions, dispatch),
     })
 )(NewFeedExchange)

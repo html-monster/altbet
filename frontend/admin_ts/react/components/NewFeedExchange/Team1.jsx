@@ -15,7 +15,7 @@ export class Team1 extends React.Component
 
     render()
     {
-        const { data, teamNum } = this.props;
+        const { data, teamNum, actions } = this.props;
 
         return (
             <div className="h-team">
@@ -23,6 +23,7 @@ export class Team1 extends React.Component
                 <table className="table">
                     <thead>
                     <tr>
+                        <th>{}</th>
                         <th>POS</th>
                         <th>Team</th>
                         <th>Name</th>
@@ -34,11 +35,12 @@ export class Team1 extends React.Component
                     { data.length ?
                         data.map((itm, key) =>
                             <tr key={key}>
+                                <td> {key + 1} </td>
                                 <td> {itm.Position} </td>
                                 <td> {itm.Team} </td>
                                 <td> {itm.Name} </td>
                                 <td> {itm.Status} </td>
-                                <td><button className="btn btn-default -btn-default btn-xs" data-url="/AltBet.Admin/Category/NewCategory?category=fantasy-sport" title="Remove player"><i className="fa fa-remove">{}</i> remove</button></td>
+                                <td><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: itm, team: teamNum})} title="Remove player"><i className="fa fa-remove -red">{}</i> remove</button></td>
                             </tr>
                         )
                         : <tr><td colSpan="5"><i>No players yet, please, add...</i></td></tr>

@@ -37,7 +37,7 @@ export class PlayersTable extends React.Component
 
     render()
     {
-        const { team1, team2 } = this.props;
+        const { team1, team2, t1pos, t2pos, actions } = this.props;
         const { data } = this.state;
 
 
@@ -67,16 +67,28 @@ export class PlayersTable extends React.Component
                     {
                         data.map((itm, key) =>
                             (this.currFilter === "All" || this.currFilter === itm.Team) &&
-                                <tr key={key}>
+                            do {
+                                let btn1disable = itm.PositionQuantity == t1pos[itm.Index];
+                                let btn2disable = itm.PositionQuantity == t2pos[itm.Index];
+
+                                <tr key={key} className={`${do {itm.used && "used team" + itm.used}}`}>
                                     <td> {itm.Position} </td>
                                     <td> {itm.Team} </td>
                                     <td> {itm.Name} </td>
                                     <td> {itm.Status} </td>
-                                    <td>
-                                        <button className="btn btn-default -btn-default btn-xs " data-url="/AltBet.Admin/Category/NewCategory?category=fantasy-sport" title="Add to team 1"><i className="fa fa-plus"></i> Add T1</button>&nbsp;
-                                        <button className="btn btn-default -btn-default btn-xs" data-url="/AltBet.Admin/Category/NewCategory?category=fantasy-sport" title="Add to team 1"><i className="fa fa-plus"></i> Add T2</button>
-                                    </td>
+                                    { itm.used ?
+                                        <td>
+                                            <button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: itm, team: itm.used})} title="Remove player"><i className="fa fa-remove -red">{}</i> remove</button>&nbsp;&nbsp;
+                                            { itm.used && <span>Team {itm.used}</span> }
+                                        </td>
+                                        :
+                                        <td>
+                                            <button className={"btn btn-default -btn-default btn-xs"} title={btn1disable ? `The ${itm.Position} position is full` : "Add to team 1"} onClick={() => btn1disable || actions.actionAddTeamplayer({player: itm, team: 1})} disabled={btn1disable}><i className={"fa fa-plus" + (btn1disable ? " -gray" : "")}></i> Add T1</button>&nbsp;
+                                            <button className={"btn btn-default -btn-default btn-xs"} title={btn2disable ? `The ${itm.Position} position is full` : "Add to team 2"} onClick={() => btn2disable || actions.actionAddTeamplayer({player: itm, team: 2})} disabled={btn2disable}><i className={"fa fa-plus" + (btn2disable ? " -gray" : "")}></i> Add T2</button>
+                                        </td>
+                                    }
                                 </tr>
+                            }
                         )
                     }
                     </tbody>

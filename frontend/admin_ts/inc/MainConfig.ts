@@ -29,4 +29,6 @@ export class MainConfig
     public static AJAX_EXCH_SET_STATUS_SETTLEMENT= 'Home/Settlement';
 
     public static AJAX_CATEGORY_MOVE = 'Category/MoveCategory';
+
+    public static AJAX_FEED_GETPLAYERS = 'Feed/GetPlayers';
 }
