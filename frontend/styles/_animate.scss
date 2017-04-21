@@ -1,69 +1,4 @@
-@keyframes zoomIn {
-	0% {  opacity: 0;  transform: scale3d(.3,.3,.3)  }
-	50% {  opacity: 1  }
-}
-@keyframes progressAnimation{
-	0%{background-position-x:0}
-	to{background-position-x:40px}
-}
-@keyframes animateUpdating {
-	0% {  background-color: orange;  }
-	100% {  background-color: transparent;  }
-}
-@keyframes fadeIn {
-	0% {  opacity: 0;  }
-	100% {  opacity: 1;  }
-}
-@keyframes fadeOut {
-	0% {  opacity: 0;  }
-	100% {  opacity: 1;  }
-}
-@keyframes fadeColorGreen {
-	0% {  color: orange;  }
-	100% {  color: #4dac2e;  }
-}
-@keyframes fadeColorRed {
-	0% {  color: orange;  }
-	100% {  color: #ff3905;  }
-}
-@keyframes fadeColorBlue {
-	0% {  color: orange;  }
-	100% {  color: #3498da;  }
-}
-@keyframes fadeColorOrange {
-	0% {  color: #bab500;  }
-	100% {  color: #ef8022;  }
-}
-@keyframes fadeColorOutSell {
-	0% {  color: #ef4d22;  }
-	100% {  color: orange;  }
-}
-@keyframes fadeColorOutBuy {
-	0% {  color: #3498da;  }
-	100% {  color: orange;  }
-}
-@keyframes shake {
-	0%, 100% {  transform: translate3d(0, 0, 0);  }
-	10%, 30%, 50%, 70%, 90% {  transform: translate3d(-10px, 0, 0);  }
-	20%, 40%, 60%, 80% {  transform: translate3d(10px, 0, 0);  }
-}
-@keyframes rubberBand {
-	0% {  transform: scale3d(1, 1, 1);  }
-	30% {  transform: scale3d(1.25, 0.75, 1);  }
-	40% {  transform: scale3d(0.75, 1.25, 1);  }
-	50% {  transform: scale3d(1.15, 0.85, 1);  }
-	65% {  transform: scale3d(.95, 1.05, 1);  }
-	75% {  transform: scale3d(1.05, .95, 1);  }
-	100% {  transform: scale3d(1, 1, 1);  }
-}
-@keyframes fadeInUp {
-	0% {  opacity: 0; transform: translateY(5px);  }
-	100% {  opacity: 1; transform: translateY(0);  }
-}
-@keyframes fadeInLeft {
-	0% {  opacity: 0;  transform: translate3d(-100%, 0, 0);  }
-	100% {  opacity: 1;  transform: none;  }
-}
+
 @keyframes bounceInRight {
 	0%, 60%, 75%, 90%, 100% {  animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);  }
 	0% {  opacity: 0;  transform: translate3d(3000px, 0, 0);  }
@@ -89,6 +24,72 @@
 	40%, 45% {  opacity: 1;  transform: translate3d(0, -20px, 0);  }
 	100% {  opacity: 0;  transform: translate3d(0, 2000px, 0);  }
 }
+@keyframes fadeIn {
+	0% {  opacity: 0;  }
+	100% {  opacity: 1;  }
+}
+@keyframes fadeOut {
+	0% {  opacity: 1;  }
+	100% {  opacity: 0;  }
+}
+@keyframes fadeInUp {
+	0% {  opacity: 0; transform: translateY(5px);  }
+	100% {  opacity: 1; transform: translateY(0);  }
+}
+@keyframes fadeInLeft {
+	0% {  opacity: 0;  transform: translate3d(-100%, 0, 0);  }
+	100% {  opacity: 1;  transform: none;  }
+}
+@keyframes fadeColorGreen {
+	0% {  color: orange;  }
+	100% {  color: #4dac2e;  }
+}
+@keyframes fadeColorRed {
+	0% {  color: orange;  }
+	100% {  color: #ff3905;  }
+}
+@keyframes fadeColorBlue {
+	0% {  color: orange;  }
+	100% {  color: #3498da;  }
+}
+@keyframes fadeColorOrange {
+	0% {  color: #bab500;  }
+	100% {  color: #ef8022;  }
+}
+@keyframes fadeColorOutSell {
+	0% {  color: #ef4d22;  }
+	100% {  color: orange;  }
+}
+@keyframes fadeColorOutBuy {
+	0% {  color: #3498da;  }
+	100% {  color: orange;  }
+}
+@keyframes rubberBand {
+	0% {  transform: scale3d(1, 1, 1);  }
+	30% {  transform: scale3d(1.25, 0.75, 1);  }
+	40% {  transform: scale3d(0.75, 1.25, 1);  }
+	50% {  transform: scale3d(1.15, 0.85, 1);  }
+	65% {  transform: scale3d(.95, 1.05, 1);  }
+	75% {  transform: scale3d(1.05, .95, 1);  }
+	100% {  transform: scale3d(1, 1, 1);  }
+}
+@keyframes progressAnimation{
+	0%{background-position-x:0}
+	to{background-position-x:40px}
+}
+@keyframes shake {
+	0%, 100% {  transform: translate3d(0, 0, 0);  }
+	10%, 30%, 50%, 70%, 90% {  transform: translate3d(-10px, 0, 0);  }
+	20%, 40%, 60%, 80% {  transform: translate3d(10px, 0, 0);  }
+}
+@keyframes updateAnimation {
+	0% {  background-color: orange;  }
+	100% {  background-color: transparent;  }
+}
+@keyframes zoomIn {
+	0% {  opacity: 0;  transform: scale3d(.3,.3,.3)  }
+	50% {  opacity: 1  }
+}
 
 //@keyframes testAnim {
 //	0% {  background-color: orange;  }
@@ -106,13 +107,12 @@
 .bounceInRight {  animation-name: bounceInRight;  }
 .bounceOutRight {  animation-name: bounceOutRight;  }
 .fadeIn {  animation-name: fadeIn;  }
+.fadeOut {  animation-name: fadeOut;  }
 .fadeInUp {  animation-name: fadeInUp;  }
 .fadeInLeft {  animation-name: fadeInLeft;  }
-.fadeInAnimation {  animation-name: fadeIn;  }
-.fadeOutAnimation {  animation-name: fadeOut;  }
 .shake {  animation-name: shake;  }
-.fadeOut-active span:after {  animation-name: animateUpdating;  }
-.fadeOut-active:before {  animation-name: animateUpdating;  }
+.updateAnimation-active span:after {  animation-name: updateAnimation;  }
+.updateAnimation-active:before {  animation-name: updateAnimation;  }
 .rubberBand {  animation-name: rubberBand;  }
 .animated{
 	animation-duration: 1s;

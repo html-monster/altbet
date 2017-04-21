@@ -34,8 +34,8 @@ export default class NewOrder extends React.Component{
 						className={item.Side ? 'sell-container' : 'buy-container' + ' form_container'}
 						key={`${symbol}_${item.Side}`}
 						transitionName={{
-							appear: 'fadeInAnimation',
-							enter: 'fadeInAnimation'
+							appear: 'fadeIn',
+							enter: 'fadeIn'
 						}}
 						transitionAppear={true}
 						transitionLeave={false}

@@ -26,8 +26,8 @@ class DefaultOrders extends React.Component
 				className="default_orders"
 				style={traderOn ? {display: 'none'} : {}}
 				transitionName={{
-					appear: 'fadeInAnimation',
-					enter: 'fadeInAnimation'
+					appear: 'fadeIn',
+					enter: 'fadeIn'
 				}}
 				transitionAppear={true}
 				transitionLeave={false}

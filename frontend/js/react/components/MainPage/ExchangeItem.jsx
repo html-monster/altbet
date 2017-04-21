@@ -129,7 +129,7 @@ export default class ExchangeItem extends React.Component
                             <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>P/L:
                                 <span className={(data.GainLoss < 0 ? 'lose' : '') + (data.GainLoss > 0 ? 'win' : '')}>
                                         {data.GainLoss ?
-											data.GainLoss < 0 ? ` ($${Math.abs(data.GainLoss)})` :  '$' + data.GainLoss
+											data.GainLoss < 0 ? ` ($${Math.abs(data.GainLoss)})` :  ' $' + data.GainLoss
 											:
 											' $' + 0}
                                 </span>

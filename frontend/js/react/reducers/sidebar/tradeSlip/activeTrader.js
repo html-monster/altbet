@@ -10,7 +10,8 @@ import {
 	TRADER_ON_ADD_ORDER,
 	TRADER_ON_DELETE_ORDER,
 	TRADER_ON_SPREAD_HIGHLIGHT,
-	TRADER_ON_DRAG
+	TRADER_ON_DRAG,
+	SHOW_QUANTITY_ERROR
 } from '../../../constants/ActionTypesActiveTrader';
 import {RebuildServerData} from '../../../actions/Sidebar/tradeSlip/activeTrader/rebuildServerData';
 
@@ -28,6 +29,7 @@ const initialState = {
 	rebuiltServerData:[],
 	spread: '',
 	spreadHighLight: [],
+	showQuantityError: false,
 	quantity: '',
 	orderInfo: {
 		activeString: null,
@@ -75,6 +77,9 @@ export default function activeTrader(state = initialState, action)
 
 		case TRADER_ON_DRAG:
 			return {...state, dragData: {...state.dragData, ...action.payload}};
+
+		case SHOW_QUANTITY_ERROR:
+			return {...state, showQuantityError: action.payload};
 
 		default:
 			return state

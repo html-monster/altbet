@@ -37,7 +37,7 @@ class ActiveTrader extends React.Component {
 		// const { activeString, showDefaultOrder } = this.state;
 		const { data, ...info } = this.props;
 		const { activeExchangeSymbol, dragData: { popUpShow }, cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
-			rebuiltServerData, spread, quantity, traderActions } = this.props;
+			rebuiltServerData, spread, showQuantityError, quantity, traderActions } = this.props;
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
 		let className = '';
@@ -165,13 +165,23 @@ class ActiveTrader extends React.Component {
 						<td className="label"><span>No. of Entries</span></td>
 						<td className="volume quantity">
 							<div className="input">
-								<button className="clear" onClick={traderActions.actionOnQuantityClear.bind(null, this)}>{}</button>
+								<button className="clear" id="trader_quantity_clear" onClick={traderActions.actionOnQuantityClear.bind(null, this)}>{}</button>
 								<input type="text" className="number quantity" data-validation="1" maxLength="8"
 									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, this)}
 									   onChange={traderActions.actionOnQuantityChange.bind(null, this)}
 									   value={quantity} ref={'inputQuantity'}/>
-								<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>
-								<div className="regulator min"><span className="plus" title="Press Arrow Up" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1)}>{}</span><span className="minus" title="Press Arrow Down" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, -1)}>{}</span></div>
+								<div className="warning" ref={'quantityError'} style={{display: 'none'}}>
+									{
+										showQuantityError ?
+											<p>Choose your number of entries</p>
+											:
+											<p>Available integer value more than 0</p>
+									}
+								</div>
+								<div className="regulator min">
+									<span className="plus" title="Press Arrow Up" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1)}>{}</span>
+									<span className="minus" title="Press Arrow Down" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, -1)}>{}</span>
+								</div>
 							</div>
 						</td>
 						<td className="spread_container ">
@@ -439,7 +449,7 @@ class TraderString extends React.Component {
 	{
 		// const { traderActions, activeString, data, mainData, index, inputQuantityContext, isMirror, quantity } = this.props;
 		const { activeExchangeSymbol, data, dragPrevPrice, dropActiveString, cmpData: { autoTradeOn, activeExchange }, index,
-			isMirror, orderInfo: {...info}, spreadHighLight, quantity, spread, ...other } = this.props;
+			isMirror, orderInfo: {...info}, traderContext, spreadHighLight, quantity, spread, ...other } = this.props;
 		// const {  showDefaultOrder  } = this.state;
 		// console.log(this.props);
 		const spreadPricePos = Math.round10(data.Price + +spread, -2);
@@ -493,7 +503,7 @@ class TraderString extends React.Component {
 				component="tr"
 				className={`visible`}
 				transitionName={{
-					enter: 'fadeOut',
+					enter: 'updateAnimation',
 				}}
 				transitionAppear={false}
 				transitionLeave={false}
@@ -532,7 +542,7 @@ class TraderString extends React.Component {
 							outputOrder: false
 						}, index)
 						:
-						null
+						other.traderActions.showQuantityError.bind(null, traderContext, true)
 				}
 				// onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, this, 'buy', data.Price) : null}
 				// onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
@@ -598,7 +608,7 @@ class TraderString extends React.Component {
 							outputOrder: false
 						}, index)
 						:
-						null
+						other.traderActions.showQuantityError.bind(null, traderContext, true)
 				}
 				// draggable={!!data.ParticularUserQuantitySell}
 				// onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, this, 'sell', data.Price) : null}
@@ -640,6 +650,8 @@ class TraderString extends React.Component {
 								cmpData={this.props.cmpData}
 								index={index}
 								quantity={quantity}
+								isMirror={isMirror}
+								traderContext={traderContext}
 								{...other}
 								{...info}
 							/>
@@ -652,6 +664,8 @@ class TraderString extends React.Component {
 								index={index}
 								quantity={quantity}
 								spread={spread}
+								isMirror={isMirror}
+								traderContext={traderContext}
 								{...other}
 								{...info}
 							/>

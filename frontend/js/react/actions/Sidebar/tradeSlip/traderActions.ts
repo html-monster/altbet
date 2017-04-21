@@ -9,7 +9,8 @@ import {
 	TRADER_ON_ADD_ORDER,
 	TRADER_ON_DELETE_ORDER,
 	TRADER_ON_SPREAD_HIGHLIGHT,
-	TRADER_ON_DRAG
+	TRADER_ON_DRAG,
+	SHOW_QUANTITY_ERROR
 } from '../../../constants/ActionTypesActiveTrader';
 import { ON_ACTIVE_SYMBOL_CHANGED } from '../../../constants/ActionTypesSidebar.js';
 import BaseActions from '../../BaseActions';
@@ -144,7 +145,9 @@ class Actions extends BaseActions
 				context.props.traderActions.actionOnButtonQuantityChange(context, 1);
             }
 			else if(code == 40)
-				context.props.traderActions.actionOnButtonQuantityChange(context, -1)
+				context.props.traderActions.actionOnButtonQuantityChange(context, -1);
+
+			context.props.traderActions.showQuantityError(context, false)
 		}
 	}
 
@@ -356,10 +359,17 @@ class Actions extends BaseActions
 			if(context && getState().sidebar.autoTradeOn)
 				context.props.traderActions.actionOnAjaxAutoTrade(context, data);
 			else{
+				const closeButton = $('#trader_quantity_clear');
+				closeButton.show();
+				setTimeout(() => {
+					closeButton.addClass('active');
+				}, 100);
+
                 dispatch({
                     type: TRADER_ON_QUANTITY_CHANGE,
                     payload: data.quantity ? data.quantity : getState().activeTrader.quantity
                 });
+
 				dispatch({
 					type: TRADER_ON_ADD_ORDER,
 					payload: {
@@ -819,6 +829,21 @@ class Actions extends BaseActions
 					payload: { popUpShow: true }
 				});
 			}
+		}
+	}
+
+	public showQuantityError(context, flag)
+	{
+		return (dispatch, getState) =>
+		{
+			if(getState().activeTrader.showQuantityError !== flag){
+				dispatch({
+					type: SHOW_QUANTITY_ERROR,
+					payload: flag
+				});
+			}
+
+			if(flag) $(context.refs.quantityError).fadeIn(200);
 		}
 	}
 }
