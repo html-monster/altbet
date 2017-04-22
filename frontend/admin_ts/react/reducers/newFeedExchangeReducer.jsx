@@ -9,6 +9,7 @@ const initialState = {
     ...globalData.AppData,
     PlayersTeam1: {positions: {}, players: []},
     PlayersTeam2: {positions: {}, players: []},
+    CurrentEventId: Object.keys(globalData.AppData.TimeEvent)[0],
 };
 
 
@@ -25,9 +26,10 @@ export default function newFeedExchange(state = initialState, action)
             return {...state};
 
         case ON_CHANGE_EVENT:
-            state = action.payload(state);
-            // action.payload(state);
-            return {...state};
+            const [ Players, CurrentEventId, markPlayers ]  = action.payload;
+            state.Players = Players;
+            if (Players.length) markPlayers(state);
+            return {...state, CurrentEventId};
 
         default:
             return state

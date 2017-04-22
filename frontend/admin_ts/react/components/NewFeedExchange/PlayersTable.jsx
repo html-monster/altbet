@@ -7,7 +7,7 @@ import React from 'react' ;
 
 export class PlayersTable extends React.Component
 {
-    filters = {'All': 'All'};
+    // filters = {};
     currFilter = "";
 
     constructor(props)
@@ -16,42 +16,36 @@ export class PlayersTable extends React.Component
         const { data, team1, team2 } = this.props;
 
         // prepare players filter
-        this.filters[team1] = team1;
-        this.filters[team2] = team2;
-        var filters = {};
-        Object.keys(this.filters).forEach((item) => { filters[item] = false });
-        filters[this.currFilter = Object.keys(this.filters)[0]] = true;
+        var filters = this._prepareFilters(data);
 
-        this.state = {data: data, filters: filters};
+        this.state = {data: data, filters};
     }
 
 
-    _onFilterChange(ee)
+    componentWillUpdate(newData, props)
     {
-        ee.preventDefault();
-
-        Object.keys(this.state.filters).forEach((key) => (this.state.filters[key] = key == ee.target.dataset.filter) && (this.currFilter = key));
-        this.setState({...this.state});
+        if( newData.eventId !== this.props.eventId )
+        {
+            this.setState({...this.state, data: newData.data, filters: this._prepareFilters(newData.data)})
+        } // endif
     }
 
 
     render()
     {
         const { team1, team2, t1pos, t2pos, actions } = this.props;
-        const { data } = this.state;
+        const { data, filters } = this.state;
 
 
         // filter btn
-        var filterBtn = (filter) => [<a href="#" key={filter + '11'} className={"f-btn" + (this.state.filters[filter] ? " active" : "")} data-filter={filter} onClick={::this._onFilterChange}>{this.filters[filter]}</a>];
+        var filterBtn = (filter) => <span key={filter + '11'}><a href="#" className={"f-btn" + (this.state.filters[filter] ? " active" : "")} data-filter={filter} onClick={::this._onFilterChange}>{filter}</a>&nbsp;</span>;
 
 
         return (
             <div className="h-players">
                 <label>Players <span className="-nobold">(avaliable)</span></label>
                 <div className="filters" title="Filter players">
-                    {filterBtn('All')}&nbsp;
-                    {filterBtn(team1)}&nbsp;
-                    {filterBtn(team2)}
+                    { Object.keys(filters).map((val) => (filterBtn(val))) }
                 </div>
                 <table className="table">
                     <thead>
@@ -64,14 +58,14 @@ export class PlayersTable extends React.Component
                     </tr>
                     </thead>
                     <tbody>
-                    {
+                    { data.length ?
                         data.map((itm, key) =>
                             (this.currFilter === "All" || this.currFilter === itm.Team) &&
                             do {
                                 let btn1disable = itm.PositionQuantity == t1pos[itm.Index];
                                 let btn2disable = itm.PositionQuantity == t2pos[itm.Index];
 
-                                <tr key={key} className={`${do {itm.used && "used team" + itm.used}}`}>
+                                <tr key={key} className={`${itm.used ? "used team" + itm.used : ""}`}>
                                     <td> {itm.Position} </td>
                                     <td> {itm.Team} </td>
                                     <td> {itm.Name} </td>
@@ -90,10 +84,35 @@ export class PlayersTable extends React.Component
                                 </tr>
                             }
                         )
+                        :
+                        <tr><td colSpan="5"><i>No avaliable players</i></td></tr>
                     }
                     </tbody>
                 </table>
             </div>
         );
+    }
+
+
+
+    _onFilterChange(ee)
+    {
+        ee.preventDefault();
+
+        Object.keys(this.state.filters).forEach((key) => (this.state.filters[key] = key == ee.target.dataset.filter) && (this.currFilter = key));
+        this.setState({...this.state});
+    }
+
+
+
+    _prepareFilters(inData)
+    {
+        var filters = {'All': false};
+
+        inData.forEach((val) => filters[val.Team] = false);
+
+        // Object.keys(filters).forEach((item) => { filters[item] = false });
+        filters[this.currFilter = Object.keys(filters)[0]] = true;
+        return filters;
     }
 }

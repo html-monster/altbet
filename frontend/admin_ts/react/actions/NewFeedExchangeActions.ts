@@ -21,10 +21,50 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            dispatch({
-                type: ON_CHANGE_EVENT,
-                payload: this.getEventTeam.bind(this, inProps),
+            let data = new FormData();
+            data.set('EventId', inProps);
+
+            const ajaxPromise = (new AjaxSend()).send({
+                formData: data,
+                message: `Error while registering user, please, try again`,
+                // url: ABpp.baseUrl + $form.attr('action'),
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GETPLAYERS,
+                respCodes: [
+                    {code: 100, message: ""},
+                    // {code: -101, message: "Some custom error"},
+                ],
+                // beforeChkResponse: (data) =>
+                // {
+                //     // DEBUG: emulate
+                //     data = {Error: 101};
+                //     // data.Param1 = "TOR-PHI-3152017"; // id
+                //     // data.Param1 = "?path=sport&status=approved";
+                //     // data.Param1 = "?status=New";
+                //     // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                //     // data.Param3 = "TOR-PHI-3152017"; // id
+                //
+                //     return data;
+                // },
             });
+
+
+            ajaxPromise.then( result =>
+                {
+                    dispatch({
+                        type: ON_CHANGE_EVENT,
+                        payload: [result.data.Param1, inProps, this.markPlayers],
+                    });
+                },
+                result => {
+                    // 0||console.log( 'result', result, result.code );
+                    if( result.code != 100 )
+                    {
+                        dispatch({
+                            type: ON_CHANGE_EVENT,
+                            payload: [[], inProps],
+                        });
+                    }
+                });
         };
     }
 
@@ -190,56 +230,6 @@ class Actions extends BaseActions
                 if( val.Id == val2.Id ) { val2.used = 2; } // endif;
             } // endfor
         }
-    }
-
-
-    /**
-     * Get team of event
-     */
-    getEventTeam(inProps, state)
-    {
-        let data = new FormData();
-        data.set('EventId', inProps);
-
-        const ajaxPromise = (new AjaxSend()).send({
-            formData: data,
-            message: `Error while registering user, please, try again`,
-            // url: ABpp.baseUrl + $form.attr('action'),
-            url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GETPLAYERS,
-            respCodes: [
-                {code: 100, message: ""},
-                // {code: -101, message: "Some custom error"},
-            ],
-            // beforeChkResponse: (data) =>
-            // {
-            //     // DEBUG: emulate
-            //     // data = {Error: 101};
-            //     // data.Param1 = "TOR-PHI-3152017"; // id
-            //     // data.Param1 = "?path=sport&status=approved";
-            //     // data.Param1 = "?status=New";
-            //     // data.Param2 = "Buffalo Bills_vs_New England Patriots";
-            //     // data.Param3 = "TOR-PHI-3152017"; // id
-            //
-            //     return data;
-            // },
-        });
-
-
-        ajaxPromise.then( result =>
-            {
-                state.Players = result.data.Param1;
-                        0||console.log( 'result', result );
-                return state;
-            },
-            result => {
-                // 0||console.log( 'result', result, result.code );
-                switch( result.code )
-                {
-                    case -101:
-                        0||console.log( 'result', result );
-                        break;
-                }
-            });
     }
 }
 

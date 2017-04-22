@@ -14,10 +14,10 @@ class NewFeedExchange extends BaseController
     constructor(props)
     {
         super(props);
-        const { Players } = this.props.data;
 
         __DEV__&&console.debug( 'this.props', props );
 
+        // const { Players } = this.props.data;
         // this.state = {Players, PlayersTeam1: [], PlayersTeam2: []};
     }
 
@@ -32,8 +32,7 @@ class NewFeedExchange extends BaseController
     {
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
-        const { Players, PlayersTeam1, PlayersTeam2 } = this.props.data;
-
+        const { Players, PlayersTeam1, PlayersTeam2, CurrentEventId } = this.props.data;
         var items = [];
 
 
@@ -97,6 +96,7 @@ class NewFeedExchange extends BaseController
                                 <div className="box-body" >
                                     <div className="form-group">
                                         <PlayersTable data={Players}
+                                            eventId={CurrentEventId}
                                             team1={AppData.Team1name} team2={AppData.Team2name}
                                             t1pos={PlayersTeam1.positions} t2pos={PlayersTeam2.positions}
                                         actions={actions} />
