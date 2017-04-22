@@ -137,11 +137,7 @@ export default class ExchangeItem extends React.Component
                             <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>P/L:
                                 <span className={(data.GainLoss < 0 ? 'lose' : '') + (data.GainLoss > 0 ? 'win' : '')}>
                                         {data.GainLoss ?
-<<<<<<< .merge_file_a06852
-											data.GainLoss < 0 ? ` ($${Common.toFixed(Math.abs(data.GainLoss))})` :  ' $' + Common.toFixed(data.GainLoss)
-=======
 											data.GainLoss < 0 ? ` ($${Math.abs(data.GainLoss)})` :  ' $' + data.GainLoss
->>>>>>> .merge_file_a12408
 											:
 											' $' + 0}
                                 </span>
