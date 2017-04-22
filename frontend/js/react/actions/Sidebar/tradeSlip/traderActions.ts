@@ -9,11 +9,13 @@ import {
 	TRADER_ON_ADD_ORDER,
 	TRADER_ON_DELETE_ORDER,
 	TRADER_ON_SPREAD_HIGHLIGHT,
-	TRADER_ON_DRAG
+	TRADER_ON_DRAG,
+	SHOW_QUANTITY_ERROR
 } from '../../../constants/ActionTypesActiveTrader';
 import { ON_ACTIVE_SYMBOL_CHANGED } from '../../../constants/ActionTypesSidebar.js';
 import BaseActions from '../../BaseActions';
 import {RebuildServerData} from './activeTrader/rebuildServerData';
+import { orderForm } from '../../../components/formValidation/validation';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 
 declare var orderClass;
@@ -41,7 +43,8 @@ class Actions extends BaseActions
 				// let symbol = $('.active_trader').attr('id');
 				// if(!symbol) return;
 				// symbol = symbol.slice(7);
-				const symbol = state.sidebar.activeExchange.name;
+				const name = state.sidebar.activeExchange.name;
+				const symbol = state.sidebar.activeExchange.symbol;
 
 				let currSymbData : any = {};
 
@@ -49,7 +52,7 @@ class Actions extends BaseActions
 					// let currentSymbol = `${this.Symbol.Exchange}_${this.Symbol.Name}_${this.Symbol.Currency}`;
 					let currentSymbol = this.Symbol.Exchange;
 
-					if(symbol == currentSymbol) {
+					if(name == currentSymbol) {
 						currSymbData = this;
 						return false;
 					}
@@ -70,7 +73,7 @@ class Actions extends BaseActions
 					});
 					// __DEV__ && console.log('re-render');
 				}
-				if(state.activeTrader.activeExchange != symbol || state.activeTrader.isMirror != isMirror){
+				if(state.activeTrader.activeExchange != name || state.activeTrader.isMirror != isMirror){
 					setTimeout(() => {this._scrollTo(context, currSymbData, isMirror)}, initialStart ? 400 : 100);
 					// console.log(this._scrollTo);
 					if(initialStart) initialStart = false;
@@ -78,9 +81,12 @@ class Actions extends BaseActions
 						type: TRADER_ON_EXCHANGE_CHANGE,
 						payload: {
 							isMirror: isMirror,
-							activeExchange: symbol
+							activeExchange: name,
+							activeExchangeSymbol: symbol
 						}
 					});
+					context.props.traderActions.actionHideDirectionConfirm();
+					// context.props.traderActions.actionRemoveOrderForm();
 					$(context.refs.activeTrader).removeClass('loading');
 					// state.activeTrader.activeExchange = symbol;
 				}
@@ -96,7 +102,8 @@ class Actions extends BaseActions
 
 	public actionOnQuantityChange(context, event)
 	{
-		return (dispatch) => {
+		return (dispatch) =>
+		{
 			if(event.target.value){
 				const closeButton = $(context.refs.inputQuantity).prev('.clear');
 				closeButton.show();
@@ -129,21 +136,27 @@ class Actions extends BaseActions
 
 	public actionOnButtonQuantityRegulator(context, event)
 	{
-		return () => {
+		return () =>
+		{
 			const code = event.which || event.charCode || event.keyCode;
 
-				if(code == 38)
+			if(code == 38){
+                event.preventDefault();
 				context.props.traderActions.actionOnButtonQuantityChange(context, 1);
+            }
 			else if(code == 40)
-				context.props.traderActions.actionOnButtonQuantityChange(context, -1)
+				context.props.traderActions.actionOnButtonQuantityChange(context, -1);
+
+			context.props.traderActions.showQuantityError(context, false)
 		}
 	}
 
 	public actionOnButtonQuantityChange(context, quantity)
 	{
-		return (dispatch, getState) => {
+		return (dispatch, getState) =>
+		{
 			const closeButton = $(context.refs.inputQuantity).prev('.clear');
-			const sum = +getState().activeTrader.quantity + quantity;
+			const sum =  +getState().activeTrader.quantity + quantity >= 0 ? +getState().activeTrader.quantity + quantity : 0;
 			closeButton.show();
 			setTimeout(() => {
 				closeButton.addClass('active');
@@ -193,7 +206,8 @@ class Actions extends BaseActions
 
 	public actionOnSpreadChange(context, event)
 	{
-		return (dispatch) => {
+		return (dispatch) =>
+		{
 			if(event.target.value	){
 				const closeButton = $(context.refs.inputSpread).prev('.clear');
 				closeButton.show();
@@ -210,7 +224,8 @@ class Actions extends BaseActions
 
 	public actionOnButtonSpreadRegulator(context, event)
 	{
-		return () => {
+		return () =>
+		{
 			const code = event.which || event.charCode || event.keyCode;
 
 			if(code == 38)
@@ -222,7 +237,8 @@ class Actions extends BaseActions
 
 	public actionOnButtonSpreadChange(context, spread, regulator)
 	{
-		return (dispatch, getState) => {
+		return (dispatch, getState) =>
+		{
 			const closeButton = $(context.refs.inputSpread).prev('.clear');
 			let spreadInput = <HTMLInputElement>$(context.refs.inputSpread)[0];
 
@@ -258,7 +274,8 @@ class Actions extends BaseActions
 
 	public actionOnSpreadHighLight(highLightElem)
 	{
-		return (dispatch) => {
+		return (dispatch) =>
+		{
 			dispatch({
 				type: TRADER_ON_SPREAD_HIGHLIGHT,
 				payload: highLightElem
@@ -275,7 +292,8 @@ class Actions extends BaseActions
 
 	public actionOnServerDataRebuild(data, isMirror)
 	{
-		return () => {
+		return () =>
+		{
 			let copyData = $.extend(true, {}, data);
 			let price = 0.99,
 				backendData = this._objectReconstruct(copyData.Orders, isMirror),
@@ -333,19 +351,40 @@ class Actions extends BaseActions
 			return htmlData;		}
 	}
 
-		public actionAddDefaultOrder(context, data, index)
+	public actionAddDefaultOrder(context, data, index)
 	{
-		return (dispatch, getState) => {
-			if(getState().sidebar.autoTradeOn)
+		return (dispatch, getState) => 
+		{
+			// console.log('index:', index);
+			if(context && getState().sidebar.autoTradeOn)
 				context.props.traderActions.actionOnAjaxAutoTrade(context, data);
 			else{
+				const closeButton = $('#trader_quantity_clear');
+				const quantity = data.quantity ? data.quantity : getState().activeTrader.quantity;
+
+
+				if(quantity)
+                {
+                    closeButton.show();
+                    setTimeout(() => {
+                        closeButton.addClass('active');
+                    }, 100);
+                }
+
+                dispatch({
+                    type: TRADER_ON_QUANTITY_CHANGE,
+                    payload: quantity
+                });
+
 				dispatch({
 					type: TRADER_ON_ADD_ORDER,
 					payload: {
 						activeString: index,
 						direction:  data.direction,
+                        focusOn: true,
 						price: data.price,
 						limit:  data.limit,
+						outputOrder: data.outputOrder || false,
 						showDirectionConfirm:  false,
 						showDefaultOrder:  true,
 						showSpreadOrder:  false,
@@ -357,7 +396,8 @@ class Actions extends BaseActions
 
 	public actionAddSpreadOrder(context, data, index, event)
 	{
-		return (dispatch, getState) => {
+		return (dispatch, getState) =>
+		{
 			event.stopPropagation();
 			if(getState().sidebar.autoTradeOn)
 				context.props.traderActions.actionOnAjaxAutoTradeSpread(context, data);
@@ -378,7 +418,8 @@ class Actions extends BaseActions
 
 	public actionShowDirectionConfirm(index, event)
 	{
-		return (dispatch) => {
+		return (dispatch) =>
+		{
 			event.stopPropagation();
 			dispatch({
 				type: TRADER_ON_ADD_ORDER,
@@ -394,7 +435,8 @@ class Actions extends BaseActions
 
 	public actionHideDirectionConfirm()
 	{
-		return (dispatch) => {
+		return (dispatch) =>
+		{
 			dispatch({
 				type: TRADER_ON_ADD_ORDER,
 				payload: {
@@ -406,7 +448,8 @@ class Actions extends BaseActions
 
 	public actionRemoveOrderForm()
 	{
-		return (dispatch) => {
+		return (dispatch) =>
+		{
 			dispatch({
 				type: TRADER_ON_DELETE_ORDER,
 				payload: {
@@ -418,7 +461,8 @@ class Actions extends BaseActions
 	}
 
 	public actionOnAjaxAutoTrade(context, orderData){
-		return () => {
+		return () =>
+		{
 			const { cmpData, isMirror, quantity } = context.props;
 			const { direction, limit, price } = orderData;
 			let url : string, ajaxData : any = {};
@@ -435,6 +479,7 @@ class Actions extends BaseActions
 				url = globalData.rootUrl + 'Order/MarketTrading';
 
 			ajaxData.Side = (direction)[0].toUpperCase() + (direction).slice(1);
+			context.props.traderActions.actionRemoveOrderForm();
 
 			defaultMethods.sendAjaxRequest({
 				httpMethod: 'POST',
@@ -456,7 +501,8 @@ class Actions extends BaseActions
 	}
 
 	public actionOnAjaxAutoTradeSpread(context, orderData){
-		return () => {
+		return () =>
+		{
 			const { cmpData, isMirror, quantity, spread } = context.props;
 			const { direction, price } = orderData;
 			const spreadPricePos = Math.round10(price + +spread, -2);
@@ -496,9 +542,12 @@ class Actions extends BaseActions
 
 	public actionOnAjaxSend(context, event)
 	{
-		return () => {
+		return () =>
+		{
 			event.preventDefault();
 			const { cmpData: { activeExchange }, traderActions } = context.props;
+
+            if(!orderForm(event.currentTarget)) return false;
 
 			function OnBeginAjax()
 			{
@@ -786,6 +835,21 @@ class Actions extends BaseActions
 					payload: { popUpShow: true }
 				});
 			}
+		}
+	}
+
+	public showQuantityError(context, flag)
+	{
+		return (dispatch, getState) =>
+		{
+			if(getState().activeTrader.showQuantityError !== flag){
+				dispatch({
+					type: SHOW_QUANTITY_ERROR,
+					payload: flag
+				});
+			}
+
+			if(flag) $(context.refs.quantityError).fadeIn(200);
 		}
 	}
 }

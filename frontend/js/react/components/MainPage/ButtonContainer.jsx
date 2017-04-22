@@ -29,31 +29,30 @@ export default class ButtonContainer extends React.Component
         } // endif
 
 
-        if( data.type == 'sell' )
+        if( data.type === 'sell' )
         {
             className = 'sell';
-            emptyBtnName = _t('sell');
+            emptyBtnName = _t('buy');
         }
         else
         {
             className = 'buy';
-            emptyBtnName = _t('buy');
+            emptyBtnName = _t('sell');
         } // endif
         // 0||console.debug( 'data', data );
 
 
         return <div className={`${className} button-container`}>
             {
-                (data.Orders.length && data.Orders.some((item) => item.Side == data.side) ?
+                (data.Orders.length && data.Orders.some((item) => item.Side === data.side) ?
                         data.Orders.map((item) =>
                         {
                             let SummaryPositionPrice = item.SummaryPositionPrice.slice();
                             data.ismirror && SummaryPositionPrice.reverse();
 
                             let html = [];
-                            if( item.Side == data.side )
+                            if( item.Side === data.side )
                             {
-                                    {/*<div className="button">*/}
                                 html = SummaryPositionPrice.map((item2) =>
                                     <AnimateOnUpdate key={item2.Price}
                                         component="div"
@@ -74,10 +73,10 @@ export default class ButtonContainer extends React.Component
                                                     ismirror: data.ismirror,
                                                     price: (price = isBasicMode ? item2.Price : item2.Price),
                                                     quantity: item2.Quantity,
-                                                    type: data.type == "sell" ? 1 : 2,
+                                                    type: data.type === "sell" ? 1 : 2,
                                                     data: data,
                                                 })}
-                                                 data-verify="Quantity" disabled={isTraiderOn} title="Click to place entry">
+                                                 data-verify="Quantity" /*disabled={isTraiderOn}*/ title="Click to place entry">
                                             <span className="price">{((price = Common.toFixed(data.ismirror ? 1 - price : price, 2))||true) && isBasicMode  ? '$' + price : price}</span>
                                             <span className="volume">{item2.Quantity}</span>
                                             {/*<div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>*/}
@@ -96,10 +95,10 @@ export default class ButtonContainer extends React.Component
                                     PosPrice: [],
                                     ismirror: data.ismirror,
                                     price: 0,
-                                    type: data.type == "sell" ? 1 : 2,
+                                    type: data.type === "sell" ? 1 : 2,
                                     data: data,
                                 })}
-                                disabled={isTraiderOn} title="Click to place entry">
+                                /*disabled={isTraiderOn}*/ title="Click to place entry">
                             <span className="price empty">{emptyBtnName}</span>
                             <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
                         </button>

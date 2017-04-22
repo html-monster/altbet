@@ -65,7 +65,7 @@ export default class ScrillForm extends React.Component{
 											 disabled={true} input={input}/>
 					}
 
-					<input type="submit" className="wave btn" defaultValue={'Submit'} />
+					<input type="submit" className="wave btn submit" defaultValue={'Submit'} />
 					<span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
 					<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
 				</div>

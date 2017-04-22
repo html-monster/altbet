@@ -168,7 +168,21 @@ class Actions extends BaseActions
         return () =>
         {
             // console.log(outStruc);
-            context.props.defaultOrderActions.actionOnOrderCreate(outStruc);
+            // console.log('context:', context);
+            let order = outStruc.Orders[0];
+            let index = order.Price === '0.' ? 'empty' : Math.round(99 - order.Price * 100);
+
+            if(ABpp.config.tradeOn){
+                context.props.traderActions.actionAddDefaultOrder(null, {
+                    direction: order.Side ? 'sell' : 'buy',
+                    price: order.Price,
+                    quantity: order.Volume,
+                    limit: order.Limit,
+                    outputOrder: true
+                }, order.Limit ? index : 'market');
+            }
+            else
+                context.props.defaultOrderActions.actionOnOrderCreate(outStruc);
             // 0||console.debug( 'getState()', getState() );
             // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
             // dispatch({
@@ -190,10 +204,9 @@ class Actions extends BaseActions
             // let symbol = getState().activeTrader.data.Symbol;
             // let symbol = getState().activeTrader.data.Symbol;
             // symbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
-
             const aexch = getState().mainPage.activeExchange;
 
-            if( aexch.name !== inProps.name || aexch.isMirror != inProps.isMirror )
+            if( aexch.name !== inProps.name || aexch.isMirror !== inProps.isMirror )
             {
                 ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror, symbol: inProps.symbol});
                 ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);

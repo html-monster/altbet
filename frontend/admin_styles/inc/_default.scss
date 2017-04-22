@@ -22,6 +22,20 @@
 .-justify { @include jalign; }
 .-green { color: $color1Green !important; }
 .-red { color: $color9Red }
+.-nobold { font-weight: normal !important; }
 .-icon-before-16 { position: relative; padding-left: 22px;
   &::before { content: ' '; @include box(b,a, 21 16 px); left: 0; top: 2px; @include bg("ico-icons-03.png"); }
 }
+
+
+//.-btn-green { background: linear-gradient(to bottom, #00a65a, darken(#00a65a, 10%)) !important;
+//  &:active { background: linear-gradient(to bottom, darken(#00a65a, 10%), #00a65a ) !important }
+//}
+
+.-btn-default { background: linear-gradient(to bottom, #f4f4f4, darken(#f4f4f4, 10%)) !important;
+  &:active { background: linear-gradient(to bottom, darken(#f4f4f4, 10%), #f4f4f4 ) !important }
+}
+
+//.-btn-danger { background: linear-gradient(to bottom, #dd4b39, darken(#dd4b39, 20%)) !important;
+//  &:active { background: linear-gradient(to bottom, darken(#dd4b39, 20%), #dd4b39 ) !important }
+//}
