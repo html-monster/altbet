@@ -340,20 +340,16 @@ export class LineupPage extends React.Component
                                     <div key="tab2content">
                                         <div className="list">
                                             <ul>
-                                                {
-                                                    function () { for (var ret = [], ii = 1, countii = this.entities.length / 2; ii <= countii; ii++ )
-                                                        ret.push(<li key={"li1" + ii}>{ii}. {this.entities[ii-1]}</li>);
-                                                    return ret; }.bind(this)()
-                                                }
+                                                { do { for (var ret = [], ii = 1, countii = this.entities.length / 2; ii <= countii; ii++ )
+                                                    ret.push(<li key={"li1" + ii}>{ii}. {this.entities[ii-1]}</li>);
+                                                ret }}
                                             </ul>
                                         </div>
                                         <div className="list">
                                             <ul>
-                                                {
-                                                    function () { for (var ret = [], countii = this.entities.length, ii = countii / 2 + 1; ii <= countii; ii++ )
-                                                        ret.push(<li key={"li2" + ii}>{ii}. {this.entities[ii-1]}</li>);
-                                                    return ret; }.bind(this)()
-                                                }
+                                                { do { for (var ret = [], countii = this.entities.length, ii = countii / 2 + 1; ii <= countii; ii++ )
+                                                    ret.push(<li key={"li2" + ii}>{ii}. {this.entities[ii-1]}</li>);
+                                                ret }}
                                             </ul>
                                         </div>
                                     </div>

@@ -50,22 +50,22 @@ class Actions extends BaseActions
 
                         return data;
                     },
-            });
-
-
-            ajaxPromise.then( result =>
-                {
-                    serverValidation({message: 'The payment is successful'});
-                },
-                result => {
-                    // 0||console.log( 'result', result, result.code );
-                    switch( result.code )
-                    {
-                        case -101:
-                            serverValidation({error: 'User name failed, correct it, please', FirstName: "User name failed"});
-                            break;
-                    }
                 });
+
+
+                ajaxPromise.then( result =>
+                    {
+                        serverValidation({message: 'The payment is successful'});
+                    },
+                    result => {
+                        // 0||console.log( 'result', result, result.code );
+                        switch( result.code )
+                        {
+                            case -101:
+                                serverValidation({error: 'User name failed, correct it, please', FirstName: "User name failed"});
+                                break;
+                        }
+                    });
 
             }
 
