@@ -29,6 +29,7 @@
 			}
 		}*/
 		.active_trader_footer{
+			@include span(last 2.6 of 12);
 			position: fixed;
 			bottom: 2px;
 			z-index: 15;

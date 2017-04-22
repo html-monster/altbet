@@ -640,7 +640,7 @@ class TraderString extends React.Component {
 			</td>
 			<td>
 				{
-					(info.outputOrder || !autoTradeOn) && index === info.activeString && quantity &&
+					(info.outputOrder || !autoTradeOn) && index === info.activeString && (info.outputOrder || quantity) &&
 					activeExchangeSymbol === activeExchange.symbol && isMirror == activeExchange.isMirror &&
 
 					(

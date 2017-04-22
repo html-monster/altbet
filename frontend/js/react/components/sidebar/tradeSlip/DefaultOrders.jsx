@@ -24,7 +24,7 @@ class DefaultOrders extends React.Component
 		return <AnimateOnUpdate
 				component="div"
 				className="default_orders"
-				style={traderOn ? {display: 'none'} : {}}
+				style={ABpp.config.currentPage !== 'PAGE_MYPOS' && traderOn ? {display: 'none'} : {}}
 				transitionName={{
 					appear: 'fadeIn',
 					enter: 'fadeIn'

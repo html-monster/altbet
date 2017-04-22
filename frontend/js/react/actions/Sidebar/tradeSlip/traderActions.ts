@@ -360,14 +360,20 @@ class Actions extends BaseActions
 				context.props.traderActions.actionOnAjaxAutoTrade(context, data);
 			else{
 				const closeButton = $('#trader_quantity_clear');
-				closeButton.show();
-				setTimeout(() => {
-					closeButton.addClass('active');
-				}, 100);
+				const quantity = data.quantity ? data.quantity : getState().activeTrader.quantity;
+
+
+				if(quantity)
+                {
+                    closeButton.show();
+                    setTimeout(() => {
+                        closeButton.addClass('active');
+                    }, 100);
+                }
 
                 dispatch({
                     type: TRADER_ON_QUANTITY_CHANGE,
-                    payload: data.quantity ? data.quantity : getState().activeTrader.quantity
+                    payload: quantity
                 });
 
 				dispatch({
