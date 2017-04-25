@@ -33,9 +33,6 @@
     }
   }
   .inactive{  opacity: 0.3;  }
-  form.loading{
-    input[type=submit] {  background-image: url("#{$pathImage}/payment-load.gif");  }
-  }
   .submit_container{  margin-bottom: 35px;  }
   input[type=submit]{
     width: 100%;

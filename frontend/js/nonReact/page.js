@@ -134,7 +134,10 @@ $(document).ready(function ()
 
 	// BM: Waves
 	Waves.init();
-	Waves.attach('.wave:not([disabled])', ['waves-button']);
+	Waves.attach('.wave:not([disabled])', null);
+
+	// Waves.calm('.not_wave');
+	// Waves.ripple('.not_wave', {wait: null});
 
 	(function showPass () {
 		let input = $('.input__field');

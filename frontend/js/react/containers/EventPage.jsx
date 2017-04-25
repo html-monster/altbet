@@ -7,6 +7,7 @@ import Chart from '../components/EventPage/Chart';
 import {BetsTable} from '../components/EventPage/BetsTable';
 import * as chartActions from '../actions/EventPage/chartActions.ts';
 import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
+import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 import eventPageActions from '../actions/eventPageActions.ts';
 
 
@@ -87,7 +88,7 @@ class EventPage extends BaseController
 
     render()
     {
-        const { defaultOrderActions, eventPage: { pageEventData: data, socket, isTraiderOn } } = this.props;
+        const { defaultOrderActions, eventPage: { pageEventData: data, socket, isTraiderOn }, traderActions } = this.props;
 		const symbol = `${data.SymbolsAndOrders.Symbol.Exchange}_${data.SymbolsAndOrders.Symbol.Name}_${data.SymbolsAndOrders.Symbol.Currency}`;
         let isMirror = data.IsMirror;
 
@@ -102,7 +103,7 @@ class EventPage extends BaseController
 // 0||console.debug( 'socket', socket );
         if( socket.activeOrders && socket.activeOrders.Orders )
         {
-            if( socket.activeOrders.Orders[0].Side == 1 )
+            if( socket.activeOrders.Orders[0].Side === 1 )
             {
                 buyIndex = 1;
                 sellIndex = 0;
@@ -202,7 +203,7 @@ class EventPage extends BaseController
                             </div>
                             <div className="low container">
                                 <span className="title">Low</span>
-                                <span className="current">{minPrice != 100 && minPrice}</span>
+                                <span className="current">{minPrice !== 100 && minPrice}</span>
                             </div>
                         </div>
                     </div>
@@ -228,18 +229,18 @@ class EventPage extends BaseController
                         </table>
                     </div>
                     <div className="ord_crt_cont event-content" data-symbol={symbol}>
-                        <button className="btn buy price event" type="button" disabled={isTraiderOn}
+                        <button className="btn buy price event" type="button" //disabled={isTraiderOn}
                             onClick={() => this.actions.onSellBuyClick({
                                    type: 0,
                                    //data: data, // orders
                                    exdata: commProps, // for trader object
-                        }, defaultOrderActions)}>Buy</button>
-                        <button className="btn sell price event" type="button" disabled={isTraiderOn}
+                        }, (ABpp.config.tradeOn ? traderActions : defaultOrderActions))}>Buy</button>
+                        <button className="btn sell price event" type="button" //disabled={isTraiderOn}
                             onClick={() => this.actions.onSellBuyClick({
                                    type: 1,
                                    //data: data, // orders
                                    exdata: commProps, // for trader object
-                        }, defaultOrderActions)}>Sell </button>
+                        }, (ABpp.config.tradeOn ? traderActions : defaultOrderActions))}>Sell </button>
                     </div>
                 </div>
             </div>
@@ -247,11 +248,13 @@ class EventPage extends BaseController
                 <div className="executed_orders sell order_create event-content" data-symbol={symbol}>
                     <BetsTable data={{data: data.IsMirror ? askData : bidData, typeb: BetsTable.TYPE_BID, isTraiderOn, exdata: data}}
                                defaultOrderActions={defaultOrderActions}
+                               traderActions={traderActions}
                                actions={this.actions} />
                 </div>
                 <div className="executed_orders buy order_create event-content" data-symbol={symbol}>
                     <BetsTable data={{data: data.IsMirror ? bidData : askData, typeb: BetsTable.TYPE_ASK, isTraiderOn, exdata: data}}
                                defaultOrderActions={defaultOrderActions}
+                               traderActions={traderActions}
                                actions={this.actions} />
                 </div>
                 <div className="executed_orders">
@@ -273,8 +276,8 @@ class EventPage extends BaseController
                         <thead>
                             <tr>
                                 <th><strong>For comparison</strong></th>
-                                <th></th>
-                                <th></th>
+                                <th>{}</th>
+                                <th>{}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -296,8 +299,8 @@ class EventPage extends BaseController
                         <thead>
                             <tr>
                                 <th><strong>For comparison</strong></th>
-                                <th></th>
-                                <th></th>
+                                <th>{}</th>
+                                <th>{}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -314,11 +317,11 @@ class EventPage extends BaseController
                         </tbody>
                     </table>
                 </div>
-                <div className="table_wrap"></div>
+                <div className="table_wrap">{}</div>
             </div>
-            <div className="information"></div>
+            <div className="information">{}</div>
 
-            <div id="disqus_thread"></div>
+            <div id="disqus_thread">{}</div>
             <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         </div>
     }
@@ -334,5 +337,6 @@ dispatch => ({
 	defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
     eventPageActions: bindActionCreators(eventPageActions, dispatch),
     chartActions: bindActionCreators(chartActions, dispatch),
+	traderActions: bindActionCreators(traderActions, dispatch),
 })
 )(EventPage)

@@ -173,7 +173,7 @@ export const orderForm = function (context) {
 
 	let price = +(($(context).find('.price input').val()).replace('$', '')),
 		volume = +$(context).find('.volume input').val(),
-		sum = +(($(context).find('.obligations input').val()).replace('$', '')),
+		sum = $(context).find('.obligations input').val() ? +(($(context).find('.obligations input').val()).replace('$', '')) : null,
 		checkboxProp = $(context).find('input[type="checkbox"]').length ? $(context).find('input[type="checkbox"]').prop('checked') : 1;
 
 	if(!ABpp.User.userIdentity){
@@ -192,7 +192,7 @@ export const orderForm = function (context) {
 			$(context).find('.volume input').next().fadeIn(200);
 			return false;
 		}
-		if(0 >= sum){// || +sum > 999999
+		if(sum !== null && 0 >= sum){// || +sum > 999999
 			$(context).find('.obligations input').next().fadeIn(200);
 			return false;
 		}
@@ -202,7 +202,7 @@ export const orderForm = function (context) {
 			$(context).find('.volume input').next().fadeIn(200);
 			return false;
 		}
-		if(0 >= sum && volume == ''){// || +sum > 999999
+		if(sum !== null && 0 >= sum && volume == ''){// || +sum > 999999
 			$(context).find('.obligations input').next().fadeIn(200);
 			return false;
 		}

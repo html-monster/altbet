@@ -31,22 +31,22 @@ export class BetsTable extends React.Component
     render ()
     {
         const self = this;
-        let { defaultOrderActions, data:{ data, typeb, isTraiderOn, exdata } } = this.props;
-        let $class = !isTraiderOn ? " clickable" : '';
+        let { defaultOrderActions, data:{ data, typeb, isTraiderOn, exdata }, traderActions } = this.props;
+        let $class = "clickable ";// = !isTraiderOn ? "clickable " : '';
         let $fieldName;
         let $type;
 
         if( typeb == BetsTable.TYPE_BID )
         {
             if (!exdata.IsMirror) data = data.slice().reverse();
-            $class += ' buy';
+            $class += 'buy';
             $fieldName = 'Bid';
             $type = 0;
         }
         else
         {
             if (exdata.IsMirror) data = data.slice().reverse();
-            $class += ' sell';
+            $class += 'sell';
             $fieldName = 'Ask';
             $type = 1;
         } // endif
@@ -100,7 +100,7 @@ export class BetsTable extends React.Component
 								type    : $type,
 								data    : data, // orders
 								exdata  : commProps, // for trader object
-							}, defaultOrderActions)}
+							}, (ABpp.config.tradeOn ? traderActions : defaultOrderActions))}
                             >
 								{/*component="div"
                                  className="button" */}
@@ -114,7 +114,7 @@ export class BetsTable extends React.Component
 									type    : $type,
 									data    : data, // orders
 									exdata  : commProps, // for trader object
-								}, defaultOrderActions)}
+								}, (ABpp.config.tradeOn ? traderActions : defaultOrderActions))}
                             >
                                 <span>{val.Quantity}</span>
                             </td>

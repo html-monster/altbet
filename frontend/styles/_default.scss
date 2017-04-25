@@ -145,13 +145,29 @@ input::-ms-clear {  display: none;  }
 //  &:-webkit-autofill{  -webkit-box-shadow: inset 0 0 0 50px #fff !important;  }
 //}
 input.datePickerJs:not([disabled]){  cursor: pointer;  }
-form.sending{
-  [type=submit]{
-    text-indent: -9999px;
-    background-image: url("#{$pathImage}/ajax-loader-balls.gif");
+form.loading{
+  i.submit{
+    position: relative;
+    &:after{
+      content: '';
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: calc(50% - 10px);
+      right: 2%;
+      background-image: url("#{$pathImage}/submit_loader.svg");
+      background-size: contain;
+    }
   }
+  //input[type=submit] {  background-image: url("#{$pathImage}/payment-load.gif"); background-position: 98% center;  }
 }
-.clear {
+//form.sending{
+//  [type=submit]{
+//    text-indent: -9999px;
+//    background-image: url("#{$pathImage}/ajax-loader-balls.gif");
+//  }
+//}
+.clear{
   display: none;
   width: 14px;
   height: 14px;
@@ -568,6 +584,12 @@ input ~ .info{
   border-radius: 5px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
   z-index: 81;
+  &.right{
+    left: auto;
+    right: 0;
+    &:before{  left: 88px;  }
+    &:after{  left: 83px;  }
+  }
   &:before{
     content: '';
     display: block;

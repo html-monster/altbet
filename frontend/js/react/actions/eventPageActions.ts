@@ -50,14 +50,14 @@ class Actions extends BaseActions
 
 
 
-    public onQuantityClick(inProps, defaultOrderActions)
+    public onQuantityClick(inProps, actions)
     {
         return (dispatch, getState) =>
         {
             // 0||console.log( 'inProps', inProps );
 
-            if( !ABpp.config.tradeOn )
-            {
+            // if( !ABpp.config.tradeOn )
+            // {
                 let props = inProps;
                 let flag = false;
                 let qt : any = 0,
@@ -94,7 +94,7 @@ class Actions extends BaseActions
                                 "Currency": props.exdata.Currency
                             },
                             "Volume": qt,
-                            "Limit": ABpp.config.basicMode ? true : false,
+                            "Limit": ABpp.config.basicMode,
                             "NewOrder": true,
                             "isMirror": props.exdata.isMirror ? 1 : 0
                         },
@@ -107,27 +107,41 @@ class Actions extends BaseActions
                 // === Htmlbook === 17-02-09 ===============================================
 
                 // call trade slip action
-                defaultOrderActions.actionOnOrderCreate(outStruc);
+                if(ABpp.config.tradeOn)
+                {
+                    let order : any = outStruc.Orders[0];
+                    let index = order.Price === '0.' ? 'empty' : Math.round(99 - order.Price * 100);
+
+                    actions.actionAddDefaultOrder(null, {
+                        direction: order.Side ? 'sell' : 'buy',
+                        price: order.Price,
+                        quantity: order.Volume,
+                        limit: order.Limit,
+                        outputOrder: true
+                    }, order.Limit ? index : 'market');
+                }
+                else
+                    actions.actionOnOrderCreate(outStruc);
                 // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
 
                 // dispatch({
                 //     type: ON_SOCKET_MESSAGE,
                 //     payload: { activeOrders: inActiveOrders, bars: inBars }
                 // });
-            } // endif
+            // } // endif
         }
     }
 
 
 
-    public onPriceClick(inProps, defaultOrderActions)
+    public onPriceClick(inProps, actions)
     {
         return (dispatch, getState) =>
         {
             // 0||console.log( 'inProps', inProps );
 
-            if( !ABpp.config.tradeOn )
-            {
+            // if( !ABpp.config.tradeOn )
+            // {
                 let props = inProps;
                 let flag = false;
                 let qt : any = 0,
@@ -167,7 +181,21 @@ class Actions extends BaseActions
                 };
                 __LDEV__&&console.debug( 'outStruc', props, outStruc );
 
-                defaultOrderActions.actionOnOrderCreate(outStruc);
+                if(ABpp.config.tradeOn)
+                {
+                    let order : any = outStruc.Orders[0];
+                    let index = order.Price === '0.' ? 'empty' : Math.round(99 - order.Price * 100);
+
+                    actions.actionAddDefaultOrder(null, {
+                        direction: order.Side ? 'sell' : 'buy',
+                        price: order.Price,
+                        quantity: order.Volume,
+                        limit: order.Limit,
+                        outputOrder: true
+                    }, order.Limit ? index : 'market');
+                }
+                else
+                    actions.actionOnOrderCreate(outStruc);
                 // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
 
                 // === Htmlbook === 17-02-09 ===============================================
@@ -178,20 +206,20 @@ class Actions extends BaseActions
                 //     type: ON_SOCKET_MESSAGE,
                 //     payload: { activeOrders: inActiveOrders, bars: inBars }
                 // });
-            } // endif
+            // } // endif
         }
     }
 
 
 
-    public onSellBuyClick(inProps, defaultOrderActions)
+    public onSellBuyClick(inProps, actions)
     {
         return (dispatch, getState) =>
         {
             // 0||console.log( 'inProps', inProps, ABpp.config.tradeOn );
 
-            if( !ABpp.config.tradeOn )
-            {
+            // if( !ABpp.config.tradeOn )
+            // {
                 let props = inProps;
 
                 let outStruc = {
@@ -216,14 +244,28 @@ class Actions extends BaseActions
                     ]
                 };
                 // __LDEV__&&console.debug( 'outStruc', props, outStruc );
-                defaultOrderActions.actionOnOrderCreate(outStruc);
+            if(ABpp.config.tradeOn)
+            {
+                let order : any = outStruc.Orders[0];
+                let index = order.Price === '0.' ? 'empty' : Math.round(99 - order.Price * 100);
+
+                actions.actionAddDefaultOrder(null, {
+                    direction: order.Side ? 'sell' : 'buy',
+                    price: order.Price,
+                    quantity: order.Volume,
+                    limit: order.Limit,
+                    outputOrder: true
+                }, order.Limit ? index : 'market');
+            }
+            else
+                actions.actionOnOrderCreate(outStruc);
                 // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
 
                 // dispatch({
                 //     type: ON_SOCKET_MESSAGE,
                 //     payload: { activeOrders: inActiveOrders, bars: inBars }
                 // });
-            } // endif
+            // } // endif
         }
     }
 

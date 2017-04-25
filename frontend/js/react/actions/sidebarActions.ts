@@ -127,8 +127,8 @@ class Actions extends BaseActions
 				// 	// ABpp.actions['MainPage.getExchange'] && ABpp.actions['MainPage.getExchange']();
 				// 	// === ==================== ===============================================
 				// }, 700);
-				if($('.wrapper_event_page').length)
-					executedOrders.find('td.clickable').removeClass('clickable');
+				// if($('.wrapper_event_page').length)
+				// 	executedOrders.find('td.clickable').removeClass('clickable');
 
 				globalData.tradeOn = true;
 				// === Vlasakh === 23-01-12 ===============================================
