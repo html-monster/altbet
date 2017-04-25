@@ -61,7 +61,7 @@ class Actions extends BaseActions
                 let props = inProps;
                 let flag = false;
                 let qt : any = 0,
-                    bpr = inProps.Price;
+                    bpr = (inProps.Price).toFixed(2);
                     // bpr = props.data[0].Price;
                 let isBasicMode = ABpp.config.basicMode;
 
@@ -75,7 +75,6 @@ class Actions extends BaseActions
 
                 if (inProps.exdata.isMirror) bpr = (1 - bpr).toFixed(2);
 
-
         // 0||console.debug( 'bpr', bpr, qt);
 
                 // return;
@@ -86,7 +85,7 @@ class Actions extends BaseActions
                     "isMirror": props.exdata.isMirror ? 1 : 0,
                     "Orders": [
                         {
-                            "Price": bpr,
+                            "Price": bpr,//ABpp.config.basicMode ? bpr : props.bestPrice,
                             "Side": props.type == 1 ? 0 : 1, // sell/buy
                             "Symbol": {
                                 "Exchange": props.exdata.Exchange,
@@ -94,7 +93,7 @@ class Actions extends BaseActions
                                 "Currency": props.exdata.Currency
                             },
                             "Volume": qt,
-                            "Limit": ABpp.config.basicMode,
+                            "Limit": true, //ABpp.config.basicMode,
                             "NewOrder": true,
                             "isMirror": props.exdata.isMirror ? 1 : 0
                         },
@@ -155,7 +154,7 @@ class Actions extends BaseActions
                 } // endfor
 
         // 0||console.debug( 'bpr', bpr, qt);
-                bpr = inProps.exdata.isMirror ? (1 - props.Price).toFixed(2) : props.Price;
+                bpr = inProps.exdata.isMirror ? (1 - props.Price).toFixed(2) : (props.Price).toFixed(2);
 
                 // return;
                 let outStruc = {
@@ -244,6 +243,10 @@ class Actions extends BaseActions
                     ]
                 };
                 // __LDEV__&&console.debug( 'outStruc', props, outStruc );
+            // === Htmlbook === 17-02-09 ===============================================
+            orderClass.tabReturn();
+            // === Htmlbook === 17-02-09 ===============================================
+
             if(ABpp.config.tradeOn)
             {
                 let order : any = outStruc.Orders[0];

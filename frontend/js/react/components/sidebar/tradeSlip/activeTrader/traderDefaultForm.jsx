@@ -12,6 +12,20 @@ export default class TraderDefaultForm extends React.Component {
 		super();
 	}
 
+	scrollToOrder(traderContext, index)
+	{
+		const tbody = $(traderContext.refs.traderBody);
+
+		tbody.animate({scrollTop: index * 20 - tbody.height() / 2 + 50}, 400);
+	}
+
+	componentDidMount()
+	{
+		const { outputOrder, index, traderContext } = this.props;
+
+		if(outputOrder) this.scrollToOrder(traderContext, index);
+	}
+
 	render()
 	{
 		const { activeString, cmpData: { activeExchange }, direction, focusOn, price, limit, index, traderContext,

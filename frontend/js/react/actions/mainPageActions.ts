@@ -81,60 +81,99 @@ class Actions extends BaseActions
         }
         else
         {
-            if( isBasicMode )
+            bpr = props.price;
+            for( let val of props.PosPrice )
             {
-                qt = props.quantity;
-                bpr = props.price;
-            }
-            else
-            {
-                for( let val of props.PosPrice )
+                if( props.ismirror )
                 {
-                    if( props.ismirror )
+                    if( props.type == 1 )
                     {
-                        if( props.type == 1 )
+                        qt += val.Quantity;
+                    }
+                    else
+                    {
+                        if( val.Price == props.price ) flag = true;
+
+                        if( flag )
                         {
                             qt += val.Quantity;
-                            if( val.Price == props.price )
-                            {
-                                bpr = props.PosPrice[0].Price;
-                                break;
-                            } // endif
-                        }
-                        else
-                        {
-                            if( val.Price == props.price ) flag = true;
+                        } // endif
+                    } // endif
+                }
+                else
+                {
+                    if (!flag && val.Price == props.price) flag = true;
 
-                            if( flag )
-                            {
-                                qt += val.Quantity;
-                                bpr = val.Price;
-                            } // endif
+                    if( props.type == 1 )
+                    {
+                        if( flag )
+                        {
+                            qt += val.Quantity;
                         } // endif
                     }
                     else
                     {
-                        if (!flag && val.Price == props.price) flag = true;
-
-                        if( props.type == 1 )
+                        if( !flag || val.Price == props.price )
                         {
-                            if( flag )
-                            {
-                                qt += val.Quantity;
-                                bpr < val.Price && (bpr = val.Price);
-                            } // endif
-                        }
-                        else
-                        {
-                            if( !flag || val.Price == props.price )
-                            {
-                                qt += val.Quantity;
-                                bpr > val.Price && (bpr = val.Price);
-                            } // endif
+                            qt += val.Quantity;
                         } // endif
                     } // endif
-                } // endfor
-            } // endif
+                } // endif
+            } // endfor
+            // if( isBasicMode )
+            // {
+            //     qt = props.quantity;
+            //     bpr = props.price;
+            // }
+            // else
+            // {
+            //     for( let val of props.PosPrice )
+            //     {
+            //         if( props.ismirror )
+            //         {
+            //             if( props.type == 1 )
+            //             {
+            //                 qt += val.Quantity;
+            //                 if( val.Price == props.price )
+            //                 {
+            //                     bpr = props.PosPrice[0].Price;
+            //                     break;
+            //                 } // endif
+            //             }
+            //             else
+            //             {
+            //                 if( val.Price == props.price ) flag = true;
+            //
+            //                 if( flag )
+            //                 {
+            //                     qt += val.Quantity;
+            //                     bpr = val.Price;
+            //                 } // endif
+            //             } // endif
+            //         }
+            //         else
+            //         {
+            //             if (!flag && val.Price == props.price) flag = true;
+            //
+            //             if( props.type == 1 )
+            //             {
+            //                 if( flag )
+            //                 {
+            //                     qt += val.Quantity;
+            //                     bpr < val.Price && (bpr = val.Price);
+            //                 } // endif
+            //             }
+            //             else
+            //             {
+            //                 if( !flag || val.Price == props.price )
+            //                 {
+            //                     qt += val.Quantity;
+            //                     bpr > val.Price && (bpr = val.Price);
+            //                 } // endif
+            //             } // endif
+            //         } // endif
+            //     } // endfor
+            // } // endif
         } // endif
 
         props.ismirror && !props.isempty && (bpr = Common.toFixed(1 - bpr, 2));
@@ -147,7 +186,7 @@ class Actions extends BaseActions
             "isMirror": props.ismirror ? 1 : 0,
             "Orders": [
                 {
-                    "Price": bpr,
+                    "Price": (+bpr).toFixed(2),
                     "Side": props.type == 1 ? 1 : 0, // sell/buy
                     "Symbol": {
                         "Exchange": props.data.exdata.Exchange,
@@ -155,7 +194,7 @@ class Actions extends BaseActions
                         "Currency": props.data.exdata.Currency
                     },
                     "Volume": qt,
-                    "Limit": isBasicMode ? true : !!props.isempty, // empty ? true : false
+                    "Limit": true, //isBasicMode ? true : !!props.isempty, // empty ? true : false
                     "NewOrder": true,
                     "isMirror": props.ismirror ? 1 : 0
                 },
@@ -169,7 +208,7 @@ class Actions extends BaseActions
         {
             // console.log(outStruc);
             // console.log('context:', context);
-            let order = outStruc.Orders[0];
+            let order : any = outStruc.Orders[0];
             let index = order.Price === '0.' ? 'empty' : Math.round(99 - order.Price * 100);
 
             if(ABpp.config.tradeOn){

@@ -222,13 +222,13 @@ class EventPage extends BaseController
                         </table>
                     </div>
                     <div className="ord_crt_cont event-content" data-symbol={symbol}>
-                        <button className="btn buy price event" type="button" //disabled={isTraiderOn}
+                        <button className="btn buy price event wave" type="button" //disabled={isTraiderOn}
                             onClick={() => this.actions.onSellBuyClick({
                                    type: 0,
                                    //data: data, // orders
                                    exdata: commProps, // for trader object
                         }, (ABpp.config.tradeOn ? traderActions : defaultOrderActions))}>Buy</button>
-                        <button className="btn sell price event" type="button" //disabled={isTraiderOn}
+                        <button className="btn sell price event wave" type="button" //disabled={isTraiderOn}
                             onClick={() => this.actions.onSellBuyClick({
                                    type: 1,
                                    //data: data, // orders
@@ -239,13 +239,13 @@ class EventPage extends BaseController
             </div>
             <div id="mainController" className="executed">
                 <div className="executed_orders sell order_create event-content" data-symbol={symbol}>
-                    <BetsTable data={{data: data.IsMirror ? askData : bidData, typeb: BetsTable.TYPE_BID, isTraiderOn, exdata: data}}
+                    <BetsTable data={{data: data.IsMirror ? askData : bidData, typeb: BetsTable.TYPE_BID, isTraiderOn, exdata: data, socket}}
                                defaultOrderActions={defaultOrderActions}
                                traderActions={traderActions}
                                actions={this.actions} />
                 </div>
                 <div className="executed_orders buy order_create event-content" data-symbol={symbol}>
-                    <BetsTable data={{data: data.IsMirror ? bidData : askData, typeb: BetsTable.TYPE_ASK, isTraiderOn, exdata: data}}
+                    <BetsTable data={{data: data.IsMirror ? bidData : askData, typeb: BetsTable.TYPE_ASK, isTraiderOn, exdata: data, socket}}
                                defaultOrderActions={defaultOrderActions}
                                traderActions={traderActions}
                                actions={this.actions} />

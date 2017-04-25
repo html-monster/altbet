@@ -59,24 +59,29 @@ class Actions extends BaseActions
 				});
 
 				// newData = Object.assign({}, this.state.data, newData);
-				if(currSymbData && currSymbData.Symbol){
+				if(currSymbData && currSymbData.Symbol)
+				{
 					if(currSymbData.Symbol.LastAsk == 1) currSymbData.Symbol.LastAsk = null;
 					if(currSymbData.Symbol.LastBid == 0) currSymbData.Symbol.LastBid = null;
 				}
 				// console.log(JSON.stringify(state.activeTrader.data), JSON.stringify(currSymbData));
-				if(JSON.stringify(state.activeTrader.data) != JSON.stringify(currSymbData) || state.activeTrader.isMirror != isMirror){
+				if(JSON.stringify(state.activeTrader.data) != JSON.stringify(currSymbData) || state.activeTrader.isMirror != isMirror)
+				{
+				// console.log('getState().activeTrader:', getState().activeTrader.orderInfo.outputOrder);
 					dispatch({
 						type: TRADER_ON_SOCKET_MESSAGE,
 						payload: {
 							data: currSymbData,
 							rebuiltServerData: traderActions.actionOnServerDataRebuild(currSymbData, isMirror)}
 					});
-					// __DEV__ && console.log('re-render');
+					__DEV__ && console.log('re-render');
 				}
-				if(state.activeTrader.activeExchange != name || state.activeTrader.isMirror != isMirror){
-					setTimeout(() => {this._scrollTo(context, currSymbData, isMirror)}, initialStart ? 400 : 100);
-					// console.log(this._scrollTo);
+				if(state.activeTrader.activeExchange != name || state.activeTrader.isMirror != isMirror)
+				{
+					if(!getState().activeTrader.orderInfo.outputOrder) setTimeout(() => {this._scrollTo(context, currSymbData, isMirror)}, initialStart ? 400 : 100);
+
 					if(initialStart) initialStart = false;
+
 					dispatch({
 						type: TRADER_ON_EXCHANGE_CHANGE,
 						payload: {
@@ -85,6 +90,7 @@ class Actions extends BaseActions
 							activeExchangeSymbol: symbol
 						}
 					});
+
 					context.props.traderActions.actionHideDirectionConfirm();
 					// context.props.traderActions.actionRemoveOrderForm();
 					$(context.refs.activeTrader).removeClass('loading');
@@ -362,7 +368,6 @@ class Actions extends BaseActions
 				const closeButton = $('#trader_quantity_clear');
 				const quantity = data.quantity ? data.quantity : getState().activeTrader.quantity;
 
-
 				if(quantity)
                 {
                     closeButton.show();
@@ -453,6 +458,7 @@ class Actions extends BaseActions
 			dispatch({
 				type: TRADER_ON_DELETE_ORDER,
 				payload: {
+					outputOrder: false,
 					showDefaultOrder: false,
 					showSpreadOrder: false
 				}

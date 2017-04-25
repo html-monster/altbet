@@ -59,8 +59,8 @@ export default class ButtonContainer extends React.Component
                                         component="div"
                                         className="button"
                                         transitionName={{
-                                            enter: 'fadeOut',
-                                            appear: 'fadeOut'
+                                            enter: 'updateAnimation',
+                                            appear: 'updateAnimation'
                                         }}
                                         transitionAppear={true}
                                         transitionLeave={false}
@@ -72,7 +72,7 @@ export default class ButtonContainer extends React.Component
                                                 {
                                                     PosPrice: item.SummaryPositionPrice,
                                                     ismirror: data.ismirror,
-                                                    price: (price = isBasicMode ? item2.Price : item2.Price),
+                                                    price: (price = item2.Price),
                                                     quantity: item2.Quantity,
                                                     type: data.type === "sell" ? 1 : 2,
                                                     data: data,

@@ -5,7 +5,7 @@ import React from 'react';
 
 import FormValidation from '../../../FormValidation';
 import InputValidation from '../../../formValidation/InputValidation';
-import {minLengthValidation, mailValidation, netellerSecureId} from '../../../formValidation/validation';
+import {emptyValidation, minLengthValidation, mailValidation, netellerSecureId} from '../../../formValidation/validation';
 
 export default class NetellerForm extends React.Component
 {
@@ -71,6 +71,7 @@ export default class NetellerForm extends React.Component
 										 label={'Withdrawal amount'} type={'tel'} filled={depositQuantity}
 										 inputLabel={'total'} name="Sum"
 										 value={depositQuantity || ''}
+										 //validate={emptyValidation}
 										 disabled={true} input={input}/>
 					}
 					{withdraw && <input type="submit" className="wave btn submit" defaultValue={'Submit'} />}

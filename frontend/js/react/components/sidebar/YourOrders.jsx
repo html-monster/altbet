@@ -211,6 +211,7 @@ class OrderItem extends React.Component
 					isMirror={data.isMirror}
 					symbol={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}
 					newOrder={false}
+					orderMode={'basic'}
 					showDeleteButton={false}
 					onSubmit={actions.actionOnAjaxSend.bind(null, formData.url)}
 						//data={data}

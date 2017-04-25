@@ -215,6 +215,7 @@ export default class OrderForm extends React.Component{
 			this.state.price = nextProps.price;
 			this.state.quantity = nextProps.quantity;
 			this.state.limit = nextProps.limit;
+			this.state.sum = Math.round10(nextProps.price * nextProps.quantity, -2);
 			if(nextProps.focusOn !== undefined) this.state.focusOn = nextProps.focusOn
 		}
 
@@ -407,9 +408,9 @@ export default class OrderForm extends React.Component{
 							Total Fees
 							<div className="help">
 								<div className="help_message">
-									<p><span>Total Pay-to Play Fees<br/>
+									<p><span style={{padding: 0}}>Total Pay-to Play Fees<br/>
 										{checkboxProp && 'Formula:'}</span> {checkboxProp ?
-										+stateData.sum ? `${stateData.sum} + ${fees}` : ''
+										+stateData.sum ? `$${(stateData.sum).toFixed(2)} + $${(fees).toFixed(2)}` : ''
 										:
 										''}</p>
 								</div>
