@@ -9,7 +9,7 @@ import Select from 'react-select';
 /**
  * @param className - class name of the container
  */
-export class DropBox extends React.Component
+export class DropBox2 extends React.Component
 {
     constructor(props)
     {
@@ -29,8 +29,8 @@ export class DropBox extends React.Component
 
     render()
     {
-        const { name, items, afterChange } = this.props;
+        const { name, items, placeholder, afterChange } = this.props;
 
-        return <Select name={name} options={items} /*autofocus*/ simpleValue clearable={this.state.clearable} disabled={this.state.disabled} value={this.state.selectValue} searchable={this.state.searchable} onChange={(newValue) => { afterChange( newValue ); this.setState({ selectValue: newValue }); }}/>;
+        return <Select placeholder={placeholder} name={name} options={items} /*autofocus*/ simpleValue clearable={this.state.clearable} disabled={this.state.disabled} value={this.state.selectValue} searchable={this.state.searchable} onChange={(newValue) => { afterChange( newValue ); this.setState({ selectValue: newValue }); }}/>;
     }
 }

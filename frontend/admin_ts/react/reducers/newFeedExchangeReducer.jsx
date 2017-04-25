@@ -9,7 +9,7 @@ const initialState = {
     ...globalData.AppData,
     PlayersTeam1: {positions: {}, players: []},
     PlayersTeam2: {positions: {}, players: []},
-    CurrentEventId: Object.keys(globalData.AppData.TimeEvent)[0],
+    CurrentEventId: globalData.AppData && globalData.AppData.TimeEvent.length ? Object.keys(globalData.AppData.TimeEvent)[0] : "",
 };
 
 

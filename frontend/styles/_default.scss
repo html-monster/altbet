@@ -546,6 +546,9 @@ input ~ .info{
   }
   li { padding: 2px 35px 2px 10px; transition: 0.2s ease-out; cursor: pointer; @include user_page_li; }
   li:last-of-type{  border-bottom: none;  }
+    .has-value.is-pseudo-focused .Select-input {
+      opacity: 0;
+    }
 }
 
 
