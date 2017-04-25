@@ -10,6 +10,7 @@ import FormValidation from './FormValidation';
 import InputValidation from './formValidation/InputValidation';
 import {passwordValidation, regexValidation, lengthValidation, mailValidation, emptyValidation, phoneValidation} from './formValidation/validation';
 import {DropBox2} from './common/DropBox2';
+import {DatePicker} from './common/DatePicker';
 
 
 export class RegisterForm extends React.PureComponent
@@ -26,20 +27,8 @@ export class RegisterForm extends React.PureComponent
 		    const $countries = JSON.parse(appData.Registration.countries);
 		    for( let val of $countries.Countries  )
 		    {
-                let item;
-                if( false&&typeof val == "object" )
-                {
-                    let key = Object.keys(val)[0];
-                    item = {value: key, regions: val[key]['States']};
-
-                    Object.keys(AppData.TimeEvent).map((key) => { return {value: key, label: AppData.TimeEvent[key]}})
-                }
-                else {
-                    item = {value: val['Code'], label: val['Country']};
-                } // endif
-
-                if (appData.Registration.currentCountry == val['Code']) item.selected = true;
-
+                let item = {value: val['Code'], label: val['Country'], States: val['States']};
+                // if (appData.Registration.currentCountry == val['Code']) item.selected = true;
                 this.countries.push(item);
 		    } // endfor
 
@@ -48,6 +37,9 @@ export class RegisterForm extends React.PureComponent
             __DEV__&&console.warn( 'Registration countries get fail' );
             this.countries = [];
         }
+
+
+        this.state = {States: []};
 	}
 
 
@@ -65,20 +57,29 @@ export class RegisterForm extends React.PureComponent
 
         var { onCustomChange } = this.props;
 
-		let input = $( "input.js-dateofbirth" );
-		input.keyup(() => false);
-		input.keydown(() => false);
-		input.keypress(() => false);
-		input.datepicker({
-			yearRange: "1901:c+0",
-			dateFormat: "d M yy",
-			maxDate: "0",
-			minDate: new Date(1, 1 - 1, 1),
-			changeMonth: true,
-			changeYear: true,
-			showAnim: 'slideDown',
-			onClose: (p1, p2) => 0||console.log( 'p1', p1, p2 )
-		});
+		// let input = $( "input.js-dateofbirth" );
+		// input.keyup(() => false);
+		// input.keydown(() => false);
+		// input.keypress(() => false);
+		// input.datepicker({
+		// 	yearRange: "1901:c+0",
+		// 	dateFormat: "d M yy",
+		// 	maxDate: "0",
+		// 	minDate: new Date(1, 1 - 1, 1),
+		// 	changeMonth: true,
+		// 	changeYear: true,
+		// 	showAnim: 'slideDown',
+		// 	onClose: (text, p2) => input.val(text),
+		// });
+
+		// $(this.refs.datePicker)
+		// input.daterangepicker({
+         //    "singleDatePicker": true,
+         //    "showDropdowns": true,
+         //    "showWeekNumbers": true,
+         //    "autoApply": true,
+         //    "startDate": moment(),
+		// }, (from, to) => 0||console.log( 'from, to', from, to ));
     }
 
 
@@ -87,6 +88,24 @@ export class RegisterForm extends React.PureComponent
         return <span className="input_animate input--yoshiko">
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 <input className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id} type={type} {...input}/>
+                <label className="input__label input__label--yoshiko" htmlFor={id}>
+                    <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
+                </label>
+                {/*<span className="validation-summary-errors"></span>*/}
+                {
+                    hint && <span className="info top">
+                        <i>{hint}</i>
+                    </span>
+                }
+            </span>;
+    }
+
+
+    datePickerRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty, onCustomChange }, ...input })
+    {
+        return <span className="input_animate input--yoshiko">
+                { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
+                <DatePicker className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id} afterChange={onCustomChange} {...input}/>
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
                     <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                 </label>
@@ -110,13 +129,13 @@ export class RegisterForm extends React.PureComponent
             </div>;
     }
 
-    dropBoxRender({ id, label, hint, items, name, initLabel, meta: { dirty, error, onCustomChange }, ...input })
+    dropBoxRender({ id, label, hint, items, name, initLabel, className, afterChange, meta: { dirty, error, onCustomChange }, ...input })
     {
-        return <span className="input_animate input--yoshiko">
+        return <span className={"input_animate input--yoshiko " + className}>
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 {/*<DropBox2 className="" name={name} items={items} initLabel={initLabel} hint={hint} input={input}*/}
 						 {/*onCustomChange={onCustomChange} options={{maxHeight: 250}} />*/}
-                <DropBox2 name={name} items={items} clearable={true} value="" searchable={true} placeholder={label} afterChange={onCustomChange}/>
+                <DropBox2 name={name} items={items} clearable={true} value="" searchable={true} placeholder={initLabel} afterChange={afterChange ? afterChange.bind(null, onCustomChange) : onCustomChange} />
 
 {/*
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
@@ -137,7 +156,7 @@ export class RegisterForm extends React.PureComponent
 	{
 		const formContent = ({ input, error, successMessage, format/*, data:{ data, plan, depositQuantity, pricePlan }*/, handleSubmit }) => {
             //return <form action="http://localhost/AltBet.Admin/Category/TestAction" ref="F1regForm" method="post" onSubmit={handleSubmit}>
-            return <form action={`${ABpp.baseUrl}/Account/Register`} ref="F1regForm" method="post" onSubmit={handleSubmit}>
+            return <form action={`${ABpp.baseUrl}/Account/Register`} onSubmit={handleSubmit}>
                 <div className="left_column column">
 {/*                    <InputValidation renderContent={this.inputRender} id='f_name' name="FirstName"
                                      className={'input__field input__field--yoshiko'}
@@ -169,11 +188,11 @@ export class RegisterForm extends React.PureComponent
                                         confirmation will be sent at that address. Also that address
                                         will be used for communication with you"/>
 
-                    <InputValidation renderContent={this.inputRender} id='user_b_day' name="DateOfBirth"
+                    <InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
                                      className={'input__field input__field--yoshiko js-dateofbirth'}
                                      //initialValue="2 Mar 01"
                                      label="Date of birth" type='text'
-                                     validate={[emptyValidation]} input={input}/>
+                                     /*validate={[emptyValidation]}*/ input={input}/>
 
 
                     <InputValidation renderContent={this.inputRender} id='r_pass' name="Password"
@@ -190,12 +209,19 @@ export class RegisterForm extends React.PureComponent
 
                 <div className="right_column column">
                     <InputValidation renderContent={this.dropBoxRender} id='c_name' name="Country"
-                                     className={'input__field input__field--yoshiko'}
-                                     label="Country"
+                                     className=""
                                      items={this.countries}
-                                     initLabel="Select country"
+                                     initLabel="Select country ..."
                                      validate={[emptyValidation]} input={input}
+                                     afterChange={::this._dropCountryChange}
                                      hint="Indicate the country of your permanent residence"/>
+
+                    <InputValidation renderContent={this.dropBoxRender} id='st_name' name="coState"
+                                     className={'country-states' + (this.state.States.length ? "" : " states-hidden")}
+                                     items={this.state.States}
+                                     initLabel="Select state ..."
+                                     validate={this.state.States.length ? [emptyValidation] : []} input={input}
+                                     hint=""/>
 
                     {/*<ul className="select_list odds_list" ref="oddsList" onClick={this.listSlide.bind(this, false)}>*/}
 
@@ -238,4 +264,26 @@ export class RegisterForm extends React.PureComponent
 			serverValidation={true}
 		/>;
 	}
+
+
+    /**
+     * Check for states
+     * @private
+     * @param onCustomChange - for validation
+     * @param val - new dd value
+     * @param item - item from source array
+     */
+	_dropCountryChange(onCustomChange, val, item)
+    {
+        let newItems = [];
+
+        if( item && item[0] && item[0].States )
+        {
+            newItems = item[0].States.map(val => {return{value: val['Code'], label: val['State']}});
+        } // endif
+
+        this.setState({...this.state, States: newItems});
+
+        onCustomChange(val);
+    }
 }

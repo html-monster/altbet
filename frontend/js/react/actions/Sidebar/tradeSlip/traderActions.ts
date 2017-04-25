@@ -10,8 +10,8 @@ import {
 	TRADER_ON_DELETE_ORDER,
 	TRADER_ON_SPREAD_HIGHLIGHT,
 	TRADER_ON_DRAG,
-	SHOW_QUANTITY_ERROR
-} from '../../../constants/ActionTypesActiveTrader';
+	SHOW_QUANTITY_ERROR,
+} from '../../../constants/ActionTypesActiveTrader.js';
 import { ON_ACTIVE_SYMBOL_CHANGED } from '../../../constants/ActionTypesSidebar.js';
 import BaseActions from '../../BaseActions';
 import {RebuildServerData} from './activeTrader/rebuildServerData';
@@ -353,7 +353,7 @@ class Actions extends BaseActions
 
 	public actionAddDefaultOrder(context, data, index)
 	{
-		return (dispatch, getState) => 
+		return (dispatch, getState) =>
 		{
 			// console.log('index:', index);
 			if(context && getState().sidebar.autoTradeOn)
