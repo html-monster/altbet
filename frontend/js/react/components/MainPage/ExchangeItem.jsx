@@ -3,7 +3,7 @@ import React from 'react';
 import ButtonContainer from './ButtonContainer';
 import {DateLocalization} from './../../models/DateLocalization';
 import {LineupPage} from './LineupPage';
-// import {Common} from './../../common/Common';
+import {Common} from './../../common/Common';
 
 
 export default class ExchangeItem extends React.Component
@@ -87,12 +87,20 @@ export default class ExchangeItem extends React.Component
                     {(date = date.unixToLocalDate({format: 'DD MMM Y'})) ? date : ''}
                     {/*- {(date = $DateLocalization.fromSharp(data.Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                 </span>
-                {data.Symbol.Status === 2 ? <i className="half_time" title="Completed">ht<span>Completed</span></i> : ""}
+                {/*{data.Symbol.Status === 2 ? <i className="half_time" title="Completed">ht<span>Completed</span></i> : ""}*/}
             </div>
+
             <div className="content_title command">
-                <h2>{data.Symbol.HomeName} {(data.Symbol.HomePoints !== null) ? <span>({data.Symbol.HomePoints})</span> : '' }</h2>
-                <h2>{data.Symbol.AwayName} {(data.Symbol.AwayPoints !== null) ? <span>({data.Symbol.AwayPoints})</span> : ''}</h2>
+                <div className="inner">
+                    <h2>{data.Symbol.HomeName} {(data.Symbol.HomePoints !== null) ? <span>({data.Symbol.HomePoints})</span> : '' }</h2>
+                    <div className="vs">vs.</div>
+                    <h2>{data.Symbol.AwayName} {(data.Symbol.AwayPoints !== null) ? <span>({data.Symbol.AwayPoints})</span> : ''}</h2>
+                </div>
                 <span className="symbol_name hidden">{symbol}</span>
+
+                <div className="event_info_bottom">
+                    <span title="Event status">{data.Symbol.StatusEvent}</span>
+                </div>
             </div>
             <div className="table not-sort wave waves-effect waves-button"> {/*id="exchange_table"*/}
                 <div className={"event-content" + $classActiveNM} data-symbol={symbol} data-id={data.Symbol.Exchange} data-mirror="0"

@@ -39,7 +39,7 @@ export class ABpp
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
-    public ver = "0.5.1";
+    public ver = "0.5.2";
 
 
     // application config

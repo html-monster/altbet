@@ -32,12 +32,12 @@ export default class ButtonContainer extends React.Component
         if( data.type === 'sell' )
         {
             className = 'sell';
-            emptyBtnName = _t('sell');
+            emptyBtnName = _t('buy');
         }
         else
         {
             className = 'buy';
-            emptyBtnName = _t('buy');
+            emptyBtnName = _t('sell');
         } // endif
         // 0||console.debug( 'data', data );
 
@@ -53,7 +53,6 @@ export default class ButtonContainer extends React.Component
                             let html = [];
                             if( item.Side === data.side )
                             {
-                                    {/*<div className="button">*/}
                                 html = SummaryPositionPrice.map((item2) =>
                                     <AnimateOnUpdate key={item2.Price}
                                         component="div"

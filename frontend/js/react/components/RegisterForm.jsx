@@ -9,7 +9,7 @@ import React from 'react';
 import FormValidation from './FormValidation';
 import InputValidation from './formValidation/InputValidation';
 import {passwordValidation, regexValidation, lengthValidation, mailValidation, emptyValidation, phoneValidation} from './formValidation/validation';
-import {DropBox} from './common/DropBox';
+import {DropBox2} from './common/DropBox2';
 
 
 export class RegisterForm extends React.PureComponent
@@ -24,26 +24,28 @@ export class RegisterForm extends React.PureComponent
         // fill country data
         try {
 		    const $countries = JSON.parse(appData.Registration.countries);
-		    for( let val of $countries.countries  )
+		    for( let val of $countries.Countries  )
 		    {
                 let item;
-                if( typeof val == "object" )
+                if( false&&typeof val == "object" )
                 {
                     let key = Object.keys(val)[0];
-                    item = {val: key, regions: val[key]['States']};
+                    item = {value: key, regions: val[key]['States']};
+
+                    Object.keys(AppData.TimeEvent).map((key) => { return {value: key, label: AppData.TimeEvent[key]}})
                 }
-                else
-                {
-                    item = {val: val};
+                else {
+                    item = {value: val['Code'], label: val['Country']};
                 } // endif
 
-                if (appData.Registration.current == val) item.selected = true;
+                if (appData.Registration.currentCountry == val['Code']) item.selected = true;
 
                 this.countries.push(item);
 		    } // endfor
 
 
         } catch (e) {
+            __DEV__&&console.warn( 'Registration countries get fail' );
             this.countries = [];
         }
 	}
@@ -51,14 +53,14 @@ export class RegisterForm extends React.PureComponent
 
     componentDidMount()
     {
-        // if( __DEV__ )
-        // {
-        //     0||console.log( 'emulate here' )
-        //     setTimeout(() =>
-        //         {$(".log_out .sign_in").click();
-        //             setTimeout(() => $(".register").click(), 500)
-        //         }, 700)
-        // } // endif
+        if( __DEV__ )
+        {
+            0||console.log( 'emulate here' )
+            setTimeout(() =>
+                {$(".log_out .sign_in").click();
+                    setTimeout(() => $(".register").click(), 500)
+                }, 700)
+        } // endif
 
 
         var { onCustomChange } = this.props;
@@ -112,11 +114,15 @@ export class RegisterForm extends React.PureComponent
     {
         return <span className="input_animate input--yoshiko">
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
-                <DropBox className="" name={name} items={items} initLabel={initLabel} hint={hint} input={input}
-						 onCustomChange={onCustomChange} options={{maxHeight: 250}} />
+                {/*<DropBox2 className="" name={name} items={items} initLabel={initLabel} hint={hint} input={input}*/}
+						 {/*onCustomChange={onCustomChange} options={{maxHeight: 250}} />*/}
+                <DropBox2 name={name} items={items} clearable={true} value="" searchable={true} placeholder={label} afterChange={onCustomChange}/>
+
+{/*
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
-                    <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
+                    <span className="input__label-content input__label-content--yoshiko" data-content={label}>{}</span>
                 </label>
+*/}
             </span>
     }
 

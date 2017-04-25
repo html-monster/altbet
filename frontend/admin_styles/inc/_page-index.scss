@@ -17,7 +17,7 @@
 
 .page-Index {
   .content-wrapper {
-    .box-body { overflow: visible }
+    //.box-body { overflow: visible }
     .btn-filter { @include iblock; margin-right: 10px;
       &.active.btn-primary { box-shadow: 0px 0px 2px 3px $color2Blue }
       &.active.btn-success { box-shadow: 0px 0px 2px 3px $color1Green }
