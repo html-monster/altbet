@@ -491,7 +491,7 @@
         text-align: left;
         input{
           width: calc(100% - 18px);
-          padding-right: 10px;
+          //padding-right: 10px;
           font-size: 14px;
           &[disabled]{  width: 100%;  }
         }
@@ -515,7 +515,7 @@
 
       input {
         height: 31px;
-        padding-left: 10px;
+        //padding-left: 10px;
         text-align: center;
         @include order_sidebar_order_input;
       }
