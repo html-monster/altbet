@@ -112,7 +112,10 @@
       }
       .basic_mode{
         .switch{  display: none;  }
-        i.submit{  width: 100%;  }
+        i.submit{
+          width: 50%;
+          &:first-of-type{  border-right: 1px solid $border_color;  }
+        }
         [type=submit]{  border-right: none;  }
       }
     }
@@ -136,7 +139,10 @@
     }
 		.basic_mode{
 			.switch{  display: none;  }
-			i.submit{  width: 100%;  }
+      i.submit{
+        width: 50%;
+        &:first-of-type{  border-right: 1px solid $border_color;  }
+      }
       [type=submit]{  border-right: none;  }
 		}
   }
@@ -252,7 +258,10 @@
     }
     .basic_mode{
       .switch{  display: none;  }
-      i.submit{  width: 100%;  }
+      i.submit{
+        width: 50%;
+        &:first-of-type{  border-right: 1px solid $border_color;  }
+      }
       [type=submit]{  border-right: none;  }
     }
     .close{
@@ -587,7 +596,7 @@
         //&.success{  background: url("#{$pathImage}/ico-success-w.png") no-repeat center #969696;  }
       }
       i.submit{  display: block;  width: 66.66%; border-radius: 0;  }
-      input[type=submit]{
+      input[type=submit], button.submit{
         width: 100%;
         height: 31px;
         padding: 0;
