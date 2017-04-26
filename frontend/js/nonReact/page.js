@@ -103,7 +103,7 @@ $(document).ready(function ()
 	popUpClass.globalPopUpClose('.price_plan_js', 'fadeOut', '.pop_up_content', 'header .price_plan');
 	popUpClass.globalPopUpClose('.wrapper_user_page .payment_message', 'fadeOut', '.wrapper_user_page .payment_message .pop_up_content');//payment message
 
-	defaultMethods.maxHeight('.sign_up_form  .tab_content ', 105 + window.innerHeight * 0.1);
+	// defaultMethods.maxHeight('.sign_up_form  .tab_content ', 105 + window.innerHeight * 0.1);
 	defaultMethods.activated('.content_bet .add_favorite');
 
 	// messageClass.showHelpMessage('.active_trader .help', '.tab_item');
@@ -237,7 +237,7 @@ $(document).ready(function ()
 
 
 	new ajaxLoginControllerClass();
-	new ajaxRegistrationControllerClass();
+	// new ajaxRegistrationControllerClass();
 	new accountClass();
 	new ajaxThemeChangeClass();
 });

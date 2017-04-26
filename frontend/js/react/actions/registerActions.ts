@@ -27,34 +27,36 @@ class Actions extends BaseActions
             if( (this.checkAreement('agreement', $form) && this.checkAreement('agreement_age', $form)) )
             {
                 let formData = new FormData(<HTMLFormElement>$form[0]);
-                formData.set('State', "");
+                // formData.set('State', "");
 
                 const ajaxPromise = (new AjaxSend()).send({
                     formData: formData,
                     message: `Error while registering user, please, try again`,
                     // url: ABpp.baseUrl + $form.attr('action'),
                     url: $form.attr('action'), // DEBUG: remove it
+                    respCodeName: 'ErrorCode',
                     respCodes: [
                         {code: 100, message: ""},
                         // {code: -101, message: "Some custom error"},
                     ],
-                    beforeChkResponse: (data) =>
-                    {
-                        // DEBUG: emulate
-                        data = {Error: 101};
-                        // data.Param1 = "TOR-PHI-3152017"; // id
-
-                        return data;
-                    },
+                    // beforeChkResponse: (data) =>
+                    // {
+                    //     // DEBUG: emulate
+                    //     data = {Error: 101};
+                    //     // data.Param1 = "TOR-PHI-3152017"; // id
+                    //
+                    //     return data;
+                    // },
                 });
 
 
                 ajaxPromise.then( result =>
                     {
+                        // 0||console.log( 'success', result );
                         serverValidation({message: 'Registration is successful'});
                     },
                     result => {
-                        // 0||console.log( 'result', result, result.code );
+                        0||console.log( 'result', result );
                         switch( result.code )
                         {
                             case -101:

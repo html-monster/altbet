@@ -19,10 +19,14 @@ class popUpClass{
 		});
 		console.log("browser version: " + $.browser.version.slice(0, 2)); // EDGE В ВЕРСИИ 50 МОГУТ ПОЛЕЗТЬ БАГИ
 	}
-	static popUpClose(closeButton, method, ...popUpWindow){
-
+	static popUpClose(closeButton, method, ...popUpWindow)
+	{
 		$(closeButton).click(callback);
-		function callback(e) {
+		function callback(e)
+		{
+			// return scrolling
+			$('body').removeClass('no-scroll');
+
 			e = e || event;
 			e.preventDefault();
 			popUpWindow.forEach(function (item) {
@@ -40,11 +44,16 @@ class popUpClass{
 		}
 	}
 
-	static popUpOpen(openButton, popUpWindow, focusElement){
+	static popUpOpen(openButton, popUpWindow, focusElement)
+	{
 		let browser = $.browser.chrome && ($.browser.version.slice(0, 2) > 53) || $.browser.mozilla;
 
 		$(openButton).click(callback);
-		function callback(e) {
+		function callback(e)
+		{
+			// disable scrolling while popuped
+			setTimeout(() => $('body').addClass('no-scroll'), 100);
+
 			e = e || event;
 			e.preventDefault();
 			$(popUpWindow).addClass('active').fadeIn(200);
@@ -67,7 +76,11 @@ class popUpClass{
 
 	static globalPopUpClose(popUp, method, ...target){
 		$(document).click(callback);
-		function callback(e) {
+		function callback(e)
+		{
+			// return scrolling
+			$('body').removeClass('no-scroll');
+
 			e = e || event;
 			if(target.length){
 				if(target.some((element) =>  $(e.target).closest(element).length != 0))

@@ -3,7 +3,7 @@
 */
 .Select { position: relative; color: $main-color;
   div, input, span { box-sizing: border-box; }
-  input { opacity: 0 }
+  //input { opacity: 0 }
   .Select-aria-only { display: inline-block; float: left; margin: -1px; width: 1px; height: 1px; clip: rect(0, 0, 0, 0); overflow: hidden; }
   &.is-disabled > .Select-control { background-color: $active_selection_bg; }
   &.is-disabled > .Select-control:hover { box-shadow: none; }
