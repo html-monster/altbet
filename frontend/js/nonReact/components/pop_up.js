@@ -4,7 +4,7 @@ class popUpClass{
 			e = e || event;
 			if(e.keyCode == 27){
 				$('.pop_up').fadeOut();
-				$('body>.wrapper').removeClass('blur');
+				// $('body>.wrapper').removeClass('blur');
 				$('.video_form iframe').removeAttr('src', '');
 				// $('#order_content').remove();
 				$('.confirm_window').removeClass('bounceInUp').addClass('bounceOutDown');
@@ -39,8 +39,8 @@ class popUpClass{
 
 				$(item).removeClass('active');
 			});
-			if (!$('.pop_up').hasClass('active'))
-				$('.blur').removeClass('blur');
+			// if (!$('.pop_up').hasClass('active'))
+			// 	$('.blur').removeClass('blur');
 		}
 	}
 
@@ -59,8 +59,8 @@ class popUpClass{
 			$(popUpWindow).addClass('active').fadeIn(200);
 			$(focusElement).focus(); //'#email'
 
-			if (browser)
-				$('body>.wrapper').addClass('blur');
+			// if (browser)
+			// 	$('body>.wrapper').addClass('blur');
 
 			if($(this).parent('.video').length){
 				var ru = 'https://www.youtube.com/embed/Gv491v-RGPA?autoplay=1',
@@ -89,7 +89,7 @@ class popUpClass{
 			$(popUp).removeClass('active');
 
 			if (!$('.pop_up').hasClass('active')){
-				$('body>.wrapper').removeClass('blur');
+				// $('body>.wrapper').removeClass('blur');
 				$('.video_form iframe').removeAttr('src', '');
 			}
 
@@ -104,7 +104,7 @@ class popUpClass{
 
 	static nativePopUpClose(popUp){
 		$(popUp).removeClass('active').fadeOut(400);
-		$('body>.wrapper').removeClass('blur');
+		// $('body>.wrapper').removeClass('blur');
 	}
 
 	static nativePopUpOpen(popUp){
