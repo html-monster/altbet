@@ -511,7 +511,8 @@
               &>button:first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
             .button { margin-right: 3px;
               &:first-child{
-                button { background-image: linear-gradient(to bottom, #f88447, #ef4d22);
+                button {
+                  &:not(.empty){  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
                   span{ color: #fff; opacity: 0.8; }
                 }
               }
@@ -524,7 +525,8 @@
             &>button:last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
             .button { margin-left: 3px;
               &:last-child{
-                button { background-image: linear-gradient(to bottom, #64c9ef, #3498da);
+                button {
+                  &:not(.empty){  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
                   span{ color: #fff; opacity: 0.8; }
                 }
               }

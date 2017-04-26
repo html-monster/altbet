@@ -176,7 +176,6 @@ export default class OrderForm extends React.Component{
 		state.focusOn = false;
 
 		this.setState(state);
-
 	}
 
 	onTypeChange(checkboxProp)
@@ -234,6 +233,13 @@ export default class OrderForm extends React.Component{
 		if(state.price === '0.') state.price = (+state.price).toFixed(2);
 
 		this.setState(state);
+	}
+
+	onClickSide(side)
+	{
+		// console.log('side:', side);
+		console.log('this.state:', this.state);
+		this.setState({...this.state, side})
 	}
 
 	componentFocus()
@@ -410,7 +416,7 @@ export default class OrderForm extends React.Component{
 								<div className="help_message">
 									<p><span style={{padding: 0}}>Total Pay-to Play Fees<br/>
 										{checkboxProp && 'Formula:'}</span> {checkboxProp ?
-										+stateData.sum ? `$${(stateData.sum).toFixed(2)} + $${(fees).toFixed(2)}` : ''
+										+stateData.sum ? `$${(+stateData.sum).toFixed(2)} + $${(fees).toFixed(2)}` : ''
 										:
 										''}</p>
 								</div>
@@ -451,18 +457,29 @@ export default class OrderForm extends React.Component{
 				<input name="LimitPrice" type="hidden" value={checkboxProp ? stateData.price : price}/>
 				<input name="Symbol" type="hidden" className="symbol" value={symbol}/>
 				<input name="isMirror" type="hidden" className="mirror" value={isMirror}/>
-				<input name="Side" type="hidden" className="side" value={(side)[0].toUpperCase() + (side).slice(1)}/>
+				<input name="Side" type="hidden" className="side" value={(stateData.side)[0].toUpperCase() + (stateData.side).slice(1)}/>
 				<div className="container">
 					<div className="switch">
 						<label className="checkbox">
 							<input name="OrderType" type="checkbox" value="true" checked={checkboxProp}
 								   onChange={this.onTypeChange.bind(this, checkboxProp)}/>
-							<input name="OrderType" type="hidden" value="false"/>
+							{
+								checkboxProp ? '' : <input name="OrderType" type="hidden" value="false"/>
+							}
 							<span>{checkboxProp ? 'Limit' : 'Market'}</span>
 						</label>
 					</div>
 					<i className="submit wave waves-input-wrapper waves-effect waves-button">
-						<input type="submit" className={`btn ${side}`} value={side} style={{textTransform: 'uppercase'}}/>
+						<input type="submit" name="Side" className={`btn buy`} value={'Buy'}
+							   style={{textTransform: 'uppercase'}}
+							   onClick={this.onClickSide.bind(this, 'buy')}
+						/>
+					</i>
+					<i className="submit wave waves-input-wrapper waves-effect waves-button">
+						<input type="submit" name="Side" className={`btn sell`}
+							   value={'Sell'} style={{textTransform: 'uppercase'}}
+							   onClick={this.onClickSide.bind(this, 'sell')}
+						/>
 					</i>
 					{
 						showDeleteButton && onDelete ?

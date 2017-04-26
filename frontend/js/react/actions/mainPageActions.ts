@@ -81,7 +81,7 @@ class Actions extends BaseActions
         }
         else
         {
-            bpr = props.price;
+            bpr = +props.price;
             for( let val of props.PosPrice )
             {
                 if( props.ismirror )
@@ -186,7 +186,7 @@ class Actions extends BaseActions
             "isMirror": props.ismirror ? 1 : 0,
             "Orders": [
                 {
-                    "Price": (+bpr).toFixed(2),
+                    "Price": bpr === '0.' ? bpr : (+bpr).toFixed(2),
                     "Side": props.type == 1 ? 1 : 0, // sell/buy
                     "Symbol": {
                         "Exchange": props.data.exdata.Exchange,
