@@ -78,14 +78,15 @@ class popUpClass{
 		$(document).click(callback);
 		function callback(e)
 		{
-			// return scrolling
-			$('body').removeClass('no-scroll');
-
 			e = e || event;
 			if(target.length){
 				if(target.some((element) =>  $(e.target).closest(element).length != 0))
 					return;
 			}
+
+			// return scrolling
+			$('body').removeClass('no-scroll');
+
 			$(popUp).removeClass('active');
 
 			if (!$('.pop_up').hasClass('active')){

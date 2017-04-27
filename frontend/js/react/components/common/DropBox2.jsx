@@ -29,12 +29,14 @@ export class DropBox2 extends React.Component
     }
 
 
+/*
     componentDidMount()
     {
         const { value, items, afterChange } = this.props;
 
         // afterChange && afterChange( value, items.filter((val) => val['value'] === value) );
     }
+*/
 
 
     render()
