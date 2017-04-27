@@ -38,19 +38,22 @@ export default class InputValidation extends React.Component
 		const error = nextProps.input.errors[props.name];
 		// console.log(nextProps.value);
 		// console.log(state.value);
-		if(nextProps.value != undefined){
+		if(nextProps.value !== undefined){
 
-			if(nextProps.value != state.value && nextProps.validate)
-				this.onChangeProgrammatically(nextProps.value);
+			if(nextProps.value !== state.value && nextProps.validate)
+				this.onChangeProgrammatically
+					.bind(this);
 
 			state.value = nextProps.value;
 			if(nextProps.name) nextProps.input.setValues({[nextProps.name]: nextProps.value || ''});
 		}
 
-		if(props.validate && nextProps.input.submited) {
+		if(props.validate && nextProps.input.submited)
+		{
 			this.validate(state.value);
 			state.meta.dirty = true;
 		}
+
 		if(props.name && error){
 			state.meta.error = error;
 			props.input.setErrors({[state.meta.inputId]: error});
@@ -80,10 +83,13 @@ export default class InputValidation extends React.Component
 	{
 		let state = this.state;
 		// const props = this.props;
-
+		console.log('value:', value);
 		state.meta.dirty = true;
+		state.value = value;
 
 		this.validate(this.props, value);
+		this.setState(state);
+		// console.log('state:', state);
 	}
 
 	onChange(event)
@@ -106,7 +112,7 @@ export default class InputValidation extends React.Component
 		if(props.validate) {
 			let state = this.state;
 
-			if(typeof props.validate == 'function')
+			if(typeof props.validate === 'function')
 				check(props.validate);
 			else
 				props.validate.some((item) => !!check(item));
@@ -122,7 +128,7 @@ export default class InputValidation extends React.Component
 				else state.meta.invalid = false;
 
 				props.input.setErrors({[state.meta.inputId]: error}, errors);
-
+				// console.log('error:', error);
 				return error;
 			}
 		}

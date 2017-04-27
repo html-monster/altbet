@@ -33,7 +33,7 @@ export class DropBox2 extends React.Component
     {
         const { value, items, afterChange } = this.props;
 
-        afterChange && afterChange( value, items.filter((val) => val['value'] === value) );
+        // afterChange && afterChange( value, items.filter((val) => val['value'] === value) );
     }
 
 
@@ -43,7 +43,9 @@ export class DropBox2 extends React.Component
 
         return (
             <div className="h-dropdown2">
-                <Select placeholder={placeholder} options={items} /*autofocus*/ simpleValue clearable={this.state.clearable} disabled={this.state.disabled} value={this.state.selectValue} searchable={this.state.searchable} onChange={afterChange ? this._onChange.bind(this, afterChange, items) : null}/>
+                <Select placeholder={placeholder} options={items} /*autofocus*/ simpleValue clearable={this.state.clearable}
+                        disabled={this.state.disabled} value={this.state.selectValue} searchable={this.state.searchable}
+                        onChange={afterChange ? this._onChange.bind(this, afterChange, items) : null}/>
                 <input type="hidden" name={name}  value={this.state.selectValue || ""} /*ref={(input) => { this.valInput = input; }}*//>
             </div>
         );
