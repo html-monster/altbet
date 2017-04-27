@@ -189,13 +189,6 @@ export class RegisterForm extends React.PureComponent
                                         confirmation will be sent at that address. Also that address
                                         will be used for communication with you"/>
 
-                    <InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
-                                     className={'input__field input__field--yoshiko js-dateofbirth'}
-                                     initialValue="2 Mar 01"
-                                     label="Date of birth" type='text'
-                                     /*validate={[emptyValidation]}*/ input={input}/>
-
-
                     <InputValidation renderContent={this.inputRender} id='r_pass' name="Password"
                                      className={'input__field input__field--yoshiko'}
                                      initialValue="123"
