@@ -41,8 +41,7 @@ export default class InputValidation extends React.Component
 		if(nextProps.value !== undefined){
 
 			if(nextProps.value !== state.value && nextProps.validate)
-				this.onChangeProgrammatically
-					.bind(this);
+				this.onChangeProgrammatically(state.value).bind(this);
 
 			state.value = nextProps.value;
 			if(nextProps.name) nextProps.input.setValues({[nextProps.name]: nextProps.value || ''});
@@ -50,7 +49,7 @@ export default class InputValidation extends React.Component
 
 		if(props.validate && nextProps.input.submited)
 		{
-			this.validate(state.value);
+			this.validate(props, state.value);
 			state.meta.dirty = true;
 		}
 
@@ -83,7 +82,7 @@ export default class InputValidation extends React.Component
 	{
 		let state = this.state;
 		// const props = this.props;
-		// __DEV__&&console.debug('value:', value);
+		// console.log('value:', value);
 		state.meta.dirty = true;
 		state.value = value;
 
@@ -120,6 +119,7 @@ export default class InputValidation extends React.Component
 			function check(validate) {
 				const error = validate(value);
 				let errors = props.input.errors;
+
 				delete errors[props.name];
 
 				state.meta.error = error;
@@ -127,6 +127,7 @@ export default class InputValidation extends React.Component
 				if(error) state.meta.invalid = true;
 				else state.meta.invalid = false;
 
+				// console.log('error:', error);
 				props.input.setErrors({[state.meta.inputId]: error}, errors);
 				// console.log('error:', error);
 				return error;

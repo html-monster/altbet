@@ -12,7 +12,7 @@ export default class FormValidation extends React.Component
 
 		this.state = {
 			submited: false,
-			sending: false,
+			// sending: false,
 			// invalid: false,
 			values: {},
 			errors: {},
@@ -32,6 +32,7 @@ export default class FormValidation extends React.Component
 	setErrors(value)
 	{
 		let state = this.state;
+		// console.log('value:', ';lskdjf;lskadfjs');
 
 		state.errors = {...state.errors, ...value};
 	}
@@ -59,18 +60,19 @@ export default class FormValidation extends React.Component
 		// console.log(JSON.stringify(rest));
 	}
 
-	onSubmit(serverValidation, e)
+	onSubmit(serverValidation, event)
 	{
-		e.preventDefault();
+		event.preventDefault();
 		let props = this.props;
 		let state = this.state;
 
 		state.submited = true;
 		state.errorMessage = '';
 		state.successMessage = '';
-		// 0||console.log( 'here', 0 );
+
 		this.setState(state);
-		for (let elem in state.errors) {
+		for (let elem in state.errors)
+		{
 			if(state.errors[elem]){
 				// state.invalid = true;
 				// this.setState(state);
@@ -79,9 +81,9 @@ export default class FormValidation extends React.Component
 		}
 		// state.invalid = false;
 
-		state.sending = true;
-		this.setState(state);
-		props.handleSubmit(this.state.values, serverValidation || e, (serverValidation) ? e : null);
+		// state.sending = true;
+		// this.setState(state);
+		props.handleSubmit(this.state.values, serverValidation || event, (serverValidation) ? event : null);
 	}
 
 	render()
