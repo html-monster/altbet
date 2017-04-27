@@ -211,7 +211,6 @@ export class RegisterForm extends React.PureComponent
 									 className={'input__field input__field--yoshiko js-dateofbirth'}
 									 label="Date of birth" type='text'
 									 validate={[emptyValidation]} input={input}/>
-                </div>
 
 
                     <InputValidation renderContent={this.dropBoxRender} id='c_name' name="Country"
@@ -249,16 +248,6 @@ export class RegisterForm extends React.PureComponent
                     </div>
                 </div>
 
-                {/*<div className="right_column column">*/}
-
-                    {/*<ul className="select_list odds_list" ref="oddsList" onClick={this.listSlide.bind(this, false)}>*/}
-
-{/*
-<input autocomplete="off" class="input__field input__field--yoshiko" data-val="true" data-val-length="Email can not exceed 128 characters" data-val-length-max="128" data-val-regex="Incorrect Email address" data-val-regex-pattern="^([a-z0-9_-]+.)*[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+)*.[a-z]{2,6}$" data-val-required="Email is required" id="e_name" maxlength="128" name="Email" type="email" value="">
-<input autocomplete="off" class="input__field input__field--yoshiko" data-val="true" data-val-length="Please enter at least 3 characters" data-val-length-max="20" data-val-length-min="3" data-val-required="Password is required" id="r_pass" maxlength="20" name="Password" type="password">
-<input autocomplete="off" class="input__field input__field--yoshiko" data-val="true" data-val-equalto="Password do not match" data-val-equalto-other="*.Password" data-val-required="Confirm Password  is required" id="r_confirm_pass" maxlength="20" name="ComparePassword" type="password">
-*/}
-                {/*</div>*/}
                 <hr/>
                 <div className={'answer-message' + (error && ' validation-summary-errors')}>{error}</div>
                 <div className="submit">
