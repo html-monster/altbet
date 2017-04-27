@@ -83,7 +83,7 @@ export default class InputValidation extends React.Component
 	{
 		let state = this.state;
 		// const props = this.props;
-		console.log('value:', value);
+		// __DEV__&&console.debug('value:', value);
 		state.meta.dirty = true;
 		state.value = value;
 
