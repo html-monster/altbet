@@ -1,3 +1,4 @@
+/*
 class ajaxRegistrationControllerClass{
 	constructor()
 	{
@@ -64,3 +65,4 @@ class ajaxRegistrationControllerClass{
 		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 	}
 }
+*/
