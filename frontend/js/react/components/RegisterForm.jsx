@@ -135,7 +135,8 @@ export class RegisterForm extends React.PureComponent
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 {/*<DropBox2 className="" name={name} items={items} initLabel={initLabel} hint={hint} input={input}*/}
 						 {/*onCustomChange={onCustomChange} options={{maxHeight: 250}} />*/}
-                <DropBox2 name={name} items={items} clearable={true} value="" searchable={true} placeholder={initLabel} afterChange={afterChange ? afterChange.bind(null, onCustomChange) : onCustomChange} />
+                <DropBox2 name={name} items={items} clearable={true} value="" searchable={true} placeholder={initLabel}
+						  afterChange={afterChange ? afterChange.bind(null, onCustomChange) : onCustomChange} />
 
 {/*
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
@@ -188,13 +189,6 @@ export class RegisterForm extends React.PureComponent
                                         confirmation will be sent at that address. Also that address
                                         will be used for communication with you"/>
 
-                    <InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
-                                     className={'input__field input__field--yoshiko js-dateofbirth'}
-                                     //initialValue="2 Mar 01"
-                                     label="Date of birth" type='text'
-                                     /*validate={[emptyValidation]}*/ input={input}/>
-
-
                     <InputValidation renderContent={this.inputRender} id='r_pass' name="Password"
                                      className={'input__field input__field--yoshiko'}
                                      //initialValue="123"
@@ -205,6 +199,11 @@ export class RegisterForm extends React.PureComponent
                                      className={'input__field input__field--yoshiko'}
                                      label="Confirm Password" type='password'
                                      validate={[emptyValidation, passwordValidation.bind(null, "r_pass")]} input={input}/>
+
+					<InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
+									 className={'input__field input__field--yoshiko js-dateofbirth'}
+									 label="Date of birth" type='text'
+									 validate={[emptyValidation]} input={input}/>
                 </div>
 
                 <div className="right_column column">
@@ -217,7 +216,7 @@ export class RegisterForm extends React.PureComponent
                                      hint="Indicate the country of your permanent residence"/>
 
                     <InputValidation renderContent={this.dropBoxRender} id='st_name' name="coState"
-                                     className={'country-states' + (this.state.States.length ? "" : " states-hidden")}
+                                     // className={'country-states' + (this.state.States.length ? "" : " states-hidden")}
                                      items={this.state.States}
                                      initLabel="Select state ..."
                                      validate={this.state.States.length ? [emptyValidation] : []} input={input}

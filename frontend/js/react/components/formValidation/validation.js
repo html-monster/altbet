@@ -5,7 +5,7 @@ export const emptyValidation = (value) => {
 	let errors;
 	if (!value)
 		errors = 'Required';
-
+// console.log(value, errors);
 	return errors
 };
 
