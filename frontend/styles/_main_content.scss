@@ -479,13 +479,13 @@
             //&[disabled]{  opacity: 0.6;  }
             &.empty{
               width: 48px;
-              background: $bg_grad;
+              @include main_page_empty_button;
               span{
                 display: block;
                 height: 32px;
                 padding: 0 !important;
                 line-height: 32px;
-                color: $color-min !important;
+                color: $color-max !important;
               }
             }
             span{

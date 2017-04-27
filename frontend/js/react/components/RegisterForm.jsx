@@ -189,13 +189,6 @@ export class RegisterForm extends React.PureComponent
                                         confirmation will be sent at that address. Also that address
                                         will be used for communication with you"/>
 
-                    <InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
-                                     className={'input__field input__field--yoshiko js-dateofbirth'}
-                                     initialValue="2 Mar 01"
-                                     label="Date of birth" type='text'
-                                     /*validate={[emptyValidation]}*/ input={input}/>
-
-
                     <InputValidation renderContent={this.inputRender} id='r_pass' name="Password"
                                      className={'input__field input__field--yoshiko'}
                                      initialValue="123"
@@ -205,7 +198,7 @@ export class RegisterForm extends React.PureComponent
                     <InputValidation renderContent={this.inputRender} id='r_confirm_pass' name="ComparePassword"
                                      className={'input__field input__field--yoshiko'}
                                      label="Confirm Password" type='password'
-                                     validate={[emptyValidation, passwordValidation.bind(null, "r_pass")]} input={input}/>
+                                     validate={passwordValidation.bind(null, "r_pass")} input={input}/>
 
 					<InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
 									 className={'input__field input__field--yoshiko js-dateofbirth'}
@@ -251,7 +244,7 @@ export class RegisterForm extends React.PureComponent
                 <hr/>
                 <div className={'answer-message' + (error && ' validation-summary-errors')}>{error}</div>
                 <div className="submit">
-                    <input type="submit" value="Register" id="submit_sign_up" className="btn"/>
+                    <input type="submit" value="Register" id="submit_sign_up" className="submit btn wave"/>
                 </div>
             </form>
 		};
