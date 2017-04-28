@@ -51,20 +51,20 @@ export class RegisterForm extends React.PureComponent
 
     componentDidMount()
     {
-        if( __DEV__ )
+/*        if( __DEV__ )
         {
             0||console.log( 'emulate here' )
             setTimeout(() =>
                 {$(".log_out .sign_in").click();
                     setTimeout(() => $(".register").click(), 500)
                 }, 700)
-        } // endif
+        }*/ // endif
 
 
         var { onCustomChange } = this.props;
 
 		let input = $( "input.js-dateofbirth" );
-		input.keyup(() => false);
+		/*input.keyup(() => false);
 		input.keydown(() => false);
 		input.keypress(() => false);
 		input.datepicker({
@@ -76,7 +76,17 @@ export class RegisterForm extends React.PureComponent
 			changeYear: true,
 			showAnim: 'slideDown',
 			onClose: (p1, p2) => 0||console.log( 'p1', p1, p2 )
-		});
+		});*/
+
+		// $(this.refs.datePicker)
+		input.daterangepicker({
+			locale: {
+				format: 'MM/DD/YYYY',
+			},
+			autoApply: true,
+			startDate: moment().format('d M YYYY'), //moment().subtract(1, 'month').format('MM/DD/YYYY'),
+			// endDate: moment(data.rangeFilter.to).format('MM/DD/YYYY')//moment().add(1, 'month').format('MM/DD/YYYY')
+		}, (from, to) => 0||console.log( 'from, to', from, to ))
     }
 
 

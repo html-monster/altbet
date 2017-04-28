@@ -18,6 +18,8 @@ class MainPage extends BaseController
         __DEV__&&console.debug( 'this.props', props );
 
         props.actions.actionOnLoad();
+
+        this.state = {loaded: ""};
     }
 
 
@@ -65,13 +67,11 @@ class MainPage extends BaseController
         ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, function(props) {self.props.actions.actionOnActiveSymbolChanged(props, self)});
 
 
-
-
-
         setTimeout(() => {
             this._itemsAnimation('.nav_items', '.content_bet');
-            $(this.refs.wrapper).addClass('loaded');
-        }, 2000);
+            // $(this.refs.wrapper).addClass('loaded');
+            this.setState({loaded: "loaded"});
+        }, 1000);
 
         // Waves.init();
         // Waves.attach('.wave:not([disabled])', ['waves-button']);
@@ -95,7 +95,7 @@ class MainPage extends BaseController
 
 
         return (
-            <div ref="wrapper" className="nav_items">
+            <div ref="wrapper" className={`nav_items ${this.state.loaded}`}>
                 <div className="wrapper" id="exchange">
                     <div className="stattabs">
                         {
