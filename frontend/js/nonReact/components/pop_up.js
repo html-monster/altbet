@@ -76,7 +76,9 @@ class popUpClass{
 
 	static globalPopUpClose(popUp, method, ...target)
 	{
-		$(document).click(callback);
+		// $(document).click(callback);
+		$(document).on('click', callback);
+
 		function callback(e)
 		{
 			e = e || event;
@@ -88,7 +90,7 @@ class popUpClass{
 			// return scrolling
 			$('body').removeClass('no-scroll');
 
-            0||console.log( '$(popUp)', $(popUp), popUp );
+            0||console.log( '$(popUp)', $(popUp), popUp, method );
 			$(popUp).removeClass('active');
 
 			if (!$('.pop_up').hasClass('active')){
@@ -102,6 +104,8 @@ class popUpClass{
 				$(popUp).hide();
 			else
 				$(popUp).fadeOut(400);
+
+            $(document).off('click', callback);
 		}
 	}
 

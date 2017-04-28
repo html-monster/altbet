@@ -45,14 +45,14 @@ export class RegisterForm extends React.PureComponent
 
     componentDidMount()
     {
-        if( __DEV__ )
+/*        if( __DEV__ )
         {
             0||console.log( 'emulate here' )
             setTimeout(() =>
                 {$(".log_out .sign_in").click();
                     setTimeout(() => $(".register").click(), 500)
                 }, 700)
-        } // endif
+        }*/ // endif
 
 
         var { onCustomChange } = this.props;
@@ -177,7 +177,7 @@ export class RegisterForm extends React.PureComponent
                                      className={'input__field input__field--yoshiko'}
                                      // initialValue="FedoryakaBest"
                                      label="User Name" type='text'
-                                     validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
+                                     validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
                                      hint="User's login allow to use symbols such as: symbols, digits, dot, underscore, dash"/>
 
                     <InputValidation renderContent={this.inputRender} id='e_name' name="Email"

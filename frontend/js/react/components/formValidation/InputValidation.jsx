@@ -36,8 +36,8 @@ export default class InputValidation extends React.Component
 		let state = this.state;
 		const props = this.props;
 		const error = nextProps.input.errors[props.name];
+		// __DEV__&&console.debug('value:', value);
 		// console.log(nextProps.value);
-		// console.log(state.value);
 		if(nextProps.value !== undefined){
 
 			if(nextProps.value !== state.value && nextProps.validate)
