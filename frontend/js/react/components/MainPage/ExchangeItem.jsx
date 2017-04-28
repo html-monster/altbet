@@ -65,7 +65,7 @@ export default class ExchangeItem extends React.Component
         let $classActive = '', $classActiveNM = '', $classActiveM = '';
         if( data.activeExchange.name === data.Symbol.Exchange )
         {
-            $classActive = ' active not_wave';
+            $classActive = ' active';
             if( !data.activeExchange.isMirror ) $classActiveNM = ' active';
             else $classActiveM = ' active';
         } // endif
@@ -79,7 +79,7 @@ export default class ExchangeItem extends React.Component
         };
 
 
-        return <div className={"content_bet not-sort categoryFilterJs" + (isBasicMode ? " basic_mode_js" : "") + $classActive + (isTraiderOn ? " clickable" : "")} id={symbol}>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
+        return <div className={"content_bet not-sort categoryFilterJs" + (isBasicMode ? " basic_mode_js" : "") + $classActive + (isTraiderOn ? " clickable" : "")} id={symbol} /*style={{display: 'none'}}*/>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
             <input name={data.Symbol.Status} type="hidden" value="inprogress" />
 
             <div className={"event_info " + data.CategoryIcon}>

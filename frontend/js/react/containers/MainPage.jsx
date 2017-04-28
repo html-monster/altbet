@@ -19,6 +19,8 @@ class MainPage extends BaseController
         __DEV__&&console.debug( 'this.props', props );
 
         props.actions.actionOnLoad();
+
+        this.state = {loaded: ""};
     }
 
 
@@ -66,6 +68,15 @@ class MainPage extends BaseController
         ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, function(props) {self.props.actions.actionOnActiveSymbolChanged(props, self)});
 
 
+
+
+
+        // setTimeout(() => {
+        //     this._itemsAnimation('.nav_items', '.content_bet');
+        //     // $(this.refs.wrapper).addClass('loaded');
+        //     this.setState({loaded: "loaded"});
+        // }, 1000);
+
         // Waves.init();
         // Waves.attach('.wave:not([disabled])', ['waves-button']);
     }
@@ -87,7 +98,7 @@ class MainPage extends BaseController
 
 
         return (
-            <div className="nav_items">
+            <div className={`nav_items ${this.state.loaded}`}>
                 <div className="wrapper" id="exchange">
                     <div className="stattabs">
                         {
@@ -134,6 +145,35 @@ class MainPage extends BaseController
             </div>
         );
         // return <Chart data={this.props.MainPage} actions={this.props.chartActions} />
+    }
+
+
+    _itemsAnimation(inWrapper, inAnimatedRow)
+    {
+        let ii = 1;
+        inWrapper = $(inWrapper);
+
+        inWrapper.find(inAnimatedRow).css('display', 'none'); //'.content_bet'
+        // animate();
+        //
+        // // items.hide().eq($(this).index()).show().find(animated_row).each(function(){
+        // function* animate()
+        // {
+        // }
+        let animate = function* (){
+            $(this).addClass('list-animate2');
+            setInterval(() => {
+                $(this).addClass('animate2'); // /*.delay(100 * ii)*/.animate({}, 1500, function() { $(this).addClass('animate2') });
+                // this.next();
+            }, 100 * ii);
+            ii++;
+            // yield ii;
+            // .css({display: 'flex', opacity: 0, marginTop: '10px'}).animate({
+            //     opacity: '1',
+            //     marginTop: '2px'
+            // }, 300);
+        }();
+        inWrapper.show().find(inAnimatedRow).each(animate.next());
     }
 }
 
