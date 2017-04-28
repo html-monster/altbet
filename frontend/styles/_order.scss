@@ -18,7 +18,7 @@
     &.right:after{  right: 2px;  }
   }
   .profit, .risk{
-    .help_message{  width: 166px;  left: -151px;  }
+    .help_message{  width: 166px;  left: -147px;  }
   }
   .wrapper {  text-align: center;  margin-top: 10px;  }
   .left_order > label {
@@ -102,6 +102,7 @@
           @include md(1400){  padding: 5px;  }
         }
         form input[type="submit"]{  border-left: none;  }
+        .container .obligations label{  width: 100%;  }
         .close{
           margin: 0;
           position: absolute;
@@ -111,7 +112,10 @@
       }
       .basic_mode{
         .switch{  display: none;  }
-        i.submit{  width: 100%;  }
+        i.submit{
+          width: 50%;
+          &:first-of-type{  border-right: 1px solid $border_color;  }
+        }
         [type=submit]{  border-right: none;  }
       }
     }
@@ -135,10 +139,12 @@
     }
 		.basic_mode{
 			.switch{  display: none;  }
-			i.submit{  width: 100%;  }
+      i.submit{
+        width: 50%;
+        &:first-of-type{  border-right: 1px solid $border_color;  }
+      }
       [type=submit]{  border-right: none;  }
 		}
-    .order_content form .container .obligations label{  width: calc(100% - 18px);  }
   }
   .ui-state-highlight{
     height: 100px;
@@ -172,11 +178,11 @@
     }
     .sell{
       left: calc(100% + 1px);
-      background-image: linear-gradient(to bottom, #f88447, #ef4d22);
+      background: linear-gradient(to bottom, #f88447, #ef4d22);
     }
     .buy{
       right: calc(100% + 1px);
-      background-image: linear-gradient(to bottom, #64c9ef, #3498da);
+      background: linear-gradient(to bottom, #64c9ef, #3498da);
     }
     &.active{
       //span.confirm_button{
@@ -249,6 +255,14 @@
       &:before{  right: 9px;  }
       .time{  color: $order_sidebar_current_order_title_color;  }
       .help_message{ width: 160px; right: 4px; top: 25px; }
+    }
+    .basic_mode{
+      .switch{  display: none;  }
+      i.submit{
+        width: 50%;
+        &:first-of-type{  border-right: 1px solid $border_color;  }
+      }
+      [type=submit]{  border-right: none;  }
     }
     .close{
       float: right;
@@ -480,21 +494,13 @@
         display: flex;
         div:nth-of-type(1) label, div:nth-of-type(2) label{  border-left: none;  }
         div:nth-of-type(3) label{  border-left: none;  border-right: none;  }
-        .obligations{
-          .warning{
-            left: auto;
-            right: 0;
-            &:before{  left: 88px;  }
-            &:after{  left: 83px;  }
-          }
-        }
       }
       .input{
         width: 100%;
         text-align: left;
         input{
           width: calc(100% - 18px);
-          padding-right: 10px;
+          //padding-right: 10px;
           font-size: 14px;
           &[disabled]{  width: 100%;  }
         }
@@ -513,11 +519,12 @@
         position: relative;
         &.with_info{  padding-right: 15px;  }
       }
+      .obligations label{  width: calc(100% - 18px);  }
       .profit label.with_info { padding-right: 0 }
 
       input {
         height: 31px;
-        padding-left: 10px;
+        //padding-left: 10px;
         text-align: center;
         @include order_sidebar_order_input;
       }
@@ -589,7 +596,7 @@
         //&.success{  background: url("#{$pathImage}/ico-success-w.png") no-repeat center #969696;  }
       }
       i.submit{  display: block;  width: 66.66%; border-radius: 0;  }
-      input[type=submit]{
+      input[type=submit], button.submit{
         width: 100%;
         height: 31px;
         padding: 0;
@@ -600,8 +607,8 @@
         border-left: none;
         cursor: pointer;
         transition: 0.4s ease-out;
-        &.sell{  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
-        &.buy{  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
+        &.sell{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
+        &.buy{  background: linear-gradient(to bottom, #64c9ef, #3498da);  }
       }
     }
   }

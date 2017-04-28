@@ -1,0 +1,15 @@
+.ac-newfeedexchange {
+  .content-wrapper {
+    .h-players {
+      .filters { display: inline-block; margin-left: 20px }
+      .f-btn.active { font-weight: bold }
+      .fa-plus { color: #00a65a; }
+      tr.used td { background: #f2fbe9 }
+      tr.used.team2 td { background: darken(#f2fbe9, 10%) }
+    }
+    .h-team {
+      //.fa-remove { color: #dd4b39; }
+    }
+  }
+}
+

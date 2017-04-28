@@ -71,12 +71,12 @@ class activeTraderClass{
 		// }();
 
 		this.eventChange = function () {
-			var checkbox = $('.left_order .tab input.limit'),
-					event_container = '.content_bet',
-					event_content = $('.event-content'),
-					tabs = $('.active_trader .event_title .event_name');
-
-			tabs.eq(0).addClass('active');
+			// var checkbox = $('.left_order .tab input.limit'),
+			// 		event_container = '.content_bet',
+			// 		event_content = $('.event-content'),
+			// 		tabs = $('.active_trader .event_title .event_name');
+			//
+			// tabs.eq(0).addClass('active');
 
 			// BM: tab_item onClick TODEL
 			// $('.tab_item').on('click', 'event_container', function () {
@@ -146,17 +146,17 @@ class activeTraderClass{
 		}();
 
 		this.addOrder = function () {
-			let //quantityButton = $('.active_trader .control .button.quantity'),
-					trader = $('.active_trader'),
-					size = trader.width(),
-					html;
-
-			trader.find('.active_trader_footer').css('width', size);
-			$(window).resize(function () {
-				size = $('.active_trader').width();
-				trader.find('#order_content').css('width', size);
-				trader.find('.active_trader_footer').css('width', size);
-			});
+			// let //quantityButton = $('.active_trader .control .button.quantity'),
+			// 		trader = $('.active_trader'),
+			// 		size = trader.width(),
+			// 		html;
+			//
+			// trader.find('.active_trader_footer').css('width', size);
+			// $(window).resize(function () {
+			// 	size = $('.active_trader').width();
+			// 	trader.find('#order_content').css('width', size);
+			// 	trader.find('.active_trader_footer').css('width', size);
+			// });
 
 			// $('.active_trader .control .button button').click(function () {
 				// activeTraderClass.buttonActivation($(this));

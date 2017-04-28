@@ -6,6 +6,7 @@ import BaseController from './BaseController';
 import ExchangeItem from '../components/MainPage/ExchangeItem';
 import mainPageActions from '../actions/MainPageActions.ts';
 import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
+import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 
 // class MainPage extends React.Component
 class MainPage extends BaseController
@@ -67,11 +68,14 @@ class MainPage extends BaseController
         ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, function(props) {self.props.actions.actionOnActiveSymbolChanged(props, self)});
 
 
-        setTimeout(() => {
-            this._itemsAnimation('.nav_items', '.content_bet');
-            // $(this.refs.wrapper).addClass('loaded');
-            this.setState({loaded: "loaded"});
-        }, 1000);
+
+
+
+        // setTimeout(() => {
+        //     this._itemsAnimation('.nav_items', '.content_bet');
+        //     // $(this.refs.wrapper).addClass('loaded');
+        //     this.setState({loaded: "loaded"});
+        // }, 1000);
 
         // Waves.init();
         // Waves.attach('.wave:not([disabled])', ['waves-button']);
@@ -88,14 +92,13 @@ class MainPage extends BaseController
         let urlBase = appData.baseUrl.MainPage;
         // let nb = "&nbsp;";
 
-
         // sort tabs data
         const currSort = appData.urlQuery.sortType;
         const $tabs = {closingsoon: 'Closing soon', popular: 'Popular', new: 'New', movers: 'Movers'};
 
 
         return (
-            <div ref="wrapper" className={`nav_items ${this.state.loaded}`}>
+            <div className={`nav_items ${this.state.loaded}`}>
                 <div className="wrapper" id="exchange">
                     <div className="stattabs">
                         {
@@ -126,7 +129,7 @@ class MainPage extends BaseController
                                     <ul className="pagination_list">
                                         {$Pagination.Pages.map((item, key) => {
                                             return <li key={key} className={(item.Disabled ? "disabled " : "") + (item.IsCurrenPage ? "active" : "")}>
-                                                <a  href={urlBase + `/${item.RouteValues.action[0] == '/' ?
+                                                <a  href={urlBase + `/${item.RouteValues.action[0] === '/' ?
                                                         item.RouteValues.action.slice(1)
                                                         :
                                                         item.RouteValues.action}?page=${item.RouteValues.Page}` + (currSort ? "&sort=" + currSort : '')}
@@ -151,19 +154,26 @@ class MainPage extends BaseController
         inWrapper = $(inWrapper);
 
         inWrapper.find(inAnimatedRow).css('display', 'none'); //'.content_bet'
-        // items.hide().eq($(this).index()).show().find(animated_row).each(function(){
-        inWrapper.show().find(inAnimatedRow).each(function(){
+        // animate();
+        //
+        // // items.hide().eq($(this).index()).show().find(animated_row).each(function(){
+        // function* animate()
+        // {
+        // }
+        let animate = function* (){
             $(this).addClass('list-animate2');
             setInterval(() => {
                 $(this).addClass('animate2'); // /*.delay(100 * ii)*/.animate({}, 1500, function() { $(this).addClass('animate2') });
+                // this.next();
             }, 100 * ii);
             ii++;
+            // yield ii;
             // .css({display: 'flex', opacity: 0, marginTop: '10px'}).animate({
             //     opacity: '1',
             //     marginTop: '2px'
             // }, 300);
-        });
-        ii = 1;
+        }();
+        inWrapper.show().find(inAnimatedRow).each(animate.next());
     }
 }
 
@@ -177,6 +187,7 @@ export default connect(
     })
     },
     dispatch => ({
+        traderActions: bindActionCreators(traderActions, dispatch),
 		defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
         actions: bindActionCreators(mainPageActions, dispatch),
     })

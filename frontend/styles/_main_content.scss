@@ -478,14 +478,16 @@
               left: 0;
               border-radius: 4px;
             }
-            &[disabled]{  opacity: 0.6;  }
+            //&[disabled]{  opacity: 0.6;  }
             &.empty{
               width: 48px;
+              @include main_page_empty_button;
               span{
                 display: block;
                 height: 32px;
-                line-height: 32px;
                 padding: 0 !important;
+                line-height: 32px;
+                color: $color-max !important;
               }
             }
             span{
@@ -510,10 +512,11 @@
           //  display: inline-block;
           //}
           .buy{
-              &>button:first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
+            &>button:not(.empty):first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
             .button { margin-right: 3px;
               &:first-child{
-                button { background-image: linear-gradient(to bottom, #f88447, #ef4d22);
+                button {
+                  &:not(.empty){  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
                   span{ color: #fff; opacity: 0.8; }
                 }
               }
@@ -523,10 +526,11 @@
             }
           }
           .sell {
-            &>button:last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
+            &>button:not(.empty):last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
             .button { margin-left: 3px;
               &:last-child{
-                button { background-image: linear-gradient(to bottom, #64c9ef, #3498da);
+                button {
+                  &:not(.empty){  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
                   span{ color: #fff; opacity: 0.8; }
                 }
               }

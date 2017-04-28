@@ -79,7 +79,7 @@ export default class ExchangeItem extends React.Component
         };
 
 
-        return <div className={"content_bet not-sort categoryFilterJs" + (isBasicMode ? " basic_mode_js" : "") + $classActive + (isTraiderOn ? " clickable" : "")} id={symbol} style={{display: 'none'}}>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
+        return <div className={"content_bet not-sort categoryFilterJs" + (isBasicMode ? " basic_mode_js" : "") + $classActive + (isTraiderOn ? " clickable" : "")} id={symbol} /*style={{display: 'none'}}*/>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
             <input name={data.Symbol.Status} type="hidden" value="inprogress" />
 
             <div className={"event_info " + data.CategoryIcon}>
@@ -98,17 +98,19 @@ export default class ExchangeItem extends React.Component
                 </div>
                 <span className="symbol_name hidden">{symbol}</span>
 
-                <div className="event_info_bottom">
-                    <span title="Event status">{data.Symbol.StatusEvent}</span>
-                </div>
+                { data.Symbol.StatusEvent &&
+                    <div className="event_info_bottom">
+                        <span title="Event status">{data.Symbol.StatusEvent}</span>
+                    </div>
+                }
             </div>
             <div className="table not-sort wave waves-effect waves-button"> {/*id="exchange_table"*/}
                 <div className={"event-content" + $classActiveNM} data-symbol={symbol} data-id={data.Symbol.Exchange} data-mirror="0"
-                    onClick={() => {ABpp.config.tradeOn && actions.exchangeSideClick({name: data.Symbol.Exchange,
+                    onClick={ABpp.config.tradeOn && actions.exchangeSideClick.bind(null, {name: data.Symbol.Exchange,
                         isMirror: false,
                         title: [data.Symbol.HomeName, data.Symbol.AwayName],
                         symbol: symbol,
-                    })}}
+                    })}
                 >
                 {/*<div className="event-content" data-symbol={symbol} onClick={this._onEventContentClick.bind(this, data)}>*/}
                     <h3 className="event-title">
@@ -137,7 +139,7 @@ export default class ExchangeItem extends React.Component
                             <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>P/L:
                                 <span className={(data.GainLoss < 0 ? 'lose' : '') + (data.GainLoss > 0 ? 'win' : '')}>
                                         {data.GainLoss ?
-											data.GainLoss < 0 ? ` ($${Common.toFixed(Math.abs(data.GainLoss))})` :  ' $' + Common.toFixed(data.GainLoss)
+											data.GainLoss < 0 ? ` ($${Math.abs(data.GainLoss)})` :  ' $' + data.GainLoss
 											:
 											' $' + 0}
                                 </span>
@@ -148,11 +150,11 @@ export default class ExchangeItem extends React.Component
 
 
                 <div className={"event-content revers" + $classActiveM} data-symbol={symbol + "_mirror"} data-id={data.Symbol.Exchange} data-mirror="1"
-                    onClick={() => {ABpp.config.tradeOn && actions.exchangeSideClick({name: data.Symbol.Exchange,
+                    onClick={ABpp.config.tradeOn && actions.exchangeSideClick.bind(null, {name: data.Symbol.Exchange,
                         isMirror: true,
                         title: [data.Symbol.HomeName, data.Symbol.AwayName],
                         symbol: symbol,
-                    })}}
+                    })}
                 >
                     <h3 className="event-title">
                         <span className="title">{data.Symbol.AwayName}</span>

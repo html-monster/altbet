@@ -10,11 +10,14 @@ import {
 	TRADER_ON_ADD_ORDER,
 	TRADER_ON_DELETE_ORDER,
 	TRADER_ON_SPREAD_HIGHLIGHT,
-	TRADER_ON_DRAG
+	TRADER_ON_DRAG,
+	SHOW_QUANTITY_ERROR
 } from '../../../constants/ActionTypesActiveTrader';
 import {RebuildServerData} from '../../../actions/Sidebar/tradeSlip/activeTrader/rebuildServerData';
 
 const initialState = {
+	activeExchange: null,
+	activeExchangeSymbol: null,
 	data: {},
 	dragData:{
 		// dragPrevPrice: null,
@@ -26,12 +29,15 @@ const initialState = {
 	rebuiltServerData:[],
 	spread: '',
 	spreadHighLight: [],
+	showQuantityError: false,
 	quantity: '',
 	orderInfo: {
 		activeString: null,
 		direction: null,
+		focusOn: true,
 		limit: true,
 		price: null,
+		outputOrder: false,
 		showSpreadOrder: false,
 		showDefaultOrder: false,
 		showDirectionConfirm: false
@@ -46,11 +52,10 @@ for(let ii = 1; ii <= 99; ii++)
 
 export default function activeTrader(state = initialState, action)
 {
-	let orderInfo;
 	switch (action.type)
 	{
 		case TRADER_ON_QUANTITY_CHANGE:
-			return {...state, quantity: action.payload};
+			return {...state, quantity: action.payload, orderInfo: {...state.orderInfo, focusOn: false}};
 
 		case TRADER_ON_SPREAD_CHANGE:
 			return {...state, spread: action.payload};
@@ -59,22 +64,22 @@ export default function activeTrader(state = initialState, action)
 			return {...state, data: action.payload.data, rebuiltServerData: action.payload.rebuiltServerData };
 
 		case TRADER_ON_EXCHANGE_CHANGE:
-			let newState = Object.assign(state, action.payload);
-			return {...newState};
+			return {...state, ...action.payload};
 
 		case TRADER_ON_ADD_ORDER:
-			orderInfo = Object.assign(state.orderInfo, {...action.payload});
-			return {...state, orderInfo: {...orderInfo} };
+			return {...state, orderInfo: {...state.orderInfo, ...action.payload} };
 
 		case TRADER_ON_DELETE_ORDER:
-			orderInfo = Object.assign(state.orderInfo, {...action.payload});
-			return {...state, orderInfo: {...orderInfo}};
+			return {...state, orderInfo: {...state.orderInfo, ...action.payload}};
 
 		case TRADER_ON_SPREAD_HIGHLIGHT:
 			return {...state, spreadHighLight: action.payload};
 
 		case TRADER_ON_DRAG:
 			return {...state, dragData: {...state.dragData, ...action.payload}};
+
+		case SHOW_QUANTITY_ERROR:
+			return {...state, showQuantityError: action.payload};
 
 		default:
 			return state

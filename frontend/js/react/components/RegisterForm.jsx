@@ -4,12 +4,13 @@
 
 
 import React from 'react';
-import Select from 'react-select';
+
 
 import FormValidation from './FormValidation';
 import InputValidation from './formValidation/InputValidation';
 import {passwordValidation, regexValidation, lengthValidation, mailValidation, emptyValidation, phoneValidation} from './formValidation/validation';
-import {DropBox} from './common/DropBox';
+import {DropBox2} from './common/DropBox2';
+import {DatePicker} from './common/DatePicker';
 
 
 export class RegisterForm extends React.PureComponent
@@ -24,28 +25,21 @@ export class RegisterForm extends React.PureComponent
         // fill country data
         try {
 		    const $countries = JSON.parse(appData.Registration.countries);
-		    for( let val of $countries.countries  )
+		    for( let val of $countries.Countries  )
 		    {
-                let item;
-                if( typeof val == "object" )
-                {
-                    let key = Object.keys(val)[0];
-                    item = {val: key, regions: val[key]['States']};
-                }
-                else
-                {
-                    item = {val: val};
-                } // endif
-
-                if (appData.Registration.current == val) item.selected = true;
-
+                let item = {value: val['Code'], label: val['Country'], States: val['States']};
+                // if (appData.Registration.currentCountry == val['Code']) item.selected = true;
                 this.countries.push(item);
 		    } // endfor
 
 
         } catch (e) {
+            __DEV__&&console.warn( 'Registration countries get fail' );
             this.countries = [];
         }
+
+
+        this.state = {States: []};
 	}
 
 
@@ -63,38 +57,56 @@ export class RegisterForm extends React.PureComponent
 
         var { onCustomChange } = this.props;
 
-		let input = $( "input.js-dateofbirth" );
-		/*input.keyup(() => false);
-		input.keydown(() => false);
-		input.keypress(() => false);
-		input.datepicker({
-			yearRange: "1901:c+0",
-			dateFormat: "d M yy",
-			maxDate: "0",
-			minDate: new Date(1, 1 - 1, 1),
-			changeMonth: true,
-			changeYear: true,
-			showAnim: 'slideDown',
-			onClose: (p1, p2) => 0||console.log( 'p1', p1, p2 )
-		});*/
+		// let input = $( "input.js-dateofbirth" );
+		// input.keyup(() => false);
+		// input.keydown(() => false);
+		// input.keypress(() => false);
+		// input.datepicker({
+		// 	yearRange: "1901:c+0",
+		// 	dateFormat: "d M yy",
+		// 	maxDate: "0",
+		// 	minDate: new Date(1, 1 - 1, 1),
+		// 	changeMonth: true,
+		// 	changeYear: true,
+		// 	showAnim: 'slideDown',
+		// 	onClose: (text, p2) => input.val(text),
+		// });
 
 		// $(this.refs.datePicker)
-		input.daterangepicker({
-			locale: {
-				format: 'MM/DD/YYYY',
-			},
-			autoApply: true,
-			startDate: moment().format('d M YYYY'), //moment().subtract(1, 'month').format('MM/DD/YYYY'),
-			// endDate: moment(data.rangeFilter.to).format('MM/DD/YYYY')//moment().add(1, 'month').format('MM/DD/YYYY')
-		}, (from, to) => 0||console.log( 'from, to', from, to ))
+		// input.daterangepicker({
+         //    "singleDatePicker": true,
+         //    "showDropdowns": true,
+         //    "showWeekNumbers": true,
+         //    "autoApply": true,
+         //    "startDate": moment(),
+		// }, (from, to) => 0||console.log( 'from, to', from, to ));
     }
 
 
     inputRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty }, ...input })
     {
-        return <span className="input_animate input--yoshiko">
+        return <span className={'input_animate input--yoshiko' + (type === 'password' ? ' pass_container' : '')}>
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 <input className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id} type={type} {...input}/>
+				{ type === 'password' ? <span className="show_password">{}</span> : '' }
+                <label className="input__label input__label--yoshiko" htmlFor={id}>
+                    <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
+                </label>
+                {/*<span className="validation-summary-errors"></span>*/}
+                {
+                    hint && <span className="info bottom">
+                        <i>{hint}</i>
+                    </span>
+                }
+            </span>;
+    }
+
+
+    datePickerRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty, onCustomChange }, ...input })
+    {
+        return <span className="input_animate input--yoshiko">
+                { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
+                <DatePicker className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id} afterChange={onCustomChange} {...input}/>
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
                     <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                 </label>
@@ -118,16 +130,20 @@ export class RegisterForm extends React.PureComponent
             </div>;
     }
 
-    dropBoxRender({ id, label, hint, items, name, initLabel, meta: { dirty, error, onCustomChange }, ...input })
+    dropBoxRender({ id, label, hint, items, name, initLabel, className, afterChange, meta: { dirty, error, onCustomChange }, ...input })
     {
-        return <span className="input_animate input--yoshiko">
+        return <span className={"input_animate input--yoshiko " + className}>
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
-                <DropBox className="" name={name} items={items} initLabel={initLabel} hint={hint} input={input}
-						 onCustomChange={onCustomChange} options={{maxHeight: 250}} />
+                {/*<DropBox2 className="" name={name} items={items} initLabel={initLabel} hint={hint} input={input}*/}
+						 {/*onCustomChange={onCustomChange} options={{maxHeight: 250}} />*/}
+                <DropBox2 name={name} items={items} clearable={true} value="" searchable={true} placeholder={initLabel}
+						  afterChange={afterChange ? afterChange.bind(null, onCustomChange) : onCustomChange} />
 
+{/*
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
-                    <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
+                    <span className="input__label-content input__label-content--yoshiko" data-content={label}>{}</span>
                 </label>
+*/}
             </span>
     }
 
@@ -142,8 +158,8 @@ export class RegisterForm extends React.PureComponent
 	{
 		const formContent = ({ input, error, successMessage, format/*, data:{ data, plan, depositQuantity, pricePlan }*/, handleSubmit }) => {
             //return <form action="http://localhost/AltBet.Admin/Category/TestAction" ref="F1regForm" method="post" onSubmit={handleSubmit}>
-            return <form action={`${ABpp.baseUrl}/Account/Register`} ref="F1regForm" method="post" onSubmit={handleSubmit}>
-                <div className="left_column column">
+            return <form action={`${ABpp.baseUrl}/Account/Register`} onSubmit={handleSubmit}>
+                <div className="column">
 {/*                    <InputValidation renderContent={this.inputRender} id='f_name' name="FirstName"
                                      className={'input__field input__field--yoshiko'}
                                      initialValue="Fedor"
@@ -160,81 +176,79 @@ export class RegisterForm extends React.PureComponent
 
                     <InputValidation renderContent={this.inputRender} id='n_name' name="NickName"
                                      className={'input__field input__field--yoshiko'}
-                                     //initialValue="FedoryakaBest"
+                                     // initialValue="FedoryakaBest"
                                      label="User Name" type='text'
-                                     validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
+                                     validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
                                      hint="User's login allow to use symbols such as: symbols, digits, dot, underscore, dash"/>
 
                     <InputValidation renderContent={this.inputRender} id='e_name' name="Email"
                                      className={'input__field input__field--yoshiko'}
                                      label="Email Address" type='text'
-                                     //initialValue="zz@xx.com"
+                                     // initialValue="Zotaper@yandex.ru"
                                      validate={[emptyValidation, mailValidation, lengthValidation.bind(null, {max: 128})]} input={input}
                                      hint="Specify your valid email. A message with registration
                                         confirmation will be sent at that address. Also that address
                                         will be used for communication with you"/>
 
-                    <InputValidation renderContent={this.inputRender} id='user_b_day' name="DateOfBirth"
-                                     className={'input__field input__field--yoshiko js-dateofbirth'}
-                                     //initialValue="2 Mar 01"
-                                     label="Date of birth" type='text'
-                                     validate={[emptyValidation]} input={input}/>
-
-
                     <InputValidation renderContent={this.inputRender} id='r_pass' name="Password"
                                      className={'input__field input__field--yoshiko'}
-                                     //initialValue="123"
+                                     // initialValue="123"
                                      label="Password" type='password'
-                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20})]} input={input}/>
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20}),
+										 passwordValidation.bind(null, "r_confirm_pass")]} input={input}/>
 
                     <InputValidation renderContent={this.inputRender} id='r_confirm_pass' name="ComparePassword"
                                      className={'input__field input__field--yoshiko'}
+									 initialValue="123"
                                      label="Confirm Password" type='password'
-                                     validate={[emptyValidation, passwordValidation.bind(null, "r_pass")]} input={input}/>
-                </div>
+                                     validate={passwordValidation.bind(null, "r_pass")} input={input}/>
 
-                <div className="right_column column">
+					<InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
+									 className={'input__field input__field--yoshiko js-dateofbirth'}
+									 label="Date of birth" type='text'
+									 initialValue="12 Apr 2017"
+									 validate={[emptyValidation]} input={input}/>
+
+
                     <InputValidation renderContent={this.dropBoxRender} id='c_name' name="Country"
-                                     className={'input__field input__field--yoshiko'}
-                                     label="Country"
+                                     className=""
                                      items={this.countries}
-                                     initLabel="Select country"
+                                     initLabel="Select country ..."
                                      validate={[emptyValidation]} input={input}
+                                     afterChange={::this._dropCountryChange}
                                      hint="Indicate the country of your permanent residence"/>
 
-                    <Select name="form-field-name" /*value="one"*/ options={[
-                            {value: 'one', label: 'One'},
-                            {value: 'two', label: 'Two'}
-                        ]}
-                    onChange={(val) => 0||console.log( 'selected val', val )}/>
-                    {/*<ul className="select_list odds_list" ref="oddsList" onClick={this.listSlide.bind(this, false)}>*/}
+                    <InputValidation renderContent={this.dropBoxRender} id='st_name' name="State"
+                                     className={'country-states' + (this.state.States.length ? "" : " states-hidden")}
+                                     items={this.state.States}
+                                     initLabel="Select state ..."
+                                     validate={this.state.States.length ? [emptyValidation] : []} input={input}
+                                     hint=""/>
 
-{/*
-<input autocomplete="off" class="input__field input__field--yoshiko" data-val="true" data-val-length="Email can not exceed 128 characters" data-val-length-max="128" data-val-regex="Incorrect Email address" data-val-regex-pattern="^([a-z0-9_-]+.)*[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+)*.[a-z]{2,6}$" data-val-required="Email is required" id="e_name" maxlength="128" name="Email" type="email" value="">
-<input autocomplete="off" class="input__field input__field--yoshiko" data-val="true" data-val-length="Please enter at least 3 characters" data-val-length-max="20" data-val-length-min="3" data-val-required="Password is required" id="r_pass" maxlength="20" name="Password" type="password">
-<input autocomplete="off" class="input__field input__field--yoshiko" data-val="true" data-val-equalto="Password do not match" data-val-equalto-other="*.Password" data-val-required="Confirm Password  is required" id="r_confirm_pass" maxlength="20" name="ComparePassword" type="password">
-*/}
+
+
+                    <div className="agreement">
+                        <InputValidation renderContent={this.chkBoxRender} id='agreement' name="agreement" validate={[]} input={input}>
+                            <span>Agree to the <a href="/conditions.html" className="text_decoration">Terms of Use</a> and <a href="#" className="text_decoration">Privacy Notice</a></span>
+                        </InputValidation>
+
+                        <InputValidation renderContent={this.chkBoxRender} id='agreement_age' name="agreement_age" validate={[]} input={input}>
+                            I confirm that I am at least 18 years of age.
+                        </InputValidation>
+
+                        {/*<div className="checkbox_container">
+                            <input type="checkbox" id="agreement"/><label htmlFor="agreement">Agree to the <a href="/conditions.html" className="text_decoration">Terms of Use</a> and <a href="#" className="text_decoration">Privacy Notice</a></label>
+                        </div>
+                        <div className="checkbox_container">
+                            <input type="checkbox" id="agreement_age"/><label htmlFor="agreement_age">I confirm that I am at least 18 years of age.</label>
+                        </div>*/}
+                    </div>
                 </div>
+
                 <hr/>
                 <div className={'answer-message' + (error && ' validation-summary-errors')}>{error}</div>
-                <div className="agreement">
-                    <InputValidation renderContent={this.chkBoxRender} id='agreement' name="agreement" validate={[]} input={input}>
-                        <span>Agree to the <a href="/conditions.html" className="text_decoration">Terms of Use</a> and <a href="#" className="text_decoration">Privacy Notice</a></span>
-                    </InputValidation>
-
-                    <InputValidation renderContent={this.chkBoxRender} id='agreement_age' name="agreement_age" validate={[]} input={input}>
-                        I confirm that I am at least 18 years of age.
-                    </InputValidation>
-
-                    {/*<div className="checkbox_container">
-                        <input type="checkbox" id="agreement"/><label htmlFor="agreement">Agree to the <a href="/conditions.html" className="text_decoration">Terms of Use</a> and <a href="#" className="text_decoration">Privacy Notice</a></label>
-                    </div>
-                    <div className="checkbox_container">
-                        <input type="checkbox" id="agreement_age"/><label htmlFor="agreement_age">I confirm that I am at least 18 years of age.</label>
-                    </div>*/}
-                </div>
                 <div className="submit">
-                    <input type="submit" value="Register" id="submit_sign_up" className="btn"/>
+                    <input type="submit" value="Register" id="submit_sign_up" className="submit btn wave"/>
                 </div>
             </form>
 		};
@@ -248,4 +262,26 @@ export class RegisterForm extends React.PureComponent
 			serverValidation={true}
 		/>;
 	}
+
+
+    /**
+     * Check for states
+     * @private
+     * @param onCustomChange - for validation
+     * @param val - new dd value
+     * @param item - item from source array
+     */
+	_dropCountryChange(onCustomChange, val, item)
+    {
+        let newItems = [];
+
+        if( item && item[0] && item[0].States )
+        {
+            newItems = item[0].States.map(val => {return{value: val['Code'], label: val['State']}});
+        } // endif
+
+        this.setState({...this.state, States: newItems});
+
+        onCustomChange(val);
+    }
 }
