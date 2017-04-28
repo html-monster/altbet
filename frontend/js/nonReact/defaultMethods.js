@@ -13,7 +13,7 @@ class defaultMethods
 		$(document).keyup(function (e) {
 			e = e || event;
 
-			if(e.keyCode == 27) {
+			if(e.keyCode === 27) {
 				$('.message_pop_up').removeClass('bounceInRight').addClass('bounceOutRight');
 			}
 		});

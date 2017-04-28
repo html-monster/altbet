@@ -85,15 +85,16 @@ export class RegisterForm extends React.PureComponent
 
     inputRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty }, ...input })
     {
-        return <span className="input_animate input--yoshiko">
+        return <span className={'input_animate input--yoshiko' + (type === 'password' ? ' pass_container' : '')}>
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 <input className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id} type={type} {...input}/>
+				{ type === 'password' ? <span className="show_password">{}</span> : '' }
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
                     <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                 </label>
                 {/*<span className="validation-summary-errors"></span>*/}
                 {
-                    hint && <span className="info top">
+                    hint && <span className="info bottom">
                         <i>{hint}</i>
                     </span>
                 }
@@ -193,16 +194,19 @@ export class RegisterForm extends React.PureComponent
                                      className={'input__field input__field--yoshiko'}
                                      // initialValue="123"
                                      label="Password" type='password'
-                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20})]} input={input}/>
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20}),
+										 passwordValidation.bind(null, "r_confirm_pass")]} input={input}/>
 
                     <InputValidation renderContent={this.inputRender} id='r_confirm_pass' name="ComparePassword"
                                      className={'input__field input__field--yoshiko'}
+									 initialValue="123"
                                      label="Confirm Password" type='password'
                                      validate={passwordValidation.bind(null, "r_pass")} input={input}/>
 
 					<InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
 									 className={'input__field input__field--yoshiko js-dateofbirth'}
 									 label="Date of birth" type='text'
+									 initialValue="12 Apr 2017"
 									 validate={[emptyValidation]} input={input}/>
 
 
