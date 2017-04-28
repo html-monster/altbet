@@ -63,7 +63,7 @@ class Actions extends BaseActions
                                 serverValidation({error: 'User name failed, correct it, please', FirstName: "User name failed"});
                                 break;
                             default:
-                                serverValidation({error: 'User registration failed, please refresh the page and try again'});
+                                serverValidation({error: 'User registration failed, please, refresh the page and try again'});
                         }
                     });
 

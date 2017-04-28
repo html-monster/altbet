@@ -1,3 +1,4 @@
+/*
 class userInspectionClass{
 	constructor(){
 		var staticProject = location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru';
@@ -11,3 +12,4 @@ class userInspectionClass{
 		// 	$('.order_screening').hide();
 	}
 }
+*/

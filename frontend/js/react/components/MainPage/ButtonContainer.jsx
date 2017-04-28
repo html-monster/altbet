@@ -32,12 +32,12 @@ export default class ButtonContainer extends React.Component
         if( data.type === 'sell' )
         {
             className = 'sell';
-            emptyBtnName = _t('buy');
+            emptyBtnName = 'trade';
         }
         else
         {
             className = 'buy';
-            emptyBtnName = _t('sell');
+            emptyBtnName = 'trade';
         } // endif
         // 0||console.debug( 'data', data );
 
@@ -51,6 +51,7 @@ export default class ButtonContainer extends React.Component
                             data.ismirror && SummaryPositionPrice.reverse();
 
                             let html = [];
+                            console.log(item.Side, data.side)
                             if( item.Side === data.side )
                             {
                                 html = SummaryPositionPrice.map((item2) =>
@@ -98,6 +99,7 @@ export default class ButtonContainer extends React.Component
                                     type: data.type === "sell" ? 1 : 2,
                                     data: data,
                                 })}
+                                style={data.type === "sell" && !data.Orders.length ? {display: 'none'} :  data.type === "buy" && !data.Orders.length ? {marginLeft: -24} : {} }
                                 /*disabled={isTraiderOn}*/ title="Click to place entry">
                             <span className="price empty">{emptyBtnName}</span>
                             <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>

@@ -98,9 +98,11 @@ export default class ExchangeItem extends React.Component
                 </div>
                 <span className="symbol_name hidden">{symbol}</span>
 
-                <div className="event_info_bottom">
-                    <span title="Event status">{data.Symbol.StatusEvent}</span>
-                </div>
+                { data.Symbol.StatusEvent &&
+                    <div className="event_info_bottom">
+                        <span title="Event status">{data.Symbol.StatusEvent}</span>
+                    </div>
+                }
             </div>
             <div className="table not-sort wave waves-effect waves-button"> {/*id="exchange_table"*/}
                 <div className={"event-content" + $classActiveNM} data-symbol={symbol} data-id={data.Symbol.Exchange} data-mirror="0"
