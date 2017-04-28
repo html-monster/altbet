@@ -27,7 +27,7 @@ export default class InputValidation extends React.Component
 			onChange: ::this.onChange,
 			value: props.initialValue || props.value || ''
 		};
-		this.validate(props, this.state.value);
+		this.validate(props, this.state.value, false);
 	}
 
 
@@ -49,7 +49,6 @@ export default class InputValidation extends React.Component
 
 		if(props.validate && nextProps.input.submited)
 		{
-			this.validate(props, state.value);
 			state.meta.dirty = true;
 		}
 
@@ -57,6 +56,8 @@ export default class InputValidation extends React.Component
 			state.meta.error = error;
 			props.input.setErrors({[state.meta.inputId]: error});
 		}
+
+		this.validate(nextProps, state.value, false);
 		// console.log(nextProps.input.errors);
 		return true;
 	}
@@ -86,7 +87,7 @@ export default class InputValidation extends React.Component
 		state.meta.dirty = true;
 		state.value = value;
 
-		this.validate(this.props, value);
+		this.validate(this.props, value, true);
 		this.setState(state);
 		// console.log('state:', state);
 	}
@@ -99,12 +100,12 @@ export default class InputValidation extends React.Component
 		state.meta.dirty = true;
 		state.value = event.target.value;
 
-		this.validate(this.props, state.value);
+		this.validate(this.props, state.value, true);
 		this.setState(state);
 		if(props.name) props.input.setValues({[props.name]: state.value});
 	}
 
-	validate(props, value)
+	validate(props, value, updateForm)
 	{
 		if(props.name) props.input.setValues({[props.name]: value});
 
@@ -112,9 +113,19 @@ export default class InputValidation extends React.Component
 			let state = this.state;
 
 			if(typeof props.validate === 'function')
+			{
 				check(props.validate);
-			else
+			}
+			else if(defaultMethods.getClass(props.validate) === 'Array' && props.validate.length )
+			{
 				props.validate.some((item) => !!check(item));
+			}
+			else
+			{
+				state.meta.error = '';
+				state.meta.invalid = true;
+				props.input.setErrors({[state.meta.inputId]: ''}, updateForm);
+			}
 
 			function check(validate) {
 				const error = validate(value);
@@ -128,7 +139,7 @@ export default class InputValidation extends React.Component
 				else state.meta.invalid = false;
 
 				// console.log('error:', error);
-				props.input.setErrors({[state.meta.inputId]: error}, errors);
+				props.input.setErrors({[state.meta.inputId]: error}, updateForm);
 				// console.log('error:', error);
 				return error;
 			}
