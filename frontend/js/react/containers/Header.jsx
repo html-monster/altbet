@@ -98,13 +98,13 @@ class Header extends React.Component
 						>
 								<span className="win-lost animated" data-verify={"Profitlost"}>Win/Loss: <strong className={'animated ' + (serverData.Profitlost < 0 ? 'lost' : 'win')}>
 									{serverData.Profitlost >= 0 ?
-										`$${profitlost}`
+										`$${(profitlost).toFixed(2)}`
 										:
-										`($${Math.abs(profitlost)})`}
+										`($${(Math.abs(profitlost)).toFixed(2)})`}
 									</strong>
 								</span>
 							<span className="invested animated" data-verify={'Exposure'}>At Stake: <strong className="animated">${(Math.round10(serverData.Exposure, -2)).toFixed(2)}</strong></span>
-							<span className="available animated" data-verify={'Available'}>Balance: <strong className="animated">${Math.round10(serverData.Available, -2)}</strong></span>
+							<span className="available animated" data-verify={'Available'}>Balance: <strong className="animated">${(Math.round10(serverData.Available, -2)).toFixed(2)}</strong></span>
 						</AnimateOnUpdate>
 						:
 						''

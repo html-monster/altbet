@@ -110,7 +110,7 @@ class orderClass{
 			order.on('keydown', 'input.number', function (e) {
 				e = e || window.e;
 				let code = e.which ||e.charCode || e.keyCode;
-				// $(this).next('.warning').fadeOut(200);
+				$(this).next('.warning').fadeOut(200);
 				if($(this).parents('.price').length || $(this).hasClass('spreader')){
 					if($(this)[0].selectionStart === 3){
 						if(code === 37 || code === 8){
