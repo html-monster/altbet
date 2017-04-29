@@ -95,6 +95,8 @@
   position: relative;
   color: $main-color;
   .nav_items {
+    &.loaded .pagination { display: block; }
+
     .mode_wrapper {
       display: flex;
       align-items: center;
@@ -623,6 +625,8 @@
         }
       }
     }
+
+    .pagination { display: none; }
   }
   .mp-exchanges{  padding-top: 5px;  }
   .tab_item:first-child {

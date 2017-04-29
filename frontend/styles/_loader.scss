@@ -1,4 +1,4 @@
-.box {
+.loading-box {
 	position: absolute;
 	width: 78px;
 	height: 78px;
@@ -7,7 +7,7 @@
 	margin-top: -39px;
 }
 
-.loading:before {
+.loader2:before {
 	content: '';
 	position: absolute;
 	width: 35px;
@@ -35,7 +35,7 @@
 		-webkit-animation: spin 3.45s infinite;
 		-moz-animation: spin 3.45s infinite;
 }
-.loading:after {
+.loader2:after {
 	content: '';
 	position: absolute;
 	width: 6px;
