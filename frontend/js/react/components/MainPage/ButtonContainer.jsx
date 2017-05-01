@@ -51,6 +51,7 @@ export default class ButtonContainer extends React.Component
                             data.ismirror && SummaryPositionPrice.reverse();
 
                             let html = [];
+
                             if( item.Side === data.side )
                             {
                                 html = SummaryPositionPrice.map((item2) =>

@@ -199,14 +199,14 @@ export class RegisterForm extends React.PureComponent
 
                     <InputValidation renderContent={this.inputRender} id='r_confirm_pass' name="ComparePassword"
                                      className={'input__field input__field--yoshiko'}
-									 initialValue="123"
+									 // initialValue="123"
                                      label="Confirm Password" type='password'
                                      validate={passwordValidation.bind(null, "r_pass")} input={input}/>
 
 					<InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
 									 className={'input__field input__field--yoshiko js-dateofbirth'}
 									 label="Date of birth" type='text'
-									 initialValue="12 Apr 2017"
+									 // initialValue="12 Apr 2017"
 									 validate={[emptyValidation]} input={input}/>
 
 
@@ -228,11 +228,11 @@ export class RegisterForm extends React.PureComponent
 
 
                     <div className="agreement">
-                        <InputValidation renderContent={this.chkBoxRender} id='agreement' name="agreement" validate={[]} input={input}>
+                        <InputValidation renderContent={this.chkBoxRender} id='agreement' input={input}>
                             <span>Agree to the <a href="/conditions.html" className="text_decoration">Terms of Use</a> and <a href="#" className="text_decoration">Privacy Notice</a></span>
                         </InputValidation>
 
-                        <InputValidation renderContent={this.chkBoxRender} id='agreement_age' name="agreement_age" validate={[]} input={input}>
+                        <InputValidation renderContent={this.chkBoxRender} id='agreement_age' input={input}>
                             I confirm that I am at least 18 years of age.
                         </InputValidation>
 
