@@ -89,7 +89,9 @@
 
 // BM: Exchanges (events)
 .ac-index.co-home {
-  .h-event { position: relative; border-radius: 6px; background: linear-gradient(to bottom, #53515e, #292830);
+  .h-event { float: left; position: relative; margin: 1px 0; width: calc(50% - 4px); border-radius: 6px;
+      background: linear-gradient(to bottom, #53515e, #292830); z-index: 10;
+    &:nth-child(odd) { margin-right: 2px; }
     .event-date { position: absolute; left: 10px; top: 10px;
       &:before { content: ''; display: inline-block; margin-right: 5px; width: 24px; height: 22px; background: url("#{$pathImage}/sprite.svg") no-repeat; }
       @include main_page_event_icon;
@@ -98,32 +100,44 @@
         //&.time{  color: $main-color-darker;  }
       }
     }
-    .event-symbols { margin: 3px 0; padding: 30px 15px 10px; font-size: 13px; }
-    .h-symbol { position: relative; padding-top: 6px; height: 40px; }
-    .l-title { display: inline-block; vertical-align: middle; font-weight: bold;
+    .event-symbols { padding: 30px 15px 10px; font-size: 13px; }
+    .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
+    .l-title { font-weight: bold; //display: inline-block; vertical-align: middle;
       a { color: rgb(218, 217, 220); }
     }
-    .l-buttons { position: absolute; right: 0; top: 0; min-width: 295px;
-      .inner { display: flex; position: relative; margin-top: 18px; }
+    .l-buttons { //min-width: 295px; //position: absolute; right: 0; top: 0;
+      .inner { display: flex; position: relative; }
+    }
+
+    &.basic_mode .button-container {
+      //&:first-child{
+      //  button.event{ transform: scaleX(1.21) scaleY(1.19) translateX(-15px); }
+      //}
+      //&:last-child{
+      //  button.event{ transform: scaleX(1.21) scaleY(1.19) translateX(15px); }
+      //}
+      &.buy .button:not(:first-child), .buy button:not(:first-child){  display: none;  }
+      &.sell .button:not(:last-child), .sell button:not(:last-child){  display: none;  }
     }
     .button-container { display: inline-flex; width: 50%; height: 35px; vertical-align: middle;
       &:first-of-type { justify-content: flex-end; padding-right: 3px; }
       &:last-of-type { justify-content: flex-start; padding-left: 2px; }
 
       button.event { position: relative; margin: 0 2px; padding: 0; height: 32px; border-radius: 4px; text-transform: uppercase;
-          background: $default-button-bg; vertical-align: middle;
+          background: $default-button-bg; vertical-align: middle; transition: all 0.4s ease-out !important;
         @include main_page_event_button;
         &:first-child {  margin-left: 0;  }
         &:last-child {  margin-right: 0;  }
         &:not([disabled]):after { content: ''; position: absolute; display: block; left: 0; top: 0; width: 100%; height: 100%;
-            background: #000000; border-radius: 4px; opacity: 0; z-index: 1; transition: 0.4s ease-out; }
-        &:hover:after{  opacity: 0.15;  }
-        &:active:after{  opacity: 0;  }
+            background: #000000; border-radius: 4px; opacity: 0; z-index: 1; }
+        &:hover:after {  opacity: 0.15;  }
+        &:active:after {  opacity: 0;  }
         &:before { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 4px; }
         &.empty { width: 48px;
           @include main_page_empty_button;
           span { display: block; padding: 0 !important; height: 32px; line-height: 32px; color: $color-max !important; }
         }
+
         span { display: block; position: relative; line-height: 13px; color: $main_page_event_title; font-weight: 600; z-index: 2;
           &.price { padding: 3px 8px 0; font-size: 13px; }
           &.volume { padding-bottom: 3px; font-size: 10px; color: transparentize($main_page_event_title, 0.4); }
@@ -139,6 +153,9 @@
               span{ color: #fff; opacity: 0.8; }
             }
           }
+          @include md(1600) {
+            &:nth-of-type(3) { display: none; }
+          }
         }
       }
       &.sell {
@@ -150,10 +167,16 @@
               span{ color: #fff; opacity: 0.8; }
             }
           }
+          @include md(1600) {
+            &:nth-last-of-type(3) { display: none; }
+          }
         }
       }
     }
 
+    //&.basic_mode {
+    //  .event-title a{  display: none;  }
+    //}
 
   }
 }
@@ -281,29 +304,6 @@
           }
         }
         &.active .content_title h2{  color: $link-color;  }
-      }
-      &.basic_mode_js {
-        .table{
-          .event-title a{  display: none;  }
-          .event-content{
-            //.container{
-            //  margin-top: 5px;
-            //  margin-bottom: -5px;
-            //}
-
-            .button-container{
-              &:first-child{
-                button.event{ transform: scaleX(1.21) scaleY(1.19) translateX(-15px); }
-              }
-              &:last-child{
-                button.event{ transform: scaleX(1.21) scaleY(1.19) translateX(15px); }
-              }
-            }
-            .buy .button:not(:first-child), .buy button:not(:first-child){  display: none;  }
-            .sell .button:not(:last-child), .sell button:not(:last-child){  display: none;  }
-            button.event{ transform: scaleX(1.21) scaleY(1.19); }
-          }
-        }
       }
       .waves-ripple{  display: none;  }
       h2, h3 {

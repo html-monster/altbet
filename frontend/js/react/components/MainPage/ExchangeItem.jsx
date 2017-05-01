@@ -79,7 +79,7 @@ export default class ExchangeItem extends React.Component
         };
 
 
-        return <div className={"h-event categoryFilterJs" + (isBasicMode ? " basic_mode_js" : "") + $classActive + (isTraiderOn ? " clickable" : "")} id={symbol}>
+        return <div className={"h-event categoryFilterJs" + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + (isTraiderOn ? " clickable" : "")} id={symbol}>
             {/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
             <div className={"event-date " + data.CategoryIcon}>
@@ -96,20 +96,23 @@ export default class ExchangeItem extends React.Component
                     </div>
 
                     <div className="l-buttons">
-                        <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                            type: 'sell',
-                            side: 0,
-                            ismirror: false,
-                            ...commProps
-                        }}/>
-                        <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                            type: 'buy',
-                            side: 1,
-                            ismirror: false,
-                            symbolName: symbol,
-                            Orders: data.Orders,
-                            ...commProps
-                        }}/>
+                        <div className="inner">
+                            <ButtonContainer actions={actions} mainContext={mainContext} data={{
+                                type: 'sell',
+                                side: 0,
+                                ismirror: false,
+                                Orders: data.Orders,
+                                ...commProps
+                            }}/>
+                            <ButtonContainer actions={actions} mainContext={mainContext} data={{
+                                type: 'buy',
+                                side: 1,
+                                ismirror: false,
+                                symbolName: symbol,
+                                Orders: data.Orders,
+                                ...commProps
+                            }}/>
+                        </div>
                     </div>
                 </div>
                 <div className="h-symbol">
@@ -118,24 +121,25 @@ export default class ExchangeItem extends React.Component
                     </div>
 
                     <div className="l-buttons">
-                        <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                            type: 'sell',
-                            side: 1,
-                            ismirror: true,
-                            symbolName: symbol,
-                            Orders: data.Orders,
-                            ...commProps
-                        }}/>
+                        <div className="inner">
+                            <ButtonContainer actions={actions} mainContext={mainContext} data={{
+                                type: 'sell',
+                                side: 1,
+                                ismirror: true,
+                                symbolName: symbol,
+                                Orders: data.Orders,
+                                ...commProps
+                            }}/>
 
-                        <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                            type: 'buy',
-                            side: 0,
-                            ismirror: true,
-                            symbolName: symbol,
-                            Orders: data.Orders,
-                            ...commProps
-                        }}/>
-
+                            <ButtonContainer actions={actions} mainContext={mainContext} data={{
+                                type: 'buy',
+                                side: 0,
+                                ismirror: true,
+                                symbolName: symbol,
+                                Orders: data.Orders,
+                                ...commProps
+                            }}/>
+                        </div>
                     </div>
                 </div>
                     <div className={'pl mode_info_js' + (data.Positions ? ' active' : '')}>
@@ -181,9 +185,8 @@ export default class ExchangeItem extends React.Component
                     })}
                 ></div>*/}
             </div>
-            <div className="table not-sort wave waves-effect waves-button"> {/*id="exchange_table"*/}
-
-
+{/*
+            <div className="table not-sort wave waves-effect waves-button"> id="exchange_table"
                 <div className={"event-content revers" + $classActiveM} data-symbol={symbol + "_mirror"} data-id={Symbol.Exchange} data-mirror="1"
                     onClick={ABpp.config.tradeOn && actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
                         isMirror: true,
@@ -204,6 +207,7 @@ export default class ExchangeItem extends React.Component
 
 
             </div>
+*/}
         </div>;
     }
 
