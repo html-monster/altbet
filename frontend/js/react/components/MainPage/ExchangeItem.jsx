@@ -39,7 +39,7 @@ export default class ExchangeItem extends React.Component
     render()
     {
         // let  = ABpp.config.basicMode;
-        const { actions, data:{ activeExchange, isBasicMode, isTraiderOn }, mainContext  } = this.props;
+        const { actions, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol }, mainContext  } = this.props;
         const data = this.props.data;
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
@@ -72,55 +72,30 @@ export default class ExchangeItem extends React.Component
 
 
         // exdata for lineup
-        var date = $DateLocalization.fromSharp(data.Symbol.StartDate, 0, {TZOffset: false});
-        const exdata = {HomeAlias: data.Symbol.HomeAlias,
-            AwayAlias: data.Symbol.AwayAlias,
-            StartDate: data.Symbol.StartDate ? date : null, // moment obj
+        var date = $DateLocalization.fromSharp(Symbol.StartDate, 0, {TZOffset: false});
+        const exdata = {HomeAlias: Symbol.HomeAlias,
+            AwayAlias: Symbol.AwayAlias,
+            StartDate: Symbol.StartDate ? date : null, // moment obj
         };
 
 
-        return <div className={"content_bet not-sort categoryFilterJs" + (isBasicMode ? " basic_mode_js" : "") + $classActive + (isTraiderOn ? " clickable" : "")} id={symbol} /*style={{display: 'none'}}*/>{/**/}{/*@(ViewBag.FilterId != null ? (Model.CategoryList.Contains(ViewBag.FilterId) ? 'display:flex;' : 'display:none;') : 'display:flex;')*/}
-            <input name={data.Symbol.Status} type="hidden" value="inprogress" />
+        return <div className={"h-event categoryFilterJs" + (isBasicMode ? " basic_mode_js" : "") + $classActive + (isTraiderOn ? " clickable" : "")} id={symbol}>
+            {/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
-            <div className={"event_info " + data.CategoryIcon}>
+            <div className={"event-date " + data.CategoryIcon}>
                 <span className="date">
                     {(date = date.unixToLocalDate({format: 'DD MMM Y'})) ? date : ''}
-                    {/*- {(date = $DateLocalization.fromSharp(data.Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
+                    {/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                 </span>
-                {/*{data.Symbol.Status === 2 ? <i className="half_time" title="Completed">ht<span>Completed</span></i> : ""}*/}
             </div>
 
-            <div className="content_title command">
-                <div className="inner">
-                    <h2>{data.Symbol.HomeName} {(data.Symbol.HomePoints !== null) ? <span>({data.Symbol.HomePoints})</span> : '' }</h2>
-                    <div className="vs">vs.</div>
-                    <h2>{data.Symbol.AwayName} {(data.Symbol.AwayPoints !== null) ? <span>({data.Symbol.AwayPoints})</span> : ''}</h2>
-                </div>
-                <span className="symbol_name hidden">{symbol}</span>
-
-                { data.Symbol.StatusEvent &&
-                    <div className="event_info_bottom">
-                        <span title="Event status">{data.Symbol.StatusEvent}</span>
+            <div className="event-symbols">
+                <div className="h-symbol">
+                    <div className="l-title">
+                        <a href={ABpp.baseUrl + data.CategoryUrl + "0"} title="see more">{Symbol.HomeName} {(Symbol.HomeHandicap !== null) ? <span>({(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap})</span> : '' }</a>
                     </div>
-                }
-            </div>
-            <div className="table not-sort wave waves-effect waves-button"> {/*id="exchange_table"*/}
-                <div className={"event-content" + $classActiveNM} data-symbol={symbol} data-id={data.Symbol.Exchange} data-mirror="0"
-                    onClick={ABpp.config.tradeOn && actions.exchangeSideClick.bind(null, {name: data.Symbol.Exchange,
-                        isMirror: false,
-                        title: [data.Symbol.HomeName, data.Symbol.AwayName],
-                        symbol: symbol,
-                    })}
-                >
-                {/*<div className="event-content" data-symbol={symbol} onClick={this._onEventContentClick.bind(this, data)}>*/}
-                    <h3 className="event-title">
-                        <span className="title">{data.Symbol.HomeName}</span>
-                        <span>{(data.Symbol.HomeHandicap !== null ? (data.Symbol.HomeHandicap > 0 ? " +" + data.Symbol.HomeHandicap : " " + data.Symbol.HomeHandicap) : false)}</span>
-                        <a href={ABpp.baseUrl + data.CategoryUrl + "0"}>see more</a>
-                    </h3>
 
-                    <div className="container">
-
+                    <div className="l-buttons">
                         <ButtonContainer actions={actions} mainContext={mainContext} data={{
                             type: 'sell',
                             side: 0,
@@ -135,72 +110,99 @@ export default class ExchangeItem extends React.Component
                             Orders: data.Orders,
                             ...commProps
                         }}/>
-                        <div className={'pl mode_info_js' + (data.Positions ? ' active' : '')}>
-                            <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>P/L:
-                                <span className={(data.GainLoss < 0 ? 'lose' : '') + (data.GainLoss > 0 ? 'win' : '')}>
-                                        {data.GainLoss ?
-											data.GainLoss < 0 ? ` ($${Math.abs(data.GainLoss)})` :  ' $' + data.GainLoss
-											:
-											' $' + 0}
-                                </span>
-                            </strong>
-                        </div>
                     </div>
                 </div>
+                <div className="h-symbol">
+                    <div className="l-title">
+                        <a href={ABpp.baseUrl + data.CategoryUrl + "1"} title="see more">{Symbol.AwayName} {(Symbol.AwayHandicap !== null) ? <span>({(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap})</span> : '' }</a>
+                    </div>
+
+                    <div className="l-buttons">
+                        <ButtonContainer actions={actions} mainContext={mainContext} data={{
+                            type: 'sell',
+                            side: 1,
+                            ismirror: true,
+                            symbolName: symbol,
+                            Orders: data.Orders,
+                            ...commProps
+                        }}/>
+
+                        <ButtonContainer actions={actions} mainContext={mainContext} data={{
+                            type: 'buy',
+                            side: 0,
+                            ismirror: true,
+                            symbolName: symbol,
+                            Orders: data.Orders,
+                            ...commProps
+                        }}/>
+
+                    </div>
+                </div>
+                    <div className={'pl mode_info_js' + (data.Positions ? ' active' : '')}>
+                        <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>P/L:
+                            <span className={(data.GainLoss < 0 ? 'lose' : '') + (data.GainLoss > 0 ? 'win' : '')}>
+                                    {data.GainLoss ?
+                                        data.GainLoss < 0 ? ` ($${Math.abs(data.GainLoss)})` :  ' $' + data.GainLoss
+                                        :
+                                        ' $' + 0}
+                            </span>
+                        </strong>
+                    </div>
+
+                    <div className={'pos mode_info_js' + (data.Positions ? ' active' : '')}>
+                        <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>Pos: <span>{data.Positions && data.Positions}</span></strong>
+                    </div>
+
+                    { Symbol.StatusEvent &&
+                        <div className="event_info_bottom">
+                            <span title="Event status">{Symbol.StatusEvent}</span>
+                        </div>
+                    }
 
 
-                <div className={"event-content revers" + $classActiveM} data-symbol={symbol + "_mirror"} data-id={data.Symbol.Exchange} data-mirror="1"
-                    onClick={ABpp.config.tradeOn && actions.exchangeSideClick.bind(null, {name: data.Symbol.Exchange,
+                    <button ref="LPOpenBtn" className="show-schedule" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenCloseClick}>{}</button>
+                    <div className="h-lup schedule loader not-sort">
+                        <div className={`tabs ${this.state.isLPOpen ? "h-lup__tabs__opened" : ""}`}>
+                            <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
+                            <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info" onClick={::this.onLPOpenClick}>Chart</div>
+                        </div>
+                        <div className="h-lup__tab_content tab_content">
+                            <LineupPage className="tab_item" exdata={exdata} data={this.data} />
+
+                            <div className="tab_item highcharts-tab" id={"container_" + symbol} data-js-highchart="">{}</div>
+                            {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
+                        </div>
+                    </div>
+                {/*<div className={"event-content" + $classActiveNM} data-symbol={symbol} data-id={Symbol.Exchange} data-mirror="0"
+                    onClick={ABpp.config.tradeOn && actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
+                        isMirror: false,
+                        title: [Symbol.HomeName, Symbol.AwayName],
+                        symbol: symbol,
+                    })}
+                ></div>*/}
+            </div>
+            <div className="table not-sort wave waves-effect waves-button"> {/*id="exchange_table"*/}
+
+
+                <div className={"event-content revers" + $classActiveM} data-symbol={symbol + "_mirror"} data-id={Symbol.Exchange} data-mirror="1"
+                    onClick={ABpp.config.tradeOn && actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
                         isMirror: true,
-                        title: [data.Symbol.HomeName, data.Symbol.AwayName],
+                        title: [Symbol.HomeName, Symbol.AwayName],
                         symbol: symbol,
                     })}
                 >
                     <h3 className="event-title">
-                        <span className="title">{data.Symbol.AwayName}</span>
-                        <span>{(data.Symbol.AwayHandicap !== null ? (data.Symbol.AwayHandicap > 0 ? " +" + data.Symbol.AwayHandicap : " " + data.Symbol.AwayHandicap) : "")}</span>
+                        <span className="title">{Symbol.AwayName}</span>
+                        <span>{(Symbol.AwayHandicap !== null ? (Symbol.AwayHandicap > 0 ? " +" + Symbol.AwayHandicap : " " + Symbol.AwayHandicap) : "")}</span>
                         <a href={ABpp.baseUrl + data.CategoryUrl + "1"}>see more</a>
                     </h3>
 
                     <div className="container">
-                        <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                            type: 'sell',
-                            side: 1,
-                            ismirror: true,
-                            symbolName: symbol,
-                            Orders: data.Orders,
-                            ...commProps
-                        }}/>
 
-                        <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                            type: 'buy',
-                            side: 0,
-                            ismirror: true,
-                            symbolName: symbol,
-                            Orders: data.Orders,
-                            ...commProps
-                        }}/>
-
-                        <div className={'pos mode_info_js' + (data.Positions ? ' active' : '')}>
-                            <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>Pos: <span>{data.Positions && data.Positions}</span></strong>
-                        </div>
                     </div>
                 </div>
 
-                <button ref="LPOpenBtn" className="show-schedule" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenCloseClick}>{}</button>
-                <div className="h-lup schedule loader not-sort">
-                    <div className={`tabs ${this.state.isLPOpen ? "h-lup__tabs__opened" : ""}`}>
-                        <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
-                        <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info" onClick={::this.onLPOpenClick}>Chart</div>
-                    </div>
-                    <div className="h-lup__tab_content tab_content">
-                        <LineupPage className="tab_item" exdata={exdata} data={this.data} />
 
-                        <div className="tab_item highcharts-tab" id={"container_" + symbol} data-js-highchart="">{}</div>
-                        {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
-                    </div>
-                </div>
-                <a href="#" className="add_favorite" title="Add to favorite">{}</a>
             </div>
         </div>;
     }
