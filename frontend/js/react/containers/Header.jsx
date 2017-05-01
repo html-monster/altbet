@@ -72,11 +72,10 @@ class Header extends React.Component
 
 				<div className="fast_menu">
 				  <a href={globalData.Urls.Home} className="btn wave waves-effect waves-button"><span>Exchange</span> </a>
-				  <a href={globalData.Urls.Home + "?filter=live"}  className={"btn wave waves-effect waves-button" + ($filter === 'live' ? ' active' : '')}><span className="live_event wave ">Live</span></a>
-				  <a href="#" className="btn wave waves-effect waves-button"><span className="history_event">History</span></a>
+				  <a href={globalData.Urls.Home + "?filter=live"}  className={"btn wave waves-effect waves-button" + ($filter === 'live' ? ' active' : '')}><span className="live_event wave ">My Games</span></a>
+				  <a href="#" className="btn wave waves-effect waves-button"><span className="history_event">My History</span></a>
 				  <a href={globalData.Urls.TradingRules} className="btn wave waves-effect waves-button"><span>Rules</span> </a>
 				</div>
-
 
 				<div className="reconnect help balloon_only">
                 	<button className="btn connect wave waves-effect waves-button" onClick={() => this.testSockOpen()} data-js-connect-label="">{}</button>
