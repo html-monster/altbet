@@ -39,7 +39,7 @@ export default class ExchangeItem extends React.Component
     render()
     {
         // let  = ABpp.config.basicMode;
-        const { actions, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol }, mainContext  } = this.props;
+        const { actions, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange }, mainContext, setCurrentExchangeFn } = this.props;
         const data = this.props.data;
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
@@ -61,14 +61,18 @@ export default class ExchangeItem extends React.Component
         };
 
         // data.activeExchange.name == data.Symbol.Exchange&&console.debug( 'data.Symbol', data.activeExchange, data.Symbol.Exchange, data.activeExchange.name == data.Symbol.Exchange );
-        // activate current exchange
-        let $classActive = '', $classActiveNM = '', $classActiveM = '';
+        // activate current exchange global
+        let $classActive = '', $classActiveNM = '', $classActiveM = '', $classActiveExch;
         if( data.activeExchange.name === data.Symbol.Exchange )
         {
             $classActive = ' active';
             if( !data.activeExchange.isMirror ) $classActiveNM = ' active';
             else $classActiveM = ' active';
         } // endif
+
+
+        // activate local curr. exchange
+        if( currentExchange === data.Symbol.Exchange ) $classActiveExch = ' active-exch'; // endif
 
 
         // exdata for lineup
@@ -79,11 +83,16 @@ export default class ExchangeItem extends React.Component
         };
 
 
-        return (
-            <div className={"h-event categoryFilterJs" + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + (isTraiderOn ? " clickable" : "")} id={symbol} data-js-hevent="">
-            {/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
-                <div className="bg"></div>
+        var exchangeSideClickFn = actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
+                        isMirror: false,
+                        title: [Symbol.HomeName, Symbol.AwayName],
+                        symbol: symbol,
+                    });
 
+
+        return (
+            <div className={"h-event categoryFilterJs" + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")} id={symbol} data-js-hevent="" onClick={() => setCurrentExchangeFn(Symbol.Exchange)}>
+            {/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
                 <div className={"event-date " + data.CategoryIcon}>
                     <span className="date">
@@ -93,7 +102,7 @@ export default class ExchangeItem extends React.Component
                 </div>
 
                 <div className="event-symbols">
-                    <div className="h-symbol">
+                <div className="h-symbol">
                         <div className="l-title">
                             <a href={ABpp.baseUrl + data.CategoryUrl + "0"} title="see more">{Symbol.HomeName} {(Symbol.HomeHandicap !== null) ? <span>({(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap})</span> : '' }</a>
                         </div>
@@ -175,25 +184,30 @@ export default class ExchangeItem extends React.Component
                             </div>
                         }
 
-                        <div className="lpnc-loc">
+                        <div className={`lpnc-loc ${this.state.isLPOpen ? "opened" : ""}`}>
                             <div className="loc1"></div>
                             <div className="loc2"></div>
+                            <div className={`lpnc_tabs ${this.state.isLPOpen ? "lpnc_tabs__opened" : ""}`}>
+                                <div className="lpnc_tabs__tab lpnc_tabs__tab_1 " title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
+                                <div className="lpnc_tabs__tab lpnc_tabs__tab_2 " title="Show chart info" onClick={::this.onLPOpenClick}>Chart</div>
+                            </div>
                             <button ref="LPOpenBtn" className="show-plnc" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenCloseClick}>{}</button>
                         </div>
 
-                        <div className="h-lup loader" data-js-hlup="">
-                            <div className={`tabs ${this.state.isLPOpen ? "h-lup__tabs__opened" : ""}`}>
-                                <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
-                                <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info" onClick={::this.onLPOpenClick}>Chart</div>
-                            </div>
-                            <div className="h-lup__tab_content tab_content">
-                                <LineupPage className="tab_item" exdata={exdata} data={this.data} />
+                        <div className="bg" data-js-bg="">
+                            <div className="h-lup loader" data-js-hlup="">
+                                <div className={`tabs h-lup__tabs ${this.state.isLPOpen ? "h-lup__tabs__opened" : ""}`}>
+                                    <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
+                                    <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info" onClick={::this.onLPOpenClick}>Chart</div>
+                                </div>
+                                <div className="h-lup__tab_content tab_content">
+                                    <LineupPage className="tab_item" exdata={exdata} data={this.data} />
 
-                                <div className="tab_item highcharts-tab" id={"container_" + symbol} data-js-highchart="">{}</div>
-                                {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
+                                    <div className="tab_item highcharts-tab" id={"container_" + symbol} data-js-highchart="">{}</div>
+                                    {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
+                                </div>
                             </div>
                         </div>
-
 
 {/*
             <div className="table not-sort wave waves-effect waves-button"> id="exchange_table"
@@ -256,10 +270,12 @@ export default class ExchangeItem extends React.Component
         var $that = $(that);
         var $wrapper = $that.closest('[data-js-hevent]');
         var $lpnc = $wrapper.find('[data-js-hlup]');
+        var $lpncBg = $wrapper.find('[data-js-bg]');
 
 		$that.toggleClass('active');
 					 // .next().toggleClass('active');
         $lpnc.toggleClass('active');
+        // $lpncBg.toggleClass('active');
 
         // var $contentTitle = $that.closest('.h-event').find('.content_title');
 		if ($that.hasClass('active'))
@@ -272,6 +288,7 @@ export default class ExchangeItem extends React.Component
             height = height > 400 ? height : 400;
 
             $lpnc.css('height', height + 40);
+            $lpncBg.css('bottom', -1 * (height + 40));
             // $contentTitle.css('max-height', 'inherit');
 
             globalData.MainCharOn = true;
@@ -282,6 +299,7 @@ export default class ExchangeItem extends React.Component
             if (!isCLose) this.props.actions.actionSetChartsSymbol({exchange: ""});
 
             $lpnc.removeAttr('style');
+            $lpncBg.removeAttr('style');
 			// setTimeout(() => { $contentTitle.removeAttr('style'); }, 400);
 
 			globalData.MainCharOn = false;
