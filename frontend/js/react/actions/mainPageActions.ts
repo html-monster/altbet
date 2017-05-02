@@ -187,7 +187,7 @@ class Actions extends BaseActions
             "Orders": [
                 {
                     "Price": bpr === '0.' ? bpr : (+bpr).toFixed(2),
-                    "Side": props.type == 1 ? 1 : 0, // sell/buy
+                    "Side": props.type == 1 ? 0 : 1, // sell/buy
                     "Symbol": {
                         "Exchange": props.data.exdata.Exchange,
                         "Name": props.data.exdata.Name,

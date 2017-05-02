@@ -76,43 +76,43 @@ export function actionOnDeleteOrder(order)
 	}
 }
 
-export function actionOnOrderTypeChange(data, checkboxProp)
-{
-	return (dispatch, getState) =>
-	{
-		// let price = $(formData.refs.inputPrice);
-		// let quantity = $(formData.refs.inputQuantity);
-		const orderID = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
-		let state = getState().defaultOrders.orderNewData;
-
-		state.forEach(function (thisItem) {
-			if(orderID === thisItem.ID){
-				thisItem.Orders.some(function (item, index, arr) {
-					if(item.Side === data.Side){
-						let newObj = Object.assign({}, item);
-
-						newObj.Limit = !checkboxProp;
-
-						if(checkboxProp && (newObj.Price === '0.'))
-							newObj.Price = '';
-						else if((newObj.Price === ''))
-							newObj.Price = '0.';
-
-						arr.splice(index, 1, newObj);
-
-						return true;
-					}
-					return false;
-				});
-			}
-		});
-		// console.log(state);
-		dispatch({
-			type: ON_DEFAULT_ORDER_TYPE_CHANGE,
-			payload: state
-		});
-	}
-}
+// export function actionOnOrderTypeChange(data, checkboxProp)
+// {
+// 	return (dispatch, getState) =>
+// 	{
+// 		// let price = $(formData.refs.inputPrice);
+// 		// let quantity = $(formData.refs.inputQuantity);
+// 		const orderID = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
+// 		let state = getState().defaultOrders.orderNewData;
+//
+// 		state.forEach(function (thisItem) {
+// 			if(orderID === thisItem.ID){
+// 				thisItem.Orders.some(function (item, index, arr) {
+// 					if(item.Side === data.Side){
+// 						let newObj = Object.assign({}, item);
+//
+// 						newObj.Limit = !checkboxProp;
+//
+// 						if(checkboxProp && (newObj.Price === '0.'))
+// 							newObj.Price = '';
+// 						else if((newObj.Price === ''))
+// 							newObj.Price = '0.';
+//
+// 						arr.splice(index, 1, newObj);
+//
+// 						return true;
+// 					}
+// 					return false;
+// 				});
+// 			}
+// 		});
+// 		// console.log(state);
+// 		dispatch({
+// 			type: ON_DEFAULT_ORDER_TYPE_CHANGE,
+// 			payload: state
+// 		});
+// 	}
+// }
 
 export function actionOnOrderCreate(newOrder)
 {
@@ -136,12 +136,13 @@ export function actionOnOrderCreate(newOrder)
 						return true;
 					}
 					else if(childIndex === thisItem.Orders.length - 1){
-						if(newOrder.Orders[0].Side){
-							thisItem.Orders.push(newOrder.Orders[0]);
-						}
-						else{
-							thisItem.Orders.unshift(newOrder.Orders[0]);
-						}
+						// if(newOrder.Orders[0].Side !== newOrder.Orders[0].Side){
+							thisItem.Orders[0] = newOrder.Orders[0];
+							// thisItem.Orders.push(newOrder.Orders[0]);
+						// }
+						// else{
+						// 	thisItem.Orders.unshift(newOrder.Orders[0]);
+						// }
 					}
 					// return item;
 				});

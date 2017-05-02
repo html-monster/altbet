@@ -21,9 +21,9 @@ class footerClass{
 			if (footer.hasClass('active') ){
 				scroll = orderSidebarHeight - footerHeight;
 				$('body > .wrapper').css('padding-bottom', footerHeight);
-				orderContent.css('max-height', scroll);
-				currentOrders.css('max-height', scroll);
-				// tbody.css('max-height', actveTraderHeight - footerHeight);
+				orderContent.css('height', scroll);
+				currentOrders.css('height', scroll);
+				// tbody.css('height', actveTraderHeight - footerHeight);
 				activeTraderClass.tbodyResize(true);
 				tabContent.removeClass('footer_active');
 				active_trader_footer.css('bottom', footerHeight + 2);
@@ -31,10 +31,10 @@ class footerClass{
 			else {
 				scroll = orderSidebarHeight ;
 				$('body > .wrapper').css('padding-bottom', 0);
-				orderContent.css('max-height', scroll);
-				currentOrders.css('max-height', scroll);
+				orderContent.css('height', scroll);
+				currentOrders.css('height', scroll);
 				activeTraderClass.tbodyResize(true);
-				// tbody.css('max-height', actveTraderHeight);
+				// tbody.css('height', actveTraderHeight);
 				tabContent.addClass('footer_active');
 				active_trader_footer.css('bottom', 2);
 			}
@@ -45,8 +45,8 @@ class footerClass{
 		// 			$('.active_trader .control.remote').outerHeight() + $('.active_trader .limit thead').height() + 12);
 			// tbody.css('max-height', actveTraderHeight);
 		// } , 0);
-		orderContent.css('max-height', scroll);
-		currentOrders.css('max-height', scroll);
+		orderContent.css('height', scroll);
+		currentOrders.css('height', scroll);
 		tabContent.addClass('footer_active');
 
 		$(window).resize(function () {

@@ -24,5 +24,4 @@ class Strings
     // Total = 'Total';
     MaxAltBetFees = 'Max Alt.Bet Fees';
     // TotalCost = 'Pay-to Play Fees';
-    Profitability = 'Potential Prize';
 }
