@@ -76,11 +76,10 @@ export function actionOnDeleteOrder(order)
 	}
 }
 
-export function actionOnOrderTypeChange(checkboxProp, formData)
+export function actionOnOrderTypeChange(data, checkboxProp)
 {
 	return (dispatch, getState) =>
 	{
-		const data = formData.props.data;
 		// let price = $(formData.refs.inputPrice);
 		// let quantity = $(formData.refs.inputQuantity);
 		const orderID = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
@@ -124,19 +123,19 @@ export function actionOnOrderCreate(newOrder)
 		// console.log('newOrder', newOrder);
 		// console.log('state', state);
 		state.some(function (thisItem, index) {
-			if(newOrder.ID == thisItem.ID && newOrder.isMirror == thisItem.isMirror){
+			if(newOrder.ID === thisItem.ID && newOrder.isMirror === thisItem.isMirror){
 				thisItem.Positions = newOrder.Positions;
 				thisItem.Orders.some(function (item, childIndex, arr) {
 					// console.log(item.Side, newOrder.Orders[0].Side);
 					// console.log(state.splice(index, 1));
-					if(item.Side == newOrder.Orders[0].Side){
+					if(item.Side === newOrder.Orders[0].Side){
 						if(newOrder.Orders[0])
 							arr.splice(childIndex, 1, newOrder.Orders[0]);
 							// item = newOrder.Orders[0];
 
 						return true;
 					}
-					else if(childIndex == thisItem.Orders.length - 1){
+					else if(childIndex === thisItem.Orders.length - 1){
 						if(newOrder.Orders[0].Side){
 							thisItem.Orders.push(newOrder.Orders[0]);
 						}
@@ -149,12 +148,12 @@ export function actionOnOrderCreate(newOrder)
 				removedChild = state.splice(index, 1);
 				return true;
 			}
-			else if(index == state.length - 1){
+			else if(index === state.length - 1){
 				state.unshift(newOrder);
 			}
 		});
 
-		if(state.length == 0 && !removedChild){
+		if(!state.length && !removedChild){
 			state.unshift(newOrder);
 		}
 
@@ -167,40 +166,42 @@ export function actionOnOrderCreate(newOrder)
 	}
 }
 
-export function actionOnAjaxSend(context, parentData, e)
+export function actionOnAjaxSend(actions, data, event)
 {
 	return () =>
 	{
-		e.preventDefault();
+		event.preventDefault();
+		const form = $(event.currentTarget);
 
 		// if(!ABpp.User.userIdentity) return false;
-		if(!orderForm(context.refs.orderForm)) return false;
+		if(!orderForm(event.currentTarget)) return false;
 
-		const data = context.props.data;
 		function OnBeginAjax()
 		{
-			$(context.refs.orderForm).find('[type=submit]').attr('disabled', true);
+			form.addClass('loading');
+			form.find('[type=submit]').attr('disabled', true);
 		}
 
-		function onSuccessAjax()
+		function onSuccessAjax(answer)
 		{
-			context.props.actions.actionOnDeleteOrder( context.props.data);
-			__DEV__ && console.log(`Order sending finished: ${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`);
+			actions.actionOnDeleteOrder(data);
+			__DEV__ && console.log(`Order sending finished: ${answer}`);
 		}
 
 		function onErrorAjax()
 		{
-			$(context.refs.orderForm).find('[type=submit]').removeAttr('disabled');
+			form.removeClass('loading');
+			form.find('[type=submit]').removeAttr('disabled');
 			defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 		}
 
 		defaultMethods.sendAjaxRequest({
 			httpMethod: 'POST',
-			url: context.props.formData.url,
+			url: data.formUrl,
 			callback: onSuccessAjax,
 			onError: onErrorAjax,
 			beforeSend: OnBeginAjax,
-			context: $(context.refs.orderForm)
+			context: form
 		});
 
 		// dispatch({

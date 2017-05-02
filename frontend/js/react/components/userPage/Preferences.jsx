@@ -205,7 +205,7 @@ export default class Preferences extends React.Component
 						</ul>
 					</section>
 					<div className="input_animate input--yoshiko submit_container">
-						<input type="submit" value="Submit" className="btn wave" disabled={loading}/>
+						<input type="submit" value="Submit" className="btn wave submit" disabled={loading}/>
 						<span className={`answer_message ${answerClass}`}>{answerMessage}</span>
 					</div>
 				</form>

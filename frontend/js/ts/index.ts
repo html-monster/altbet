@@ -32,14 +32,14 @@ export class ABpp
     public static PAGE_LANDING = 'PAGE_LANDING';
     public static PAGE_STATIC = 'PAGE_STATIC';
     public static PAGE_ANSWER = 'PAGE_ANSWER';
-    public static TAKER_FEES = 0.0086;
-    public static MAKER_FEES = 0.0026;
+    public static TAKER_FEES = 0.04;
+    public static MAKER_FEES = 0.04;
 
 
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
-    public ver = "0.5.1";
+    public ver = "2.1";
 
 
     // application config

@@ -10,6 +10,7 @@ export class AjaxSend
             formData: null,
             message: "",
             url: "",
+            respCodeName: 'Error',
             respCodes: [],
             beforeChkResponse: null,
         };
@@ -40,14 +41,21 @@ export class AjaxSend
 
 
                         // user defined error
-                        if( data.Error > 100 && data.Error < 200 )
+                        if( data[props.respCodeName] > 100 && data[props.respCodeName] < 200 )
                         {
-                            error = -data.Error;
+                            error = -data[props.respCodeName];
+                            throw new Error(message);
+
+
+                        // catched server error, common error
+                        } else if( data[props.respCodeName] == 100 )
+                        {
+                            error = -100;
                             throw new Error(message);
 
 
                         // success
-                        } else if( data.Error == 200 )
+                        } else if( data[props.respCodeName] == 200 )
                         {
                             error = 100;
                             throw new Error("");
@@ -90,8 +98,8 @@ export class AjaxSend
                 data: props.formData || new FormData(),
                 // Options to tell jQuery not to process data or worry about the content-type
                 cache: false,
-                contentType: false,
-                processData: false
+                //contentType: false,
+                //processData: false
             }, 'json');
             // .always(function () {
             //     // form.find('.loading-ico').fadeOut(200);

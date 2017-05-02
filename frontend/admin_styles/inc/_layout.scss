@@ -44,3 +44,6 @@ section.sidebar { overflow: visible }
     .btn[data-type=del] { @include nblock }
   }
 }
+
+
+.content-wrapper .box-body { overflow: visible }

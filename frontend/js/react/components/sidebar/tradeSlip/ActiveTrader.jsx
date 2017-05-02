@@ -36,15 +36,15 @@ class ActiveTrader extends React.Component {
 		// 0||console.log( 'activeExchange', activeExchange );
 		// const { activeString, showDefaultOrder } = this.state;
 		const { data, ...info } = this.props;
-		const { dragData: { popUpShow }, cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
-			rebuiltServerData, spread, quantity, traderActions } = this.props;
+		const { activeExchangeSymbol, dragData: { popUpShow }, cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
+			rebuiltServerData, spread, showQuantityError, quantity, traderActions } = this.props;
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
 		let className = '';
 		// console.log(this.props);
 		// className = $active = $activeM = '';
 		// ( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
-
+		
         let gainLoss = data && data.GainLoss ? data.GainLoss : '';
         if (data) {
             if (gainLoss < 0)
@@ -115,13 +115,46 @@ class ActiveTrader extends React.Component {
 			<table className="control">
 				<tbody>
 					<tr>
-						<td className={'buy_mkt confim buy market_button wave waves-effect waves-button' + (quantity && bid ? ' active clickable' : '')}>
+						<td className={'join_bid buy market_button confim wave' + (quantity && bid ? ' active clickable' : '')}>
+							<button className="wave waves-effect waves-button" onClick={
+								traderActions.actionAddDefaultOrder.bind(null, this, {
+									direction: 'buy',
+									price    : bid,
+									limit    : true,
+									outputOrder: false
+								}, 'limit')}
+									disabled={!quantity || !bid}>
+								Join BID <span className="price">
+									{
+										bid
+									}
+								</span>
+							</button>
+						</td>
+						<td className={'join_ask sell market_button confim wave' + (quantity && ask ? ' active clickable' : '')}>
+							<button className="wave waves-effect waves-button" onClick={
+								traderActions.actionAddDefaultOrder.bind(null, this, {
+									direction: 'sell',
+									price    : ask,
+									limit    : true,
+									outputOrder: false
+								}, 'limit')}
+									disabled={!quantity || !ask}>
+								<span className="price">
+									{
+										ask
+									}
+								</span> Join ASK
+							</button>
+						</td>
+						{/*<td className={'buy_mkt confim buy market_button wave waves-effect waves-button' + (quantity && bid ? ' active clickable' : '')}>
 							<button
 								onClick={
 									traderActions.actionAddDefaultOrder.bind(null, this, {
 										direction: 'sell',
-										price    : data.Symbol ? Math.round10(1 - data.Symbol.LastAsk, -2) : '',
-										limit    : false
+										price    : data.Symbol ? bid : '',
+										limit    : false,
+										outputOrder: false
 									}, 'market')}
 								disabled={!quantity || !bid}>
 								Buy MKT
@@ -132,26 +165,42 @@ class ActiveTrader extends React.Component {
 								onClick={
 									traderActions.actionAddDefaultOrder.bind(null, this, {
 										direction: 'buy',
-										price    : data.Symbol ? Math.round10(1 - data.Symbol.LastAsk, -2) : '',
-										limit    : false
+										price    : data.Symbol ? ask : '',
+										limit    : false,
+										outputOrder: false
 									}, 'market')}
 								disabled={!quantity || !ask}>
 								Sell MKT
 							</button>
-						</td>
+						</td>*/}
 						<td className="spreader label"><span>Spreader</span></td>
 					</tr>
 					<tr>
 						<td>
 							{
-								!autoTradeOn && orderInfo.activeString === 'market' && orderInfo.showDefaultOrder && quantity &&
+								(orderInfo.outputOrder || !autoTradeOn) && orderInfo.activeString === 'market' && orderInfo.showDefaultOrder && quantity &&
+								activeExchangeSymbol === activeExchange.symbol && isMirror == activeExchange.isMirror &&
 
 								<TraderDefaultForm
 									activeString={orderInfo.activeString}
 									index={'market'}
 									mainData={data}
 									quantity={quantity}
-									inputQuantityContext={this}
+									traderContext={this}
+									{...info}
+									{...orderInfo}
+								/>
+							}
+							{
+								(orderInfo.outputOrder || !autoTradeOn) && orderInfo.activeString === 'limit' && orderInfo.showDefaultOrder && quantity &&
+								activeExchangeSymbol === activeExchange.symbol && isMirror == activeExchange.isMirror &&
+
+								<TraderDefaultForm
+									activeString={orderInfo.activeString}
+									index={'limit'}
+									mainData={data}
+									quantity={quantity}
+									traderContext={this}
 									{...info}
 									{...orderInfo}
 								/>
@@ -159,16 +208,26 @@ class ActiveTrader extends React.Component {
 						</td>
 					</tr>
 					<tr>
-						<td className="label"><span>Quantity</span></td>
+						<td className="label"><span>No. of Entries</span></td>
 						<td className="volume quantity">
 							<div className="input">
-								<button className="clear" onClick={traderActions.actionOnQuantityClear.bind(null, this)}>{}</button>
+								<button className="clear" id="trader_quantity_clear" onClick={traderActions.actionOnQuantityClear.bind(null, this)}>{}</button>
 								<input type="text" className="number quantity" data-validation="1" maxLength="8"
 									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, this)}
 									   onChange={traderActions.actionOnQuantityChange.bind(null, this)}
 									   value={quantity} ref={'inputQuantity'}/>
-								<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>
-								<div className="regulator min"><span className="plus" title="Press Arrow Up" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1)}>{}</span><span className="minus" title="Press Arrow Down" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, -1)}>{}</span></div>
+								<div className="warning" ref={'quantityError'} style={{display: 'none'}}>
+									{
+										showQuantityError ?
+											<p>Choose your number of entries</p>
+											:
+											<p>Available integer value more than 0</p>
+									}
+								</div>
+								<div className="regulator min">
+									<span className="plus" title="Press Arrow Up" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1)}>{}</span>
+									<span className="minus" title="Press Arrow Down" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, -1)}>{}</span>
+								</div>
 							</div>
 						</td>
 						<td className="spread_container ">
@@ -179,7 +238,7 @@ class ActiveTrader extends React.Component {
 									   onKeyDown={traderActions.actionOnButtonSpreadRegulator.bind(null, this)}
 									   onChange={traderActions.actionOnSpreadChange.bind(null, this)}
 									   value={spread} ref={'inputSpread'} disabled={!quantity}/>
-								<div className="warning" style={{display: 'none'}}>
+								<div className="warning right" style={{display: 'none'}}>
 									<p>Available value from 0.01 to 0.99</p>
 								</div>
 								{
@@ -194,63 +253,21 @@ class ActiveTrader extends React.Component {
 				<tbody>
 					<tr>
 						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 5)}>5</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 10)}>10</button></td>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 20)}>20</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 50)}>50</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 15)}>15</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 20)}>20</button></td>
 						<td className="button spread"><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.01)} disabled={!quantity}>0.01</button><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.05)} disabled={!quantity}>0.05</button></td>
 					</tr>
 					<tr>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 100)}>100</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 200)}>200</button></td>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 500)}>500</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1000)}>1000</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 25)}>25</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 50)}>50</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 100)}>100</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 250)}>250</button></td>
 						<td className="button spread"><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.10)} disabled={!quantity}>0.10</button><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.15)} disabled={!quantity}>0.15</button></td>
 					</tr>
 					<tr>
-						<td className={'join_bid buy market_button confim wave waves-effect waves-button' + (quantity && bid ? ' active clickable' : '')}>
-							<button onClick={
-								traderActions.actionAddDefaultOrder.bind(null, this, {
-									direction: 'buy',
-									price    : bid,
-									limit    : true
-								}, 'limit')}
-								disabled={!quantity || !bid}>
-								Join BID <span className="price">
-									{
-										bid
-									}
-								</span>
-							</button>
-						</td>
-						<td className={'join_ask sell market_button confim wave waves-effect waves-button' + (quantity && ask ? ' active clickable' : '')}>
-							<button onClick={
-								traderActions.actionAddDefaultOrder.bind(null, this, {
-									direction: 'sell',
-									price    : ask,
-									limit    : true
-								}, 'limit')}
-								disabled={!quantity || !ask}>
-								<span className="price">
-									{
-										ask
-									}
-								</span> Join ASK
-							</button>
-						</td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 500)}>500</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1000)}>1000</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1500)}>1500</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 2000)}>2000</button></td>
 						<td className="button spread"><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.25)} disabled={!quantity}>0.25</button><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.30)} disabled={!quantity}>0.30</button></td>
 					</tr>
 					<tr>
-						<td>
-							{
-								!autoTradeOn && orderInfo.activeString === 'limit' && orderInfo.showDefaultOrder && quantity &&
-
-								<TraderDefaultForm
-									activeString={orderInfo.activeString}
-									index={'limit'}
-									mainData={data}
-									quantity={quantity}
-									inputQuantityContext={this}
-									{...info}
-									{...orderInfo}
-								/>
-							}
-						</td>
+						<td>{}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -332,6 +349,20 @@ class ActiveTrader extends React.Component {
 						 }
 					</div>
 				}
+				{
+					(orderInfo.outputOrder || !autoTradeOn) && orderInfo.activeString === 'empty' && orderInfo.showDefaultOrder &&
+					activeExchangeSymbol === activeExchange.symbol && isMirror == activeExchange.isMirror &&
+
+					<TraderDefaultForm
+						activeString={orderInfo.activeString}
+						index={'empty'}
+						mainData={data}
+						quantity={quantity}
+						traderContext={this}
+						{...info}
+						{...orderInfo}
+					/>
+				}
 				<table className={'limit' + ($.browser.webkit ? ' webkit' : '') + (quantity ? ' clickable' : '') +
 				(popUpShow ? ' blocked' : '')}>
 					<thead>
@@ -352,7 +383,7 @@ class ActiveTrader extends React.Component {
 									mainData={data}
 									orderInfo={orderInfo}
 									index={index}
-									inputQuantityContext={this}
+									traderContext={this}
 									{...info}
 								/>
 							)
@@ -418,7 +449,8 @@ class TraderString extends React.Component {
 	render()
 	{
 		// const { traderActions, activeString, data, mainData, index, inputQuantityContext, isMirror, quantity } = this.props;
-		const { data, dragPrevPrice, dropActiveString, cmpData: { autoTradeOn }, index, orderInfo: {...info}, spreadHighLight, quantity, spread, ...other } = this.props;
+		const { activeExchangeSymbol, data, dragPrevPrice, dropActiveString, cmpData: { autoTradeOn, activeExchange }, index,
+			isMirror, orderInfo: {...info}, traderContext, spreadHighLight, quantity, spread, ...other } = this.props;
 		// const {  showDefaultOrder  } = this.state;
 		// console.log(this.props);
 		const spreadPricePos = Math.round10(data.Price + +spread, -2);
@@ -472,7 +504,7 @@ class TraderString extends React.Component {
 				component="tr"
 				className={`visible`}
 				transitionName={{
-					enter: 'fadeOut',
+					enter: 'updateAnimation',
 				}}
 				transitionAppear={false}
 				transitionLeave={false}
@@ -507,10 +539,11 @@ class TraderString extends React.Component {
 						other.traderActions.actionAddDefaultOrder.bind(null, this, {
 							direction: 'buy',
 							price: data.Price,
-							limit: true
+							limit: true,
+							outputOrder: false
 						}, index)
 						:
-						null
+						other.traderActions.showQuantityError.bind(null, traderContext, true)
 				}
 				// onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, this, 'buy', data.Price) : null}
 				// onDragEnd={dragAvailable ? other.traderActions.onDragEnd : null}
@@ -572,10 +605,11 @@ class TraderString extends React.Component {
 						other.traderActions.actionAddDefaultOrder.bind(null, this, {
 							direction: 'sell',
 							price: data.Price,
-							limit: true
+							limit: true,
+							outputOrder: false
 						}, index)
 						:
-						null
+						other.traderActions.showQuantityError.bind(null, traderContext, true)
 				}
 				// draggable={!!data.ParticularUserQuantitySell}
 				// onDragStart={dragAvailable ? other.traderActions.onDragStart.bind(null, this, 'sell', data.Price) : null}
@@ -607,7 +641,8 @@ class TraderString extends React.Component {
 			</td>
 			<td>
 				{
-					!autoTradeOn && index === info.activeString && quantity &&
+					(info.outputOrder || !autoTradeOn) && index === info.activeString && (info.outputOrder || quantity) &&
+					activeExchangeSymbol === activeExchange.symbol && isMirror == activeExchange.isMirror &&
 
 					(
 						(info.showDefaultOrder &&
@@ -616,6 +651,8 @@ class TraderString extends React.Component {
 								cmpData={this.props.cmpData}
 								index={index}
 								quantity={quantity}
+								isMirror={isMirror}
+								traderContext={traderContext}
 								{...other}
 								{...info}
 							/>
@@ -628,6 +665,8 @@ class TraderString extends React.Component {
 								index={index}
 								quantity={quantity}
 								spread={spread}
+								isMirror={isMirror}
+								traderContext={traderContext}
 								{...other}
 								{...info}
 							/>

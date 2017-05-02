@@ -2,12 +2,12 @@ class eventPageClass{
 	constructor(){
 		let self = this;
 
-		$('.left_order .tab input.limit').change(function () {
-			if($(this).prop('checked'))
-				$('.executed_orders td').removeClass('clickable');
-			else
-				$('.executed_orders td').addClass('clickable');
-		});
+		// $('.left_order .tab input.limit').change(function () {
+		// 	if($(this).prop('checked'))
+		// 		$('.executed_orders td').removeClass('clickable');
+		// 	else
+		// 		$('.executed_orders td').addClass('clickable');
+		// });
 
 		// self.tabularMarking = function () {
 		// 	let executedOrders = $('.wrapper_event_page .executed_orders');

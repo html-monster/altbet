@@ -36,7 +36,7 @@ class Actions extends BaseActions
 		}
 	}
 
-	public actionOnYourOrderDelete(order, indexGr)
+	public actionOrderDelete(order, indexGr)
 	{
 		return (dispatch, getState) =>
 		{
@@ -53,36 +53,89 @@ class Actions extends BaseActions
 		}
 	}
 
-	public actionOnAjaxSend(context, parentContext, e)
+	public actionOrderDeleteAjax(context, event)
 	{
 		return () =>
 		{
-			e.preventDefault();
-			if(!orderForm(context.refs.orderForm)) return false;
+			event.preventDefault();
+			const form = $(context.refs.deleteForm);
 
-			function OnBeginAjax()
+			function BeforeAjax()
 			{
-				$(context.refs.orderForm).find('[type=submit]').attr('disabled', 'true');
+				form.addClass('loading');
+				form.find('[type=submit]').attr('disabled', 'true');
 			}
 
-			function onSuccessAjax()
+			function onSuccessAjax(data)
 			{
-				console.log('Order sending finished: ' + context.props.data.ID);
+				data = data.split('_');
+				let id = '#' + data[0] + '__order';
+
+				if(data[1] === 'True'){
+					console.log($(id).parents('.order_content').find('h3').text() + ' order is deleted');
+
+					context.props.onDelete();
+				}
+				else{
+					console.log($(id).parents('.order_content').find('h3').text() + ' order isn\'t deleted');
+					form.find('[type=submit]').removeAttr('disabled');
+					form.removeClass('loading');
+					defaultMethods.showError('Internal server error, try again later');
+				}
 			}
 
-			function onErrorAjax()
+			function onErrorAjax(x, y)
 			{
-				$(context.refs.orderForm).find('[type=submit]').removeAttr('disabled');
+				form.find('[type=submit]').removeAttr('disabled');
+				form.removeClass('loading');
+				__DEV__ && console.log('XMLHTTPRequest object: ', x);
+				__DEV__ && console.log('textStatus: ',  y);
 				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 			}
 
 			defaultMethods.sendAjaxRequest({
 				httpMethod: 'POST',
-				url: context.props.formData.url,
+				callback: onSuccessAjax,
+				onError: onErrorAjax,
+				beforeSend: BeforeAjax,
+				url: ABpp.baseUrl + '/Order/Cancel',
+				context: form});
+		}
+	}
+
+	public actionOnAjaxSend(formUrl, event)
+	{
+		return () =>
+		{
+			event.preventDefault();
+
+			const form = event.currentTarget;
+
+			if(!orderForm(form)) return false;
+
+			function OnBeginAjax()
+			{
+				$(form).find('[type=submit]').attr('disabled', 'true');
+			}
+
+			function onSuccessAjax()
+			{
+				console.log('Order sending finished: ' + $(form).find('[name=ID]').val());
+			}
+
+			function onErrorAjax()
+			{
+				$(form).find('[type=submit]').removeAttr('disabled');
+				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+			}
+
+			defaultMethods.sendAjaxRequest({
+				httpMethod: 'POST',
+				url: formUrl,
 				callback: onSuccessAjax,
 				onError: onErrorAjax,
 				beforeSend: OnBeginAjax,
-				context: $(context.refs.orderForm)
+				context: $(form)
 			});
 		}
 	}

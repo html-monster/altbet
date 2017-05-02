@@ -19,11 +19,17 @@
 - Loaders (http://preloaders.net/en/free)
 - Translit (https://github.com/xguest/iso_9_js)
 - React-router (https://github.com/ReactTraining/react-router)
+- Zendesk (https://developer.zendesk.com/embeddables/docs/widget/api)
+- CSS loaders (http://cssload.net/ru/spinners/3)
 
 
 ## Plugins
 - React pluging (https://react.parts/web)
 -- Time picker (http://react-component.github.io/time-picker)
+-- React Dropdowns (https://react.rocks/tag/Dropdown)
+--- React Select (http://jedwatson.github.io/react-select/)
+--- React-Super-Select Live (http://alsoscotland.github.io/react-super-select/react-super-select-examples.html)
+-- React Widgets (http://jquense.github.io/react-widgets/docs/#/dropdownlist?_k=6wmbsn)
 - Waves (http://fian.my.id/Waves/#start)
 - AdminLTE (https://almsaeedstudio.com/themes/AdminLTE/pages/UI/buttons.html)
 - Handlebar (http://handlebarsjs.com/)

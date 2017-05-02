@@ -72,8 +72,8 @@ class Header extends React.Component
 
 				<div className="fast_menu">
 				  <a href={globalData.Urls.Home} className="btn wave waves-effect waves-button"><span>Exchange</span> </a>
-				  <a href={globalData.Urls.Home + "?filter=live"}  className={"btn wave waves-effect waves-button" + ($filter === 'live' ? ' active' : '')}><span className="live_event wave ">Live</span></a>
-				  <a href="#" className="btn wave waves-effect waves-button"><span className="history_event">History</span></a>
+				  <a href={globalData.Urls.Home + "?filter=live"}  className={"btn wave waves-effect waves-button" + ($filter === 'live' ? ' active' : '')}><span className="live_event wave ">My Games</span></a>
+				  <a href="#" className="btn wave waves-effect waves-button"><span className="history_event">My History</span></a>
 				  <a href={globalData.Urls.TradingRules} className="btn wave waves-effect waves-button"><span>Rules</span> </a>
 				</div>
 
@@ -98,13 +98,13 @@ class Header extends React.Component
 						>
 								<span className="win-lost animated" data-verify={"Profitlost"}>Win/Loss: <strong className={'animated ' + (serverData.Profitlost < 0 ? 'lost' : 'win')}>
 									{serverData.Profitlost >= 0 ?
-										`$${profitlost}`
+										`$${(profitlost).toFixed(2)}`
 										:
-										`($${Math.abs(profitlost)})`}
+										`($${(Math.abs(profitlost)).toFixed(2)})`}
 									</strong>
 								</span>
 							<span className="invested animated" data-verify={'Exposure'}>At Stake: <strong className="animated">${(Math.round10(serverData.Exposure, -2)).toFixed(2)}</strong></span>
-							<span className="available animated" data-verify={'Available'}>Balance: <strong className="animated">${Math.round10(serverData.Available, -2)}</strong></span>
+							<span className="available animated" data-verify={'Available'}>Balance: <strong className="animated">${(Math.round10(serverData.Available, -2)).toFixed(2)}</strong></span>
 						</AnimateOnUpdate>
 						:
 						''

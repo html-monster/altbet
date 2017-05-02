@@ -5,7 +5,7 @@ import React from 'react';
 
 import FormValidation from '../../../FormValidation';
 import InputValidation from '../../../formValidation/InputValidation';
-import {minLengthValidation, mailValidation, netellerSecureId} from '../../../formValidation/validation';
+import {emptyValidation, minLengthValidation, mailValidation, netellerSecureId} from '../../../formValidation/validation';
 
 export default class NetellerForm extends React.Component
 {
@@ -71,9 +71,10 @@ export default class NetellerForm extends React.Component
 										 label={'Withdrawal amount'} type={'tel'} filled={depositQuantity}
 										 inputLabel={'total'} name="Sum"
 										 value={depositQuantity || ''}
+										 //validate={emptyValidation}
 										 disabled={true} input={input}/>
 					}
-					{withdraw && <input type="submit" className="wave btn" defaultValue={'Submit'} />}
+					{withdraw && <input type="submit" className="wave btn submit" defaultValue={'Submit'} />}
 					{withdraw && <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>}
 					{withdraw && <span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>}
 				</div>
@@ -87,7 +88,7 @@ export default class NetellerForm extends React.Component
 										 value={depositQuantity || pricePlan ? depositQuantity + pricePlan : ''}
 										 disabled={true} input={input}/>
 
-						<input type="submit" className="wave btn" defaultValue={'Submit'}  />
+						<input type="submit" className="wave btn submit" defaultValue={'Submit'}  />
 						<span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
 						<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
 					</div>

@@ -23,49 +23,50 @@ class Actions extends BaseActions
             let flag = true;
 
             // 0||console.log( 'here 11', context, values, serverValidation, event.target, p1,  p2);
-            const $form = $(event.target);
+            const $form = $(event.currentTarget);
             if( (this.checkAreement('agreement', $form) && this.checkAreement('agreement_age', $form)) )
             {
-                let formData = new FormData(<HTMLFormElement>$form[0]);
-                formData.set('State', "");
+                // let formData = new FormData(<HTMLFormElement>$form[0]);
+                // console.log('values:', values);
+                // formData.set('State', "");
 
                 const ajaxPromise = (new AjaxSend()).send({
-                    formData: formData,
+                    formData: values,
                     message: `Error while registering user, please, try again`,
                     // url: ABpp.baseUrl + $form.attr('action'),
                     url: $form.attr('action'), // DEBUG: remove it
+                    respCodeName: 'ErrorCode',
                     respCodes: [
                         {code: 100, message: ""},
                         // {code: -101, message: "Some custom error"},
                     ],
-                    beforeChkResponse: (data) =>
-                    {
-                        // DEBUG: emulate
-                        data = {Error: 101};
-                        // data.Param1 = "TOR-PHI-3152017"; // id
-                        // data.Param1 = "?path=sport&status=approved";
-                        // data.Param1 = "?status=New";
-                        // data.Param2 = "Buffalo Bills_vs_New England Patriots";
-                        // data.Param3 = "TOR-PHI-3152017"; // id
-
-                        return data;
-                    },
-            });
-
-
-            ajaxPromise.then( result =>
-                {
-                    serverValidation({message: 'The payment is successful'});
-                },
-                result => {
-                    // 0||console.log( 'result', result, result.code );
-                    switch( result.code )
-                    {
-                        case -101:
-                            serverValidation({error: 'User name failed, correct it, please', FirstName: "User name failed"});
-                            break;
-                    }
+                    // beforeChkResponse: (data) =>
+                    // {
+                    //     // DEBUG: emulate
+                    //     data = {Error: 101};
+                    //     // data.Param1 = "TOR-PHI-3152017"; // id
+                    //
+                    //     return data;
+                    // },
                 });
+
+
+                ajaxPromise.then( result =>
+                    {
+                        // 0||console.log( 'success', result );
+                        serverValidation({message: 'Registration is successful'});
+                    },
+                    result => {
+                        0||console.log( 'result', result );
+                        switch( result.code )
+                        {
+                            case -101:
+                                serverValidation({error: 'User name failed, correct it, please', FirstName: "User name failed"});
+                                break;
+                            default:
+                                serverValidation({error: 'User registration failed, please, refresh the page and try again'});
+                        }
+                    });
 
             }
 

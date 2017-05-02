@@ -209,6 +209,7 @@ class orderClass{
 						}
 					}
 				}
+				message.fadeOut(200);
 			});
 		}();
 
@@ -554,91 +555,91 @@ class orderClass{
 	 * @returns html ордера
 	 */
 	static createOrderForm(orderDirection, modification, limit, context, object) {
-		let html = $('.order_content.new').clone(),
-				eventId = context.parents('.event-content').attr('id') ? context.parents('.event-content').attr('id') : context.parents('.event-content').attr('data-symbol'),
-				sumVal;
-
-		html.removeClass('new');
-		if(modification == 'full'){
-			html.attr('id', id[defaultMethods.searchValue(id, eventId)][0] + '__order').css({display: 'none'});
-			html.find('h3').text(object.title);
-			if(globalData.basicMode) html.find('form').addClass('basic_mode');
-		}
-		else{
-			html = html.find('form').css({display: 'none'});
-			if(globalData.basicMode) html.addClass('basic_mode');
-		}
-
-		if (orderDirection == 'sell') {
-			// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
-			if(globalData.basicMode){
-				sumVal = +object.sellSum;
-				html.find('.obligations input.number').val(object.sellSum);
-			}
-			html.find('.side').val('Sell');
-		}
-		else {
-			if(modification == 'full'){
-				html.find('.buy-container').html(html.find('.sell-container').html());
-				html.find('.sell-container').html('');
-			}
-			html.find('input[type=submit]').toggleClass('sell buy').val('buy');
-			if(globalData.basicMode){
-				sumVal = +object.buySum;
-				html.find('.obligations input.number').val(object.buySum);
-			}
-			html.find('.side').val('Buy');
-			// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
-		}
-
-		if(limit) {
-			html.find('.price input.number').val(object.price);
-			html.find('.checkbox span').text('Limit');
-			html.find('.checkbox input').prop('checked', true);
-		}
-		else {
-			html.find('.price input.number').attr('disabled', true).removeAttr('name').val(object.priceMarket);
-			html.find('.obligations input.number').removeAttr('name').attr('disabled', true);
-			html.find('.obligations .regulator').hide();
-			// html.find('.price input.number').attr('disabled', true);
-			// html.find('.obligations input.number').val('');
-			html.find('.price label').text('Market price');
-			html.find('.price .regulator').remove();
-			html.find('.checkbox input[type=checkbox]').attr('checked', false);
-			html.find('.checkbox span').text('Market');
-			html.find('.fees span').hide();
-			html.find('.fees input').val(Math.round10(object.volume * 0.0086, -2));
-		}
-
-		html.find('.volume input.number').val(object.volume);
-		html.find('.symbol').val(context.parents('.event-content').attr('data-symbol').replace(/_mirror/, ''));
-
-		if(context.parents('.event-content').hasClass('revers'))
-			html.find('.mirror').val('1');
-		else
-			html.find('.mirror').val('0');
-
-		if(globalData.basicMode){
-			let fee = Math.round10(object.volume * 0.0086, -2);
-			// let container = html.find('.switch');
-			// container.css({paddingLeft: 0, textAlign: 'center'}).children().hide();
-			// container.append('<strong class="profit">Profit: <span></span></strong>');
-			html.find('.fees input').val(fee || '');
-			html.find('.risk input').val(Math.round10(fee + sumVal, -2) || '');
-			html.find('.profit input').val(Math.round10((1 - object.price) * object.volume, -2) || '');
-		}
-
-		return html;
+		// let html = $('.order_content.new').clone(),
+		// 		eventId = context.parents('.event-content').attr('id') ? context.parents('.event-content').attr('id') : context.parents('.event-content').attr('data-symbol'),
+		// 		sumVal;
+		//
+		// html.removeClass('new');
+		// if(modification == 'full'){
+		// 	html.attr('id', id[defaultMethods.searchValue(id, eventId)][0] + '__order').css({display: 'none'});
+		// 	html.find('h3').text(object.title);
+		// 	if(globalData.basicMode) html.find('form').addClass('basic_mode');
+		// }
+		// else{
+		// 	html = html.find('form').css({display: 'none'});
+		// 	if(globalData.basicMode) html.addClass('basic_mode');
+		// }
+		//
+		// if (orderDirection == 'sell') {
+		// 	// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
+		// 	if(globalData.basicMode){
+		// 		sumVal = +object.sellSum;
+		// 		html.find('.obligations input.number').val(object.sellSum);
+		// 	}
+		// 	html.find('.side').val('Sell');
+		// }
+		// else {
+		// 	if(modification == 'full'){
+		// 		html.find('.buy-container').html(html.find('.sell-container').html());
+		// 		html.find('.sell-container').html('');
+		// 	}
+		// 	html.find('input[type=submit]').toggleClass('sell buy').val('buy');
+		// 	if(globalData.basicMode){
+		// 		sumVal = +object.buySum;
+		// 		html.find('.obligations input.number').val(object.buySum);
+		// 	}
+		// 	html.find('.side').val('Buy');
+		// 	// html.find('.id').val(id[defaultMethods.searchValue(id, context.parents('.event-content').attr('id'))][0] + '__order_buy');
+		// }
+		//
+		// if(limit) {
+		// 	html.find('.price input.number').val(object.price);
+		// 	html.find('.checkbox span').text('Limit');
+		// 	html.find('.checkbox input').prop('checked', true);
+		// }
+		// else {
+		// 	html.find('.price input.number').attr('disabled', true).removeAttr('name').val(object.priceMarket);
+		// 	html.find('.obligations input.number').removeAttr('name').attr('disabled', true);
+		// 	html.find('.obligations .regulator').hide();
+		// 	// html.find('.price input.number').attr('disabled', true);
+		// 	// html.find('.obligations input.number').val('');
+		// 	html.find('.price label').text('Market price');
+		// 	html.find('.price .regulator').remove();
+		// 	html.find('.checkbox input[type=checkbox]').attr('checked', false);
+		// 	html.find('.checkbox span').text('Market');
+		// 	html.find('.fees span').hide();
+		// 	html.find('.fees input').val(Math.round10(object.volume * 0.0086, -2));
+		// }
+		//
+		// html.find('.volume input.number').val(object.volume);
+		// html.find('.symbol').val(context.parents('.event-content').attr('data-symbol').replace(/_mirror/, ''));
+		//
+		// if(context.parents('.event-content').hasClass('revers'))
+		// 	html.find('.mirror').val('1');
+		// else
+		// 	html.find('.mirror').val('0');
+		//
+		// if(globalData.basicMode){
+		// 	let fee = Math.round10(object.volume * 0.0086, -2);
+		// 	// let container = html.find('.switch');
+		// 	// container.css({paddingLeft: 0, textAlign: 'center'}).children().hide();
+		// 	// container.append('<strong class="profit">Profit: <span></span></strong>');
+		// 	html.find('.fees input').val(fee || '');
+		// 	html.find('.risk input').val(Math.round10(fee + sumVal, -2) || '');
+		// 	html.find('.profit input').val(Math.round10((1 - object.price) * object.volume, -2) || '');
+		// }
+		//
+		// return html;
 	}
 
 	/**
 	 * BM: скрывает и показывает информацию при отсутсвие ордеров в сайдбаре
 	 */
 	static showInfo () {
-		if($('#order .default_orders').children().length > 1)
-			$('#default_order_info').hide();
-		else
-			$('#default_order_info').show();
+		// if($('#order .default_orders').children().length > 1)
+		// 	$('#default_order_info').hide();
+		// else
+		// 	$('#default_order_info').show();
 	}
 
 	/**
