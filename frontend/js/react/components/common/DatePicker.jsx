@@ -25,7 +25,7 @@ export class DatePicker extends React.PureComponent
 		input.keydown(() => false);
 		input.keypress(() => false);
 		input.datepicker({
-			yearRange: "1901:c+0",
+			yearRange: "1901:c",
 			dateFormat: "d M yy",
 			maxDate: "0",
 			minDate: new Date(1, 1 - 1, 1),
