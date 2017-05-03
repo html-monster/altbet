@@ -17,7 +17,7 @@
   //&__tabs { bottom: 6px; }
 
   &__tabs__opened &__tab.active { color: $color-blue; }
-  &__tab { display: inline-block;  width: 103px; position: absolute; top: 0px; line-height: 21px; font-size: 13px; text-align: center;
+  &__tab { display: inline-block;  width: 103px; position: absolute; top: 0; line-height: 21px; font-size: 13px; text-align: center;
     color: #fff;  transition: color 0.4s ease-out; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
     &_1 { right: 50%;
       margin-right: 1px;
@@ -106,10 +106,22 @@
 .ac-index.co-home {
   .h-event { float: left; position: relative; margin: 1px 0; width: calc(50% - 4px); border-radius: 6px; z-index: 10;
     &:nth-child(odd) { margin-right: 2px; }
-    &.active-exch { z-index: 100; transform: scale(1.01); transition: .3s; }
+    &.active-exch { z-index: 100; /*transform: scale(1.01); transition: .3s;*/ }
     //&.active2 { transform: scale(1.03, 1.1); }
 
     &.active-exch>.bg { box-shadow: 0px 0px 0px 1px #63b541; }
+    &.basic_mode .button-container {
+      &.buy .button:not(:first-child), .buy button:not(:first-child){  display: none;  }
+      &.sell .button:not(:last-child), .sell button:not(:last-child){  display: none;  }
+    }
+    &.expert-mode .button-container {
+      &.sell, &.buy {
+        &.onebtn, &.hideall {
+          .button { display: block }
+        }
+      }
+    }
+
     &>.bg { position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-radius: 6px;
         background: linear-gradient(to bottom, #53515e, #292830); z-index: -1; transition: .4s;
       &.active {  }
@@ -124,26 +136,23 @@
       }
     }
 
-    .event-symbols { padding: 30px 15px 10px; font-size: 13px;
-      //* { z-index: }
-    }
+    .event-symbols { padding: 30px 15px 10px; font-size: 13px; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
     .l-title { font-weight: bold;
       a { color: rgb(218, 217, 220); }
     }
     .l-buttons {
-      .inner { display: flex; position: relative; }
+      .inner { display: flex; position: relative; min-width: 275px;
+          @include md(1600) { min-width: 185px; }
+      }
     }
 
-    &.basic_mode .button-container {
-      &.buy .button:not(:first-child), .buy button:not(:first-child){  display: none;  }
-      &.sell .button:not(:last-child), .sell button:not(:last-child){  display: none;  }
-    }
+
     .button-container { display: inline-flex; width: 50%; height: 35px; vertical-align: middle;
       &:first-of-type { justify-content: flex-end; padding-right: 3px; }
       &:last-of-type { justify-content: flex-start; padding-left: 2px; }
 
-      button.event { position: relative; margin: 0 2px; padding: 0; height: 32px; border-radius: 4px; text-transform: uppercase;
+      button.event { position: relative; margin: 0 2px; padding: 0; min-width: 42px; height: 32px; border-radius: 4px; text-transform: uppercase;
           background: $default-button-bg; vertical-align: middle; transition: all 0.4s ease-out !important;
         @include main_page_event_button;
         &:first-child {  margin-left: 0;  }
@@ -164,22 +173,19 @@
         }
       }
 
-      &.buy {
-        &>button:not(.empty):first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
-        .button { margin-right: 3px;
-          &:first-child{
-            button {
-              &:not(.empty){  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
-              span{ color: #fff; opacity: 0.8; }
-            }
-          }
-          @include md(1600) {
-            &:nth-of-type(3) { display: none; }
-          }
-        }
-      }
+
+      // left buttons
       &.sell {
         &>button:not(.empty):last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
+        // for preview
+        &.onebtn { width: 42px;
+          .button { display: none; }
+          .button:last-of-type { display: block; }
+        }
+        &.hideall, &.nobets { width: 0;
+          .button { display: none; }
+        }
+
         .button { margin-left: 3px;
           &:last-child{
             button {
@@ -188,37 +194,54 @@
             }
           }
           @include md(1600) {
-            &:nth-last-of-type(3) { display: none; }
+            &:nth-last-of-type(3) { display: none !important; }
+          }
+        }
+      }
+      // right buttons
+      &.buy {
+        &>button:not(.empty):first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
+        // for preview
+        &.onebtn { width: 42px;
+          .button { display: none; }
+          .button:first-of-type { display: block; }
+        }
+        &.hideall { width: 0;
+          .button { display: none; }
+        }
+
+        .button { margin-right: 3px;
+          &:first-child{
+            button {
+              &:not(.empty){  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
+              span{ color: #fff; opacity: 0.8; }
+            }
+          }
+          @include md(1600) {
+            &:nth-of-type(3) { display: none !important; }
           }
         }
       }
     }
 
-    //&.active .lpnc-loc { bottom: -12px; }
+    // lineup tabs
+    // &.active .lpnc-loc { bottom: -12px; }
     .lpnc-loc { position: relative; bottom: -2px; height: 37px; text-align: center; transition: 0.4s ease-out;
       .loc1, .loc2 { display: inline-block; width: 108px; height: 37px; transform: scaleY(0.55) translateY(14px);
           background: url("#{$pathImage}/sprite_components.svg") no-repeat; }
       .loc1 { background-position: -28px -11px; }
       .loc2 { background-position: -163px -11px; }
 
-      &.opened .lpnc_tabs { bottom: 0; }
+      &.opened .lpnc_tabs { bottom: 0;
+        &__tab.active { color: $color-blue; }
+      }
       .lpnc_tabs { position: absolute; left: 0; bottom: 1px; width: 100%; line-height: 21px; font-size: 13px; text-align: center;
           color: #fff;  transition: color 0.4s ease-out;
         &__tab { display: inline-block; width: 103px; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
-          &:hover{  color: $color-blue;  }
-          &_1 { //right: 50%;
-            margin-right: 1px;
-            padding-left: 16px;
-            padding-right: 13px;
-            @include main_page_lineup_button;
-          }
-          &_2 {
-            //left: 50%;
-            margin-left: 1px;
-            padding-left: 13px;
-            padding-right: 16px;
-            @include main_page_chart_button;
-          }
+              transition: color .4s; cursor: pointer;
+          &:hover { color: $color-blue; }
+          &_1 { margin-right: 1px; padding-left: 16px; padding-right: 13px; @include main_page_lineup_button; }
+          &_2 { margin-left: 1px; padding-left: 13px; padding-right: 16px; @include main_page_chart_button; }
         }
       }
     }
@@ -243,6 +266,8 @@
   }
 }
 
+
+// ------------- ВСЁ ЧТО НИЖЕ БУДЕТ УДАЛЕНО !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ----------------------------------
 .content {
   @include span(7.6 of 12);
   @include push (1.8 of 12);

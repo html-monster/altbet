@@ -43,10 +43,15 @@ export default class ExchangeItem extends React.Component
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
 
+        // mode basic/expert
+        let isExpertMode = currentExchange === data.Symbol.Exchange || !isBasicMode;
+        const expModeClass = isExpertMode ? 'expert-mode' : '';
+
         // common props for button container
         let commProps = {
             isTraiderOn: isTraiderOn,
             isBasicMode: isBasicMode,
+            isExpertMode,
             symbolName: symbol,
             Orders: data.Orders,
             exdata: {
@@ -59,9 +64,9 @@ export default class ExchangeItem extends React.Component
             }
         };
 
-        // data.activeExchange.name == data.Symbol.Exchange&&console.debug( 'data.Symbol', data.activeExchange, data.Symbol.Exchange, data.activeExchange.name == data.Symbol.Exchange );
+
         // activate current exchange global
-        let $classActive = '', $classActiveNM = '', $classActiveM = '', $classActiveExch;
+        let $classActive = '', $classActiveNM = '', $classActiveM = '';
         if( data.activeExchange.name === data.Symbol.Exchange )
         {
             $classActive = ' active';
@@ -71,6 +76,7 @@ export default class ExchangeItem extends React.Component
 
 
         // activate local curr. exchange
+        let $classActiveExch = "";
         if( currentExchange === data.Symbol.Exchange ) $classActiveExch = ' active-exch'; // endif
 
 
@@ -82,19 +88,21 @@ export default class ExchangeItem extends React.Component
         };
 
 
+/*
         var exchangeSideClickFn = actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
                         isMirror: false,
                         title: [Symbol.HomeName, Symbol.AwayName],
                         symbol: symbol,
                     });
+*/
 
 
         return (
-            <div className={"h-event categoryFilterJs" + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")} id={symbol} data-js-hevent="" onClick={() => setCurrentExchangeFn(Symbol.Exchange)}>
+            <div className={`h-event categoryFilterJs ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")} id={symbol} data-js-hevent="" onClick={() => setCurrentExchangeFn(Symbol.Exchange)}>
             {/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
                 <div className={"event-date " + data.CategoryIcon}>
-                    <span className="date">
+                    <span className="date" title={Symbol.Exchange}>
                         {(date = date.unixToLocalDate({format: 'DD MMM Y'})) ? date : ''}
                         {/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>
@@ -184,11 +192,11 @@ export default class ExchangeItem extends React.Component
                         }
 
                         <div className={`lpnc-loc ${isLPOpen ? "opened" : ""}`}>
-                            <div className="loc1"></div>
-                            <div className="loc2"></div>
+                            <div className="loc1">{}</div>
+                            <div className="loc2">{}</div>
                             <div className={`lpnc_tabs ${isLPOpen ? "lpnc_tabs__opened" : ""}`}>
-                                <div className="lpnc_tabs__tab lpnc_tabs__tab_1 " title="Show teams info" onClick={this.onLPOpenClick.bind(this, 0)}>Lineups</div>
-                                <div className="lpnc_tabs__tab lpnc_tabs__tab_2 " title="Show chart info" onClick={this.onLPOpenClick.bind(this, 1)}>Chart</div>
+                                <div className={"lpnc_tabs__tab lpnc_tabs__tab_1 " + activeTab[0]} title="Show teams info" onClick={this.onLPTabClick.bind(this, 0)}>Lineups</div>
+                                <div className={"lpnc_tabs__tab lpnc_tabs__tab_2 " + activeTab[1]} title="Show chart info" onClick={this.onLPTabClick.bind(this, 1)}>Chart</div>
                             </div>
                             <button ref="LPOpenBtn" className="show-plnc" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenCloseClick}>{}</button>
                         </div>
@@ -240,7 +248,7 @@ export default class ExchangeItem extends React.Component
     /**
      * @private
      */
-    onLPOpenClick(index)
+    onLPTabClick(index)
     {
         var activeTab = ["", ""];
 

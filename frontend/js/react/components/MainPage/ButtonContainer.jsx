@@ -9,18 +9,17 @@ export default class ButtonContainer extends React.Component
 {
     render()
     {
-        const { data:{ isBasicMode, isTraiderOn }, mainContext } = this.props;
+        const { data, data:{ isBasicMode, isExpertMode, isTraiderOn }, mainContext } = this.props;
         // let $DateLocalization = new DateLocalization();
-        const data = this.props.data;
     // console.log(data);
-        let price, className, emptyBtnName, mirrorClass;
+        let price, className, emptyBtnName, mirrorClass, btnsPreviewClass = "", side1 = 0, side2 = 1;
 
-        // 0||console.debug( 'this.props.actions', this.props.actions );
 
         if( data.ismirror )
         {
             mirrorClass = 'mirror';
-            // price = (1 - (isBasicMode ? item.Price : item.Price));
+            side1 = 1;
+            side2 = 0;
         }
         else
         {
@@ -28,21 +27,35 @@ export default class ButtonContainer extends React.Component
             // price = isBasicMode ? item.Price : item.Price;
         } // endif
 
+        // check for bets
+        let items1 = data.Orders.some((item) => item.Side === side1);
+        let items2 = data.Orders.some((item) => item.Side === side2);
 
+
+        // left buttons
         if( data.type === 'sell' )
         {
             className = 'sell';
             emptyBtnName = 'trade';
+
+            // check for bets
+            if( items1 && !items2 ) btnsPreviewClass = "onebtn";
+            else if (!items1 && !items2) btnsPreviewClass = "nobets";
+            else btnsPreviewClass = "hideall";
         }
         else
         {
             className = 'buy';
             emptyBtnName = 'trade';
+
+            // check for bets
+            if( items2 ) btnsPreviewClass = "onebtn";
+            else if( items1 && !items2 ) btnsPreviewClass = "hideall";
         } // endif
-        // 0||console.debug( 'data', data );
 
 
-        return <div className={`${className} button-container`}>
+
+        return <div className={`${className} button-container ${btnsPreviewClass}`}>
             {
                 (data.Orders.length && data.Orders.some((item) => item.Side === data.side) ?
                         data.Orders.map((item) =>
@@ -55,34 +68,37 @@ export default class ButtonContainer extends React.Component
                             if( item.Side === data.side )
                             {
                                 html = SummaryPositionPrice.map((item2) =>
-                                    <AnimateOnUpdate key={item2.Price}
-                                        component="div"
-                                        className="button"
-                                        transitionName={{
-                                            enter: 'updateAnimation',
-                                            appear: 'updateAnimation'
-                                        }}
-                                        transitionAppear={true}
-                                        transitionLeave={false}
-                                        transitionAppearTimeout={800}
-                                        transitionEnterTimeout={800}
-                                        data={item2}
-                                    >
-                                        <button className={`event animated ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this, mainContext,
-                                                {
-                                                    PosPrice: item.SummaryPositionPrice,
-                                                    ismirror: data.ismirror,
-                                                    price: (price = item2.Price),
-                                                    quantity: item2.Quantity,
-                                                    type: data.type === "sell" ? 1 : 2,
-                                                    data: data,
-                                                })}
-                                                 data-verify="Quantity" /*disabled={isTraiderOn}*/ title="Click to place entry">
-                                            <span className="price">{((price = Common.toFixed(data.ismirror ? 1 - price : price, 2))||true) && isBasicMode  ? '$' + price : price}</span>
-                                            <span className="volume">{item2.Quantity}</span>
-                                            {/*<div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>*/}
-                                        </button>
-                                    </AnimateOnUpdate>
+                                    do {
+                                        let price = Common.toFixed(data.ismirror ? 1 - price : price, 2);
+                                        <AnimateOnUpdate key={item2.Price}
+                                            component="div"
+                                            className="button"
+                                            transitionName={{
+                                                enter: 'updateAnimation',
+                                                appear: 'updateAnimation'
+                                            }}
+                                            transitionAppear={true}
+                                            transitionLeave={false}
+                                            transitionAppearTimeout={800}
+                                            transitionEnterTimeout={800}
+                                            data={item2}
+                                        >
+                                            <button className={`event animated ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this, mainContext,
+                                                    {
+                                                        PosPrice: item.SummaryPositionPrice,
+                                                        ismirror: data.ismirror,
+                                                        price: (price = item2.Price),
+                                                        quantity: item2.Quantity,
+                                                        type: data.type === "sell" ? 1 : 2,
+                                                        data: data,
+                                                    })}
+                                                     data-verify="Quantity" /*disabled={isTraiderOn}*/ title="Click to place entry">
+                                                <span className="price">{price}</span>
+                                                <span className="volume">{item2.Quantity}</span>
+                                                {/*<div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>*/}
+                                            </button>
+                                        </AnimateOnUpdate>
+                                    }
                                 );
                                     {/*</div>*/}
                             }
