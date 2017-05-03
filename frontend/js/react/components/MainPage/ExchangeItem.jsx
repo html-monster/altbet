@@ -13,7 +13,7 @@ export default class ExchangeItem extends React.Component
         super(props);
         // __DEV__&&console.debug( 'ExchangeItem.props.data', this.props.data );
 
-        this.state = {isLPOpen: false};
+        this.state = {isLPOpen: false, activeTab: [" active", ""]};
 
         // эмуляция времени игроков
         this.data = gLineupPageData;
@@ -38,9 +38,8 @@ export default class ExchangeItem extends React.Component
 
     render()
     {
-        // let  = ABpp.config.basicMode;
-        const { actions, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange }, mainContext, setCurrentExchangeFn } = this.props;
-        const data = this.props.data;
+        const { actions, data, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange }, mainContext, setCurrentExchangeFn } = this.props;
+        const { isLPOpen, activeTab } = this.state;
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
 
@@ -184,25 +183,27 @@ export default class ExchangeItem extends React.Component
                             </div>
                         }
 
-                        <div className={`lpnc-loc ${this.state.isLPOpen ? "opened" : ""}`}>
+                        <div className={`lpnc-loc ${isLPOpen ? "opened" : ""}`}>
                             <div className="loc1"></div>
                             <div className="loc2"></div>
-                            <div className={`lpnc_tabs ${this.state.isLPOpen ? "lpnc_tabs__opened" : ""}`}>
-                                <div className="lpnc_tabs__tab lpnc_tabs__tab_1 " title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
-                                <div className="lpnc_tabs__tab lpnc_tabs__tab_2 " title="Show chart info" onClick={::this.onLPOpenClick}>Chart</div>
+                            <div className={`lpnc_tabs ${isLPOpen ? "lpnc_tabs__opened" : ""}`}>
+                                <div className="lpnc_tabs__tab lpnc_tabs__tab_1 " title="Show teams info" onClick={this.onLPOpenClick.bind(this, 0)}>Lineups</div>
+                                <div className="lpnc_tabs__tab lpnc_tabs__tab_2 " title="Show chart info" onClick={this.onLPOpenClick.bind(this, 1)}>Chart</div>
                             </div>
                             <button ref="LPOpenBtn" className="show-plnc" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenCloseClick}>{}</button>
                         </div>
 
                         <div className="h-lup loader" data-js-hlup="">
-                            <div className={`tabs h-lup__tabs ${this.state.isLPOpen ? "h-lup__tabs__opened" : ""}`}>
+{/*
+                            <div className={`tabs h-lup__tabs ${isLPOpen ? "h-lup__tabs__opened" : ""}`}>
                                 <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
                                 <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info" onClick={::this.onLPOpenClick}>Chart</div>
                             </div>
+*/}
                             <div className="h-lup__tab_content tab_content">
-                                <LineupPage className="tab_item" exdata={exdata} data={this.data} />
+                                <LineupPage className={"h-lup__tab_item tab_item" + activeTab[0]} exdata={exdata} data={this.data} />
 
-                                <div className="tab_item highcharts-tab" id={"container_" + symbol} data-js-highchart="">{}</div>
+                                <div className={"h-lup__tab_item tab_item highcharts-tab" + activeTab[1]} id={"container_" + symbol} data-js-highchart="">{}</div>
                                 {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                             </div>
                         </div>
@@ -239,18 +240,35 @@ export default class ExchangeItem extends React.Component
     /**
      * @private
      */
-    onLPOpenClick()
+    onLPOpenClick(index)
     {
-        this.state.isLPOpen||this.onLPOpenCloseClick();
+        var activeTab = ["", ""];
+
+        activeTab[index] = " active";
+
+        var newStates = {...this.state, activeTab};
+        this.setState(newStates);
+
+        this.state.isLPOpen||this.onLPOpenCloseClick({newStates});
+/*
+        $(container).find('.wrapper .tab').click(function ()
+        {
+			let items = $(container).find('.tab_item');
+
+			$(container).find('.wrapper .tab').removeClass("active").eq($(this).index()).addClass("active");
+
+			itemsAnimation(items);
+        }).eq(0).addClass("active");
+*/
     }
 
 
     /**
      * @private
      */
-    onLPOpenCloseClick()
+    onLPOpenCloseClick({newStates})
     {
-        this.setState({...this.state, isLPOpen: !this.state.isLPOpen});
+        this.setState({...this.state, ...newStates, isLPOpen: !this.state.isLPOpen});
 
         let target = this.refs.LPOpenBtn;
         if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);
