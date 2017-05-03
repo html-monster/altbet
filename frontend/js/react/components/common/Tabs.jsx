@@ -58,7 +58,7 @@ export class Tabs extends React.PureComponent
         if( !($(ee.target).attr('data-disabled')) )
         {
             tabContainer.children('.js-tab').removeClass("active").eq($(ee.target).index()).addClass("active");
-            itemContainer.children('.js-tab_item').removeClass('active').hide().eq($(ee.target).index()).fadeIn();
+            itemContainer.children('.js-tab_item').removeClass('active').hide().eq($(ee.target).index()).show();
         }
     }
 }

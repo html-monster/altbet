@@ -184,11 +184,11 @@ export default class ExchangeItem extends React.Component
                         }
 
                         <div className={`lpnc-loc ${isLPOpen ? "opened" : ""}`}>
-                            <div className="loc1"></div>
-                            <div className="loc2"></div>
+                            <div className="loc1">{}</div>
+                            <div className="loc2">{}</div>
                             <div className={`lpnc_tabs ${isLPOpen ? "lpnc_tabs__opened" : ""}`}>
-                                <div className="lpnc_tabs__tab lpnc_tabs__tab_1 " title="Show teams info" onClick={this.onLPOpenClick.bind(this, 0)}>Lineups</div>
-                                <div className="lpnc_tabs__tab lpnc_tabs__tab_2 " title="Show chart info" onClick={this.onLPOpenClick.bind(this, 1)}>Chart</div>
+                                <div className="lpnc_tabs__tab lpnc_tabs__tab_1 tab" title="Show teams info" onClick={this.onLPOpenClick.bind(this, 0)}>Lineups</div>
+                                <div className="lpnc_tabs__tab lpnc_tabs__tab_2 tab" title="Show chart info" onClick={this.onLPOpenClick.bind(this, 1)}>Chart</div>
                             </div>
                             <button ref="LPOpenBtn" className="show-plnc" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenCloseClick}>{}</button>
                         </div>
@@ -284,10 +284,10 @@ export default class ExchangeItem extends React.Component
      */
     lineupOpen(that, isCLose)
     {
-        var $that = $(that);
-        var $wrapper = $that.closest('[data-js-hevent]');
-        var $lpnc = $wrapper.find('[data-js-hlup]');
-        var $lpncBg = $wrapper.find('[data-js-bg]');
+        let $that = $(that);
+        let $wrapper = $that.closest('[data-js-hevent]');
+        let $lpnc = $wrapper.find('[data-js-hlup]');
+        let $lpncBg = $wrapper.find('[data-js-bg]');
 
 		$that.toggleClass('active');
 					 // .next().toggleClass('active');

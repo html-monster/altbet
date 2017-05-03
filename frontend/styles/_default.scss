@@ -590,6 +590,7 @@ input ~ .info{
 .tab {
   transition: 0.4s ease-out;
   cursor: pointer;
+  text-align: center;
   user-select: none;
   &[data-disabled]{  cursor: default;  opacity: 0.6; }
 }
@@ -601,7 +602,7 @@ input ~ .info{
 
 // BM: tabs variant like AT
 .h-tab1 {
-  &__tabs { margin: 0 auto; border-radius: 4px; }
+  &__tabs { margin: 0 auto; border-radius: 4px; text-align: center; }
   &__tab { display: inline-block; width: calc(50% - 1px); height: 35px; line-height: 33px; color: #fff; font-size: 14px;
       border: 1px solid #fff; border-radius: 4px 0 0 4px; vertical-align: top;
     &.active { background-image: linear-gradient(to top, #bdc0cd, #ffffff); border: none; color: #211e25; }
