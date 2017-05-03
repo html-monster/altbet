@@ -194,23 +194,22 @@ export default class ExchangeItem extends React.Component
                             <button ref="LPOpenBtn" className="show-plnc" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenCloseClick}>{}</button>
                         </div>
 
-                        <div className="bg" data-js-bg="">
-                            <div className="h-lup loader" data-js-hlup="">
-                                <div className={`tabs h-lup__tabs ${this.state.isLPOpen ? "h-lup__tabs__opened" : ""}`}>
-                                    <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
-                                    <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info" onClick={::this.onLPOpenClick}>Chart</div>
-                                </div>
-                                <div className="h-lup__tab_content tab_content">
-                                    <LineupPage className="tab_item" exdata={exdata} data={this.data} />
+                        <div className="h-lup loader" data-js-hlup="">
+                            <div className={`tabs h-lup__tabs ${this.state.isLPOpen ? "h-lup__tabs__opened" : ""}`}>
+                                <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
+                                <div className="h-lup__tab h-lup__tab_2 tab" title="Show chart info" onClick={::this.onLPOpenClick}>Chart</div>
+                            </div>
+                            <div className="h-lup__tab_content tab_content">
+                                <LineupPage className="tab_item" exdata={exdata} data={this.data} />
 
-                                    <div className="tab_item highcharts-tab" id={"container_" + symbol} data-js-highchart="">{}</div>
-                                    {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
-                                </div>
+                                <div className="tab_item highcharts-tab" id={"container_" + symbol} data-js-highchart="">{}</div>
+                                {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                             </div>
                         </div>
+                        <div className="bg" data-js-bg="">{}</div>
 
-{/*
-            <div className="table not-sort wave waves-effect waves-button"> id="exchange_table"
+                {/*
+                 <div className="table not-sort wave waves-effect waves-button"> id="exchange_table"
                 <div className={"event-content revers" + $classActiveM} data-symbol={symbol + "_mirror"} data-id={Symbol.Exchange} data-mirror="1"
                     onClick={ABpp.config.tradeOn && actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
                         isMirror: true,
@@ -287,8 +286,8 @@ export default class ExchangeItem extends React.Component
             let height = $wrapper.find("[data-js-team]").height();
             height = height > 400 ? height : 400;
 
-            $lpnc.css('height', height + 40);
             $lpncBg.css('bottom', -1 * (height + 40));
+            $lpnc.css('height', height + 40);
             // $contentTitle.css('max-height', 'inherit');
 
             globalData.MainCharOn = true;

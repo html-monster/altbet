@@ -3,13 +3,13 @@
   //.h-lup__tab { top: -9px; transition: 0.4s ease-out; }
   //.h-lup { overflow: visible }
 }
-.h-event .lpnc-loc {
-  .h-lup__tab { top: auto; bottom: -8px; }
-}
-.h-lup { position: absolute; margin: 0 10px; bottom: 0; height: 0; border-radius: 6px; z-index: 2; clear: both; overflow: hidden;
+//.h-event .lpnc-loc {
+//  .h-lup__tab { top: auto; bottom: -8px; }
+//}
+.h-lup { position: absolute; margin: 0 10px; /*bottom: 0;*/ height: 0; border-radius: 6px; z-index: 2; clear: both; overflow: hidden;
      transition: 0.4s ease-out;
   @include chartMP;
-  &.active { padding-top: 10px; height: 400px; }
+  &.active { padding-top: 10px; /*height: 400px;*/ }
   &:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 0;
       background: $main_page_gif no-repeat center $main_page_tab_color_active; }
   &.loader:after{  height: 100%;  }
@@ -34,7 +34,9 @@
     }
     &:hover{  color: $color-blue;  }
   }
-  &__tab_content { position: relative; padding-top: 10px !important; overflow: hidden }
+
+  //&.active &__tab_content { opacity: 1; transition: .4s; }
+  &__tab_content { position: relative; padding-top: 10px !important; overflow: hidden; /*opacity: 0;*/ }
 
   .highcharts-tab { text-align: center; }
   .highcharts-container { display: inline-block; }
