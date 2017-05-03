@@ -51,6 +51,7 @@ export default class ButtonContainer extends React.Component
             // check for bets
             if( items2 ) btnsPreviewClass = "onebtn";
             else if( items1 && !items2 ) btnsPreviewClass = "hideall";
+            if( !items1 && !items2 ) btnsPreviewClass = "nobets";
         } // endif
 
 

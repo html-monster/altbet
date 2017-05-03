@@ -195,7 +195,7 @@ export class WebsocketModel
 
 
         // main page charts
-        if(globalData.mainPage && globalData.MainCharOn) mainChartController.drawMainCharts(data.Bars);
+        if(globalData.mainPage && globalData.MainCharOn) mainChartController && mainChartController.drawMainCharts(data.Bars);
 
         // BM: main page events data
 // 0||console.debug( 'data.SymbolsAndOrders', data.SymbolsAndOrders );

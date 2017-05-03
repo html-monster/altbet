@@ -116,9 +116,10 @@
     }
     &.expert-mode .button-container {
       &.sell, &.buy {
-        &.onebtn, &.hideall {
-          .button { display: block }
+        &.onebtn, &.hideall { width: 50%;
+          .button { display: inline-block; }
         }
+        &.buy.nobets .button { width: 42px; }
       }
     }
 
@@ -142,15 +143,15 @@
       a { color: rgb(218, 217, 220); }
     }
     .l-buttons {
-      .inner { display: flex; position: relative; min-width: 275px;
-          @include md(1600) { min-width: 185px; }
+      .inner { display: block; position: relative; min-width: 277px; text-align: right;
+          @include md(1600) { min-width: 187px; }
       }
     }
 
 
-    .button-container { display: inline-flex; width: 50%; height: 35px; vertical-align: middle;
-      &:first-of-type { justify-content: flex-end; padding-right: 3px; }
-      &:last-of-type { justify-content: flex-start; padding-left: 2px; }
+    .button-container { display: inline-block; width: 50%; height: 35px; vertical-align: middle;
+      &:first-of-type { padding-right: 3px; text-align: left }
+      &:last-of-type { padding-left: 2px; text-align: right }
 
       button.event { position: relative; margin: 0 2px; padding: 0; min-width: 42px; height: 32px; border-radius: 4px; text-transform: uppercase;
           background: $default-button-bg; vertical-align: middle; transition: all 0.4s ease-out !important;
@@ -175,12 +176,13 @@
 
 
       // left buttons
-      &.sell {
+      &.sell, &.buy { button.empty { font-size: 12px; } }
+      &.sell { text-align: right;
         &>button:not(.empty):last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
         // for preview
         &.onebtn { width: 42px;
           .button { display: none; }
-          .button:last-of-type { display: block; }
+          .button:last-of-type { display: inline-block; }
         }
         &.hideall, &.nobets { width: 0;
           .button { display: none; }
@@ -199,12 +201,13 @@
         }
       }
       // right buttons
-      &.buy {
+      &.buy { text-align: left  ;
         &>button:not(.empty):first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
         // for preview
+        &.nobets { width: 42px; }
         &.onebtn { width: 42px;
-          .button { display: none; }
-          .button:first-of-type { display: block; }
+          .button { display: inline-block; }
+          .button:first-of-type { display: inline-block; }
         }
         &.hideall { width: 0;
           .button { display: none; }

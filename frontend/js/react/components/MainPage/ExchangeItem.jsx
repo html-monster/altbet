@@ -98,7 +98,7 @@ export default class ExchangeItem extends React.Component
 
 
         return (
-            <div className={`h-event categoryFilterJs ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")} id={symbol} data-js-hevent="" onClick={() => setCurrentExchangeFn(Symbol.Exchange)}>
+            <div className={`h-event categoryFilterJs ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")} id={symbol} data-js-hevent="" onClick={() => setCurrentExchangeFn(Symbol.Exchange)} data-js-event="">
             {/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
                 <div className={"event-date " + data.CategoryIcon}>
@@ -111,7 +111,7 @@ export default class ExchangeItem extends React.Component
                 <div className="event-symbols">
                 <div className="h-symbol">
                         <div className="l-title">
-                            <a href={ABpp.baseUrl + data.CategoryUrl + "0"} title="see more">{Symbol.HomeName} {(Symbol.HomeHandicap !== null) ? <span>({(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap})</span> : '' }</a>
+                            <a href={ABpp.baseUrl + data.CategoryUrl + "0"} title="see more"><span data-js-title="">{Symbol.HomeName}</span> {(Symbol.HomeHandicap !== null) ? <span>({(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap})</span> : '' }</a>
                         </div>
 
                         <div className="l-buttons">
@@ -136,7 +136,7 @@ export default class ExchangeItem extends React.Component
                     </div>
                     <div className="h-symbol">
                         <div className="l-title">
-                            <a href={ABpp.baseUrl + data.CategoryUrl + "1"} title="see more">{Symbol.AwayName} {(Symbol.AwayHandicap !== null) ? <span>({(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap})</span> : '' }</a>
+                            <a href={ABpp.baseUrl + data.CategoryUrl + "1"} title="see more"><span data-js-title>{Symbol.AwayName}</span> {(Symbol.AwayHandicap !== null) ? <span>({(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap})</span> : '' }</a>
                         </div>
 
                         <div className="l-buttons">
