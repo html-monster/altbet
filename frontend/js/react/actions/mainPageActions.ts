@@ -245,6 +245,8 @@ class Actions extends BaseActions
             // symbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
             const aexch = getState().mainPage.activeExchange;
 
+            0||console.log( 'inProps', inProps );
+            
             if( aexch.name !== inProps.name || aexch.isMirror !== inProps.isMirror )
             {
                 ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror, symbol: inProps.symbol});
@@ -275,7 +277,7 @@ class Actions extends BaseActions
         // };
             // console.debug( 'exchangeSideClick', getState());
 
-            if( $('.left_order .tab input.limit').prop('checked') )
+/*            if( $('.left_order .tab input.limit').prop('checked') )
             {
                 // todo: needs move to sidebar
                 // set current tab
@@ -298,7 +300,7 @@ class Actions extends BaseActions
 
                 // activeTraderClass.spreaderClean(true);
                 // activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);
-            } // endif
+            }*/ // endif
 
             // 0||console.log( 'inProps, val.Symbol.Exchange', inProps, inProps.name, inProps.isMirror );
 

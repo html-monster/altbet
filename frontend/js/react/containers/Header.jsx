@@ -59,7 +59,7 @@ class Header extends React.Component
 			serverData.Exposure = serverData.Invested;
 			serverData.Available= serverData.CurrentBalance;
 		}
-        const profitlost = serverData.Profitlost.toFixed(2);
+        const profitlost = serverData.Profitlost;
 
         return <div className="header_info">
 			{/*<div className="video btn">*/}
@@ -98,7 +98,7 @@ class Header extends React.Component
 						>
 								<span className="win-lost animated" data-verify={"Profitlost"}>Win/Loss: <strong className={'animated ' + (serverData.Profitlost < 0 ? 'lost' : 'win')}>
 									{serverData.Profitlost >= 0 ?
-										`$${(profitlost).toFixed(2)}`
+										`$${profitlost.toFixed(2)}`
 										:
 										`($${(Math.abs(profitlost)).toFixed(2)})`}
 									</strong>
@@ -109,7 +109,6 @@ class Header extends React.Component
 						:
 						''
 				}
-				{/*{ ABpp.User.isAuthorized() && ABpp.User.login == 'bot' ? <a href="#" className="btn deposit" onClick={() => this.testSockOpen()} title="Connect to socket">C</a> : ''}*/}
                 { ABpp.User.isAuthorized() && ABpp.User.login === 'bot' ? <button className="btn wave waves-effect waves-button" onClick={() => this.testSockClose()} title="Dissconnect from socket">D</button> : ''}
 
 

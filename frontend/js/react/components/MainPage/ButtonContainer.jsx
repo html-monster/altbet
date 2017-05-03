@@ -99,7 +99,7 @@ export default class ButtonContainer extends React.Component
                                     type: data.type === "sell" ? 1 : 2,
                                     data: data,
                                 })}
-                                style={data.type === "sell" && !data.Orders.length ? {display: 'none'} :  data.type === "buy" && !data.Orders.length ? {marginLeft: -24} : {} }
+                                //style={data.type === "sell" && !data.Orders.length ? {display: 'none'} :  data.type === "buy" && !data.Orders.length ? {marginLeft: -24} : {} }
                                 /*disabled={isTraiderOn}*/ title="Click to place entry">
                             <span className="price empty">{emptyBtnName}</span>
                             <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>

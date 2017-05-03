@@ -20,7 +20,7 @@ class MainPage extends BaseController
 
         props.actions.actionOnLoad();
 
-        this.state = {loaded: ""};
+        this.state = {loaded: "", currentExchange: ""};
     }
 
 
@@ -87,6 +87,7 @@ class MainPage extends BaseController
         // let isBasicMode = ABpp.config.basicMode;
         const data = this.props.data;
         const { actions, data:{ activeExchange, isBasicMode, isTraiderOn } } = this.props;
+        const { currentExchange } = this.state;
         let $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
         let urlBase = appData.baseUrl.MainPage;
@@ -121,7 +122,11 @@ class MainPage extends BaseController
                         <div className="tab_item">
                             <div className="mp-exchanges">
                                 {data.marketsData.map((item, key) =>
-                                    <ExchangeItem key={key} data={{...item, activeExchange, isBasicMode, isTraiderOn}} mainContext={this} actions={actions}/>
+                                    <ExchangeItem key={key}
+                                        data={{...item, activeExchange, isBasicMode, isTraiderOn, currentExchange}}
+                                        mainContext={this}
+                                        setCurrentExchangeFn={::this._setCurrentExchange}
+                                        actions={actions} />
                                 )}
                             </div>
                             { $Pagination && $Pagination.LastPage > 1 &&
@@ -174,6 +179,13 @@ class MainPage extends BaseController
             // }, 300);
         }();
         inWrapper.show().find(inAnimatedRow).each(animate.next());
+    }
+
+
+
+    _setCurrentExchange(item)
+    {
+        this.setState({...this.state, currentExchange: item});
     }
 }
 
