@@ -59,7 +59,7 @@ class Header extends React.Component
 			serverData.Exposure = serverData.Invested;
 			serverData.Available= serverData.CurrentBalance;
 		}
-        const profitlost = serverData.Profitlost.toFixed(2);
+        const profitlost = serverData.Profitlost;
 
         return <div className="header_info">
 			{/*<div className="video btn">*/}
