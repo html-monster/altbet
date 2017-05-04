@@ -404,7 +404,6 @@ class Actions extends BaseActions
         };
     }
 
-
     /**
      * set active symbol on main page
      * @param inProps

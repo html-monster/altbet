@@ -170,21 +170,6 @@ export default class ExchangeItem extends React.Component
                         })}
                     ></div>*/}
                 </div>
-                        <div className={'pl mode_info_js' + (data.Positions ? ' active' : '')}>
-                            <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>P/L:
-                                <span className={(data.GainLoss < 0 ? 'lose' : '') + (data.GainLoss > 0 ? 'win' : '')}>
-                                        {data.GainLoss ?
-                                            data.GainLoss < 0 ? ` ($${Math.abs(data.GainLoss)})` :  ' $' + data.GainLoss
-                                            :
-                                            ' $' + 0}
-                                </span>
-                            </strong>
-                        </div>
-
-                        <div className={'pos mode_info_js' + (data.Positions ? ' active' : '')}>
-                            <strong style={data.Positions ? {transform: `translateY(0)`} : {}}>Pos: <span>{data.Positions && data.Positions}</span></strong>
-                        </div>
-
                         { Symbol.StatusEvent &&
                             <div className="event_info_bottom">
                                 <span title="Event status">{Symbol.StatusEvent}</span>
@@ -192,13 +177,28 @@ export default class ExchangeItem extends React.Component
                         }
 
                         <div className={`lpnc-loc ${isLPOpen ? "opened" : ""}`}>
-                            <div className="loc1">{}</div>
-                            <div className="loc2">{}</div>
+                            {/*<div className="loc1">{}</div>*/}
+                            {/*<div className="loc2">{}</div>*/}
+							<div className={'pl mode_info_js' + (data.Positions ? ' active' : '')}>
+								<strong style={data.Positions ? {transform: `translateY(0)`} : {}}>P/L:
+									<span className={(data.GainLoss < 0 ? 'lose' : '') + (data.GainLoss > 0 ? 'win' : '')}>
+                                        {data.GainLoss ?
+											data.GainLoss < 0 ? ` ($${(Math.abs(data.GainLoss)).toFixed(2)})` :  ' $' + (data.GainLoss).toFixed(2)
+											:
+											' $' + 0}
+                                </span>
+								</strong>
+							</div>
+
+							<div className={'pos mode_info_js' + (data.Positions ? ' active' : '')}>
+								<strong style={data.Positions ? {transform: `translateY(0)`} : {}}>Pos: <span>{data.Positions && data.Positions}</span></strong>
+							</div>
+
                             <div className={`lpnc_tabs ${isLPOpen ? "lpnc_tabs__opened" : ""}`}>
-                                <div className={"lpnc_tabs__tab lpnc_tabs__tab_1 " + activeTab[0]} title="Show teams info" onClick={this.onLPTabClick.bind(this, 0)}>Lineups</div>
-                                <div className={"lpnc_tabs__tab lpnc_tabs__tab_2 " + activeTab[1]} title="Show chart info" onClick={this.onLPTabClick.bind(this, 1)}>Chart</div>
+                                <div className={"lpnc_tabs__tab lpnc_tabs__tab_1 " + activeTab[0]} title="Show teams info" onClick={this._onLPTabClick.bind(this, 0)}>Lineups</div>
+                                <div className={"lpnc_tabs__tab lpnc_tabs__tab_2 " + activeTab[1]} title="Show chart info" onClick={this._onLPTabClick.bind(this, 1)}>Chart</div>
                             </div>
-                            <button ref="LPOpenBtn" className="show-plnc" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenCloseClick}>{}</button>
+                            <button ref="LPOpenBtn" className="show-plnc" data-js-lineup="" title="Show chart" onClick={::this._onLPOpenCloseClick}>{}</button>
                         </div>
 
                         <div className="h-lup" data-js-hlup="">
@@ -248,7 +248,7 @@ export default class ExchangeItem extends React.Component
     /**
      * @private
      */
-    onLPTabClick(index)
+    _onLPTabClick(index)
     {
         var activeTab = ["", ""];
 
@@ -257,7 +257,7 @@ export default class ExchangeItem extends React.Component
         var newStates = {...this.state, activeTab};
         this.setState(newStates);
 
-        this.state.isLPOpen||this.onLPOpenCloseClick({newStates});
+        this.state.isLPOpen||this._onLPOpenCloseClick({newStates});
 /*
         $(container).find('.wrapper .tab').click(function ()
         {
@@ -274,13 +274,15 @@ export default class ExchangeItem extends React.Component
     /**
      * @private
      */
-    onLPOpenCloseClick({newStates})
+    _onLPOpenCloseClick({newStates})
     {
         this.setState({...this.state, ...newStates, isLPOpen: !this.state.isLPOpen});
 
         let target = this.refs.LPOpenBtn;
         if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);
         this.lineupOpen(target);
+
+
     }
 
 
