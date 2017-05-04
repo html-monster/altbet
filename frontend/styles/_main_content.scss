@@ -111,23 +111,29 @@
 
 
 // BM: Exchanges (events)
+@mixin visibleAttr { position: static; transition: .5s; /*transition-delay: .3s*/ };
+@mixin hiddAttr { position: absolute };
 .ac-index.co-home {
-  .h-event { float: left; position: relative; margin: 1px 0; width: calc(50% - 4px); border-radius: 6px; z-index: 10;
+  .h-event { float: left; position: relative; margin: 1px 0; width: calc(50% - 4px); min-width: 410px; border-radius: 6px; z-index: 10;
     &:nth-child(odd) { margin-right: 2px; }
     &.active-exch { z-index: 100; /*transform: scale(1.01); transition: .3s;*/ }
     //&.active2 { transform: scale(1.03, 1.1); }
 
     &.active-exch>.bg { box-shadow: 0px 0px 0px 1px #63b541; }
-    &.basic_mode .button-container {
-      &.buy .button:not(:first-child), .buy button:not(:first-child){  display: none;  }
-      &.sell .button:not(:last-child), .sell button:not(:last-child){  display: none;  }
-    }
-    &.expert-mode .button-container {
-      &.sell, &.buy {
-        &.onebtn, &.hideall { width: 50%;
-          .button { display: inline-block; }
+    //&.basic_mode .button-container {
+    //  &.buy .button:not(:first-child), .buy button:not(:first-child){  display: none;  }
+    //  &.sell .button:not(:last-child), .sell button:not(:last-child){  display: none;  }
+    //}
+    &.expert-mode {
+      .event-symbols { padding-right: 15px; }
+      .button-container {
+        &.sell, &.buy {
+          &.onebtn, &.hideall { width: 50%;
+            //.button { display: inline-block; }
+            .button { @include visibleAttr; visibility: visible; opacity: 1; }
+          }
+          &.buy.nobets .button { width: 42px; }
         }
-        &.buy.nobets .button { width: 42px; }
       }
     }
 
@@ -145,7 +151,7 @@
       }
     }
 
-    .event-symbols { padding: 30px 15px 10px; font-size: 13px; }
+    .event-symbols { padding: 30px 25px 10px 15px; font-size: 13px; transition: .4s; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
     .l-title { font-weight: bold;
       a { color: rgb(218, 217, 220); }
@@ -157,9 +163,11 @@
     }
 
 
-    .button-container { display: inline-block; width: 50%; height: 35px; vertical-align: middle;
+    .button-container { display: inline-block; width: 50%; height: 35px; vertical-align: middle; //transition: .3s;
       &:first-of-type { padding-right: 3px; text-align: left }
       &:last-of-type { padding-left: 2px; text-align: right }
+
+      .button { display: inline-block; }
 
       button.event { position: relative; margin: 0 2px; padding: 0; min-width: 42px; height: 32px; border-radius: 4px; text-transform: uppercase;
           background: $default-button-bg; vertical-align: middle; transition: all 0.4s ease-out !important;
@@ -171,9 +179,11 @@
         &:hover:after {  opacity: 0.15;  }
         &:active:after {  opacity: 0;  }
         &:before { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 4px; }
-        &.empty { width: 48px;
+        &.empty { //width: 48px;
           @include main_page_empty_button;
-          span { display: block; padding: 0 !important; height: 32px; line-height: 32px; color: $color-max !important; }
+          span { display: block; padding: 0 !important; height: 32px; line-height: 32px; color: $color-max !important;
+            &.price { font-size: 11px; }
+          }
         }
 
         span { display: block; position: relative; line-height: 13px; color: $main_page_event_title; font-weight: 600; z-index: 2;
@@ -189,11 +199,14 @@
         &>button:not(.empty):last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
         // for preview
         &.onebtn { width: 42px;
-          .button { display: none; }
-          .button:last-of-type { display: inline-block; }
+          //.button { display: none; }
+          .button { @include hiddAttr; visibility: hidden; opacity: 0 }
+          //.button:last-of-type { display: inline-block; }
+          .button:last-of-type { @include visibleAttr; visibility: visible; opacity: 1; }
         }
         &.hideall, &.nobets { width: 0;
-          .button { display: none; }
+          //.button { display: none; }
+          .button { @include hiddAttr; visibility: hidden; opacity: 0 }
         }
 
         .button { margin-left: 3px;
@@ -214,11 +227,14 @@
         // for preview
         &.nobets { width: 42px; }
         &.onebtn { width: 42px;
-          .button { display: inline-block; }
-          .button:first-of-type { display: inline-block; }
+          //.button { display: inline-block; }
+          .button { @include hiddAttr; visibility: hidden; opacity: 0; }
+          //.button:first-of-type { display: inline-block; }
+          .button:first-of-type { @include visibleAttr; visibility: visible; opacity: 1; }
         }
         &.hideall { width: 0;
-          .button { display: none; }
+          //.button { display: none; }
+          .button { @include hiddAttr; visibility: hidden; opacity: 0; }
         }
 
         .button { margin-right: 3px;
@@ -276,16 +292,12 @@
       { display: none; }
   }
 }
+.content { @include span(7.6 of 12); @include push (1.8 of 12); position: relative; margin-top: 70px; padding: 15px; min-width: 800px;
+    color: $main-color; }
 
 
 // ------------- ВСЁ ЧТО НИЖЕ БУДЕТ УДАЛЕНО !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ----------------------------------
 .content {
-  @include span(7.6 of 12);
-  @include push (1.8 of 12);
-  margin-top: 70px;
-  padding: 15px;
-  position: relative;
-  color: $main-color;
   .nav_items {
     &.loaded .pagination { display: block; }
 

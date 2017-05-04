@@ -1,12 +1,5 @@
-.order {
-  @include span(last 2.6 of 12);
-  height: 100%;
-  background: $order_sidebar_bg;
-  position: fixed;
-  right: 0;
-  top: 70px;
-  z-index: 99;
-  transition: 0.4s ease-out;
+.order { @include span(last 2.6 of 12); position: fixed; right: 0; top: 70px; z-index: 99; min-width: 295px; height: 100%;
+      background: $order_sidebar_bg; transition: 0.4s ease-out;
   @include wave;
   label{
     color: #000000;
