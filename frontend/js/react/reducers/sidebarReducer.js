@@ -41,7 +41,16 @@ export default function sidebar(state = initialState, action)
         case ON_ACTIVE_SYMBOL_CHANGED:
             if (!action.payload.id) action.payload.id = state.activeExchange.name;
             if (!action.payload.symbol) action.payload.symbol = state.activeExchange.symbol;
-            return {...state, activeExchange: {name: action.payload.id, isMirror: action.payload.isMirror, symbol: action.payload.symbol}};
+            if (!action.payload.HomeName) action.payload.homeName = state.activeExchange.homeName;
+            if (!action.payload.AwayName) action.payload.awayName = state.activeExchange.awayName;
+            // console.log('action.payload:', action.payload);
+            return {...state, activeExchange: {
+            	name: action.payload.id,
+				isMirror: action.payload.isMirror,
+				symbol: action.payload.symbol,
+				homeName: action.payload.HomeName,
+				awayName: action.payload.AwayName
+            }};
 
         default:
             return state;
