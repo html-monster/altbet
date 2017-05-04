@@ -128,6 +128,7 @@ class MainPage extends BaseController
                                         setCurrentExchangeFn={::this._setCurrentExchange}
                                         actions={actions} />
                                 )}
+                                <div className="b-clear"></div>
                             </div>
                             { $Pagination && $Pagination.LastPage > 1 &&
                                 <div className="pagination">
