@@ -6,7 +6,7 @@
 //.h-event .lpnc-loc {
 //  .h-lup__tab { top: auto; bottom: -8px; }
 //}
-.h-lup {
+.h-lup { color: $color5TextWhite;
   position: absolute; z-index: 2; margin: 0 10px; width: calc(100% - 20px); height: 0; border-radius: 6px;
   overflow: hidden;
   transition: 0.4s ease-out;
@@ -115,11 +115,18 @@
 @mixin hiddAttr { position: absolute };
 .ac-index.co-home {
   .h-event { float: left; position: relative; margin: 1px 0; width: calc(50% - 4px); min-width: 410px; border-radius: 6px; z-index: 10;
+        color: $color4TextWhite;
     &:nth-child(odd) { margin-right: 2px; }
-    &.active-exch { z-index: 100; /*transform: scale(1.01); transition: .3s;*/ }
-    //&.active2 { transform: scale(1.03, 1.1); }
 
-    &.active-exch>.bg { box-shadow: 0px 0px 0px 1px #63b541; }
+    // ovverride on activate exchange
+    &.active-exch { z-index: 100; color: $color4TextBlack;
+      &>.bg { background: linear-gradient(to bottom, #EBEBEB, #B8B8B8); }
+      .l-title a { color: $color4TextBlack; }
+      .button-container button.event.empty { background: #8D9095 linear-gradient(to bottom, lighten(#8D9095, 10%), lighten(#54525D, 20%)) } //#8D9095
+      .button-container.buy .button:first-child button.empty span { color: $color4TextWhite }
+      .button-container.sell .button:last-child button.empty span { color: $color4TextWhite }
+    }
+
     //&.basic_mode .button-container {
     //  &.buy .button:not(:first-child), .buy button:not(:first-child){  display: none;  }
     //  &.sell .button:not(:last-child), .sell button:not(:last-child){  display: none;  }
@@ -146,7 +153,7 @@
       &:before { content: ''; display: inline-block; margin-right: 5px; width: 24px; height: 22px; background: url("#{$pathImage}/sprite.svg") no-repeat; }
       @include main_page_event_icon;
       span { /*display: inline-block; margin-right: 5px;*/ font-size: 12px; vertical-align: top;
-        &.date { color: $main-color; }
+        &.date { /*color: $main-color;*/ }
         //&.time{  color: $main-color-darker;  }
       }
     }
@@ -154,7 +161,7 @@
     .event-symbols { padding: 30px 25px 10px 15px; font-size: 13px; transition: .4s; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
     .l-title { font-weight: bold;
-      a { color: rgb(218, 217, 220); }
+      a { color: $color4TextWhite; transition: none; }
     }
     .l-buttons {
       .inner { display: block; position: relative; min-width: 277px; text-align: right;
@@ -179,16 +186,16 @@
         &:hover:after {  opacity: 0.15;  }
         &:active:after {  opacity: 0;  }
         &:before { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 4px; }
-        &.empty { //width: 48px;
+        &.empty {
           @include main_page_empty_button;
-          span { display: block; padding: 0 !important; height: 32px; line-height: 32px; color: $color-max !important;
+          span { display: block; padding: 0 !important; height: 32px; line-height: 32px; //color: $color-max !important;
             &.price { font-size: 11px; }
           }
         }
 
-        span { display: block; position: relative; line-height: 13px; color: $main_page_event_title; font-weight: 600; z-index: 2;
+        span { display: block; position: relative; line-height: 13px; /*color: $main_page_event_title;*/ font-weight: 600; z-index: 2;
           &.price { padding: 3px 8px 0; font-size: 13px; }
-          &.volume { padding-bottom: 3px; font-size: 10px; color: transparentize($main_page_event_title, 0.4); }
+          &.volume { padding-bottom: 3px; font-size: 10px; color: darken($color4TextWhite, 25%); }
         }
       }
 
@@ -213,6 +220,7 @@
           &:last-child{
             button {
               &:not(.empty){  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
+              &.empty span { color: $color4TextBlack; }
               span{ color: #fff; opacity: 0.8; }
             }
           }
@@ -241,6 +249,7 @@
           &:first-child{
             button {
               &:not(.empty){  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
+              &.empty span { color: $color4TextBlack; }
               span{ color: #fff; opacity: 0.8; }
             }
           }
@@ -253,13 +262,13 @@
 
     // lineup tabs
     // &.active .lpnc-loc { bottom: -12px; }
-    .lpnc-loc { position: relative; bottom: -2px; height: 37px; text-align: center; transition: 0.4s ease-out;
+    .lpnc-loc { position: relative; bottom: -3px; height: 37px; text-align: center; transition: 0.4s ease-out;
       .loc1, .loc2 { display: inline-block; width: 108px; height: 37px; transform: scaleY(0.55) translateY(14px);
           background: url("#{$pathImage}/sprite_components.svg") no-repeat; }
       .loc1 { background-position: -28px -11px; }
       .loc2 { background-position: -163px -11px; }
 
-      &.opened .lpnc_tabs { bottom: 0;
+      &.opened .lpnc_tabs { //bottom: 0;
         &__tab.active { color: $color-blue; }
       }
       .lpnc_tabs { position: absolute; left: 0; bottom: 1px; width: 100%; line-height: 21px; font-size: 13px; text-align: center;
@@ -293,7 +302,12 @@
   }
 }
 .content { @include span(7.6 of 12); @include push (1.8 of 12); position: relative; margin-top: 70px; padding: 15px; min-width: 800px;
-    color: $main-color; }
+    color: $main-color;
+  .nav_items {
+    &.loaded .pagination { display: block; }
+    .wrapper>.tab_content{  padding-top: 50px;  }
+  }
+}
 
 
 // ------------- ВСЁ ЧТО НИЖЕ БУДЕТ УДАЛЕНО !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ----------------------------------
@@ -374,7 +388,7 @@
         @include main_page_tab_icon;
       }
     }
-    .tab_content{  padding-top: 50px;  }
+    //.tab_content{  padding-top: 50px;  }
     .ui-state-highlight{
       height: 102px;
       border: 1px dashed #fcefa1;

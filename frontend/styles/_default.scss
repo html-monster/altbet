@@ -3,6 +3,8 @@
 :-moz-placeholder { color: #dbdbdb; }
 :-ms-input-placeholder{ color: #dbdbdb; }
 
+.b-clear { clear: both }
+
 .blur{
   *:not(.pop_up){
     filter: url("#{$pathImage}/blur.svg#blur") blur(5px);
@@ -794,8 +796,6 @@ input ~ .info{
   }
 }
 
-
-.b-clear { clear: both }
 
 
 

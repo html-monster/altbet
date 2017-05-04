@@ -313,7 +313,7 @@ export default class ExchangeItem extends React.Component
             height = height > 400 ? height : 400;
 
             $lpncBg.css('bottom', -1 * (height + 40));
-            $lpnc.css('height', height + 40);
+            $lpnc.css('height', height + 30);
             // $contentTitle.css('max-height', 'inherit');
 
             globalData.MainCharOn = true;
