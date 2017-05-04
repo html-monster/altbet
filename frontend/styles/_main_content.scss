@@ -6,15 +6,12 @@
 //.h-event .lpnc-loc {
 //  .h-lup__tab { top: auto; bottom: -8px; }
 //}
-.h-lup { color: $color5TextWhite;
-  position: absolute; z-index: 2; margin: 0 10px; width: calc(100% - 20px); height: 0; border-radius: 6px;
-  overflow: hidden;
-  transition: 0.4s ease-out;
-  @include chartMP;
-  &.active { padding-top: 10px; /*height: 400px;*/ }
-  &:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 0;
-      background: $main_page_gif no-repeat center $main_page_tab_color_active; }
-  &.loader:after{  height: 100%;  }
+.h-lup { position: absolute; top: 100%; z-index: 2; margin: 0 10px; width: calc(100% - 20px); height: 0; border-radius: 6px; color: $color5TextWhite;
+      overflow: hidden; transition: 0.4s ease-out; @include chartMP;
+  //&.active { padding-top: 10px; /*height: 400px;*/ }
+  //&:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 0;
+  //    background: $main_page_gif no-repeat center $main_page_tab_color_active; }
+  //&.loader:after{  height: 100%;  }
 
   //&__tabs { bottom: 6px; }
 
@@ -38,9 +35,11 @@
   }
 
   //&.active &__tab_content { opacity: 1; transition: .4s; }
-  &__tab_content { position: relative; padding-top: 10px !important; overflow: hidden; /*opacity: 0;*/ }
+  &__tab_content {  position: relative; padding-top: 20px !important; overflow: hidden; /*opacity: 0;*/}
 
   &__tab_item { display: none !important;
+    &.loading:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+      border-radius: 6px; background: $main_page_gif no-repeat center $main_page_tab_color_active; }
     &.active { display: block !important; }
   }
 
@@ -114,7 +113,13 @@
 @mixin visibleAttr { position: static; transition: .5s; /*transition-delay: .3s*/ };
 @mixin hiddAttr { position: absolute };
 .ac-index.co-home {
-  .h-event { float: left; position: relative; margin: 1px 0; width: calc(50% - 4px); min-width: 410px; border-radius: 6px; z-index: 10;
+	.mp-exchanges{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+  .h-event { display: flex;  flex-direction: column;  justify-content: space-between; position: relative; margin: 1px 0;
+		width: calc(50% - 1px); min-width: 410px; border-radius: 6px; z-index: 10;
         color: $color4TextWhite;
     &:nth-child(odd) { margin-right: 2px; }
 
@@ -125,6 +130,7 @@
       .button-container button.event.empty { background: #8D9095 linear-gradient(to bottom, lighten(#8D9095, 10%), lighten(#54525D, 20%)) } //#8D9095
       .button-container.buy .button:first-child button.empty span { color: $color4TextWhite }
       .button-container.sell .button:last-child button.empty span { color: $color4TextWhite }
+      .event-date{  @include main_page_event_icon_invert;  }
     }
 
     //&.basic_mode .button-container {
@@ -145,7 +151,7 @@
     }
 
     &>.bg { position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-radius: 6px;
-        background: linear-gradient(to bottom, #53515e, #292830); z-index: -1; transition: .4s;
+        background: linear-gradient(to bottom, #53515e, #292830); z-index: -1; transition: .4s ease-out;
       &.active {  }
     }
 
@@ -187,7 +193,7 @@
         &:active:after {  opacity: 0;  }
         &:before { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 4px; }
         &.empty {
-          @include main_page_empty_button;
+          //@include main_page_empty_button;
           span { display: block; padding: 0 !important; height: 32px; line-height: 32px; //color: $color-max !important;
             &.price { font-size: 11px; }
           }
@@ -218,9 +224,9 @@
 
         .button { margin-left: 3px;
           &:last-child{
-            button {
-              &:not(.empty){  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
-              &.empty span { color: $color4TextBlack; }
+            button { background-image: linear-gradient(to bottom, #64c9ef, #3498da);
+              //&:not(.empty){  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
+              &.empty span { /*color: $color4TextBlack;*/ }
               span{ color: #fff; opacity: 0.8; }
             }
           }
@@ -247,9 +253,9 @@
 
         .button { margin-right: 3px;
           &:first-child{
-            button {
-              &:not(.empty){  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
-              &.empty span { color: $color4TextBlack; }
+            button { background-image: linear-gradient(to bottom, #f88447, #ef4d22);
+              //&:not(.empty){  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
+              &.empty span { /*color: $color4TextWhite;*/ }
               span{ color: #fff; opacity: 0.8; }
             }
           }
@@ -262,16 +268,41 @@
 
     // lineup tabs
     // &.active .lpnc-loc { bottom: -12px; }
-    .lpnc-loc { position: relative; bottom: -3px; height: 37px; text-align: center; transition: 0.4s ease-out;
-      .loc1, .loc2 { display: inline-block; width: 108px; height: 37px; transform: scaleY(0.55) translateY(14px);
-          background: url("#{$pathImage}/sprite_components.svg") no-repeat; }
-      .loc1 { background-position: -28px -11px; }
-      .loc2 { background-position: -163px -11px; }
+    .lpnc-loc { position: relative; bottom: -2px; height: 37px; text-align: center; transition: 0.4s ease-out;
+      //.loc1, .loc2 { display: inline-block; width: 108px; height: 37px; transform: scaleY(0.55) translateY(14px);
+      //    background: url("#{$pathImage}/sprite_components.svg") no-repeat; }
+      //.loc1 { background-position: -28px -11px; }
+      //.loc2 { background-position: -163px -11px; }
+
+			.pl, .pos{
+				width: 108px;  height: 37px;  position: absolute;  bottom: 0;  font-size: 11px;  font-weight: normal;
+				line-height: 16px;  color: $main-color;  background: url("#{$pathImage}/sprite_components.svg") no-repeat;
+				overflow: hidden;  transition: 0.4s ease-out;  transform: scaleY(0.55) translateY(14px);
+				&.active{  transform: none;  }
+				strong{  display: block;  width: 90px;  transform: translateY(-20px);  transition: 0.2s ease-out;  font-weight: normal;  }
+			}
+			.pl{
+				left: calc(50% - 108px); background-position: $main_page_event_info_pl_bg;
+				//padding-left: 13px;  padding-right: 0;  right: -5px;
+				//.profit{  color: #4dac2e;  }
+				//.loss{  color: #ff3905;  }
+				strong{  float: right;  }
+				span{
+					&.win{  color: #4dac2e;  }
+					&.lose{  color: #ff3905;  }
+				}
+			}
+			.pos{
+				left: 50%; background-position: $main_page_event_info_pos_bg;
+				//padding-right: 13px;  padding-left: 0;  left: -6px;
+				strong{  float: left;  }
+				span{  color: $main_page_pos_color;  }
+			}
 
       &.opened .lpnc_tabs { //bottom: 0;
         &__tab.active { color: $color-blue; }
       }
-      .lpnc_tabs { position: absolute; left: 0; bottom: 1px; width: 100%; line-height: 21px; font-size: 13px; text-align: center;
+      .lpnc_tabs { position: absolute; left: 0; bottom: 0; width: 100%; line-height: 21px; font-size: 13px; text-align: center;
           color: #fff;  transition: color 0.4s ease-out;
         &__tab { display: inline-block; width: 103px; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
               transition: color .4s; cursor: pointer;
@@ -284,7 +315,7 @@
 
 
     // btn open lineups
-    .show-plnc { display: block; position: absolute; left: calc(50% - 20px); bottom: 2px; width: 40px; height: 20px; min-height: inherit;
+    .show-plnc { display: block; position: absolute; left: calc(50% - 20px); bottom: 0; width: 40px; height: 20px; min-height: inherit;
           background: $main_page_event_chart_button; cursor: pointer; z-index: 4; transition: 0.4s ease-out;
       &:before, &:after { content: ''; display: block; position: absolute; left: 12px; width: 15px; height: 1px;
           background: #eeeeef * 0.5; transition: 0.4s ease-out; }
@@ -296,7 +327,7 @@
       }
     }
 
-    .mode_info_js, .event_info_bottom
+    /*.mode_info_js,*/ .event_info_bottom
     //, .h-lup__tab_content
       { display: none; }
   }
@@ -579,8 +610,6 @@
           .pl, .pos{
             width: 108px;
             height: 37px;
-            //padding-top: 4px;
-            //visibility: hidden;
             position: absolute;
             bottom: -45px;
             font-size: 11px;
@@ -595,7 +624,6 @@
             strong{
               display: block;
               width: 102px;
-              //margin-top: 3px;
               transform: translateY(-20px);
               transition: 0.2s ease-out;
 							font-weight: normal;

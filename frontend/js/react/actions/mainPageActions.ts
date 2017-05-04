@@ -245,8 +245,8 @@ class Actions extends BaseActions
             // symbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
             const aexch = getState().mainPage.activeExchange;
 
-            0||console.log( 'inProps', inProps );
-            
+            // 0||console.log( 'inProps', inProps );
+
             if( aexch.name !== inProps.name || aexch.isMirror !== inProps.isMirror )
             {
                 ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror, symbol: inProps.symbol});
@@ -403,7 +403,6 @@ class Actions extends BaseActions
             });
         };
     }
-
 
     /**
      * set active symbol on main page
