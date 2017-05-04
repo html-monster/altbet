@@ -128,9 +128,9 @@ class MainPage extends BaseController
                                         setCurrentExchangeFn={::this._setCurrentExchange}
                                         actions={actions} />
                                 )}
-                                <div className="b-clear"></div>
                             </div>
-                            { $Pagination && $Pagination.LastPage > 1 &&
+                            {
+                                $Pagination && $Pagination.LastPage > 1 &&
                                 <div className="pagination">
                                     <ul className="pagination_list">
                                         {$Pagination.Pages.map((item, key) => {

@@ -240,7 +240,7 @@ $(document).ready(function ()
 	// new ajaxRegistrationControllerClass();
 	new accountClass();
 	new ajaxThemeChangeClass();
-	// mainChartController = new mainChartController();
+	mainChartController = new mainChartController();
 });
 
 
