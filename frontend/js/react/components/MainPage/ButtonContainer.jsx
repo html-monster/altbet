@@ -74,7 +74,7 @@ export default class ButtonContainer extends React.Component
                                     let item2 = SummaryPositionPrice[ii];
                                     if( item2 )
                                     {
-                                        let price = item2.Price;
+                                        let price = Common.toFixed(data.ismirror ? 1 - item2.Price : item2.Price, 2);
                                         html.push(<AnimateOnUpdate key={item2.Price}
                                                 component="div"
                                                 className="button"
@@ -92,13 +92,13 @@ export default class ButtonContainer extends React.Component
                                                         {
                                                             PosPrice: item.SummaryPositionPrice,
                                                             ismirror: data.ismirror,
-                                                            price: (price),
+                                                            price: price,
                                                             quantity: item2.Quantity,
                                                             type: data.type === "sell" ? 1 : 2,
                                                             data: data,
                                                         })}
                                                          data-verify="Quantity" /*disabled={isTraiderOn}*/ title="Click to place entry">
-                                                    <span className="price">{Common.toFixed(data.ismirror ? 1 - price : price, 2)}</span>
+                                                    <span className="price">{price}</span>
                                                     <span className="volume">{item2.Quantity}</span>
                                                     {/*<div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>*/}
                                                 </button>
