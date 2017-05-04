@@ -71,9 +71,9 @@ class Header extends React.Component
 
 
 				<div className="fast_menu">
-				  <a href={globalData.Urls.Home} className="f_button"><span>Exchange</span> </a>
-				  <a href={globalData.Urls.Home + "?filter=live"}  className={"f_button f_but_before" + ($filter === 'live' ? ' active' : '')}><span className="live_event wave ">My Games</span></a>
-				  <a href="#" className="f_button f_but_before"><span className="history_event">My History</span></a>
+				  <a href={globalData.Urls.Home} className="f_button f_but_bor"><span>Exchange</span> </a>
+				  <a href={globalData.Urls.Home + "?filter=live"}  className={"f_button f_but_before f_but_bor" + ($filter === 'live' ? ' active' : '')}><span>My Games</span></a>
+				  <a href="#" className="f_button f_but_before f_but_bor"><span className="history_event">My History</span></a>
 				  <a href={globalData.Urls.TradingRules} className="f_button f_but_before"><span>Rules</span> </a>
 				</div>
 

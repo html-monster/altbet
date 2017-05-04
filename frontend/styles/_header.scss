@@ -245,224 +245,235 @@ header {
         .f_button {
           display: flex;
           position: relative;
-          align-items: center;
-          transition: 0.2s ease-out;
-          color: #fff;
-          height: 40px;
           padding: 0 10px;
-          border-right: 1px solid #54545a;
-          &.active {
-            color: #000;
-          }
-          &.f_but_before{
-            &:before {
+          align-items: center;
+          height: 40px;
+          span{
+            color: $color5TextWhite;
+            font-weight: bold;
+            transition: 0.2s ease-out;
+            &:after {
               content: '';
               display: block;
-              width: 1px;
-              height: 40px;
-              background: #292830;
               position: absolute;
-              top: 0;
-              left: -2px;
-            }
-            &:last-child{
-              border: none;
+              bottom: -15px;
+              left: 5px;
+              width: calc(100% - 10px);
+              height: 0;
+              background:$color4TextWhite;
+              border-radius:3px;
+              transition: 0.2s ease-out;
             }
           }
-          span:{
+          &:hover {span {&:after{height: 2px;}}}
+          &.active{span{color:#fff}}
+          &.f_but_bor{border-right: 1px solid #54545a;}
+          &.f_but_before:before {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 40px;
+            background: #292830;
+            position: absolute;
+            top: 0;
+            left: -2px;
           }
-        }
+
       }
     }
   }
-  .chat {
-    display: none;
-    width: 32px;
-    height: 44px;
-    margin-right: -1px;
-    border-radius: 0;
-    background: url("#{$pathImage}/sprite.svg") no-repeat -219px -13px, url("#{$pathImage}/chat.png") no-repeat 0 7px contain;
+}
+
+.chat {
+  display: none;
+  width: 32px;
+  height: 44px;
+  margin-right: -1px;
+  border-radius: 0;
+  background: url("#{$pathImage}/sprite.svg") no-repeat -219px -13px, url("#{$pathImage}/chat.png") no-repeat 0 7px contain;
+}
+
+.user {
+  height: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  position: relative;
+  &:before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: #292830;
+    position: absolute;
+    top: 15px;
+    left: 0;
   }
-  .user {
+  span {
+    //display: block;
+    margin-right: 10px;
+    color: #fff;
+  }
+  .log_in {
+    display: none;
     height: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
     position: relative;
+    &.active {
+      display: flex;
+    }
+    ul.user-menu {
+      display: none;
+      width: 177px;
+      text-align: right;
+      list-style-type: none;
+      position: absolute;
+      top: 70px;
+      right: 0;
+      li {
+        background: #292830;
+        a, strong {
+          display: block;
+          padding: 5px;
+          padding-right: 15px;
+          background: linear-gradient(to bottom, #373540, #53515e);
+          color: #ffffff;
+          font-size: 14px;
+          border-bottom: 1px solid #292830;
+          border-radius: 0 0 5px 5px;
+          border-top: 1px solid #53515e;
+          transition: 0.3s ease-out;
+          &:hover {
+            background: linear-gradient(to bottom, #53515e, #373540);
+          }
+        }
+        strong {
+          display: flex;
+          justify-content: flex-end;
+          font-weight: normal;
+          border-top: none;
+          padding-right: 12px;
+          button {
+            display: inline-block;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            margin-left: 5px;
+            border-radius: 4px;
+            border: 1px solid #211e25;
+            cursor: pointer;
+            &:hover, &.active {
+              border: 1px solid $link-color;
+            }
+            &.dark {
+              background: linear-gradient(to top, #53515e, #292830);
+            }
+            &.light {
+              background: linear-gradient(to top, #FFFFFF, #606060);
+            }
+          }
+        }
+        &:first-child a {
+          border-top: none;
+        }
+        &:last-child, &:last-child a {
+          border-radius: 0 0 5px 5px;
+        }
+      }
+      &.active ~ span.user-name:after {
+        transform: rotate(180deg);
+      }
+    }
+    span.count_message {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -102px -357px;
+      position: relative;
+      span.count {
+        display: block;
+        width: 17px;
+        height: 17px;
+        margin: 0;
+        text-align: center;
+        line-height: 13px;
+        font-size: 9px;
+        color: #403f49;
+        background: #2dd640;
+        border-radius: 50%;
+        border: 2px solid #403f49;
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        overflow: hidden;
+      }
+    }
+    span.user-name {
+      margin: 0;
+      padding-right: 15px;
+      text-align: right;
+      position: relative;
+      &:after {
+        content: '';
+        display: block;
+        width: 10px;
+        height: 10px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -231px -199px;
+        position: absolute;
+        top: 8px;
+        right: 0;
+        transition: 0.2s ease-out;
+      }
+    }
+  }
+  .log_out {
+    display: none;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    &:hover {
+      .change-color {
+        visibility: visible;
+        opacity: 1;
+        top: 70px;
+      }
+    }
     &:before {
       content: '';
       display: block;
-      width: 1px;
-      height: 40px;
-      background: #292830;
+      width: 25px;
+      height: 25px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -424px -18px;
+    }
+    &.active {
+      display: flex;
+    }
+    a {
+      width: 65px;
+      margin-left: 5px;
+      font-size: 14px;
+      color: #ffffff;
+    }
+    .change-color {
+      width: 105px;
+      visibility: hidden;
+      opacity: 0;
+      padding: 5px;
       position: absolute;
-      top: 15px;
-      left: 0;
-    }
-    span {
-      //display: block;
-      margin-right: 10px;
-      color: #fff;
-    }
-    .log_in {
-      display: none;
-      height: 100%;
-      align-items: center;
-      justify-content: flex-end;
-      cursor: pointer;
-      position: relative;
-      &.active {
-        display: flex;
-      }
-      ul.user-menu {
-        display: none;
-        width: 177px;
-        text-align: right;
-        list-style-type: none;
-        position: absolute;
-        top: 70px;
-        right: 0;
-        li {
-          background: #292830;
-          a, strong {
-            display: block;
-            padding: 5px;
-            padding-right: 15px;
-            background: linear-gradient(to bottom, #373540, #53515e);
-            color: #ffffff;
-            font-size: 14px;
-            border-bottom: 1px solid #292830;
-            border-radius: 0 0 5px 5px;
-            border-top: 1px solid #53515e;
-            transition: 0.3s ease-out;
-            &:hover {
-              background: linear-gradient(to bottom, #53515e, #373540);
-            }
-          }
-          strong {
-            display: flex;
-            justify-content: flex-end;
-            font-weight: normal;
-            border-top: none;
-            padding-right: 12px;
-            button {
-              display: inline-block;
-              padding: 0;
-              width: 20px;
-              height: 20px;
-              margin: 0;
-              margin-left: 5px;
-              border-radius: 4px;
-              border: 1px solid #211e25;
-              cursor: pointer;
-              &:hover, &.active {
-                border: 1px solid $link-color;
-              }
-              &.dark {
-                background: linear-gradient(to top, #53515e, #292830);
-              }
-              &.light {
-                background: linear-gradient(to top, #FFFFFF, #606060);
-              }
-            }
-          }
-          &:first-child a {
-            border-top: none;
-          }
-          &:last-child, &:last-child a {
-            border-radius: 0 0 5px 5px;
-          }
-        }
-        &.active ~ span.user-name:after {
-          transform: rotate(180deg);
-        }
-      }
-      span.count_message {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        background: url("#{$pathImage}/sprite.svg") no-repeat -102px -357px;
-        position: relative;
-        span.count {
-          display: block;
-          width: 17px;
-          height: 17px;
-          margin: 0;
-          text-align: center;
-          line-height: 13px;
-          font-size: 9px;
-          color: #403f49;
-          background: #2dd640;
-          border-radius: 50%;
-          border: 2px solid #403f49;
-          position: absolute;
-          top: -5px;
-          right: -5px;
-          overflow: hidden;
-        }
-      }
-      span.user-name {
-        margin: 0;
-        padding-right: 15px;
-        text-align: right;
-        position: relative;
-        &:after {
-          content: '';
-          display: block;
-          width: 10px;
-          height: 10px;
-          background: url("#{$pathImage}/sprite.svg") no-repeat -231px -199px;
-          position: absolute;
-          top: 8px;
-          right: 0;
-          transition: 0.2s ease-out;
-        }
-      }
-    }
-    .log_out {
-      display: none;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      &:hover {
-        .change-color {
-          visibility: visible;
-          opacity: 1;
-          top: 70px;
-        }
-      }
-      &:before {
-        content: '';
-        display: block;
-        width: 25px;
-        height: 25px;
-        background: url("#{$pathImage}/sprite.svg") no-repeat -424px -18px;
-      }
-      &.active {
-        display: flex;
-      }
-      a {
-        width: 65px;
-        margin-left: 5px;
-        font-size: 14px;
-        color: #ffffff;
-      }
-      .change-color {
-        width: 105px;
-        visibility: hidden;
-        opacity: 0;
-        padding: 5px;
-        position: absolute;
-        top: 75px;
-        right: -5px;
-        background: linear-gradient(to bottom, #373540, #53515e);
-        border-radius: 0 0 4px 4px;
-        text-align: center;
-        box-shadow: 0 7px 10px -2px rgba(0, 0, 0, 0.5);
-        transition: 0.4s ease-out;
-      }
+      top: 75px;
+      right: -5px;
+      background: linear-gradient(to bottom, #373540, #53515e);
+      border-radius: 0 0 4px 4px;
+      text-align: center;
+      box-shadow: 0 7px 10px -2px rgba(0, 0, 0, 0.5);
+      transition: 0.4s ease-out;
     }
   }
+}
+
 }
 
 .change-color {
