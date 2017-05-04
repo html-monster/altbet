@@ -292,10 +292,10 @@ export default class ExchangeItem extends React.Component
      */
     lineupOpen(that, isCLose)
     {
-        var $that = $(that);
-        var $wrapper = $that.closest('[data-js-hevent]');
-        var $lpnc = $wrapper.find('[data-js-hlup]');
-        var $lpncBg = $wrapper.find('[data-js-bg]');
+        let $that = $(that);
+        let $wrapper = $that.closest('[data-js-hevent]');
+        let $lpnc = $wrapper.find('[data-js-hlup]');
+        let $lpncBg = $wrapper.find('[data-js-bg]');
 
 		$that.toggleClass('active');
 					 // .next().toggleClass('active');

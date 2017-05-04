@@ -56,8 +56,8 @@ export default class NewOrder extends React.Component{
 							orderMode={'basic'}
 							showDeleteButton={true}
 							onSubmit={actions.actionOnAjaxSend.bind(null, actions, {...item, formUrl: formData.url})}
-							onDelete={actions.actionOnDeleteOrder.bind(null, item)}
-							onTypeChange={actions.actionOnOrderTypeChange.bind(null, item)}
+							//onDelete={actions.actionOnDeleteOrder.bind(null, item)}
+							//onTypeChange={actions.actionOnOrderTypeChange.bind(null, item)}
 							// data={{...data, ...item}}
 							//containerData={data}
 							// formData={formData}

@@ -201,7 +201,8 @@ export class RegisterForm extends React.PureComponent
                                      className={'input__field input__field--yoshiko'}
 									 // initialValue="123"
                                      label="Confirm Password" type='password'
-                                     validate={passwordValidation.bind(null, "r_pass")} input={input}/>
+                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20}),
+										 passwordValidation.bind(null, "r_pass")]} input={input}/>
 
 					<InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
 									 className={'input__field input__field--yoshiko js-dateofbirth'}

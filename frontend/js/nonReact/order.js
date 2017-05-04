@@ -49,8 +49,8 @@ class orderClass{
 				if(windowWidth > 1200){
 					windowHeight = window.innerHeight;
 					orderSidebarHeight = windowHeight - substructionHeight;
-					orderContent.css('max-height', orderSidebarHeight);
-					currentOrders.css('max-height', orderSidebarHeight);
+					orderContent.css('height', orderSidebarHeight);
+					currentOrders.css('height', orderSidebarHeight);
 				}
 			});
 
@@ -189,25 +189,25 @@ class orderClass{
 						if(code === 48 && $(this)[0].selectionStart === 0)
 							return false;
 					}
-					if($(this).parents('.obligations').length){
-						let val = $(this).val().split('.');
-
-						if((code < 46 || code > 57 || code === 47) && condition){
-							message.fadeIn(200);
-						}
-						else{
-							message.fadeOut(200);
-						}
-						if(val.length === 2){
-							if(code	 === 46)
-								return false;
-
-							if(val[1].length > 2){
-								val[1] = val[1].slice(0, 1);
-								$(this).val($(this).val().split('.')[0] + '.' + val[1]);
-							}
-						}
-					}
+					// if($(this).parents('.obligations').length){
+					// 	let val = $(this).val().split('.');
+					//
+					// 	if((code < 46 || code > 57 || code === 47) && condition){
+					// 		message.fadeIn(200);
+					// 	}
+					// 	else{
+					// 		message.fadeOut(200);
+					// 	}
+					// 	if(val.length === 2){
+					// 		if(code	 === 46)
+					// 			return false;
+					//
+					// 		if(val[1].length > 2){
+					// 			val[1] = val[1].slice(0, 1);
+					// 			$(this).val($(this).val().split('.')[0] + '.' + val[1]);
+					// 		}
+					// 	}
+					// }
 				}
 				message.fadeOut(200);
 			});
