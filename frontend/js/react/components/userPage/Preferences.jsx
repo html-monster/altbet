@@ -207,6 +207,7 @@ export default class Preferences extends React.Component {
             <li>
               <CheckBox onChange={this._checkNumber} data={{className: "checkbox checkbox_horizontal", name: "SmsActivity", checked: SmsActivity}}>
                 <strong className="label">Send me sms of my activity:</strong>
+                <span style={{display: 'block', color: 'white'}}>Вы не ввели номер телефона в настройках</span>
               </CheckBox>
             </li>
           </ul>
@@ -227,13 +228,11 @@ export default class Preferences extends React.Component {
    * @private
    */
   _checkNumber (ee, isChecked) {
-    
-    console.log('isChecked',isChecked);
-    
+        
     const Phone = appData.pageAccountData.UserInfo;
     let SmsAct = appData.pageAccountData.Account;
     
-    console.log('number from server: ' + Phone.Phone);
+    // console.log('number from server: ' + Phone.Phone);
     let reg = Phone.Phone;
     if( reg === '' ) {
       console.log('Введите Ваш номер телефона');
@@ -241,5 +240,6 @@ export default class Preferences extends React.Component {
     else{
       console.log(true);
     }
+    console.log('isChecked',isChecked);
   }
 }
