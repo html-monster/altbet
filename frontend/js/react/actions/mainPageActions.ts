@@ -29,8 +29,10 @@ class Actions extends BaseActions
 
             let symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
             ABpp.Websocket.sendSubscribe({exchange: data.Symbol.Exchange}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
-            flag && ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false});
-            flag && setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false}), 700);
+            flag && ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false,
+                HomeName: data.Symbol.HomeName, AwayName: data.Symbol.AwayName});
+            flag && setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false,
+                HomeName: data.Symbol.HomeName, AwayName: data.Symbol.AwayName}), 700);
 
             ABpp.Websocket.subscribe((inData) =>
             {
@@ -249,7 +251,8 @@ class Actions extends BaseActions
 
             if( aexch.name !== inProps.name || aexch.isMirror !== inProps.isMirror )
             {
-                ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror, symbol: inProps.symbol});
+                ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, HomeName: inProps.title[0],
+                    AwayName: inProps.title[1], isMirror: inProps.isMirror, symbol: inProps.symbol});
                 ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
 
                 if($('#ChkLimit').prop('checked')) globalData.tradeOn = true;

@@ -100,7 +100,10 @@ export default class ExchangeItem extends React.Component
 
         return (
             <div className={`h-event categoryFilterJs ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")}
-                onClick={() => {setCurrentExchangeFn(Symbol.Exchange);
+                onClick={() =>
+                {
+                    setCurrentExchangeFn(Symbol.Exchange);
+
                     ABpp.config.tradeOn && actions.exchangeSideClick({name: Symbol.Exchange,
                         isMirror: false,
                         title: [Symbol.HomeName, Symbol.AwayName],

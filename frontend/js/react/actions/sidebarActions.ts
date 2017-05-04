@@ -187,6 +187,7 @@ class Actions extends BaseActions
     {
         return (dispatch) =>
         {
+        	// console.log('props:', props);
             dispatch({
                 type: ON_ACTIVE_SYMBOL_CHANGED,
                 payload: props,

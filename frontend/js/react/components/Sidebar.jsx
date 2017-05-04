@@ -24,7 +24,7 @@ class Sidebar extends React.Component
 
 
         // allow AT
-        if( ABpp.config.currentPage != ABpp.CONSTS.PAGE_MYPOS )
+        if( ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS )
         {
             this.isAllowAT = true;
         }
@@ -72,10 +72,10 @@ class Sidebar extends React.Component
 		return <div className="left_order">
 			{
 				isAllowAT &&
-				<label htmlFor="ChkLimit" className={'trader ' + (userIdentity == 'True' ? '' : 'disabled')}>
+				<label htmlFor="ChkLimit" className={'trader ' + (userIdentity === 'True' ? '' : 'disabled')}>
 					<input type="checkbox" id="ChkLimit" name="limit" className="limit" ref="chkTraderOn" checked={traderOn}
 						   onChange={(ee) => actions.actionOnTraderOnChange(ee.target.checked)}
-						   disabled={userIdentity != 'True'}/>
+						   disabled={userIdentity !== 'True'}/>
 					<span>
 						Active bettor
 						<span className="help">
