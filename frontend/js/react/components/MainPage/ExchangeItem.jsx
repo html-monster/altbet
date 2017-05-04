@@ -201,7 +201,7 @@ export default class ExchangeItem extends React.Component
                             <button ref="LPOpenBtn" className="show-plnc" data-js-lineup="" title="Show chart" onClick={::this.onLPOpenCloseClick}>{}</button>
                         </div>
 
-                        <div className="h-lup loader" data-js-hlup="">
+                        <div className="h-lup" data-js-hlup="">
 {/*
                             <div className={`tabs h-lup__tabs ${isLPOpen ? "h-lup__tabs__opened" : ""}`}>
                                 <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
@@ -211,7 +211,7 @@ export default class ExchangeItem extends React.Component
                             <div className="h-lup__tab_content tab_content">
                                 <LineupPage className={"h-lup__tab_item tab_item" + activeTab[0]} exdata={exdata} data={this.data} />
 
-                                <div className={"h-lup__tab_item tab_item highcharts-tab" + activeTab[1]} id={"container_" + symbol} data-js-highchart="">{}</div>
+                                <div className={"h-lup__tab_item tab_item loading highcharts-tab" + activeTab[1]} id={"container_" + symbol} data-js-highchart="">{}</div>
                                 {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                             </div>
                         </div>
@@ -296,6 +296,7 @@ export default class ExchangeItem extends React.Component
         let $wrapper = $that.closest('[data-js-hevent]');
         let $lpnc = $wrapper.find('[data-js-hlup]');
         let $lpncBg = $wrapper.find('[data-js-bg]');
+        let $chartWrp = $wrapper.find('[data-js-highchart]');
 
 		$that.toggleClass('active');
 					 // .next().toggleClass('active');

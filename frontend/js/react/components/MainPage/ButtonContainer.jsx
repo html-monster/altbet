@@ -70,7 +70,7 @@ export default class ButtonContainer extends React.Component
                             {
                                 html = SummaryPositionPrice.map((item2) =>
                                     do {
-                                        let price = Common.toFixed(data.ismirror ? 1 - price : price, 2);
+                                        let price = Common.toFixed(data.ismirror ? 1 - item2.Price : item2.Price, 2);
                                         <AnimateOnUpdate key={item2.Price}
                                             component="div"
                                             className="button"
@@ -88,7 +88,7 @@ export default class ButtonContainer extends React.Component
                                                     {
                                                         PosPrice: item.SummaryPositionPrice,
                                                         ismirror: data.ismirror,
-                                                        price: (price = item2.Price),
+                                                        price: price,
                                                         quantity: item2.Quantity,
                                                         type: data.type === "sell" ? 1 : 2,
                                                         data: data,
