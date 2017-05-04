@@ -40,6 +40,7 @@ export default class ExchangeItem extends React.Component
     {
         const { actions, data, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange }, mainContext, setCurrentExchangeFn } = this.props;
         const { isLPOpen, activeTab } = this.state;
+        // 0||console.log( 'activeExchange', activeExchange, currentExchange );
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
 
@@ -98,7 +99,16 @@ export default class ExchangeItem extends React.Component
 
 
         return (
-            <div className={`h-event categoryFilterJs ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")} id={symbol} data-js-hevent="" onClick={() => setCurrentExchangeFn(Symbol.Exchange)} data-js-event="">
+            <div className={`h-event categoryFilterJs ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")}
+                onClick={() => {setCurrentExchangeFn(Symbol.Exchange);
+                    ABpp.config.tradeOn && actions.exchangeSideClick({name: Symbol.Exchange,
+                        isMirror: false,
+                        title: [Symbol.HomeName, Symbol.AwayName],
+                        symbol: symbol,
+                    })
+                }}
+                id={symbol} data-js-hevent=""
+            >
             {/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
                 <div className={"event-date " + data.CategoryIcon}>
@@ -110,9 +120,12 @@ export default class ExchangeItem extends React.Component
 
                 <div className="event-symbols">
                 <div className="h-symbol">
-                        <div className="l-title">
-                            <a href={ABpp.baseUrl + data.CategoryUrl + "0"} title="see more"><span data-js-title="">{Symbol.HomeName}</span> {(Symbol.HomeHandicap !== null) ? <span>({(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap})</span> : '' }</a>
-                        </div>
+                        <h3 className="l-title">{ do {
+                            let html = [<span key="0" data-js-title="">{Symbol.HomeName}</span>, (Symbol.HomeHandicap !== null) ? <span key="1"> ({(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap})</span> : ''];
+                                isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
+                                : <span className="seemore-lnk">{html}</span>
+                            }}
+                        </h3>
 
                         <div className="l-buttons">
                             <div className="inner">
@@ -135,9 +148,12 @@ export default class ExchangeItem extends React.Component
                         </div>
                     </div>
                     <div className="h-symbol">
-                        <div className="l-title">
-                            <a href={ABpp.baseUrl + data.CategoryUrl + "1"} title="see more"><span data-js-title>{Symbol.AwayName}</span> {(Symbol.AwayHandicap !== null) ? <span>({(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap})</span> : '' }</a>
-                        </div>
+                        <h3 className="l-title">{ do {
+                            let html = [<span key="0" data-js-title>{Symbol.AwayName}</span>, (Symbol.AwayHandicap !== null) ? <span key="1"> ({(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap})</span> : ''];
+                                isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>
+                                : <span className="seemore-lnk">{html}</span>
+                            }}
+                        </h3>
 
                         <div className="l-buttons">
                             <div className="inner">
