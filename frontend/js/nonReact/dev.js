@@ -1,5 +1,5 @@
 var gLineupPageData = {
-	"Team Leonard, SA" : {
+	"Team Cahill, SD" : {
 		teamName: "Team Cahill",
 		fantasyPoints: 31.1,
 		team: [
@@ -22,7 +22,7 @@ var gLineupPageData = {
             etr: "43.6",
 		}
 	},
-	"Team Harden, HOU": {
+	"Team Quintana, CHI": {
 		teamName: "Team Quintana",
         fantasyPoints: 36.1,
 		team: [

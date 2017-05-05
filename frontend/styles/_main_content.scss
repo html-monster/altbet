@@ -68,12 +68,16 @@
   //&:nth-of-type(3), &:nth-of-type(6) { padding-left: 5px }
   &__title { margin: 5px 0 0 0; padding-bottom: 5px; border-bottom: 1px solid darken(#bdc0cd, 20%); text-align: left; font-size: 14px; font-weight: bold }
   &__team { width: 100%; border-collapse: separate; border-spacing: 3px;
-    td, th { font-size: 12px; vertical-align: top; }
+    td, th { font-size: 12px; text-align: center; vertical-align: top; }
     tr:hover td { text-shadow: 0 0 10px #bdc0cd; cursor: pointer }
-    .pos { position: relative }
-    .pl { padding-left: 5px; text-align: left; }
+    tr.totals {
+      td:first-child { text-align: left }
+      td { color: #fff; font-weight: bold }
+    }
+    //.pos {  }
+    .pl { position: relative; padding-left: 5px; text-align: left; }
   }
-  &__total { margin-top: 10px; padding-top: 10px; border-top: 1px solid darken(#bdc0cd, 20%); font-size: 14px; text-align: left }
+  //&__total { margin-top: 10px; padding-top: 10px; border-top: 1px solid darken(#bdc0cd, 20%); font-size: 14px; text-align: left }
 }
 
 // BM: player info block
