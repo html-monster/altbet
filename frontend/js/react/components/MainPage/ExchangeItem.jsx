@@ -91,7 +91,7 @@ export default class ExchangeItem extends React.Component
 
 
         return (
-            <div className={`h-event categoryFilterJs ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")}
+            <div className={`h-event categoryFilterJs animated fadeIn ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")}
                 onClick={() =>
                 {
                     setCurrentExchangeFn(Symbol.Exchange);
