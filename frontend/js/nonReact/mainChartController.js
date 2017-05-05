@@ -1,16 +1,20 @@
-﻿var mainChartController = function () {
+﻿var mainChartController = new function () {
 	var charts = [];
 
+    var self = this;
+	this.charts = [];
+
 	this.drawMainCharts = function (data) {
-		if (charts.length == 0)
+		if (this.charts.length == 0)
 			createCharts(data);
 		else
-			updateCharts(charts, data)
+			updateCharts(this.charts, data)
 
         console.log(':', 1);
 	}
 
-	var createCharts = function (data) {
+	var createCharts = function (data)
+	{
 		$('div[id^="container_"]').each(function () {
 			var identificators = $(this).attr('id').replace('container_', '').split('_');
 			var graphData = [];
@@ -35,7 +39,8 @@
 				}
 			});
 
-			charts.push(new Highcharts.Chart({
+            let $Chart;
+			self.charts.push($Chart = new Highcharts.Chart({
 				chart      : {
 					type    : 'line',
 					renderTo: ($(this).attr('id'))
@@ -87,6 +92,8 @@
 					data          : graphDataMirror
 				}]
 			}));
+
+			// setTimeout(() => $Chart.reflow(), 2000);
 		});
 		$('.h-lup__tab_item.loading').removeClass('loading');
 	}
@@ -118,7 +125,6 @@
 					});
 				}
 			});
-
 		});
 		$('.h-lup__tab_item.loading').removeClass('loading');
 	}
