@@ -1,5 +1,5 @@
 var gLineupPageData = {
-	"Team Cahill, SD" : {
+	"Team Cahill" : {
 		teamName: "Team Cahill",
 		fantasyPoints: 31.1,
 		team: [
@@ -22,7 +22,7 @@ var gLineupPageData = {
             etr: "43.6",
 		}
 	},
-	"Team Quintana, CHI": {
+	"Team Quintana": {
 		teamName: "Team Quintana",
         fantasyPoints: 36.1,
 		team: [
@@ -43,8 +43,155 @@ var gLineupPageData = {
             eppg: "78.6",
             score: "36.1",
             etr: "44.3",
+		},
+	},
+  
+
+  "Team Leonard": {
+		teamName: "Team Leonard",
+        fantasyPoints: 149.3 ,
+		team: [
+				{pos: "SD", name: "Parker, PG", team: "SA", status: "A", eppg:21.2 , fppg: 19.4, score: 15.3, timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+				{pos: "CHI", name: "Green, SG", team: "SA", status: "A", eppg:  19.2   , fppg:   17.1, score:   16.8, timeEnd:   1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+				{pos: "CHI", name: "Mills, G", team: "SA", status: "A", eppg:21.3 , fppg: 17.9, score: 14.8, timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+				{pos: "CHI", name: "Leonard, SF", team: "SA", status: "A", eppg:  45.2   , fppg:   42.1, score:   31.3, timeEnd:   1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+				{pos: "CHI", name: "Aldridge, PF", team: "SA", status: "A", eppg:29.9 , fppg: 30.9, score: 21.4, timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+				{pos: "WAS", name: "Carrol, F", team: "TOR", status: "A", eppg:  17.2   , fppg:   11.8, score:     , timeEnd:   4, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+				{pos: "DEF", name: "Gasol, C", team: "SA", status: "A", eppg:25.7 , fppg: 26.3, score:   19.7, timeEnd: 1.3, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+				{pos: "DEF", name: "Gnobili, SG", team: "SA", status: "A", eppg:  20.6   , fppg:   15.7, score: 14.9, timeEnd:   1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+				{pos: "GK", name: "Anderson, SF", team: "SA", status: "A", eppg:19.1 , fppg: 20.8, score:   15.1, timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+			],
+		TotScore: 158,
+		Diff: "-32",
+		Totals: {
+            fppg: "202",
+            eppg: "219.4",
+            score: "149.3",
+            etr: "12",
 		}
-	}
+	},
+  
+  
+  
+  "Team Harden": {
+    teamName: "Team Harden",
+    fantasyPoints: 151.3,
+    team: [
+      {pos: "SD", name: "Beverly, PG", team: "HOU", status: "A", eppg: 28.2, fppg: 25.9, score:21.2 , timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Harden, SG", team: "HOU", status: "A", eppg:   53.7, fppg:     55.2, score:39.4 , timeEnd:   1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Williams, G", team: "HOU", status: "A", eppg: 23.4, fppg: 26.5, score:16.9 , timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Aziza, SF", team: "HOU", status: "A", eppg:   24.1, fppg:     25.7, score:14.8 , timeEnd:   1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Anderson, PF", team: "HOU", status: "A", eppg: 25.2, fppg: 22.1, score:17.3 , timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "WAS", name: "Harrell, PF", team: "TOR", status: "A", eppg:   15.9, fppg:     16.6, score:10.2 , timeEnd:   1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "DEF", name: "Dekker, F", team: "HOU", status: "A", eppg: 16.1, fppg: 13.8, score:10.2 , timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "DEF", name: "Thompson, C", team: "HOU", status: "A", eppg:   22.8, fppg:     25.9, score: , timeEnd:   4, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "GK", name: "Gordon, SG", team: "CLE", status: "A", eppg: 27.1, fppg: 25.4, score:21.3 , timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+    ],
+    TotScore: 158,
+    Diff: "-32",
+    Totals: {
+      fppg: "237.1",
+      eppg: "236.5",
+      score: "151.3",
+      etr: "12",
+    }
+  },
+    
+  "Team Fleury   ": {
+    teamName: "Team Fleury",
+    fantasyPoints: 49.2,
+    team: [
+      {pos: "SD", name: "Fleury, G", team: "PIT", status: "A", eppg: 14, fppg: 12.4 , score:8.7 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Kessel, RW", team: "PIT", status: "A", eppg:   8.5, fppg:   8 , score:  6.2 , timeEnd:   1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Homquist, LW", team: "PIT", status: "A", eppg: 7.1, fppg: 7.9 , score:5.7 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Maroon, LW", team: "EDM", status: "A", eppg:   6.1, fppg:   5.3 ,score: , timeEnd:   3, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Malkin, C", team: "PIT", status: "A", eppg: 9.8, fppg: 10.7 , score:  8.1 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "WAS", name: "Guenzel. C", team: "PIT", status: "A", eppg:   12.2, fppg:   11.8  , score:9.7 , timeEnd:   1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "DEF", name: "Schultz, D", team: "PIT", status: "A", eppg: 7.9, fppg: 7.4 , score:  7.1 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "DEF", name: "Cole, D", team: "PIT", status: "A", eppg:   5.3, fppg:   5.7 , score:3.7, timeEnd:   1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "GK", name: "Hagelin, LW", team: "PIT", status: "A", eppg: 4.7, fppg: 4.4 , score:  3.1 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+    ],
+    TotScore: 158,
+    Diff: "-32",
+    Totals: {
+      fppg: "69.2",
+      eppg: "75.6",
+      score: "49.2",
+      etr: "15",
+    }
+  },
+  
+  "Team Holby   ": {
+    teamName: "Team Holby",
+    fantasyPoints: 54.3,
+    team: [
+      {pos: "SD", name: "Holby,G", team: "WAS", status: "A", eppg:15.2 , fppg:12.8  , score:10.2 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Ovechkin, LW", team: "WAS", status: "A", eppg:  9.1 , fppg:  8.9 , score:  6.7  , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Oshie, RW", team: "WAS", status: "A", eppg:7.2 , fppg:8 , score:6.2 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Williams, RW", team: "WAS", status: "A", eppg:  6.9 , fppg:  6.2 ,score:  5.7 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Backstrom, C", team: "WAS", status: "A", eppg:8.5 , fppg:8  , score:7.1   , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "WAS", name: "Kuznetzov, C", team: "WAS", status: "A", eppg:  6.1 , fppg:  6.3    , score:  5.9 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "DEF", name: "Carlson, D", team: "WAS", status: "A", eppg:7.3 , fppg:6.9  , score:6.5   , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "DEF", name: 'Shattenkirk, D', team: "WAS", status: "A", eppg:  5.9 , fppg:  6.5   , score:  5.1, timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "GK", name: "Perry, RW", team: "ANH", status: "A", eppg:4.1 , fppg:6.3 , score:  , timeEnd: 3, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+    ],
+    TotScore: 158,
+    Diff: "-32",
+    Totals: {
+      fppg: "69.9",
+      eppg: "70.3",
+      score: "53.4",
+      etr: "15",
+    }
+  },
+  
+  "Team Sanchez": {
+    teamName: "Team Sanchez",
+    fantasyPoints: 30.1,
+    team: [
+      {pos: "SD", name: "Sanchez, F", team: "ARS", status: "A", eppg:7.2, fppg: 12.6  , score:3.5 , timeEnd: 0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Walcott, F", team: "ARS", status: "A", eppg:  4.6   , fppg:   10, score:  3.1  , timeEnd: 0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Ozli, M", team: "ARS", status: "A", eppg:5.2 , fppg: 9.2, score:2.8 , timeEnd: 0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Iwobi, M", team: "ARS", status: "A", eppg:  5  , fppg:   4.9,score:  2.8 , timeEnd: 0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Bertrand, D", team: "SOU", status: "A", eppg:7.9 , fppg: 7.5, score:3.9   , timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "WAS", name: "Oxlade-Chamberlain, D", team: "ARS", status: "A", eppg:  6.1 , fppg:   5.6   , score:  3.4 , timeEnd: 0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "DEF", name: "Martinez, GK", team: "ARS", status: "A", eppg:6.9 , fppg: 7.9 , score:4.1   , timeEnd: 0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "DEF", name: 'Mustafi, D', team: "ARS", status: "A", eppg:  5.2   , fppg:   6.7 , score:  2.8, timeEnd: 0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "GK", name: "Gibbs, D", team: "ARS", status: "A", eppg:7.1 , fppg: 6.5 , score:3.7  , timeEnd: 0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+    ],
+    TotScore: 158,
+    Diff: "-32",
+    Totals: {
+      fppg: "70.9",
+      eppg: "55.2",
+      score: "30.1",
+      etr: "5.8",
+    }
+  },
+  
+  "Team Ibrahimovic": {
+    teamName: "Team Ibrahimovic",
+    fantasyPoints: 29.4,
+    team: [
+      {pos: "SD", name: "Ibrahimovic, F", team: "MUN", status: "Inj", eppg:8.5, fppg: 12.6  , score:3.9 , timeEnd:0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Pogba, F", team: "MUN", status: "Inj", eppg:  8.1   , fppg:  10, score:  4.6  , timeEnd:0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Mkhitaryan, M", team: "MUN", status: "A", eppg:9.1 , fppg:8.2, score:3.1 , timeEnd:0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Herera, M", team: "MUN", status: "A", eppg:  4.6  , fppg:  7.4,score:  2.8 , timeEnd:0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Valencia, D", team: "MUN", status: "A", eppg:5.8 , fppg:6.9, score:3.1   , timeEnd:0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "WAS", name: "Blind, M", team: "MUN", status: "A", eppg:  6.3 , fppg:  6.3   , score:  2.7 , timeEnd:0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "DEF", name: "de Gea", team: "MUN", status: "A", eppg:5.3 , fppg:6.7 , score:2.6   , timeEnd:0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "DEF", name: 'Can, M', team: "LIV", status: "A", eppg:  6.1   , fppg:  5.8 , score:  3.1, timeEnd:1.3, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "GK", name: "Lingard, M", team: "MUN", status: "A", eppg:6.9 , fppg:7.1 , score:3.5  , timeEnd:0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+    ],
+    TotScore: 158,
+    Diff: "-32",
+    Totals: {
+      fppg: "71",
+      eppg: "60.7",
+      score: "29.4",
+      etr: "6.1",
+    }
+  }
 };
 
 
