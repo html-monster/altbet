@@ -44,6 +44,8 @@ export default class ExchangeItem extends React.Component
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
 
+        // console.log('this.props:', this.props);
+        // console.log('this.state:', this.state);
         // mode basic/expert
         let isExpertMode = currentExchange === data.Symbol.Exchange || !isBasicMode;
         const expModeClass = isExpertMode ? 'expert-mode' : '';
@@ -103,6 +105,8 @@ export default class ExchangeItem extends React.Component
                 onClick={() =>
                 {
                     setCurrentExchangeFn(Symbol.Exchange);
+
+					this.lineupOpen('[data-js-lineup].active', 1);
 
                     ABpp.config.tradeOn && actions.exchangeSideClick({name: Symbol.Exchange,
                         isMirror: false,
@@ -269,14 +273,14 @@ export default class ExchangeItem extends React.Component
      */
     _onLPTabClick(index)
     {
-        var activeTab = ["", ""];
-
-        activeTab[index] = " active";
-
-        var newStates = {...this.state, activeTab};
-        this.setState(newStates);
-
-        this.state.isLPOpen||this._onLPOpenCloseClick({newStates});
+        // var activeTab = ["", ""];
+		//
+        // activeTab[index] = " active";
+		//
+        // var newStates = {...this.state, activeTab};
+        // this.setState(newStates);
+		//
+        // this.state.isLPOpen||this._onLPOpenCloseClick({newStates});
 /*
         $(container).find('.wrapper .tab').click(function ()
         {
@@ -295,11 +299,11 @@ export default class ExchangeItem extends React.Component
      */
     _onLPOpenCloseClick({newStates})
     {
-        this.setState({...this.state, ...newStates, isLPOpen: !this.state.isLPOpen});
-
-        let target = this.refs.LPOpenBtn;
-        if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);
-        this.lineupOpen(target);
+        // this.setState({...this.state, ...newStates, isLPOpen: !this.state.isLPOpen});
+		//
+        // let target = this.refs.LPOpenBtn;
+        // if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);
+        // this.lineupOpen(target);
 
 
     }
