@@ -19,21 +19,6 @@ export default class ExchangeItem extends React.Component
         this.data = gLineupPageData;
     }
 
-
-/*
-    componentDidMount()
-    {
-        0||console.log( 'this.props.data.Symbol.Exchange', this.props.data.Symbol.Exchange );
-        // var self = this;
-        //
-	    // $('[data-js-lineup]:not(.has-click)').click((ee) =>
-	    // {
-         //    // 0||console.log( 'this.props.data.Symbol.Exchange', this.props.data.Symbol.Exchange );
-         //    if (!$(ee.target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1).bind(self);
-         //    this.lineupOpen(ee.target);
-	    // }).addClass('has-click');
-    }
-*/
     componentWillUpdate(newProps)
     {
         // if not active -> close
@@ -110,8 +95,6 @@ export default class ExchangeItem extends React.Component
                 onClick={() =>
                 {
                     setCurrentExchangeFn(Symbol.Exchange);
-
-					this.lineupOpen('[data-js-lineup].active', 1);
 
                     ABpp.config.tradeOn && actions.exchangeSideClick({name: Symbol.Exchange,
                         isMirror: false,
