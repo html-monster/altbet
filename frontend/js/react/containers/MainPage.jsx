@@ -131,7 +131,7 @@ class MainPage extends BaseController
                             </div>
                             {
                                 $Pagination && $Pagination.LastPage > 1 &&
-                                <div className="pagination">
+                                <div className="pagination fadeIn animated">
                                     <ul className="pagination_list">
                                         {$Pagination.Pages.map((item, key) => {
                                             return <li key={key} className={(item.Disabled ? "disabled " : "") + (item.IsCurrenPage ? "active" : "")}>
