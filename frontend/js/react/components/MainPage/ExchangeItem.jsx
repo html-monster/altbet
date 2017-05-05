@@ -272,7 +272,7 @@ export default class ExchangeItem extends React.Component
         var newStates = {...this.state, activeTab};
         this.setState(newStates);
 
-        this.state.isLPOpen||this._onLPOpenCloseClick({newStates});
+        // this.state.isLPOpen||this._onLPOpenCloseClick({newStates});
 /*
         $(container).find('.wrapper .tab').click(function ()
         {
@@ -366,6 +366,12 @@ export default class ExchangeItem extends React.Component
 
 			globalData.MainCharOn = false;
 		}
+
+
+        for( let val of mainChartController.charts  )
+        {
+            setTimeout(() => val.reflow(), 2000);
+        } // endfor
 
 		// if($('[data-js-lineup]').hasClass('active'))
 		// 	globalData.MainCharOn = true;
