@@ -34,6 +34,11 @@ export default class ExchangeItem extends React.Component
 	    // }).addClass('has-click');
     }
 */
+    componentWillUpdate(newProps)
+    {
+        // if not active -> close
+        if( newProps.data.currentExchange !== newProps.data.Symbol.Exchange && this.state.isLPOpen ) this._lupClose();
+    }
 
 
     render()
@@ -43,12 +48,12 @@ export default class ExchangeItem extends React.Component
         // 0||console.log( 'activeExchange', activeExchange, currentExchange );
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
+        let isExpertMode;
 
-        // console.log('this.props:', this.props);
-        // console.log('this.state:', this.state);
         // mode basic/expert
-        let isExpertMode = currentExchange === data.Symbol.Exchange || !isBasicMode;
+        isExpertMode = currentExchange === data.Symbol.Exchange || !isBasicMode;
         const expModeClass = isExpertMode ? 'expert-mode' : '';
+
 
         // common props for button container
         let commProps = {
@@ -128,7 +133,9 @@ export default class ExchangeItem extends React.Component
                 <div className="event-symbols">
                 <div className="h-symbol">
                         <h3 className="l-title">{ do {
-                            let html = [<span key="0" data-js-title="">{Symbol.HomeName}</span>, (Symbol.HomeHandicap !== null) ? <span key="1"> ({(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap})</span> : ''];
+                                let html = [<span key="0" data-js-title="">{Symbol.HomeName}</span>
+                                    , (Symbol.HomeHandicap !== null) ? <span key="1"> {(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
+                                    , data.Symbol.LastPrice ? ` $${data.Symbol.LastPrice.toFixed(2)}` : ''];
                                 isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
                                 : <span className="seemore-lnk">{html}</span>
                             }}
@@ -156,7 +163,9 @@ export default class ExchangeItem extends React.Component
                     </div>
                     <div className="h-symbol">
                         <h3 className="l-title">{ do {
-                            let html = [<span key="0" data-js-title>{Symbol.AwayName}</span>, (Symbol.AwayHandicap !== null) ? <span key="1"> ({(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap})</span> : ''];
+                                let html = [<span key="0" data-js-title>{Symbol.AwayName}</span>
+                                    , (Symbol.AwayHandicap !== null) ? <span key="1"> {(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap}</span> : ''
+                                    , data.Symbol.LastPrice ? ` $${(1 - data.Symbol.LastPrice).toFixed(2)}` : ""];
                                 isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>
                                 : <span className="seemore-lnk">{html}</span>
                             }}
@@ -273,14 +282,14 @@ export default class ExchangeItem extends React.Component
      */
     _onLPTabClick(index)
     {
-        // var activeTab = ["", ""];
-		//
-        // activeTab[index] = " active";
-		//
-        // var newStates = {...this.state, activeTab};
-        // this.setState(newStates);
-		//
-        // this.state.isLPOpen||this._onLPOpenCloseClick({newStates});
+        var activeTab = ["", ""];
+
+        activeTab[index] = " active";
+
+        var newStates = {...this.state, activeTab};
+        this.setState(newStates);
+
+        this.state.isLPOpen||this._onLPOpenCloseClick({newStates});
 /*
         $(container).find('.wrapper .tab').click(function ()
         {
@@ -295,17 +304,29 @@ export default class ExchangeItem extends React.Component
 
 
     /**
+     * On open/close lineup btn click
      * @private
      */
     _onLPOpenCloseClick({newStates})
     {
-        // this.setState({...this.state, ...newStates, isLPOpen: !this.state.isLPOpen});
-		//
-        // let target = this.refs.LPOpenBtn;
-        // if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);
-        // this.lineupOpen(target);
+        this.setState({...this.state, ...newStates, isLPOpen: !this.state.isLPOpen});
+
+        let target = this.refs.LPOpenBtn;
+        if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);
+        this.lineupOpen(target);
+    }
 
 
+    /**
+     * Just close lineup
+     * @private
+     */
+    _lupClose()
+    {
+        this.setState({...this.state, isLPOpen: false});
+
+        let target = this.refs.LPOpenBtn;
+        this.lineupOpen(target, 1);
     }
 
 
@@ -318,18 +339,25 @@ export default class ExchangeItem extends React.Component
     lineupOpen(that, isCLose)
     {
         let $that = $(that);
+        if (!$that.length) return;
+
         let $wrapper = $that.closest('[data-js-hevent]');
         let $lpnc = $wrapper.find('[data-js-hlup]');
         let $lpncBg = $wrapper.find('[data-js-bg]');
         let $chartWrp = $wrapper.find('[data-js-highchart]');
 
 		$that.toggleClass('active');
-					 // .next().toggleClass('active');
         $lpnc.toggleClass('active');
-        // $lpncBg.toggleClass('active');
+
+        if( isCLose )
+        {
+            $that.removeClass('active');
+            $lpnc.removeClass('active');
+        } // endif
+
 
         // var $contentTitle = $that.closest('.h-event').find('.content_title');
-		if ($that.hasClass('active'))
+		if (!isCLose && $that.hasClass('active'))
         {
             // set subscribe for chart data
             this.props.actions.actionSetChartsSymbol({exchange: this.props.data.Symbol.Exchange});

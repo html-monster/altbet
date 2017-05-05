@@ -119,18 +119,18 @@
 		justify-content: space-between;
 	}
   .h-event { display: flex;  flex-direction: column;  justify-content: space-between; position: relative; margin: 1px 0;
-		width: calc(50% - 1px); min-width: 410px; border-radius: 6px; z-index: 10;
-        color: $color4TextWhite;
+		width: calc(50% - 1px); min-width: 410px; border-radius: 6px; z-index: 10; color: $color4TextWhite;
     &:nth-child(odd) { margin-right: 2px; }
 
     // ovverride on activate exchange
     &.active-exch { z-index: 100; color: $color4TextBlack;
       &>.bg { background: linear-gradient(to bottom, #EBEBEB, #B8B8B8); }
-      .l-title a { color: $color4TextBlack; }
+      .l-title .seemore-lnk { color: $color4TextBlack; }
       .button-container button.event.empty { background: #8D9095 linear-gradient(to bottom, lighten(#8D9095, 10%), lighten(#54525D, 20%)) } //#8D9095
       .button-container.buy .button:first-child button.empty span { color: $color4TextWhite }
       .button-container.sell .button:last-child button.empty span { color: $color4TextWhite }
       .event-date{  @include main_page_event_icon_invert;  }
+      .button-container.buy.nobets { width: 52px; }
     }
 
     //&.basic_mode .button-container {
@@ -145,7 +145,8 @@
             //.button { display: inline-block; }
             .button { @include visibleAttr; visibility: visible; opacity: 1; }
           }
-          &.buy.nobets .button { width: 42px; }
+          &.buy.nobets { width: 52px }
+          //&.buy.nobets .button { width: 52px }
         }
       }
     }
@@ -159,7 +160,7 @@
       &:before { content: ''; display: inline-block; margin-right: 5px; width: 24px; height: 22px; background: url("#{$pathImage}/sprite.svg") no-repeat; }
       @include main_page_event_icon;
       span { /*display: inline-block; margin-right: 5px;*/ font-size: 12px; vertical-align: top;
-        &.date { /*color: $main-color;*/ }
+        &.date { transition: none }
         //&.time{  color: $main-color-darker;  }
       }
     }
@@ -167,7 +168,7 @@
     .event-symbols { padding: 30px 25px 10px 15px; font-size: 13px; transition: .4s; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
     .l-title { font-weight: bold;
-      a { color: $color4TextWhite; transition: none; }
+      .seemore-lnk { color: $color4TextWhite; transition: none; }
     }
     .l-buttons {
       .inner { display: block; position: relative; min-width: 277px; text-align: right;
@@ -198,6 +199,7 @@
             &.price { font-size: 11px; }
           }
         }
+        &.empty-balvan { background: rgba(0, 0, 0, 0.27); box-shadow: inset 0px -9px 25px -14px rgba(255, 255, 255, 0.1) }
 
         span { display: block; position: relative; line-height: 13px; /*color: $main_page_event_title;*/ font-weight: 600; z-index: 2;
           &.price { padding: 3px 8px 0; font-size: 13px; }
@@ -225,8 +227,8 @@
         .button { margin-left: 3px;
           &:last-child{
             button { background-image: linear-gradient(to bottom, #64c9ef, #3498da);
-              //&:not(.empty){  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
-              &.empty span { /*color: $color4TextBlack;*/ }
+              &:not(.empty){  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
+              //&.empty span { /*color: $color4TextBlack;*/ }
               span{ color: #fff; opacity: 0.8; }
             }
           }
@@ -349,7 +351,7 @@
     .mode_wrapper {
       display: flex;
       align-items: center;
-      width: 145px;
+      width: 155px;
       height: 40px;
       padding: 0 10px;
       float: right;
