@@ -91,7 +91,7 @@ export default class ExchangeItem extends React.Component
 
 
         return (
-            <div className={`h-event categoryFilterJs animated fadeIn ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")}
+            <div className={`h-event no_lineups categoryFilterJs animated fadeIn ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")}
                 onClick={() =>
                 {
                     setCurrentExchangeFn(Symbol.Exchange);
@@ -366,12 +366,6 @@ export default class ExchangeItem extends React.Component
 
 			globalData.MainCharOn = false;
 		}
-
-
-        for( let val of mainChartController.charts  )
-        {
-            setTimeout(() => val.reflow(), 2000);
-        } // endfor
 
 		// if($('[data-js-lineup]').hasClass('active'))
 		// 	globalData.MainCharOn = true;
