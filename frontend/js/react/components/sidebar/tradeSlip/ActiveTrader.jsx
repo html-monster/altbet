@@ -41,7 +41,6 @@ class ActiveTrader extends React.Component {
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
 		let className = '';
-		console.log('activeExchangeэб' ,activeExchange.homeName);
 		// className = $active = $activeM = '';
 		// ( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
 		

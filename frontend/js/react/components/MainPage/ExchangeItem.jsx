@@ -83,9 +83,6 @@ export default class ExchangeItem extends React.Component
         } // endif
 
 
-        // 0||console.log( 'currentExchange === "" && isTraiderOn && data.activeExchange.name === data.Symbol.Exchange', currentExchange, isTraiderOn, data.activeExchange.name , data.Symbol.Exchange );
-        // if( currentExchange === "" && isTraiderOn && data.activeExchange.name === data.Symbol.Exchange )
-
         // activate local curr. exchange
         let $classActiveExch = "";
         if( currentExchange === data.Symbol.Exchange ) $classActiveExch = ' active-exch'; // endif
@@ -113,6 +110,8 @@ export default class ExchangeItem extends React.Component
                 onClick={() =>
                 {
                     setCurrentExchangeFn(Symbol.Exchange);
+
+					this.lineupOpen('[data-js-lineup].active', 1);
 
                     ABpp.config.tradeOn && actions.exchangeSideClick({name: Symbol.Exchange,
                         isMirror: false,
