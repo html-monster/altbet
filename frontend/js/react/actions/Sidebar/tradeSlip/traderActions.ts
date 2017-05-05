@@ -671,7 +671,7 @@ class Actions extends BaseActions
 	{
 		return (dispatch, getState) =>
 		{
-			$(context.refs.activeTrader).addClass('loading');
+			if( getState().activeTrader.isMirror != isMirror ) $(context.refs.activeTrader).addClass('loading');
 			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: getState().sidebar.activeExchange.name, isMirror: isMirror, symbol: getState().sidebar.activeExchange.symbol});
 			dispatch({
 				type: ON_ACTIVE_SYMBOL_CHANGED,

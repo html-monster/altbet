@@ -124,7 +124,7 @@ export class LineupPage extends React.Component
                                                     </div>
                                                 </td>
                                                 <td className="pl"><strong>{itm.name} ({itm.team.toUpperCase()})</strong></td><td>{itm.status}</td><td>{itm.fppg}</td><td><strong>{itm.score}</strong></td>
-                                                <td title="Estimated Time Remaining">{moment(moment(itm.timeEnd).diff(Date.now())).format("HH:mm")}</td>
+                                                <td title="Estimated Time Remaining">{itm.timeEnd}</td>
                                             </tr>)
                                         }
                                         <tr className="totals">
