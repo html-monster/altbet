@@ -69,9 +69,9 @@ class ActiveTrader extends React.Component {
 				ABpp.config.currentPage === ABpp.CONSTS.PAGE_MAIN ?
 					<div className="event_title">
 						<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}
-							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>sadasdasdsa
+							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>
 							{
-								activeExchange.homeName ? activeExchange.homeName + " somth" : 'lalalal'//JSON.stringify(data) !== '{}' && ${data.Symbol.HomeHandicap}
+								activeExchange.homeName//JSON.stringify(data) !== '{}' && ${data.Symbol.HomeHandicap}
 							}
 						</div>
 						<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}
