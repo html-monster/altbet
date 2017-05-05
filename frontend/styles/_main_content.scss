@@ -277,6 +277,36 @@
     }
 
     // lineup tabs
+		&.no_lineups{
+			.lpnc_tabs {display: none; }
+			.lpnc-loc{
+				.pl, .pos{
+					width: 140px;
+					height: 20px;
+					transform: none;
+					&:not(.active){
+						height: 0;
+						transform: scaleY(0);
+					}
+					strong{  margin-top: 3px;  }
+				}
+				.pl{
+					left: calc(50% - 140px);
+					background-position: -28px -73px;
+					strong{
+						float: left;
+						margin-left: 25px;
+					}
+				}
+				.pos{
+					background-position: -124px -73px;
+					strong{
+						float: right;
+						margin-right: 25px;
+					}
+				}
+			}
+		}
     // &.active .lpnc-loc { bottom: -12px; }
     .lpnc-loc { position: relative; bottom: -2px; height: 37px; text-align: center; transition: 0.4s ease-out;
       //.loc1, .loc2 { display: inline-block; width: 108px; height: 37px; transform: scaleY(0.55) translateY(14px);
