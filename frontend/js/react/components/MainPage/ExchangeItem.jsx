@@ -242,7 +242,7 @@ export default class ExchangeItem extends React.Component
                             </div>
 */}
                             <div className="h-lup__tab_content tab_content">
-                                <LineupPage className={"h-lup__tab_item tab_item" + activeTab[0]} exdata={exdata} data={this.data} />
+                                <LineupPage className={"h-lup__tab_item tab_item" + activeTab[0]} exdata={exdata} data={this.data} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName} />
 
                                 <div className={"h-lup__tab_item tab_item loading highcharts-tab" + activeTab[1]} id={"container_" + symbol} data-js-highchart="">{}</div>
                                 {/*<img src="~/Images/chart_white.svg" alt=""/>*/}

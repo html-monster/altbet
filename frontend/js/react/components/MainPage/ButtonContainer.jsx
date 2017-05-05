@@ -13,6 +13,7 @@ export default class ButtonContainer extends React.Component
         // let $DateLocalization = new DateLocalization();
     // console.log(data);
         let price, className, emptyBtnName, mirrorClass, btnsPreviewClass = "", side1 = 0, side2 = 1;
+        let debug = "";
 
 
         if( data.ismirror )
@@ -57,6 +58,7 @@ export default class ButtonContainer extends React.Component
 
 
         return <div className={`${className} button-container ${btnsPreviewClass}`}>
+            {/*<span style={{position: "absolute", zIndex: "1", left: "0", top: "0"}}>{data.type}</span>*/}
             {
                 (data.Orders.length && data.Orders.some((item) => item.Side === data.side) ?
                     data.Orders.map((item) =>
@@ -70,7 +72,7 @@ export default class ButtonContainer extends React.Component
                         {
                             for( let jj = 0, ii = 0, countii = 3; jj < countii; jj++ )
                             {
-                                ii = data.ismirror ? countii - (jj + 1) : jj;
+                                ii = data.type === 'sell' ? countii - (jj + 1) : jj;
                                 let item2 = SummaryPositionPrice[ii];
                                 if( item2 )
                                 {
@@ -160,6 +162,7 @@ export default class ButtonContainer extends React.Component
                         else if( !items1 && !items2 && data.type !== 'sell' ) html[0];
                         // additional empty btns
                         else data.type === 'sell' ? html.reverse() : html;
+                        // else { if (data.type === 'sell') debug = "debug"; data.type === 'sell' ? html.reverse() : html; }
                     })
                 )
             }
@@ -181,6 +184,7 @@ export default class ButtonContainer extends React.Component
                     <div className="symbolName" style="display: none">data.Symbol</div>
                 </button>
             }*/}
+            {/*{debug ? <span style={{position: "absolute", zIndex: "1", left: "0", top: "0"}}>{debug}</span>:""}*/}
         </div>;
     }
 
