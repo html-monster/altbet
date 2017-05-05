@@ -34,10 +34,11 @@ export default class ExchangeItem extends React.Component
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
         let isExpertMode;
+        let noTeamsClass, noTeamsWrappClass;
 
         // todo: check for no team hardcode
-        let noTeamsClass = this.data[Symbol.HomeName] && this.data[Symbol.AwayName] && this.data[Symbol.HomeName].team && this.data[Symbol.AwayName].team ? "" : " hidden";
-        if( noTeamsClass ) activeTab = ['', " active"];
+        noTeamsClass = this.data[Symbol.HomeName] && this.data[Symbol.AwayName] && this.data[Symbol.HomeName].team && this.data[Symbol.AwayName].team ? "" : " hidden";
+        if( noTeamsClass ) { noTeamsWrappClass = "no_lineups"; activeTab = ['', " active"];}
 
         // mode basic/expert
         isExpertMode = currentExchange === data.Symbol.Exchange || !isBasicMode;
@@ -95,7 +96,7 @@ export default class ExchangeItem extends React.Component
         // 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
 
         return (
-            <div className={`h-event no_lineups categoryFilterJs animated fadeIn ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")}
+            <div className={`h-event ${noTeamsWrappClass} categoryFilterJs animated fadeIn ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")}
                 onClick={() =>
                 {
                     setCurrentExchangeFn(Symbol.Exchange);
