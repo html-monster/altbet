@@ -129,7 +129,10 @@
     // ovverride on activate exchange
     &.active-exch { z-index: 100; color: $color4TextBlack;
       &>.bg { background: linear-gradient(to bottom, #EBEBEB, #B8B8B8); }
-      .l-title .seemore-lnk { color: $color4TextBlack; }
+      .l-title {
+        .score { color: #4ade1a; }
+        .seemore-lnk { color: $color4TextBlack; }
+      }
       .button-container button.event.empty { background: #8D9095 linear-gradient(to bottom, lighten(#8D9095, 10%), lighten(#54525D, 20%)) } //#8D9095
       .button-container.buy .button:first-child button.empty span { color: $color4TextWhite }
       .button-container.sell .button:last-child button.empty span { color: $color4TextWhite }
@@ -172,6 +175,7 @@
     .event-symbols { padding: 30px 25px 10px 15px; font-size: 13px; transition: .4s; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
     .l-title { font-weight: bold;
+      .score { color: #4ade1a; }
       .seemore-lnk { color: $color4TextWhite; transition: none; }
     }
     .l-buttons {

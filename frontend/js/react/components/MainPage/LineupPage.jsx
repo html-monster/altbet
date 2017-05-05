@@ -56,7 +56,7 @@ export class LineupPage extends React.Component
                                 <div className="l-lup__rules"><a href="#" className="l-lup__link text_decoration" onClick={::this._onRaSClick}>Rules & Scoring</a></div>
 
                                 <div className="l-team">
-                                    <div className="l-team__title">{data[HomeName].teamName} ({data[HomeName].fantasyPoints})</div>
+                                    <div className="l-team__title">{data[HomeName].teamName} ({data[HomeName].Totals.eppg})</div>
                                     <table className="l-team__team">
                                         <tbody>
                                         <tr>
@@ -101,7 +101,7 @@ export class LineupPage extends React.Component
                                 <div className="l-lup__rules"><a href="#" className="l-lup__link text_decoration" onClick={::this._onRaSClick}>Rules & Scoring</a></div>
 
                                 <div className="l-team">
-                                    <div className="l-team__title">{data[AwayName].teamName} ({data[AwayName].fantasyPoints})</div>
+                                    <div className="l-team__title">{data[AwayName].teamName} ({data[AwayName].Totals.eppg})</div>
                                     <table className="l-team__team">
                                         <tbody>
                                         <tr>
