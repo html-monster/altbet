@@ -1,5 +1,5 @@
 var gLineupPageData = {
-	"Team Cahill" : {
+	"Team Cahill, SD" : {
 		teamName: "Team Cahill",
 		fantasyPoints: 31.1,
 		team: [
@@ -22,7 +22,7 @@ var gLineupPageData = {
             etr: "43.6",
 		}
 	},
-	"Team Quintana": {
+	"Team Quintana, CHI": {
 		teamName: "Team Quintana",
         fantasyPoints: 36.1,
 		team: [
@@ -45,9 +45,9 @@ var gLineupPageData = {
             etr: "44.3",
 		},
 	},
-  
 
-  "Team Leonard": {
+
+  "Team Leonard, SA": {
 		teamName: "Team Leonard",
         fantasyPoints: 149.3 ,
 		team: [
@@ -70,10 +70,10 @@ var gLineupPageData = {
             etr: "12",
 		}
 	},
-  
-  
-  
-  "Team Harden": {
+
+
+
+  "Team Harden, HOU": {
     teamName: "Team Harden",
     fantasyPoints: 151.3,
     team: [
@@ -96,8 +96,8 @@ var gLineupPageData = {
       etr: "12",
     }
   },
-    
-  "Team Fleury   ": {
+
+  "Team Fleury, PIT": {
     teamName: "Team Fleury",
     fantasyPoints: 49.2,
     team: [
@@ -120,8 +120,8 @@ var gLineupPageData = {
       etr: "15",
     }
   },
-  
-  "Team Holby   ": {
+
+  "Team Holby, WAS": {
     teamName: "Team Holby",
     fantasyPoints: 54.3,
     team: [
@@ -144,8 +144,8 @@ var gLineupPageData = {
       etr: "15",
     }
   },
-  
-  "Team Sanchez": {
+
+  "Team Sanchez, ARS": {
     teamName: "Team Sanchez",
     fantasyPoints: 30.1,
     team: [
@@ -168,8 +168,8 @@ var gLineupPageData = {
       etr: "5.8",
     }
   },
-  
-  "Team Ibrahimovic": {
+
+  "Team Ibrahimovic, MUN": {
     teamName: "Team Ibrahimovic",
     fantasyPoints: 29.4,
     team: [

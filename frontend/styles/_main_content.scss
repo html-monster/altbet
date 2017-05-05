@@ -181,13 +181,13 @@
     }
 
 
-    .button-container { display: inline-block; position: relative; width: 50%; height: 35px; vertical-align: middle; //transition: .3s;
+    .button-container { display: inline-flex; position: relative; width: 50%; height: 35px; vertical-align: middle; //transition: .3s;
       &:first-of-type { padding-right: 3px; text-align: left }
       &:last-of-type { padding-left: 2px; text-align: right }
 
       .button { display: inline-block; }
 
-      button.event { position: relative; margin: 0 2px; padding: 0; min-width: 42px; height: 32px; border-radius: 4px; text-transform: uppercase;
+      button.event { position: relative; margin: 0 2px; padding: 0; min-width: 43px; height: 32px; border-radius: 4px; text-transform: uppercase;
           background: $default-button-bg; vertical-align: middle; transition: all 0.4s ease-out !important;
         @include main_page_event_button;
         &:first-child {  margin-left: 0;  }
@@ -217,7 +217,7 @@
       &.sell { text-align: right;
         &>button:not(.empty):last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
         // for preview
-        &.onebtn { width: 42px;
+        &.onebtn { width: 43px;
           //.button { display: none; }
           .button { @include hiddAttr; visibility: hidden; opacity: 0 }
           //.button:last-of-type { display: inline-block; }
@@ -245,8 +245,8 @@
       &.buy { text-align: left  ;
         &>button:not(.empty):first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
         // for preview
-        &.nobets { width: 42px; }
-        &.onebtn { width: 42px;
+        &.nobets { width: 43px; }
+        &.onebtn { width: 43px;
           //.button { display: inline-block; }
           .button { @include hiddAttr; visibility: hidden; opacity: 0; }
           //.button:first-of-type { display: inline-block; }

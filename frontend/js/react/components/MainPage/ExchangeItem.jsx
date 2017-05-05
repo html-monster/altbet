@@ -226,7 +226,7 @@ export default class ExchangeItem extends React.Component
                             <div className="h-lup__tab_content tab_content">
                                 <LineupPage className={"h-lup__tab_item tab_item" + activeTab[0]} exdata={exdata} data={this.data} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName} />
 
-                                <div className={"h-lup__tab_item tab_item loading highcharts-tab" + activeTab[1]} id={"container_" + symbol} data-js-highchart="">{}</div>
+                                <div className={"h-lup__tab_item tab_item loading highcharts-tab" + activeTab[1]} id={"container_" + symbol} data-js-highchart="" ref={'chartContainer'}>{}</div>
                                 {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                             </div>
                         </div>
@@ -272,6 +272,23 @@ export default class ExchangeItem extends React.Component
         var newStates = {...this.state, activeTab};
         this.setState(newStates);
 
+        if(index)
+        {
+            for( let val of mainChartController.charts  )
+            {
+                if(val.renderTo.id === this.refs.chartContainer.id)
+                {
+                    let containerWidth = $(this.refs.chartContainer).width();
+                    let chart = $(val.container);
+
+                    if(chart.width() > containerWidth) setTimeout(() => val.reflow(), 400);
+
+
+                    // 0||console.log( 'val.renderTo.id', val.renderTo.id );
+                    // setTimeout(() => val.reflow(), 2000);
+                }
+            } // endfor
+        }
         // this.state.isLPOpen||this._onLPOpenCloseClick({newStates});
 /*
         $(container).find('.wrapper .tab').click(function ()
@@ -366,12 +383,6 @@ export default class ExchangeItem extends React.Component
 
 			globalData.MainCharOn = false;
 		}
-
-
-        for( let val of mainChartController.charts  )
-        {
-            setTimeout(() => val.reflow(), 2000);
-        } // endfor
 
 		// if($('[data-js-lineup]').hasClass('active'))
 		// 	globalData.MainCharOn = true;
