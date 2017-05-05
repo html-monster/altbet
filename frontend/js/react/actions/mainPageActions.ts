@@ -38,13 +38,25 @@ class Actions extends BaseActions
             {
                 let state = getState().mainPage.marketsData;
 
-                if( JSON.stringify(inData) != JSON.stringify(state) )
+                // console.log('inData:', inData);
+                // console.log('state:', state);
+                // console.log('JSON.stringify(inData) != JSON.stringify(state):', JSON.stringify(inData) != JSON.stringify(state));
+                // console.log('inData.some((item, index)=>JSON.stringify(item) !== JSON.stringify(state[index])):',
+                //     inData.some((item, index)=>JSON.stringify(item) !== JSON.stringify(state[index])));
+                let compare = inData.some((item, index)=>{
+                    delete item.TimeRemains;
+                    delete state[index].TimeRemains;
+                    return JSON.stringify(item) !== JSON.stringify(state[index])
+                });
+
+                if( compare )
                 {
     // __DEV__&&console.debug( 'inData', inData, state );
                     dispatch({
                         type: ON_SOCKET_MESSAGE,
                         payload: inData
                     });
+                    __DEV__ && console.log('re-render');
     //             }
     //             else
     //             {
