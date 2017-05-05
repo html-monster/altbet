@@ -114,7 +114,7 @@ class MainPage extends BaseController
                             <label className="mode_switch">
                                 <input defaultChecked={!isBasicMode} id="Mode" name="Mode" type="checkbox" />
                                 <input name="Mode" type="hidden" defaultValue={!isBasicMode} />
-                                { isBasicMode ? <span>Basic Mode</span> : <span>Expert Mode</span> }
+                                { isBasicMode ? <span>Basic View</span> : <span>Detailed View</span> }
                             </label>
                         </div>
                     </div>

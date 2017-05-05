@@ -124,7 +124,7 @@ export default class ButtonContainer extends React.Component
                     :
                     (do {
                         let html = [
-                        <div className="button">
+                        <div className="button" key="0">
                             <button className={`event animated empty ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this, mainContext,
                                     {
                                         isempty: true,
@@ -141,14 +141,14 @@ export default class ButtonContainer extends React.Component
                             </button>
                         </div>
                         ,
-                        <div className="button">
+                        <div className="button" key="1">
                             <button className={`event animated ${className} ${mirrorClass} empty-balvan`} disabled={true}>
                                 <span className="price">{}</span>
                                 <span className="volume">{}</span>
                             </button>
                         </div>
                         ,
-                        <div className="button" disabled={true}>
+                        <div className="button" disabled={true} key="2">
                             <button className={`event animated ${className} ${mirrorClass} empty-balvan`} disabled={true}>
                                 <span className="price">{}</span>
                                 <span className="volume">{}</span>
