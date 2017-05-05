@@ -92,9 +92,9 @@ class Actions extends BaseActions
 
 
                 // set tabs titles
-				$('.active_trader .event_title .event_name').each(function () {
-					$(this).text(titles.eq(ii++).text());
-				});
+                // $('.active_trader .event_title .event_name').each(function () {
+					// $(this).text(titles.eq(ii++).text());
+				// });
 
 				// === Vlasakh === 17-01-03 ===============================================
 				// ABpp.actions['MainPage.firstExchangeActivate'] && ABpp.actions['MainPage.firstExchangeActivate']();

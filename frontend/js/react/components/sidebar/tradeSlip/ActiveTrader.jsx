@@ -44,7 +44,7 @@ class ActiveTrader extends React.Component {
 		console.log('activeExchangeэб' ,activeExchange.homeName);
 		// className = $active = $activeM = '';
 		// ( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
-
+		
         let gainLoss = data && data.GainLoss ? data.GainLoss : '';
         if (data) {
             if (gainLoss < 0)
@@ -68,10 +68,17 @@ class ActiveTrader extends React.Component {
 			{
 				ABpp.config.currentPage === ABpp.CONSTS.PAGE_MAIN ?
 					<div className="event_title">
-						<div className={"event_named" + (!activeExchange.isMirror ? ' active' : '')}
-							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>{activeExchange.awayName}</div>
-						<div className={'event_named' + (activeExchange.isMirror ? ' active' : '')}
-							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, true)}>{activeExchange.awayName}
+						<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}
+							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>
+							{
+								activeExchange.homeName//JSON.stringify(data) !== '{}' && ${data.Symbol.HomeHandicap}
+							}
+						</div>
+						<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}
+							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, true)}>
+							{
+								activeExchange.awayName// JSON.stringify(data) !== '{}' && ${data.Symbol.AwayHandicap}
+							}
 						</div>
 					</div>
 					:
