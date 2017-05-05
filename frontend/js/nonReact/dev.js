@@ -15,6 +15,12 @@ var gLineupPageData = {
 			],
 		TotScore: 126,
 		Diff: "+32",
+		Totals: {
+            fppg: "63.3",
+            eppg: "66.1",
+            score: "31.1",
+            etr: "43.6",
+		}
 	},
 	"Team Harden, HOU": {
 		teamName: "Team Quintana",
@@ -32,6 +38,12 @@ var gLineupPageData = {
 			],
 		TotScore: 158,
 		Diff: "-32",
+		Totals: {
+            fppg: "81.7",
+            eppg: "78.6",
+            score: "36.1",
+            etr: "44.3",
+		}
 	}
 };
 
