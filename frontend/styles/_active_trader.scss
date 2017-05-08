@@ -26,6 +26,7 @@
 				transition: 0.4s ease-out;
 				overflow: hidden;
 				@include trader_event_name;
+				user-select: none;
 			}
 		}
 		.active_trader_footer{

@@ -29,6 +29,7 @@ a.text_decoration, a.link{
 
 
 // BM: buttons
+button, input[type=submit]{ user-select: none; }
 button, a.button {
   height: 30px;
   padding: 4px 12px;
