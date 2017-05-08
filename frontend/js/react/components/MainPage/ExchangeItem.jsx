@@ -125,7 +125,7 @@ export default class ExchangeItem extends React.Component
                         <h3 className="l-title">{ do {
                                 let html = [<span key="0" data-js-title=""><span className="score">{this.data[Symbol.HomeName].Totals.score}&nbsp;&nbsp;</span> {Symbol.HomeName}</span>
                                     , (Symbol.HomeHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
-                                    , data.Symbol.LastPrice ? <span>&nbsp;&nbsp;${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
+                                    , data.Symbol.LastPrice ? <span key="2">&nbsp;&nbsp;${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
                                 isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
                                 : <span className="seemore-lnk">{html}</span>
                             }}

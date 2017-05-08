@@ -81,9 +81,9 @@
 }
 
 // BM: player info block
-//.l-team__team tr:hover .b-pl-info { display: block; }
-.l-team__team tr:active .b-pl-info { visibility: visible; opacity: 1 }
-.b-pl-info { position: absolute; left: 0; top: 100%; padding: 10px;
+.l-team__team tr:hover .b-pl-info { visibility: visible; opacity: 1 }
+//.l-team__team tr:active .b-pl-info { visibility: visible; opacity: 1 }
+.b-pl-info { position: absolute; left: 20px; top: 100%; padding: 10px;
       text-align: right;  text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
       @include main_page_lineup_hind;
   &__main-inf {  }
@@ -176,7 +176,8 @@
     .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
     .l-title { font-weight: bold;
       .score { color: #4ade1a; }
-      .seemore-lnk { color: $color4TextWhite; transition: none; }
+      .seemore-lnk { color: $color4TextWhite; transition: color .2s; }
+      a.seemore-lnk:hover { color: $color-blue; }
     }
     .l-buttons {
       .inner { display: block; position: relative; min-width: 281px; text-align: right;

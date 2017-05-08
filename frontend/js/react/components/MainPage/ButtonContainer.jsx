@@ -65,6 +65,9 @@ export default class ButtonContainer extends React.Component
                     {
                         let SummaryPositionPrice = item.SummaryPositionPrice.slice();
                         // data.ismirror && SummaryPositionPrice.reverse();
+                        // if (data.type === 'sell' || data.type !== 'sell' && data.ismirror) SummaryPositionPrice.reverse();
+                        // if (data.type === 'sell' || data.ismirror) SummaryPositionPrice.reverse();
+                        if (data.type === 'sell' && !data.ismirror || data.type !== 'sell' && data.ismirror) SummaryPositionPrice.reverse();
 
                         let html = [];
 
@@ -73,6 +76,7 @@ export default class ButtonContainer extends React.Component
                             for( let jj = 0, ii = 0, countii = 3; jj < countii; jj++ )
                             {
                                 ii = data.type === 'sell' ? countii - (jj + 1) : jj;
+                                // ii = jj;
                                 let item2 = SummaryPositionPrice[ii];
                                 if( item2 )
                                 {
@@ -120,7 +124,8 @@ export default class ButtonContainer extends React.Component
                             // );
                             } // endfor
                         }
-                        else html = '';
+                        else html = [];
+                        // return data.type === 'sell' && !data.ismirror || data.type === 'buy' && data.ismirror ? html.reverse() : html;
                         return html;
                     })
                     :
