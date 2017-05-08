@@ -3,6 +3,10 @@
 :-moz-placeholder { color: #dbdbdb; }
 :-ms-input-placeholder{ color: #dbdbdb; }
 
+.b-clear { clear: both }
+.hidden { display: none !important; }
+
+
 .blur{
   *:not(.pop_up){
     filter: url("#{$pathImage}/blur.svg#blur") blur(5px);
@@ -590,6 +594,7 @@ input ~ .info{
 .tab {
   transition: 0.4s ease-out;
   cursor: pointer;
+  text-align: center;
   user-select: none;
   &[data-disabled]{  cursor: default;  opacity: 0.6; }
 }
@@ -601,7 +606,7 @@ input ~ .info{
 
 // BM: tabs variant like AT
 .h-tab1 {
-  &__tabs { margin: 0 auto; border-radius: 4px; }
+  &__tabs { margin: 0 auto; border-radius: 4px; text-align: center; }
   &__tab { display: inline-block; width: calc(50% - 1px); height: 35px; line-height: 33px; color: #fff; font-size: 14px;
       border: 1px solid #fff; border-radius: 4px 0 0 4px; vertical-align: top;
     &.active { background-image: linear-gradient(to top, #bdc0cd, #ffffff); border: none; color: #211e25; }
@@ -726,8 +731,6 @@ input ~ .info{
   fill: none;
 }
 
-.hidden{  display: none !important;  }
-
 .global_message_container{
   width: 300px;
   padding: 10px 15px;
@@ -776,7 +779,7 @@ input ~ .info{
 
 
 // BM: pagination
-.pagination { margin-left: 11%; padding-top: 20px; //margin-bottom: 40px;
+.pagination { /*margin-left: 11%; */padding-top: 20px; //margin-bottom: 40px;
   .pagination_list { display: flex; justify-content: center;
     li { margin-left: 1px; width: 40px; height: 40px; border-radius: 4px; border: 1px solid #211e25;
         background: linear-gradient(to bottom, #53515e, #292830);
@@ -793,8 +796,6 @@ input ~ .info{
   }
 }
 
-
-.b-clear { clear: both }
 
 
 

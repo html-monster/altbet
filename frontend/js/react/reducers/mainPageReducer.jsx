@@ -22,8 +22,8 @@ export default function mainPage(state = initialState, action)
         case ON_SOCKET_MESSAGE:
             // 0||console.debug( 'state', state );
             // 0||console.debug( 'newVar', newVar );
-                let newVar = {...state, marketsData: action.payload};
-            return newVar;
+            //     let newVar = {...state, marketsData: action.payload};
+            return {...state, marketsData: action.payload};
 
         case ON_POS_PRICE_CLICK:
             return {...state, activeExchange: {name: action.payload[0], isMirror: action.payload[1]}};

@@ -25,5 +25,4 @@ class Strings
     // Total = 'Sum';
     MaxAltBetFees = 'Max fees for this order';
     // TotalCost = 'Total Cost';
-    Profitability = 'Profitability';
 }

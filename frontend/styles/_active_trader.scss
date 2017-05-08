@@ -13,7 +13,7 @@
 			left: 0;
 			z-index: 100;
 		}
-		/*.event_title{
+		.event_title{
 			display: flex;
 			.event_name{
 				width: 50%;
@@ -27,7 +27,7 @@
 				overflow: hidden;
 				@include trader_event_name;
 			}
-		}*/
+		}
 		.active_trader_footer{
 			@include span(last 2.6 of 12);
 			position: fixed;
@@ -36,8 +36,8 @@
 			box-shadow: 0 -6px 15px -3px rgba(0, 0, 0, 0.3);
 			transition: 0.4s ease-out;
 		}
-		span.close{  height: 31px; background: url("#{$pathImage}/ico-delete-w.png") no-repeat center #969696;  border-radius: 5px; cursor: pointer; }
-		.help{
+		//span.close{  height: 31px; background: url("#{$pathImage}/ico-delete-w.png") no-repeat center #969696;  border-radius: 5px; cursor: pointer; }
+		.price_value .help{
 			right: 0;
 			&:not(.balloon_only){
 				@include md(1450){  right: -3px;  }
@@ -478,6 +478,10 @@
 						td:nth-of-type(1){  width: 20%;  } //58px
 						td:nth-of-type(5){  width: 20%;  } //68px
 					}
+					&:nth-of-type(1),&:nth-of-type(2),&:nth-of-type(3),&:nth-of-type(4),&:nth-of-type(5),
+					&:nth-of-type(6),&:nth-of-type(7){
+						#order_content{  margin-top: 10px;  }
+					}
 				}
 			}
 			tr{
@@ -612,14 +616,13 @@
 			left: 0;
 			right: 0;
 			z-index: 10;
-			//margin: 0;
-			margin-top: 10px;
+			margin-top: -126px;
 			padding: 0;
 			background: $order_sidebar_bg;
 			box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.5);
 			font-weight: normal;
 			transition: 0.5s ease-out;
-			&.empty{  top: 18px;  }
+			&.empty{  top: 26px;  }
 			&.animated{  animation-duration: 0.5s;  }
 			&.active{
 				//transform: translateY(5px);

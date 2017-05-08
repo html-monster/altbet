@@ -33,7 +33,7 @@ export default class TraderDefaultForm extends React.Component {
 		// console.log('this.props:', this.props);
 		// let orderFormStyle = {position: 'absolute', left: 0, zIndex: 10, marginTop: 10};
 
-		return <div className={'order_content default animated' + (index === activeString || !index ? ' fadeInUp' : '') +
+		return <div className={'order_content default animated' + (index === activeString || !index ? ' fadeInDown' : '') +
 					(price === '0.' ? ' empty' : '')}
 					id="order_content"
 					key={direction}

@@ -56,7 +56,7 @@ module.exports = {
     },
 
     plugins: [
-        new WebpackNotifierPlugin({title: 'bundleR.js', alwaysNotify: true}),
+        // new WebpackNotifierPlugin({title: 'bundleR.js', alwaysNotify: true}),
 
         new webpack.DefinePlugin({
             __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),

@@ -41,7 +41,6 @@ class ActiveTrader extends React.Component {
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
 		let className = '';
-		// console.log(this.props);
 		// className = $active = $activeM = '';
 		// ( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
 		
@@ -65,25 +64,25 @@ class ActiveTrader extends React.Component {
 		return <div className="active_trader" id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
-			{/*{
-				ABpp.config.currentPage != 2 ?
+			{
+				ABpp.config.currentPage === ABpp.CONSTS.PAGE_MAIN ?
 					<div className="event_title">
 						<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}
 							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>
 							{
-								JSON.stringify(data) != '{}' && `${data.Symbol.HomeName} ${data.Symbol.HomeHandicap}`
+								activeExchange.homeName//JSON.stringify(data) !== '{}' && ${data.Symbol.HomeHandicap}
 							}
 						</div>
 						<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}
 							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, true)}>
 							{
-								JSON.stringify(data) != '{}' && `${data.Symbol.AwayName} ${data.Symbol.AwayHandicap}`
+								activeExchange.awayName// JSON.stringify(data) !== '{}' && ${data.Symbol.AwayHandicap}
 							}
 						</div>
 					</div>
 					:
 					''
-			}*/}
+			}
 			<table className="info">
 				<tbody>
 					<tr>
@@ -91,7 +90,7 @@ class ActiveTrader extends React.Component {
 							<a href="#">
 								P/L
 								<span className={'quantity ' + className}>{gainLoss && gainLoss < 0 ? `($${(gainLoss).toString().slice(1)})` :
-								'$' + (gainLoss || '')}</span>
+								''}</span>
 								<span className="help"><span className="help_message right"><strong>Profit in this event</strong></span></span>
 							</a>
 						</td>
