@@ -579,13 +579,13 @@
           overflow: hidden !important;
           .help_message{  visibility: hidden; }
         }
-        //&:first-of-type{
-        //  border-right: 1px solid $order_sidebar_order_border_color;
+        &:first-of-type{
+          border-right: 1px solid $order_sidebar_order_border_color;
           //.amount{
           //  float: right;
           //  border-left: 1px solid #fff;
           //}
-        //}
+        }
         //.help_message{
         //  t
         //}

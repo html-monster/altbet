@@ -56,7 +56,7 @@ export class LineupPage extends React.Component
                                 <div className="l-lup__rules"><a href="#" className="l-lup__link text_decoration" onClick={::this._onRaSClick}>Rules & Scoring</a></div>
 
                                 <div className="l-team">
-                                    <div className="l-team__title">{data[HomeName].teamName} ({data[HomeName].fantasyPoints})</div>
+                                    <div className="l-team__title">{data[HomeName].teamName} ({data[HomeName].Totals.eppg})</div>
                                     <table className="l-team__team">
                                         <tbody>
                                         <tr>
@@ -101,7 +101,7 @@ export class LineupPage extends React.Component
                                 <div className="l-lup__rules"><a href="#" className="l-lup__link text_decoration" onClick={::this._onRaSClick}>Rules & Scoring</a></div>
 
                                 <div className="l-team">
-                                    <div className="l-team__title">{data[AwayName].teamName} ({data[AwayName].fantasyPoints})</div>
+                                    <div className="l-team__title">{data[AwayName].teamName} ({data[AwayName].Totals.eppg})</div>
                                     <table className="l-team__team">
                                         <tbody>
                                         <tr>
@@ -124,7 +124,7 @@ export class LineupPage extends React.Component
                                                     </div>
                                                 </td>
                                                 <td className="pl"><strong>{itm.name} ({itm.team.toUpperCase()})</strong></td><td>{itm.status}</td><td>{itm.fppg}</td><td><strong>{itm.score}</strong></td>
-                                                <td title="Estimated Time Remaining">{moment(moment(itm.timeEnd).diff(Date.now())).format("HH:mm")}</td>
+                                                <td title="Estimated Time Remaining">{itm.timeEnd}</td>
                                             </tr>)
                                         }
                                         <tr className="totals">

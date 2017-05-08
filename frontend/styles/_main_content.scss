@@ -129,7 +129,10 @@
     // ovverride on activate exchange
     &.active-exch { z-index: 100; color: $color4TextBlack;
       &>.bg { background: linear-gradient(to bottom, #EBEBEB, #B8B8B8); }
-      .l-title .seemore-lnk { color: $color4TextBlack; }
+      .l-title {
+        .score { color: #3f9622; }
+        .seemore-lnk { color: $color4TextBlack; }
+      }
       .button-container button.event.empty { background: #8D9095 linear-gradient(to bottom, lighten(#8D9095, 10%), lighten(#54525D, 20%)) } //#8D9095
       .button-container.buy .button:first-child button.empty span { color: $color4TextWhite }
       .button-container.sell .button:last-child button.empty span { color: $color4TextWhite }
@@ -172,22 +175,23 @@
     .event-symbols { padding: 30px 25px 10px 15px; font-size: 13px; transition: .4s; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
     .l-title { font-weight: bold;
+      .score { color: #4ade1a; }
       .seemore-lnk { color: $color4TextWhite; transition: none; }
     }
     .l-buttons {
-      .inner { display: block; position: relative; min-width: 277px; text-align: right;
-          @include md(1600) { min-width: 187px; }
+      .inner { display: block; position: relative; min-width: 281px; text-align: right;
+          @include md(1600) { min-width: 191px; }
       }
     }
 
 
-    .button-container { display: inline-block; position: relative; width: 50%; height: 35px; vertical-align: middle; //transition: .3s;
+    .button-container { display: inline-flex; position: relative; width: 50%; height: 35px; vertical-align: middle; //transition: .3s;
       &:first-of-type { padding-right: 3px; text-align: left }
       &:last-of-type { padding-left: 2px; text-align: right }
 
       .button { display: inline-block; }
 
-      button.event { position: relative; margin: 0 2px; padding: 0; min-width: 42px; height: 32px; border-radius: 4px; text-transform: uppercase;
+      button.event { position: relative; margin: 0 2px; padding: 0; min-width: 43px; height: 32px; border-radius: 4px; text-transform: uppercase;
           background: $default-button-bg; vertical-align: middle; transition: all 0.4s ease-out !important;
         @include main_page_event_button;
         &:first-child {  margin-left: 0;  }
@@ -217,7 +221,7 @@
       &.sell { text-align: right;
         &>button:not(.empty):last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
         // for preview
-        &.onebtn { width: 42px;
+        &.onebtn { width: 43px;
           //.button { display: none; }
           .button { @include hiddAttr; visibility: hidden; opacity: 0 }
           //.button:last-of-type { display: inline-block; }
@@ -245,8 +249,8 @@
       &.buy { text-align: left  ;
         &>button:not(.empty):first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
         // for preview
-        &.nobets { width: 42px; }
-        &.onebtn { width: 42px;
+        &.nobets { width: 43px; }
+        &.onebtn { width: 43px;
           //.button { display: inline-block; }
           .button { @include hiddAttr; visibility: hidden; opacity: 0; }
           //.button:first-of-type { display: inline-block; }

@@ -29,11 +29,16 @@ export default class ExchangeItem extends React.Component
     render()
     {
         const { actions, data, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange }, mainContext, setCurrentExchangeFn } = this.props;
-        const { isLPOpen, activeTab } = this.state;
+        let { isLPOpen, activeTab } = this.state;
         // 0||console.log( 'activeExchange', activeExchange, currentExchange );
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
         let isExpertMode;
+        let noTeamsClass, noTeamsWrappClass = "";
+
+        // todo: check for no team hardcode
+        noTeamsClass = this.data[Symbol.HomeName] && this.data[Symbol.AwayName] && this.data[Symbol.HomeName].team && this.data[Symbol.AwayName].team ? "" : " hidden";
+        if( noTeamsClass ) { noTeamsWrappClass = "no_lineups"; activeTab = ['', " active"];}
 
         // mode basic/expert
         isExpertMode = currentExchange === data.Symbol.Exchange || !isBasicMode;
@@ -70,7 +75,8 @@ export default class ExchangeItem extends React.Component
 
         // activate local curr. exchange
         let $classActiveExch = "";
-        if( currentExchange === data.Symbol.Exchange ) $classActiveExch = ' active-exch'; // endif
+        // if( currentExchange === data.Symbol.Exchange ) $classActiveExch = ' active-exch'; // endif
+        if( currentExchange === data.Symbol.Exchange || currentExchange === "" && isTraiderOn && activeExchange.name === data.Symbol.Exchange ) $classActiveExch = ' active-exch'; // endif
 
 
         // exdata for lineup
@@ -88,15 +94,16 @@ export default class ExchangeItem extends React.Component
                         symbol: symbol,
                     });
 */
-
+        // 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
 
         return (
-            <div className={`h-event no_lineups categoryFilterJs animated fadeIn ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")}
+            <div className={`h-event ${noTeamsWrappClass} categoryFilterJs animated fadeIn ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")}
                 onClick={() =>
                 {
                     setCurrentExchangeFn(Symbol.Exchange);
 
-                    ABpp.config.tradeOn && actions.exchangeSideClick({name: Symbol.Exchange,
+                    //ABpp.config.tradeOn &&
+                    actions.exchangeSideClick({name: Symbol.Exchange,
                         isMirror: false,
                         title: [Symbol.HomeName, Symbol.AwayName],
                         symbol: symbol,
@@ -116,9 +123,9 @@ export default class ExchangeItem extends React.Component
                 <div className="event-symbols">
                 <div className="h-symbol">
                         <h3 className="l-title">{ do {
-                                let html = [<span key="0" data-js-title="">{Symbol.HomeName}</span>
-                                    , (Symbol.HomeHandicap !== null) ? <span key="1"> {(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
-                                    , data.Symbol.LastPrice ? ` $${data.Symbol.LastPrice.toFixed(2)}` : ''];
+                                let html = [<span key="0" data-js-title=""><span className="score">{this.data[Symbol.HomeName].Totals.score}&nbsp;&nbsp;</span> {Symbol.HomeName}</span>
+                                    , (Symbol.HomeHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
+                                    , data.Symbol.LastPrice ? <span>&nbsp;&nbsp;${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
                                 isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
                                 : <span className="seemore-lnk">{html}</span>
                             }}
@@ -146,9 +153,9 @@ export default class ExchangeItem extends React.Component
                     </div>
                     <div className="h-symbol">
                         <h3 className="l-title">{ do {
-                                let html = [<span key="0" data-js-title>{Symbol.AwayName}</span>
-                                    , (Symbol.AwayHandicap !== null) ? <span key="1"> {(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap}</span> : ''
-                                    , data.Symbol.LastPrice ? ` $${(1 - data.Symbol.LastPrice).toFixed(2)}` : ""];
+                                let html = [<span key="0" data-js-title><span className="score">{this.data[Symbol.AwayName].Totals.score}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>
+                                    , (Symbol.AwayHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap}</span> : ''
+                                    , data.Symbol.LastPrice ? <span>&nbsp;&nbsp;${(1 - data.Symbol.LastPrice).toFixed(2)}</span> : ""];
                                 isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>
                                 : <span className="seemore-lnk">{html}</span>
                             }}
@@ -210,8 +217,8 @@ export default class ExchangeItem extends React.Component
 							</div>
 
                             <div className={`lpnc_tabs ${isLPOpen ? "lpnc_tabs__opened" : ""}`}>
-                                <div className={"lpnc_tabs__tab lpnc_tabs__tab_1 " + activeTab[0]} title="Show teams info" onClick={this._onLPTabClick.bind(this, 0)}>Lineups</div>
-                                <div className={"lpnc_tabs__tab lpnc_tabs__tab_2 " + activeTab[1]} title="Show chart info" onClick={this._onLPTabClick.bind(this, 1)}>Chart</div>
+                                <div className={`lpnc_tabs__tab lpnc_tabs__tab_1 ${noTeamsClass}` + activeTab[0]} title="Show teams info" onClick={this._onLPTabClick.bind(this, 0)}>Lineups</div>
+                                <div className={`lpnc_tabs__tab lpnc_tabs__tab_2 ${noTeamsClass}` + activeTab[1]} title="Show chart info" onClick={this._onLPTabClick.bind(this, 1)}>Chart</div>
                             </div>
                             <button ref="LPOpenBtn" className="show-plnc" data-js-lineup="" title="Show chart" onClick={::this._onLPOpenCloseClick}>{}</button>
                         </div>
@@ -224,9 +231,11 @@ export default class ExchangeItem extends React.Component
                             </div>
 */}
                             <div className="h-lup__tab_content tab_content">
-                                <LineupPage className={"h-lup__tab_item tab_item" + activeTab[0]} exdata={exdata} data={this.data} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName} />
+                                { noTeamsClass ? <div className="h-lup__tab_item tab_item">{}</div>
+                                    : <LineupPage className={"h-lup__tab_item tab_item" + activeTab[0]} exdata={exdata} data={this.data} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName} />
+                                }
 
-                                <div className={"h-lup__tab_item tab_item loading highcharts-tab" + activeTab[1]} id={"container_" + symbol} data-js-highchart="">{}</div>
+                                <div className={"h-lup__tab_item tab_item loading highcharts-tab" + activeTab[1]} id={"container_" + symbol} data-js-highchart="" ref={'chartContainer'}>{}</div>
                                 {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                             </div>
                         </div>
@@ -272,6 +281,23 @@ export default class ExchangeItem extends React.Component
         var newStates = {...this.state, activeTab};
         this.setState(newStates);
 
+        if(index)
+        {
+            for( let val of mainChartController.charts  )
+            {
+                if(val.renderTo.id === this.refs.chartContainer.id)
+                {
+                    let containerWidth = $(this.refs.chartContainer).width();
+                    let chart = $(val.container);
+
+                    if(chart.width() > containerWidth) setTimeout(() => val.reflow(), 400);
+
+
+                    // 0||console.log( 'val.renderTo.id', val.renderTo.id );
+                    // setTimeout(() => val.reflow(), 2000);
+                }
+            } // endfor
+        }
         // this.state.isLPOpen||this._onLPOpenCloseClick({newStates});
 /*
         $(container).find('.wrapper .tab').click(function ()

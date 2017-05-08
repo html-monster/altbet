@@ -1,5 +1,5 @@
 var gLineupPageData = {
-	"Team Cahill" : {
+	"Team Cahill, SD" : {
 		teamName: "Team Cahill",
 		fantasyPoints: 31.1,
 		team: [
@@ -22,7 +22,7 @@ var gLineupPageData = {
             etr: "43.6",
 		}
 	},
-	"Team Quintana": {
+	"Team Quintana, CHI": {
 		teamName: "Team Quintana",
         fantasyPoints: 36.1,
 		team: [
@@ -45,9 +45,9 @@ var gLineupPageData = {
             etr: "44.3",
 		},
 	},
-  
 
-  "Team Leonard": {
+
+  "Team Leonard, SA": {
 		teamName: "Team Leonard",
         fantasyPoints: 149.3 ,
 		team: [
@@ -56,7 +56,7 @@ var gLineupPageData = {
 				{pos: "CHI", name: "Mills, G", team: "SA", status: "A", eppg:21.3 , fppg: 17.9, score: 14.8, timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
 				{pos: "CHI", name: "Leonard, SF", team: "SA", status: "A", eppg:  45.2   , fppg:   42.1, score:   31.3, timeEnd:   1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
 				{pos: "CHI", name: "Aldridge, PF", team: "SA", status: "A", eppg:29.9 , fppg: 30.9, score: 21.4, timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
-				{pos: "WAS", name: "Carrol, F", team: "TOR", status: "A", eppg:  17.2   , fppg:   11.8, score:     , timeEnd:   4, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+				{pos: "WAS", name: "Carrol, F", team: "TOR", status: "A", eppg:  17.2   , fppg:   11.8, score: "", timeEnd:   4, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
 				{pos: "DEF", name: "Gasol, C", team: "SA", status: "A", eppg:25.7 , fppg: 26.3, score:   19.7, timeEnd: 1.3, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
 				{pos: "DEF", name: "Gnobili, SG", team: "SA", status: "A", eppg:  20.6   , fppg:   15.7, score: 14.9, timeEnd:   1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
 				{pos: "GK", name: "Anderson, SF", team: "SA", status: "A", eppg:19.1 , fppg: 20.8, score:   15.1, timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
@@ -70,10 +70,10 @@ var gLineupPageData = {
             etr: "12",
 		}
 	},
-  
-  
-  
-  "Team Harden": {
+
+
+
+  "Team Harden, HOU": {
     teamName: "Team Harden",
     fantasyPoints: 151.3,
     team: [
@@ -84,7 +84,7 @@ var gLineupPageData = {
       {pos: "CHI", name: "Anderson, PF", team: "HOU", status: "A", eppg: 25.2, fppg: 22.1, score:17.3 , timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
       {pos: "WAS", name: "Harrell, PF", team: "TOR", status: "A", eppg:   15.9, fppg:     16.6, score:10.2 , timeEnd:   1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
       {pos: "DEF", name: "Dekker, F", team: "HOU", status: "A", eppg: 16.1, fppg: 13.8, score:10.2 , timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
-      {pos: "DEF", name: "Thompson, C", team: "HOU", status: "A", eppg:   22.8, fppg:     25.9, score: , timeEnd:   4, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "DEF", name: "Thompson, C", team: "HOU", status: "A", eppg:   22.8, fppg:     25.9, score: "", timeEnd:   4, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
       {pos: "GK", name: "Gordon, SG", team: "CLE", status: "A", eppg: 27.1, fppg: 25.4, score:21.3 , timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
     ],
     TotScore: 158,
@@ -96,15 +96,15 @@ var gLineupPageData = {
       etr: "12",
     }
   },
-    
-  "Team Fleury   ": {
+
+  "Team Fleury, PIT": {
     teamName: "Team Fleury",
     fantasyPoints: 49.2,
     team: [
       {pos: "SD", name: "Fleury, G", team: "PIT", status: "A", eppg: 14, fppg: 12.4 , score:8.7 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
       {pos: "CHI", name: "Kessel, RW", team: "PIT", status: "A", eppg:   8.5, fppg:   8 , score:  6.2 , timeEnd:   1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
       {pos: "CHI", name: "Homquist, LW", team: "PIT", status: "A", eppg: 7.1, fppg: 7.9 , score:5.7 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
-      {pos: "CHI", name: "Maroon, LW", team: "EDM", status: "A", eppg:   6.1, fppg:   5.3 ,score: , timeEnd:   3, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "CHI", name: "Maroon, LW", team: "EDM", status: "A", eppg:   6.1, fppg:   5.3 ,score: "", timeEnd:   3, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
       {pos: "CHI", name: "Malkin, C", team: "PIT", status: "A", eppg: 9.8, fppg: 10.7 , score:  8.1 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
       {pos: "WAS", name: "Guenzel. C", team: "PIT", status: "A", eppg:   12.2, fppg:   11.8  , score:9.7 , timeEnd:   1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
       {pos: "DEF", name: "Schultz, D", team: "PIT", status: "A", eppg: 7.9, fppg: 7.4 , score:  7.1 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
@@ -120,8 +120,8 @@ var gLineupPageData = {
       etr: "15",
     }
   },
-  
-  "Team Holby   ": {
+
+  "Team Holby, WAS": {
     teamName: "Team Holby",
     fantasyPoints: 54.3,
     team: [
@@ -133,7 +133,7 @@ var gLineupPageData = {
       {pos: "WAS", name: "Kuznetzov, C", team: "WAS", status: "A", eppg:  6.1 , fppg:  6.3    , score:  5.9 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
       {pos: "DEF", name: "Carlson, D", team: "WAS", status: "A", eppg:7.3 , fppg:6.9  , score:6.5   , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
       {pos: "DEF", name: 'Shattenkirk, D', team: "WAS", status: "A", eppg:  5.9 , fppg:  6.5   , score:  5.1, timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
-      {pos: "GK", name: "Perry, RW", team: "ANH", status: "A", eppg:4.1 , fppg:6.3 , score:  , timeEnd: 3, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
+      {pos: "GK", name: "Perry, RW", team: "ANH", status: "A", eppg:4.1 , fppg:6.3 , score: "", timeEnd: 3, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
     ],
     TotScore: 158,
     Diff: "-32",
@@ -144,8 +144,8 @@ var gLineupPageData = {
       etr: "15",
     }
   },
-  
-  "Team Sanchez": {
+
+  "Team Sanchez, ARS": {
     teamName: "Team Sanchez",
     fantasyPoints: 30.1,
     team: [
@@ -168,8 +168,8 @@ var gLineupPageData = {
       etr: "5.8",
     }
   },
-  
-  "Team Ibrahimovic": {
+
+  "Team Ibrahimovic, MUN": {
     teamName: "Team Ibrahimovic",
     fantasyPoints: 29.4,
     team: [
@@ -191,7 +191,55 @@ var gLineupPageData = {
       score: "29.4",
       etr: "6.1",
     }
-  }
+  },
+
+  "San Antonio Spurs": {
+    Totals: {
+      score: "85",
+    }
+  },
+
+  "Houston Rockets": {
+    Totals: {
+      score: "89",
+    }
+  },
+
+  "Arsenal": {
+    Totals: {
+      score: "0",
+    }
+  },
+
+  "Manchester United": {
+    Totals: {
+      score: "1",
+    }
+  },
+
+  "Pittsburgh Penguins": {
+    Totals: {
+      score: "2",
+    }
+  },
+
+  "Washignton Capitals": {
+    Totals: {
+      score: "3",
+    }
+  },
+
+  "Chicago White Sox (Quintana)": {
+    Totals: {
+      score: "7",
+    }
+  },
+
+  "San Diego Padres (Cahill)": {
+    Totals: {
+      score: "3",
+    }
+  },
 };
 
 

@@ -249,7 +249,7 @@ class Actions extends BaseActions
             // symbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
             const aexch = getState().mainPage.activeExchange;
 
-            // 0||console.log( 'inProps', inProps );
+            // 0||console.log( 'click', inProps );
 
             if( aexch.name !== inProps.name || aexch.isMirror !== inProps.isMirror )
             {

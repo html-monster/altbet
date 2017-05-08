@@ -4,6 +4,8 @@
 :-ms-input-placeholder{ color: #dbdbdb; }
 
 .b-clear { clear: both }
+.hidden { display: none !important; }
+
 
 .blur{
   *:not(.pop_up){
@@ -729,8 +731,6 @@ input ~ .info{
   left: 0;
   fill: none;
 }
-
-.hidden{  display: none !important;  }
 
 .global_message_container{
   width: 300px;
