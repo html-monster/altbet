@@ -350,6 +350,34 @@ if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru
 	var globalData;
 	globalData.userIdentity = 'True';
 }
+
+// злобный костыль за 10 минут для горизонт скрола.
+
+$( window ).resize(function() {
+  let width = $(window).width();
+  let height = $(window).height();
+  
+  if (width <= 1366){
+    $('#mountPoint').addClass('scroll');
+    $('#DiMPHeader').addClass('scroll_header');
+    $('.main_menu').addClass('scroll_main_menu').css('height', height);
+    $('.order ').addClass('scroll_sidebar');
+    $('.content').addClass('scroll_content');
+    $('.content_my_position').addClass('scroll_position');
+    $('.wrapper_user_page').addClass('user_scroll');
+    $('.co-account').css('overflow-y', 'hidden');
+  }
+  else {
+    $('#mountPoint').removeClass('scroll');
+    $('#DiMPHeader').removeClass('scroll_header');
+    $('.main_menu').removeClass('scroll_main_menu');
+    $('.order').removeClass('scroll_sidebar');
+    $('.content').removeClass('scroll_content');
+    $('.co-account').css('overflow-y', 'visible');
+  }
+});
+
+
 /*class teamClass{
 	constructor(){
 

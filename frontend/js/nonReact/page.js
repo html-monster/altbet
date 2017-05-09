@@ -241,6 +241,12 @@ $(document).ready(function ()
 	new accountClass();
 	new ajaxThemeChangeClass();
 	// mainChartController = new mainChartController();
+  
+  
+  // злобный костыль за 10 минут для горизонт скрола.
+  
+  $(window).trigger('resize')
+  
 });
 
 

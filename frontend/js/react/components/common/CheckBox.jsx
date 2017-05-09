@@ -24,9 +24,7 @@ export class CheckBox extends React.Component
         if(this.props.onChange) this.props.onChange(event, this.state.ischecked);
         this.setState({...this.state});
     }
-
-
-
+  
     render()
     {
         const {className, name} = this.props.data;

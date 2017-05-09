@@ -207,7 +207,7 @@ export default class Preferences extends React.Component {
             <li>
               <CheckBox onChange={this._checkNumber} data={{className: "checkbox checkbox_horizontal", name: "SmsActivity", checked: SmsActivity}}>
                 <strong className="label">Send me sms of my activity:</strong>
-                <span style={{display: 'block', color: 'white'}}>Вы не ввели номер телефона в настройках</span>
+                
               </CheckBox>
             </li>
           </ul>
@@ -221,12 +221,11 @@ export default class Preferences extends React.Component {
       </form>
     </div>;
   }
-  
-  
   /**
    * Проверка на наличие номера телефона в Settings
    * @private
    */
+  
   _checkNumber (ee, isChecked) {
         
     const Phone = appData.pageAccountData.UserInfo;
