@@ -98,7 +98,7 @@ var gLineupPageData = {
   },
 
   "Team Fleury, PIT": {
-    teamName: "Team Fleury",
+    teamName: "Team Fleury, PIT",
     fantasyPoints: 49.2,
     team: [
       {pos: "SD", name: "Fleury, G", team: "PIT", status: "A", eppg: 14, fppg: 12.4 , score:8.7 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
@@ -122,7 +122,7 @@ var gLineupPageData = {
   },
 
   "Team Holby, WAS": {
-    teamName: "Team Holby",
+    teamName: "Team Hotby",
     fantasyPoints: 54.3,
     team: [
       {pos: "SD", name: "Holby,G", team: "WAS", status: "A", eppg:15.2 , fppg:12.8  , score:10.2 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},

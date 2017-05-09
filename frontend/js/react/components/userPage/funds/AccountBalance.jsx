@@ -47,7 +47,7 @@ export default class AccountBalance extends React.Component{
 			<div className="color_map">
 				<ul>
 					<li className="pl">P/L = <span>$0</span></li>
-					<li className="inv">Invested = <span>$0</span></li>
+					<li className="inv">At Stake = <span>$0</span></li>
 					<li className="ava">Available = <span>$0</span></li>
 				</ul>
 			</div>

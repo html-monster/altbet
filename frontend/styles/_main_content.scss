@@ -117,11 +117,7 @@
 @mixin visibleAttr { position: static; transition: .5s; /*transition-delay: .3s*/ };
 @mixin hiddAttr { position: absolute };
 .ac-index.co-home {
-	.mp-exchanges{
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-	}
+  .mp-exchanges { display: flex; flex-wrap: wrap; justify-content: space-between; }
   .h-event { display: flex;  flex-direction: column;  justify-content: space-between; position: relative; margin: 1px 0;
 		width: calc(50% - 1px); min-width: 410px; border-radius: 6px; z-index: 10; color: $color4TextWhite;
     &:nth-child(odd) { margin-right: 2px; }
@@ -133,12 +129,15 @@
         .score { color: #3f9622; }
         .seemore-lnk { color: $color4TextBlack; }
       }
-      .button-container button.event.empty { background: #8D9095 linear-gradient(to bottom, lighten(#8D9095, 10%), lighten(#54525D, 20%)) } //#8D9095
+      .button-container {
+        button.event.empty { background: #8D9095 linear-gradient(to bottom, lighten(#8D9095, 10%), lighten(#54525D, 20%)) } //#8D9095
+        &.opener { @include hiddAttr; visibility: hidden; opacity: 0; transition: .2s; }
+      }
       .button-container.buy .button:first-child button.empty span { color: $color4TextWhite }
       .button-container.sell .button:last-child button.empty span { color: $color4TextWhite }
       .event-date{  @include main_page_event_icon_invert;  }
       .button-container.buy.nobets { width: 52px; }
-      .opener .button { @include hiddAttr; visibility: hidden; opacity: 0; }
+      .l-buttons .inner { @include visibleAttr; visibility: visible; opacity: 1; transition: .4s }
     }
 
     //&.basic_mode .button-container {
@@ -149,12 +148,15 @@
       .event-symbols { padding-right: 15px; }
       .button-container {
         &.sell, &.buy {
-          /*&.onebtn!*, &.hideall*! { width: 50%;
+          //&.onebtn!*, &.hideall*! { width: 50%;
+          &.nobets {
             .button { @include visibleAttr; visibility: visible; opacity: 1; }
-          }*/
+          }
           &.buy.nobets { width: 52px }
         }
+        &.opener { @include hiddAttr; visibility: hidden; opacity: 0; transition: .2s; }
       }
+      .l-buttons .inner { @include visibleAttr; visibility: visible; opacity: 1; transition: .4s }
     }
 
     &>.bg { position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-radius: 6px;
@@ -171,16 +173,25 @@
       }
     }
 
-    .event-symbols { padding: 30px 25px 10px 15px; font-size: 13px; transition: .4s; }
+    .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 40px 25px 10px 15px; height: 100%;
+        font-size: 13px; transition: .4s; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
     .l-title { font-weight: bold;
       .score { color: #4ade1a; }
       .seemore-lnk { color: $color4TextWhite; transition: color .1s; }
       a.seemore-lnk:hover { color: $color-blue; }
+      .last-price { white-space: nowrap;
+        &.down i { display: inline-block; top: 2px; background-position: -309px -308px; }
+        &.up i { display: inline-block; top: 0; background-position: -292px -306px; }
+        i { display: none; position: relative; margin-right: -5px; width: 15px; height: 16px; background-size: cover;
+            background: url(../../Images/sprite.svg) no-repeat; }
+            //background: url(../../Images/temp/sprite-01.svg) no-repeat; background-position: 0px 0px; }
+      }
     }
     .l-buttons {
-      .inner { display: block; position: relative; min-width: 281px; text-align: right;
-          @include md(1600) { min-width: 191px; }
+      .inner { display: block; position: relative; min-width: 281px; text-align: right;  @include hiddAttr; visibility: hidden; opacity: 0;
+            transition: .2s;
+        @include md(1600) { min-width: 191px; }
       }
     }
 
@@ -189,7 +200,7 @@
       &:first-of-type { padding-right: 3px; text-align: left }
       &:last-of-type { padding-left: 2px; text-align: right }
 
-      .button { display: inline-block; }
+      .button { display: inline-block; /*@include hiddAttr; visibility: hidden; opacity: 0*/ }
 
       button.event { position: relative; margin: 0 2px; padding: 0; min-width: 43px; height: 32px; border-radius: 4px; text-transform: uppercase;
           background: $default-button-bg; vertical-align: middle; transition: all 0.4s ease-out !important;
@@ -215,7 +226,12 @@
         }
       }
 
-      &.opener .button { @include visibleAttr; visibility: visible; opacity: 1; }
+      &.opener { @include visibleAttr; visibility: visible; position: absolute; right: 35px; top: calc(50% - 35px/2); width: auto;
+          opacity: 1; transition: .4s;
+        button { padding: 0 10px; color: #333; font-size: 14px; background: linear-gradient(to top, #bdc0cd, #ffffff); font-weight: bold; text-transform: none }
+        i { display: inline-block; position: relative; margin-right: 10px; top: 3px; width: 18px; height: 16px;
+            background: url(../../Images/sprite.svg) no-repeat; background-position: -269px -307px; }
+      }
 
 
       // left buttons
@@ -282,34 +298,19 @@
 
     // lineup tabs
 		&.no_lineups{
-			.lpnc_tabs {display: none; }
-			.lpnc-loc{
-				.pl, .pos{
-					width: 140px;
-					height: 20px;
-					transform: none;
-					&:not(.active){
-						height: 0;
-						transform: scaleY(0);
-					}
-					strong{  margin-top: 3px;  }
-				}
-				.pl{
-					left: calc(50% - 140px);
-					background-position: -28px -73px;
-					strong{
-						float: left;
-						margin-left: 25px;
-					}
-				}
-				.pos{
-					background-position: -124px -73px;
-					strong{
-						float: right;
-						margin-right: 25px;
-					}
-				}
-			}
+          .lpnc_tabs {display: none; }
+          .lpnc-loc{
+            .pl, .pos{ width: 140px; height: 20px; transform: none;
+              &:not(.active){ height: 0; transform: scaleY(0); }
+              strong{  margin-top: 3px;  }
+            }
+            .pl{ left: calc(50% - 140px); background-position: -28px -73px;
+              strong { float: left; margin-left: 25px; }
+            }
+            .pos { background-position: -124px -73px;
+              strong { float: right; margin-right: 25px; }
+            }
+          }
 		}
     // &.active .lpnc-loc { bottom: -12px; }
     .lpnc-loc { position: relative; bottom: -2px; height: 37px; text-align: center; transition: 0.4s ease-out;
