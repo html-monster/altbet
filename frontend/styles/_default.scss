@@ -180,10 +180,10 @@ i.wave{  display: inline-block;  font-style: normal; border-radius: 4px; }
   }
 }
 
-.wave{
-  transform: translateZ(0);
-  //-webkit-mask-image: -webkit-radial-gradient(circle,#fff 100%,#000 100%);
-}
+//.wave{
+//  transform: translateZ(0);
+//  -webkit-mask-image: -webkit-radial-gradient(circle,#fff 100%,#000 100%);
+//}
 
 .show_password {
   display: inline-block;

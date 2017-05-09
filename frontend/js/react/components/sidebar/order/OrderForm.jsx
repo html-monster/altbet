@@ -409,7 +409,20 @@ export default class OrderForm extends React.Component{
 						{/*</label>*/}
 						{/*<div className="input">*/}
 							{/*<input type="text" className="number" autoComplete="off" ref="inputFees"*/}
-								   {/*onChange={null} value={stateData.quantity ? '$' + fees.toFixed(2) || '' : ''} disabled/>*/}
+								   {/*onChange={null} value={<div className="fees">
+									<label className="with_info">
+									<span>Fees</span>
+									<div className="help">
+									<div className="help_message right">
+									<p>{_t('MaxAltBetFees')}</p>
+									</div>
+									</div>
+									</label>
+									<div className="input">
+									<input type="text" className="number" autoComplete="off" ref="inputFees"
+									onChange={null} value={stateData.quantity ? '$' + fees.toFixed(2) || '' : ''} disabled/>
+									</div>
+									</div>} disabled/>*/}
 						{/*</div>*/}
 					{/*</div>*/}
 					{/*<div className="risk">*/}
@@ -435,7 +448,7 @@ export default class OrderForm extends React.Component{
 					{/*</div>*/}
 					<div className="profit">
 						<strong className="info_string">
-							Potential Prize <span>{stateData.quantity ? `$${(+stateData.quantity).toFixed(2)}` : '$0.00'}</span>
+							Prize: <span>{stateData.quantity ? `$${(+stateData.quantity).toFixed(2)}` : '$0.00'}</span>
 						</strong>
 						{/*<label>*/}
 							{/*{_t('Profitability')}*/}
@@ -446,6 +459,9 @@ export default class OrderForm extends React.Component{
 								   {/*disabled />*/}
 							{/*/!*checkboxProp && +price && stateData.Volume ? Math.round10((1 - price) * stateData.Volume, -2) || '' : ''*!/*/}
 						{/*</div>*/}
+					</div>
+					<div className="fees">
+						<strong className="info_string">Fees: <span>${stateData.quantity ? fees.toFixed(2) || '0.00' : '0.00'}</span></strong>
 					</div>
 				</div>
 				{!newOrder && id ? <input name="ID" type="hidden" value={id}/> : ''}

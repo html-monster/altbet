@@ -334,9 +334,20 @@
         left: calc(50% - 7px);
       }
     }
-    .price, .volume, .fees, .risk, .profit{
+    .price, .volume, .risk, .profit{
       flex-grow: 1;
       input.number[disabled]{  border-right: 1px solid $order_sidebar_order_border_color;  }
+    }
+    .fees{
+      position: absolute; right: 2px;
+      .info_string{
+        font-size: 10px;
+        line-height: 26px;
+        color: gray;
+        span{
+          color: gray;
+        }
+      }
     }
     .edit{
       //right: 22px;
