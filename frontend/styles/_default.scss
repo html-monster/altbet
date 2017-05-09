@@ -592,10 +592,13 @@ input ~ .info{
 
 
 // BM: tabs
+.tabs{
+  text-align: center;
+  &.text_left{ text-align: left; }
+}
 .tab {
   transition: 0.4s ease-out;
   cursor: pointer;
-  text-align: center;
   user-select: none;
   &[data-disabled]{  cursor: default;  opacity: 0.6; }
 }

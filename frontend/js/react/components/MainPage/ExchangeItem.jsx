@@ -3,7 +3,7 @@ import React from 'react';
 import ButtonContainer from './ButtonContainer';
 import {DateLocalization} from './../../models/DateLocalization';
 import {LineupPage} from './LineupPage';
-import {Common} from './../../common/Common';
+// import {Common} from './../../common/Common';
 
 
 export default class ExchangeItem extends React.Component
@@ -40,8 +40,9 @@ export default class ExchangeItem extends React.Component
         noTeamsClass = this.data[Symbol.HomeName] && this.data[Symbol.AwayName] && this.data[Symbol.HomeName].team && this.data[Symbol.AwayName].team ? "" : " hidden";
         if( noTeamsClass ) { noTeamsWrappClass = "no_lineups"; activeTab = ['', " active"];}
 
-        // mode basic/expert
-        isExpertMode = currentExchange === data.Symbol.Exchange || !isBasicMode;
+        // mode basic/expert ============== костыль на событии присустсвую 2 класс expert_mode basic_mode =============
+        isExpertMode = currentExchange === data.Symbol.Exchange ||
+            currentExchange === "" && isTraiderOn && activeExchange.name === data.Symbol.Exchange || !isBasicMode;
         const expModeClass = isExpertMode ? 'expert-mode' : '';
 
 
@@ -68,19 +69,21 @@ export default class ExchangeItem extends React.Component
         if( data.activeExchange.name === data.Symbol.Exchange )
         {
             $classActive = ' active';
-            if( !data.activeExchange.isMirror ) $classActiveNM = ' active';
-            else $classActiveM = ' active';
+            // if( !data.activeExchange.isMirror ) $classActiveNM = ' active';
+            // else $classActiveM = ' active';
         } // endif
 
 
         // activate local curr. exchange
         let $classActiveExch = "";
         // if( currentExchange === data.Symbol.Exchange ) $classActiveExch = ' active-exch'; // endif
+        // console.log('currentExchange:', currentExchange);
+        // console.log('data.Symbol.Exchange:', data.Symbol.Exchange);
         if( currentExchange === data.Symbol.Exchange || currentExchange === "" && isTraiderOn && activeExchange.name === data.Symbol.Exchange ) $classActiveExch = ' active-exch'; // endif
 
 
         // exdata for lineup
-        var date = $DateLocalization.fromSharp(Symbol.StartDate, 0, {TZOffset: false});
+        let date = $DateLocalization.fromSharp(Symbol.StartDate, 0, {TZOffset: false});
         const exdata = {HomeAlias: Symbol.HomeAlias,
             AwayAlias: Symbol.AwayAlias,
             StartDate: Symbol.StartDate ? date : null, // moment obj
@@ -97,7 +100,7 @@ export default class ExchangeItem extends React.Component
         // 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
 
         return (
-            <div className={`h-event ${noTeamsWrappClass} categoryFilterJs animated fadeIn ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")}
+            <div className={`h-event ${noTeamsWrappClass} categoryFilterJs animated fadeIn ${expModeClass}` + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")} //+ (isBasicMode ? " basic_mode_js basic_mode" : "")
                 onClick={() =>
                 {
                     setCurrentExchangeFn(Symbol.Exchange);
@@ -274,11 +277,11 @@ export default class ExchangeItem extends React.Component
      */
     _onLPTabClick(index)
     {
-        var activeTab = ["", ""];
+        let activeTab = ["", ""];
 
         activeTab[index] = " active";
 
-        var newStates = {...this.state, activeTab};
+        let newStates = {...this.state, activeTab};
         this.setState(newStates);
 
         if(index)
@@ -353,7 +356,7 @@ export default class ExchangeItem extends React.Component
         let $wrapper = $that.closest('[data-js-hevent]');
         let $lpnc = $wrapper.find('[data-js-hlup]');
         let $lpncBg = $wrapper.find('[data-js-bg]');
-        let $chartWrp = $wrapper.find('[data-js-highchart]');
+        // let $chartWrp = $wrapper.find('[data-js-highchart]');
 
 		$that.toggleClass('active');
         $lpnc.toggleClass('active');
