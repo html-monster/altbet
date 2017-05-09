@@ -270,6 +270,7 @@ class EventPage extends BaseController
                     </table>
                 </div>
             </div>
+{/*
             <div className="comparison">
                 <div className="table_wrap">
                     <table className="comparison_table">
@@ -319,6 +320,7 @@ class EventPage extends BaseController
                 </div>
                 <div className="table_wrap">{}</div>
             </div>
+*/}
             <div className="information">{}</div>
 
             <div id="disqus_thread">{}</div>

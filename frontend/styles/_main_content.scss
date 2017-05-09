@@ -176,7 +176,7 @@
     .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
     .l-title { font-weight: bold;
       .score { color: #4ade1a; }
-      .seemore-lnk { color: $color4TextWhite; transition: color .2s; }
+      .seemore-lnk { color: $color4TextWhite; transition: color .1s; }
       a.seemore-lnk:hover { color: $color-blue; }
     }
     .l-buttons {
