@@ -138,6 +138,7 @@
       .button-container.sell .button:last-child button.empty span { color: $color4TextWhite }
       .event-date{  @include main_page_event_icon_invert;  }
       .button-container.buy.nobets { width: 52px; }
+      .opener .button { @include hiddAttr; visibility: hidden; opacity: 0; }
     }
 
     //&.basic_mode .button-container {
@@ -148,12 +149,10 @@
       .event-symbols { padding-right: 15px; }
       .button-container {
         &.sell, &.buy {
-          &.onebtn, &.hideall { width: 50%;
-            //.button { display: inline-block; }
+          /*&.onebtn!*, &.hideall*! { width: 50%;
             .button { @include visibleAttr; visibility: visible; opacity: 1; }
-          }
+          }*/
           &.buy.nobets { width: 52px }
-          //&.buy.nobets .button { width: 52px }
         }
       }
     }
@@ -216,20 +215,21 @@
         }
       }
 
+      &.opener .button { @include visibleAttr; visibility: visible; opacity: 1; }
+
 
       // left buttons
       &.sell, &.buy { button.empty { font-size: 12px; } }
       &.sell { text-align: right;
         &>button:not(.empty):last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
         // for preview
+        /*
         &.onebtn { width: 43px;
-          //.button { display: none; }
           .button { @include hiddAttr; visibility: hidden; opacity: 0 }
-          //.button:last-of-type { display: inline-block; }
           .button:last-of-type { @include visibleAttr; visibility: visible; opacity: 1; }
         }
-        &.hideall, &.nobets { width: 0;
-          //.button { display: none; }
+        */
+        /*&.hideall, */&.nobets { width: 0;
           .button { @include hiddAttr; visibility: hidden; opacity: 0 }
         }
 
@@ -237,7 +237,6 @@
           &:last-child{
             button { background-image: linear-gradient(to bottom, #64c9ef, #3498da);
               &:not(.empty){  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
-              //&.empty span { /*color: $color4TextBlack;*/ }
               span{ color: #fff; opacity: 0.8; }
             }
           }
@@ -250,17 +249,21 @@
       &.buy { text-align: left  ;
         &>button:not(.empty):first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
         // for preview
-        &.nobets { width: 43px; }
+        //&.nobets { width: 43px; }
+        &.nobets { width: 0;
+          .button { @include hiddAttr; visibility: hidden; opacity: 0 }
+        }
+        /*
         &.onebtn { width: 43px;
-          //.button { display: inline-block; }
           .button { @include hiddAttr; visibility: hidden; opacity: 0; }
-          //.button:first-of-type { display: inline-block; }
           .button:first-of-type { @include visibleAttr; visibility: visible; opacity: 1; }
         }
+        */
+        /*
         &.hideall { width: 0;
-          //.button { display: none; }
           .button { @include hiddAttr; visibility: hidden; opacity: 0; }
         }
+        */
 
         .button { margin-right: 3px;
           &:first-child{

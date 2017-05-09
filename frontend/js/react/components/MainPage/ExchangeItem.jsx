@@ -132,23 +132,31 @@ export default class ExchangeItem extends React.Component
                         </h3>
 
                         <div className="l-buttons">
-                            <div className="inner">
-                                <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                                    type: 'sell',
-                                    side: 0,
-                                    ismirror: false,
-                                    Orders: data.Orders,
-                                    ...commProps
-                                }}/>
-                                <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                                    type: 'buy',
-                                    side: 1,
-                                    ismirror: false,
-                                    symbolName: symbol,
-                                    Orders: data.Orders,
-                                    ...commProps
-                                }}/>
-                            </div>
+                                <div className="inner">
+                                    <ButtonContainer actions={actions} mainContext={mainContext} data={{
+                                        type: 'sell',
+                                        side: 0,
+                                        ismirror: false,
+                                        Orders: data.Orders,
+                                        ...commProps
+                                    }}/>
+                                    <ButtonContainer actions={actions} mainContext={mainContext} data={{
+                                        type: 'buy',
+                                        side: 1,
+                                        ismirror: false,
+                                        symbolName: symbol,
+                                        Orders: data.Orders,
+                                        ...commProps
+                                    }}/>
+                                </div>
+                                <div className={`button-container opener`}>
+                                    <div className="button">
+                                        <button className={`event`}>
+                                        <span className="price">{}</span>
+                                            <span className="volume">{}</span>
+                                        </button>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                     <div className="h-symbol">
