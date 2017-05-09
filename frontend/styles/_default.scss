@@ -31,6 +31,7 @@ a.text_decoration, a.link{
 
 
 // BM: buttons
+button, input[type=submit]{ user-select: none; }
 button, a.button {
   height: 30px;
   padding: 4px 12px;
@@ -179,10 +180,10 @@ i.wave{  display: inline-block;  font-style: normal; border-radius: 4px; }
   }
 }
 
-.wave{
-  transform: translateZ(0);
-  //-webkit-mask-image: -webkit-radial-gradient(circle,#fff 100%,#000 100%);
-}
+//.wave{
+//  transform: translateZ(0);
+//  -webkit-mask-image: -webkit-radial-gradient(circle,#fff 100%,#000 100%);
+//}
 
 .show_password {
   display: inline-block;
@@ -591,10 +592,13 @@ input ~ .info{
 
 
 // BM: tabs
+.tabs{
+  text-align: center;
+  &.text_left{ text-align: left; }
+}
 .tab {
   transition: 0.4s ease-out;
   cursor: pointer;
-  text-align: center;
   user-select: none;
   &[data-disabled]{  cursor: default;  opacity: 0.6; }
 }

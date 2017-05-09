@@ -251,18 +251,18 @@ class ActiveTrader extends React.Component {
 			<table className="control">
 				<tbody>
 					<tr>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 5)}>5</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 10)}>10</button></td>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 15)}>15</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 20)}>20</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 5)}>+5</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 10)}>+10</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 15)}>+15</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 20)}>+20</button></td>
 						<td className="button spread"><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.01)} disabled={!quantity}>0.01</button><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.05)} disabled={!quantity}>0.05</button></td>
 					</tr>
 					<tr>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 25)}>25</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 50)}>50</button></td>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 100)}>100</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 250)}>250</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 25)}>+25</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 50)}>+50</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 100)}>+100</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 250)}>+250</button></td>
 						<td className="button spread"><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.10)} disabled={!quantity}>0.10</button><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.15)} disabled={!quantity}>0.15</button></td>
 					</tr>
 					<tr>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 500)}>500</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1000)}>1000</button></td>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1500)}>1500</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 2000)}>2000</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 500)}>+500</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1000)}>+1000</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1500)}>+1500</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 2000)}>+2000</button></td>
 						<td className="button spread"><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.25)} disabled={!quantity}>0.25</button><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.30)} disabled={!quantity}>0.30</button></td>
 					</tr>
 					<tr>
