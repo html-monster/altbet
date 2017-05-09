@@ -1,8 +1,9 @@
 import {
-    ON_POS_PRICE_CLICK,
-    ON_SOCKET_MESSAGE,
-    ON_BASIC_MODE_CH,
-    TRAIDER_MODE_CH,
+    MP_ON_POS_PRICE_CLICK,
+    MP_ON_SOCKET_MESSAGE,
+    MP_ON_BASIC_MODE_CH,
+    MP_TRAIDER_MODE_CH,
+    MP_ON_CHANGE_SUBSCRIBING
 } from '../constants/ActionTypesPageMain';
 import { WebsocketModel } from '../models/Websocket';
 import { Common } from '../common/Common';
@@ -47,7 +48,7 @@ class Actions extends BaseActions
                 if( compare )
                 {
                     dispatch({
-                        type: ON_SOCKET_MESSAGE,
+                        type: MP_ON_SOCKET_MESSAGE,
                         payload: inData
                     });
                     __DEV__ && console.log('re-render');
@@ -57,7 +58,7 @@ class Actions extends BaseActions
 
 
             dispatch({
-                type: ON_POS_PRICE_CLICK,
+                type: MP_ON_POS_PRICE_CLICK,
                 payload: [data.Symbol.Exchange, false]
             });
         }
@@ -229,7 +230,7 @@ class Actions extends BaseActions
             // 0||console.debug( 'getState()', getState() );
             // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
             // dispatch({
-            //     type: ON_POS_PRICE_CLICK,
+            //     type: MP_ON_POS_PRICE_CLICK,
             //     payload: {}
             // });
         }
@@ -310,11 +311,11 @@ class Actions extends BaseActions
             // 0||console.log( 'inProps, val.Symbol.Exchange', inProps, inProps.name, inProps.isMirror );
 
             // dispatch({
-            //     type: ON_POS_PRICE_CLICK,
+            //     type: MP_ON_POS_PRICE_CLICK,
             //     payload: [inProps.name, inProps.isMirror]
             // });
             return {
-                type: ON_POS_PRICE_CLICK,
+                type: MP_ON_POS_PRICE_CLICK,
                 data: [inProps.name, inProps.isMirror]
             };
     }
@@ -355,7 +356,7 @@ class Actions extends BaseActions
         return (dispatch, getState) =>
         {
             dispatch({
-                type: ON_BASIC_MODE_CH,
+                type: MP_ON_BASIC_MODE_CH,
                 payload: inMode
             });
         };
@@ -370,7 +371,7 @@ class Actions extends BaseActions
             inMode && context.lastExchangeActivate();
 
             dispatch({
-                type: TRAIDER_MODE_CH,
+                type: MP_TRAIDER_MODE_CH,
                 payload: inMode
             });
         };
@@ -416,16 +417,15 @@ class Actions extends BaseActions
      */
     public actionSetChartsSymbol(inProps)
     {
-        return (dispatch, getState) =>
+        return (dispatch) =>
         {
-            // let state = getState().mainPage;
-
             ABpp.Websocket.sendSubscribe({exchange: inProps.exchange}, SocketSubscribe.MP_CHARTS_SYMBOL);
+            globalData.MainCharOn = !!inProps.exchange;
 
-            // dispatch({
-            //     type: type,
-            //     payload: data,
-            // });
+            dispatch({
+                type: MP_ON_CHANGE_SUBSCRIBING,
+                payload: inProps.exchange,
+            });
         };
     }
 }

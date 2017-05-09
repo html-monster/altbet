@@ -10,7 +10,8 @@
 		else
 			createCharts(data);
 
-        console.log(':', 1);
+
+		console.log('chart rendered', data["0"].Symbol.Exchange);
 	};
 
 	let createCharts = function (data)

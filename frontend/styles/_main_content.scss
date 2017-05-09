@@ -207,7 +207,10 @@
             &.price { font-size: 11px; }
           }
         }
-        &.empty-balvan { background: rgba(0, 0, 0, 0.27); box-shadow: inset 0px -9px 25px -14px rgba(255, 255, 255, 0.1) }
+        &.empty-balvan {
+					//background: rgba(0, 0, 0, 0.27); box-shadow: inset 0px -9px 25px -14px rgba(255, 255, 255, 0.1)
+					background: transparent; box-shadow: inset 0 3px 11px 0 rgba(0, 0, 0, 0.3);
+				}
 
         span { display: block; position: relative; line-height: 13px; /*color: $main_page_event_title;*/ font-weight: 600; z-index: 2;
           &.price { padding: 3px 8px 0; font-size: 13px; }
