@@ -176,7 +176,7 @@
 
     .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 45px 25px 15px 15px; height: 100%;
         font-size: 13px; transition: .4s; }
-    .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
+    .h-symbol { display: flex; justify-content: space-between; align-items: center; min-height: 35px; }
     .l-title { font-weight: bold;
       @include md(1600) { max-width: 270px; }
       .score { color: #4ade1a; }
