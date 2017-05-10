@@ -5,7 +5,7 @@
     "gulp": "./node_modules/gulp/bin/gulp.js",
     "devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 9090 --host localhost",
     "webpack": "webpack",
-    "webpackDEV": "webpack --watch --watch-aggregate-timeout 300 --COMMENT=\"DEBUG=true(set in environment)\"",
+    "webpackDEV": "webpack --watch --watch-aggregate-timeout 300 --env.patch --COMMENT=\"DEBUG=true(set in environment)\"",
     "webpackBuild": "webpack --config webpackinc/webpack.config.build.js --COMMENT=\"NODE_ENV=production(set in environment)\""
   },
   "author": "Aleksey",
@@ -86,6 +86,7 @@
     "url-loader": "^0.5.6",
     "vinyl-named": "^1.1.0",
     "webpack": "^1.12.12",
+        "webpack-auto-inject-version": "^0.5.13",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.6.4",
@@ -94,8 +95,8 @@
     "webpack-stream": "^3.1.0",
     "webpack-uglify-js-plugin": "^1.1.9"
   },
-  "name": "altbet",
-  "version": "1.0.0",
+  "name": "Altbet",
+  "version": "3.2.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/html-monster/altbet.git"
