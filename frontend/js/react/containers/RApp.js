@@ -15,9 +15,8 @@ class RApp extends React.Component
 
         props.actions.setInstance(this);
 
-        0||console.log( 'here', 1 );
         ABpp.ver = '[AIV]{version}[/AIV]';
-        console.log( 'version:', ABpp.ver );
+        __DEV__&&console.info( 'version:', ABpp.ver );
 
         // set base for link urls
         // ABpp.baseUrl = location.host == 'localhost' ? "/AltBet" : "/";
