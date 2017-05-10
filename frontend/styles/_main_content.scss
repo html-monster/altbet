@@ -234,8 +234,8 @@
       &.opener { @include visibleAttr; visibility: visible; position: absolute; right: 35px; top: calc(50% - 35px/2); width: auto;
           opacity: 1; transition: .4s;
         button { padding: 0 10px; color: #333; font-size: 14px; background: linear-gradient(to top, #bdc0cd, #ffffff); font-weight: bold; text-transform: none }
-        i { display: inline-block; position: relative; margin-right: 10px; top: 3px; width: 18px; height: 16px;
-            background: url(../../Images/sprite.svg) no-repeat; background-position: -269px -307px; }
+        i { display: inline-block; position: relative; margin-right: 10px; top: 3px; width: 18px; height: 18px;
+            background: url(../../Images/sprite.svg) no-repeat; background-position: -269px -305px; }
       }
 
 
