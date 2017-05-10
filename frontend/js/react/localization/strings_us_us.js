@@ -8,20 +8,14 @@
 class Strings
 {
     buy = 'BUY';
-    sell = 'SELL';
     ask = 'SELL';
 
     TradeSlip = 'Entry Slip';
     YourOrders = 'Your Entries';
 
     Symbol = 'Entry ID';
-    Quantity = 'Entries';
-    Fees = 'Pay-to-Play fees';
+    Fees = 'Pay-to-Play Fees';
     Bought = 'Bought';
     Sold = 'Sold';
     Profit = 'Win';
-    // Amount = 'Amount';
-    // Total = 'Total';
-    MaxAltBetFees = 'Max Alt.Bet Fees';
-    // TotalCost = 'Pay-to Play Fees';
 }

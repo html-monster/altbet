@@ -21,6 +21,9 @@
 - React-router (https://github.com/ReactTraining/react-router)
 - Zendesk (https://developer.zendesk.com/embeddables/docs/widget/api)
 - CSS loaders (http://cssload.net/ru/spinners/3)
+- React Oprimize
+-- (https://facebook.github.io/react/docs/optimizing-performance.html)
+-- Оптимизация производительности в React (http://habrahabr.net/thread/7947)
 
 
 ## Plugins

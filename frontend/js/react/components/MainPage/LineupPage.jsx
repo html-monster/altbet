@@ -82,7 +82,7 @@ export class LineupPage extends React.Component
                                                     <td>{itm.status}</td>
                                                     <td>{itm.fppg}</td>
                                                     <td>{itm.eppg}</td>
-                                                    <td><strong>{itm.score}</strong></td>
+                                                    <td><strong>{itm.score || "-"}</strong></td>
                                                     <td title="Estimated Time Remaining">{itm.timeEnd}</td>
                                                 </tr>)
                                         }
@@ -110,6 +110,7 @@ export class LineupPage extends React.Component
                                             <th className="pl">Name</th>
                                             <th>Status</th>
                                             <th>FPPG</th>
+                                            <th>EPPG</th>
                                             <th>Score</th>
                                             <th title="Estimated Time Remaining">ETR</th>
                                         </tr>
@@ -123,7 +124,11 @@ export class LineupPage extends React.Component
                                                         <div className="b-pl-info__statistic">{itm.plInfo.action}</div>
                                                     </div>
                                                 </td>
-                                                <td className="pl"><strong>{itm.name} ({itm.team.toUpperCase()})</strong></td><td>{itm.status}</td><td>{itm.fppg}</td><td><strong>{itm.score}</strong></td>
+                                                <td className="pl"><strong>{itm.name} ({itm.team.toUpperCase()})</strong></td>
+                                                <td>{itm.status}</td>
+                                                <td>{itm.fppg}</td>
+                                                <td>{itm.eppg}</td>
+                                                <td><strong>{itm.score || "-"}</strong></td>
                                                 <td title="Estimated Time Remaining">{itm.timeEnd}</td>
                                             </tr>)
                                         }
