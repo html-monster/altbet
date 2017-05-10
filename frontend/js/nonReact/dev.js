@@ -1,6 +1,6 @@
 var gLineupPageData = {
 	"Team Cahill, SD" : {
-		teamName: "Team Cahill",
+		teamName: "Team Cahill, SD",
 		fantasyPoints: 31.1,
 		team: [
 				{pos: "SD", name: "Myers, 1B", team: "SD", status: "A", eppg: 6.9, fppg: 6.3, score: 2.1, timeEnd: 5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
@@ -23,7 +23,7 @@ var gLineupPageData = {
 		}
 	},
 	"Team Quintana, CHI": {
-		teamName: "Team Quintana",
+		teamName: "Team Quintana, CHI",
         fantasyPoints: 36.1,
 		team: [
 				{pos: "SD", name: "Abreu, 1B", team: "CHI", status: "A", eppg: 11.3, fppg: 9.2, score: 2.7, timeEnd: 5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
@@ -48,7 +48,7 @@ var gLineupPageData = {
 
 
   "Team Leonard, SA": {
-		teamName: "Team Leonard",
+		teamName: "Team Leonard, SA",
         fantasyPoints: 149.3 ,
 		team: [
 				{pos: "SD", name: "Parker, PG", team: "SA", status: "A", eppg:21.2 , fppg: 19.4, score: 15.3, timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
@@ -74,7 +74,7 @@ var gLineupPageData = {
 
 
   "Team Harden, HOU": {
-    teamName: "Team Harden",
+    teamName: "Team Harden, HOU",
     fantasyPoints: 151.3,
     team: [
       {pos: "SD", name: "Beverly, PG", team: "HOU", status: "A", eppg: 28.2, fppg: 25.9, score:21.2 , timeEnd: 1, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
@@ -122,7 +122,7 @@ var gLineupPageData = {
   },
 
   "Team Holby, WAS": {
-    teamName: "Team Hotby",
+    teamName: "Team Holby, WAS",
     fantasyPoints: 54.3,
     team: [
       {pos: "SD", name: "Holby,G", team: "WAS", status: "A", eppg:15.2 , fppg:12.8  , score:10.2 , timeEnd: 1.5, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
@@ -146,7 +146,7 @@ var gLineupPageData = {
   },
 
   "Team Sanchez, ARS": {
-    teamName: "Team Sanchez",
+    teamName: "Team Sanchez, ARS",
     fantasyPoints: 30.1,
     team: [
       {pos: "SD", name: "Sanchez, F", team: "ARS", status: "A", eppg:7.2, fppg: 12.6  , score:3.5 , timeEnd: 0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},
@@ -170,7 +170,7 @@ var gLineupPageData = {
   },
 
   "Team Ibrahimovic, MUN": {
-    teamName: "Team Ibrahimovic",
+    teamName: "Team Ibrahimovic, MUN",
     fantasyPoints: 29.4,
     team: [
       {pos: "SD", name: "Ibrahimovic, F", team: "MUN", status: "Inj", eppg:8.5, fppg: 12.6  , score:3.9 , timeEnd:0.6, plInfo: {action: "FG 6 TYds 8.6 int 1"},},

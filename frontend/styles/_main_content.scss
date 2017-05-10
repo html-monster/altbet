@@ -44,8 +44,7 @@
   }
 
   .lineup_swch{
-    .h-tab1__tab{
-      width: calc(25% - 1px);  height: 20px;  line-height: 17px;  font-size: 12px; transition: 0s;
+    .h-tab1__tab { padding: 0 10px; width: auto;  height: 20px; line-height: 17px; font-size: 12px; transition: 0s;
       &.active{  line-height: 18px;  }
     }
   }
