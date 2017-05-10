@@ -86,7 +86,7 @@ export class Chart
     {
         var self = this;
 
-        this.chartType = Chart.TYPE_AREASPLINE;
+        this.chartType = Chart.TYPE_SPLINE;
         this.chartTheme = Chart.THEME_LIGHT == ABpp.config.currentTheme ? Chart.THEME_LIGHT : Chart.THEME_DARK;
 
         this.Generator = new Generator();

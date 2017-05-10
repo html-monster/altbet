@@ -165,7 +165,7 @@
       &.active {  }
     }
 
-    .event-date { position: absolute; left: 10px; top: 10px;
+    .event-date { position: absolute; left: 10px; top: 15px;
       &:before { content: ''; display: inline-block; margin-right: 5px; width: 24px; height: 22px; background: url("#{$pathImage}/sprite.svg") no-repeat; }
       @include main_page_event_icon;
       span { /*display: inline-block; margin-right: 5px;*/ font-size: 12px; vertical-align: top;
@@ -174,7 +174,7 @@
       }
     }
 
-    .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 40px 25px 10px 15px; height: 100%;
+    .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 45px 25px 15px 15px; height: 100%;
         font-size: 13px; transition: .4s; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
     .l-title { font-weight: bold;

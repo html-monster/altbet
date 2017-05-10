@@ -114,7 +114,7 @@ export default class ExchangeItem extends React.Component
         };
 
 
-        let $lastPriceClass = data.Symbol.PriceChangeDirection == -1 ? "down" : data.Symbol.PriceChangeDirection == 1 ? "up" : "";
+        let $lastPriceClass = data.Symbol.PriceChangeDirection == -1 ? ["down", "up"] : data.Symbol.PriceChangeDirection == 1 ? ["up", "down"] : ["", ""];
 /*
         var exchangeSideClickFn = actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
                         isMirror: false,
@@ -153,7 +153,7 @@ export default class ExchangeItem extends React.Component
                         <h3 className="l-title">{ do {
                                 let html = [<span key="0" data-js-title=""><span className="score">{this.data[Symbol.HomeName].Totals.score}&nbsp;&nbsp;</span> {Symbol.HomeName}</span>
                                     , (Symbol.HomeHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
-                                    , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass}`}>&nbsp;&nbsp;<i></i>${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
+                                    , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}>&nbsp;&nbsp;<i></i>${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
                                 isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
                                 : <span className="seemore-lnk">{html}</span>
                             }}
@@ -188,7 +188,7 @@ export default class ExchangeItem extends React.Component
                         <h3 className="l-title">{ do {
                                 let html = [<span key="0" data-js-title><span className="score">{this.data[Symbol.AwayName].Totals.score}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>
                                     , (Symbol.AwayHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap}</span> : ''
-                                    , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass}`}>&nbsp;&nbsp;<i></i>${(1 - data.Symbol.LastPrice).toFixed(2)}</span> : ""];
+                                    , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[1]}`}>&nbsp;&nbsp;<i></i>${(1 - data.Symbol.LastPrice).toFixed(2)}</span> : ""];
                                 isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>
                                 : <span className="seemore-lnk">{html}</span>
                             }}
