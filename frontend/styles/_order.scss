@@ -219,8 +219,7 @@
       align-items: center;
     }
     h3{
-      margin-right: 10px;
-      max-width: 55%;
+      max-width: calc(100% - 115px);
       font-size: 13px;
       vertical-align: middle;
       color: transparentize(#ffffff, 0.2);
