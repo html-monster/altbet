@@ -13,16 +13,29 @@ export default class ExchangeItem extends React.Component
         super(props);
         // __DEV__&&console.debug( 'ExchangeItem.props.data', this.props.data );
 
-        this.state = {isLPOpen: false, activeTab: [" active", ""]};
-
         // эмуляция времени игроков
         this.data = gLineupPageData;
+
+        this.state = {
+            isLPOpen: false,
+            activeTab: (this.data[props.data.Symbol.HomeName] && this.data[props.data.Symbol.AwayName] &&
+                        this.data[props.data.Symbol.HomeName].team && this.data[props.data.Symbol.AwayName].team) ?
+                [" active", ""] : ["", " active"]
+        };
     }
 
-    componentWillUpdate(newProps)
+    componentWillUpdate(nextProps, nextState)
     {
+        // if( newProps.data.currentExchange !== newProps.data.Symbol.Exchange && this.state.isLPOpen ) this._lupClose();
+
         // if not active -> close
-        if( newProps.data.currentExchange !== newProps.data.Symbol.Exchange && this.state.isLPOpen ) this._lupClose();
+        if(nextProps.data.currentExchange !== nextProps.data.Symbol.Exchange && this.state.isLPOpen && nextState.isLPOpen)
+        {
+            //chart socket unsubscribe
+            if(nextProps.data.currentExchange !== nextProps.data.chartSubscribing) this._chartSubscribing(false);
+            //close open lineup
+            this._onLPOpenCloseClick(true);
+        }
     }
 
 
@@ -63,6 +76,17 @@ export default class ExchangeItem extends React.Component
             }
         };
 
+        //lineupContainer height
+		let height;
+		if(this.refs.lineupContainer)
+        {
+			height = $(this.refs.lineupContainer.refs.container).height();
+			height = height > 400 ? height : 400;
+        }
+        else
+        {
+            height = 400;
+        }
 
         // activate current exchange global
         let $classActive = '', $classActiveNM = '', $classActiveM = '';
@@ -226,13 +250,16 @@ export default class ExchangeItem extends React.Component
 							</div>
 
                             <div className={`lpnc_tabs ${isLPOpen ? "lpnc_tabs__opened" : ""}`}>
-                                <div className={`lpnc_tabs__tab lpnc_tabs__tab_1 ${noTeamsClass}` + activeTab[0]} title="Show teams info" onClick={this._onLPTabClick.bind(this, 0)}>Lineups</div>
-                                <div className={`lpnc_tabs__tab lpnc_tabs__tab_2 ${noTeamsClass}` + activeTab[1]} title="Show chart info" onClick={this._onLPTabClick.bind(this, 1)}>Chart</div>
+                                <div className={`lpnc_tabs__tab lpnc_tabs__tab_1 ${noTeamsClass}` + activeTab[0]} title="Show teams info"
+                                     onClick={this._onLPTabClick.bind(this, 0)}>Lineups</div>
+                                <div className={`lpnc_tabs__tab lpnc_tabs__tab_2 ${noTeamsClass}` + activeTab[1]} title="Show chart info"
+                                     onClick={this._onLPTabClick.bind(this, 1)}>Chart</div>
                             </div>
-                            <button ref="LPOpenBtn" className="show-plnc" data-js-lineup="" title="Show chart" onClick={::this._onLPOpenCloseClick}>{}</button>
+                            <button ref="LPOpenBtn" className={'show-plnc' + (isLPOpen ? ' active' : '')} data-js-lineup="" title="Show chart"
+                                    onClick={::this._onLPOpenCloseClick}>{}</button>
                         </div>
 
-                        <div className="h-lup" data-js-hlup="">
+                        <div className="h-lup" data-js-hlup="" style={isLPOpen ? {height: height + 30} : {height: 0}}>
 {/*
                             <div className={`tabs h-lup__tabs ${isLPOpen ? "h-lup__tabs__opened" : ""}`}>
                                 <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
@@ -241,14 +268,16 @@ export default class ExchangeItem extends React.Component
 */}
                             <div className="h-lup__tab_content tab_content">
                                 { noTeamsClass ? <div className="h-lup__tab_item tab_item">{}</div>
-                                    : <LineupPage className={"h-lup__tab_item tab_item" + activeTab[0]} exdata={exdata} data={this.data} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName} />
+                                    : <LineupPage className={"h-lup__tab_item tab_item" + activeTab[0]} exdata={exdata}
+                                                  data={this.data} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName}
+                                                  ref="lineupContainer"/>
                                 }
 
                                 <div className={"h-lup__tab_item tab_item loading highcharts-tab" + activeTab[1]} id={"container_" + symbol} data-js-highchart="" ref={'chartContainer'}>{}</div>
                                 {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                             </div>
                         </div>
-                        <div className="bg" data-js-bg="">{}</div>
+                        <div className="bg" data-js-bg="" style={isLPOpen ? {bottom: -1 * (height + 40)} : {bottom: 0}}>{}</div>
 
                 {/*
                  <div className="table not-sort wave waves-effect waves-button"> id="exchange_table"
@@ -278,35 +307,21 @@ export default class ExchangeItem extends React.Component
     }
 
 
-    /**
-     * @private
-     */
-    _onLPTabClick(index)
+	/**
+     * On lineup or chart tab click
+	 * @param index number - index of active tab
+	 * @private
+	 */
+	_onLPTabClick(index)
     {
         let activeTab = ["", ""];
 
         activeTab[index] = " active";
 
-        let newStates = {...this.state, activeTab};
+        let newStates = {...this.state, isLPOpen: true, activeTab};
         this.setState(newStates);
 
-        if(index)
-        {
-            for( let val of mainChartController.charts  )
-            {
-                if(val.renderTo.id === this.refs.chartContainer.id)
-                {
-                    let containerWidth = $(this.refs.chartContainer).width();
-                    let chart = $(val.container);
-
-                    if(chart.width() > containerWidth) setTimeout(() => val.reflow(), 400);
-
-
-                    // 0||console.log( 'val.renderTo.id', val.renderTo.id );
-                    // setTimeout(() => val.reflow(), 2000);
-                }
-            } // endfor
-        }
+        this._chartSubscribing(index);
         // this.state.isLPOpen||this._onLPOpenCloseClick({newStates});
 /*
         $(container).find('.wrapper .tab').click(function ()
@@ -321,17 +336,67 @@ export default class ExchangeItem extends React.Component
     }
 
 
-    /**
+	/**
      * On open/close lineup btn click
-     * @private
-     */
-    _onLPOpenCloseClick({newStates})
+	 * @param close boolean - use if you need close the tab
+	 * @private
+	 */
+	_onLPOpenCloseClick(close)
     {
-        this.setState({...this.state, ...newStates, isLPOpen: !this.state.isLPOpen});
+		const { data:{ chartSubscribing } } = this.props;
 
-        let target = this.refs.LPOpenBtn;
-        if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);
-        this.lineupOpen(target);
+		close = typeof close === 'boolean' && close;
+
+        let isLPOpen = this.state.isLPOpen;
+        this.setState({...this.state, isLPOpen: close ? false : !isLPOpen});
+
+		if(!close)
+        {
+            if(isLPOpen || this.state.activeTab[0])
+            {
+				if(chartSubscribing) this._chartSubscribing(false);
+            }
+            else
+            {
+				this._chartSubscribing(true);
+            }
+        }
+
+        // let target = this.refs.LPOpenBtn;
+        // if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this._lineupOpen('[data-js-lineup].active', 1);
+        // this._lineupOpen(target);
+    }
+
+	/**
+     * chart socket subscribing
+	 * @param subscribe boolean
+	 * @private
+	 */
+	_chartSubscribing(subscribe)
+    {
+		if(subscribe)
+		{
+			this.props.actions.actionSetChartsSymbol({exchange: this.props.data.Symbol.Exchange});
+
+			for( let val of mainChartController.charts  )
+			{
+				if(val.renderTo.id === this.refs.chartContainer.id)
+				{
+					let containerWidth = $(this.refs.chartContainer).width();
+					let chart = $(val.container);
+
+					if(chart.width() > containerWidth) setTimeout(() => val.reflow(), 400);
+
+
+					// 0||console.log( 'val.renderTo.id', val.renderTo.id );
+					// setTimeout(() => val.reflow(), 2000);
+				}
+			} // endfor
+		}
+		else
+		{
+			this.props.actions.actionSetChartsSymbol({exchange: ""})
+		}
     }
 
 
@@ -341,10 +406,10 @@ export default class ExchangeItem extends React.Component
      */
     _lupClose()
     {
-        this.setState({...this.state, isLPOpen: false});
-
-        let target = this.refs.LPOpenBtn;
-        this.lineupOpen(target, 1);
+        // this.setState({...this.state, isLPOpen: false});
+		//
+        // let target = this.refs.LPOpenBtn;
+        // this._lineupOpen(target, 1);
     }
 
 
@@ -354,8 +419,9 @@ export default class ExchangeItem extends React.Component
      * @param that - opener
      * @param isCLose Boolean - need if just close
      */
-    lineupOpen(that, isCLose)
+    _lineupOpen(that, isCLose)
     {
+        // console.log('that:', that);
         let $that = $(that);
         if (!$that.length) return;
 
@@ -379,6 +445,7 @@ export default class ExchangeItem extends React.Component
         {
             // set subscribe for chart data
             this.props.actions.actionSetChartsSymbol({exchange: this.props.data.Symbol.Exchange});
+            globalData.MainCharOn = true;
 
 
             let height = $wrapper.find("[data-js-team]").height();
@@ -387,19 +454,19 @@ export default class ExchangeItem extends React.Component
             $lpncBg.css('bottom', -1 * (height + 40));
             $lpnc.css('height', height + 30);
             // $contentTitle.css('max-height', 'inherit');
-
-            globalData.MainCharOn = true;
+            // console.log('55:', 55);
         }
 		else
 		{
+		    // console.log('666:', 666);
             // set unsubscribe from chart data if close btn click
             if (!isCLose) this.props.actions.actionSetChartsSymbol({exchange: ""});
+			globalData.MainCharOn = false;
 
             $lpnc.removeAttr('style');
             $lpncBg.removeAttr('style');
 			// setTimeout(() => { $contentTitle.removeAttr('style'); }, 400);
 
-			globalData.MainCharOn = false;
 		}
 
 		// if($('[data-js-lineup]').hasClass('active'))

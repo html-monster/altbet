@@ -46,7 +46,7 @@ export class LineupPage extends React.Component
         var date;
 
 
-        return <div className={"l-lup " + className} data-js-team="">
+        return <div className={"l-lup " + className} data-js-team="" ref={'container'}>
                 { data[HomeName] && data[AwayName] &&
                     <Tabs className="h-lineup_container" tabsClass="lineup_swch h-tab1">
                         {[
