@@ -71,7 +71,7 @@ class Header extends React.Component
 
 
 				<div className="fast_menu">
-				  <a href={globalData.Urls.Home} className="f_button f_but_bor"><span>Exchange</span> </a>
+				  <a href={globalData.Urls.Home} className={`f_button f_but_bor${globalData.action === 'index' && globalData.controller === 'home' && $filter !== 'live' ? " active" : ''}`}><span>Exchange</span> </a>
 				  <a href={globalData.Urls.Home + "?filter=live"}  className={"f_button f_but_before f_but_bor" + ($filter === 'live' ? ' active' : '')}><span>My Games</span></a>
 				  <a href="#" className="f_button f_but_before f_but_bor"><span className="history_event">My History</span></a>
 				  <a href={globalData.Urls.TradingRules} className="f_button f_but_before"><span>Rules</span> </a>
@@ -96,15 +96,15 @@ class Header extends React.Component
 							transitionEnterTimeout={800}
 							data={serverData}
 						>
-								<span className="win-lost animated" data-verify={"Profitlost"}>Win/Loss: <strong className={'animated ' + (serverData.Profitlost < 0 ? 'lost' : 'win')}>
+								<span className="win-lost animated" data-verify={"Profitlost"}>{_t("WinLoss")}: <strong className={'animated ' + (serverData.Profitlost < 0 ? 'lost' : 'win')}>
 									{serverData.Profitlost >= 0 ?
 										`$${profitlost.toFixed(2)}`
 										:
 										`($${(Math.abs(profitlost)).toFixed(2)})`}
 									</strong>
 								</span>
-							<span className="invested animated" data-verify={'Exposure'}>At Stake: <strong className="animated">${(Math.round10(serverData.Exposure, -2)).toFixed(2)}</strong></span>
-							<span className="available animated" data-verify={'Available'}>Balance: <strong className="animated">${(Math.round10(serverData.Available, -2)).toFixed(2)}</strong></span>
+							<span className="invested animated" data-verify={'Exposure'}>{_t("AtStake")}: <strong className="animated">${(Math.round10(serverData.Exposure, -2)).toFixed(2)}</strong></span>
+							<span className="available animated" data-verify={'Available'}>{_t("Balance")}: <strong className="animated">${(Math.round10(serverData.Available, -2)).toFixed(2)}</strong></span>
 						</AnimateOnUpdate>
 						:
 						''

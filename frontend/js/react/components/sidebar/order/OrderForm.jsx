@@ -313,7 +313,7 @@ export default class OrderForm extends React.Component{
 						<label className="with_info" htmlFor={`${id}_price`}>
 							{
 								checkboxProp ?
-									'Per Entry'
+									'Per Unit'
 									:
 									'Market price'
 							}
@@ -357,7 +357,7 @@ export default class OrderForm extends React.Component{
 						</div>
 					</div>
 					<div className="volume">
-						<label htmlFor={`${id}_quantity`}>{_t('Quantity')}</label>
+						<label htmlFor={`${id}_quantity`}>Quantity</label>
 						<div className="input">
 							<InputNumber type="tel" id={`${id}_quantity`} className="number" data-validation="123"
 										 maxLength="7" name="Quantity" autoComplete="off"

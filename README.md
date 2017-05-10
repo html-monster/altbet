@@ -12,7 +12,6 @@
 - Честный MVC на React + Redux (https://habrahabr.ru/company/devexpress/blog/305812/), (http://codepen.io/MrCheater/pen/GqQpYY/?editors=0010)
 - Redux TS скелет (https://github.com/rangle/typescript-react-redux-example)
 - Redux friendlist (https://github.com/jchapron/redux-friendlist-demo/tree/v1.0/src/reducers)
-- Ошибочная оценка сроков, как причина провала проекта (http://bugscatcher.net/archives/4472)
 - Пагинация (https://github.com/AdeleD/react-paginate)
 - Observer (http://www.dofactory.com/javascript/observer-design-pattern)
 - DeepCompare (http://stackoverflow.com/questions/1068834/object-comparison-in-javascript)
@@ -24,6 +23,7 @@
 - React Oprimize
 -- (https://facebook.github.io/react/docs/optimizing-performance.html)
 -- Оптимизация производительности в React (http://habrahabr.net/thread/7947)
+- Momentjs Format (https://momentjs.com/docs/#/displaying/format/)
 
 
 ## Plugins

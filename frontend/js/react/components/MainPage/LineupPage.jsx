@@ -75,7 +75,8 @@ export class LineupPage extends React.Component
                                                     <td className="pl">
                                                         <strong>{itm.name} ({itm.team.toUpperCase()})</strong>
                                                         <div className="b-pl-info">
-                                                            <div className="b-pl-info__main-inf">{`${exdata.HomeAlias} vs ${exdata.AwayAlias} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>
+                                                            {/*<div className="b-pl-info__main-inf">{`${exdata.HomeAlias} vs ${exdata.AwayAlias} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>*/}
+                                                            <div className="b-pl-info__main-inf">{`${itm.plInfo.vs} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>
                                                             <div className="b-pl-info__statistic">{itm.plInfo.action}</div>
                                                         </div>
                                                     </td>
@@ -106,7 +107,6 @@ export class LineupPage extends React.Component
                                         <tbody>
                                         <tr>
                                             <th>{}</th>
-                                            <th>Pos</th>
                                             <th className="pl">Name</th>
                                             <th>Status</th>
                                             <th>FPPG</th>
@@ -117,14 +117,14 @@ export class LineupPage extends React.Component
                                         {
                                             data[AwayName].team.map((itm, key) => <tr key={key}>
                                                 <td>{key + 1}</td>
-                                                <td className="pos">
-                                                    {itm.pos}
+                                                <td className="pl">
+                                                    <strong>{itm.name} ({itm.team.toUpperCase()})</strong>
                                                     <div className="b-pl-info">
-                                                        <div className="b-pl-info__main-inf">{`${exdata.HomeAlias} vs ${exdata.AwayAlias} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>
+                                                        <div className="b-pl-info__main-inf">{`${itm.plInfo.vs} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>
                                                         <div className="b-pl-info__statistic">{itm.plInfo.action}</div>
                                                     </div>
+
                                                 </td>
-                                                <td className="pl"><strong>{itm.name} ({itm.team.toUpperCase()})</strong></td>
                                                 <td>{itm.status}</td>
                                                 <td>{itm.fppg}</td>
                                                 <td>{itm.eppg}</td>

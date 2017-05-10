@@ -143,7 +143,7 @@ export default class ExchangeItem extends React.Component
 
                 <div className={"event-date " + data.CategoryIcon}>
                     <span className="date" title={Symbol.Exchange}>
-                        {(date = date.unixToLocalDate({format: 'DD MMM Y'})) ? date : ''}
+                        {(date = date.unixToLocalDate({format: 'DD MMM Y h:mm A'})) ? date : ''}
                         {/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>
                 </div>
@@ -268,7 +268,7 @@ export default class ExchangeItem extends React.Component
 */}
                             <div className="h-lup__tab_content tab_content">
                                 { noTeamsClass ? <div className="h-lup__tab_item tab_item">{}</div>
-                                    : <LineupPage className={"h-lup__tab_item tab_item" + activeTab[0]} exdata={exdata}
+                                    : <LineupPage className={"h-lup__tab_item h-lup__tab1_item tab_item" + activeTab[0]} exdata={exdata}
                                                   data={this.data} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName}
                                                   ref="lineupContainer"/>
                                 }

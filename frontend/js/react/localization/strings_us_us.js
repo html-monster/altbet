@@ -10,12 +10,16 @@ class Strings
     buy = 'BUY';
     ask = 'SELL';
 
-    TradeSlip = 'Entry Slip';
-    YourOrders = 'Your Entries';
+    TradeSlip = 'Game Slip';
+    YourOrders = 'Your Games';
 
     Symbol = 'Entry ID';
+    Quantity = 'Entries';
     Fees = 'Pay-to-Play Fees';
     Bought = 'Bought';
     Sold = 'Sold';
     Profit = 'Win';
+    WinLoss = "Win/Loss";
+    AtStake = "At Stake";
+    Balance = "Balance";
 }

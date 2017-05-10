@@ -77,10 +77,10 @@ class Sidebar extends React.Component
 						   onChange={(ee) => actions.actionOnTraderOnChange(ee.target.checked)}
 						   disabled={userIdentity !== 'True'}/>
 					<span>
-						Active bettor
+						Active Player
 						<span className="help">
 							<span className="help_message">
-								<strong>The Active Bettor interface offers some slick, highly sophisticated, super user friendly, never offered before in the betting world, functionalities, so fasten your seatbelts and off you go to the market - fast!</strong>
+								<strong>The Active Player interface offers some slick, highly sophisticated, super user friendly, never offered before in the betting world, functionalities, so fasten your seatbelts and off you go to the market - fast!</strong>
 							</span>
 						</span>
 					</span>

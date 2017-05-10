@@ -12,7 +12,7 @@
 			background: $my_pos_main_bg;
 			border-radius: 4px;
 		}
-		.tabs { @include my_pos_tab_container_styles; }
+		.tabs { @include my_pos_tab_container_styles; text-align: left }
 		.tab {
 			display: inline-block;
 			margin-right: 4px;

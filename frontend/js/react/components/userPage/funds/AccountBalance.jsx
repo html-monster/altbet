@@ -46,9 +46,9 @@ export default class AccountBalance extends React.Component{
 		return <div className={"tab_item user_balance" + (this.props.active ? ' active' : '')}>
 			<div className="color_map">
 				<ul>
-					<li className="pl">P/L = <span>$0</span></li>
-					<li className="inv">At Stake = <span>$0</span></li>
-					<li className="ava">Available = <span>$0</span></li>
+					<li className="pl">{_t("WinLoss")} = <span>$0</span></li>
+					<li className="inv">{_t("AtStake")} = <span>$0</span></li>
+					<li className="ava">{_t("Balance")} = <span>$0</span></li>
 				</ul>
 			</div>
 			<div className="user_content balance">

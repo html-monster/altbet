@@ -91,11 +91,12 @@ class Actions extends BaseActions
             {
                 if( props.ismirror )
                 {
-                    if( props.type == 1 )
+                    if( props.type == 1 ) // buy
                     {
                         qt += val.Quantity;
+                        if( val.Price == props.price ) break;
                     }
-                    else
+                    else // sell
                     {
                         if( val.Price == props.price ) flag = true;
 
@@ -125,65 +126,10 @@ class Actions extends BaseActions
                     } // endif
                 } // endif
             } // endfor
-            // if( isBasicMode )
-            // {
-            //     qt = props.quantity;
-            //     bpr = props.price;
-            // }
-            // else
-            // {
-            //     for( let val of props.PosPrice )
-            //     {
-            //         if( props.ismirror )
-            //         {
-            //             if( props.type == 1 )
-            //             {
-            //                 qt += val.Quantity;
-            //                 if( val.Price == props.price )
-            //                 {
-            //                     bpr = props.PosPrice[0].Price;
-            //                     break;
-            //                 } // endif
-            //             }
-            //             else
-            //             {
-            //                 if( val.Price == props.price ) flag = true;
-            //
-            //                 if( flag )
-            //                 {
-            //                     qt += val.Quantity;
-            //                     bpr = val.Price;
-            //                 } // endif
-            //             } // endif
-            //         }
-            //         else
-            //         {
-            //             if (!flag && val.Price == props.price) flag = true;
-            //
-            //             if( props.type == 1 )
-            //             {
-            //                 if( flag )
-            //                 {
-            //                     qt += val.Quantity;
-            //                     bpr < val.Price && (bpr = val.Price);
-            //                 } // endif
-            //             }
-            //             else
-            //             {
-            //                 if( !flag || val.Price == props.price )
-            //                 {
-            //                     qt += val.Quantity;
-            //                     bpr > val.Price && (bpr = val.Price);
-            //                 } // endif
-            //             } // endif
-            //         } // endif
-            //     } // endfor
-            // } // endif
         } // endif
 
         props.ismirror && !props.isempty && (bpr = Common.toFixed(1 - bpr, 2));
 
-// 0||console.debug( '!!props.isempty', !!props.isempty );
         let outStruc = {
             "ID": `${props.data.exdata.Exchange}_${props.data.exdata.Name}_${props.data.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
             "EventTitle": props.ismirror ? props.data.exdata.AwayName : props.data.exdata.HomeName,

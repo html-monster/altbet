@@ -5,7 +5,7 @@ import {Common} from './../../common/Common';
 import AnimateOnUpdate from '../Animation';
 
 
-export default class ButtonContainer extends React.Component
+export default class ButtonContainer extends React.PureComponent
 {
     render()
     {
@@ -96,7 +96,7 @@ export default class ButtonContainer extends React.Component
                                                     {
                                                         PosPrice: item.SummaryPositionPrice,
                                                         ismirror: data.ismirror,
-                                                        price: price,
+                                                        price: item2.Price,
                                                         quantity: item2.Quantity,
                                                         type: data.type === "sell" ? 1 : 2,
                                                         data: data,

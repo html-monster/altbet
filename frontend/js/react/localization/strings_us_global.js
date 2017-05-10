@@ -15,8 +15,12 @@ class Strings
     YourOrders = 'Your Orders';
 
     Symbol = 'Symbol';
+    Quantity = 'Entries';
     Fees = 'Fees';
     Bought = 'Long';
     Sold = 'Short';
     Profit = 'Profit';
+    WinLoss = "Win/Loss";
+    AtStake = "At Stake";
+    Balance = "Balance";
 }
