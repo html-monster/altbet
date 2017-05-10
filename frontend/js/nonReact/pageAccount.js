@@ -200,10 +200,10 @@ class accountClass{
 					// else elementVal.eq(0).text('($' + (Math.round10((value[0] * progress), -2)).toString().slice(1) + ')');
 					// elementVal.eq(1).text('$' + Math.round10((value[1] * progress), -2));
 					// elementVal.eq(2).text('$' + Math.round10((value[2] * progress), -2));
-					if(profitPositive) elementMapVal.eq(0).text('$' + Math.round10((value[0] * progress), -2));
-					else elementMapVal.eq(0).text('($' + (Math.round10((value[0] * progress), -2)).toString().slice(1) + ')');
-					elementMapVal.eq(1).text('$' + Math.round10((value[1] * progress), -2));
-					elementMapVal.eq(2).text('$' + Math.round10((value[2] * progress), -2));
+					if(profitPositive) elementMapVal.eq(0).text('$' + (Math.round10((value[0] * progress), -2)).toFixed(2));
+					else elementMapVal.eq(0).text(`($${(Math.abs(Math.round10((value[0] * progress), -2)).toFixed(2))})`);
+					elementMapVal.eq(1).text('$' + (Math.round10((value[1] * progress), -2)).toFixed(2));
+					elementMapVal.eq(2).text('$' + (Math.round10((value[2] * progress), -2)).toFixed(2));
 				},
 				complete: function () {}
 			});

@@ -44,11 +44,14 @@ class ActiveTrader extends React.Component {
 		// className = $active = $activeM = '';
 		// ( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
 
-        let gainLoss = data && data.GainLoss ? data.GainLoss : '';
-        if (data) {
-            if (gainLoss < 0)
+        let gainLoss = JSON.stringify(data) !== '{}' ? data.GainLoss : '$0.00';
+
+        if(gainLoss !== '$0.00') gainLoss = gainLoss < 0 ? `($${(Math.abs(gainLoss)).toFixed(2)})` : '$' + (gainLoss).toFixed(2);
+
+        if (JSON.stringify(data) !== '{}') {
+            if (data.GainLoss < 0)
                 className = 'loss';
-            else if (gainLoss > 0)
+            else if (data.GainLoss > 0)
                 className = 'profit';
         }
         const bid = isMirror ?
@@ -89,23 +92,22 @@ class ActiveTrader extends React.Component {
 						<td className="open_pnl trader_info">
 							<a href="#">
 								P/L
-								<span className={'quantity ' + className}>{gainLoss && gainLoss < 0 ? `($${(gainLoss).toString().slice(1)})` :
-								''}</span>
+								<span className={'quantity ' + className}>{gainLoss}</span>
 								<span className="help"><span className="help_message right"><strong>Profit in this event</strong></span></span>
 							</a>
 						</td>
 						<td className="open_contracts trader_info">
 							<a href="#">
 								Quantity
-								<span className="quantity up">{data.Positions}</span>
-								<span className="help"><span className="help_message"><strong>Open postions</strong></span></span>
+								<span className="pos">{data.Positions || 0}</span>
+								<span className="help"><span className="help_message"><strong>Open positions</strong></span></span>
 							</a>
 						</td>
 						<td className="amount trader_info">
 							<a href="#">
 								Avg. Price
 								<span className="quantity up"></span>
-								<span className="help"><span className="help_message"><strong>Average price of postion</strong></span></span>
+								<span className="help"><span className="help_message"><strong>Average price of position</strong></span></span>
 							</a>
 						</td>
 					</tr>
@@ -125,7 +127,7 @@ class ActiveTrader extends React.Component {
 									disabled={!quantity || !bid}>
 								Join BID <span className="price">
 									{
-										bid
+										bid ? bid.toFixed(2) : ''
 									}
 								</span>
 							</button>
@@ -141,7 +143,7 @@ class ActiveTrader extends React.Component {
 									disabled={!quantity || !ask}>
 								<span className="price">
 									{
-										ask
+										ask ? ask.toFixed(2) : ''
 									}
 								</span> Join ASK
 							</button>
@@ -276,7 +278,7 @@ class ActiveTrader extends React.Component {
 					<tbody>
 						<tr>
 							<td className="reverse active">
-								<a href="#" className="ReverseAllJs">Reverse</a>
+								<a href="#" className="ReverseAllJs wave">Reverse</a>
 								<div className="confirm_window animated">
 									<div className="container">
 										<span>Do you really want do it?</span>
@@ -288,7 +290,7 @@ class ActiveTrader extends React.Component {
 								</div>
 							</td>
 							<td className="cancel_all active">
-								<a href="#" className="CancelAllJs">Cancel All</a>
+								<a href="#" className="CancelAllJs wave">Cancel All</a>
 								<div className="confirm_window animated">
 									<div className="container">
 										<span>Do you really want do it?</span>
@@ -300,7 +302,7 @@ class ActiveTrader extends React.Component {
 								</div>
 							</td>
 							<td className="close_out active">
-								<a href="#" className="CloseOutJs">Close Out</a>
+								<a href="#" className="CloseOutJs wave">Close Out</a>
 								<div className="confirm_window animated">
 									<div className="container">
 										<span>Do you really want do it?</span>

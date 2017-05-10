@@ -305,6 +305,7 @@ class Actions extends BaseActions
 				backendData = this._objectReconstruct(copyData.Orders, isMirror),
 				htmlData = [];
 			// let className = 'ask';
+			// console.log('backendData:', backendData);
 
 			for(let ii = 1; ii <= 99; ii++)
 			{
@@ -583,64 +584,6 @@ class Actions extends BaseActions
 		}
 	}
 
-	/**
-	 * на основе объекта с бэкенда формирует новый объект в формате ключ == price и добавляет side
-	 * @param inData
-	 * @param isMirror
-	 * @returns {{}}
-	 */
-	private _objectReconstruct(inData, isMirror)
-	{
-		let newData = {};
-
-		$(inData).each(function(){
-			let sideData = this;
-			if(sideData.SummaryPositionPrice){
-				$(sideData.SummaryPositionPrice).each(function(){
-					let item = this;
-					if(isMirror) item.Side = sideData.Side == 1 ? 0 : 1;
-					else item.Side = sideData.Side;
-
-					item.Price = isMirror ? Math.round10(1 - item.Price, -2) : item.Price;
-					newData[(item.Price).toString()] = item;
-				});
-			}
-		});
-
-		return newData;
-	}
-
-	private _scrollTo(context, data, isMirror) {
-		const tbody =  $(context.refs.traderBody);
-		if(JSON.stringify(data) != '{}'){
-			let { Symbol: { LastAsk, LastBid } } = data;
-			if(isMirror) {
-				let LastBidOld = LastBid;
-
-				if(LastAsk)LastBid = Math.round10(1 - LastAsk, -2);
-				else LastBid = null;
-
-				if(LastBidOld) LastAsk = Math.round10(1 - LastBidOld, -2);
-				else LastAsk = null;
-			}
-
-			let indexBuy = LastBid ? Math.round(99 - LastBid * 100) : 0,
-				indexSell = LastAsk ? Math.round(99 - LastAsk * 100) : 0;
-
-			if(!indexBuy)
-				indexBuy = indexSell;
-			else if(!indexSell)
-				indexSell = indexBuy;
-
-			tbody.animate({scrollTop: (indexBuy + (indexSell - indexBuy) / 2) * 20 - tbody.height() / 2 + 10}, 400);
-		}
-		else
-			tbody.animate({scrollTop: 980 - tbody.height() / 2}, 200);
-
-		// console.log(tbody.height());
-		// console.log(980 - tbody.height() / 2);
-	}
-
 	// public tbodyResize(showFooter){
 	// 	let windowHeight = window.innerHeight,
 	// 		footer = $('footer'),
@@ -857,6 +800,64 @@ class Actions extends BaseActions
 
 			if(flag) $(context.refs.quantityError).fadeIn(200);
 		}
+	}
+
+	/**
+	 * на основе объекта с бэкенда формирует новый объект в формате ключ == price и добавляет side
+	 * @param inData
+	 * @param isMirror
+	 * @returns {{}}
+	 */
+	private _objectReconstruct(inData, isMirror)
+	{
+		let newData = {};
+
+		$(inData).each(function(){
+			let sideData = this;
+			if(sideData.SummaryPositionPrice){
+				$(sideData.SummaryPositionPrice).each(function(){
+					let item = this;
+					if(isMirror) item.Side = sideData.Side == 1 ? 0 : 1;
+					else item.Side = sideData.Side;
+
+					item.Price = isMirror ? Math.round10(1 - item.Price, -2) : item.Price;
+					newData[(item.Price).toString()] = item;
+				});
+			}
+		});
+
+		return newData;
+	}
+
+	private _scrollTo(context, data, isMirror) {
+		const tbody =  $(context.refs.traderBody);
+		if(JSON.stringify(data) != '{}'){
+			let { Symbol: { LastAsk, LastBid } } = data;
+			if(isMirror) {
+				let LastBidOld = LastBid;
+
+				if(LastAsk)LastBid = Math.round10(1 - LastAsk, -2);
+				else LastBid = null;
+
+				if(LastBidOld) LastAsk = Math.round10(1 - LastBidOld, -2);
+				else LastAsk = null;
+			}
+
+			let indexBuy = LastBid ? Math.round(99 - LastBid * 100) : 0,
+				indexSell = LastAsk ? Math.round(99 - LastAsk * 100) : 0;
+
+			if(!indexBuy)
+				indexBuy = indexSell;
+			else if(!indexSell)
+				indexSell = indexBuy;
+
+			tbody.animate({scrollTop: (indexBuy + (indexSell - indexBuy) / 2) * 20 - tbody.height() / 2 + 10}, 400);
+		}
+		else
+			tbody.animate({scrollTop: 980 - tbody.height() / 2}, 200);
+
+		// console.log(tbody.height());
+		// console.log(980 - tbody.height() / 2);
 	}
 }
 export default (new Actions()).export();

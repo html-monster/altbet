@@ -648,7 +648,7 @@ input ~ .info{
 // BM: tabs
 .tabs{
   text-align: center;
-  &.text_left{ text-align: left; }
+  &.tabs_left{ text-align: left; }
 }
 .tab {
   transition: 0.4s ease-out;

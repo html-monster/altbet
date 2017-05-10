@@ -62,7 +62,7 @@ class Deposit extends React.Component{
 
 		return <div className={"tab_item funds" + (this.props.active ? ' active' : '')}>
 			<h3>Add funds</h3>
-			<span className="account_balance">You currently have <span className="value">${Math.round10(data.UserAssets.CurrentBalance, -2)}</span> in your account</span>
+			<span className="account_balance">You currently have <span className="value">${(Math.round10(data.UserAssets.CurrentBalance, -2)).toFixed(2)}</span> in your account</span>
 			<div className="quantity_control">
 				<strong>Select deposit amount</strong>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>10</button>

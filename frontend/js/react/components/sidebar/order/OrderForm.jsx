@@ -18,7 +18,7 @@ let OddsConverterObj = new OddsConverter();
  * 	quantity
  * 	isMirror - *required
  * 	symbol - event symbol *required
- *  orderMode - string, can be: 'expert', 'basic', 'normal'
+ *  orderView - string, can be: 'advanced', 'simple', 'normal'
  *  showDeleteButton - boolean
  *  focus - string, turn on or off focus on price or quantity input; can be: 'price', 'quantity', 'normal'
  *  focusOn - boolean, put focus on input or not
@@ -288,19 +288,20 @@ export default class OrderForm extends React.Component{
 	render()
 	{
 		const stateData = this.state;
-		const { formUrl, id, side, limit, isMirror, symbol, newOrder = true, orderMode, price, showDeleteButton = true, onSubmit, onDelete} = this.props;
+		const { formUrl, id, side, limit, isMirror, symbol, newOrder = true, orderView = 'normal', price, showDeleteButton = true, onSubmit, onDelete} = this.props;
 		const fees = Math.round10(ABpp.config.takerFees * stateData.quantity, -2);
 		let checkboxProp = stateData.limit;
 		let formClass;
 
-		if(orderMode === 'expert')
-			formClass = '';
-		else if(orderMode === 'basic'){
-			formClass = ' basic_mode';
-			// checkboxProp = true
-		}
-		else
-			formClass = ABpp.config.basicMode ? ' basic_mode' : '';
+		// if(orderMode === 'expert')
+		// 	formClass = '';
+		// else if(orderMode === 'basic'){
+		// 	formClass = ' basic_mode';
+		// 	// checkboxProp = true
+		// }
+		// else
+		// 	formClass = ABpp.config.basicMode ? ' basic_mode' : '';
+
 
 		// const style = checkboxProp ? {display: 'block'} : {display: 'none'};
 
@@ -308,7 +309,7 @@ export default class OrderForm extends React.Component{
 			<form action={formUrl} className={side + formClass + ' animated'} autoComplete="off"
 					  onSubmit={onSubmit} method="post"
 				  noValidate="novalidate" data-verify={['price', 'quantity']}>
-				<div className="container">
+				<div className={'container' + (showDeleteButton && onDelete ? ' close_btn' : '')}>
 					<div className="price">
 						<label className="with_info" htmlFor={`${id}_price`}>
 							{
@@ -340,11 +341,11 @@ export default class OrderForm extends React.Component{
 										 onBlur={::this.onBlur}
 										 value={checkboxProp ? stateData.price : price}
 										 key={price}
-										 hard={true} label={true} disabled={orderMode === 'basic' && !limit}
+										 hard={true} label={true} disabled={!limit}
 										 ref="inputPrice" inputValidate = 'price'/>
 							<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
 							{
-								orderMode === 'basic' && !limit ?
+								!limit ?
 									''
 									:
 									<div className="regulator">
@@ -494,44 +495,54 @@ export default class OrderForm extends React.Component{
 						{/*${(Math.round10((1 - stateData.price) * stateData.quantity, -2)).toFixed(2)}*/}
 						{/*<span className="help_message"><strong>MM/DD/YYYY HH:MM</strong></span>*/}
 					{/*</span>*/}
-					<i className="submit wave waves-input-wrapper waves-effect waves-button">
-						<button type="submit" className={`btn buy submit`}
-								style={{textTransform: 'uppercase'}}
-								onClick={this.onClickSide.bind(this, 'buy')}
-								onMouseUp={this.rippleHide}>
-							Buy
-							<span className="amount">
-								<span className="help balloon_only">
-									${(Math.round10(stateData.price * stateData.quantity + fees, -2)).toFixed(2)}
-									<span className="help_message right">
-										<strong>Total Pay-to Play Fees: <br/>
-											${(Math.round10(stateData.price * stateData.quantity, -2)).toFixed(2)}
-											{' + '}${fees.toFixed(2) + ' '}
-										</strong>
+					{
+						 (orderView === 'simple' && side === 'buy') || orderView !== 'simple'  ?
+							<i className="submit wave waves-input-wrapper waves-effect waves-button">
+								<button type="submit" className={`btn buy submit`}
+										style={{textTransform: 'uppercase'}}
+										onClick={this.onClickSide.bind(this, 'buy')}
+										onMouseUp={this.rippleHide}>
+									Buy
+									<span className="amount">
+										<span className="help balloon_only">
+											${(Math.round10(stateData.price * stateData.quantity + fees, -2)).toFixed(2)}
+											<span className="help_message right">
+												<strong>Total Pay-to Play Fees: <br/>
+													${(Math.round10(stateData.price * stateData.quantity, -2)).toFixed(2)}
+													{' + '}${fees.toFixed(2) + ' '}
+												</strong>
+											</span>
+										</span>
 									</span>
-								</span>
-							</span>
-						</button>
-					</i>
-					<i className="submit wave waves-input-wrapper waves-effect waves-button">
-						<button type="submit" className={`btn sell submit`}
-								style={{textTransform: 'uppercase'}}
-								onClick={this.onClickSide.bind(this, 'sell')}
-								onMouseUp={this.rippleHide}>
-							<span className="amount">
-								<span className="help balloon_only">
-									${(Math.round10((1 - stateData.price) * stateData.quantity + fees, -2)).toFixed(2)}
-									<span className="help_message">
-										<strong>Total Pay-to Play Fees: <br/>
-											${(Math.round10((1 - stateData.price) * stateData.quantity, -2)).toFixed(2)}
-											{' + '}${fees.toFixed(2) + ' '}
-										</strong>
+								</button>
+							</i>
+							 :
+							 ''
+					}
+					{
+						(orderView === 'simple' && side === 'sell') || orderView !== 'simple'  ?
+							<i className="submit wave waves-input-wrapper waves-effect waves-button">
+								<button type="submit" className={`btn sell submit`}
+										style={{textTransform: 'uppercase'}}
+										onClick={this.onClickSide.bind(this, 'sell')}
+										onMouseUp={this.rippleHide}>
+									<span className="amount">
+										<span className="help balloon_only">
+											${(Math.round10((1 - stateData.price) * stateData.quantity + fees, -2)).toFixed(2)}
+											<span className="help_message">
+												<strong>Total Pay-to Play Fees: <br/>
+													${(Math.round10((1 - stateData.price) * stateData.quantity, -2)).toFixed(2)}
+													{' + '}${fees.toFixed(2) + ' '}
+												</strong>
+											</span>
+										</span>
 									</span>
-								</span>
-							</span>
-							Sell
-						</button>
-					</i>
+									Sell
+								</button>
+							</i>
+							:
+							''
+					}
 						{
 							showDeleteButton && onDelete ?
 								<span className="delete" onClick={onDelete}>{}</span>

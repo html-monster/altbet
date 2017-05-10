@@ -35,7 +35,7 @@ export default class Funds extends React.PureComponent{
 			{header}
 			<div className="funds_tab">
 				<div className="wrapper_user">
-					<div className="tabs">
+					<div className="tabs tabs_left">
 						<span className={"tab btn wave " + tabA["balance"]}>Account Balance</span>
 						<span className={"tab btn wave " + tabA["deposit"]}>Deposit Funds</span>
 						<span className="tab btn wave">Withdraw Funds</span>

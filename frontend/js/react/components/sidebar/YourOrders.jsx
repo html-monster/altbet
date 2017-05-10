@@ -80,7 +80,7 @@ class GroupingOrder extends React.Component
 						<h3>{data.Symbol}</h3>
 						{
 							(data.LastSide) ?
-								<strong className={`last-price ${data.LastSide ? 'down' : 'up'}`}>{data.LastPrice}</strong>
+								<strong className={`last-price ${data.LastSide ? 'down' : 'up'}`}>{(data.LastPrice).toFixed(2)}</strong>
 							:
 								''
 						}
@@ -164,7 +164,7 @@ class OrderItem extends React.Component
 			url: ABpp.baseUrl + '/Order/Edit',
 			action: 'edit'
 		};
-		data.Price = data.isMirror ? (Math.round10(1 - data.Price, -2)).toFixed(2) : (Math.round10(data.Price, -2)).toFixed(2);
+		data.Price = data.isMirror ? Math.round10(1 - data.Price, -2) : Math.round10(data.Price, -2);
 		const className = (data.isMirror) ?
 											data.Side ? 'buy' : 'sell'
 										:
@@ -173,7 +173,7 @@ class OrderItem extends React.Component
 		return <div className="order_container not-sort" id={data.ID + '__order'}>
 			<div className={'order_info ' + className}>
 				<div className="container">
-					<strong className="amount"> <span className="price">{data.Price}</span></strong>
+					<strong className="amount"> <span className="price">{(data.Price).toFixed(2)}</span></strong>
 					<strong className="qty"> <span className="volume">{data.Volume}</span></strong>
 					<strong className="dt timestamp help balloon_only">
 		 				<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}</span>&nbsp;
@@ -211,7 +211,6 @@ class OrderItem extends React.Component
 					isMirror={data.isMirror}
 					symbol={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}
 					newOrder={false}
-					orderMode={'basic'}
 					showDeleteButton={false}
 					onSubmit={actions.actionOnAjaxSend.bind(null, formData.url)}
 						//data={data}

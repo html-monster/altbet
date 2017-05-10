@@ -49,7 +49,7 @@ export default class TraderDefaultForm extends React.Component {
 					isMirror={isMirror}
 					symbol={activeExchange.symbol}
 					newOrder={true}
-					orderMode={'basic'}
+					orderView={'simple'}
 					showDeleteButton={true}
 					//focus={'quantity'}
 					focusOn={focusOn}
