@@ -66,7 +66,7 @@ export class TabMyOrderHistory extends React.Component
 															</td>
 															<td className="side">{(item.IsMirror ? (item.Side ? _t('Bought') : _t('Sold')) : (item.Side ? _t('Sold') : _t('Bought')))}</td>
 															<td className="quantity">{item.Quantity}</td>
-															<td>{(item.IsMirror ? Math.round10(1 - item.Price, -2) : item.Price)}</td>
+															<td>{(item.IsMirror ? (Math.round10(1 - item.Price, -2)).toFixed(2) : (item.Price).toFixed(2))}</td>
 															<td><span
 																	className={(item.IsMaker ? 'up' : 'down')}>{(item.IsMaker ? (item.Fees).toFixed(4) : `($${(item.Fees).toFixed(4)})`)}</span>
 															</td>

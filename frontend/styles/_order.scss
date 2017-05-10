@@ -217,6 +217,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      &.close_btn div:last-of-type label{ width: calc(100% - 18px); }
     }
     h3{
       max-width: calc(100% - 115px);
@@ -343,9 +344,7 @@
         font-size: 9px;
         line-height: 26px;
         color: gray;
-        span{
-          color: gray;
-        }
+        span{ color: gray; }
       }
     }
     .edit{
@@ -573,7 +572,7 @@
         top: 0;
         right: 0;
         cursor: pointer;
-        border-left: 1px solid $order_sidebar_order_border_color;
+        //border-left: 1px solid $order_sidebar_order_border_color;
       }
       button {
         height: 31px;

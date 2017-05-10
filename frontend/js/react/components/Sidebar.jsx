@@ -91,11 +91,11 @@ class Sidebar extends React.Component
 					<input type="checkbox" className="auto" onChange={actions.actionOnAutoTradeChange} checked={autoTradeOn}/>
 					<span>
 						Auto trade
-						<span className="help">
-							<span className="help_message">
-								<strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, vel?</strong>
-							</span>
-						</span>
+						{/*<span className="help">*/}
+							{/*<span className="help_message">*/}
+								{/*<strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, vel?</strong>*/}
+							{/*</span>*/}
+						{/*</span>*/}
 					</span>
 				</label>
 			}

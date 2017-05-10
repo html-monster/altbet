@@ -34,7 +34,7 @@ class UserPage extends BaseController
 
 
         return <div className="wrapper_about wrapper_user_page">
-            <ul className="tabs text_left">
+            <ul className="tabs tabs_left">
                 <li className={"tab " + (this.props.route.tab === "funds" ? "active" : "")}><Link to={`/funds`}>Funds</Link></li>
                 <li className={"tab " + (this.props.route.tab === "pref" ? "active" : "")}><Link to={`/preferences`}>My Preferences</Link></li>
                 <li className={"tab " + (this.props.route.tab === "sett" ? "active" : "")}><Link to={`/settings`}>Settings</Link></li>

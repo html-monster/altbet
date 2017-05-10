@@ -4,7 +4,7 @@
   margin-top: 70px;
 
   .time { opacity: 0.5 }
-  .fullname { font-size: 10px; }
+  .fullname { font-size: 10px; opacity: 0.6; }
   .my_position {
 		padding: 15px;
     .container {
@@ -133,7 +133,8 @@
 						position: relative;
 						@include my_pos_td_and_button;
 						.waves-ripple{  display: block;  }
-						span{
+						&.spread span{ display: inline-block; width: 30px; }
+						span {
 							&.last_price:before{
 								content: '';
 								display: inline-block;

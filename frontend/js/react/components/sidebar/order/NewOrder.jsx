@@ -53,7 +53,6 @@ export default class NewOrder extends React.Component{
 							isMirror={item.isMirror}
 							symbol={symbol}
 							newOrder={true}
-							orderMode={'basic'}
 							showDeleteButton={true}
 							onSubmit={actions.actionOnAjaxSend.bind(null, actions, {...item, formUrl: formData.url})}
 							//onDelete={actions.actionOnDeleteOrder.bind(null, item)}
