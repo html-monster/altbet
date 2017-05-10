@@ -89,8 +89,8 @@ class GroupingOrder extends React.Component
 				</div>
 				<div className="order_info">
 					<div className="container">
-						<strong className="amount">Amount</strong>
-						<strong className="qty">Entries</strong>
+						<strong className="amount">Price</strong>
+						<strong className="qty">Quantity</strong>
 						<strong className="dt">Datetime</strong>
 						<div className="button_container">{}</div>
 					</div>

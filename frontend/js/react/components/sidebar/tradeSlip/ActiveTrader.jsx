@@ -43,7 +43,7 @@ class ActiveTrader extends React.Component {
 		let className = '';
 		// className = $active = $activeM = '';
 		// ( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
-		
+
         let gainLoss = data && data.GainLoss ? data.GainLoss : '';
         if (data) {
             if (gainLoss < 0)
@@ -104,7 +104,7 @@ class ActiveTrader extends React.Component {
 						<td className="amount trader_info">
 							<a href="#">
 								Avg. Price
-								<span className="quantity up">26</span>
+								<span className="quantity up"></span>
 								<span className="help"><span className="help_message"><strong>Average price of postion</strong></span></span>
 							</a>
 						</td>
