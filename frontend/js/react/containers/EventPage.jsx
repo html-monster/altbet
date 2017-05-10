@@ -101,7 +101,7 @@ class EventPage extends BaseController
 
         // form ask and bid orders
 // 0||console.debug( 'socket', socket );
-        if( socket.activeOrders && socket.activeOrders.Orders )
+        if( socket.activeOrders && socket.activeOrders.Orders.length )
         {
             if( socket.activeOrders.Orders[0].Side === 1 )
             {
@@ -189,11 +189,9 @@ class EventPage extends BaseController
                             <div className="current_price">
                                 <span className="title">Last Price:</span>
                                 <span className="value">{lastPrice}</span>
-                                { StatusEvent &&
-                                    [ <br />,
-                                    <span className="title">Event status: </span>,
-                                    <span className="value">{StatusEvent}</span>]
-                                }
+                                { StatusEvent && <br /> }
+                                { StatusEvent && <span className="title">Event status: </span> }
+                                { StatusEvent && <span className="value">{StatusEvent}</span> }
                             </div>
                         </div>
                         <div className="price_scope">

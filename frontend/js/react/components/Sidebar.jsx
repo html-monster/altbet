@@ -24,14 +24,14 @@ class Sidebar extends React.Component
 
 
         // allow AT
-        if( ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS )
-        {
-            this.isAllowAT = true;
-        }
-        else
+        if( ABpp.config.currentPage === ABpp.CONSTS.PAGE_MYPOS )
         {
             this.isAllowAT = false;
             ABpp.config.tradeOn = false;
+        }
+        else
+        {
+            this.isAllowAT = true;
         } // endif
         props.actions.actionChangeAllowAt(this.isAllowAT);
 	}
