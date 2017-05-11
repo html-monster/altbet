@@ -37,13 +37,39 @@ export default class Preferences extends React.Component
 
 		function onSuccessAjax(error)
 		{
-			if(error){
-				this.setState({
-					...this.state,
-					answerMessage: error,
-					answerClass: 'invalid_message',
-					loading: false
-				});
+			if(error)
+			{
+				if(defaultMethods.getClass(error) === 'String')
+				{
+					this.setState({
+						...this.state,
+						answerMessage: error,
+						answerClass: 'invalid_message',
+						loading: false
+					});
+				}
+				else if(error.Link)
+				{
+					this.setState({
+						...this.state,
+						answerMessage: `If you want to renew the subscription, you need to go <a href="${error.Link}" target="_blank" class="link">here</a>`,
+						answerClass: 'invalid_message',
+						loading: false,
+						serverData: {
+							...this.state.serverData,
+							MailNews: false
+						}
+					});
+				}
+				else
+				{
+					this.setState({
+						...this.state,
+						answerMessage: 'Server error. Please try again or try again later.',
+						answerClass: 'invalid_message',
+						loading: false
+					});
+				}
 			}
 			else
 				this.setState({
@@ -84,24 +110,6 @@ export default class Preferences extends React.Component
 			console.log('textStatus: ',  y);
 		}
 	}
-
-	radioButtonsDisabling(event)
-	{
-		this.setState({...this.state, radioButtonsDisabled: event.currentTarget.checked})
-	}
-
-    /**
-     * @private
-     */
-    _onChkChange(opt, ee)
-    {
-        // 0||console.log( 'ee', ee.target, ee.target.dataset, this.state );
-        // 0||console.log( 'this.state.filters[ee.target.dataset.filter]', this.state.filters[ee.target.dataset.filter], this.state );
-        this.state[opt] = !this.state[opt];
-        this.setState({...this.state});
-    }
-
-
 
     render()
     {
@@ -157,7 +165,8 @@ export default class Preferences extends React.Component
 						<h4>Alt.Bet Promotions</h4>
 						<ul className="preferences_list">
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: MailNews}}>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: MailNews, willUpdate: true}}
+										  onChange={::this._onMailNewsChange}>
 									<strong className="label">Send me Alt.Bet news and offers:</strong>
 								</CheckBox>
 							</li>
@@ -171,7 +180,7 @@ export default class Preferences extends React.Component
 							</li>
 							<li>
 								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailActivity", checked: radioButtonsDisabled}}
-										  onChange={::this.radioButtonsDisabling}>
+										  onChange={::this._radioButtonsDisabling}>
 									<strong className="label" style={{paddingRight: 20}}>
 										Send me information on my activity:
 										<span className="help">
@@ -206,9 +215,38 @@ export default class Preferences extends React.Component
 					</section>
 					<div className="input_animate input--yoshiko submit_container">
 						<input type="submit" value="Submit" className="btn wave submit" disabled={loading}/>
-						<span className={`answer_message ${answerClass}`}>{answerMessage}</span>
+						<span className={`answer_message ${answerClass}`} dangerouslySetInnerHTML={{__html: answerMessage}}>{}</span>
 					</div>
 				</form>
             </div>;
     }
+
+	/**
+	 * Unchecked mail news checkbox if catch server error
+	 * @param event
+	 * @private
+	 */
+	_onMailNewsChange(event)
+	{
+		this.state.serverData.MailNews = event.target.checked;
+	}
+
+	/**
+	 * @private
+	 */
+	_radioButtonsDisabling(event)
+	{
+		this.setState({...this.state, radioButtonsDisabled: event.currentTarget.checked})
+	}
+
+	/**
+	 * @private
+	 */
+	_onChkChange(opt, ee)
+	{
+		// 0||console.log( 'ee', ee.target, ee.target.dataset, this.state );
+		// 0||console.log( 'this.state.filters[ee.target.dataset.filter]', this.state.filters[ee.target.dataset.filter], this.state );
+		this.state[opt] = !this.state[opt];
+		this.setState({...this.state});
+	}
 }
