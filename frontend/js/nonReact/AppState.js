@@ -10,13 +10,13 @@ class AppStateClass{
 				modeSwitch.prop('checked', false);
 				globalData.basicMode = true;
 				ABpp.config.basicMode = true;
-				modeSwitchClass.checkMode(modeSwitch);
+				// modeSwitchClass.checkMode(modeSwitch);
 			}
 			else{
 				modeSwitch.prop('checked', true);
 				globalData.basicMode = false;
 				ABpp.config.basicMode = false;
-				modeSwitchClass.checkMode(modeSwitch);
+				// modeSwitchClass.checkMode(modeSwitch);
 			}
 			if(stateParams.Theme && stateParams.Theme == 'dark')
 				themeChangeClass.setColorScheme($('.change-color button'), 'dark');

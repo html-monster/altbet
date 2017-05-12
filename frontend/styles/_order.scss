@@ -48,7 +48,7 @@
         border: none;
         color: $main_page_tab_color_active;
       }
-      @include order_sidebar_tab_separator;
+      &.divide{ @include order_sidebar_tab_separator; }
       &:last-child {
         //&.active{  border-left: 1px solid #445b69;  }
         border-radius: 0 4px 4px 0;

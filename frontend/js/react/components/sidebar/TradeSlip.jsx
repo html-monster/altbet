@@ -39,7 +39,7 @@ export default class TradeSlip extends React.Component
 
 			{/* // BM: --------------------------------------------------- ACTIVE TRADER ---*/}
 			{
-				data.isAllowAT && <ActiveTrader cmpData={data}/>
+				ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS && <ActiveTrader cmpData={data}/>
 			}
 
 		</div>

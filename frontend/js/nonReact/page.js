@@ -117,7 +117,7 @@ $(document).ready(function ()
 
 	// new myPosClass(); // activate my pos script
 
-	new modeSwitchClass(); //mode switch activate
+	// new modeSwitchClass(); //mode switch activate
 
 	// new themeChangeClass();
 	// (function changeSelect(){

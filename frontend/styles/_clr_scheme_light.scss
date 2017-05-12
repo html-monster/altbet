@@ -57,8 +57,8 @@ $warning_message_arrow: #ffffff;
 	}
 }
 
-$breadcrumbs-bg: #ffffff;
-$breadcrumbs-color: transparentize(#000000, 0.5);
+//$breadcrumbs-bg: #ffffff;
+//$breadcrumbs-color: transparentize(#000000, 0.5);
 
 @mixin chartEP {
 	svg > text:last-of-type{  visibility: hidden;  }
