@@ -1,10 +1,11 @@
 
-var path = require('path');
+let path = require('path');
 const options = require('./pathes');
 const webpack = require('webpack');
 // const WebpackNotifierPlugin = require('webpack-notifier');
-var WebpackAutoInject = require('webpack-auto-inject-version');
+const WebpackAutoInject = require('webpack-auto-inject-version');
 
+var StringReplacePlugin = require("string-replace-webpack-plugin");
 // const loaders = require('./webpack/loaders');
 // const plugins = require('./webpack/plugins');
 // const postcssInit = require('./webpack/postcss');
@@ -20,6 +21,7 @@ const sourceMap = process.env.TEST || process.env.NODE_ENV !== 'production'
 
 // 0||console.log(options.path.destServer);
 // 0||console.log(  __dirname + options.path.destServer + '/Scripts');
+
 
 
 module.exports = {
@@ -69,6 +71,7 @@ module.exports = {
                 AutoIncreaseVersion: true
             }
         }),
+        new StringReplacePlugin(),
     ],
     // ].concat(sourceMap),
 
@@ -76,30 +79,65 @@ module.exports = {
         // preLoaders: [
         //   loaders.tslint,
         // ],
+/*        rules: [ // webpack 2 !!!!!
+            {
+                test: /\.json$/,
+                use: 'json-loader'
+            }
+        ],*/
         loaders: [
+            {
+                test: /\.json$/,
+                loader: 'json-loader'
+            },
             {
                 test: /\.jsx$/,
                 loader: "babel-loader",
-                exclude: [/node_modules/, /public/],
+                exclude: [/node_modules/, /public/, /vendor/],
                 query: {
                     presets: ['es2015', 'stage-0', 'react'],
                     plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
-                  }
+                }
             },
             {
                 test: /\.js$/,
                 loader: "babel-loader",
-                exclude: [/node_modules/, /public/],
+                exclude: [/node_modules/, /public/, /vendor/],
                 query: {
                     presets: ['es2015', 'stage-0', 'react'],
                     plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
-                  }
+                }
             },
             {
                 test: /\.ts?$/,
                 // loader: 'awesome-typescript-loader',
                 loader: 'ts-loader',
-                exclude: /node_modules/,
+                exclude: [/node_modules/, /public/, /vendor/],
+            },
+            // {
+            //     test: /\.js$/,
+            //     loader: 'string-replace',
+            //     query: {
+            //         multiple: [
+            //             {search: '[[REPLACE VERSION]]', replace: getBuildTime()},
+            //             // {search: '_', replace: 'window.lodash'},
+            //         ],
+            //         flags: 'i',
+            //     }
+            // },
+            // configure replacements for file patterns
+            {
+                test: /\.js$/,
+                loader: StringReplacePlugin.replace({
+                    replacements: [
+                        {
+                            pattern: /<<REPLACE VERSION>>/ig,
+                            replacement: function (match, p1, offset, string) {
+                                return getBuildTime();
+                            }
+                        }
+                    ]
+                })
             }
         ],
     },
@@ -117,3 +155,11 @@ module.exports = {
     },
     // postcss: postcssInit,
 };
+
+
+
+function getBuildTime()
+{
+    let $now = new Date();
+    return `${$now.getDate()} ${$now.getHours()}:${$now.getMinutes()}:${$now.getSeconds()}`;
+}
