@@ -9,6 +9,7 @@ import {CheckBox} from '../common/CheckBox';
 
 export default class Preferences extends React.Component
 {
+	smsCheckbox;
 
 	constructor()
 	{
@@ -113,7 +114,7 @@ export default class Preferences extends React.Component
 
     render()
     {
-        const { IsMode, IsBettor, IsTrade, MailActivity, MailFrequency, MailNews, MailUpdates } = this.state.serverData;
+        const { IsMode, IsBettor, IsTrade, MailActivity, MailFrequency, MailNews, MailUpdates, SmsActivity } = this.state.serverData;
         const { header, active } = this.props.data;
         const { answerMessage, answerClass, loading, radioButtonsDisabled } = this.state;
 
@@ -212,6 +213,17 @@ export default class Preferences extends React.Component
 								</div>
 							</li>
 						</ul>
+
+						<ul className="preferences_list" style={{marginTop: 20 + 'px'}}>
+							<li>
+								<CheckBox ref={(item)=>this.smsCheckbox = item} onChange={::this._checkNumber} data={{className: "checkbox checkbox_horizontal", name: "SmsActivity", checked: SmsActivity}}>
+									<strong className="label">Send me sms of my activity:</strong>
+								</CheckBox>
+							</li>
+							<li className="sms_action" style={{marginTop: 20 + 'px', display: 'none' }}>
+								Enter your phone number in the  <a href="http://localhost/AltBet/Account#/settings">settings</a></li>
+						</ul>
+
 					</section>
 					<div className="input_animate input--yoshiko submit_container">
 						<input type="submit" value="Submit" className="btn wave submit" disabled={loading}/>
@@ -248,5 +260,20 @@ export default class Preferences extends React.Component
 		// 0||console.log( 'this.state.filters[ee.target.dataset.filter]', this.state.filters[ee.target.dataset.filter], this.state );
 		this.state[opt] = !this.state[opt];
 		this.setState({...this.state});
+	}
+
+	/**
+	 * Проверка на наличие номера телефона в Settings
+	 * @private
+	 */
+	_checkNumber (ee, isChecked) {
+
+		const Phone = appData.pageAccountData.UserInfo;
+		let reg = Phone.Phone;
+		if( reg === '' ) {
+			setTimeout(()=> this.smsCheckbox.unCheck(), 200);
+
+			$('.sms_action').css('display' , 'block');
+		}
 	}
 }
