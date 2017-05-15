@@ -211,7 +211,7 @@ export default class Preferences extends React.Component {
                 <strong className="label">Send me sms of my activity:</strong>
               </CheckBox>
             </li>
-            <li className="sms_action" style={{marginTop: 20 + 'px', display: 'none' }}>
+            <li className="sms_action" data-js-sms_action="">
               Enter your phone number in the  <a href="http://localhost/AltBet/Account#/settings">settings</a></li>
           </ul>
         
@@ -237,7 +237,7 @@ export default class Preferences extends React.Component {
     if( reg === '' ) {
       setTimeout(()=> this.smsCheckbox.unCheck(), 200);
       
-      $('.sms_action').css('display' , 'block');
+      $('[data-js-sms_action]').css('display' , 'block');
     }
   }
 }

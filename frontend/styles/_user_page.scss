@@ -588,6 +588,8 @@
       width: 100%;
       li{  height: 22px;  }
       .sms_action{
+        margin-top: 20px;
+        display: none;
         a{
           color: #e4e4e4;
           &:hover{
