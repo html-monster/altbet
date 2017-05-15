@@ -51,7 +51,7 @@ export class TabOpenOrders extends React.Component
                                         <th>{_t('Symbol')}</th>
                                         <th>Time</th>
                                         <th>Type</th>
-                                        <th>Quantity</th>
+                                        <th>Units</th>
                                         <th>Price</th>
                                         <th>Latest</th>
                                         <th>Position</th>

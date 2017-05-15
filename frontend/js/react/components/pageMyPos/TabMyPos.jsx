@@ -69,7 +69,7 @@ export class TabMyPos extends React.Component
                                             <tr>
                                                 <th>{_t('Symbol')}</th>
                                                 <th>Type</th>
-                                                <th>Quantity</th>
+                                                <th>Units</th>
                                                 <th>Price</th>
                                                 <th><span className="sell">{_t('buy')}</span> | <span className="buy">{_t('ask')}</span></th>
                                                 <th><span className="profit">{_t('Profit')}</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>

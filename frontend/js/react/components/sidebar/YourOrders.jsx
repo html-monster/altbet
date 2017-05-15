@@ -90,7 +90,7 @@ class GroupingOrder extends React.Component
 				<div className="order_info">
 					<div className="container">
 						<strong className="amount">Price</strong>
-						<strong className="qty">Quantity</strong>
+						<strong className="qty">Units</strong>
 						<strong className="dt">Datetime</strong>
 						<div className="button_container">{}</div>
 					</div>
