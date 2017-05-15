@@ -13,17 +13,16 @@ export class CheckBox extends React.Component
 
         this.state = { ischecked: this.props.data.checked,}
     }
-
-
-    /**
-     * @private
-     */
-    _onChkChange(event)
-    {
-        this.state.ischecked = !this.state.ischecked;
-        if(this.props.onChange) this.props.onChange(event, this.state.ischecked);
-        this.setState({...this.state});
-    }
+  
+  
+  /**
+   * @public
+   */
+  unCheck()
+  {
+    this.setState({...this.state, ischecked: false});
+  }
+    
   
     render()
     {
@@ -36,4 +35,17 @@ export class CheckBox extends React.Component
                 {this.props.children}
             </label>;
     }
+  
+    
+    
+  /**
+   * @private
+   */
+  _onChkChange(event)
+  {
+    this.state.ischecked = !this.state.ischecked;
+    this.setState({...this.state});
+    if(this.props.onChange) this.props.onChange(event, this.state.ischecked);
+  }
+
 }

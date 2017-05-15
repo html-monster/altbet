@@ -9,6 +9,8 @@ import {CheckBox} from '../common/CheckBox';
 
 export default class Preferences extends React.Component {
   
+  smsCheckbox;
+  
   constructor() {
     super();
     
@@ -205,11 +207,12 @@ export default class Preferences extends React.Component {
           
           <ul className="preferences_list" style={{marginTop: 20 + 'px'}}>
             <li>
-              <CheckBox onChange={this._checkNumber} data={{className: "checkbox checkbox_horizontal", name: "SmsActivity", checked: SmsActivity}}>
+              <CheckBox ref={(item)=>this.smsCheckbox = item} onChange={::this._checkNumber} data={{className: "checkbox checkbox_horizontal", name: "SmsActivity", checked: SmsActivity}}>
                 <strong className="label">Send me sms of my activity:</strong>
-                
               </CheckBox>
             </li>
+            <li className="sms_action" style={{marginTop: 20 + 'px', display: 'none' }}>
+              Enter your phone number in the  <a href="http://localhost/AltBet/Account#/settings">settings</a></li>
           </ul>
         
         
@@ -221,24 +224,20 @@ export default class Preferences extends React.Component {
       </form>
     </div>;
   }
+  
   /**
    * Проверка на наличие номера телефона в Settings
    * @private
    */
   
   _checkNumber (ee, isChecked) {
-        
-    const Phone = appData.pageAccountData.UserInfo;
-    let SmsAct = appData.pageAccountData.Account;
     
-    // console.log('number from server: ' + Phone.Phone);
+    const Phone = appData.pageAccountData.UserInfo;
     let reg = Phone.Phone;
     if( reg === '' ) {
-      console.log('Введите Ваш номер телефона');
+      setTimeout(()=> this.smsCheckbox.unCheck(), 200);
+      
+      $('.sms_action').css('display' , 'block');
     }
-    else{
-      console.log(true);
-    }
-    console.log('isChecked',isChecked);
   }
 }
