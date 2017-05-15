@@ -242,9 +242,9 @@ export default class ExchangeItem extends React.Component
 					 .next().toggleClass('active');
 		$that.closest('.table').toggleClass('active');
 
-        var $contentTitle = $that.closest('.content_bet').find('.content_title');
+		var $contentTitle = $that.closest('.content_bet').find('.content_title');
 		if ($that.hasClass('active'))
-        {
+		{
             // set subscribe for chart data
             this.props.actions.actionSetChartsSymbol({exchange: this.props.data.Symbol.Exchange});
 
@@ -254,7 +254,7 @@ export default class ExchangeItem extends React.Component
 
             $that.next().css('height', height + 40);
             $contentTitle.css('max-height', 'inherit');
-        }
+		}
 		else
 		{
             // set unsubscribe from chart data if close btn click
