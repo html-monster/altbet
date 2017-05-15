@@ -25,6 +25,15 @@ export class CheckBox extends React.Component
         this.setState({...this.state});
     }
 
+	/**
+     * will update checkbox if checkbox willUpdate parameter true
+	 * @param nextProps
+	 */
+	componentWillUpdate(nextProps)
+    {
+        if(nextProps.data.willUpdate && this.state.ischecked !== nextProps.data.checked) this.state.ischecked = nextProps.data.checked;
+    }
+
 
 
     render()

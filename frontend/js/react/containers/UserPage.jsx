@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { bindActionCreators } from 'redux'
+// import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
@@ -34,17 +34,17 @@ class UserPage extends BaseController
 
 
         return <div className="wrapper_about wrapper_user_page">
-            <ul className="tabs">
-                <li className={"tab " + (this.props.route.tab == "funds" ? "active" : "")}><Link to={`/funds`}>Funds</Link></li>
-                <li className={"tab " + (this.props.route.tab == "pref" ? "active" : "")}><Link to={`/preferences`}>My Preferences</Link></li>
-                <li className={"tab " + (this.props.route.tab == "sett" ? "active" : "")}><Link to={`/settings`}>Settings</Link></li>
+            <ul className="tabs tabs_left">
+                <li className={"tab " + (this.props.route.tab === "funds" ? "active" : "")}><Link to={`/funds`}>Funds</Link></li>
+                <li className={"tab " + (this.props.route.tab === "pref" ? "active" : "")}><Link to={`/preferences`}>My Preferences</Link></li>
+                <li className={"tab " + (this.props.route.tab === "sett" ? "active" : "")}><Link to={`/settings`}>Settings</Link></li>
             </ul>
             <div className="tab_content">
-                <Funds data={{header: $tabHeaderHtml, active: this.props.route.tab == "funds", tab: this.props.params.tabname}}/>
+                <Funds data={{header: $tabHeaderHtml, active: this.props.route.tab === "funds", tab: this.props.params.tabname}}/>
 
-                <Preferences data={{header: $tabHeaderHtml, active: this.props.route.tab == "pref"}}/>
+                <Preferences data={{header: $tabHeaderHtml, active: this.props.route.tab === "pref"}}/>
 
-                <Settings data={{header: $tabHeaderHtml, active: this.props.route.tab == "sett"}}/>
+                <Settings data={{header: $tabHeaderHtml, active: this.props.route.tab === "sett"}}/>
             </div>
         </div>;
     }

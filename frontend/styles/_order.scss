@@ -1,12 +1,5 @@
-.order {
-  @include span(last 2.6 of 12);
-  height: 100%;
-  background: $order_sidebar_bg;
-  position: fixed;
-  right: 0;
-  top: 70px;
-  z-index: 99;
-  transition: 0.4s ease-out;
+.order { @include span(last 2.6 of 12); position: fixed; right: 0; top: 70px; z-index: 99; min-width: 295px; height: 100%;
+      background: $order_sidebar_bg; transition: 0.4s ease-out;
   @include wave;
   label{
     color: #000000;
@@ -55,7 +48,7 @@
         border: none;
         color: $main_page_tab_color_active;
       }
-      @include order_sidebar_tab_separator;
+      &.divide{ @include order_sidebar_tab_separator; }
       &:last-child {
         //&.active{  border-left: 1px solid #445b69;  }
         border-radius: 0 4px 4px 0;
@@ -224,10 +217,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      &.close_btn div:last-of-type label{ width: calc(100% - 18px); }
     }
     h3{
-      margin-right: 10px;
-      max-width: 55%;
+      max-width: calc(100% - 115px);
       font-size: 13px;
       vertical-align: middle;
       color: transparentize(#ffffff, 0.2);
@@ -341,9 +334,18 @@
         left: calc(50% - 7px);
       }
     }
-    .price, .volume, .fees, .risk, .profit{
+    .price, .volume, .risk, .profit{
       flex-grow: 1;
       input.number[disabled]{  border-right: 1px solid $order_sidebar_order_border_color;  }
+    }
+    .fees{
+      position: absolute; right: 4px; bottom: 32px;
+      .info_string{
+        font-size: 9px;
+        line-height: 26px;
+        color: gray;
+        span{ color: gray; }
+      }
     }
     .edit{
       //right: 22px;
@@ -570,7 +572,7 @@
         top: 0;
         right: 0;
         cursor: pointer;
-        border-left: 1px solid $order_sidebar_order_border_color;
+        //border-left: 1px solid $order_sidebar_order_border_color;
       }
       button {
         height: 31px;
@@ -586,13 +588,13 @@
           overflow: hidden !important;
           .help_message{  visibility: hidden; }
         }
-        //&:first-of-type{
-        //  border-right: 1px solid $order_sidebar_order_border_color;
+        &:first-of-type{
+          border-right: 1px solid $order_sidebar_order_border_color;
           //.amount{
           //  float: right;
           //  border-left: 1px solid #fff;
           //}
-        //}
+        }
         //.help_message{
         //  t
         //}

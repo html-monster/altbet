@@ -2,7 +2,8 @@
 var path = require('path');
 const options = require('./pathes');
 const webpack = require('webpack');
-const WebpackNotifierPlugin = require('webpack-notifier');
+// const WebpackNotifierPlugin = require('webpack-notifier');
+var WebpackAutoInject = require('webpack-auto-inject-version');
 
 // const loaders = require('./webpack/loaders');
 // const plugins = require('./webpack/plugins');
@@ -56,12 +57,17 @@ module.exports = {
     },
 
     plugins: [
-        new WebpackNotifierPlugin({title: 'bundleR.js', alwaysNotify: true}),
+        // new WebpackNotifierPlugin({title: 'bundleR.js', alwaysNotify: true}),
 
         new webpack.DefinePlugin({
             __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
             __TEST__: JSON.stringify(process.env.TEST || false),
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        }),
+        new WebpackAutoInject({
+            components: {
+                AutoIncreaseVersion: true
+            }
         }),
     ],
     // ].concat(sourceMap),

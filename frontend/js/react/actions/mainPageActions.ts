@@ -1,8 +1,9 @@
 import {
-    ON_POS_PRICE_CLICK,
-    ON_SOCKET_MESSAGE,
-    ON_BASIC_MODE_CH,
-    TRAIDER_MODE_CH,
+    MP_ON_POS_PRICE_CLICK,
+    MP_ON_SOCKET_MESSAGE,
+    MP_ON_BASIC_MODE_CH,
+    MP_TRAIDER_MODE_CH,
+    MP_ON_CHANGE_SUBSCRIBING
 } from '../constants/ActionTypesPageMain';
 import { WebsocketModel } from '../models/Websocket';
 import { Common } from '../common/Common';
@@ -29,31 +30,35 @@ class Actions extends BaseActions
 
             let symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
             ABpp.Websocket.sendSubscribe({exchange: data.Symbol.Exchange}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
-            flag && ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false});
-            flag && setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false}), 700);
+            flag && ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false,
+                HomeName: data.Symbol.HomeName, AwayName: data.Symbol.AwayName});
+            flag && setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false,
+                HomeName: data.Symbol.HomeName, AwayName: data.Symbol.AwayName}), 700);
 
             ABpp.Websocket.subscribe((inData) =>
             {
                 let state = getState().mainPage.marketsData;
 
-                if( JSON.stringify(inData) != JSON.stringify(state) )
+                let compare = inData.some((item, index)=>{
+                    delete item.TimeRemains;
+                    delete state[index].TimeRemains;
+                    return JSON.stringify(item) !== JSON.stringify(state[index])
+                });
+
+                if( compare )
                 {
-    // __DEV__&&console.debug( 'inData', inData, state );
                     dispatch({
-                        type: ON_SOCKET_MESSAGE,
+                        type: MP_ON_SOCKET_MESSAGE,
                         payload: inData
                     });
-    //             }
-    //             else
-    //             {
-    // __DEV__&&console.debug('samedata');
+                    __DEV__ && console.log('re-render');
                 } // endif
 
             }, WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES);
 
 
             dispatch({
-                type: ON_POS_PRICE_CLICK,
+                type: MP_ON_POS_PRICE_CLICK,
                 payload: [data.Symbol.Exchange, false]
             });
         }
@@ -86,11 +91,12 @@ class Actions extends BaseActions
             {
                 if( props.ismirror )
                 {
-                    if( props.type == 1 )
+                    if( props.type == 1 ) // buy
                     {
                         qt += val.Quantity;
+                        if( val.Price == props.price ) break;
                     }
-                    else
+                    else // sell
                     {
                         if( val.Price == props.price ) flag = true;
 
@@ -120,65 +126,10 @@ class Actions extends BaseActions
                     } // endif
                 } // endif
             } // endfor
-            // if( isBasicMode )
-            // {
-            //     qt = props.quantity;
-            //     bpr = props.price;
-            // }
-            // else
-            // {
-            //     for( let val of props.PosPrice )
-            //     {
-            //         if( props.ismirror )
-            //         {
-            //             if( props.type == 1 )
-            //             {
-            //                 qt += val.Quantity;
-            //                 if( val.Price == props.price )
-            //                 {
-            //                     bpr = props.PosPrice[0].Price;
-            //                     break;
-            //                 } // endif
-            //             }
-            //             else
-            //             {
-            //                 if( val.Price == props.price ) flag = true;
-            //
-            //                 if( flag )
-            //                 {
-            //                     qt += val.Quantity;
-            //                     bpr = val.Price;
-            //                 } // endif
-            //             } // endif
-            //         }
-            //         else
-            //         {
-            //             if (!flag && val.Price == props.price) flag = true;
-            //
-            //             if( props.type == 1 )
-            //             {
-            //                 if( flag )
-            //                 {
-            //                     qt += val.Quantity;
-            //                     bpr < val.Price && (bpr = val.Price);
-            //                 } // endif
-            //             }
-            //             else
-            //             {
-            //                 if( !flag || val.Price == props.price )
-            //                 {
-            //                     qt += val.Quantity;
-            //                     bpr > val.Price && (bpr = val.Price);
-            //                 } // endif
-            //             } // endif
-            //         } // endif
-            //     } // endfor
-            // } // endif
         } // endif
 
         props.ismirror && !props.isempty && (bpr = Common.toFixed(1 - bpr, 2));
 
-// 0||console.debug( '!!props.isempty', !!props.isempty );
         let outStruc = {
             "ID": `${props.data.exdata.Exchange}_${props.data.exdata.Name}_${props.data.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
             "EventTitle": props.ismirror ? props.data.exdata.AwayName : props.data.exdata.HomeName,
@@ -225,7 +176,7 @@ class Actions extends BaseActions
             // 0||console.debug( 'getState()', getState() );
             // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
             // dispatch({
-            //     type: ON_POS_PRICE_CLICK,
+            //     type: MP_ON_POS_PRICE_CLICK,
             //     payload: {}
             // });
         }
@@ -245,9 +196,12 @@ class Actions extends BaseActions
             // symbol = `${symbol.Exchange}_${symbol.Name}_${symbol.Currency}`;
             const aexch = getState().mainPage.activeExchange;
 
+            // 0||console.log( 'click', inProps );
+
             if( aexch.name !== inProps.name || aexch.isMirror !== inProps.isMirror )
             {
-                ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, isMirror: inProps.isMirror, symbol: inProps.symbol});
+                ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, HomeName: inProps.title[0],
+                    AwayName: inProps.title[1], isMirror: inProps.isMirror, symbol: inProps.symbol});
                 ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
 
                 if($('#ChkLimit').prop('checked')) globalData.tradeOn = true;
@@ -275,7 +229,7 @@ class Actions extends BaseActions
         // };
             // console.debug( 'exchangeSideClick', getState());
 
-            if( $('.left_order .tab input.limit').prop('checked') )
+/*            if( $('.left_order .tab input.limit').prop('checked') )
             {
                 // todo: needs move to sidebar
                 // set current tab
@@ -298,16 +252,16 @@ class Actions extends BaseActions
 
                 // activeTraderClass.spreaderClean(true);
                 // activeTraderClass.buttonActivation($('.active_trader .control input.quantity'), false);
-            } // endif
+            }*/ // endif
 
             // 0||console.log( 'inProps, val.Symbol.Exchange', inProps, inProps.name, inProps.isMirror );
 
             // dispatch({
-            //     type: ON_POS_PRICE_CLICK,
+            //     type: MP_ON_POS_PRICE_CLICK,
             //     payload: [inProps.name, inProps.isMirror]
             // });
             return {
-                type: ON_POS_PRICE_CLICK,
+                type: MP_ON_POS_PRICE_CLICK,
                 data: [inProps.name, inProps.isMirror]
             };
     }
@@ -348,7 +302,7 @@ class Actions extends BaseActions
         return (dispatch, getState) =>
         {
             dispatch({
-                type: ON_BASIC_MODE_CH,
+                type: MP_ON_BASIC_MODE_CH,
                 payload: inMode
             });
         };
@@ -363,7 +317,7 @@ class Actions extends BaseActions
             inMode && context.lastExchangeActivate();
 
             dispatch({
-                type: TRAIDER_MODE_CH,
+                type: MP_TRAIDER_MODE_CH,
                 payload: inMode
             });
         };
@@ -402,7 +356,6 @@ class Actions extends BaseActions
         };
     }
 
-
     /**
      * set active symbol on main page
      * @param inProps
@@ -410,16 +363,15 @@ class Actions extends BaseActions
      */
     public actionSetChartsSymbol(inProps)
     {
-        return (dispatch, getState) =>
+        return (dispatch) =>
         {
-            // let state = getState().mainPage;
-
             ABpp.Websocket.sendSubscribe({exchange: inProps.exchange}, SocketSubscribe.MP_CHARTS_SYMBOL);
+            globalData.MainCharOn = !!inProps.exchange;
 
-            // dispatch({
-            //     type: type,
-            //     payload: data,
-            // });
+            dispatch({
+                type: MP_ON_CHANGE_SUBSCRIBING,
+                payload: inProps.exchange,
+            });
         };
     }
 }

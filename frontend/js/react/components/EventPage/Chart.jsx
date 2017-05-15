@@ -20,7 +20,7 @@ export default class Chart extends React.Component
 
     componentWillReceiveProps(nextProps)
     {
-        let checked = this.props.data.Chart.ChartObj.getType() == this.props.data.Chart.types.TYPE_AREASPLINE;
+        let checked = this.props.data.Chart.ChartObj.getType() == this.props.data.Chart.types.TYPE_SPLINE;
 
         this.refs.chartType.checked = !checked;
     }
@@ -34,7 +34,7 @@ export default class Chart extends React.Component
                 <h2>{this.props.data.pageEventData.IsMirrorName}</h2>
                 <label className="chk-chart-type checkbox checkbox_horizontal green-brown label-left">
                     <input ref="chartType" type="checkbox" defaultChecked={true} onChange={::this._onChkChange} />
-                    <span className="label"><b>Area</b>/<i>Line</i></span>
+                    <span className="label"><b>Line</b>/<i>Area</i></span>
                     <span />
                 </label>
                 {/*<input id="IsMirror" name="IsMirror" type="hidden" defaultChecked={this.props.data.IsMirror} value={`${this.props.data.IsMirror}`} />*/}
