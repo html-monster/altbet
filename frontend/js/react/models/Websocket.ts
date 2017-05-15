@@ -215,8 +215,6 @@ export class WebsocketModel
         // if(globalData.eventPageOn) eventChartController.drawEventChart(data.Bars);
         if(ABpp.config.tradeOn && !ABpp.config.basicMode)
         {
-            console.log('ABpp.config.tradeOn:', ABpp.config.tradeOn);
-            console.log('!ABpp.config.basicMode:', !ABpp.config.basicMode);
             window.ee.emit('activeOrders.update', data.ActiveOrders);//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
         }
 
