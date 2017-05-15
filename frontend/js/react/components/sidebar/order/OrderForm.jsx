@@ -358,7 +358,7 @@ export default class OrderForm extends React.Component{
 						</div>
 					</div>
 					<div className="volume">
-						<label htmlFor={`${id}_quantity`}>Quantity</label>
+						<label htmlFor={`${id}_quantity`}>Units</label>
 						<div className="input">
 							<InputNumber type="tel" id={`${id}_quantity`} className="number" data-validation="123"
 										 maxLength="7" name="Quantity" autoComplete="off"
