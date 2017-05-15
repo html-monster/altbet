@@ -21,6 +21,19 @@ class DefaultOrders extends React.Component
 	{
 		const { actions, cmpData: { traderOn }, data: { orderNewData } } = this.props;
 
+		let message;
+		switch (ABpp.config.currentPage)
+		{
+			case ABpp.CONSTS.PAGE_MYPOS:
+				message = "MAKE YOUR SELECTION(S) ON THE LEFT BY CLICKING ON THE BUY/SEll BUTTON.";
+				break;
+			case ABpp.CONSTS.PAGE_EVENT:
+				message = "MAKE YOUR SELECTION(S) ON THE LEFT BY CLICKING ON THE BUY/SEll BUTTON OR PRICES.";
+				break;
+			default:
+				message = "MAKE YOUR SELECTION(S) ON THE LEFT BY CLICKING ON THE PRICES. OR TURN ON ACTIVE BETTOR ABOVE..";
+		}
+
 		return <AnimateOnUpdate
 				component="div"
 				className="default_orders"
@@ -37,7 +50,7 @@ class DefaultOrders extends React.Component
 			>
 				{
 					(orderNewData && !orderNewData.length) ?
-						<p id="default_order_info" className="default_order_info animated">{ABpp.User.login ? "MAKE YOUR SELECTION(S) ON THE LEFT BY CLICKING ON THE PRICES. OR TURN ON ACTIVE BETTOR ABOVE." : "You must login to make orders"}</p>
+						<p id="default_order_info" className="default_order_info animated">{ABpp.User.login ? message : "You must login to make orders"}</p>
 						:
 						/* // BM: --------------------------------------------------- NEW ORDER ---*/
 						orderNewData.map((item) =>

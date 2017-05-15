@@ -73,7 +73,7 @@ export default class FormValidation extends React.Component
 
 		this.setState(state);
 
-		setTimeout(() => {
+		// setTimeout(() => {
 			for (let elem in state.errors)
 			{
 				// console.log('errors:', state.errors[elem]);
@@ -83,8 +83,8 @@ export default class FormValidation extends React.Component
 					return false;
 				}
 			}
-		props.handleSubmit(this.state.values, serverValidation || event, (serverValidation) ? event : null);
-		}, 500)
+			props.handleSubmit(this.state.values, serverValidation || event, (serverValidation) ? event : null);
+		// }, 500)
 		// state.invalid = false;
 
 		// state.sending = true;

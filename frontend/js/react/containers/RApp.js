@@ -15,13 +15,14 @@ class RApp extends React.Component
 
         props.actions.setInstance(this);
 
+        ABpp.ver = '[AIV]{version}[/AIV]';
+        __DEV__&&console.info( 'version:', ABpp.ver );
+
         // set base for link urls
         // ABpp.baseUrl = location.host == 'localhost' ? "/AltBet" : "/";
         // ABpp.baseUrl = globalData.rootUrl;
 
         props.actions.actionOnLoad();
-
-        // globalData.theme
     }
 
 

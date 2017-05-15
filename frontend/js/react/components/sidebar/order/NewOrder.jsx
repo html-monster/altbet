@@ -22,7 +22,7 @@ export default class NewOrder extends React.Component{
 			<div className="order-title">
 				<h3>{data.EventTitle}</h3>
 				<span className="close" onClick={actions.actionOnDeleteOrder.bind(null, data)}><span>{}</span></span>
-				<strong className="current-order up">Entries: <span>{data.Positions}</span></strong>
+				<strong className="current-order up">Quantity: <span>{data.Positions}</span></strong>
 			</div>
 			{
 				data.Orders.map((item) =>
@@ -53,11 +53,10 @@ export default class NewOrder extends React.Component{
 							isMirror={item.isMirror}
 							symbol={symbol}
 							newOrder={true}
-							orderMode={'basic'}
 							showDeleteButton={true}
 							onSubmit={actions.actionOnAjaxSend.bind(null, actions, {...item, formUrl: formData.url})}
-							onDelete={actions.actionOnDeleteOrder.bind(null, item)}
-							onTypeChange={actions.actionOnOrderTypeChange.bind(null, item)}
+							//onDelete={actions.actionOnDeleteOrder.bind(null, item)}
+							//onTypeChange={actions.actionOnOrderTypeChange.bind(null, item)}
 							// data={{...data, ...item}}
 							//containerData={data}
 							// formData={formData}

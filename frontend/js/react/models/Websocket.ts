@@ -195,7 +195,7 @@ export class WebsocketModel
 
 
         // main page charts
-        if(globalData.mainPage && globalData.MainCharOn) mainChartController.drawMainCharts(data.Bars);
+        if(globalData.mainPage && globalData.MainCharOn) mainChartController && mainChartController.drawMainCharts(data.Bars);
 
         // BM: main page events data
 // 0||console.debug( 'data.SymbolsAndOrders', data.SymbolsAndOrders );
@@ -213,8 +213,7 @@ export class WebsocketModel
         // Send chart data
         if(globalData.eventPageOn) { window.ee.emit('EventPage.Chart.setData', data.Bars); }
         // if(globalData.eventPageOn) eventChartController.drawEventChart(data.Bars);
-
-        if(globalData.tradeOn)
+        if(ABpp.config.tradeOn && !ABpp.config.basicMode)
         {
             window.ee.emit('activeOrders.update', data.ActiveOrders);//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
         }

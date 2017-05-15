@@ -69,7 +69,7 @@ export class TabMyPos extends React.Component
                                             <tr>
                                                 <th>{_t('Symbol')}</th>
                                                 <th>Type</th>
-                                                <th>{_t('Quantity')}</th>
+                                                <th>Quantity</th>
                                                 <th>Price</th>
                                                 <th><span className="sell">{_t('buy')}</span> | <span className="buy">{_t('ask')}</span></th>
                                                 <th><span className="profit">{_t('Profit')}</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>
@@ -99,17 +99,26 @@ export class TabMyPos extends React.Component
                                                             <th>{}</th>
                                                             <th>
                                                                         <span className={'pl ' + plClass}>
-                                                                            {(item.CommonSymbolProfitLoss < 0 ? '($' + (item.CommonSymbolProfitLoss).toString().slice(1) + ')' : '$' + item.CommonSymbolProfitLoss)}
+                                                                            {(item.CommonSymbolProfitLoss < 0 ?
+                                                                                `($${(Math.abs(item.CommonSymbolProfitLoss)).toFixed(2)})`
+                                                                                :
+                                                                                '$' + (item.CommonSymbolProfitLoss).toFixed(2))}
                                                                         </span>
                                                             </th>
-                                                            <th><button className="btn close_out wave" onClick={this._handleCloseOut.bind(this, {symbol: `${item.Symbol.Exchange}_${item.Symbol.Name}_${item.Symbol.Currency}`, name: item.Symbol.HomeName + ' - ' + item.Symbol.AwayName})}>Close Out</button></th>
+                                                            <th>
+                                                                <button className="btn close_out wave"
+                                                                        onClick={this._handleCloseOut.bind(this, {
+                                                                            symbol: `${item.Symbol.Exchange}_${item.Symbol.Name}_${item.Symbol.Currency}`,
+                                                                            name: item.Symbol.HomeName + ' - ' + item.Symbol.AwayName})}
+                                                                >Close Out</button>
+                                                            </th>
                                                         </tr>
                                                         </thead>
                                                         <tbody className="showhide active">
                                                         {
                                                             item.SubPositions.map((item2, key) =>
                                                             {
-                                                                var commProps = {
+                                                                let commProps = {
                                                                     isMirror: item2.IsMirror,
                                                                     // symbolName: symbol,
                                                                     // Orders: data.Orders,
@@ -120,6 +129,16 @@ export class TabMyPos extends React.Component
                                                                     Name : item.Symbol.Name,
                                                                     Currency : item.Symbol.Currency,
                                                                 };
+
+																const bid = item2.IsMirror ?
+																	(item.Symbol && item.Symbol.LastAsk !== 1) ? (Math.round10(1 - item.Symbol.LastAsk, -2)).toFixed(2) : '-'
+																	:
+																	(item.Symbol && item.Symbol.LastBid) ? (item.Symbol.LastBid).toFixed(2) : '-';
+																const ask = item2.IsMirror ?
+																	(item.Symbol && item.Symbol.LastBid) ? (Math.round10(1 - item.Symbol.LastBid, -2)).toFixed(2) : '-'
+																	:
+																	(item.Symbol && item.Symbol.LastAsk !== 1) ? (item.Symbol.LastAsk).toFixed(2) : '-';
+
                                                                 plClass = '';
                                                                 if(item.CommonSymbolProfitLoss < 0) plClass = 'loss';
                                                                 else if(item.CommonSymbolProfitLoss > 0) plClass = 'profit';
@@ -134,12 +153,12 @@ export class TabMyPos extends React.Component
                                                                     </td>
                                                                     <td className="side">{(item2.Side ? _t('Sold') : _t('Bought'))}</td>
                                                                     <td className="quantity">{item2.CommonVolume}</td>
-                                                                    <td className="avg_price">{Math.round10(item2.AvgPrice, -2)}</td>
+                                                                    <td className="avg_price">{(Math.round10(item2.AvgPrice, -2)).toFixed(2)}</td>
                                                                     <td className="spread">
-                                                                        <span className="sell">{(item2.IsMirror ? Math.round10(1 - item.Symbol.LastAsk, -2) : item.Symbol.LastBid)}</span> |
-                                                                        <span className="buy"> {(item2.IsMirror ? Math.round10(1 - item.Symbol.LastBid, -2) : item.Symbol.LastAsk)}</span>
+                                                                        <span className="buy"> {bid}</span>|
+                                                                        <span className="sell">{ask}</span>
                                                                     </td>
-                                                                    <td className={'pl ' + plClass}>{(item2.CommonProfitLoss < 0) ? '($' + (item2.CommonProfitLoss).toString().slice(1) + ')' : '$' + item2.CommonProfitLoss}</td>
+                                                                    <td className={'pl ' + plClass}>{(item2.CommonProfitLoss < 0) ? `($${(Math.abs(item2.CommonProfitLoss)).toFixed(2)})` : '$' + (item2.CommonProfitLoss).toFixed(2)}</td>
                                                                     <td>
                                                                         <span className="buy"><button className="buy btn event wave empty btnJs"
                                                                             onClick={() => actions.actionOnBuySellClick({type: 0, exdata: commProps}, defaultOrderActions)}

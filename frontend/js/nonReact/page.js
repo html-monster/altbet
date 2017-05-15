@@ -117,7 +117,7 @@ $(document).ready(function ()
 
 	// new myPosClass(); // activate my pos script
 
-	new modeSwitchClass(); //mode switch activate
+	// new modeSwitchClass(); //mode switch activate
 
 	// new themeChangeClass();
 	// (function changeSelect(){
@@ -240,6 +240,13 @@ $(document).ready(function ()
 	// new ajaxRegistrationControllerClass();
 	new accountClass();
 	new ajaxThemeChangeClass();
+	// mainChartController = new mainChartController();
+
+
+  // злобный костыль за 10 минут для горизонт скрола.
+
+  $(window).trigger('resize')
+
 });
 
 

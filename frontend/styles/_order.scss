@@ -1,12 +1,5 @@
-.order {
-  @include span(last 2.6 of 12);
-  height: 100%;
-  background: $order_sidebar_bg;
-  position: fixed;
-  right: 0;
-  top: 70px;
-  z-index: 99;
-  transition: 0.4s ease-out;
+.order { @include span(last 2.6 of 12); position: fixed; right: 0; top: 70px; z-index: 99; min-width: 295px; height: 100%;
+      background: $order_sidebar_bg; transition: 0.4s ease-out;
   @include wave;
   label{
     color: #000000;
@@ -17,9 +10,9 @@
     width: 95px;
     &.right:after{  right: 2px;  }
   }
-  .profit, .risk{
-    .help_message{  width: 166px;  left: -147px;  }
-  }
+  //.profit, .risk{
+  //  .help_message{  width: 166px;  left: -147px;  }
+  //}
   .wrapper {  text-align: center;  margin-top: 10px;  }
   .left_order > label {
     padding-right: 20px;
@@ -55,7 +48,7 @@
         border: none;
         color: $main_page_tab_color_active;
       }
-      @include order_sidebar_tab_separator;
+      &.divide{ @include order_sidebar_tab_separator; }
       &:last-child {
         //&.active{  border-left: 1px solid #445b69;  }
         border-radius: 0 4px 4px 0;
@@ -76,7 +69,7 @@
   }
   .tab_item {
     display: none;
-    padding-bottom: 35px;
+    padding-bottom: 80px;
     overflow-x: hidden;
     @include scroll;
     transition: 0.4s ease-out;
@@ -102,7 +95,7 @@
           @include md(1400){  padding: 5px;  }
         }
         form input[type="submit"]{  border-left: none;  }
-        .container .obligations label{  width: 100%;  }
+        //.container .obligations label{  width: 100%;  }
         .close{
           margin: 0;
           position: absolute;
@@ -110,14 +103,7 @@
           right: 1px;
         }
       }
-      .basic_mode{
-        .switch{  display: none;  }
-        i.submit{
-          width: 50%;
-          &:first-of-type{  border-right: 1px solid $border_color;  }
-        }
-        [type=submit]{  border-right: none;  }
-      }
+
     }
   }
   .default_orders{
@@ -130,6 +116,7 @@
       h3{  line-height: 20px;  }
       //strong.last-price{  margin-top: 0;  }
       .close{
+        height: 24px;
         margin-right: 0;
         position: absolute;
         top: 4px;
@@ -137,14 +124,6 @@
         cursor: pointer;
       }
     }
-		.basic_mode{
-			.switch{  display: none;  }
-      i.submit{
-        width: 50%;
-        &:first-of-type{  border-right: 1px solid $border_color;  }
-      }
-      [type=submit]{  border-right: none;  }
-		}
   }
   .ui-state-highlight{
     height: 100px;
@@ -238,14 +217,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      //position: relative;
-      //&:nth-child(2){
-      //  justify-content: flex-start;
-      //}
+      &.close_btn div:last-of-type label{ width: calc(100% - 18px); }
     }
     h3{
-      margin-right: 10px;
-      max-width: 55%;
+      max-width: calc(100% - 115px);
       font-size: 13px;
       vertical-align: middle;
       color: transparentize(#ffffff, 0.2);
@@ -256,62 +231,58 @@
       .time{  color: $order_sidebar_current_order_title_color;  }
       .help_message{ width: 160px; right: 4px; top: 25px; }
     }
-    .basic_mode{
-      .switch{  display: none;  }
-      i.submit{
-        width: 50%;
-        &:first-of-type{  border-right: 1px solid $border_color;  }
-      }
-      [type=submit]{  border-right: none;  }
+    .info_string{
+      color: #ffffff;
+      span{  color: $color-green  }
     }
-    .close{
-      float: right;
-      margin-top: 4px;
-      margin-right: 2px;
-      height: 16px;
-      width: 16px;
-      position: relative;
-      //border-radius: 50%;
-      //border: 1px solid #fff;
-      &:hover{
-        &:before, span:before{  transform: rotate(90deg);  }
-        &:after, span:after{  transform: rotate(-90deg);  }
-        //&:before{  transform: rotate(135deg);  }
-        //&:after{  transform: rotate(45deg);  }
-        //span{
-        //  &:before{  transform: rotate(135deg);  }
-        //  &:after{  transform: rotate(45deg);  }
-        //}
-      }
-      &:before, &:after, span:before, span:after{
-        content: '';
-        display: block;
-        width: 4px;
-        height: 12px;
-        position: absolute;
-        top: calc(50% - 6px);
-        left: calc(50% - 2px);
-        background: #fff;
-        border-radius: 2px;
-        transition: 0.4s ease-out;
-      }
-      &:before{  transform: rotate(45deg);  }
-      &:after{  transform: rotate(-45deg);  }
-      span{
-        display: block;
-        height: 100%;
-        &:before, &:after{
-          width: 2px;
-          height: 10px;
-          top: calc(50% - 5px);
-          left: calc(50% - 1px);
-          background: #292830;
-          z-index: 2;
-        }
-        &:before{  transform: rotate(45deg);  }
-        &:after{  transform: rotate(-45deg);  }
-      }
-    }
+    //.close{
+    //  float: right;
+    //  margin-top: 4px;
+    //  margin-right: 2px;
+    //  height: 16px;
+    //  width: 16px;
+    //  position: relative;
+    //  //border-radius: 50%;
+    //  //border: 1px solid #fff;
+    //  &:hover{
+    //    &:before, span:before{  transform: rotate(90deg);  }
+    //    &:after, span:after{  transform: rotate(-90deg);  }
+    //    //&:before{  transform: rotate(135deg);  }
+    //    //&:after{  transform: rotate(45deg);  }
+    //    //span{
+    //    //  &:before{  transform: rotate(135deg);  }
+    //    //  &:after{  transform: rotate(45deg);  }
+    //    //}
+    //  }
+    //  &:before, &:after, span:before, span:after{
+    //    content: '';
+    //    display: block;
+    //    width: 4px;
+    //    height: 12px;
+    //    position: absolute;
+    //    top: calc(50% - 6px);
+    //    left: calc(50% - 2px);
+    //    background: #fff;
+    //    border-radius: 2px;
+    //    transition: 0.4s ease-out;
+    //  }
+    //  &:before{  transform: rotate(45deg);  }
+    //  &:after{  transform: rotate(-45deg);  }
+    //  span{
+    //    display: block;
+    //    height: 100%;
+    //    &:before, &:after{
+    //      width: 2px;
+    //      height: 10px;
+    //      top: calc(50% - 5px);
+    //      left: calc(50% - 1px);
+    //      background: #292830;
+    //      z-index: 2;
+    //    }
+    //    &:before{  transform: rotate(45deg);  }
+    //    &:after{  transform: rotate(-45deg);  }
+    //  }
+    //}
     strong { display: inline-block; font-size: 12px; line-height: 23px; letter-spacing: 0.2px;
           color: transparentize($order_sidebar_current_order_title_color, 0.5);
       &.amount { width: 60px; text-align: center }
@@ -363,8 +334,18 @@
         left: calc(50% - 7px);
       }
     }
-    .price, .volume, .fees, .risk, .profit{
+    .price, .volume, .risk, .profit{
+      flex-grow: 1;
       input.number[disabled]{  border-right: 1px solid $order_sidebar_order_border_color;  }
+    }
+    .fees{
+      position: absolute; right: 4px; bottom: 32px;
+      .info_string{
+        font-size: 9px;
+        line-height: 26px;
+        color: gray;
+        span{ color: gray; }
+      }
     }
     .edit{
       //right: 22px;
@@ -405,36 +386,36 @@
         }
       }
     }
-    .error_pop_up {
-      display: none;
-      height: 100%;
-      padding: 10px;
-      position: absolute;
-      top: 0;
-      left: 100%;
-      z-index: 6;
-      color: #ef4d22;
-      background: rgba(0, 0, 0, 0.8);
-      &.active{
-        display: block;
-        left: 0;
-        animation-duration: 0.7s;
-        animation-fill-mode: both;
-      }
-      .container{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-      }
-      .close{
-        width: 16px;
-        height: 16px;
-        position: absolute;
-        top: 1px;
-        right: 1px;
-      }
-    }
+    //.error_pop_up {
+    //  display: none;
+    //  height: 100%;
+    //  padding: 10px;
+    //  position: absolute;
+    //  top: 0;
+    //  left: 100%;
+    //  z-index: 6;
+    //  color: #ef4d22;
+    //  background: rgba(0, 0, 0, 0.8);
+    //  &.active{
+    //    display: block;
+    //    left: 0;
+    //    animation-duration: 0.7s;
+    //    animation-fill-mode: both;
+    //  }
+    //  .container{
+    //    display: flex;
+    //    align-items: center;
+    //    justify-content: center;
+    //    height: 100%;
+    //  }
+    //  .close{
+    //    width: 16px;
+    //    height: 16px;
+    //    position: absolute;
+    //    top: 1px;
+    //    right: 1px;
+    //  }
+    //}
     .sell-container form{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));  }
     .buy-container form{  background: linear-gradient(to bottom, transparentize(#64c9ef, 0.9), transparentize(#3498da, 0.9));  }
     .sell-buy-container form{
@@ -442,7 +423,7 @@
       .price, .volume{  width: 40%;  }
       .success, .delete{
         width: 20% !important;
-        height: 59px !important;
+        height: 58px !important;
       }
       .delete{
         &:hover{  background: $trader_order_button_hover;  }
@@ -467,7 +448,7 @@
         width: 100%;
         height: 100%;
         box-shadow: none;
-        border-top: 1px solid $order_sidebar_order_border_color;
+        //border-top: 1px solid $order_sidebar_order_border_color;
         background: transparent;
         &:hover{  background: $trader_order_button_hover;  }
         &:active{
@@ -491,9 +472,12 @@
       text-align: center;
       position: relative;
       .container{
-        display: flex;
-        div:nth-of-type(1) label, div:nth-of-type(2) label{  border-left: none;  }
-        div:nth-of-type(3) label{  border-left: none;  border-right: none;  }
+        &:first-of-type{  border-top: 1px solid $order_sidebar_order_border_color;  }
+        //&:last-of-type{  position: relative;  }
+        border-bottom: 1px solid $order_sidebar_order_border_color;
+        &.info{  justify-content: center;  }
+        //div:nth-of-type(1) label, div:nth-of-type(2) label{  border-left: none;  }
+        //div:nth-of-type(3) label{  border-left: none;  border-right: none;  }
       }
       .input{
         width: 100%;
@@ -515,12 +499,12 @@
         color: $order_sidebar_order_label_color;
         font-weight: 600;
         text-align: center;
-        border: 1px solid $order_sidebar_order_border_color;
+        border-bottom: 1px solid $order_sidebar_order_border_color;
+        border-right: 1px solid $order_sidebar_order_border_color;
         position: relative;
         &.with_info{  padding-right: 15px;  }
       }
-      .obligations label{  width: calc(100% - 18px);  }
-      .profit label.with_info { padding-right: 0 }
+      //.obligations label{  width: calc(100% - 18px);  }
 
       input {
         height: 31px;
@@ -528,55 +512,58 @@
         text-align: center;
         @include order_sidebar_order_input;
       }
-      label.checkbox{
-        display: block;
-        width: 33.33%;
-        height: 31px;
-        color: #707070;
-        line-height: 31px;
-        text-align: left;
-        border-top: 1px solid $order_sidebar_order_border_color;
-        border-right: 1px solid $order_sidebar_order_border_color;
-        @include checkbox_vertical;
-        padding-left: calc(6% + 25px);
-        &>span{
-          color: $checkbox_label_color;
-          &:before{  left: calc(6% + 16px); background: #4dac2e; transition: 0.4s ease-out;  }
-          &:after{  left: calc(6% + 17px);  }
-        }
-        input:checked ~ span{
-          &:before{  background: #ef8022;  }
-        }
-      }
-      .switch{
-        width: 33.33%;
-        height: 31px;
-        border-top: 1px solid $order_sidebar_order_border_color;
-        border-right: 1px solid $order_sidebar_order_border_color;
-        label.checkbox{
-          width: 100%;
-          //padding-left: calc(6% + 25px);
-          padding: 0;
-          border: none;
-          text-align: center;
-          span{
-            display: inline-block;
-            width: 45px;
-            position: relative;
-            &:before{
-              left: -20px;
-            }
-            &:after{
-              left: -19px;
-            }
-          }
-        }
-        //.profit{
-        //  padding: 0;
-        //  color: $main-color;
-        //  span{  color: #4dac2e;  }
-        //}
-      }
+      //label.checkbox{
+      //  display: block;
+      //  width: 33.33%;
+      //  height: 31px;
+      //  color: #707070;
+      //  line-height: 31px;
+      //  text-align: left;
+      //  border-top: 1px solid $order_sidebar_order_border_color;
+      //  border-right: 1px solid $order_sidebar_order_border_color;
+      //  @include checkbox_vertical;
+      //  padding-left: calc(6% + 25px);
+      //  &>span{
+      //    color: $checkbox_label_color;
+      //    &:before{  left: calc(6% + 16px); background: #4dac2e; transition: 0.4s ease-out;  }
+      //    &:after{  left: calc(6% + 17px);  }
+      //  }
+      //  input:checked ~ span{
+      //    &:before{  background: #ef8022;  }
+      //  }
+      //}
+      //.switch{
+      //  width: 33.33%;
+      //  height: 31px;
+      //  border-top: 1px solid $order_sidebar_order_border_color;
+      //  border-right: 1px solid $order_sidebar_order_border_color;
+      //  label.checkbox{
+      //    width: 100%;
+      //    //padding-left: calc(6% + 25px);
+      //    padding: 0;
+      //    border: none;
+      //    text-align: center;
+      //    span{
+      //      display: inline-block;
+      //      width: 45px;
+      //      position: relative;
+      //      &:before{
+      //        left: -20px;
+      //      }
+      //      &:after{
+      //        left: -19px;
+      //      }
+      //    }
+      //  }
+      //}
+      //span.close{
+      //  width: 18px;
+      //  height: 27px;
+      //  position: absolute;
+      //  top: 0;
+      //  right: 0;
+      //  background: none;
+      //}
       .delete{
         display: flex;
         width: 18px;
@@ -585,8 +572,7 @@
         top: 0;
         right: 0;
         cursor: pointer;
-        border: 1px solid $order_sidebar_order_border_color;
-        border-right: none;
+        //border-left: 1px solid $order_sidebar_order_border_color;
       }
       button {
         height: 31px;
@@ -595,21 +581,65 @@
         &.buy{  background-color: #2dc7ca;  }
         //&.success{  background: url("#{$pathImage}/ico-success-w.png") no-repeat center #969696;  }
       }
-      i.submit{  display: block;  width: 66.66%; border-radius: 0;  }
+      i.submit{
+        display: block;  flex-grow: 1;  border-radius: 0;
+        &:hover{  overflow: inherit !important;  }
+        &:active{
+          overflow: hidden !important;
+          .help_message{  visibility: hidden; }
+        }
+        &:first-of-type{
+          border-right: 1px solid $order_sidebar_order_border_color;
+          //.amount{
+          //  float: right;
+          //  border-left: 1px solid #fff;
+          //}
+        }
+        //.help_message{
+        //  t
+        //}
+        //.amount{  border-left: 1px solid #fff;  }
+        //&:last-of-type .amount{
+        //  float: left;
+        //  border-right: 1px solid #fff;
+        //}
+      }
       input[type=submit], button.submit{
         width: 100%;
         height: 31px;
         padding: 0;
         font-size: 12px;
         color: #ffffff;
-        border: 1px solid $order_sidebar_order_border_color;
+        //border: 1px solid $order_sidebar_order_border_color;
         border-bottom: none;
         border-left: none;
+        border-radius: 0;
         cursor: pointer;
         transition: 0.4s ease-out;
         &.sell{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
         &.buy{  background: linear-gradient(to bottom, #64c9ef, #3498da);  }
       }
+      .amount{
+        float: right;
+        padding: 0 10px;
+        border-left: 1px solid #fff;
+        .help_message{
+          width: 150px;
+          top: 24px;
+          &.right{  left: auto; right: -20px;  }
+        }
+      }
+      //.help.amount{
+      //  position: absolute;
+      //  top: calc(50% - 9px);
+      //  z-index: 1;
+      //  font-size: 12px;
+      //  color: transparent;
+      //  cursor: pointer;
+      //  user-select: none;
+      //  &.right{  right: 10px;  }
+      //  &.left{  right: calc(50% + 11px);  }
+      //}
     }
   }
   .my_order{
