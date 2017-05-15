@@ -587,6 +587,14 @@
       display: inline-block;
       width: 100%;
       li{  height: 22px;  }
+      .sms_action{
+        a{
+          color: #e4e4e4;
+          &:hover{
+            color: #3498da;
+          }
+        }
+      }
 			label{
 				padding-left: 325px;
 				position: relative;
