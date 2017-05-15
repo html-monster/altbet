@@ -74,6 +74,7 @@
         "gulp-rev-del-redundant": "^1.1.5",
         "gulp-sass": "^2.3.1",
         "gulp-uglify": "^1.5.1",
+        "happypack": "^3.0.3",
         "json-loader": "^0.5.4",
         "redux-devtools": "^3.3.1",
         "sass-loader": "*",
@@ -97,7 +98,7 @@
         "webpack-uglify-js-plugin": "^1.1.9"
     },
     "name": "Altbet",
-    "version": "3.2.12",
+    "version": "3.2.22",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/html-monster/altbet.git"
