@@ -29,11 +29,11 @@ export default class Preferences extends React.Component
 		const Phone = appData.pageAccountData.UserInfo.Phone;
 
 		// Unchecked sms of my activity checkbox if phone is empty in settings
-		if( this.state.serverData.SmsActivity && /^[^0-9]{4,}/gi.test(Phone) )
+		if( this.state.serverData.SmsActivity && (!Phone || /^[^0-9]/gi.test(Phone)) )
 		{
 			this.setState({
 				...this.state,
-				answerMessage: `Enter your phone number in the <a href="${ABpp.baseUrl}/Account#/settings" target="_blank" class="link">settings</a>`,
+				answerMessage: `Enter your phone number in the <a href="${ABpp.baseUrl}/Account#/settings" class="link">settings</a>`,
 				answerClass: 'invalid_message',
 				loading: false,
 				serverData: {
@@ -182,7 +182,7 @@ export default class Preferences extends React.Component
 						<h4>Alt.Bet Promotions</h4>
 						<ul className="preferences_list">
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: MailNews, willUpdate: true}}
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: MailNews, alwaysUpdate: true}}
 										  onChange={::this._saveCheckboxState}>
 									<strong className="label">Send me Alt.Bet news and offers:</strong>
 								</CheckBox>
@@ -236,7 +236,7 @@ export default class Preferences extends React.Component
 						<h4>Gameday Updates</h4>
 						<ul className="preferences_list">
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "SmsActivity", checked: SmsActivity, willUpdate: true}}
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "SmsActivity", checked: SmsActivity, alwaysUpdate: true}}
 										  onChange={::this._saveCheckboxState}>
 									<strong className="label">Send me sms on my activity:</strong>
 								</CheckBox>
