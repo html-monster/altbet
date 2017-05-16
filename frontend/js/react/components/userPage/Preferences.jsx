@@ -9,8 +9,6 @@ import {CheckBox} from '../common/CheckBox';
 
 export default class Preferences extends React.Component
 {
-	smsCheckbox;
-
 	constructor()
 	{
 		super();
@@ -27,6 +25,24 @@ export default class Preferences extends React.Component
 	sendData(event)
 	{
 		event.preventDefault();
+
+		const Phone = appData.pageAccountData.UserInfo.Phone;
+
+		// Unchecked sms of my activity checkbox if phone is empty in settings
+		if( this.state.serverData.SmsActivity && /^[^0-9]{4,}/gi.test(Phone) )
+		{
+			this.setState({
+				...this.state,
+				answerMessage: `Enter your phone number in the <a href="${ABpp.baseUrl}/Account#/settings" target="_blank" class="link">settings</a>`,
+				answerClass: 'invalid_message',
+				loading: false,
+				serverData: {
+					...this.state.serverData,
+					SmsActivity: false
+				}
+			});
+			return false;
+		}
 
 		defaultMethods.sendAjaxRequest({
 			context   : $(event.currentTarget),
@@ -167,7 +183,7 @@ export default class Preferences extends React.Component
 						<ul className="preferences_list">
 							<li>
 								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: MailNews, willUpdate: true}}
-										  onChange={::this._onMailNewsChange}>
+										  onChange={::this._saveCheckboxState}>
 									<strong className="label">Send me Alt.Bet news and offers:</strong>
 								</CheckBox>
 							</li>
@@ -213,17 +229,19 @@ export default class Preferences extends React.Component
 								</div>
 							</li>
 						</ul>
-
-						<ul className="preferences_list" style={{marginTop: 20 + 'px'}}>
+					</section>
+					<section>
+						<h3 className="section_user">Sms Notifications:</h3>
+						<hr/>
+						<h4>Gameday Updates</h4>
+						<ul className="preferences_list">
 							<li>
-								<CheckBox ref={(item)=>this.smsCheckbox = item} onChange={::this._checkNumber} data={{className: "checkbox checkbox_horizontal", name: "SmsActivity", checked: SmsActivity}}>
-									<strong className="label">Send me sms of my activity:</strong>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "SmsActivity", checked: SmsActivity, willUpdate: true}}
+										  onChange={::this._saveCheckboxState}>
+									<strong className="label">Send me sms on my activity:</strong>
 								</CheckBox>
 							</li>
-							<li className="sms_action" style={{marginTop: 20 + 'px', display: 'none' }}>
-								Enter your phone number in the  <a href="http://localhost/AltBet/Account#/settings">settings</a></li>
 						</ul>
-
 					</section>
 					<div className="input_animate input--yoshiko submit_container">
 						<input type="submit" value="Submit" className="btn wave submit" disabled={loading}/>
@@ -232,18 +250,20 @@ export default class Preferences extends React.Component
 				</form>
             </div>;
     }
-
+	
 	/**
-	 * Unchecked mail news checkbox if catch server error
+	 * save checkbox state if it changed, need to unchecked checkbox
+	 * @param context - checkbox context
 	 * @param event
 	 * @private
 	 */
-	_onMailNewsChange(event)
+	_saveCheckboxState(event, context)
 	{
-		this.state.serverData.MailNews = event.target.checked;
+		this.state.serverData[context.name] = event.target.checked;
 	}
 
 	/**
+	 * Disabled radiobuttons if checkbox unchecked
 	 * @private
 	 */
 	_radioButtonsDisabling(event)
@@ -260,20 +280,5 @@ export default class Preferences extends React.Component
 		// 0||console.log( 'this.state.filters[ee.target.dataset.filter]', this.state.filters[ee.target.dataset.filter], this.state );
 		this.state[opt] = !this.state[opt];
 		this.setState({...this.state});
-	}
-
-	/**
-	 * Проверка на наличие номера телефона в Settings
-	 * @private
-	 */
-	_checkNumber (ee, isChecked) {
-
-		const Phone = appData.pageAccountData.UserInfo;
-		let reg = Phone.Phone;
-		if( reg === '' ) {
-			setTimeout(()=> this.smsCheckbox.unCheck(), 200);
-
-			$('.sms_action').css('display' , 'block');
-		}
 	}
 }

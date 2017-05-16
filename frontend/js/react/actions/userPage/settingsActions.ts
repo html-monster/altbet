@@ -44,7 +44,11 @@ class Actions extends BaseActions
             {
                 __DEV__ && console.log(error);
                 if(error) serverValidation({error});
-                else serverValidation({message: 'Your data was successfully changed'});
+                else
+                {
+                    serverValidation({message: 'Your data was successfully changed'});
+                    appData.pageAccountData.UserInfo = values;
+                }
                 submit.removeAttr('disabled');
                 form.removeClass('loading');
             }
