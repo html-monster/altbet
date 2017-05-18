@@ -235,7 +235,10 @@ class Actions extends BaseActions
 			const code = event.which || event.charCode || event.keyCode;
 
 			if(code == 38)
+			{
+				event.preventDefault();
 				context.props.traderActions.actionOnButtonSpreadChange(context, 0.01, true);
+			}
 			else if(code == 40)
 				context.props.traderActions.actionOnButtonSpreadChange(context, -0.01, true)
 		}
