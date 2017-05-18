@@ -124,7 +124,7 @@
     &:nth-child(odd) { margin-right: 2px; }
 
     // ovverride on activate exchange
-    &.active-exch { z-index: 100; color: $color4TextBlack;
+    &.active-exch { color: $color4TextBlack;
       &>.bg { background: linear-gradient(to bottom, #EBEBEB, #B8B8B8); }
       .l-title {
         .score { color: #3f9622; }

@@ -370,7 +370,7 @@ $( window ).resize(function() {
   else {
     $('#mountPoint').removeClass('scroll');
     $('#DiMPHeader').removeClass('scroll_header');
-    $('.main_menu').removeClass('scroll_main_menu');
+    $('.main_menu').removeClass('scroll_main_menu').removeAttr('style');
     $('.order').removeClass('scroll_sidebar');
     $('.content').removeClass('scroll_content');
     $('.co-account').css('overflow-y', 'visible');
