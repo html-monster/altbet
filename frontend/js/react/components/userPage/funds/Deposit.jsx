@@ -10,7 +10,7 @@ import Visa from './transactionForms/Visa';
 import NetellerForm from './transactionForms/NetellerForm';
 import ScrillForm from './transactionForms/SkrillForm';
 import Bitpay from './transactionForms/Bitpay';
-import InputNumber from '../../inputNumber';
+import InputNumber from '../../InputNumber';
 import * as actions from '../../../actions/userPage/depositActions';
 
 class Deposit extends React.Component{

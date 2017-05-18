@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import AnimateOnUpdate from '../../Animation.jsx';
-import TraderDefaultForm from './activeTrader/traderDefaultForm';
-import TraderSpreadForm from './activeTrader/traderSpreadForm';
+import TraderDefaultForm from './activeTrader/TraderDefaultForm';
+import TraderSpreadForm from './activeTrader/TraderSpreadForm';
 import traderActions from '../../../actions/Sidebar/tradeSlip/traderActions';
 import * as defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderActions';
 import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
