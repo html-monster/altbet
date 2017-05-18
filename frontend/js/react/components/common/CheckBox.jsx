@@ -25,6 +25,7 @@ export class CheckBox extends React.Component
         if(nextProps.data.alwaysUpdate && this.state.ischecked !== nextProps.data.checked) this.state.ischecked = nextProps.data.checked;
     }
 
+
     render()
     {
         const {className, name} = this.props.data;
@@ -41,9 +42,9 @@ export class CheckBox extends React.Component
 	 * @private
 	 */
 	_onChkChange(event)
-	{
-		this.state.ischecked = !this.state.ischecked;
-		this.setState(this.state);
-		if(this.props.onChange) this.props.onChange(event, this);
-	}
+    {
+        if(this.props.onChange) this.props.onChange(event);
+        this.state.ischecked = !this.state.ischecked;
+        this.setState({...this.state});
+    }
 }
