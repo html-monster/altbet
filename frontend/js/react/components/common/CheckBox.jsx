@@ -17,12 +17,12 @@ export class CheckBox extends React.Component
     }
 
 	/**
-     * will update checkbox if checkbox willUpdate parameter true
+     * will update checkbox if checkbox alwaysUpdate parameter true
 	 * @param nextProps
 	 */
 	componentWillUpdate(nextProps)
     {
-        if(nextProps.data.willUpdate && this.state.ischecked !== nextProps.data.checked) this.state.ischecked = nextProps.data.checked;
+        if(nextProps.data.alwaysUpdate && this.state.ischecked !== nextProps.data.checked) this.state.ischecked = nextProps.data.checked;
     }
 
     render()
