@@ -74,55 +74,31 @@
       }
     }
   }*/
-  &:not(.opened){
-    overflow: hidden;
-  }
+  &:not(.opened){ overflow: hidden; }
   &.opened, &:hover{
     width: 15%;
-    .main span.main{
-      color: #d0d0d0;
-    }
+    .main span.main{ color: #d0d0d0; }
   }
   .nav_bet{ height: 100%; }
   .root_menu{ position: relative; z-index: 1; padding-top: 10px; height: 100%; background: linear-gradient(to bottom, #3a3943, #292830);
               box-shadow: 5px 0 15px -6px rgba(0, 0, 0, 0.5); }
   .nav_bet.root_menu ul{ display: none; } //кастыль чтобы убрать плохой внешний вид до загрузки реакт меню
   button.return{
-    position: absolute;
-    left: 1px;
-    padding: 13px;
-    transform: rotate(180deg);
-    background: url(../../Images/sprite.svg) no-repeat;
-    background-position: -54px -198px;
-    transition: 0.4s ease-out;
+    position: absolute; left: 1px; padding: 13px; transform: rotate(180deg); background: url(../../Images/sprite.svg) no-repeat;
+    background-position: -54px -198px; transition: 0.4s ease-out;
     &:hover{
-      background-position: -49px -198px;
-      //transform: rotate(180deg) translateX(-5px);
-    }
+      background-position: -49px -198px; }
   }
   a{
-    display: block;
-    color: #d0d0d0;
-    font-size: 14px;
-    line-height: 24px;
+    display: block; color: #d0d0d0; font-size: 14px; line-height: 24px;
     &:hover { color: $color-blue; }
     &.jump{ display: none; }//кастыль чтобы убрать плохой внешний вид до загрузки реакт меню
     &.showAll{
       &:before, &:after{
-        content: '';
-        display: block;
-        position: absolute;
-        left: 15px;
-        right: 15px;
-        height: 1px;
+        content: ''; display: block; position: absolute; left: 15px; right: 15px; height: 1px;
       }
-      &:before{
-        bottom: 0;
-        background: #08080a;
-      }
-      &:after{
-        bottom: -1px;
-        background: #53515e;
+      &:before{ bottom: 0; background: #08080a; }
+      &:after{ bottom: -1px; background: #53515e;
       }
     }
   }
@@ -134,17 +110,10 @@
 
         li{
           padding: 5px 10px 0 15px;
-          &:first-of-type{
-            position: relative;
-            padding-bottom: 5px;
-          }
-          &:hover, &.active{
-            color: $color-blue !important
-          }
+          &:first-of-type{ position: relative; padding-bottom: 5px; }
+          &:hover, &.active{ color: $color-blue !important }
         }
-        span{
-          font-size: 14px;
-        }
+        span{ font-size: 14px; }
       }
       &.lv0{ background: #2e2c34; }
       &.lv1{ background: #25242b; }
@@ -152,9 +121,7 @@
       &.lv3{ background: #151419; }
     }
   }
-  li{
-    user-select: none;
-    cursor: pointer;
+  li{ user-select: none; cursor: pointer;
     &:hover, &.active{
       span.main{ color: $color-blue !important; }
     }
@@ -167,18 +134,9 @@
     &.favorite > span.main:before {  background-position: -146px -275px;  }
     &.live_event > span.main:before{  background-position: -236px -275px;  }
     span.main{
-      display: flex;
-      align-items: center;
-      width: 15vw;
-      height: 40px;
-      color: transparent;
+      display: flex; align-items: center; width: 15vw; height: 40px; color: transparent;
       &:before{
-        content: '';
-        display: inline-block;
-        width: 22px;
-        height: 25px;
-        vertical-align: bottom;
-        margin: 0 9px;
+        content: ''; display: inline-block; width: 22px; height: 25px; vertical-align: bottom; margin: 0 9px;
         background: url("#{$pathImage}/sprite.svg") no-repeat;
       }
     }
