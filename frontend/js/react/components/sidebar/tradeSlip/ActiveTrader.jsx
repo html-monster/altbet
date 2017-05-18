@@ -539,7 +539,7 @@ class TraderString extends React.Component {
 					quantity ?
 						other.traderActions.actionAddDefaultOrder.bind(null, this, {
 							direction: 'buy',
-							price: data.Price,
+							price: (data.Price).toFixed(2),
 							limit: true,
 							outputOrder: false
 						}, index)
@@ -605,7 +605,7 @@ class TraderString extends React.Component {
 					quantity ?
 						other.traderActions.actionAddDefaultOrder.bind(null, this, {
 							direction: 'sell',
-							price: data.Price,
+							price: (data.Price).toFixed(2),
 							limit: true,
 							outputOrder: false
 						}, index)

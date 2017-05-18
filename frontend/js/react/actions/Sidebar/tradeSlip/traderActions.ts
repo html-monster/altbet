@@ -798,7 +798,11 @@ class Actions extends BaseActions
 				});
 			}
 
-			if(flag) $(context.refs.quantityError).fadeIn(200);
+			if(flag)
+			{
+				$(context.refs.quantityError).fadeIn(200);
+				$(context.refs.inputQuantity).focus();
+			}
 		}
 	}
 
