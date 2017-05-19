@@ -16,7 +16,7 @@ export default class MenuItemsList extends React.Component
 
 		// categoryMenu.forEach(function (item) {console.log('CatName:', item.CatName);})
 		// console.log('categoryItems:', categoryItems);
-		let linkAnchor = `Show all ${currentData.CatName}`;
+		let linkAnchor = `${currentData.CatName}`;
 		let maxLetters, windowWidth = $(window).width();
 		let parentCategory = (categoryMenu.filter((item) => currentData.CatParentId === item.CatId));
 		if(parentCategory.length) parentCategory = parentCategory[0];
@@ -32,7 +32,7 @@ export default class MenuItemsList extends React.Component
 					<button className="return" title={`return to ${parentCategory.CatName}`}
 							onClick={actions.getMenuCategory.bind(null, actions, parentCategory)}>{}</button>
 				}
-				<a href={`${ABpp.baseUrl}/eng/home/${currentData.CatUrlChain}`} className="showAll" title={linkAnchor}
+				<a href={`${ABpp.baseUrl}/eng/home/${currentData.CatUrlChain}`} className="showAll" title={'Show all ' + linkAnchor}
 					style={!isRootCategory ? {paddingLeft: 15} : {}}>
 					{
 						linkAnchor.length > maxLetters ? linkAnchor.slice(0, maxLetters - 2) + '...' : linkAnchor
