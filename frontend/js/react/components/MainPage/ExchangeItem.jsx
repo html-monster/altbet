@@ -47,11 +47,23 @@ export default class ExchangeItem extends React.Component
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
         let isExpertMode;
-        let noTeamsClass, noTeamsWrappClass = "";
+        let noTeamsClass, noTeamsWrappClass = "", $homeTotal, $awayTotal ;
 
         // todo: check for no team hardcode
-        noTeamsClass = this.data[Symbol.HomeName] && this.data[Symbol.AwayName] && this.data[Symbol.HomeName].team && this.data[Symbol.AwayName].team ? "" : " hidden";
-        if( noTeamsClass ) { noTeamsWrappClass = "no_lineups"; activeTab = ['', " active"];}
+        const $HomeTeamObj = this.data[Symbol.HomeName];
+        const $AwayTeamObj = this.data[Symbol.AwayName];
+        noTeamsClass = $HomeTeamObj && $AwayTeamObj && $HomeTeamObj.team && $AwayTeamObj.team ? "" : " hidden";
+        if( noTeamsClass ) {
+            noTeamsWrappClass = "no_lineups";
+            activeTab = ['', " active"];
+        }
+        else
+        {
+            $homeTotal = $HomeTeamObj.Totals.score;
+            $awayTotal = $AwayTeamObj.Totals.score;
+            0||console.log( '$awayTotal', $awayTotal );
+        } // endif
+
 
         // mode basic/expert ============== костыль на событии присустсвую 2 класс expert_mode basic_mode =============
         isExpertMode = currentExchange === data.Symbol.Exchange ||
@@ -151,7 +163,8 @@ export default class ExchangeItem extends React.Component
                 <div className="event-symbols">
                 <div className="h-symbol">
                         <h3 className="l-title">{ do {
-                                let html = [<span key="0" data-js-title=""><span className="score">{this.data[Symbol.HomeName].Totals.score}&nbsp;&nbsp;</span> {Symbol.HomeName}</span>
+
+                            let html = [<span key="0" data-js-title=""><span className="score">{$homeTotal}&nbsp;&nbsp;</span> {Symbol.HomeName}</span>
                                     , (Symbol.HomeHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
                                     , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}>&nbsp;&nbsp;<i></i>${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
                                 isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
@@ -186,7 +199,7 @@ export default class ExchangeItem extends React.Component
                     </div>
                     <div className="h-symbol">
                         <h3 className="l-title">{ do {
-                                let html = [<span key="0" data-js-title><span className="score">{this.data[Symbol.AwayName].Totals.score}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>
+                                let html = [<span key="0" data-js-title><span className="score">{$awayTotal}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>
                                     , (Symbol.AwayHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap}</span> : ''
                                     , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[1]}`}>&nbsp;&nbsp;<i></i>${(1 - data.Symbol.LastPrice).toFixed(2)}</span> : ""];
                                 isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>

@@ -4,9 +4,8 @@ const options = require('./pathes');
 const webpack = require('webpack');
 // const WebpackNotifierPlugin = require('webpack-notifier');
 const WebpackAutoInject = require('webpack-auto-inject-version');
-const StringReplacePlugin = require("string-replace-webpack-plugin");
 
-var HappyPack = require('happypack');
+var StringReplacePlugin = require("string-replace-webpack-plugin");
 // const loaders = require('./webpack/loaders');
 // const plugins = require('./webpack/plugins');
 // const postcssInit = require('./webpack/postcss');
@@ -67,25 +66,12 @@ module.exports = {
             __TEST__: JSON.stringify(process.env.TEST || false),
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         }),
-
-        new HappyPack({
-            id: 'jsx',
-            threads: 4,
-            loaders: ['babel-loader'],
-        }),
-        new HappyPack({
-            id: 'js',
-            threads: 4,
-            loaders: ['babel-loader']
-        }),
-
-        new StringReplacePlugin(),
         new WebpackAutoInject({
             components: {
                 AutoIncreaseVersion: true
             }
         }),
-
+        new StringReplacePlugin(),
     ],
     // ].concat(sourceMap),
 
@@ -106,24 +92,23 @@ module.exports = {
             },
             {
                 test: /\.jsx$/,
-                loaders: [ 'happypack/loader?id=jsx' ]
-                // loader: "babel-loader",
-                // exclude: [/node_modules/, /public/, /vendor/],
-                // query: {
-                //     presets: ['es2015', 'stage-0', 'react'],
-                //     plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
-                // }
+                // loader: "babel-loader?cacheDirectory=true",
+                loader: "babel-loader",
+                exclude: [/node_modules/, /public/, /vendor/],
+                query: {
+                    presets: ['es2015', 'stage-0', 'react'],
+                    plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
+                }
             },
             {
                 test: /\.js$/,
-                loaders: [ 'happypack/loader?id=js' ],
-                // loader: "babel-loader",
+                loader: "babel-loader",
                 // loader: "babel-loader?cacheDirectory=true",
-                // exclude: [/node_modules/, /public/, /vendor/],
-                // query: {
-                //     presets: ['es2015', 'stage-0', 'react'],
-                //     plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
-                // }
+                exclude: [/node_modules/, /public/, /vendor/],
+                query: {
+                    presets: ['es2015', 'stage-0', 'react'],
+                    plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
+                }
             },
             {
                 test: /\.ts?$/,

@@ -98,7 +98,7 @@ class ActiveTrader extends React.Component {
 						</td>
 						<td className="open_contracts trader_info">
 							<a href="#">
-								Quantity
+								Units
 								<span className="pos">{data.Positions || 0}</span>
 								<span className="help"><span className="help_message"><strong>Open positions</strong></span></span>
 							</a>

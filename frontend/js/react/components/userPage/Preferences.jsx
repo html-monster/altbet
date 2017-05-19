@@ -9,7 +9,6 @@ import {CheckBox} from '../common/CheckBox';
 
 export default class Preferences extends React.Component
 {
-
 	constructor()
 	{
 		super();
@@ -26,6 +25,24 @@ export default class Preferences extends React.Component
 	sendData(event)
 	{
 		event.preventDefault();
+
+		const Phone = appData.pageAccountData.UserInfo.Phone;
+
+		// Unchecked sms of my activity checkbox if phone is empty in settings
+		if( this.state.serverData.SmsActivity && (!Phone || /^[^0-9]/gi.test(Phone)) )
+		{
+			this.setState({
+				...this.state,
+				answerMessage: `Enter your phone number in the <a href="${ABpp.baseUrl}/Account#/settings" class="link">settings</a>`,
+				answerClass: 'invalid_message',
+				loading: false,
+				serverData: {
+					...this.state.serverData,
+					SmsActivity: false
+				}
+			});
+			return false;
+		}
 
 		defaultMethods.sendAjaxRequest({
 			context   : $(event.currentTarget),
@@ -113,7 +130,7 @@ export default class Preferences extends React.Component
 
     render()
     {
-        const { IsMode, IsBettor, IsTrade, MailActivity, MailFrequency, MailNews, MailUpdates } = this.state.serverData;
+        const { IsMode, IsBettor, IsTrade, MailActivity, MailFrequency, MailNews, MailUpdates, SmsActivity } = this.state.serverData;
         const { header, active } = this.props.data;
         const { answerMessage, answerClass, loading, radioButtonsDisabled } = this.state;
 
@@ -165,8 +182,8 @@ export default class Preferences extends React.Component
 						<h4>Alt.Bet Promotions</h4>
 						<ul className="preferences_list">
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: MailNews, willUpdate: true}}
-										  onChange={::this._onMailNewsChange}>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: MailNews, alwaysUpdate: true}}
+										  onChange={::this._saveCheckboxState}>
 									<strong className="label">Send me Alt.Bet news and offers:</strong>
 								</CheckBox>
 							</li>
@@ -213,6 +230,19 @@ export default class Preferences extends React.Component
 							</li>
 						</ul>
 					</section>
+					<section>
+						<h3 className="section_user">Sms Notifications:</h3>
+						<hr/>
+						<h4>Gameday Updates</h4>
+						<ul className="preferences_list">
+							<li>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "SmsActivity", checked: SmsActivity, alwaysUpdate: true}}
+										  onChange={::this._saveCheckboxState}>
+									<strong className="label">Send me sms on my activity:</strong>
+								</CheckBox>
+							</li>
+						</ul>
+					</section>
 					<div className="input_animate input--yoshiko submit_container">
 						<input type="submit" value="Submit" className="btn wave submit" disabled={loading}/>
 						<span className={`answer_message ${answerClass}`} dangerouslySetInnerHTML={{__html: answerMessage}}>{}</span>
@@ -220,18 +250,20 @@ export default class Preferences extends React.Component
 				</form>
             </div>;
     }
-
+	
 	/**
-	 * Unchecked mail news checkbox if catch server error
+	 * save checkbox state if it changed, need to unchecked checkbox
+	 * @param context - checkbox context
 	 * @param event
 	 * @private
 	 */
-	_onMailNewsChange(event)
+	_saveCheckboxState(event, context)
 	{
-		this.state.serverData.MailNews = event.target.checked;
+		this.state.serverData[context.name] = event.target.checked;
 	}
 
 	/**
+	 * Disabled radiobuttons if checkbox unchecked
 	 * @private
 	 */
 	_radioButtonsDisabling(event)

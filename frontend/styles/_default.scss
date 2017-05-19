@@ -64,11 +64,9 @@ select{
 }
 ul{  list-style-type: none;  }
 *:focus{  outline: none;  }
-body { overflow-x: auto;
-  > .wrapper{
+body{ overflow-x: auto; > .wrapper{
   @include container(12);
   min-height:100%;
-  box-sizing: border-box;
   transition: 0.4s ease-out;
   &.scroll{
     min-width: 1500px !important;
@@ -435,7 +433,6 @@ input ~ .info{
       &:before, &:after{  opacity: 1;  }
     }
   }
-
   i{
     visibility: hidden;
     width: 295px;
