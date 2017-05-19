@@ -85,9 +85,9 @@
   .nav_bet.root_menu ul{ display: none; } //кастыль чтобы убрать плохой внешний вид до загрузки реакт меню
   button.return{
     position: absolute; left: 1px; padding: 13px; transform: rotate(180deg); background: url(../../Images/sprite.svg) no-repeat;
-    background-position: -54px -198px; transition: 0.4s ease-out;
+    background-position: -54px -197px; transition: 0.4s ease-out;
     &:hover{
-      background-position: -49px -198px; }
+      background-position: -49px -197px; }
   }
   a{
     display: block; color: #d0d0d0; font-size: 14px; line-height: 24px;

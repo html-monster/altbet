@@ -100,6 +100,12 @@ class MainPage extends BaseController
 
         return (
             <div className={`nav_items ${this.state.loaded}`}>
+                {/*<ul className="breadcrumbs">*/}
+                    {/*<li><a href="#">Sport</a></li>*/}
+                    {/*<li><a href="#">Footbool</a></li>*/}
+                    {/*<li><a href="#">UK Premiership League</a></li>*/}
+                    {/*<li>Manchester United vs. Chelsea</li>*/}
+                {/*</ul>*/}
                 <div className="wrapper" id="exchange">
                     <div className="stattabs">
                         {
