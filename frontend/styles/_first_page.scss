@@ -6,7 +6,7 @@ header.first_page {
     width: 1200px;
     margin: 0 auto;
     background: transparent;
-    border-bottom: 1px solid transparentize(#ffffff, 0.9);
+    //border-bottom: 1px solid transparentize(#ffffff, 0.9);
   }
   .header_right {
     border: none;
@@ -65,9 +65,7 @@ header.first_page {
   .user {
     padding-left: 0;
     padding-right: 0;
-    &:before {
-      display: none;
-    }
+    &:before, &:after { display: none; }
     .log_out a {
       width: auto;
       padding-right: 0;

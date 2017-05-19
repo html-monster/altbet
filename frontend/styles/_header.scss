@@ -346,8 +346,9 @@ header {
         text-align: right;
         list-style-type: none;
         position: absolute;
-        top: 70px;
-        right: 0;
+        top: 55px;
+        right: -19px;
+				z-index: -1;
         li {
           background: #292830;
           a, strong {

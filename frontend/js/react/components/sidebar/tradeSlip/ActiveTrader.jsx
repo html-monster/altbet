@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import AnimateOnUpdate from '../../Animation.jsx';
-import TraderDefaultForm from './activeTrader/traderDefaultForm';
-import TraderSpreadForm from './activeTrader/traderSpreadForm';
+import TraderDefaultForm from './activeTrader/TraderDefaultForm';
+import TraderSpreadForm from './activeTrader/TraderSpreadForm';
 import traderActions from '../../../actions/Sidebar/tradeSlip/traderActions';
 import * as defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderActions';
 import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
@@ -539,7 +539,7 @@ class TraderString extends React.Component {
 					quantity ?
 						other.traderActions.actionAddDefaultOrder.bind(null, this, {
 							direction: 'buy',
-							price: data.Price,
+							price: (data.Price).toFixed(2),
 							limit: true,
 							outputOrder: false
 						}, index)
@@ -605,7 +605,7 @@ class TraderString extends React.Component {
 					quantity ?
 						other.traderActions.actionAddDefaultOrder.bind(null, this, {
 							direction: 'sell',
-							price: data.Price,
+							price: (data.Price).toFixed(2),
 							limit: true,
 							outputOrder: false
 						}, index)
