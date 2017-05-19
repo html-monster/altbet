@@ -61,7 +61,7 @@ export default class ExchangeItem extends React.Component
         {
             $homeTotal = $HomeTeamObj.Totals.score;
             $awayTotal = $AwayTeamObj.Totals.score;
-            0||console.log( '$awayTotal', $awayTotal );
+            // 0||console.log( '$awayTotal', $awayTotal );
         } // endif
 
 

@@ -43,7 +43,7 @@ export class CheckBox extends React.Component
 	 */
 	_onChkChange(event)
     {
-        if(this.props.onChange) this.props.onChange(event);
+        if(this.props.onChange) this.props.onChange(event, this);
         this.state.ischecked = !this.state.ischecked;
         this.setState({...this.state});
     }
