@@ -69,7 +69,8 @@ class Actions extends BaseActions
 					executedOrders = $('.wrapper_event_page .executed_orders');
 
             // call socket if allow active trader
-			getState().sidebar.isAllowAT && ABpp.Websocket.sendSubscribe({tradeOn: isChecked}, SocketSubscribe.TRADER_ON);
+            // getState().sidebar.isAllowAT &&
+			ABpp.Websocket.sendSubscribe({tradeOn: isChecked}, SocketSubscribe.TRADER_ON);
 			// 0||console.log( 'getState().sidebar.activeExchange', getState().sidebar.activeExchange );
 
 			if( isChecked )
