@@ -9,7 +9,6 @@ import {CheckBox} from '../common/CheckBox';
 
 export default class Preferences extends React.Component
 {
-
 	constructor()
 	{
 		super();
@@ -27,6 +26,24 @@ export default class Preferences extends React.Component
 	{
 		event.preventDefault();
 
+		const Phone = appData.pageAccountData.UserInfo.Phone;
+
+		// Unchecked sms of my activity checkbox if phone is empty in settings
+		if( this.state.serverData.SmsActivity && (!Phone || /^[^0-9]/gi.test(Phone)) )
+		{
+			this.setState({
+				...this.state,
+				answerMessage: `Enter your phone number in the <a href="${ABpp.baseUrl}/Account#/settings" class="link">settings</a>`,
+				answerClass: 'invalid_message',
+				loading: false,
+				serverData: {
+					...this.state.serverData,
+					SmsActivity: false
+				}
+			});
+			return false;
+		}
+
 		defaultMethods.sendAjaxRequest({
 			context   : $(event.currentTarget),
 			url       : appData.pageAccountPreferencesUrl,
@@ -37,13 +54,39 @@ export default class Preferences extends React.Component
 
 		function onSuccessAjax(error)
 		{
-			if(error){
-				this.setState({
-					...this.state,
-					answerMessage: error,
-					answerClass: 'invalid_message',
-					loading: false
-				});
+			if(error)
+			{
+				if(defaultMethods.getClass(error) === 'String')
+				{
+					this.setState({
+						...this.state,
+						answerMessage: error,
+						answerClass: 'invalid_message',
+						loading: false
+					});
+				}
+				else if(error.Link)
+				{
+					this.setState({
+						...this.state,
+						answerMessage: `If you want to renew the subscription, you need to go <a href="${error.Link}" target="_blank" class="link">here</a>`,
+						answerClass: 'invalid_message',
+						loading: false,
+						serverData: {
+							...this.state.serverData,
+							MailNews: false
+						}
+					});
+				}
+				else
+				{
+					this.setState({
+						...this.state,
+						answerMessage: 'Server error. Please try again or try again later.',
+						answerClass: 'invalid_message',
+						loading: false
+					});
+				}
 			}
 			else
 				this.setState({
@@ -85,27 +128,9 @@ export default class Preferences extends React.Component
 		}
 	}
 
-	radioButtonsDisabling(event)
-	{
-		this.setState({...this.state, radioButtonsDisabled: event.currentTarget.checked})
-	}
-
-    /**
-     * @private
-     */
-    _onChkChange(opt, ee)
-    {
-        // 0||console.log( 'ee', ee.target, ee.target.dataset, this.state );
-        // 0||console.log( 'this.state.filters[ee.target.dataset.filter]', this.state.filters[ee.target.dataset.filter], this.state );
-        this.state[opt] = !this.state[opt];
-        this.setState({...this.state});
-    }
-
-
-
     render()
     {
-        const { IsMode, IsBettor, IsTrade, MailActivity, MailFrequency, MailNews, MailUpdates } = this.state.serverData;
+        const { IsMode, IsBettor, IsTrade, MailActivity, MailFrequency, MailNews, MailUpdates, SmsActivity } = this.state.serverData;
         const { header, active } = this.props.data;
         const { answerMessage, answerClass, loading, radioButtonsDisabled } = this.state;
 
@@ -136,17 +161,17 @@ export default class Preferences extends React.Component
 								{/*<input id="IsMode" type="checkbox" checked={this.state.IsMode} onChange={this._onChkChange.bind(this, "IsMode")}/>*/}
 								{/*@Html.CheckBoxFor(m=>m.IsMode, new { @checked = Model.IsMode })*/}
 								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "IsMode", checked: IsMode}}>
-									<strong className="label">Expert mode:</strong>
+									<strong className="label">Expert Mode:</strong>
 								</CheckBox>
 							</li>
 							<li>
 								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "IsBettor", checked: IsBettor}}>
-									<strong className="label">Active bettor:</strong>
+									<strong className="label">Active Player:</strong>
 								</CheckBox>
 							</li>
 							<li>
 								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "IsTrade", checked: IsTrade}}>
-									<strong className="label">Auto trade:</strong>
+									<strong className="label">Auto Trade:</strong>
 								</CheckBox>
 							</li>
 						</ul>
@@ -157,7 +182,8 @@ export default class Preferences extends React.Component
 						<h4>Alt.Bet Promotions</h4>
 						<ul className="preferences_list">
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: MailNews}}>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailNews", checked: MailNews, alwaysUpdate: true}}
+										  onChange={::this._saveCheckboxState}>
 									<strong className="label">Send me Alt.Bet news and offers:</strong>
 								</CheckBox>
 							</li>
@@ -171,7 +197,7 @@ export default class Preferences extends React.Component
 							</li>
 							<li>
 								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "MailActivity", checked: radioButtonsDisabled}}
-										  onChange={::this.radioButtonsDisabling}>
+										  onChange={::this._radioButtonsDisabling}>
 									<strong className="label" style={{paddingRight: 20}}>
 										Send me information on my activity:
 										<span className="help">
@@ -204,11 +230,55 @@ export default class Preferences extends React.Component
 							</li>
 						</ul>
 					</section>
+					<section>
+						<h3 className="section_user">Sms Notifications:</h3>
+						<hr/>
+						<h4>Gameday Updates</h4>
+						<ul className="preferences_list">
+							<li>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "SmsActivity", checked: SmsActivity, alwaysUpdate: true}}
+										  onChange={::this._saveCheckboxState}>
+									<strong className="label">Send me sms on my activity:</strong>
+								</CheckBox>
+							</li>
+						</ul>
+					</section>
 					<div className="input_animate input--yoshiko submit_container">
 						<input type="submit" value="Submit" className="btn wave submit" disabled={loading}/>
-						<span className={`answer_message ${answerClass}`}>{answerMessage}</span>
+						<span className={`answer_message ${answerClass}`} dangerouslySetInnerHTML={{__html: answerMessage}}>{}</span>
 					</div>
 				</form>
             </div>;
     }
+	
+	/**
+	 * save checkbox state if it changed, need to unchecked checkbox
+	 * @param context - checkbox context
+	 * @param event
+	 * @private
+	 */
+	_saveCheckboxState(event, context)
+	{
+		this.state.serverData[context.name] = event.target.checked;
+	}
+
+	/**
+	 * Disabled radiobuttons if checkbox unchecked
+	 * @private
+	 */
+	_radioButtonsDisabling(event)
+	{
+		this.setState({...this.state, radioButtonsDisabled: event.currentTarget.checked})
+	}
+
+	/**
+	 * @private
+	 */
+	_onChkChange(opt, ee)
+	{
+		// 0||console.log( 'ee', ee.target, ee.target.dataset, this.state );
+		// 0||console.log( 'this.state.filters[ee.target.dataset.filter]', this.state.filters[ee.target.dataset.filter], this.state );
+		this.state[opt] = !this.state[opt];
+		this.setState({...this.state});
+	}
 }

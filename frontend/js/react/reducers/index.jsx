@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import appState from './appReducer';
 import header from './headerReducer';
+import mainMenu from './menuReduser';
 import mainPage from './mainPageReducer';
 import eventPage from './eventPageReducer';
 import accountPage from './accountPageReducer';
@@ -51,6 +52,7 @@ switch (ABpp.config.currentPage)
 		reducers = {
 			App: appState,
 			header,
+			mainMenu,
 			mainPage,
 			myPosReduce,
 			sidebar,
@@ -66,6 +68,7 @@ switch (ABpp.config.currentPage)
 		reducers = {
 			App: appState,
 			header,
+			mainMenu,
 			eventPage,
 			sidebar,
 			// tradeSlip,
@@ -80,6 +83,7 @@ switch (ABpp.config.currentPage)
 		reducers = {
 			App: appState,
 			header,
+			mainMenu,
 			accountPage,
 			deposit,
 			withdraw,
@@ -93,6 +97,7 @@ switch (ABpp.config.currentPage)
 		reducers = {
 			App: appState,
 			header,
+			mainMenu,
 			myPosReduce,
 			sidebar,
 			// tradeSlip,
@@ -107,6 +112,7 @@ switch (ABpp.config.currentPage)
 		reducers = {
 			App: appState,
 			header,
+			mainMenu,
 			...common,
 		};
 		break;
@@ -115,6 +121,7 @@ switch (ABpp.config.currentPage)
 		reducers = {
 			App: appState,
 			header,
+			mainMenu,
 			...common,
 		};
 		break;

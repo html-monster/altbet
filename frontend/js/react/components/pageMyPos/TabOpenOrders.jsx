@@ -51,7 +51,7 @@ export class TabOpenOrders extends React.Component
                                         <th>{_t('Symbol')}</th>
                                         <th>Time</th>
                                         <th>Type</th>
-                                        <th>{_t('Quantity')}</th>
+                                        <th>Units</th>
                                         <th>Price</th>
                                         <th>Latest</th>
                                         <th>Position</th>
@@ -84,12 +84,12 @@ export class TabOpenOrders extends React.Component
                                                         </td>
                                                         <td>{(item.isMirror ? (item.Side ? 'Buy' : 'Sell') : (item.Side ? 'Sell' : 'Buy'))}</td>
                                                         <td className="quantity">{item.Volume}</td>
-                                                        <td>{(item.isMirror ? Math.round10(1 - item.Price, -2) : item.Price)}</td>
+                                                        <td>{(item.isMirror ? (Math.round10(1 - item.Price, -2)).toFixed(2) : (item.Price).toFixed(2))}</td>
                                                         <td>
                                                             {
-                                                                (item.Symbol.LastSide != null) &&
+                                                                (item.Symbol.LastSide !== null) &&
                                                                     <span className={`${item.isMirror ? (item.Symbol.LastSide ? 'buy' : 'sell') : (item.Symbol.LastSide ? 'sell' : 'buy')} last_price`}>
-                                                                        {item.isMirror ? Math.round10(1 - item.Symbol.LastPrice, -2) : item.Symbol.LastPrice}
+                                                                        {item.isMirror ? (Math.round10(1 - item.Symbol.LastPrice, -2)).toFixed(2) : (item.Symbol.LastPrice).toFixed(2)}
                                                                     </span>
                                                             }
                                                         </td>

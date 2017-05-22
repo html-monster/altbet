@@ -32,8 +32,20 @@
 	0% {  opacity: 1;  }
 	100% {  opacity: 0;  }
 }
+@keyframes fadeOutLeft {
+	0% { opacity: 1; }
+	100% { opacity: 0; transform: translate3d(-100%, 0, 0); }
+}
+@keyframes fadeOutDown {
+	0% { opacity: 1; }
+	100% { opacity: 0; transform: translate3d(0, 100%, 0); }
+}
 @keyframes fadeInUp {
 	0% {  opacity: 0; transform: translateY(5px);  }
+	100% {  opacity: 1; transform: translateY(0);  }
+}
+@keyframes fadeInDown {
+	0% {  opacity: 0; transform: translateY(-5px);  }
 	100% {  opacity: 1; transform: translateY(0);  }
 }
 @keyframes fadeInLeft {
@@ -108,7 +120,10 @@
 .bounceOutRight {  animation-name: bounceOutRight;  }
 .fadeIn {  animation-name: fadeIn;  }
 .fadeOut {  animation-name: fadeOut;  }
+.fadeOutLeft {  animation-name: fadeOutLeft;  }
+.fadeOutDown {  animation-name: fadeOutDown;  }
 .fadeInUp {  animation-name: fadeInUp;  }
+.fadeInDown {  animation-name: fadeInDown;  }
 .fadeInLeft {  animation-name: fadeInLeft;  }
 .shake {  animation-name: shake;  }
 .updateAnimation-active span:after {  animation-name: updateAnimation;  }
@@ -118,6 +133,11 @@
 	animation-duration: 1s;
 	animation-fill-mode: both;
 	&:before{  animation-duration: 1s;  animation-fill-mode: both;  }
+	&.dur8{ animation-duration: 0.8s; }
+	&.dur5{ animation-duration: 0.5s; }
+	&.dur4{ animation-duration: 0.4s; }
+	&.dur3{ animation-duration: 0.3s; }
+	&.dur2{ animation-duration: 0.2s; }
 	span:after {  animation-duration: 1s;  animation-fill-mode: both;  }
 }
 

@@ -43,17 +43,17 @@ $(document).ready(function ()
 	new inputNumber('.order');
 	new inputNumber('.sing_up_form');
 
-	if(location.hostname == "altbet.html-monster.ru"){
-		let letAccess = new accessClass('.access_container input[name="login"]', '.access_container input[name="pass"]', $('.access_container input.required').parent());
+	// if(location.hostname === "altbet.html-monster.ru"){
+	// 	let letAccess = new accessClass('.access_container input[name="login"]', '.access_container input[name="pass"]', $('.access_container input.required').parent());
+	//
+	// 	$('.access_container form').submit(function (event) {
+	// 		event = event || window.event;
+	// 		event.preventDefault ? event.preventDefault() : (event.returnValue=false);
+	// 		letAccess.checkAccess('access');
+	// 	});
+	// }
 
-		$('.access_container form').submit(function (event) {
-			event = event || window.event;
-			event.preventDefault ? event.preventDefault() : (event.returnValue=false);
-			letAccess.checkAccess('access');
-		});
-	}
-
-	new menuClass();
+	// new menuClass();
 	new footerClass();
 
 	// new userInspectionClass();
@@ -115,7 +115,7 @@ $(document).ready(function ()
 
 	// new myPosClass(); // activate my pos script
 
-	new modeSwitchClass(); //mode switch activate
+	// new modeSwitchClass(); //mode switch activate
 
 	// new themeChangeClass();
 	// (function changeSelect(){
@@ -145,11 +145,11 @@ $(document).ready(function ()
 		});
 
 		input.change(function () {
-			if($(this).val() == '') $(this).parent().removeClass('input--filled');
+			if($(this).val() === '') $(this).parent().removeClass('input--filled');
 			else $(this).parent().addClass('input--filled');
 		});
 		input.blur(function () {
-			if($(this).val() == '') $(this).parent().removeClass('input--filled');
+			if($(this).val() === '') $(this).parent().removeClass('input--filled');
 			else $(this).parent().addClass('input--filled');
 		});
 	})();
@@ -238,6 +238,13 @@ $(document).ready(function ()
 	// new ajaxRegistrationControllerClass();
 	new accountClass();
 	new ajaxThemeChangeClass();
+	// mainChartController = new mainChartController();
+
+
+  // злобный костыль за 10 минут для горизонт скрола.
+
+  $(window).trigger('resize')
+
 });
 
 

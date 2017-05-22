@@ -23,14 +23,15 @@ class Actions extends BaseActions
             let flag = true;
 
             // 0||console.log( 'here 11', context, values, serverValidation, event.target, p1,  p2);
-            const $form = $(event.target);
+            const $form = $(event.currentTarget);
             if( (this.checkAreement('agreement', $form) && this.checkAreement('agreement_age', $form)) )
             {
-                let formData = new FormData(<HTMLFormElement>$form[0]);
+                // let formData = new FormData(<HTMLFormElement>$form[0]);
+                // console.log('values:', values);
                 // formData.set('State', "");
 
                 const ajaxPromise = (new AjaxSend()).send({
-                    formData: formData,
+                    formData: values,
                     message: `Error while registering user, please, try again`,
                     // url: ABpp.baseUrl + $form.attr('action'),
                     url: $form.attr('action'), // DEBUG: remove it

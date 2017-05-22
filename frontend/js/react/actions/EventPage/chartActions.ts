@@ -7,7 +7,7 @@ export function actionChartTypeChange(checked)
 {
     return (dispatch, getState) => {
         let ChartObj = getState().eventPage.Chart.ChartObj;
-        ChartObj.setType(!checked ? Chart.TYPE_AREASPLINE : Chart.TYPE_SPLINE);
+        ChartObj.setType(checked ? Chart.TYPE_AREASPLINE : Chart.TYPE_SPLINE);
         // dispatch({
         //     type: ON_CHART_MOUNT,
         //     payload: { Chart: ChartObj }

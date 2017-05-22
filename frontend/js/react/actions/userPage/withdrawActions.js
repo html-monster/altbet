@@ -97,8 +97,8 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 		const { approved } = getState().withdraw;
 		__DEV__ && console.log('transactionData:', values);
 		// getState().withdraw.form = event.target;
-		const form = $(event.target);
-		const url = $(event.target).attr('action');
+		const form = $(event.currentTarget);
+		const url = form.attr('action');
 		const submit = form.find('[type=submit]');
 		let onSuccessAjax;
 

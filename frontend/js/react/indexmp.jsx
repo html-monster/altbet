@@ -9,6 +9,7 @@ import configureStore from './store/configureStore';
 import RApp from './containers/RApp';
 import MainPage from './containers/MainPage';
 import Header from './containers/Header';
+import MainMenu from './containers/MainMenu';
 import EventPage from './containers/EventPage';
 import AccountPage from './containers/UserPage';
 import PageMyPos from './components/PageMyPos.jsx';
@@ -40,6 +41,14 @@ if( !globalData.landingPage  )
 			<Header />
 		</Provider>,
 		document.getElementById('DiMPHeader')
+	);
+
+
+	ReactDOM.render(
+		<Provider store={store}>
+			<MainMenu />
+		</Provider>,
+		document.getElementById('DiMainMenu')
 	);
 
 

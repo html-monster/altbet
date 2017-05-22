@@ -11,20 +11,19 @@ export class CheckBox extends React.Component
     {
         super(props);
 
-        this.state = { ischecked: this.props.data.checked,}
+        this.state = { ischecked: this.props.data.checked,};
+
+        this.name = props.data.name;
     }
 
-
-    /**
-     * @private
-     */
-    _onChkChange(event)
+	/**
+     * will update checkbox if checkbox alwaysUpdate parameter true
+	 * @param nextProps
+	 */
+	componentWillUpdate(nextProps)
     {
-        if(this.props.onChange) this.props.onChange(event);
-        this.state.ischecked = !this.state.ischecked;
-        this.setState({...this.state});
+        if(nextProps.data.alwaysUpdate && this.state.ischecked !== nextProps.data.checked) this.state.ischecked = nextProps.data.checked;
     }
-
 
 
     render()
@@ -37,5 +36,15 @@ export class CheckBox extends React.Component
                 <span>{}</span>
                 {this.props.children}
             </label>;
+    }
+
+	/**
+	 * @private
+	 */
+	_onChkChange(event)
+    {
+        if(this.props.onChange) this.props.onChange(event, this);
+        this.state.ischecked = !this.state.ischecked;
+        this.setState({...this.state});
     }
 }

@@ -9,7 +9,7 @@ import Visa from './transactionForms/Visa';
 import NetellerForm from './transactionForms/NetellerForm';
 import ScrillForm from './transactionForms/SkrillForm';
 import Bitpay from './transactionForms/Bitpay';
-import InputNumber from '../../inputNumber';
+import InputNumber from '../../InputNumber';
 import * as actions from '../../../actions/userPage/withdrawActions';
 
 class Withdraw extends React.Component{
@@ -40,7 +40,7 @@ class Withdraw extends React.Component{
 // console.log(actions);
 		return <div className="tab_item funds">
 			<h3>Withdraw funds</h3>
-			<span className="account_balance">You currently have <span className="value">${Math.round10(data.UserAssets.CurrentBalance, -2)}</span> in your account</span>
+			<span className="account_balance">You currently have <span className="value">${(Math.round10(data.UserAssets.CurrentBalance, -2)).toFixed(2)}</span> in your account</span>
 			<div className="quantity_control">
 				<strong>Select withdrawal amount</strong>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>10</button>
