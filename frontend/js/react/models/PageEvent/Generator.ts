@@ -14,7 +14,7 @@ export class Generator
     private FLAG_GEN_STARTED = 0;
     private genLastPoint = 0;
     // private flagForceStop = true; // !!!!!!!!!!!!!!!
-    private flagForceStop = false;
+    private flagForceStop = true;
 
     private flagActive = false;
     private TiGenerator = [];
