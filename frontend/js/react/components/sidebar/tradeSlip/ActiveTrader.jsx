@@ -120,7 +120,7 @@ class ActiveTrader extends React.Component {
 							<button className="wave waves-effect waves-button" onClick={
 								traderActions.actionAddDefaultOrder.bind(null, this, {
 									direction: 'buy',
-									price    : bid,
+									price    : bid ? bid.toFixed(2) : bid,
 									limit    : true,
 									outputOrder: false
 								}, 'limit')}
@@ -136,7 +136,7 @@ class ActiveTrader extends React.Component {
 							<button className="wave waves-effect waves-button" onClick={
 								traderActions.actionAddDefaultOrder.bind(null, this, {
 									direction: 'sell',
-									price    : ask,
+									price    : ask ? ask.toFixed(2) : ask,
 									limit    : true,
 									outputOrder: false
 								}, 'limit')}

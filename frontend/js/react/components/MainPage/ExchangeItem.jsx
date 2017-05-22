@@ -167,7 +167,7 @@ export default class ExchangeItem extends React.Component
                             let html = [<span key="0" data-js-title=""><span className="score">{$homeTotal}&nbsp;&nbsp;</span> {Symbol.HomeName}</span>
                                     , (Symbol.HomeHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
                                     , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}>&nbsp;&nbsp;<i></i>${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
-                                isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
+							$classActiveExch ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
                                 : <span className="seemore-lnk">{html}</span>
                             }}
                         </h3>
@@ -202,7 +202,7 @@ export default class ExchangeItem extends React.Component
                                 let html = [<span key="0" data-js-title><span className="score">{$awayTotal}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>
                                     , (Symbol.AwayHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap}</span> : ''
                                     , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[1]}`}>&nbsp;&nbsp;<i></i>${(1 - data.Symbol.LastPrice).toFixed(2)}</span> : ""];
-                                isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>
+							$classActiveExch ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>
                                 : <span className="seemore-lnk">{html}</span>
                             }}
                         </h3>
