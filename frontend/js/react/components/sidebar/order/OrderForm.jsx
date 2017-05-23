@@ -288,11 +288,30 @@ export default class OrderForm extends React.Component{
 	render()
 	{
 		const stateData = this.state;
-		const { formUrl, id, side, limit, isMirror, symbol, newOrder = true, orderView = 'normal', price, showDeleteButton = true, onSubmit, onDelete} = this.props;
+		const { formUrl, id, side, ask, bid, limit, isMirror, symbol, newOrder = true, orderView = 'normal', price, showDeleteButton = true, onSubmit, onDelete} = this.props;
 		const fees = Math.round10(ABpp.config.takerFees * stateData.quantity, -2);
 		let checkboxProp = stateData.limit;
-		let formClass;
+		// let formClass;
 
+		let probability = '';
+
+
+		if(side === 'sell')
+		{
+			if(bid && stateData.price <= bid) probability = ' high';
+			if(bid && Math.round10(stateData.price <= bid + 0.05, -2) && stateData.price > bid) probability = ' high_middle';
+			if(bid && Math.round10(stateData.price <= bid + 0.1, -2) && Math.round10(stateData.price > bid + 0.05, -2)) probability = ' middle';
+			if(bid && Math.round10(stateData.price <= bid + 0.15, -2) && Math.round10(stateData.price > bid + 0.1, -2)) probability = ' low_middle';
+			if(bid && stateData.price > Math.round10(bid + 0.15, -2)) probability = ' low';
+		}
+		else
+		{
+			if(ask && stateData.price >= ask) probability = ' high';
+			if(ask && Math.round10(stateData.price >= ask - 0.05, -2) && stateData.price < ask) probability = ' high_middle';
+			if(ask && Math.round10(stateData.price >= ask - 0.1, -2) && Math.round10(stateData.price < ask - 0.05, -2)) probability = ' middle';
+			if(ask && Math.round10(stateData.price >= ask - 0.15, -2) && Math.round10(stateData.price < ask - 0.1, -2)) probability = ' low_middle';
+			if(ask && stateData.price < Math.round10(ask - 0.15, -2)) probability = ' low';
+		}
 		// if(orderMode === 'expert')
 		// 	formClass = '';
 		// else if(orderMode === 'basic'){
@@ -306,7 +325,7 @@ export default class OrderForm extends React.Component{
 		// const style = checkboxProp ? {display: 'block'} : {display: 'none'};
 
 		return (
-			<form action={formUrl} className={side + formClass + ' animated'} autoComplete="off"
+			<form action={formUrl} className={side + ' animated'} autoComplete="off"
 					  onSubmit={onSubmit} method="post"
 				  noValidate="novalidate" data-verify={['price', 'quantity']}>
 				<div className={'container' + (showDeleteButton && onDelete ? ' close_btn' : '')}>
@@ -333,7 +352,7 @@ export default class OrderForm extends React.Component{
 							}
 						</label>
 						<div className="input">
-							<InputNumber type="tel" id={`${id}_price`} className="number"
+							<InputNumber type="tel" id={`${id}_price`} className={'number' + probability}
 										 maxLength="5" autoComplete="off"
 										 onChange={this.onInputChange.bind(this, 'price')}
 										 onKeyDown={this.onInputKeyDown.bind(this, 'price')}

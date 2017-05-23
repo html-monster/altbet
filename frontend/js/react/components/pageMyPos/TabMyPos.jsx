@@ -128,6 +128,8 @@ export class TabMyPos extends React.Component
                                                                     Exchange : item.Symbol.Exchange,
                                                                     Name : item.Symbol.Name,
                                                                     Currency : item.Symbol.Currency,
+																	Ask : item.Symbol.LastAsk,
+																	Bid : item.Symbol.LastBid,
                                                                 };
 
 																const bid = item2.IsMirror ?

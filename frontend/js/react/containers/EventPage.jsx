@@ -153,6 +153,8 @@ class EventPage extends BaseController
             Exchange : data.SymbolsAndOrders.Symbol.Exchange,
             Name : data.SymbolsAndOrders.Symbol.Name,
             Currency : data.SymbolsAndOrders.Symbol.Currency,
+            Ask : data.SymbolsAndOrders.Symbol.LastAsk,
+            Bid : data.SymbolsAndOrders.Symbol.LastBid,
         };
 
 

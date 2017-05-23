@@ -28,10 +28,11 @@ export default class TraderDefaultForm extends React.Component {
 
 	render()
 	{
-		const { activeString, cmpData: { activeExchange }, direction, focusOn, price, limit, index, traderContext,
+		const { activeString, bestPrice, cmpData: { activeExchange }, direction, focusOn, price, limit, index, traderContext,
 			isMirror, traderActions, quantity } = this.props;
 		// console.log('this.props:', this.props);
 		// let orderFormStyle = {position: 'absolute', left: 0, zIndex: 10, marginTop: 10};
+		// console.log('bestPrice:', bestPrice);
 
 		return <div className={'order_content default animated' + (index === activeString || !index ? ' fadeInDown' : '') +
 					(price === '0.' ? ' empty' : '')}
@@ -44,6 +45,8 @@ export default class TraderDefaultForm extends React.Component {
 					id={`${activeExchange.symbol}_${direction}_${isMirror}`}
 					limit={limit}
 					side={direction === 'sell' ? 'sell' : 'buy'}
+					ask={bestPrice.ask}
+					bid={bestPrice.bid}
 					price={price}
 					quantity={quantity}
 					isMirror={isMirror}

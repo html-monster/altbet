@@ -184,6 +184,7 @@ class ActiveTrader extends React.Component {
 
 								<TraderDefaultForm
 									activeString={orderInfo.activeString}
+									bestPrice={{ask, bid}}
 									index={'market'}
 									mainData={data}
 									quantity={quantity}
@@ -198,6 +199,7 @@ class ActiveTrader extends React.Component {
 
 								<TraderDefaultForm
 									activeString={orderInfo.activeString}
+									bestPrice={{ask, bid}}
 									index={'limit'}
 									mainData={data}
 									quantity={quantity}
@@ -234,7 +236,7 @@ class ActiveTrader extends React.Component {
 						<td className="spread_container ">
 							<div className="input">
 								<button className="clear" onClick={traderActions.actionOnSpreadClear.bind(null, this)}>{}</button>
-								<input type="text" className="number spreader" maxLength="4" data-validation="0.1"
+								<input type="text" className="number spreader" maxLength="5" data-validation="0.1"
 									   onMouseUp={spread ? null : traderActions.actionOnButtonSpreadChange.bind(null, this, '0.')}
 									   onKeyDown={traderActions.actionOnButtonSpreadRegulator.bind(null, this)}
 									   onChange={traderActions.actionOnSpreadChange.bind(null, this)}
@@ -356,6 +358,7 @@ class ActiveTrader extends React.Component {
 
 					<TraderDefaultForm
 						activeString={orderInfo.activeString}
+						bestPrice={{ask, bid}}
 						index={'empty'}
 						mainData={data}
 						quantity={quantity}
@@ -456,10 +459,24 @@ class TraderString extends React.Component {
 		// console.log(this.props);
 		const spreadPricePos = Math.round10(data.Price + +spread, -2);
 		const spreadPriceNeg = Math.round10(data.Price - spread, -2);
-		const dragAvailable = !!data.ParticularUserQuantityBuy || !!data.ParticularUserQuantitySell;
+		// const dragAvailable = !!data.ParticularUserQuantityBuy || !!data.ParticularUserQuantitySell;
 		let className = '';
 		let addOrder = null;
 		let spreadHighLightFunc = null;
+		let bidsProb = '';
+		let offersProb = '';
+
+		if(data.AskValue && data.Price >= data.AskValue) bidsProb = ' high';
+		if(data.AskValue && data.Price >= Math.round10(data.AskValue - 0.05, -2) && data.Price < data.AskValue) bidsProb = ' high_middle';
+		if(data.AskValue && data.Price >= Math.round10(data.AskValue - 0.1, -2) && data.Price < Math.round10(data.AskValue - 0.05, -2)) bidsProb = ' middle';
+		if(data.AskValue && data.Price >= Math.round10(data.AskValue - 0.15, -2) && data.Price < Math.round10(data.AskValue - 0.1, -2)) bidsProb = ' low_middle';
+		if(data.AskValue && data.Price < Math.round10(data.AskValue - 0.15, -2)) bidsProb = ' low';
+
+		if(data.BidValue && data.Price <= data.BidValue) offersProb = ' high';
+		if(data.BidValue && data.Price <= Math.round10(data.BidValue + 0.05, -2) && data.Price > data.BidValue) offersProb = ' high_middle';
+		if(data.BidValue && data.Price <= Math.round10(data.BidValue + 0.1, -2) && data.Price > Math.round10(data.BidValue + 0.05, -2)) offersProb = ' middle';
+		if(data.BidValue && data.Price <= Math.round10(data.BidValue + 0.15, -2) && data.Price > Math.round10(data.BidValue + 0.1, -2)) offersProb = ' low_middle';
+		if(data.BidValue && data.Price > Math.round10(data.BidValue + 0.15, -2)) offersProb = ' low';
 		// spread && console.log(data.BidValue < data.Price);
 		if(+spread){
 			if(data.Spread === 'mid'){
@@ -516,7 +533,7 @@ class TraderString extends React.Component {
 				ref={'tr'}
 				data={data}
 		>
-			<td className={'my_offers my_size animated' + (!!data.ParticularUserQuantityBuy ? ' clickable' : '')}
+			<td className={'my_size animated' + (!!data.ParticularUserQuantityBuy ? ' clickable' : '')}
 				data-verify={'ParticularUserQuantityBuy'}
 				// draggable={!!data.ParticularUserQuantityBuy}
 				onClick={!!data.ParticularUserQuantityBuy ? other.traderActions.deleteOrders.bind(null, this, data.Price, 'Buy') : null}
@@ -533,7 +550,7 @@ class TraderString extends React.Component {
 				}
 			</td>
 
-			<td className={'size buy size_buy animated ' + (data.Bid ? 'best_buy' : '') + (quantity ? ' clickable' : '')}
+			<td className={'size buy size_buy animated' + bidsProb + (data.Bid ? ' best_buy' : '') + (quantity ? ' clickable' : '')}
 				data-verify="QuantityBuy"
 				onClick={
 					quantity ?
@@ -599,7 +616,7 @@ class TraderString extends React.Component {
 					}
 				</div>
 			</td>
-			<td className={'size sell size_sell animated ' + (data.Ask ? 'best_sell' : '') + (quantity ? ' clickable' : '')}
+			<td className={'size sell size_sell animated ' + offersProb + (data.Ask ? ' best_sell' : '') + (quantity ? ' clickable' : '')}
 				data-verify="QuantitySell"
 				onClick={
 					quantity ?
@@ -624,7 +641,7 @@ class TraderString extends React.Component {
 					</span>
 				</span>
 			</td>
-			<td className={'my_bids my_size animated'  + (!!data.ParticularUserQuantitySell ? ' clickable' : '')}
+			<td className={'my_size animated'  + (!!data.ParticularUserQuantitySell ? ' clickable' : '')}
 				data-verify="ParticularUserQuantitySell"
 				// draggable={!!data.ParticularUserQuantitySell}
 				onClick={!!data.ParticularUserQuantitySell ? other.traderActions.deleteOrders.bind(null, this, data.Price, 'Sell') : null}
@@ -649,6 +666,7 @@ class TraderString extends React.Component {
 						(info.showDefaultOrder &&
 							<TraderDefaultForm
 								activeString={info.activeString}
+								bestPrice={{ask: data.AskValue, bid: data.BidValue}}
 								cmpData={this.props.cmpData}
 								index={index}
 								quantity={quantity}
@@ -662,6 +680,7 @@ class TraderString extends React.Component {
 						(spread && info.showSpreadOrder &&
 							<TraderSpreadForm
 								activeString={info.activeString}
+								data={data}
 								cmpData={this.props.cmpData}
 								index={index}
 								quantity={quantity}
