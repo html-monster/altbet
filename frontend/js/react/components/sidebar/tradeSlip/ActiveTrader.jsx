@@ -533,7 +533,7 @@ class TraderString extends React.Component {
 				ref={'tr'}
 				data={data}
 		>
-			<td className={'my_size animated' + (!!data.ParticularUserQuantityBuy ? ' clickable' : '')}
+			<td className={'my_size my_offers animated' + (!!data.ParticularUserQuantityBuy ? ' clickable' : '')}
 				data-verify={'ParticularUserQuantityBuy'}
 				// draggable={!!data.ParticularUserQuantityBuy}
 				onClick={!!data.ParticularUserQuantityBuy ? other.traderActions.deleteOrders.bind(null, this, data.Price, 'Buy') : null}
@@ -641,7 +641,7 @@ class TraderString extends React.Component {
 					</span>
 				</span>
 			</td>
-			<td className={'my_size animated'  + (!!data.ParticularUserQuantitySell ? ' clickable' : '')}
+			<td className={'my_size my_bids animated'  + (!!data.ParticularUserQuantitySell ? ' clickable' : '')}
 				data-verify="ParticularUserQuantitySell"
 				// draggable={!!data.ParticularUserQuantitySell}
 				onClick={!!data.ParticularUserQuantitySell ? other.traderActions.deleteOrders.bind(null, this, data.Price, 'Sell') : null}
