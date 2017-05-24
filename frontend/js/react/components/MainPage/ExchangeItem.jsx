@@ -85,6 +85,8 @@ export default class ExchangeItem extends React.Component
                 Exchange : data.Symbol.Exchange,
                 Name : data.Symbol.Name,
                 Currency : data.Symbol.Currency,
+				Bid : data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid,
+				Ask : data.Symbol.LastAsk === 1 ? null : data.Symbol.LastAsk ,
             }
         };
 

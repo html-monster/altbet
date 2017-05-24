@@ -15,6 +15,7 @@ export default class ButtonContainer extends React.PureComponent
         let price, className, emptyBtnName, mirrorClass, btnsPreviewClass = "", side1 = 0, side2 = 1;
         let debug = "";
 
+        // console.log('props:', this.props);
 
         if( data.ismirror )
         {

@@ -63,6 +63,8 @@ export class BetsTable extends React.Component
             Exchange : exdata.SymbolsAndOrders.Symbol.Exchange,
             Name : exdata.SymbolsAndOrders.Symbol.Name,
             Currency : exdata.SymbolsAndOrders.Symbol.Currency,
+            Ask : symbol.LastAsk,
+			Bid : symbol.LastBid,
         };
 
         return <table>
@@ -115,10 +117,10 @@ export class BetsTable extends React.Component
 									type    : $type,
 									data    : data, // orders
 									exdata  : commProps, // for trader object
-                                    bestPrice: exdata.IsMirror ?
-                                                    $type ? Math.round10(1 - symbol.LastBid, -2) : Math.round10(1 - symbol.LastAsk, -2)
-                                                    :
-                                                    $type ? symbol.LastAsk : symbol.LastBid
+                                    // bestPrice: exdata.IsMirror ?
+                                    //                 $type ? Math.round10(1 - symbol.LastBid, -2) : Math.round10(1 - symbol.LastAsk, -2)
+                                    //                 :
+                                    //                 $type ? symbol.LastAsk : symbol.LastBid
 								}, (ABpp.config.tradeOn ? traderActions : defaultOrderActions))}
                             >
                                 <span>{val.Quantity}</span>

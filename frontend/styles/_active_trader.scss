@@ -222,7 +222,7 @@
 					&:-ms-input-placeholder {  color: #ffffff;  }
 				}
 			}
-			tr.zoom{  width: 100%;  }
+			//tr.zoom{  width: 100%;  }
 			th{
 				max-width: 70px;
 				padding: 5px 0;
@@ -558,7 +558,33 @@
 				&.size.size_sell .container:not(.best_buy):not(.best_sell):after{
 					transform: translateX(50%) scaleX(0.01);
 				}
-				&.clickable{  cursor: pointer; }
+				$high: #3fff00;
+				$high_middle: #a9ff00;
+				$middle: #ffff00;
+				$low_middle: #ff9d00;
+				$low: #ca0002;
+				&.clickable{
+					cursor: pointer;
+					// probability fulfilment ==========
+					&:hover{
+						&.high{ background: transparentize($high, 0.9);
+							.container:before{ background: transparentize($high, 0.2) !important; }
+						}
+						&.high_middle{ background: transparentize($high_middle, 0.9);
+							.container:before{ background: transparentize($high_middle, 0.2) !important; }
+						}
+						&.middle{ background: transparentize($middle, 0.9);
+							.container:before{ background: transparentize($middle, 0.2) !important; }
+						}
+						&.low_middle{ background: transparentize($low_middle, 0.9);
+							.container:before{ background: transparentize($low_middle, 0.2) !important; }
+						}
+						&.low{ background: transparentize($low, 0.9);
+							.container:before{ background: transparentize($low, 0.2) !important; }
+						}
+					}
+					// probability fulfilment ==========
+				}
 				&.size_sell{
 					background-color: transparentize(#ef4d22, 0.92);
 					&.clickable{

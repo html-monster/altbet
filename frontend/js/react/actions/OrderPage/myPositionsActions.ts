@@ -36,6 +36,8 @@ class Actions extends BaseActions
             "EventTitle": props.exdata.isMirror ? props.exdata.AwayName : props.exdata.HomeName,
             "Positions": props.exdata.Positions,
             "isMirror": props.exdata.isMirror ? 1 : 0,
+            "Bid": props.exdata.Bid,
+            "Ask": props.exdata.Ask,
             "Orders": [
                 {
                     "Price": bpr,

@@ -112,9 +112,10 @@
       justify-content: space-between;
       background: linear-gradient(to bottom, #53515e, #292830);
       position: relative;
-      h3, .current-order{  color: #ffffff;  }
+      h3, .current-order{ color: #ffffff; }
       h3{  line-height: 20px;  }
       //strong.last-price{  margin-top: 0;  }
+      .current-order{ min-width: 75px; text-align: right; }
       .close{
         height: 24px;
         margin-right: 0;
@@ -220,7 +221,7 @@
       &.close_btn div:last-of-type label{ width: calc(100% - 18px); }
     }
     h3{
-      max-width: calc(100% - 115px);
+      //max-width: calc(100% - 115px);
       font-size: 13px;
       vertical-align: middle;
       color: transparentize(#ffffff, 0.2);
@@ -482,6 +483,7 @@
       .input{
         width: 100%;
         text-align: left;
+        //background: $color-max;
         input{
           width: calc(100% - 18px);
           //padding-right: 10px;

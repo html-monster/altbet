@@ -752,7 +752,8 @@ class Actions extends BaseActions
 
 			function onSuccessAjax(answer)
 			{
-				__DEV__ && console.log(answer);
+				if(answer !== 'success')
+					defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 			}
 
 			if(popUpShow){

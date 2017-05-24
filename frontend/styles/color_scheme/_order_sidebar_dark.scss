@@ -43,6 +43,13 @@ $order_sidebar_current_order_title_color: #ffffff;
 	color: #ffffff;
 	transition: 0.4s ease-out;
 	&:focus{  background: #3e3d45;  }
+	// probability fulfilment ==========
+	&.high{ color: transparentize(#3fff00, 0.2); }
+	&.high_middle{ color: transparentize(#a9ff00, 0.2); }
+	&.middle{ color: transparentize(#ffff00, 0.2); }
+	&.low_middle{ color: #ff9d00; }
+	&.low{ color: #ff0104; }
+	// probability fulfilment ==========
 }
 @mixin order_sidebar_confirm_window{
 	background: $bg_color;

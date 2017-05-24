@@ -11,12 +11,33 @@ export default class TraderSpreadForm extends React.Component {
 
 	render()
 	{
-		const { traderActions, activeString, cmpData: { activeExchange }, direction, price, index, inputQuantityContext,
+		const { traderActions, activeString, mainData: { Symbol }, cmpData: { activeExchange }, direction, price, index, inputQuantityContext,
 			isMirror, quantity, spread } = this.props;
-		const spreadPricePos = Math.round10(price + +spread, -2);
-		const spreadPriceNeg = Math.round10(price - spread, -2);
+		let spreadPricePos = Math.round10(price + +spread, -2);
+		spreadPricePos = spreadPricePos > 0.98 ? 0.99 : spreadPricePos.toFixed(2);
+		spreadPricePos = direction === 'ask' ? price.toFixed(2) : spreadPricePos;
+		let spreadPriceNeg = Math.round10(price - spread, -2);
+		spreadPriceNeg = spreadPriceNeg < 0.02 ? 0.01 : spreadPriceNeg.toFixed(2);
+		spreadPriceNeg = direction === 'bid' ? price.toFixed(2) : spreadPriceNeg;
+		let bidsProb = '';
+		let offersProb = '';
 
-		return <div className={'order_content spread animated' + (index == activeString || !index ? ' fadeInUp' : '')}
+		if(Symbol)
+		{
+			if (Symbol.LastBid && spreadPricePos <= Symbol.LastBid) offersProb = ' high';
+			if (Symbol.LastBid && spreadPricePos <= Math.round10(Symbol.LastBid + 0.05, -2) && spreadPricePos > Symbol.LastBid) offersProb = ' high_middle';
+			if (Symbol.LastBid && spreadPricePos <= Math.round10(Symbol.LastBid + 0.1, -2) && spreadPricePos > Math.round10(Symbol.LastBid + 0.05, -2)) offersProb = ' middle';
+			if (Symbol.LastBid && spreadPricePos <= Math.round10(Symbol.LastBid + 0.15, -2) && spreadPricePos > Math.round10(Symbol.LastBid + 0.1, -2)) offersProb = ' low_middle';
+			if (Symbol.LastBid && spreadPricePos > Math.round10(Symbol.LastBid + 0.15, -2)) offersProb = ' low';
+
+			if (Symbol.LastAsk && spreadPriceNeg >= Symbol.LastAsk) bidsProb = ' high';
+			if (Symbol.LastAsk && spreadPriceNeg >= Math.round10(Symbol.LastAsk - 0.05, -2) && spreadPriceNeg < Symbol.LastAsk) bidsProb = ' high_middle';
+			if (Symbol.LastAsk && spreadPriceNeg >= Math.round10(Symbol.LastAsk - 0.1, -2) && spreadPriceNeg < Math.round10(Symbol.LastAsk - 0.05, -2)) bidsProb = ' middle';
+			if (Symbol.LastAsk && spreadPriceNeg >= Math.round10(Symbol.LastAsk - 0.15, -2) && spreadPriceNeg < Math.round10(Symbol.LastAsk - 0.1, -2)) bidsProb = ' low_middle';
+			if (Symbol.LastAsk && spreadPriceNeg < Math.round10(Symbol.LastAsk - 0.15, -2)) bidsProb = ' low';
+		}
+
+		return <div className={'order_content spread animated' + (index === activeString || !index ? ' fadeInUp' : '')}
 					id="order_content"
 					key={direction}
 		>
@@ -29,8 +50,8 @@ export default class TraderSpreadForm extends React.Component {
 						<div className="price sell">
 							<label>Selling price</label>
 							<div className="input">
-								<input type="text" className="number" data-validation="0.33" maxLength="4"
-									   value={direction == 'ask' ? price.toFixed(2) : (spreadPricePos > 0.98 ? 0.99 : spreadPricePos.toFixed(2))}
+								<input type="tel" className={'number' + offersProb} data-validation="0.33" maxLength="4"
+									   value={spreadPricePos}
 									   onChange={traderActions.actionOnQuantityChange.bind(null, inputQuantityContext)}
 									   disabled="disabled"/>
 								<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
@@ -62,15 +83,15 @@ export default class TraderSpreadForm extends React.Component {
 					<input className="symbol" name="Symbol" type="hidden" defaultValue={activeExchange.symbol}/>
 					<input className="mirror" name="isMirror" type="hidden" defaultValue={isMirror}/>
 					<input className="SellOrderLimitPrice" name="SellOrderLimitPrice" type="hidden"
-						   defaultValue={direction == 'ask' ? price : (spreadPricePos > 0.98 ? 0.99 : spreadPricePos)}/>
+						   defaultValue={spreadPricePos}/>
 					<input className="BuyOrderLimitPrice" name="BuyOrderLimitPrice" type="hidden"
-						   defaultValue={direction == 'bid' ? price : (spreadPriceNeg < 0.02 ? 0.01 : spreadPriceNeg)}/>
+						   defaultValue={spreadPriceNeg}/>
 					<div className="container">
 						<div className="price buy">
 							<label>Buying price</label>
 							<div className="input">
-								<input type="text" className="number" data-validation="0.33" maxLength="4"
-									   value={direction == 'bid' ? price.toFixed(2) : (spreadPriceNeg < 0.02 ? 0.01 : spreadPriceNeg.toFixed(2))}
+								<input type="tel" className={'number' + bidsProb} data-validation="0.33" maxLength="4"
+									   value={spreadPriceNeg}
 									   onChange={traderActions.actionOnQuantityChange.bind(null, inputQuantityContext)}
 									   disabled="disabled"/>
 								<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
