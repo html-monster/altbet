@@ -68,7 +68,7 @@ export class BetsTable extends React.Component
         return <table>
             <thead>
                 <tr>
-                    <th><span>ID</span></th>
+                    {/*<th><span>ID</span></th>*/}
                     <th><span>{$fieldName}</span></th>
                     <th><span>Quantity</span></th>
                 </tr>
@@ -93,7 +93,7 @@ export class BetsTable extends React.Component
                             transitionLeaveTimeout={500}
                             data={val}
                         >
-                            <td><span>alt.bet</span></td>
+                            {/*<td><span>alt.bet</span></td>*/}
                             <td className={`price ${$class} animated`} data-verify="Quantity"
                                 onClick={() => self.props.actions.onPriceClick({
 								Price   : val.Price,

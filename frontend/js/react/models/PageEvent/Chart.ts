@@ -65,19 +65,26 @@ export class Chart
 
     private themeOpts: any = {
         dark: {
+            color: "#919096", // также поставлен как цвет для линий сетки
+            gridColor2: "#4d4c52", // также поставлен как цвет для линий сетки
+            backgroundColor: "#211e25",
             fill: '#53515E',
             stroke: '#53515E',
             select: {
                 fill: '#8F8D9A',
-                stroke: '#8F8D9A'
+                stroke: '#8F8D9A',
+                color: '#fff',
             }
         },
         light: {
+            color: "#919096",
+            backgroundColor: "#ffffff",
             fill: '#F7F7F7',
             stroke: '#F7F7F7',
             select: {
                 fill: '#E7E7E7',
-                stroke: '#E7E7E7'
+                stroke: '#E7E7E7',
+                color: '#fff',
             }
         }
     };
@@ -179,23 +186,24 @@ export class Chart
         this.chartData = {
             chart: {
                 height: 450,
-                // spacingTop: 20,
                 type: self.chartType,
                 animation: {
                         duration: 700,
                         // easing: 'easeOutBounce'
                     },
+                backgroundColor: self.themeOpts[self.chartTheme].backgroundColor,
+                plotBackgroundColor: self.themeOpts[self.chartTheme].backgroundColor,
                 // type: 'spline',
             },
             title: {
                 text: ''
             },
-/*            credits: {
+            credits: {
                 enabled: false
             },
             legend: {
                 enabled: false
-            },*/
+            },
             tooltip: {
                 enabled: false,
                 valueDecimals: 2,
@@ -208,14 +216,25 @@ export class Chart
                     'stroke-linejoin': 'round',
                     'stroke-radius': 2,
                     'stroke-width': 3,
+                    style: {
+                        color: self.themeOpts[self.chartTheme].color,
+                    },
                     states: {
                         select: {
                             fill: self.themeOpts[self.chartTheme].select.fill,
-                            stroke: self.themeOpts[self.chartTheme].select.stroke
+                            stroke: self.themeOpts[self.chartTheme].select.stroke,
+                            style: {
+                                color: self.themeOpts[self.chartTheme].select.color,
+                                fontWeight: 'bold',
+                            },
                         },
                         hover: {
                             fill: self.themeOpts[self.chartTheme].select.fill,
-                            stroke: self.themeOpts[self.chartTheme].select.stroke
+                            stroke: self.themeOpts[self.chartTheme].select.stroke,
+                            style: {
+                                color: self.themeOpts[self.chartTheme].select.color,
+                                fontWeight: 'bold',
+                            },
                         }
                     },
                     'borderRadius': 6,
@@ -235,6 +254,10 @@ export class Chart
                         count: 15,
                         text: '15m',
                     }, {
+                        type: 'minute',
+                        count: 30,
+                        text: '30m',
+                    }, {
                         type: 'hour',
                         count: 1,
                         text: '1h',
@@ -242,6 +265,10 @@ export class Chart
                         type: 'day',
                         count: 1,
                         text: '1d',
+                    }, {
+                        type: 'week',
+                        count: 1,
+                        text: '1w',
                     }, {
                         type: 'all',
                         text: 'All',
@@ -260,10 +287,14 @@ export class Chart
             },
             navigator: {
                 enabled: true,
+                outlineColor: self.themeOpts[self.chartTheme].color,
                 series: {
                     type: 'spline',
                     lineWidth: 2,
-                }
+                },
+                xAxis: {
+                    gridLineColor: self.themeOpts[self.chartTheme].gridColor2,
+                },
             },
 /*                plotOptions: {
                 areaspline: {
@@ -290,24 +321,30 @@ export class Chart
                 },
             },*/
             xAxis: {
-                crosshair: true,
+                crosshair: false,
                 type: 'datetime',
-                // lineWidth: 0,
-                // minorGridLineWidth: 5,
-                // lineColor: 'transparent',
-                // minorGridLineColor: "#000000",
-                minorGridLineDashStyle: "Dash",
+                // lineWidth: 5,
+                // gridLineDashStyle: 'longdash',
+                gridLineWidth: 0,
                 labels: {
-                    enabled: true
-                },
+                    enabled: true,
+                    style: {
+                        color: self.themeOpts[self.chartTheme].color,
+                    },                },
                 title: {
-                    text: 'Price'
+                    text: 'Time'
                 },
                 // minorTickLength: 0,
-                // tickLength: 0,
+                // tickLength: 100,
+                // tickColor: '#dc0000',
+                tickWidth: 0,
             },
             yAxis: {
+                gridLineColor: self.themeOpts[self.chartTheme].gridColor2,
                 labels: {
+                    style: {
+                        color: self.themeOpts[self.chartTheme].color,
+                    },
                     formatter: function () {
                         // return '$' + (eval(this.value) / self.volumeScale).toFixed(2).toString();
                         return '$' + this.value.toFixed(2).toString();
@@ -318,9 +355,9 @@ export class Chart
                 // endOnTick: false,
                 // maxPadding: 0.2,
                 // minPadding: 0.1,
-/*                title: {
-                    text: ''
-                }*/
+                title: {
+                    text: 'Price'
+                },
             },
             series: [{
                 data: [],
