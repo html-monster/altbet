@@ -5,7 +5,8 @@ import React from 'react';
 import EventOrders from './sidebar/YourOrders.jsx';
 // import NewOrder from './sidebar/order/NewOrder.jsx';
 // import ActiveTrader from './sidebar/ActiveTrader.jsx';
-import TradeSlip from './sidebar/TradeSlip.jsx';
+import TradeSlip from './sidebar/TradeSlip';
+import YourOrders from './sidebar/YourOrders';
 // import {OddsConverter} from '../models/oddsConverter/oddsConverter.ts';
 import sidebarActions from '../actions/sidebarActions.ts';
 
@@ -17,20 +18,26 @@ class Sidebar extends React.Component
 	{
 		super();
 
-		this.state = {globalData: globalData};
+		this.state = {
+			globalData: globalData,
+			isAllowAT: true
+		};
         this.FLAG_LOAD = true;
         // 0||console.log( 'this.props.sidebar', props.sidebar );
 
 
         // allow AT
-        if( ABpp.config.currentPage != ABpp.CONSTS.PAGE_MYPOS )
+        if( ABpp.config.currentPage === ABpp.CONSTS.PAGE_MYPOS || ABpp.config.basicMode )
         {
-            this.isAllowAT = true;
+            this.state.isAllowAT = false;
+            ABpp.config.tradeOn = false;
+			// globalData.tradeOn = false;
+			this.isAllowAT = false;
         }
         else
         {
-            this.isAllowAT = false;
-            ABpp.config.tradeOn = false;
+        	this.isAllowAT = true;
+            this.state.isAllowAT = true;
         } // endif
         props.actions.actionChangeAllowAt(this.isAllowAT);
 	}
@@ -40,7 +47,13 @@ class Sidebar extends React.Component
     {
         let data = ABpp.SysEvents.getLastNotifyData(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL);
         data && this.props.actions.actionOnActiveSymbolChanged(data);
+		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ODD_SYSTEM, (props) => this.props.actions.actionOnOddSystemChange(props));
 		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, (props) => this.props.actions.actionOnActiveSymbolChanged(props));
+		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, () => {
+			// ABpp.config.tradeOn = false;
+			// globalData.tradeOn = false;
+			this.setState({...this.state, isAllowAT: !ABpp.config.basicMode})
+		});
     }
 
 
@@ -51,14 +64,16 @@ class Sidebar extends React.Component
 		// console.log(ABpp.Websocket);
 		// isChecked && ABpp.Websocket.sendSubscribe({tradeOn: isChecked}, SocketSubscribe.TRADER_ON);
 		// ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, isChecked);
-        this.props.actions.actionOnTraderOnChange(this.props.sidebar.traderOn);
+        this.props.actions.actionOnTraderOnChange(ABpp.config.tradeOn);
     }
 
 
 	render()
 	{
 		let userIdentity = this.state.globalData.userIdentity;
-		const { actions, sidebar: { autoTradeOn, isAllowAT, traderOn } } = this.props;
+		const { isAllowAT } = this.state;
+		const { actions, sidebar: { autoTradeOn, currentOddSystem, traderOn } } = this.props;
+
         // var {traderOn} = this.props.sidebar;
         // if( this.FLAG_LOAD  )
         // {
@@ -69,15 +84,15 @@ class Sidebar extends React.Component
 		return <div className="left_order">
 			{
 				isAllowAT &&
-				<label htmlFor="ChkLimit" className={'trader ' + (userIdentity == 'True' ? '' : 'disabled')}>
+				<label htmlFor="ChkLimit" className={'trader ' + (userIdentity === 'True' ? '' : 'disabled')}>
 					<input type="checkbox" id="ChkLimit" name="limit" className="limit" ref="chkTraderOn" checked={traderOn}
 						   onChange={(ee) => actions.actionOnTraderOnChange(ee.target.checked)}
-						   disabled={userIdentity != 'True'}/>
+						   disabled={userIdentity !== 'True'}/>
 					<span>
-						Active bettor
+						Active Player
 						<span className="help">
 							<span className="help_message">
-								<strong>The Active Bettor interface offers some slick, highly sophisticated, super user friendly, never offered before in the betting world, functionalities, so fasten your seatbelts and off you go to the market - fast!</strong>
+								<strong>The Active Player interface offers some slick, highly sophisticated, super user friendly, never offered before in the betting world, functionalities, so fasten your seatbelts and off you go to the market - fast!</strong>
 							</span>
 						</span>
 					</span>
@@ -88,137 +103,33 @@ class Sidebar extends React.Component
 					<input type="checkbox" className="auto" onChange={actions.actionOnAutoTradeChange} checked={autoTradeOn}/>
 					<span>
 						Auto trade
-						<span className="help">
-							<span className="help_message">
-								<strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, vel?</strong>
-							</span>
-						</span>
+						{/*<span className="help">*/}
+							{/*<span className="help_message">*/}
+								{/*<strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, vel?</strong>*/}
+							{/*</span>*/}
+						{/*</span>*/}
 					</span>
 				</label>
 			}
 			<div className="wrapper">
 				<div className="tabs">
-					<span className="tab active">Trade Slip</span>
+					<span className="tab active">{_t('TradeSlip')}</span>
 					{
 						ABpp.User.userIdentity ?
-							<span className="tab js-tab2">Your Orders</span>
+							<span className={'tab js-tab2' + (isAllowAT ? ' divide' : '')}>{_t('YourOrders')}</span>
 							:
-							<span className="tab js-tab2" data-disabled={true}>Your Orders</span>
+							<span className={'tab js-tab2' + (isAllowAT ? ' divide' : '')} data-disabled={true}>{_t('YourOrders')}</span>
 					}
 				</div>
 				<div className="tab_content order-content">
 
 					{/* // BM: --------------------------------------------------- TRADE SLIP ---*/}
-					<TradeSlip data={{...this.props.sidebar, isAllowAT}} />
+					<TradeSlip data={{...this.props.sidebar, isAllowAT: this.isAllowAT}} />
 
 					{/* // BM: --------------------------------------------------- YOUR ORDERS ---*/}
-					<EventOrders/>
+					<YourOrders currentOddSystem={currentOddSystem}/>
 				</div>
 
-			</div>
-			<div className="template">
-
-				{/* // BM: --------------------------------------------------- NEW ORDER ---*/}
-				{/*<NewOrder data={{}}/>*/}
-
-				{/*<div className="order_content default" style={{position: 'absolute', left: 0, zIndex: 10, opacity: 0, marginTop: 5}}>
-					<div className="sell-container">
-						<form action={ABpp.baseUrl + '/Order/Create'} autoComplete="off" data-ajax="true" data-ajax-begin="ajaxControllerClass.OnBeginJs" data-ajax-failure="ajaxControllerClass.OnFailureJs" data-ajax-success="ajaxControllerClass.OnSuccessJs" data-ajax-url={ABpp.baseUrl + '/Order/Create'} method="post" noValidate="novalidate">
-							<div className="container">
-								<div className="price ">
-									<label>Price</label>
-									<div className="input">
-										<input autoComplete="off" className="number" data-validation="0.33" maxLength="4" name="LimitPrice" type="text" value="" disabled="disabled"/>
-										<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
-									</div>
-								</div>
-								<div className="volume">
-									<label>Quantity</label>
-									<div className="input">
-										<input autoComplete="off" className="number quantity" data-validation="123" maxLength="8" name="Quantity" type="text" value=""/>
-										<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>
-										<div className="regulator">
-											<span className="plus" title="Press Arrow Up">{}</span>
-											<span className="minus" title="Press Arrow Down">{}</span>
-										</div>
-									</div>
-								</div>
-								<div className="obligations ">
-									<label>Sum</label>
-									<div className="input">
-										<input type="text" className="number" data-validation="40.59" maxLength="8" disabled="disabled"/>
-										<div className="warning" style={{display: 'none'}}><p>Minimal available value 0.01</p></div>
-									</div>
-								</div>
-							</div>
-							<input className="side" name="Side" type="hidden" value=""/>
-							<input className="symbol" name="Symbol" type="hidden" value=""/>
-							<input className="mirror" name="isMirror" type="hidden" value=""/>
-							<input className="direction" name="OrderType" type="hidden" value=""/>
-							<input className="price_value" name="LimitPrice" type="hidden" value=""/>
-							<div className="container">
-								<div className="submit_wrapper">
-									<input type="submit" className="btn sell wave" value="Sell" style={{textTransform: 'uppercase'}}/>
-								</div>
-								<span className="delete ">{}</span>
-								<div className="checkbox"></div>
-							</div>
-						</form>
-					</div>
-					<div className="buy-container"></div>
-				</div>
-				<div className="order_content spread" style={{position: 'absolute', left: 0, zIndex: 10, opacity: 0, marginTop: 5}}>
-					<div className="sell-buy-container">
-						<form action={ABpp.baseUrl + '/Order/Spreader'} data-ajax="true" data-ajax-begin="ajaxControllerClass.OnBeginJs" data-ajax-failure="ajaxControllerClass.OnFailureJs" data-ajax-success="ajaxControllerClass.OnSuccessJs" data-ajax-url={ABpp.baseUrl + '/Order/Spreader'} method="post" noValidate="novalidate">
-							<div className="container">
-								<div className="price sell">
-									<label>Selling price</label>
-									<div className="input">
-										<input type="text" className="number" data-validation="0.33" maxLength="4" disabled="disabled"/>
-										<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
-									</div>
-								</div>
-								<div className="volume">
-									<label>Quantity</label>
-									<div className="input">
-										<input className="number quantity" data-validation="123" maxLength="8" name="SellOrderQuantity" type="text" value=""/>
-										<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>
-										<div className="regulator">
-											<span className="plus" title="Press Arrow Up">{}</span>
-											<span className="minus" title="Press Arrow Down">{}</span>
-										</div>
-									</div>
-								</div>
-								<div className="success"><input type="submit" className="success_btn" value=""/></div>
-							</div>
-							<input className="symbol" name="Symbol" type="hidden" value=""/>
-							<input className="mirror" name="isMirror" type="hidden" value=""/>
-							<input className="SellOrderLimitPrice" name="SellOrderLimitPrice" type="hidden" value=""/>
-							<input className="BuyOrderLimitPrice" name="BuyOrderLimitPrice" type="hidden" value=""/>
-							<div className="container">
-								<div className="price buy">
-									<label>Buying price</label>
-									<div className="input">
-										<input type="text" className="number" data-validation="0.33" maxLength="4" disabled="disabled"/>
-										<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
-									</div>
-								</div>
-								<div className="volume">
-									<label>Quantity</label>
-									<div className="input">
-										<input className="number quantity" data-validation="123" maxLength="8" name="BuyOrderQuantity" type="text" value=""/>
-										<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>
-										<div className="regulator">
-											<span className="plus" title="Press Arrow Up">{}</span>
-											<span className="minus" title="Press Arrow Down">{}</span>
-										</div>
-									</div>
-								</div>
-								<span className="delete">{}</span>
-							</div>
-						</form>
-					</div>
-				</div>*/}
 			</div>
 		</div>
 	}

@@ -4,7 +4,7 @@ class popUpClass{
 			e = e || event;
 			if(e.keyCode == 27){
 				$('.pop_up').fadeOut();
-				$('body>.wrapper').removeClass('blur');
+				// $('body>.wrapper').removeClass('blur');
 				$('.video_form iframe').removeAttr('src', '');
 				// $('#order_content').remove();
 				$('.confirm_window').removeClass('bounceInUp').addClass('bounceOutDown');
@@ -19,10 +19,14 @@ class popUpClass{
 		});
 		console.log("browser version: " + $.browser.version.slice(0, 2)); // EDGE В ВЕРСИИ 50 МОГУТ ПОЛЕЗТЬ БАГИ
 	}
-	static popUpClose(closeButton, method, ...popUpWindow){
-
+	static popUpClose(closeButton, method, ...popUpWindow)
+	{
 		$(closeButton).click(callback);
-		function callback(e) {
+		function callback(e)
+		{
+			// return scrolling
+			$('body').removeClass('no-scroll');
+
 			e = e || event;
 			e.preventDefault();
 			popUpWindow.forEach(function (item) {
@@ -35,23 +39,28 @@ class popUpClass{
 
 				$(item).removeClass('active');
 			});
-			if (!$('.pop_up').hasClass('active'))
-				$('.blur').removeClass('blur');
+			// if (!$('.pop_up').hasClass('active'))
+			// 	$('.blur').removeClass('blur');
 		}
 	}
 
-	static popUpOpen(openButton, popUpWindow, focusElement){
+	static popUpOpen(openButton, popUpWindow, focusElement)
+	{
 		let browser = $.browser.chrome && ($.browser.version.slice(0, 2) > 53) || $.browser.mozilla;
 
 		$(openButton).click(callback);
-		function callback(e) {
+		function callback(e)
+		{
+			// disable scrolling while popuped
+			setTimeout(() => $('body').addClass('no-scroll'), 100);
+
 			e = e || event;
 			e.preventDefault();
 			$(popUpWindow).addClass('active').fadeIn(200);
 			$(focusElement).focus(); //'#email'
 
-			if (browser)
-				$('body>.wrapper').addClass('blur');
+			// if (browser)
+			// 	$('body>.wrapper').addClass('blur');
 
 			if($(this).parent('.video').length){
 				var ru = 'https://www.youtube.com/embed/Gv491v-RGPA?autoplay=1',
@@ -65,18 +74,27 @@ class popUpClass{
 		}
 	}
 
-	static globalPopUpClose(popUp, method, ...target){
+	static globalPopUpClose(popUp, method, ...target)
+	{
 		$(document).click(callback);
-		function callback(e) {
+		// $(document).on('click', callback);
+
+		function callback(e)
+		{
 			e = e || event;
 			if(target.length){
 				if(target.some((element) =>  $(e.target).closest(element).length != 0))
 					return;
 			}
+
+			// return scrolling
+			$('body').removeClass('no-scroll');
+
+            // 0||console.log( '$(popUp)', $(popUp), popUp, method );
 			$(popUp).removeClass('active');
 
 			if (!$('.pop_up').hasClass('active')){
-				$('body>.wrapper').removeClass('blur');
+				// $('body>.wrapper').removeClass('blur');
 				$('.video_form iframe').removeAttr('src', '');
 			}
 
@@ -86,12 +104,14 @@ class popUpClass{
 				$(popUp).hide();
 			else
 				$(popUp).fadeOut(400);
+
+            // $(document).off('click', callback);
 		}
 	}
 
 	static nativePopUpClose(popUp){
 		$(popUp).removeClass('active').fadeOut(400);
-		$('body>.wrapper').removeClass('blur');
+		// $('body>.wrapper').removeClass('blur');
 	}
 
 	static nativePopUpOpen(popUp){

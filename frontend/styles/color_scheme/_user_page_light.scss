@@ -1,21 +1,7 @@
-$user_page_balance: #dce1e6;
 @mixin payment_input_shadow{
 	box-shadow: inset 0 0 15px -3px rgba(0, 0, 0, 0.2);
 }
 @mixin user_tab_border{  border: 1px solid $default-button-bg * 0.84;  }
-@mixin user_validation_params{
-	.invalidJs{
-		color: #ff3905 !important;
-		box-shadow: inset 0 0 10px transparentize(#ff3905, 0.7) !important;
-		border: 1px solid transparentize(#ff3905, 0.7) !important;
-	}
-
-	.validJs{
-		color: #4dac2e !important;
-		box-shadow: inset 0 0 10px transparentize(#4dac2e, 0.7) !important;
-		border: 1px solid transparentize(#4dac2e, 0.7) !important;
-	}
-}
 @mixin user_balance_color_map{
 	&.pl {
 		color: #4dac2e;
@@ -49,13 +35,12 @@ $user_page_balance: #dce1e6;
 	&.ava {  background: transparentize(#1196d4, 0.8);  }
 }
 $user_page_tr_separate: #afb5bb;
-$user_page_payment_list_bg: linear-gradient(to top, #bdc0cd, #ffffff);
-$user_page_arrow: -228px -212px;
-@mixin user_page_separate{
+$active_selection_bg: linear-gradient(to top, #bdc0cd, #ffffff);
+$dropbox_list_bg: #bdc0cd;
+//$user_page_arrow: -228px -212px;
+@mixin user_page_li{
 	border-bottom: 1px solid #bdc0cd;
 	border-top: 1px solid #fff;
-}
-@mixin user_page_li_action{
 	&:hover{  background: #bdc0cd;  }
 	&:active{  background: #bdc0cd * 0.9;  }
 }

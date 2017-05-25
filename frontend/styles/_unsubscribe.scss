@@ -1,0 +1,22 @@
+.answer_wrapper{
+	@include span(10.2 of 12);
+	@include push (1.8 of 12);
+	margin-top: 70px;
+	padding: 15px;
+	//height: 100%;
+	//position: fixed;
+	color: $main-color;
+}
+
+.answer_container{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: column;
+	height: calc(100% - 70px);
+	text-align: center;
+	h1{  text-transform: none;  }
+	h1, p{
+		&.animated{  animation-duration: 2.5s;  }
+	}
+}

@@ -5,14 +5,14 @@ import {DateLocalization} from '../../models/DateLocalization';
 
 export class TabOpenOrders extends React.Component
 {
-    filters = {'Sport': 'Sport', 'Economy': 'Economy', 'E-Sport': 'E-Sport', 'Society': 'Society', };
+    filters = {'fantasy sport': 'Fantasy Sport', 'economy': 'Economy', 'e-sport': 'E-Sport', 'society': 'Society', };
 
     constructor(props)
     {
         super(props);
 
         var filters = {};
-        Object.keys(this.filters).forEach((item) => { filters[this.filters[item]] = true });
+        Object.keys(this.filters).forEach((item) => { filters[item] = true });
         this.state = {filters: filters};
     }
 
@@ -28,31 +28,30 @@ export class TabOpenOrders extends React.Component
 
     render()
     {
-        var {data: openOrdersData} = this.props;
-// 0||console.debug( 'openOrdersData', openOrdersData );
-
+        const { data: openOrdersData, yourOrdersActions } = this.props;
+        // 0||console.debug( 'openOrdersData', openOrdersData );
         // filter btn
-        var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "1"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '2'} htmlFor={inCatName + "1"} className={inCatName.toLowerCase().replace("-", "_")}><span className="sub_tab">{inCatName}</span></label>];
+        var filterBtn = (inCatName, $ca) => [<input key={inCatName + "11"} id={$ca = inCatName.replace(" ", "_").replace("-", "_") + "11"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '13'} htmlFor={$ca} className={this.filters[inCatName].toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{this.filters[inCatName]}</span></label>];
 
 
         return <div className="tab_item">
             <div className="my_position_tab">
                 <div className="wrapper">
                     <div className="filters">
-                        {filterBtn(this.filters['Sport'])}&nbsp;
-                        {filterBtn(this.filters['Economy'])}&nbsp;
-                        {filterBtn(this.filters['E-Sport'])}&nbsp;
-                        {filterBtn(this.filters['Society'])}
+                        {filterBtn('fantasy sport')}&nbsp;
+                        {/*{filterBtn(this.filters['Economy'])}&nbsp;*/}
+                        {filterBtn('e-sport')}
+                        {/*{filterBtn(this.filters['Society'])}*/}
                     </div>
                     <div className="tab_content">
                         <div className="open_orders table_content">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Symbol</th>
+                                        <th>{_t('Symbol')}</th>
                                         <th>Time</th>
                                         <th>Type</th>
-                                        <th>Quantity</th>
+                                        <th>Units</th>
                                         <th>Price</th>
                                         <th>Latest</th>
                                         <th>Position</th>
@@ -68,8 +67,9 @@ export class TabOpenOrders extends React.Component
                                             {
                                                 openOrdersData.map((item, key) =>
                                                 {
-                                                    let $handicap = (item.isMirror ? item.Symbol.AwayHandicap : item.Symbol.HomeHandicap);
-                                                    if( this.state.filters[item.Category] ) return <tr key={key} className={(item.isMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))} id={item.ID}>
+                                                    const $handicap = (item.isMirror ? item.Symbol.AwayHandicap : item.Symbol.HomeHandicap);
+
+                                                    if( this.state.filters[item.Category.toLowerCase()] ) return <tr key={key} className={(item.isMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))} id={item.ID}>
                                                         <td className="title">
                                                             {(item.isMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}
                                                             <span className="muted">{$handicap && ` (${$handicap})`}</span>
@@ -77,26 +77,26 @@ export class TabOpenOrders extends React.Component
                                                             <span className="fullname muted">{item.Symbol.HomeName} - {item.Symbol.AwayName}</span>
                                                         </td>
                                                         <td>
-                                                            <span className="timestamp help">
+                                                            <span className="timestamp">
                                                                 <span className="date">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'DD MMM Y'})}</span>
-                                                                <span className="muted">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: ' hh:mm'})}</span>
+                                                                <span className="time">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: ' hh:mm'})}</span>
                                                             </span>
                                                         </td>
                                                         <td>{(item.isMirror ? (item.Side ? 'Buy' : 'Sell') : (item.Side ? 'Sell' : 'Buy'))}</td>
                                                         <td className="quantity">{item.Volume}</td>
-                                                        <td>{(item.isMirror ? Math.round10(1 - item.Price, -2) : item.Price)}</td>
+                                                        <td>{(item.isMirror ? (Math.round10(1 - item.Price, -2)).toFixed(2) : (item.Price).toFixed(2))}</td>
                                                         <td>
                                                             {
-                                                                (item.Symbol.LastSide != null) &&
+                                                                (item.Symbol.LastSide !== null) &&
                                                                     <span className={`${item.isMirror ? (item.Symbol.LastSide ? 'buy' : 'sell') : (item.Symbol.LastSide ? 'sell' : 'buy')} last_price`}>
-                                                                        {item.isMirror ? Math.round10(1 - item.Symbol.LastPrice, -2) : item.Symbol.LastPrice}
+                                                                        {item.isMirror ? (Math.round10(1 - item.Symbol.LastPrice, -2)).toFixed(2) : (item.Symbol.LastPrice).toFixed(2)}
                                                                     </span>
                                                             }
                                                         </td>
                                                         <td className={item.isPosition ? 'pos' : ''}>{}</td>
                                                         <td>
-                                                            <button className="edit btn wave">Edit</button>
-                                                            <button className="delete btn wave" style={{marginLeft : 10}}>Cancel</button>
+                                                            <button className="edit btn wave" onClick={yourOrdersActions.actionOpenEditForm.bind(null, item.ID)}>Edit</button>
+                                                            <button className="delete btn wave" onClick={yourOrdersActions.actionOpenDeleteForm.bind(null, item.ID)} style={{marginLeft : 10}}>Cancel</button>
                                                         </td>
                                                     </tr>;
                                                 })

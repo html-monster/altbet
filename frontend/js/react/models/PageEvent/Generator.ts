@@ -45,6 +45,8 @@ export class Generator
      */
     public restart()
     {
+        if (this.flagForceStop) return;
+
         if( this.TiGenerator.length )
         {
             this.cancel();
@@ -81,7 +83,7 @@ export class Generator
             // __HiDEV__||console.debug( 'time', time, moment.unix(time/1000), moment.unix(data[data.length-1].x/1000), data[data.length-1] );
 
             try {
-                Highcharts.charts[0].series[0].addPoint({
+                let virtPoint = {
                     x: Math.floor(time),
                     // x: moment().unix() * 1000,
                     y: yy,
@@ -92,7 +94,18 @@ export class Generator
                     vol: data[data.length-1].vol,
                     virtual: true,
                     current: moment().format("Do, h:mm:ss a")
-                }, true);
+                };
+
+
+                if( Highcharts.charts[0].series[0].data[Highcharts.charts[0].series[0].data.length-1].virtual )
+                {
+                    Highcharts.charts[0].series[0].data[Highcharts.charts[0].series[0].data.length-1] = virtPoint;
+                }
+                else
+                {
+                    Highcharts.charts[0].series[0].addPoint(virtPoint, true);
+                } // endif
+
 
                 // Highcharts.charts[0].redraw();
 
@@ -121,6 +134,7 @@ export class Generator
      */
     public cancel()
     {
+        if (this.flagForceStop) return;
         // __HiDEV__||console.warn( 'Try cancel' );
         this._stopTimer();
 
@@ -154,9 +168,19 @@ export class Generator
      */
     private _deleteVirtPoint()
     {
-        // var data = Highcharts.charts[0].series[0].options.data;
-        // this.genLastPoint && data.splice(this.genLastPoint, 1);
+        let delPoints = [];
+        let data = Highcharts.charts[0].series[0].data;
+        // search for virtual points
+        for(let ii = 0, countii = data.length; ii < countii; ii++ )
+        {
+            if( data[ii].virtual ) delPoints.push(ii);
+        } // endfor
+
+        // del virtual point from chart
+        delPoints.forEach((val) => Highcharts.charts[0].series[0].removePoint(val, true));
+
         this.genLastPoint = 0;
+
         this.chartObj.setChartData(null, true);
     };
 

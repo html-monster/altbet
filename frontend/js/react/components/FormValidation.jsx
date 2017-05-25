@@ -4,14 +4,15 @@
 
 import React from 'react';
 
-export default class FormValidation extends React.Component{
+export default class FormValidation extends React.Component
+{
 	constructor()
 	{
 		super();
 
 		this.state = {
 			submited: false,
-			sending: false,
+			// sending: false,
 			// invalid: false,
 			values: {},
 			errors: {},
@@ -28,11 +29,13 @@ export default class FormValidation extends React.Component{
 		state.values = {...state.values, ...value}
 	}
 
-	setErrors(value)
+	setErrors(value, updateForm)
 	{
 		let state = this.state;
+		// console.log('value:', value);
 
 		state.errors = {...state.errors, ...value};
+		if(updateForm) this.setState(state)
 	}
 
 	serverValidation(data)
@@ -51,35 +54,41 @@ export default class FormValidation extends React.Component{
 			state.successMessage = message;
 			this.setState(state);
 		}
-		if(JSON.stringify(rest) != '{}'){
+		if(JSON.stringify(rest) !== '{}'){
 			state.inputErrors = rest;
 			this.setState(state);
 		}
 		// console.log(JSON.stringify(rest));
 	}
 
-	onSubmit(serverValidation, e)
+	onSubmit(serverValidation, event)
 	{
-		e.preventDefault();
+		event.preventDefault();
 		let props = this.props;
 		let state = this.state;
 
 		state.submited = true;
 		state.errorMessage = '';
 		state.successMessage = '';
+
 		this.setState(state);
-		for (let elem in state.errors) {
-			if(state.errors[elem]){
-				// state.invalid = true;
-				// this.setState(state);
-				return false;
+
+		// setTimeout(() => {
+			for (let elem in state.errors)
+			{
+				// console.log('errors:', state.errors[elem]);
+				if(state.errors[elem]){
+					// state.invalid = true;
+					// this.setState(state);
+					return false;
+				}
 			}
-		}
+			props.handleSubmit(this.state.values, serverValidation || event, (serverValidation) ? event : null);
+		// }, 500)
 		// state.invalid = false;
 
-		state.sending = true;
-		this.setState(state);
-		props.handleSubmit(this.state.values, serverValidation || e, (serverValidation) ? e : null);
+		// state.sending = true;
+		// this.setState(state);
 	}
 
 	render()

@@ -5,8 +5,9 @@ import { connect } from 'react-redux'
 import BaseController from './BaseController';
 import ExchangeItem from '../components/MainPage/ExchangeItem';
 import mainPageActions from '../actions/MainPageActions.ts';
-
-
+import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
+import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
+import sidebarActions from '../actions/sidebarActions.ts';
 // class MainPage extends React.Component
 class MainPage extends BaseController
 {
@@ -18,6 +19,8 @@ class MainPage extends BaseController
         __DEV__&&console.debug( 'this.props', props );
 
         props.actions.actionOnLoad();
+
+        this.state = {loaded: "", currentExchange: ""};
     }
 
 
@@ -65,6 +68,15 @@ class MainPage extends BaseController
         ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, function(props) {self.props.actions.actionOnActiveSymbolChanged(props, self)});
 
 
+
+
+
+        // setTimeout(() => {
+        //     this._itemsAnimation('.nav_items', '.content_bet');
+        //     // $(this.refs.wrapper).addClass('loaded');
+        //     this.setState({loaded: "loaded"});
+        // }, 1000);
+
         // Waves.init();
         // Waves.attach('.wave:not([disabled])', ['waves-button']);
     }
@@ -73,27 +85,42 @@ class MainPage extends BaseController
     render()
     {
         // let isBasicMode = ABpp.config.basicMode;
-        let data = this.props.data;
-        let {activeExchange, isBasicMode, isTraiderOn} = this.props.data;
-        var $Pagination;
+        const data = this.props.data;
+        const { actions, data:{ activeExchange, chartSubscribing, isBasicMode, isTraiderOn } } = this.props;
+        const { currentExchange } = this.state;
+        let $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
-        var urlBase = appData.baseUrl.MainPage;
-let nb = "&nbsp;";
+        let urlBase = appData.baseUrl.MainPage;
+        // let nb = "&nbsp;";
+
+        // sort tabs data
+        const currSort = appData.urlQuery.sortType;
+        const $tabs = {closingsoon: 'Closing soon', popular: 'Popular', new: 'New', movers: 'Movers'};
+
 
         return (
-            <div className="nav_items">
+            <div className={`nav_items ${this.state.loaded}`}>
+                {/*<ul className="breadcrumbs">*/}
+                    {/*<li><a href="#">Sport</a></li>*/}
+                    {/*<li><a href="#">Footbool</a></li>*/}
+                    {/*<li><a href="#">UK Premiership League</a></li>*/}
+                    {/*<li>Manchester United vs. Chelsea</li>*/}
+                {/*</ul>*/}
                 <div className="wrapper" id="exchange">
-                    <div className="tabs">
-                        <span className="tab"><span data-content="Closing soon"></span></span>
-                        <span className="tab"><span data-content="Popular"></span></span>
-                        {/*<span className="tab"><span data-content="Trending"></span></span>*/}
-                        <span className="tab"><span data-content="New"></span></span>
-                        <span className="tab"><span data-content="Movers"></span></span>
+                    <div className="stattabs">
+                        {
+                            Object.keys($tabs).map((val, key) => <a href={"?sort=" + val} key={val} className={"stab" + (val == currSort || !currSort && !key ? " active" : '')}><span data-content={$tabs[val]}>{}</span></a>)
+                        }
+                        {/*<span className="stab"><a href="?sort=closingsoon"><span data-content="Closing soon">{}</span></a></span>
+                        <span className="stab"><a href="?sort=popular"><span data-content="Popular">{}</span></a></span>
+                        <span className="stab"><span data-content="Trending"></span></span>
+                        <span className="stab"><a href="?sort=new"><span data-content="New">{}</span></a></span>
+                        <span className="stab"><a href="?sort=movers"><span data-content="Movers">{}</span></a></span>*/}
                         <div className="mode_wrapper">
                             <label className="mode_switch">
-                                <input defaultChecked={!isBasicMode} id="Mode" name="Mode" type="checkbox" />
-                                <input name="Mode" type="hidden" defaultValue={!isBasicMode} />
-                                { isBasicMode ? <span>Basic Mode</span> : <span>Expert Mode</span> }
+                                <input defaultChecked={!isBasicMode} id="Mode" name="Mode" type="checkbox"
+                                       onChange={::this._modeSwitch}/>
+                                { isBasicMode ? <span>Basic View</span> : <span>Detailed View</span> }
                             </label>
                         </div>
                     </div>
@@ -101,15 +128,24 @@ let nb = "&nbsp;";
                         <div className="tab_item">
                             <div className="mp-exchanges">
                                 {data.marketsData.map((item, key) =>
-                                    <ExchangeItem key={key} data={{...item, activeExchange, isBasicMode, isTraiderOn}} actions={this.props.actions} />
+                                    <ExchangeItem key={key}
+                                        data={{...item, activeExchange, chartSubscribing, isBasicMode, isTraiderOn, currentExchange}}
+                                        mainContext={this}
+                                        setCurrentExchangeFn={::this._setCurrentExchange}
+                                        actions={actions} />
                                 )}
                             </div>
-                            { $Pagination && $Pagination.LastPage > 1 &&
-                                <div className="pagination">
+                            {
+                                $Pagination && $Pagination.LastPage > 1 &&
+                                <div className="pagination fadeIn animated">
                                     <ul className="pagination_list">
                                         {$Pagination.Pages.map((item, key) => {
                                             return <li key={key} className={(item.Disabled ? "disabled " : "") + (item.IsCurrenPage ? "active" : "")}>
-                                                <a href={urlBase + `/${item.RouteValues.action[0] == '/' ? item.RouteValues.action.slice(1) : item.RouteValues.action}?Page=${item.RouteValues.Page}`} dangerouslySetInnerHTML={{__html: item.Caption}}></a>
+                                                <a  href={urlBase + `/${item.RouteValues.action[0] === '/' ?
+                                                        item.RouteValues.action.slice(1)
+                                                        :
+                                                        item.RouteValues.action}?page=${item.RouteValues.Page}` + (currSort ? "&sort=" + currSort : '')}
+                                                    dangerouslySetInnerHTML={{__html: item.Caption}}>{}</a>
                                             </li>
                                         })}
                                     </ul>
@@ -122,17 +158,84 @@ let nb = "&nbsp;";
         );
         // return <Chart data={this.props.MainPage} actions={this.props.chartActions} />
     }
+
+
+    _itemsAnimation(inWrapper, inAnimatedRow)
+    {
+        let ii = 1;
+        inWrapper = $(inWrapper);
+
+        inWrapper.find(inAnimatedRow).css('display', 'none'); //'.content_bet'
+        // animate();
+        //
+        // // items.hide().eq($(this).index()).show().find(animated_row).each(function(){
+        // function* animate()
+        // {
+        // }
+        let animate = function* (){
+            $(this).addClass('list-animate2');
+            setInterval(() => {
+                $(this).addClass('animate2'); // /*.delay(100 * ii)*/.animate({}, 1500, function() { $(this).addClass('animate2') });
+                // this.next();
+            }, 100 * ii);
+            ii++;
+            // yield ii;
+            // .css({display: 'flex', opacity: 0, marginTop: '10px'}).animate({
+            //     opacity: '1',
+            //     marginTop: '2px'
+            // }, 300);
+        }();
+        inWrapper.show().find(inAnimatedRow).each(animate.next());
+    }
+
+
+
+    _setCurrentExchange(item)
+    {
+        this.setState({...this.state, currentExchange: item});
+    }
+
+	_modeSwitch(event)
+    {
+        const checked = event.target.checked;
+        const { sidebarActions } = this.props;
+
+        if(checked)
+        {
+            globalData.basicMode = false;
+
+			ABpp.config.basicMode = false;
+			// ABpp.config.tradeOn = false;
+			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
+
+			if(globalData.tradeOn) sidebarActions.actionOnTraderOnChange(checked);
+		}
+		else
+		{
+			globalData.basicMode = true;
+
+			ABpp.config.basicMode = true;
+			// ABpp.config.tradeOn = true;
+			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
+
+			sidebarActions.actionOnTraderOnChange(checked);
+		}
+    }
 }
 
 // __DEV__&&console.debug( 'connect', connect );
 
 export default connect(
-    state => ({
+    state => {
+        return ({
         data: state.mainPage,
         // test: state.Ttest,
-    }),
+    })
+    },
     dispatch => ({
-        // actions: bindActionCreators(actions, dispatch),
+		sidebarActions: bindActionCreators(sidebarActions, dispatch),
+		traderActions: bindActionCreators(traderActions, dispatch),
+		defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
         actions: bindActionCreators(mainPageActions, dispatch),
     })
 )(MainPage)

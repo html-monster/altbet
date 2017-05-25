@@ -2,7 +2,6 @@ import React from 'react' ;
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import {WebsocketModel} from '../models/Websocket';
 // import Page from '../components/Page'
 import Actions from '../actions/appActions.ts';
 // import * as userActions from '../actions/UserActions';
@@ -16,17 +15,15 @@ class RApp extends React.Component
 
         props.actions.setInstance(this);
 
+        ABpp.ver = '[AIV]{version}[/AIV]';
+        __DEV__&&console.info( `version: ${ABpp.ver} (<<REPLACE VERSION>>)` );
+        // 0||console.log( 'here', 4 );
+
         // set base for link urls
         // ABpp.baseUrl = location.host == 'localhost' ? "/AltBet" : "/";
         // ABpp.baseUrl = globalData.rootUrl;
 
-
-        // activate websocket
-        ABpp.Websocket = new WebsocketModel();
-        ABpp.Websocket.connectSocketServer();
-        globalData.Websocket = ABpp.Websocket; // for debug
-
-        // globalData.theme
+        props.actions.actionOnLoad();
     }
 
 

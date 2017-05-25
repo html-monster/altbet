@@ -13,8 +13,10 @@ export class SocketSubscribe
     public static TRADER_ON = '2';
     public static CURRENT_ORDERS = '4';
     public static AP_ACCOUNT_DATA = '6';
+    public static MP_CHARTS_SYMBOL = '7';
 
     private subscribeParams = { // last subscribe params
+            UserBrowser: "",
             User: "",
             PageName: '',
             ExchangeName: "",
@@ -22,6 +24,7 @@ export class SocketSubscribe
             CurrentOrders: "0",
             PaginationNumber: '1',
             CategoryPath: '', //sport/american-football
+            MainPageChartsSymbol: "",
         };
     private subscribeData = {};     // data from subscribers
 
@@ -30,6 +33,7 @@ export class SocketSubscribe
     constructor()
     {
         // init subscribe data
+        this.subscribeParams.UserBrowser = navigator.userAgent;
         this.subscribeParams.User = ABpp.User.login;
         this.subscribeParams.PageName = ABpp.config.currentPage;
     }
@@ -45,6 +49,7 @@ export class SocketSubscribe
         switch( type )
         {
             case SocketSubscribe.MP_SYMBOLS_AND_ORDERS : ret = this.setSymbolsAndOrders(data); break;
+            case SocketSubscribe.MP_CHARTS_SYMBOL : ret = this.setMpChartsSymbol(data); break;
             case SocketSubscribe.AP_ACCOUNT_DATA : ret = this.setAccountData(data); break;
             case SocketSubscribe.EP_ACTIVE_ORDER : ret = this.setActiveOrder(data); break;
             case SocketSubscribe.MYP_ORDERS_POSITIONS_HISTORY : ret = this.setOrdersPositionsHistory(data); break;
@@ -93,8 +98,10 @@ export class SocketSubscribe
             ExchangeName: props.exchange,
             ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
             // CurrentOrders: "0",
-            PaginationNumber: appData.pageNum || "1",
+            PaginationNumber: appData.urlQuery.pageNum || "1",
             CategoryPath: path, //sport/american-football
+            Sort: appData.urlQuery.sortType || "closingsoon",
+            Filter: appData.urlQuery.filter || "closingsoon",
             // CategoryPath: '',
         };
 
@@ -214,6 +221,22 @@ export class SocketSubscribe
         // 0||console.debug( 'receiveActiveOrderFixData', inData, params, activeOrders );
         return {ActiveOrders: activeOrders, Bars: bars};
     }
+
+
+
+    /**
+     * set main page chart open
+     * @param props
+     */
+    private setMpChartsSymbol(props)
+    {
+        props = { ...this.subscribeParams,
+            MainPageChartsSymbol: props.exchange,
+        };
+
+        return props;
+    }
+
 }
 
 window.SocketSubscribe = SocketSubscribe;

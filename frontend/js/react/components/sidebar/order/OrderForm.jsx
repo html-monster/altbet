@@ -2,85 +2,100 @@ import React from 'react';
 // import { bindActionCreators } from 'redux';
 // import { connect } from 'react-redux';
 // import * as orderFormActions from '../../../actions/order/orderFormActions.ts';
-import InputNumber from '../../inputNumber';
-import {OddsConverterObj} from '../../../models/oddsConverter/oddsConverter.js';
+import InputNumber from '../../InputNumber';
+import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
 
-{/*// let OddsConverterObj = new OddsConverter('implied_probability');*/}
+let OddsConverterObj = new OddsConverter();
 
+
+/**
+ * props:{
+ * 	formUrl - string, form action *required
+ * 	id - string
+ * 	limit - boolean *required
+ * 	side - string, order side *required
+ * 	price - order price
+ * 	quantity
+ * 	isMirror - *required
+ * 	symbol - event symbol *required
+ *  orderView - string, can be: 'advanced', 'simple', 'normal'
+ *  showDeleteButton - boolean
+ *  focus - string, turn on or off focus on price or quantity input; can be: 'price', 'quantity', 'normal'
+ *  focusOn - boolean, put focus on input or not
+ *  onSubmit - function
+ *  onDelete - function
+ *  onTypeChange - function
+ * }
+ */
 export default class OrderForm extends React.Component{
 	constructor(props)
 	{
 		super();
 		this.state = {
-			...props.data
+			focus: 'normal', // свойство показывающее в какое поле надо поставить фокус
+			focusOn: true, // надо ли вообще ставить фокус
+			currentOddSystem: ABpp.config.currentOddSystem,
+			...props
 		};
-		const price = this.state.Side ? 1 - Math.round10(1 - this.state.Price, -2) : this.state.Price;
-		this.state.Sum = Math.round10(price * this.state.Volume, -2);
-		if(this.state.Limit == undefined) this.state.Limit = true;
+		const price = this.state.side === 'sell' ? Math.round10(1 - this.state.price, -2) : this.state.price;
+		this.OddsConverterObj = new OddsConverter();
+		this.state.sum = Math.round10(price * this.state.quantity, -2);
+		if(this.state.price === undefined) this.state.price = '0.';
+		// if(this.state.limit === undefined) this.state.limit = true;
+
+		// let arr = [];
+		// for(let ii = 0.01; ii <= 0.99; ii += 0.01){
+		// 	arr.push(OddsConverterObj.convertToOtherSystem(ii));
+		// 	// console.log(`${Math.round10(ii, -2)}: `, OddsConverterObj.convertToOtherSystem(ii));
+		// }
+		// arr.push(OddsConverterObj.convertToOtherSystem(0.99));
+		// arr.forEach(function (item) {
+		// 	console.log(OddsConverterObj.convertToAltbetSystem(item));
+		// });
+		// console.log('==================================================================');
+		// OddsConverterObj.convertToAltbetSystem('49/1');
+		// console.log(`+104`, OddsConverterObj.convertToAltbetSystem('+104'));
+		// console.log(`-233`, OddsConverterObj.convertToAltbetSystem('-233'));
+		// console.log(`1/5`, OddsConverterObj.convertToAltbetSystem('1/5'));
+		// console.log(`-5000`, OddsConverterObj.convertToAltbetSystem('-5000'));
 	}
-
-	// OnBeginAjax()
-	// {
-	// 	$(this.refs.orderForm).find('[type=submit]').attr('disabled', true);
-	// }
-	//
-	// onSuccessAjax()
-	// {
-	// 	console.log('Order sending finished: ' + this.props.data.ID);
-	// }
-	//
-	// onErrorAjax()
-	// {
-	// 	$(this.refs.orderForm).find('[type=submit]').removeAttr('disabled');
-	// 	defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
-	// }
-
-	// ajaxSendHandler(e)
-	// {
-	// 	e.preventDefault();
-	// 	defaultMethods.sendAjaxRequest({
-	// 		httpMethod: 'POST',
-	// 		url: this.props.formData.url,
-	// 		callback: ::this.onSuccessAjax,
-	// 		onError: ::this.onErrorAjax,
-	// 		beforeSend: ::this.OnBeginAjax,
-	// 		context: $(this.refs.orderForm)
-	// 	});
-	// }
 
 	onInputIncrement(input, value, event)
 	{
+		const { onKeyDownQuantity } = this.props;
 		const state = this.state;
 		const refs = this.refs;
 
-		// console.log(refs.inputSum.refs.input);
-		if(input == 'Sum' && +state.Price){
-			const price = state.Side ? 1 - state.Price : state.Price;
-			const sum = Math.round10(+state[input] + value, -2);
-			state[input] = sum;
-			input = 'Volume';
-			value = Math.round(sum / price);
-			refs.inputSum.refs.input.focus();
-
-			if(value <= 0)
-				state[input] = 1;
-			else if(value > 9999999)
-				state[input] = 9999999;
-			else
-				state[input] = value;
-		}
-		else{
+		// if(input === 'sum' && +state.price){
+		// 	const price = state.side === 'sell' ? 1 - state.price : state.price;
+		// 	const sum = Math.round10(+state[input] + value, -2);
+		//
+		// 	if(sum > 0 && sum <= 9999999) state[input] = sum.toFixed(2);
+		//
+		// 	input = 'quantity';
+		// 	value = Math.round(sum / price);
+		// 	refs.inputSum.refs.input.focus();
+		//
+		// 	if(value <= 0)
+		// 		state[input] = 1;
+		// 	else if(value > 9999999)
+		// 		state[input] = 9999999;
+		// 	else
+		// 		state[input] = value;
+		// }
+		// else{
+			if(input === 'quantity' && onKeyDownQuantity) onKeyDownQuantity(value, event);
 			value = Math.round10(+state[input] + value, -2);
-			if(input == 'Price'){
+			if(input === 'price'){
 				if(value <= 0)
 					state[input] = value = 0.01;
 				else if(value > 0.99)
 					state[input] = value = 0.99;
 				else
-					state[input] = value;
+					state[input] = value.toFixed(2);
 
-				const price = state.Side ? 1 - value : value;
-				state['Sum'] =  Math.round10(state.Volume * price, -2);
+				const price = state.side === 'sell' ? 1 - value : value;
+				state['sum'] =  (Math.round10(state.quantity * price, -2)).toFixed(2);
 				refs.inputPrice.refs.input.focus();
 			}
 			else{
@@ -89,8 +104,8 @@ export default class OrderForm extends React.Component{
 				else if(value > 9999999)
 					state[input] = 9999999;
 				else{
-					if(input == 'Volume'){
-						const price = state.Side ? 1 - state.Price : state.Price;
+					if(input === 'quantity'){
+						const price = state.side === 'sell' ? 1 - state.price : state.price;
 						state[input] = value;
 						value = Math.round10(value * price, -2);
 						refs.inputQuantity.refs.input.focus();
@@ -98,12 +113,14 @@ export default class OrderForm extends React.Component{
 					else
 						refs.inputSum.refs.input.focus();
 
-					state['Sum'] = value;
+					state['sum'] = value.toFixed(2);
 					// state[input] = value;
 				}
 
 			}
-		}
+		// }
+		state.focusOn = false;
+
 		this.setState(state)
 	}
 
@@ -111,314 +128,453 @@ export default class OrderForm extends React.Component{
 	{
 		const code = event.which || event.charCode || event.keyCode;
 
-
-		if(code == 38){
+		if(code === 38){
 			event.preventDefault();
-			this.onInputIncrement(input, input == 'Price' ? 0.01 : 1, event);
+			this.onInputIncrement(input, input === 'price' ? 0.01 : 1, event);
 		}
-		else if(code == 40)
-			this.onInputIncrement(input, input == 'Price' ? -0.01 : -1, event)
+		else if(code === 40){
+			this.onInputIncrement(input, input === 'price' ? -0.01 : -1, event);
+		}
 	}
 
 	onInputChange(input, event)
 	{
 		const state = this.state;
-		const inputValue = event.target.value;
+		const { onChangeQuantity } = this.props;
+		const inputValue = ((event.target.value).replace('$', ''));
 		let value;
-		if(input == 'Sum' && +state.Price){
-			value = Math.round(+inputValue / (state.Side ? 1 - state.Price : state.Price));
-			state['Volume'] = value;
-			state[input] = inputValue;
-		}
-		else if(input == 'Price'){
+
+		// if(input === 'sum' && +state.price){
+		// 	value = Math.round(+inputValue / (state.side === 'sell' ? 1 - state.price : state.price));
+		// 	state['quantity'] = value;
+		// 	state[input] = inputValue;
+		// }
+		// else
+			if(input === 'price'){
 			value = inputValue;
 			state[input] = value;
-			const price = state.Side ? 1 - value : value;
-			value = Math.round10(state.Volume * price, -2);
-			if(inputValue != '0.') state['Sum'] = value;
+			const price = state.side === 'sell' ? 1 - value : value;
+			value = Math.round10(state.quantity * price, -2);
+			if(inputValue !== '0.') state['sum'] = value.toFixed(2);
 			// console.dir(event.handler);
 		}
 		else{
 			value = inputValue;
-			if(input == 'Volume'){
-				const price = state.Side ? 1 - state.Price : state.Price;
+			if(input === 'quantity'){
+				const price = state.side === 'sell' ? 1 - state.price : state.price;
 				state[input] = value;
 				value = Math.round10(value * price, -2);
+				if(onChangeQuantity) onChangeQuantity(event);
 			}
-			state['Sum'] = value;
+			state['sum'] = value.toFixed(2);
 		}
 		// console.log(value);
 		// state[input] = value || '';
 		// console.log(state[input]);
-		this.setState(state);
+		state.focusOn = false;
 
+		this.setState(state);
 	}
 
 	onTypeChange(checkboxProp)
 	{
-		const price = $(this.refs.inputPrice.refs.input);
-		const quantity = $(this.refs.inputQuantity.refs.input);
+		let state = this.state;
+		const { newOrder, onTypeChange } = this.props;
+		// const price = $(this.refs.inputPrice.refs.input);
+		// const quantity = $(this.refs.inputQuantity.refs.input);
 
-		this.state.Limit = !checkboxProp;
-		this.setState(this.state);
+		state.limit = !checkboxProp;
 
-		// if (!checkboxProp) {
-		//
-		// 	setTimeout(function () {
-		// 		price.focus();
-		// 		price[0].selectionStart = 4;
-		// 	}, 300);
-		// }
-		// else {
-			quantity.focus();
-			quantity[0].selectionStart = quantity.val().length;
-		// }
+		this.setState(state);
+
+		this.componentFocus();
+
+		if(onTypeChange) onTypeChange(checkboxProp);
 	}
 
-	shouldComponentUpdate(nextProps, nextState){
-			// console.log(this.props.data, nextProps.data);
-		if((JSON.stringify(this.props.data) == JSON.stringify(nextProps.data) &&
-			this.state == nextState)){
+	shouldComponentUpdate(nextProps, nextState)
+	{
+		// console.log(this.props.limit, nextProps.limit);
+		// console.log(JSON.stringify(this.props) === JSON.stringify(nextProps));
+		// console.log('this.state:', this.state.quantity);
+		// console.log('nextState:', nextState.quantity);
+		if((JSON.stringify(this.props) === JSON.stringify(nextProps) &&
+			this.state === nextState && this.state.currentOddSystem === ABpp.config.currentOddSystem))
+		{
 			return false;
 		}
+		this.state.currentOddSystem = ABpp.config.currentOddSystem;
 		// console.log(JSON.stringify(this.props.data));
 		// console.log(JSON.stringify(nextProps.data));
-		if(JSON.stringify(this.props.data) != JSON.stringify(nextProps.data)){
-			this.state.Price = nextProps.data.Price;
-			this.state.Volume = nextProps.data.Volume
+		if(this.props.price !== nextProps.price || this.props.quantity !== nextProps.quantity
+			|| this.props.limit !== nextProps.limit || this.props.focusOn !== nextProps.focusOn)
+		{
+			this.state.price = nextProps.price;
+			this.state.quantity = nextProps.quantity;
+			this.state.limit = nextProps.limit;
+			this.state.sum = Math.round10(nextProps.price * nextProps.quantity, -2);
+			if(nextProps.focusOn !== undefined) this.state.focusOn = nextProps.focusOn
 		}
 
 		return true;
 	}
 
-	componentFocus(){
-		let data = this.props.data;
+	onPriceFocus()
+	{
+		if(!this.state.limit) this.onTypeChange(false);
+	}
 
-		if(data.NewOrder){
-			let dom = this.refs;
+	onBlur()
+	{
+		let state = this.state;
 
-			if(data.Limit && data.Price == '0.'){
-				dom.inputPrice.refs.input.focus();
+		state.price = (+state.price).toFixed(2);
+
+		this.setState(state);
+	}
+
+	rippleHide()
+	{
+		$('.waves-ripple').remove();
+	}
+
+	onClickSide(side)
+	{
+		// console.log('side:', side);
+		// console.log('this.state:', this.state);
+		this.setState({...this.state, side})
+	}
+
+	componentFocus()
+	{
+		const { focus, focusOn, limit } = this.state;
+		const price = this.refs.inputPrice.refs.input;
+		const quantity = this.refs.inputQuantity.refs.input;
+
+		if(focusOn){
+			switch (focus){
+				case 'price':
+					price.focus();
+					break;
+				case 'quantity':
+					quantity.focus();
+					break;
+				default:
+					if (limit) price.focus();
+					else quantity.focus();
 			}
-			else
-				dom.inputQuantity.refs.input.focus();
 		}
 	}
 
-	componentDidUpdate(prevProps){
-		const data = this.props.data;
-		const prevData = prevProps.data;
+	componentDidUpdate(prevProps, prevState)
+	{
+		const props = this.props;
 		// const state = this.state;
-		// console.log(state);
-		// console.log(prevState);
-		if(data.Price != prevData.Price || data.Volume != prevData.Volume || data.Limit != prevData.Limit){
+		// console.log('props.quantity:', props.quantity);
+		// console.log('prevProps.quantity:', prevProps.quantity);
+		// console.log('state.quantity:', state.quantity);
+		// console.log('prevState.quantity:', prevState.quantity);
+		if(props.price !== prevProps.price || (props.quantity !== prevProps.quantity /*&& props.quantity !== state.quantity*/)
+			|| props.limit !== prevProps.limit){
 			this.componentFocus();
 		}
 	}
 
-	componentDidMount(){
+	componentDidMount()
+	{
 		this.componentFocus();
 	}
 
 	render()
 	{
 		const stateData = this.state;
-		const { actions, containerData, data, formData, onOrderDelete } = this.props;
-		let className = data.Side ? 'sell' : 'buy';
-		let orderId;
-		const checkboxProp = (data.Limit == undefined) ?
-			stateData.Limit
-			:
-			data.Limit;
-		const style = checkboxProp ? {display: 'block'} : {display: 'none'};
+		const { formUrl, id, side, ask, bid, limit, isMirror, symbol, newOrder = true, orderView = 'normal', price, showDeleteButton = true, onSubmit, onDelete} = this.props;
+		const fees = Math.round10(ABpp.config.takerFees * stateData.quantity, -2);
+		let checkboxProp = stateData.limit;
+		// let formClass;
 
- 		if(!data.NewOrder){
- 			orderId = data.ID;
- 			data.Price = data.isMirror ? Math.round10(1 - data.Price, -2) : Math.round10(data.Price, -2);
-			className = (data.isMirror) ?
-				data.Side ? 'buy' : 'sell'
-				:
-				data.Side ? 'sell' : 'buy';
+		let probability = '';
+
+
+		if(side === 'sell')
+		{
+			if(bid && stateData.price <= bid) probability = ' high';
+			if(bid && Math.round10(stateData.price <= bid + 0.05, -2) && stateData.price > bid) probability = ' high_middle';
+			if(bid && Math.round10(stateData.price <= bid + 0.1, -2) && Math.round10(stateData.price > bid + 0.05, -2)) probability = ' middle';
+			if(bid && Math.round10(stateData.price <= bid + 0.15, -2) && Math.round10(stateData.price > bid + 0.1, -2)) probability = ' low_middle';
+			if(bid && stateData.price > Math.round10(bid + 0.15, -2)) probability = ' low';
 		}
-		else{
- 			orderId = data.Symbol ? `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}_${data.Side}_${data.isMirror}` : ''
+		else
+		{
+			if(ask && stateData.price >= ask) probability = ' high';
+			if(ask && Math.round10(stateData.price >= ask - 0.05, -2) && stateData.price < ask) probability = ' high_middle';
+			if(ask && Math.round10(stateData.price >= ask - 0.1, -2) && Math.round10(stateData.price < ask - 0.05, -2)) probability = ' middle';
+			if(ask && Math.round10(stateData.price >= ask - 0.15, -2) && Math.round10(stateData.price < ask - 0.1, -2)) probability = ' low_middle';
+			if(ask && stateData.price < Math.round10(ask - 0.15, -2)) probability = ' low';
 		}
-		const price = stateData.Side ? Math.round10(1 - stateData.Price, -2) : stateData.Price;
-		// const sum = +price && (/[0-9]+|[.][0-9]+/gi.test(data.Sum) || !data.Sum) ? Math.round10(price * data.Volume, -2) : data.Sum;
-		const fees = Math.round10(ABpp.config.takerFees * stateData.Volume, -2);
+		// if(orderMode === 'expert')
+		// 	formClass = '';
+		// else if(orderMode === 'basic'){
+		// 	formClass = ' basic_mode';
+		// 	// checkboxProp = true
+		// }
+		// else
+		// 	formClass = ABpp.config.basicMode ? ' basic_mode' : '';
+
+
+		// const style = checkboxProp ? {display: 'block'} : {display: 'none'};
 
 		return (
-			<form action={formData.url} className={className + (ABpp.config.basicMode ? ' basic_mode' : '') + ' animated'} autoComplete="off"
-				  onSubmit={actions.actionOnAjaxSend.bind(null, this, containerData)} method="post"
-				  noValidate="novalidate" ref="orderForm" data-verify={['Price', 'Volume']}>
-				<div className="container">
+			<form action={formUrl} className={side + ' animated'} autoComplete="off"
+					  onSubmit={onSubmit} method="post"
+				  noValidate="novalidate" data-verify={['price', 'quantity']}>
+				<div className={'container' + (showDeleteButton && onDelete ? ' close_btn' : '')}>
 					<div className="price">
-						<label htmlFor={`${orderId}_price`}>
+						<label className="with_info" htmlFor={`${id}_price`}>
 							{
 								checkboxProp ?
-									'Your price'
+									'Per Unit'
 									:
 									'Market price'
 							}
+							{
+								<div className="help">
+									<div className="help_message right">
+										<p>
+											{`${this.OddsConverterObj.getSystemName()} odds : ${checkboxProp ?
+												+stateData.price ? this.OddsConverterObj.convertToOtherSystem(stateData.price) : ''
+												:
+												+price ? this.OddsConverterObj.convertToOtherSystem(stateData.price) : ''}`}
+
+										</p>
+									</div>
+								</div>
+							}
 						</label>
 						<div className="input">
-							<InputNumber type="tel" id={`${orderId}_price`} className="number" data-validation="0.33"
-										 maxLength="4" name="LimitPrice" autoComplete="off"
-										 onChange={this.onInputChange.bind(this, 'Price')}
-										 onKeyDown={this.onInputKeyDown.bind(this, 'Price')}
-										 value={checkboxProp ? stateData.Price : data.Price}
-										 key={checkboxProp}
-										 disabled={!(checkboxProp)} ref="inputPrice" inputValidate = 'price'/>
+							<InputNumber type="tel" id={`${id}_price`} className={'number' + probability}
+										 maxLength="5" autoComplete="off"
+										 onChange={this.onInputChange.bind(this, 'price')}
+										 onKeyDown={this.onInputKeyDown.bind(this, 'price')}
+										 onFocus={::this.onPriceFocus}
+										 onBlur={::this.onBlur}
+										 value={checkboxProp ? stateData.price : price}
+										 key={price}
+										 hard={true} label={true} disabled={!limit}
+										 ref="inputPrice" inputValidate = 'price'/>
 							<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
 							{
-								<div className="regulator" style={style}>
-									<span className="plus" onClick={this.onInputIncrement.bind(this, 'Price', 0.01)}
-										  title="Press Arrow Up">{}</span>
-									<span className="minus" onClick={this.onInputIncrement.bind(this, 'Price', -0.01)}
-										  title="Press Arrow Down">{}</span>
-								</div>
+								!limit ?
+									''
+									:
+									<div className="regulator">
+											<span className="plus" onClick={this.onInputIncrement.bind(this, 'price', 0.01)}
+												  title="Press Arrow Up">{}</span>
+										<span className="minus" onClick={this.onInputIncrement.bind(this, 'price', -0.01)}
+											  title="Press Arrow Down">{}</span>
+									</div>
 							}
 						</div>
 					</div>
 					<div className="volume">
-						<label htmlFor={`${orderId}_quantity`}>Quantity</label>
+						<label htmlFor={`${id}_quantity`}>Units</label>
 						<div className="input">
-							<InputNumber type="tel" id={`${orderId}_quantity`} className="number" data-validation="123"
+							<InputNumber type="tel" id={`${id}_quantity`} className="number" data-validation="123"
 										 maxLength="7" name="Quantity" autoComplete="off"
-										 onChange={this.onInputChange.bind(this, 'Volume')}
-										 onKeyDown={this.onInputKeyDown.bind(this, 'Volume')}
-										 value={stateData.Volume}
+										 onChange={this.onInputChange.bind(this, 'quantity')}
+										 onKeyDown={this.onInputKeyDown.bind(this, 'quantity')}
+										 value={stateData.quantity}
 										 ref="inputQuantity" inputValidate = 'integer'/>
 							<div className="warning" style={{display: 'none'}}>
 								<p>Available integer value more than 0</p>
 							</div>
 							<div className="regulator">
-								<span className="plus" onClick={this.onInputIncrement.bind(this, 'Volume',  1)}
+								<span className="plus" onClick={this.onInputIncrement.bind(this, 'quantity',  1)}
 									  title="Press Arrow Up">{}</span>
-								<span className="minus" onClick={this.onInputIncrement.bind(this, 'Volume',  -1)}
+								<span className="minus" onClick={this.onInputIncrement.bind(this, 'quantity',  -1)}
 									  title="Press Arrow Down">{}</span>
 							</div>
 						</div>
 					</div>
-					<div className="obligations">
-						<label htmlFor={`${orderId}_sum`}>Sum</label>
-						<div className="input">
-							<InputNumber type="tel" id={`${orderId}_sum`} className="number" data-validation="40.59" hard="true"
-										 onChange={this.onInputChange.bind(this, 'Sum')}
-										 onKeyDown={this.onInputKeyDown.bind(this, 'Sum')}
-										 value={checkboxProp ? stateData.Sum || '' : ''}
-										 maxLength="7" autoComplete="off" disabled={!(checkboxProp)} ref="inputSum"/>
-							<div className="warning" style={{display: 'none'}}><p>Minimal available value 0.01</p></div>
-							{
-								<div className="regulator" style={style}>
-									<span className="plus" onClick={this.onInputIncrement.bind(this, 'Sum', 1)}
-										  title="Press Arrow Up">{}</span>
-									<span className="minus" onClick={this.onInputIncrement.bind(this, 'Sum', -1)}
-										  title="Press Arrow Down">{}</span>
-								</div>
-							}
-						</div>
-					</div>
+					{/*<div className="obligations">*/}
+						{/*<label htmlFor={`${id}_sum`}>Amount</label>*/}
+						{/*<div className="input">*/}
+							{/*<InputNumber type="tel" id={`${id}_sum`} className="number" data-validation="40.59" hard={true}*/}
+										 {/*onChange={this.onInputChange.bind(this, 'sum')}*/}
+										 {/*onKeyDown={this.onInputKeyDown.bind(this, 'sum')}*/}
+										 {/*value={checkboxProp ? (!stateData.sum ||stateData.sum === '0.00' ? '' : stateData.sum) : ''}*/}
+										 {/*label={true}*/}
+										 {/*maxLength="8" autoComplete="off" disabled={!(checkboxProp)} ref="inputSum"/>*/}
+							{/*<div className="warning right" style={{display: 'none'}}><p>Minimal available value 0.01</p></div>*/}
+							{/*{*/}
+								{/*<div className="regulator" style={style}>*/}
+									{/*<span className="plus" onClick={this.onInputIncrement.bind(this, 'sum', 1)}*/}
+										  {/*title="Press Arrow Up">{}</span>*/}
+									{/*<span className="minus" onClick={this.onInputIncrement.bind(this, 'sum', -1)}*/}
+										  {/*title="Press Arrow Down">{}</span>*/}
+								{/*</div>*/}
+							{/*}*/}
+						{/*</div>*/}
+					{/*</div>*/}
 				</div>
-				<div className="container">
-					<div className="fees">
-						<label>
-							<span>Max </span>Fees
-							<div className="help">
-								<div className="help_message right">
-									<p>Max fees for this order</p>
-								</div>
-							</div>
-						</label>
-						<div className="input">
-							<input type="text" className="number" autoComplete="off" ref="inputFees"
-								   onChange={null} value={stateData.Volume ? fees || '' : ''} disabled/>
-						</div>
-					</div>
-					<div className="risk">
-						<label>
-							Total Cost
-							<div className="help">
-								<div className="help_message right">
-									<p><span>Combined cost of contracts and  applicable fees<br/>
-										{checkboxProp && 'Formula:'}</span> {checkboxProp ?
-										+stateData.Sum ? `${stateData.Sum} + ${fees}` : ''
-										:
-										''}</p>
-								</div>
-							</div>
-						</label>
-						<div className="input">
-							<input type="text" className="number" autoComplete="off" ref="inputRisk"
-								   onChange={null} value={checkboxProp ?
-									   +stateData.Sum ? Math.round10(+stateData.Sum + fees, -2) : ''
-									   :
-									   ''} disabled/>
-						</div>
-					</div>
+				<div className="container info">
+					{/*<div className="fees">*/}
+						{/*<label className="with_info">*/}
+							{/*<span>Fees</span>*/}
+							{/*<div className="help">*/}
+								{/*<div className="help_message right">*/}
+									{/*<p>{_t('MaxAltBetFees')}</p>*/}
+								{/*</div>*/}
+							{/*</div>*/}
+						{/*</label>*/}
+						{/*<div className="input">*/}
+							{/*<input type="text" className="number" autoComplete="off" ref="inputFees"*/}
+								   {/*onChange={null} value={<div className="fees">
+									<label className="with_info">
+									<span>Fees</span>
+									<div className="help">
+									<div className="help_message right">
+									<p>{_t('MaxAltBetFees')}</p>
+									</div>
+									</div>
+									</label>
+									<div className="input">
+									<input type="text" className="number" autoComplete="off" ref="inputFees"
+									onChange={null} value={stateData.quantity ? '$' + fees.toFixed(2) || '' : ''} disabled/>
+									</div>
+									</div>} disabled/>*/}
+						{/*</div>*/}
+					{/*</div>*/}
+					{/*<div className="risk">*/}
+						{/*<label className="with_info">*/}
+							{/*Total Fees*/}
+							{/*<div className="help">*/}
+								{/*<div className="help_message">*/}
+									{/*<p><span style={{padding: 0}}>Total Pay-to Play Fees<br/>*/}
+										{/*{checkboxProp && 'Formula:'}</span> {checkboxProp ?*/}
+										{/*+stateData.sum ? `$${(+stateData.sum).toFixed(2)} + $${(fees).toFixed(2)}` : ''*/}
+										{/*:*/}
+										{/*''}</p>*/}
+								{/*</div>*/}
+							{/*</div>*/}
+						{/*</label>*/}
+						{/*<div className="input">*/}
+							{/*<input type="text" className="number" autoComplete="off" ref="inputRisk"*/}
+								   {/*onChange={null} value={checkboxProp ?*/}
+									   {/*+stateData.sum ? '$' + (Math.round10(+stateData.sum + fees, -2)).toFixed(2) : ''*/}
+									   {/*:*/}
+									   {/*''} disabled/>*/}
+						{/*</div>*/}
+					{/*</div>*/}
 					<div className="profit">
-						<label>
-							Profitability
-							<div className="help">
-								<div className="help_message right">
-									<p>
-										<span>Possible maximum prize if position results in winning outcome<br/>
-											{checkboxProp && 'Formula:'}</span> {
-											checkboxProp && +price && stateData.Volume ? `(1 - ${price}) * ${stateData.Volume}` || '' : ''
-										}
-									</p>
-								</div>
-							</div>
-						</label>
-						<div className="input">
-							<input type="text" className="number" autoComplete="off" ref="inputProfit"
-								   onChange={null} value={checkboxProp && +price && stateData.Volume ? Math.round10((1 - price) * stateData.Volume, -2) || '' : ''}
-								   disabled />
-						</div>
+						<strong className="info_string">
+							Prize: <span>{stateData.quantity ? `$${(+stateData.quantity).toFixed(2)}` : '$0.00'}</span>
+						</strong>
+						{/*<label>*/}
+							{/*{_t('Profitability')}*/}
+						{/*</label>*/}
+						{/*<div className="input">*/}
+							{/*<input type="text" className="number" autoComplete="off" ref="inputProfit"*/}
+								   {/*onChange={null} value={stateData.quantity ? `$${(+stateData.quantity).toFixed(2)}` : ''}*/}
+								   {/*disabled />*/}
+							{/*/!*checkboxProp && +price && stateData.Volume ? Math.round10((1 - price) * stateData.Volume, -2) || '' : ''*!/*/}
+						{/*</div>*/}
+					</div>
+					<div className="fees">
+						<strong className="info_string">Fees: <span>${stateData.quantity ? fees.toFixed(2) || '0.00' : '0.00'}</span></strong>
 					</div>
 				</div>
-				{data.ID ? <input name="ID" type="hidden" value={data.ID}/> : ''}
-				<input name="Symbol" type="hidden" className="symbol" value={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}/>
-				<input name="isMirror" type="hidden" className="mirror" value={data.isMirror}/>
-				<input name="Side" type="hidden" className="side" value={(className)[0].toUpperCase() + (className).slice(1)}/>
+				{!newOrder && id ? <input name="ID" type="hidden" value={id}/> : ''}
+				<input name="LimitPrice" type="hidden" value={checkboxProp ? stateData.price : price}/>
+				<input name="Symbol" type="hidden" className="symbol" value={symbol}/>
+				<input name="isMirror" type="hidden" className="mirror" value={isMirror}/>
+				<input name="Side" type="hidden" className="side" value={(stateData.side)[0].toUpperCase() + (stateData.side).slice(1)}/>
+				<input name="OrderType" type="hidden" value={checkboxProp}/>
 				<div className="container">
-					<div className="switch">
-						<label className="checkbox">
-							{
-								data.NewOrder ?
-									<input name="OrderType" type="checkbox" value="true" checked={checkboxProp}
-										   onChange={actions.actionOnOrderTypeChange.bind(null, checkboxProp, this)}/>
-									:
-									<input name="OrderType" type="checkbox" value="true" checked={checkboxProp}
-										   onChange={this.onTypeChange.bind(this, checkboxProp)}/>
-							}
-							<input name="OrderType" type="hidden" value="false"/>
-							<span>{checkboxProp ? 'Limit' : 'Market'}</span>
-						</label>
-					</div>
-					<i className="submit wave waves-input-wrapper waves-effect waves-button">
-						<input type="submit" className={`btn ${className}`} value={className} style={{textTransform: 'uppercase'}}/>
-					</i>
+					{/*<div className="switch">*/}
+						{/*<label className="checkbox">*/}
+							{/*<input name="OrderType" type="checkbox" value="true" checked={checkboxProp}*/}
+								   {/*onChange={this.onTypeChange.bind(this, checkboxProp)}/>*/}
+							{/*{*/}
+								{/*checkboxProp ? '' : <input name="OrderType" type="hidden" value="false"/>*/}
+							{/*}*/}
+							{/*<span>{checkboxProp ? 'Limit' : 'Market'}</span>*/}
+						{/*</label>*/}
+					{/*/!*</div>*!/*/}
+					{/*<span className="help amount left balloon_only">*/}
+						{/*${(Math.round10(stateData.price * stateData.quantity, -2)).toFixed(2)}*/}
+						{/*<span className="help_message">*/}
+							{/*<strong>Total Pay-to Play Fees: <br/>*/}
+								{/*${(Math.round10(stateData.price * stateData.quantity, -2)).toFixed(2)}*/}
+								{/*{' + '}${fees.toFixed(2) + ' '}*/}
+							{/*</strong>*/}
+						{/*</span>*/}
+					{/*</span>*/}
+					{/*<span className="help amount right balloon_only">*/}
+						{/*${(Math.round10((1 - stateData.price) * stateData.quantity, -2)).toFixed(2)}*/}
+						{/*<span className="help_message"><strong>MM/DD/YYYY HH:MM</strong></span>*/}
+					{/*</span>*/}
 					{
-						data.NewOrder ?
-							<span className="delete" onClick={onOrderDelete}>{}</span>
+						 (orderView === 'simple' && side === 'buy') || orderView !== 'simple'  ?
+							<i className="submit wave waves-input-wrapper waves-effect waves-button">
+								<button type="submit" className={`btn buy submit`}
+										style={{textTransform: 'uppercase'}}
+										onClick={this.onClickSide.bind(this, 'buy')}
+										onMouseUp={this.rippleHide}>
+									Buy
+									<span className="amount">
+										<span className="help balloon_only">
+											${(Math.round10(stateData.price * stateData.quantity + fees, -2)).toFixed(2)}
+											<span className="help_message right">
+												<strong>Total Pay-to Play Fees: <br/>
+													${(Math.round10(stateData.price * stateData.quantity, -2)).toFixed(2)}
+													{' + '}${fees.toFixed(2) + ' '}
+												</strong>
+											</span>
+										</span>
+									</span>
+								</button>
+							</i>
+							 :
+							 ''
+					}
+					{
+						(orderView === 'simple' && side === 'sell') || orderView !== 'simple'  ?
+							<i className="submit wave waves-input-wrapper waves-effect waves-button">
+								<button type="submit" className={`btn sell submit`}
+										style={{textTransform: 'uppercase'}}
+										onClick={this.onClickSide.bind(this, 'sell')}
+										onMouseUp={this.rippleHide}>
+									<span className="amount">
+										<span className="help balloon_only">
+											${(Math.round10((1 - stateData.price) * stateData.quantity + fees, -2)).toFixed(2)}
+											<span className="help_message">
+												<strong>Total Pay-to Play Fees: <br/>
+													${(Math.round10((1 - stateData.price) * stateData.quantity, -2)).toFixed(2)}
+													{' + '}${fees.toFixed(2) + ' '}
+												</strong>
+											</span>
+										</span>
+									</span>
+									Sell
+								</button>
+							</i>
 							:
 							''
 					}
+						{
+							showDeleteButton && onDelete ?
+								<span className="delete" onClick={onDelete}>{}</span>
+								:
+								''
+						}
+								{/*<span className="close" onClick={onDelete}><span>{}</span></span>*/}
 				</div>
-				<div className="error_pop_up">
-					<span>The connection to the server has been lost. Please check your internet connection or try again.</span>
-					<span className="close"><span>{}</span></span>
-				</div>
+				{/*<div className="error_pop_up">*/}
+					{/*<span>The connection to the server has been lost. Please check your internet connection or try again.</span>*/}
+					{/*<span className="close"><span>{}</span></span>*/}
+				{/*</div>*/}
 			</form>
 		)
 	}
 }
-
-// export default connect(state => ({
-// 		orderForm: state.orderForm,
-// 	}),
-// 	dispatch => ({
-// 		orderFormActions: bindActionCreators(orderFormActions, dispatch),
-// 	})
-// )(OrderForm)

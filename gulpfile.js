@@ -29,7 +29,7 @@ const $ = require('gulp-load-plugins')();
 
 const named = require('vinyl-named');
 
-const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV == 'development';
+const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 
 function lazyRequire(taskName, inTaskName, path, options)
@@ -85,6 +85,11 @@ lazyRequire('front-css-rev', 'def', './gulpinc/css-rev', {
     manifestPath: $pathDestServer + '/Content',
 });
 
+// BM: ================================================================================================ LOCALIZATION ===
+lazyRequire('localization', 'def', './gulpinc/localization', {
+    src: 'frontend/js/react/localization',
+    dst: $pathDestServer + '/Scripts/dist/localization',
+});
 
 // TODO: is used anymore?
 gulp.task('fonts', function() {
@@ -104,7 +109,7 @@ gulp.task('styles', function() {
         }))
       }))
       .pipe(gulpIf(isDevelopment, sourcemaps.init()))
-      .pipe(sass({outputStyle: "compact"}))
+      .pipe(sass({outputStyle: "compact"})) //compact compressed
       .pipe(autoprefixer({
         browsers: ['last 4 versions']
       }))
@@ -150,11 +155,17 @@ gulp.task('styles', function() {
 
 
 gulp.task('js',function(){
-    return gulp.src(['frontend/js/nonReact/**/*.js',  '!frontend/js/nonReact/browserCheck.js','!frontend/js/nonReact/test.js',
-      '!frontend/js/nonReact/access.js', '!frontend/js/nonReact/pageFirst.js'])
+    return gulp.src(['frontend/js/nonReact/**/*.js',
+        '!frontend/js/nonReact/browserCheck.js',
+        '!frontend/js/nonReact/test.js',
+        '!frontend/js/nonReact/access.js',
+        '!frontend/js/nonReact/pageFirst.js',
+        '!frontend/js/react/localization/**',
+        ])
     .pipe(sourcemaps.init())
     .pipe(babel({
-      presets: ['es2015']
+      presets: ['es2015', 'stage-0'],
+      plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
     }))
     .pipe($.concat('all.js'))
     // $.uglify(),
@@ -180,9 +191,14 @@ gulp.task('vendor',function(){
         'vendor/daterangepicker/daterangepicker.js',
         // '!vendor/react-15.3.1/build/react.js',
         // '!vendor/react-15.3.1/build/react-dom.js',
-        'frontend/js/nonReact/browserCheck.js']),
+        'frontend/js/nonReact/browserCheck.js',
+
+        'vendor/visibilityjs/lib/visibility.core.js',
+        'vendor/visibilityjs/lib/visibility.timers.js',
+        'vendor/visibilityjs/lib/visibility.fallback.js',
+        ]),
     $.concat('vendors.js'),
-    // $.uglify(),
+    gulpIf(!isDevelopment, $.uglify()),
     // gulp.dest('./public/js'),
     gulp.dest($pathDestServer + '/Scripts/dist'),
 
@@ -238,7 +254,8 @@ gulp.task('watch-admin', function () {
 gulp.task('watch-front-js-styles', function () {
     gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
     gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));
-    gulp.watch($pathDestServer + '/Scripts/dist/*.*', {delay: 700}, gulp.series('front-js-rev'));
+    gulp.watch('frontend/js/react/localization/*.js', gulp.series('localization'));
+    gulp.watch($pathDestServer + '/Scripts/dist/**/*.*', {delay: 700}, gulp.series('front-js-rev'));
     gulp.watch($pathDestServer + '/Content/dist/*.*', {delay: 700}, gulp.series('front-css-rev'));
 });
 

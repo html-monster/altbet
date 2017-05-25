@@ -41,7 +41,7 @@ $line1ico: -276px;
 $line2ico: -429px;
 $line3ico: -465px;
 @mixin main_page_event_icon{
-	&.sport:before{  background-position: -68px $line1ico;  }
+	&.sport:before {  background-position: -68px $line1ico;  }
 	&.cybersport:before, &.e_sport:before{  background-position: -186px $line1ico;  }
 	&.economy:before, &.finance:before{  background-position: -107px $line1ico; }
 	&.society:before{  background-position: -27px $line1ico;  }
@@ -65,6 +65,30 @@ $line3ico: -465px;
 	&.entertainment:before{  background-position: -148px $line3ico;  }
 
 }
+@mixin main_page_event_icon_invert{
+	&.sport:before{  background-position: -68px -306px;  }
+	&.e_sport:before{  background-position: -186px -306px;  }
+	&.economy:before, &.finance:before{  background-position: -107px -306px;  }
+	&.society:before{  background-position: -27px -306px;  }
+
+	&.soccer:before{  background-position: -27px -517px;  }
+	&.rugby:before{  background-position: -59px -517px;  }
+	&.basketball:before{  background-position: -88px -517px;  }
+	&.tennis:before{  background-position: -117px -517px;  }
+	&.volleyball:before{  background-position: -147px -517px;  }
+	&.hockey:before{  background-position: -176px -517px;  }
+	&.baseball:before{  background-position: -207px -517px;  }
+	&.boxing:before{  background-position: -237px -517px;  }
+	&.horse_racing:before{  background-position: -269px -517px;  }
+	&.politics:before{  background-position: -297px -517px;  }
+	&.currencies:before{  background-position: -324px -517px;  }
+	&.indexes:before{  background-position: -350px -517px;  }
+	&.dota2:before{  background-position: -27px -552px;  }
+	&.csgo:before{  background-position: -59px -552px;  }
+	&.lol:before{  background-position: -85px -552px;  }
+	&.economy:before{  background-position: -115px -552px;  }
+	&.entertainment:before{  background-position: -148px -552px;  }
+}
 @mixin main_page_event_button{
 	box-shadow: inset 0 18px 25px -8px rgba(255, 255, 255, 0.1);
 	transition: 0.2s ease;
@@ -81,10 +105,26 @@ $line3ico: -465px;
 	box-shadow: 0 0 15px 0 transparentize($link-color * 0.5, 0.2);
 }
 $main_page_event_opacity: 0.3;
-$main_page_event_info_pl_bg: -396px -516px;
-$main_page_event_info_pos_bg: -445px -516px;
+$main_page_event_info_pl_bg: -28px -10px;
+$main_page_event_info_pos_bg: -163px -10px;
 @mixin pricing_plans_separate{
 	border-left: 1px solid #211e25 * 1.4;
 	border-right: 1px solid #211e25 * 0.6;
 	&:last-child h2{  color: #4dac2e;   }
+}
+@mixin main_page_lineup_hind{
+	border: 1px solid #494949;
+	background: #28272F;
+}
+@mixin main_page_lineup_button{
+	background-position: -29px -115px;
+	&:active{  background-position: -30px -149px;  }
+}
+@mixin main_page_chart_button{
+	background-position: -117px -115px;
+	&:active{  background-position: -117px -149px;  }
+}
+@mixin main_page_empty_button{
+	background: #fff;
+	box-shadow: inset 0 -30px 20px -8px rgba(0, 0, 0, 0.3);
 }

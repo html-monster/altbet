@@ -1,3 +1,5 @@
+$allowMedia: true;
+
 @import "inc/functions";
 @import "inc/vars";
 @import "inc/default";
@@ -8,4 +10,7 @@
 @import "inc/layout";
 @import "inc/page-category";
 @import "inc/page-index";
+@import "inc/page-feed";
 @import "inc/login";
+@import "inc/status-dialog";
+@import "inc/page-newfeedexchange";

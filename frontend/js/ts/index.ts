@@ -1,14 +1,19 @@
 /// <reference path="./../.d/common.d.ts" />
 /// <reference path="./../.d/jquery.d.ts" />
+
+// import "babel-polyfill";
+
 import {SysEvents} from "../react/models/SysEvents";
+// import OddsConverter from '../react/models/oddsConverter/oddsConverter';
+
 declare let globalData : any;
 declare let window : any;
 
 
 import { User } from "../react/models/User";
-import { WebsocketModel } from "../react/models/Websocket";
+import { Localization } from "../react/common/Localization";
 
-// declare var WebsocketModel: WebsocketModel;
+declare const WebsocketModel: any;
 
 // local dev option
 // __LDEV__ = true;
@@ -20,26 +25,30 @@ import { WebsocketModel } from "../react/models/Websocket";
  */
 export class ABpp
 {
-    public static PAGE_MAIN = '1';
-    public static PAGE_EVENT = '2';
-    public static PAGE_ACCOUNT = '3';
-    public static PAGE_MYPOS = '4';
-    public static TAKER_FEES = 0.0086;
-    public static MAKER_FEES = 0.0026;
+    public static PAGE_MAIN = 'PAGE_MAIN';
+    public static PAGE_EVENT = 'PAGE_EVENT';
+    public static PAGE_ACCOUNT = 'PAGE_ACCOUNT';
+    public static PAGE_MYPOS = 'PAGE_MYPOS';
+    public static PAGE_LANDING = 'PAGE_LANDING';
+    public static PAGE_STATIC = 'PAGE_STATIC';
+    public static PAGE_ANSWER = 'PAGE_ANSWER';
+    public static TAKER_FEES = 0.04;
+    public static MAKER_FEES = 0.04;
 
 
     public static THEME_DARK = 'dark';
     public static THEME_LIGHT = 'light';
 
-    public ver = 0.31;
+    public ver = "3";
 
 
     // application config
     public config = {
         currentTheme: null,   // current theme
         currentPage: null,    // current page
+        currentOddSystem: null, // current Odd System
         takerFees: null,      // taker fees
-        makerFees: null,       // maker fees
+        makerFees: null,      // maker fees
         basicMode: true,      // play mode
         tradeOn: false,       // active trader state
     };
@@ -50,9 +59,12 @@ export class ABpp
     public actions : any = {};
 
     public User: User = null;                   // user entity
-    public Websocket: WebsocketModel = null;    // websocket object
+    public Websocket = null;                    // websocket object
     public SysEvents: SysEvents = null;         // system events
     public Store = null;                        // redux store
+    // public OddsConverter = null;                        // redux store
+    public Localization = null;                 // localization module
+    public Chart = null;                        // EP chart
 
 
     private static instance = null;
@@ -83,6 +95,9 @@ export class ABpp
         // create user
         this.createUser();
 
+        this.config.currentOddSystem = localStorage.getItem('currentOddSystem') ? localStorage.getItem('currentOddSystem') : 'Implied';
+        // this.OddsConverter = new OddsConverter();
+
         // set basic mode from user settings
         this.config.basicMode = this.User.settings.basicMode;
         this.config.tradeOn = this.User.settings.tradeOn;
@@ -90,6 +105,9 @@ export class ABpp
         // set curr ver
         globalData.AppVersion = this.ver; // for debug only
         this.baseUrl = globalData.rootUrl.slice(0, -1);
+
+
+        this.Localization = Localization;
     }
 
 
@@ -109,6 +127,12 @@ export class ABpp
             return ABpp.PAGE_ACCOUNT;
         else if( globalData.myPosOn )
             return ABpp.PAGE_MYPOS;
+        else if( globalData.landingPage )
+            return ABpp.PAGE_LANDING;
+        else if( globalData.actionName === "getstaticpage" )
+            return ABpp.PAGE_STATIC;
+        else if( globalData.answerPageOn )
+            return ABpp.PAGE_ANSWER;
     }
 
 

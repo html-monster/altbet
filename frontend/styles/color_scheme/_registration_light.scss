@@ -28,16 +28,16 @@ $reg_title: #292830;
 	&.web:after{  background-position: -361px -91px; }
 	&.phone:after{  background-position: -330px -91px; }
 }
-@mixin validation_params{
-	.input--yoshiko .input-validation-error{
-		color: #ff3905;
-		box-shadow: inset 0 0 10px transparentize(#ff3905, 0.7);
-		border: 1px solid transparentize(#ff3905, 0.7);
-	}
-
-	.input--yoshiko .valid{
-		color: #4dac2e;
-		box-shadow: inset 0 0 10px transparentize(#4dac2e, 0.7);
-		border: 1px solid transparentize(#4dac2e, 0.7);
-	}
-}
+//@mixin validation_params{
+//	.input--yoshiko .input-validation-error{
+//		color: #ff3905;
+//		box-shadow: inset 0 0 10px transparentize(#ff3905, 0.7);
+//		border: 1px solid transparentize(#ff3905, 0.7);
+//	}
+//
+//	.input--yoshiko .valid{
+//		color: #4dac2e;
+//		box-shadow: inset 0 0 10px transparentize(#4dac2e, 0.7);
+//		border: 1px solid transparentize(#4dac2e, 0.7);
+//	}
+//}

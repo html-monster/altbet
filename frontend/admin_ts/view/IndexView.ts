@@ -11,6 +11,7 @@ import Dialog from "../component/Dialog";
 import {RadioBtns} from "../component/RadioBtns";
 import {Loading} from "../component/Loading";
 import {translit} from "../component/translit.js";
+import {FormFilters} from "../component/FormFilters";
 import {User} from "../model/User";
 import Common from "../inc/Common";
 
@@ -140,36 +141,68 @@ export class IndexView extends BaseView
             "showDropdowns": true,
             "showWeekNumbers": true,
             "timePicker": true,
-            "timePicker24Hour": true,
+            // "timePicker24Hour": true,
             timePickerIncrement: 5,
             "opens": "left",
             locale: {
-                format: 'MM/DD/YYYY H:mm'
+                format: 'MM/DD/YYYY h:mm A'
             }
         });
 
 
+
         // timezones
         var data = [];
-                //[{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
-        for( let ii in globalData.timezone )
-        {
-            let val = globalData.timezone[ii];
-            data.push({id: val.offset, text: val.text});
-        } // endfor
+        var $CBtz = $("[data-js-cb-timezones]", form);
+        var $width = $CBtz.parent().width();
 
-        // var tmpl = function
-        $("[data-js-cb-timezones]").select2({
+                //[{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
+        for( let val of globalData.timezone )
+        {
+            // data.push({id: val.BaseUtcOffset, text: val.DisplayName});
+            data.push({id: val.Id, text: val.DisplayName});
+        } // endfor
+/*
+        // $CBtz.html($("#TPLtz").html());
+
+        var timeZones = moment.tz.names();
+        var offsetTmz = {};
+        // 0||console.log( 'moment.tz, timeZones', timeZones );
+        // setTimeout(() => console.log('tsz',moment.tz.names()), 700)
+
+        for (var ii in timeZones) {
+            // var parts = val.text.match(/GMT.+\)(.*\/(.*))/);
+            // 0||console.log( 'timeZones[i]', timeZones[ii] );
+            if (!offsetTmz[moment.tz(timeZones[ii]).utcOffset() + ""]) offsetTmz[moment.tz(timeZones[ii]).utcOffset() + ""] = [];
+            // offsetTmz[moment.tz(timeZones[ii]).utcOffset() + ""].push(moment.tz(timeZones[ii]).utcOffset() + ` (GMT` + moment.tz(timeZones[ii]).format('Z') + ")" + timeZones[ii]);
+            offsetTmz[moment.tz(timeZones[ii]).utcOffset() + ""].push(timeZones[ii]);
+        }
+
+        data = [];
+        for( let ii in offsetTmz )
+        {
+            let val = offsetTmz[ii];
+            data.push(val.reduce(function (res, current) {
+                return res != "" ? `${res}, ${current}` : current;
+            }, ""));
+        } // endfor*/
+
+        $CBtz.select2({
+            width: $width,
             data: data,
-            templateResult: (state) => {
+            dropdownAutoWidth: true,
+            templateResult: (state, liItm) => {
                     if (!state.id) {
                         return state.text;
                     }
+
                     var $state = $('<span class="icon ' + state.id + '">' + state.text + '</span>');
                     if (state.id < 0) var $state = $('<span class="icon noicon">' + state.text + '</span>');
                     return $state;
                 }
-        }).val(globalData.currentIcon ? globalData.currentIcon : "-100").trigger("change");
+        })
+        // .val(moment().utcOffset()/60).trigger("change");
+        .val("UTC").trigger("change");
 
 
         // disable/enable on date
@@ -298,14 +331,38 @@ export class IndexView extends BaseView
                     "showDropdowns": true,
                     "showWeekNumbers": true,
                     "timePicker": true,
-                    "timePicker24Hour": true,
+                    // "timePicker24Hour": false,
                     timePickerIncrement: 5,
                     "opens": "left",
                     locale: {
-                        format: 'MM/DD/YYYY H:mm'
+                        format: 'MM/DD/YYYY h:mm A'
                     }
                 });
 
+
+                // timezones
+                var cbdata = [];
+                var $CBtz = $("[data-js-cb-timezones]", wrapper);
+                var $width = $CBtz.parent().width();
+
+                // for( let val of globalData.timezone ) cbdata.push({id: val.BaseUtcOffset, text: val.DisplayName});
+                for( let val of globalData.timezone ) cbdata.push({id: val.Id, text: val.DisplayName});
+
+                $CBtz.select2({
+                    width: $width,
+                    data: cbdata,
+                    dropdownAutoWidth: true,
+                    templateResult: (state, liItm) => {
+                            if (!state.id) {
+                                return state.text;
+                            }
+
+                            var $state = $('<span class="icon ' + state.id + '">' + state.text + '</span>');
+                            if (state.id < 0) var $state = $('<span class="icon noicon">' + state.text + '</span>');
+                            return $state;
+                        }
+                })
+                .val("UTC").trigger("change");
 
 
                 $("[data-js=ChkStartDate]", wrapper).click(function () { $(this).find("input").click(); });
@@ -513,14 +570,48 @@ export class IndexView extends BaseView
     {
         var $that = $(target);
         var $buttons = $("[data-js-btn-side]", $that);
+
+        var ff = new FormFilters();
+        ff.bindFiltersFn($that);
+
         $buttons.click((ee) =>
         {
             $buttons.removeClass().addClass("btn btn-default");
             var $this = $(ee.target);
             $this.removeClass("btn-default").addClass($this.data("class") + ' active');
-            $("[data-js-wintype]", $that).val($this.data("id"));
-            $("[data-js-wintypestr]", $that).val($this.data("result"));
+            // $("[data-js-wintypestr]", $that).val($this.data("result"));
+
+            // 0||console.log( 'elm', $("[js-side-labels] span", $that).css({fontWidth: ''}).eq($this.data("id")), $this.data("id") );
+            var index = $this.data("id");
+            $("[data-js-side-labels] span", $that).css({fontWeight: ''}).eq(index).css({fontWeight: 'bold'});
+
+            if( index == 1 ) $("[data-js-percent]", $that).val("-1");
+            else $("[data-js-percent]", $that).val($("[data-js-side-labels] [type=text]", $that).val());
+        });
+
+        $("[data-js-side-labels] [type=text]", $that).keyup((ee) =>
+        {
+            $("[data-js-percent]", $that).val($(ee.target).val());
+            $("[data-js-btn-side]", $that).eq(0).click();
         })
+    }
+
+
+
+    public onSetStatusOkClick(inForm)
+    {
+        var $input = $("[data-js-side-labels] [type=text]");
+        var $val = $input.val();
+        $("[data-js-error-message]").text('');
+
+        if( $val != -1 && ($val < 0 || $val > 100) )
+        {
+            $input.focus().select();
+            $("[data-js-error-message]").html('<br/>Selltement value must be between 0 and 100');
+            return false;
+        } // endif
+
+        return true;
     }
 
 
@@ -578,7 +669,7 @@ export class IndexView extends BaseView
         if( $alias.val() == '' && $name != '' )
         {
             $alias.val($name.split(" ").map((val) => {
-                var $s1 = translit(val.trim(), 5);
+                var $s1 : any = translit(val.trim(), 5);
                 return $s1.replace(/[^a-zA-Z0-9]/g, '').slice(0, 3);
             }).join("").toUpperCase());
         } // endif

@@ -1,0 +1,1 @@
+export const ON_CHECK_FIELDS = 'ON_REG_CHECK_FIELDS';

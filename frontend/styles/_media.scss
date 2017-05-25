@@ -67,6 +67,7 @@ $lgmin:1201;
   }
 }
 
+
 @mixin lgmin($min){
   @media screen and(min-width: $lgmin + px){
     @content;

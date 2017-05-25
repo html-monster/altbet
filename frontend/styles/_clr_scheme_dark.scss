@@ -7,7 +7,13 @@ $default-button-bg: #211e25;
 $active_bg: linear-gradient(to top, #bdc0cd, #ffffff);
 $bg_color: linear-gradient(to bottom, #53515e, #292830);
 $color-max: #000;
+$color-min: #fff;
+$border_color: #000;
 
+$bg_grad_invert: linear-gradient(to top, #bdc0cd, #ffffff);
+$bg_grad: linear-gradient(to bottom, #53515e, #292830);
+$grad_top: #53515e;
+$grad_bottom: #292830;
 $checkbox_bg: #53525d;
 $checkbox_label_color: #ffffff;
 
@@ -19,7 +25,7 @@ $warning_message_arrow: #3a3943;
 
 @mixin separator{
 	border-top: 1px solid #17161b;
-	border-bottom: 1px solid #3b3a44;
+	border-bottom: 1px solid #484753;
 }
 
 @mixin regulator{
@@ -51,16 +57,12 @@ $warning_message_arrow: #3a3943;
 	}
 }
 
-$breadcrumbs-bg: linear-gradient(to bottom, #53515e, #292830);
-$breadcrumbs-color: transparentize(#ffffff, 0.5);
+//$breadcrumbs-bg: linear-gradient(to bottom, #53515e, #292830);
+//$breadcrumbs-color: transparentize(#ffffff, 0.5);
 
-@mixin chart{
-	svg > text:last-of-type{  visibility: hidden;  }
-	.highcharts-container{
-		padding-top: 10px;
-		border-radius: 6px;
-		background: linear-gradient(to bottom, #211e25, #292830);
-	}
+@mixin chartEP{
+	/*svg > text:last-of-type{  visibility: hidden;  }
+	//.highcharts-container{
 	rect.highcharts-background{
 		fill: transparent;
 	}
@@ -72,7 +74,24 @@ $breadcrumbs-color: transparentize(#ffffff, 0.5);
 		fill: transparentize(#ffffff, 0.6) !important;
 	}
 	.highcharts-tooltip path { fill: #53515e; }
-	//.highcharts-input-group { display: none; }
+	//.highcharts-input-group { display: none; }*/
+}
+
+@mixin chartMP{
+	& { background: linear-gradient(to bottom, #211e25, #292830); }
+	@include chartEP;
+}
+
+@mixin input_validation{
+	.invalidJs{
+		color: #ff3905 !important;
+		border: 1px solid #ff3905 * 0.7 !important;
+	}
+
+	.validJs{
+		color: #4dac2e !important;
+		border: 1px solid #4dac2e * 0.7 !important;
+	}
 }
 
 input[type="text"], input[type="email"], input[type="password"], input[type="tel"], textarea {
@@ -83,8 +102,9 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
 	}
 }
 
+
 @import "color_scheme/main_page_dark";
-@import "color_scheme/ordred_sidebar_dark";
+@import "color_scheme/_order_sidebar_dark";
 @import "color_scheme/trader_dark";
 @import "color_scheme/sign_in_dark";
 @import "color_scheme/registration_dark";

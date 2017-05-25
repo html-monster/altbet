@@ -32,7 +32,7 @@ class Actions extends BaseActions
                 // if( !activeOrders || JSON.stringify(inActiveOrders.Orders) != JSON.stringify(activeOrders.Orders) || false
                 if( !activeOrders || JSON.stringify(inActiveOrders) != JSON.stringify(activeOrders) || false
                     /*JSON.stringify(inBars) != JSON.stringify(bars)*/ )
-    __DEV__&&console.debug( 'changed socket', inActiveOrders, inBars,  activeOrders, bars );
+    // __DEV__&&console.debug( 'changed socket', inActiveOrders, inBars,  activeOrders, bars );
                 {
                     dispatch({
                         type: ON_SOCKET_MESSAGE,
@@ -50,18 +50,18 @@ class Actions extends BaseActions
 
 
 
-    public onQuantityClick(inProps)
+    public onQuantityClick(inProps, actions)
     {
         return (dispatch, getState) =>
         {
-            // 0||console.log( 'inProps', inProps );
+            // console.log( 'inProps', inProps );
 
-            if( !ABpp.config.tradeOn )
-            {
+            // if( !ABpp.config.tradeOn )
+            // {
                 let props = inProps;
                 let flag = false;
                 let qt : any = 0,
-                    bpr = inProps.Price;
+                    bpr = (inProps.Price).toFixed(2);
                     // bpr = props.data[0].Price;
                 let isBasicMode = ABpp.config.basicMode;
 
@@ -75,7 +75,6 @@ class Actions extends BaseActions
 
                 if (inProps.exdata.isMirror) bpr = (1 - bpr).toFixed(2);
 
-
         // 0||console.debug( 'bpr', bpr, qt);
 
                 // return;
@@ -84,9 +83,11 @@ class Actions extends BaseActions
                     "EventTitle": props.exdata.isMirror ? props.exdata.AwayName : props.exdata.HomeName,
                     "Positions": props.exdata.Positions,
                     "isMirror": props.exdata.isMirror ? 1 : 0,
+                    "Bid": inProps.exdata.Bid,
+                    "Ask": inProps.exdata.Ask,
                     "Orders": [
                         {
-                            "Price": bpr,
+                            "Price": bpr,//ABpp.config.basicMode ? bpr : props.bestPrice,
                             "Side": props.type == 1 ? 0 : 1, // sell/buy
                             "Symbol": {
                                 "Exchange": props.exdata.Exchange,
@@ -94,7 +95,7 @@ class Actions extends BaseActions
                                 "Currency": props.exdata.Currency
                             },
                             "Volume": qt,
-                            "Limit": ABpp.config.basicMode ? true : false,
+                            "Limit": true, //ABpp.config.basicMode,
                             "NewOrder": true,
                             "isMirror": props.exdata.isMirror ? 1 : 0
                         },
@@ -107,26 +108,41 @@ class Actions extends BaseActions
                 // === Htmlbook === 17-02-09 ===============================================
 
                 // call trade slip action
-                getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+                if(ABpp.config.tradeOn)
+                {
+                    let order : any = outStruc.Orders[0];
+                    let index = order.Price === '0.' ? 'empty' : Math.round(99 - order.Price * 100);
+
+                    actions.actionAddDefaultOrder(null, {
+                        direction: order.Side ? 'sell' : 'buy',
+                        price: order.Price,
+                        quantity: order.Volume,
+                        limit: order.Limit,
+                        outputOrder: true
+                    }, order.Limit ? index : 'market');
+                }
+                else
+                    actions.actionOnOrderCreate(outStruc);
+                // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
 
                 // dispatch({
                 //     type: ON_SOCKET_MESSAGE,
                 //     payload: { activeOrders: inActiveOrders, bars: inBars }
                 // });
-            } // endif
+            // } // endif
         }
     }
 
 
 
-    public onPriceClick(inProps)
+    public onPriceClick(inProps, actions)
     {
         return (dispatch, getState) =>
         {
             // 0||console.log( 'inProps', inProps );
 
-            if( !ABpp.config.tradeOn )
-            {
+            // if( !ABpp.config.tradeOn )
+            // {
                 let props = inProps;
                 let flag = false;
                 let qt : any = 0,
@@ -140,7 +156,7 @@ class Actions extends BaseActions
                 } // endfor
 
         // 0||console.debug( 'bpr', bpr, qt);
-                bpr = inProps.exdata.isMirror ? (1 - props.Price).toFixed(2) : props.Price;
+                bpr = inProps.exdata.isMirror ? (1 - props.Price).toFixed(2) : (props.Price).toFixed(2);
 
                 // return;
                 let outStruc = {
@@ -148,6 +164,8 @@ class Actions extends BaseActions
                     "EventTitle": props.exdata.isMirror ? props.exdata.AwayName : props.exdata.HomeName,
                     "Positions": props.exdata.Positions,
                     "isMirror": props.exdata.isMirror ? 1 : 0,
+                    "Bid": inProps.exdata.Bid,
+                    "Ask": inProps.exdata.Ask,
                     "Orders": [
                         {
                             "Price": bpr,
@@ -166,7 +184,22 @@ class Actions extends BaseActions
                 };
                 __LDEV__&&console.debug( 'outStruc', props, outStruc );
 
-                getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+                if(ABpp.config.tradeOn)
+                {
+                    let order : any = outStruc.Orders[0];
+                    let index = order.Price === '0.' ? 'empty' : Math.round(99 - order.Price * 100);
+
+                    actions.actionAddDefaultOrder(null, {
+                        direction: order.Side ? 'sell' : 'buy',
+                        price: order.Price,
+                        quantity: order.Volume,
+                        limit: order.Limit,
+                        outputOrder: true
+                    }, order.Limit ? index : 'market');
+                }
+                else
+                    actions.actionOnOrderCreate(outStruc);
+                // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
 
                 // === Htmlbook === 17-02-09 ===============================================
                 orderClass.tabReturn();
@@ -176,20 +209,20 @@ class Actions extends BaseActions
                 //     type: ON_SOCKET_MESSAGE,
                 //     payload: { activeOrders: inActiveOrders, bars: inBars }
                 // });
-            } // endif
+            // } // endif
         }
     }
 
 
 
-    public onSellBuyClick(inProps)
+    public onSellBuyClick(inProps, actions)
     {
         return (dispatch, getState) =>
         {
             // 0||console.log( 'inProps', inProps, ABpp.config.tradeOn );
 
-            if( !ABpp.config.tradeOn )
-            {
+            // if( !ABpp.config.tradeOn )
+            // {
                 let props = inProps;
 
                 let outStruc = {
@@ -197,6 +230,8 @@ class Actions extends BaseActions
                     "EventTitle": props.exdata.isMirror ? props.exdata.AwayName : props.exdata.HomeName,
                     "Positions": props.exdata.Positions,
                     "isMirror": props.exdata.isMirror ? 1 : 0,
+                    "Bid": inProps.exdata.Bid,
+                    "Ask": inProps.exdata.Ask,
                     "Orders": [
                         {
                             "Price": "0.",
@@ -214,14 +249,32 @@ class Actions extends BaseActions
                     ]
                 };
                 // __LDEV__&&console.debug( 'outStruc', props, outStruc );
+            // === Htmlbook === 17-02-09 ===============================================
+            orderClass.tabReturn();
+            // === Htmlbook === 17-02-09 ===============================================
 
-                getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+            if(ABpp.config.tradeOn)
+            {
+                let order : any = outStruc.Orders[0];
+                let index = order.Price === '0.' ? 'empty' : Math.round(99 - order.Price * 100);
+
+                actions.actionAddDefaultOrder(null, {
+                    direction: order.Side ? 'sell' : 'buy',
+                    price: order.Price,
+                    quantity: order.Volume,
+                    limit: order.Limit,
+                    outputOrder: true
+                }, order.Limit ? index : 'market');
+            }
+            else
+                actions.actionOnOrderCreate(outStruc);
+                // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
 
                 // dispatch({
                 //     type: ON_SOCKET_MESSAGE,
                 //     payload: { activeOrders: inActiveOrders, bars: inBars }
                 // });
-            } // endif
+            // } // endif
         }
     }
 

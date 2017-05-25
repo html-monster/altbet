@@ -28,7 +28,7 @@ const sourceMap = process.env.TEST || process.env.NODE_ENV !== 'production'
 module.exports = {
     // entry: ['./frontend/js/react/indexmp.tsx'],
     entry: {
-        "bundle-adm": './frontend/admin_ts/bundle-adm.ts',
+        "bundle-adm": './frontend/admin_ts/bundle-adm.js',
         // "index-admin": './frontend/ts_admin/index-admin.scss',
     },
         // styles: './frontend/styles/index-admin.scss'
@@ -59,6 +59,7 @@ module.exports = {
             '',
             '.ts',
             '.js',
+            '.jsx',
             '.scss',
         ],
     },
@@ -101,6 +102,16 @@ module.exports = {
                 exclude: [/node_modules/, /public/],
                 query: {
                     presets: ['es2015', 'stage-0', 'react'],
+                    plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
+                  }
+            },
+            {
+                test: /\.jsx$/,
+                loader: "babel-loader",
+                exclude: [/node_modules/, /public/],
+                query: {
+                    presets: ['es2015', 'stage-0', 'react'],
+                    plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
                   }
             },
         ]

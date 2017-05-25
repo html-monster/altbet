@@ -1,0 +1,71 @@
+//order_sidebar=========================================================================================================
+$order_sidebar_bg: linear-gradient(to bottom, #3b3a44, #292830);
+$order_sidebar_tab_color: #fff;
+$order_sidebar_head_separator: #000000;
+$order_sidebar_activation_column_opacity: 0.1;
+@mixin order_sidebar_tab_separator{
+	//&:first-child{  border-right: none;  }
+	&:last-child{
+		&:after{
+			content: '';
+			display: block;
+			width: 1px;
+			height: 25px;
+			background: #000000;
+			position: absolute;
+			top: 39px;
+			left: 0;
+			opacity: 0.1;
+		}
+	}
+}
+@mixin order_sidebar_current_order_title_buy{
+	//.edit{
+	//	border-left: 1px solid #292830;
+	//	border-bottom: 1px solid #292830;
+	//}
+	//.delete{
+	//	border-left: 1px solid #292830;
+	//}
+}
+@mixin order_sidebar_current_order_title_sell{
+	//.edit{
+	//	border-left: 1px solid #292830;
+	//	border-bottom: 1px solid #292830;
+	//}
+	//.delete{
+	//	border-left: 1px solid #292830;
+	//}
+}
+$order_sidebar_current_order_title_color: #ffffff;
+@mixin order_sidebar_order_input{
+	background: #292830;
+	color: #ffffff;
+	transition: 0.4s ease-out;
+	&:focus{  background: #3e3d45;  }
+	// probability fulfilment ==========
+	&.high{ color: transparentize(#3fff00, 0.2); }
+	&.high_middle{ color: transparentize(#a9ff00, 0.2); }
+	&.middle{ color: transparentize(#ffff00, 0.2); }
+	&.low_middle{ color: #ff9d00; }
+	&.low{ color: #ff0104; }
+	// probability fulfilment ==========
+}
+@mixin order_sidebar_confirm_window{
+	background: $bg_color;
+	color: #89888c;
+	.container {
+		padding: 10px;
+		background: $main-bg;
+		border: 1px solid #000;
+		border-radius: 4px;
+	}
+	button{
+		&.yes{  background: linear-gradient(to bottom, #f8b747, #ef8022);  }
+		&.no{  background: linear-gradient(to top, #bdc0cd, #ffffff);  color: #211e25;  }
+	}
+}
+$order_sidebar_order_label_color: #ffffff;
+$order_sidebar_order_edit: url("#{$pathImage}/sprite.svg") no-repeat -163px -135px;
+$order_sidebar_order_delete: url("#{$pathImage}/sprite.svg") no-repeat -163px -178px;
+$order_sidebar_order_border_color: #211e25;

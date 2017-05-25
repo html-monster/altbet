@@ -7,7 +7,13 @@ $default-button-bg: #e9eaee;
 $active_bg: linear-gradient(to bottom, #64c9ef, #3498da);
 $bg_color: #fff;
 $color-max: #fff;
+$color-min: #000;
+$border_color: #dce1e6;
 
+$bg_grad_invert: linear-gradient(to bottom, #53515e, #292830);
+$bg_grad: linear-gradient(to top, #bdc0cd, #ffffff);
+$grad_top: #ffffff;
+$grad_bottom: #ffffff;
 $checkbox_bg: #ffffff;
 $checkbox_label_color: #000000;
 
@@ -51,10 +57,10 @@ $warning_message_arrow: #ffffff;
 	}
 }
 
-$breadcrumbs-bg: #ffffff;
-$breadcrumbs-color: transparentize(#000000, 0.5);
+//$breadcrumbs-bg: #ffffff;
+//$breadcrumbs-color: transparentize(#000000, 0.5);
 
-@mixin chart{
+@mixin chartEP {
 	svg > text:last-of-type{  visibility: hidden;  }
 	.highcharts-container{
 		padding-top: 10px;
@@ -64,6 +70,23 @@ $breadcrumbs-color: transparentize(#000000, 0.5);
 	}
 	rect.highcharts-background{
 		fill: transparent;
+	}
+}
+@mixin chartMP {
+	@include chartEP;
+}
+
+@mixin input_validation{
+	.invalidJs{
+		color: #ff3905 !important;
+		box-shadow: inset 0 0 10px transparentize(#ff3905, 0.7) !important;
+		border: 1px solid transparentize(#ff3905, 0.7) !important;
+	}
+
+	.validJs{
+		color: #4dac2e !important;
+		box-shadow: inset 0 0 10px transparentize(#4dac2e, 0.7) !important;
+		border: 1px solid transparentize(#4dac2e, 0.7) !important;
 	}
 }
 

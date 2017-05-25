@@ -337,8 +337,15 @@ export class IndexController extends BaseController
             // callbackCancel: function() { $IndexView.endDeleteExch() },
             callbackOK: (ee) =>
             {
+                var form = $(ee.target).closest('form');
+
+                // check input while settlement
+                if ( type == ExchangeModel.STATUS_SETTLEMENT && !$IndexView.onSetStatusOkClick(form) ) return false;
+
+                // 0||console.log( 'ok', 0 ); return false;
+
                 // $IndexView.beginDeleteExch();
-                var formData = new FormData(<HTMLFormElement>$(ee.target).closest('form')[0]);
+                var formData = new FormData(<HTMLFormElement>form[0]);
                 formData.set('exchange', $that.data('id'));
                 // formData.set('status', 2);
                 // formData.set('result', $('[name=result]').val());

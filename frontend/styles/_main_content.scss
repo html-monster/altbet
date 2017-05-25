@@ -1,14 +1,405 @@
-.content {
-  @include span(7.6 of 12);
-  @include push (1.8 of 12);
-  margin-top: 45px;
-  padding: 15px;
-  position: relative;
+// BM: lineuppage area
+.h-event.active-exch {
+  //.h-lup__tab { top: -9px; transition: 0.4s ease-out; }
+  //.h-lup { overflow: visible }
+}
+//.h-event .lpnc-loc {
+//  .h-lup__tab { top: auto; bottom: -8px; }
+//}
+.h-lup { position: absolute; top: 100%; z-index: 2; margin: 0 10px; width: calc(100% - 20px); height: 0; border-radius: 6px; color: $color5TextWhite;
+      overflow: hidden; transition: 0.4s ease-out; @include chartMP;
+  //&.active { padding-top: 10px; /*height: 400px;*/ }
+  //&:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 0;
+  //    background: $main_page_gif no-repeat center $main_page_tab_color_active; }
+  //&.loader:after{  height: 100%;  }
+
+  //&__tabs { bottom: 6px; }
+
+  &__tabs__opened &__tab.active { color: $color-blue; }
+  &__tab { display: inline-block;  width: 103px; position: absolute; top: 0; line-height: 21px; font-size: 13px; text-align: center;
+    color: #fff;  transition: color 0.4s ease-out; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
+    &_1 { right: 50%;
+      margin-right: 1px;
+      padding-left: 16px;
+      padding-right: 13px;
+      @include main_page_lineup_button;
+    }
+    &_2 {
+      left: 50%;
+      margin-left: 1px;
+      padding-left: 13px;
+      padding-right: 16px;
+      @include main_page_chart_button;
+    }
+    &:hover{  color: $color-blue;  }
+  }
+
+  //&.active &__tab_content { opacity: 1; transition: .4s; }
+  &__tab_content {  position: relative; padding-top: 20px !important; overflow: hidden; /*opacity: 0;*/}
+
+  //&__tab1_item { padding-bottom: 40px; }
+
+  &__tab_item { display: none !important;
+    &.loading:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+      border-radius: 6px; background: $main_page_gif no-repeat center $main_page_tab_color_active; }
+    &.active { display: block !important; }
+  }
+
+  .lineup_swch{
+    .h-tab1__tab { padding: 0 10px; width: auto;  height: 20px; line-height: 17px; font-size: 12px; transition: 0s;
+      &.active{  line-height: 18px;  }
+    }
+  }
+  .highcharts-tab { text-align: center; }
+  .highcharts-container { display: inline-block; }
+  svg { width: 100% !important;  }
+  img{  width: 100%;  }
+}
+
+
+
+
+// BM: Lineup page teams
+.l-lup { padding: 0 10px 40px;
+  &__rules { position: absolute; right: 15px; font-size: 11px; }
+  &__link { color: $main-color }
+}
+.l-team { width: 100%; /*color: #bdc0cd;*/ font-size: 13px;
+  //&:nth-of-type(2), &:nth-of-type(5) { padding-right: 5px }
+  //&:nth-of-type(3), &:nth-of-type(6) { padding-left: 5px }
+  &__title { margin: 5px 0 0 0; padding-bottom: 5px; border-bottom: 1px solid darken(#bdc0cd, 20%); text-align: left; font-size: 14px; font-weight: bold }
+  &__team { width: 100%; border-collapse: separate; border-spacing: 3px;
+    td, th { font-size: 12px; text-align: center; vertical-align: top; }
+    tr:hover td { text-shadow: 0 0 10px #bdc0cd; cursor: pointer }
+    tr.totals {
+      td:first-child { text-align: left }
+      td { color: #fff; font-weight: bold }
+    }
+    //.pos {  }
+    .pl { position: relative; padding-left: 5px; text-align: left; }
+  }
+  //&__total { margin-top: 10px; padding-top: 10px; border-top: 1px solid darken(#bdc0cd, 20%); font-size: 14px; text-align: left }
+}
+
+// BM: player info block
+.l-team__team tr:hover .b-pl-info { visibility: visible; opacity: 1 }
+//.l-team__team tr:active .b-pl-info { visibility: visible; opacity: 1 }
+.b-pl-info { position: absolute; left: 20px; top: 100%; padding: 10px;
+      text-align: right;  text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
+      @include main_page_lineup_hind;
+  &__main-inf {  }
+  &__statistic { font-size: 12px; }
+}
+
+
+// BM: rules & scoring
+.h-rns { display: table-cell; width: 100%;
+  .tabs { width: 30%; min-width: 300px; }
+  .tab_content { display: flex; padding-bottom: 35px; height: 100%; color: #bdc0cd;
+    a { color: #3498da; position: relative;
+      &:hover::after { left: 0; width: 100%; }
+      &::after { content: ''; display: block; position: absolute; left: 50%; bottom: -1px; width: 0; height: 1px;
+          background: linear-gradient(to right, transparent, #3498da, transparent); transition: all .3s ease-out;
+      }
+    }
+  }
+  .tab_item { margin-top: 20px }
+  .tab_item1 { padding: 10px 15px 15px; text-align: left; overflow: hidden; @include scroll; }
+  .tab_item2 { width: 100%;
+    .list { display: inline-block; width: 50%; text-align: center; }
+    ul { display: inline-block; }
+    li { padding-bottom: 10px; text-align: left; }
+  }
+}
+
+
+
+// BM: Exchanges (events)
+@mixin visibleAttr { position: static; transition: .5s; /*transition-delay: .3s*/ };
+@mixin hiddAttr { position: absolute };
+.ac-index.co-home {
+  .mp-exchanges { display: flex; flex-wrap: wrap; justify-content: space-between; }
+  .h-event { display: flex;  flex-direction: column;  justify-content: space-between; position: relative; margin: 1px 0;
+		width: calc(50% - 1px); min-width: 410px; border-radius: 6px; z-index: 10; color: $color4TextWhite;
+    &:nth-child(odd) { margin-right: 2px; }
+
+    // ovverride on activate exchange
+    &.active-exch { z-index: 11; color: $color4TextBlack;
+      &>.bg { background: linear-gradient(to bottom, #EBEBEB, #B8B8B8); }
+      .l-title {
+        .score { color: #3f9622; }
+        .seemore-lnk { color: $color4TextBlack; }
+      }
+      .button-container {
+        button.event.empty { background: #8D9095 linear-gradient(to bottom, lighten(#8D9095, 10%), lighten(#54525D, 20%)) } //#8D9095
+        &.opener { @include hiddAttr; visibility: hidden; opacity: 0; transition: .2s; }
+      }
+      .button-container.buy .button:first-child button.empty span { color: $color4TextWhite }
+      .button-container.sell .button:last-child button.empty span { color: $color4TextWhite }
+      .event-date{  @include main_page_event_icon_invert;  }
+      .button-container.buy.nobets { width: 52px; }
+      .l-buttons .inner { @include visibleAttr; visibility: visible; opacity: 1; transition: .4s }
+    }
+
+    //&.basic_mode .button-container {
+    //  &.buy .button:not(:first-child), .buy button:not(:first-child){  display: none;  }
+    //  &.sell .button:not(:last-child), .sell button:not(:last-child){  display: none;  }
+    //}
+    &.expert-mode {
+      .event-symbols { padding-right: 15px; }
+      .button-container {
+        &.sell, &.buy {
+          //&.onebtn!*, &.hideall*! { width: 50%;
+          &.nobets {
+            .button { @include visibleAttr; visibility: visible; opacity: 1; }
+          }
+          &.buy.nobets { width: 52px }
+        }
+        &.opener { @include hiddAttr; visibility: hidden; opacity: 0; transition: .2s; }
+      }
+      .l-buttons .inner { @include visibleAttr; visibility: visible; opacity: 1; transition: .4s }
+    }
+
+    &>.bg { position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-radius: 6px;
+        background: linear-gradient(to bottom, #53515e, #292830); z-index: -1; transition: .4s ease-out;
+      &.active {  }
+    }
+
+    .event-date { position: absolute; left: 10px; top: 15px;
+      &:before { content: ''; display: inline-block; margin-right: 5px; width: 24px; height: 22px; background: url("#{$pathImage}/sprite.svg") no-repeat; }
+      @include main_page_event_icon;
+      span { /*display: inline-block; margin-right: 5px;*/ font-size: 12px; vertical-align: top;
+        &.date { transition: none }
+        //&.time{  color: $main-color-darker;  }
+      }
+    }
+
+    .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 45px 25px 15px 15px; height: 100%;
+        font-size: 13px; transition: .4s; }
+    .h-symbol { display: flex; justify-content: space-between; align-items: center; min-height: 35px; }
+    .l-title { font-weight: bold;
+      @include md(1600) { max-width: 270px; }
+      .score { color: #4ade1a; }
+      .seemore-lnk { color: $color4TextWhite; transition: color .1s; }
+      a.seemore-lnk:hover { color: $color-blue; }
+      .last-price { white-space: nowrap;
+        &.down i { display: inline-block; top: 2px; background-position: -309px -308px; }
+        &.up i { display: inline-block; top: 0; background-position: -292px -306px; }
+        i { display: none; position: relative; margin-right: -5px; width: 15px; height: 16px; background-size: cover;
+            background: url(../../Images/sprite.svg) no-repeat; }
+            //background: url(../../Images/temp/sprite-01.svg) no-repeat; background-position: 0px 0px; }
+      }
+    }
+    .l-buttons {
+      .inner { display: block; position: relative; min-width: 281px; text-align: right;  @include hiddAttr; visibility: hidden; opacity: 0;
+            transition: .2s;
+        @include md(1600) { min-width: 191px; }
+      }
+    }
+
+
+    .button-container { display: inline-flex; position: relative; width: 50%; height: 35px; vertical-align: middle; //transition: .3s;
+      &:first-of-type { padding-right: 3px; text-align: left }
+      &:last-of-type { padding-left: 2px; text-align: right }
+
+      .button { display: inline-block; /*@include hiddAttr; visibility: hidden; opacity: 0*/ }
+
+      button.event { position: relative; margin: 0 2px; padding: 0; min-width: 43px; height: 32px; border-radius: 4px; text-transform: uppercase;
+          background: $default-button-bg; vertical-align: middle; transition: all 0.4s ease-out !important;
+        @include main_page_event_button;
+        &:first-child {  margin-left: 0;  }
+        &:last-child {  margin-right: 0;  }
+        &:not([disabled]):after { content: ''; position: absolute; display: block; left: 0; top: 0; width: 100%; height: 100%;
+            background: #000000; border-radius: 4px; opacity: 0; z-index: 1; }
+        &:hover:after {  opacity: 0.15;  }
+        &:active:after {  opacity: 0;  }
+        &:before { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 4px; }
+        &.empty {
+          //@include main_page_empty_button;
+          span { display: block; padding: 0 !important; height: 32px; line-height: 32px; //color: $color-max !important;
+            &.price { font-size: 11px; }
+          }
+        }
+        &.empty-balvan {
+					background: transparent; box-shadow: inset 0 1px 7px 0 rgba(0, 0, 0, 0.3);
+					//background: transparent; box-shadow: inset 0 3px 11px 0 rgba(0, 0, 0, 0.3);
+				}
+
+        span { display: block; position: relative; line-height: 13px; /*color: $main_page_event_title;*/ font-weight: 600; z-index: 2;
+          &.price { padding: 3px 8px 0; font-size: 13px; }
+          &.volume { padding-bottom: 3px; font-size: 10px; color: darken($color4TextWhite, 25%); }
+        }
+      }
+
+      &.opener { @include visibleAttr; visibility: visible; position: absolute; right: 35px; top: calc(50% - 35px/2); width: auto;
+          opacity: 1; transition: .4s;
+        button { padding: 0 10px; color: #333; font-size: 14px; background: linear-gradient(to top, #bdc0cd, #ffffff); font-weight: bold; text-transform: none }
+        i { display: inline-block; position: relative; margin-right: 10px; top: 3px; width: 18px; height: 18px;
+            background: url(../../Images/sprite.svg) no-repeat; background-position: -269px -305px; }
+      }
+
+
+      // left buttons
+      &.sell, &.buy { button.empty { font-size: 12px; } }
+      &.sell { text-align: right;
+        &>button:not(.empty):last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
+        // for preview
+        /*
+        &.onebtn { width: 43px;
+          .button { @include hiddAttr; visibility: hidden; opacity: 0 }
+          .button:last-of-type { @include visibleAttr; visibility: visible; opacity: 1; }
+        }
+        */
+        /*&.hideall, */&.nobets { width: 0;
+          .button { @include hiddAttr; visibility: hidden; opacity: 0 }
+        }
+
+        .button { margin-left: 3px;
+          &:last-child{
+            button { background-image: linear-gradient(to bottom, #64c9ef, #3498da);
+              &:not(.empty){  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
+              span{ color: #fff; opacity: 0.8; }
+            }
+          }
+          @include md(1600) {
+            &:nth-last-of-type(3) { display: none !important; }
+          }
+        }
+      }
+      // right buttons
+      &.buy { text-align: left  ;
+        &>button:not(.empty):first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
+        // for preview
+        //&.nobets { width: 43px; }
+        &.nobets { width: 0;
+          .button { @include hiddAttr; visibility: hidden; opacity: 0 }
+        }
+        /*
+        &.onebtn { width: 43px;
+          .button { @include hiddAttr; visibility: hidden; opacity: 0; }
+          .button:first-of-type { @include visibleAttr; visibility: visible; opacity: 1; }
+        }
+        */
+        /*
+        &.hideall { width: 0;
+          .button { @include hiddAttr; visibility: hidden; opacity: 0; }
+        }
+        */
+
+        .button { margin-right: 3px;
+          &:first-child{
+            button { background-image: linear-gradient(to bottom, #f88447, #ef4d22);
+              //&:not(.empty){  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
+              &.empty span { /*color: $color4TextWhite;*/ }
+              span{ color: #fff; opacity: 0.8; }
+            }
+          }
+          @include md(1600) {
+            &:nth-of-type(3) { display: none !important; }
+          }
+        }
+      }
+    }
+
+    // lineup tabs
+		&.no_lineups{
+          .lpnc_tabs {display: none; }
+          .lpnc-loc{
+            .pl, .pos{ width: 140px; height: 20px; transform: none;
+              &:not(.active){ height: 0; transform: scaleY(0); }
+              strong{  margin-top: 3px;  }
+            }
+            .pl{ left: calc(50% - 140px); background-position: -28px -73px;
+              strong { float: left; margin-left: 25px; }
+            }
+            .pos { background-position: -124px -73px;
+              strong { float: right; margin-right: 25px; }
+            }
+          }
+		}
+    // &.active .lpnc-loc { bottom: -12px; }
+    .lpnc-loc { position: relative; bottom: -2px; height: 37px; text-align: center; transition: 0.4s ease-out;
+      //.loc1, .loc2 { display: inline-block; width: 108px; height: 37px; transform: scaleY(0.55) translateY(14px);
+      //    background: url("#{$pathImage}/sprite_components.svg") no-repeat; }
+      //.loc1 { background-position: -28px -11px; }
+      //.loc2 { background-position: -163px -11px; }
+
+			.pl, .pos{
+				width: 108px;  height: 37px;  position: absolute;  bottom: 0;  font-size: 11px;  font-weight: normal;
+				line-height: 16px;  color: $main-color;  background: url("#{$pathImage}/sprite_components.svg") no-repeat;
+				overflow: hidden;  transition: 0.4s ease-out;  transform: scaleY(0.55) translateY(14px);
+				&.active{  transform: none;  }
+				strong{  display: block;  width: 90px;  transform: translateY(-20px);  transition: 0.2s ease-out;  font-weight: normal;  }
+			}
+			.pl{
+				left: calc(50% - 108px); background-position: $main_page_event_info_pl_bg;
+				//padding-left: 13px;  padding-right: 0;  right: -5px;
+				//.profit{  color: #4dac2e;  }
+				//.loss{  color: #ff3905;  }
+				strong{  float: right;  }
+				span{
+					&.win{  color: #4dac2e;  }
+					&.lose{  color: #ff3905;  }
+				}
+			}
+			.pos{
+				left: 50%; background-position: $main_page_event_info_pos_bg;
+				//padding-right: 13px;  padding-left: 0;  left: -6px;
+				strong{  float: left;  }
+				span{  color: $main_page_pos_color;  }
+			}
+
+      &.opened .lpnc_tabs { //bottom: 0;
+        &__tab.active { color: $color-blue; }
+      }
+      .lpnc_tabs { position: absolute; left: 0; bottom: 0; width: 100%; line-height: 21px; font-size: 13px; text-align: center;
+          color: #fff;  transition: color 0.4s ease-out;
+        &__tab { display: inline-block; width: 103px; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
+              transition: color .4s; cursor: pointer;
+          &:hover { color: $color-blue; }
+          &_1 { margin-right: 1px; padding-left: 16px; padding-right: 13px; @include main_page_lineup_button; }
+          &_2 { margin-left: 1px; padding-left: 13px; padding-right: 16px; @include main_page_chart_button; }
+        }
+      }
+    }
+
+
+    // btn open lineups
+    .show-plnc { display: block; position: absolute; left: calc(50% - 20px); bottom: 0; width: 40px; height: 20px; min-height: inherit;
+          background: $main_page_event_chart_button; cursor: pointer; z-index: 4; transition: 0.4s ease-out;
+      &:before, &:after { content: ''; display: block; position: absolute; left: 12px; width: 15px; height: 1px;
+          background: #eeeeef * 0.5; transition: 0.4s ease-out; }
+      &:before {  top: 9px;  }
+      &:after {  top: 13px;  }
+      &.active{
+        &:before { top: 12px; transform: rotate(45deg); }
+        &:after { top: 12px; transform: rotate(-45deg); }
+      }
+    }
+
+    /*.mode_info_js,*/ .event_info_bottom
+    //, .h-lup__tab_content
+      { display: none; }
+  }
+}
+.content { @include span(7.6 of 12); @include push (1.8 of 12); position: relative; margin-top: 70px; padding: 15px; min-width: 800px;
+    color: $main-color;
   .nav_items {
-    .mode_wrapper{
+    &.loaded .pagination { display: block; }
+    .wrapper>.tab_content{  padding-top: 50px;  }
+  }
+}
+
+
+// ------------- ВСЁ ЧТО НИЖЕ БУДЕТ УДАЛЕНО !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ----------------------------------
+.content {
+  .nav_items {
+    &.loaded .pagination { display: block; }
+
+    .mode_wrapper {
       display: flex;
       align-items: center;
-      width: 145px;
+      width: 155px;
       height: 40px;
       padding: 0 10px;
       float: right;
@@ -37,7 +428,7 @@
         }
       }
     }
-    .tabs {
+    .stattabs {
       width: 63.33%;
       padding: 15px;
       background: $main-bg;
@@ -45,7 +436,7 @@
       top: 70px;
       left: 15%;
       z-index: 93;
-      span.tab {
+      a.stab {
         display: inline-block;
         margin-right: 10px;
         padding: 0 15px;
@@ -78,11 +469,12 @@
         @include main_page_tab_icon;
       }
     }
-    .tab_content{  padding-top: 60px;  }
+    //.tab_content{  padding-top: 50px;  }
     .ui-state-highlight{
       height: 102px;
       border: 1px dashed #fcefa1;
     }
+
     .content_bet {
       display: flex;
       align-items: stretch;
@@ -93,31 +485,13 @@
       border-radius: 6px;
       transition: 0.4s ease-out;
       cursor: default;
-      //overflow: inherit !important;
 			&:first-child{  margin-top: 0!important;  }
       &.ui-sortable-helper{  transition: 0s;  cursor: move;  }
 			&.ui-sortable-handle .content_title{  cursor: move;  }
       &.clickable{
         .waves-ripple{  display: block;;  }
-        .content_title{
-          //&:hover + .table{
-          //  .event-content:first-child h3.event-title{  color: transparentize($link-color, 0.4);  }
-          //}
-          //&:after{
-          //  content: '';
-          //  display: block;
-          //  width: 2px;
-          //  height: 100%;
-          //  position: absolute;
-          //  top: 0;
-          //  z-index: 5;
-          //  opacity: 0;
-          //  box-shadow: 0 0 15px 0 transparentize($link-color * 0.5, 1);
-          //}
-        }
         .content_title, .table{  transition: 0.4s ease-out;  }
         &:not(.event-content):hover{
-          //.event-content:first-child h3.event-title{  color: transparentize($link-color, 0.4);  }
           .content_title h2{  color: transparentize($link-color, 0.4);  }
         }
         .event-content{
@@ -131,43 +505,10 @@
         }
         &.active{
           .content_title{
-            //&:before{
-            //  left: 100%;
-            //  background: linear-gradient( to bottom, $link-color, $link-color * 0.8);
-            //}
-            //&:after{
-            //  transition: 0.4s ease-out;
-            //  right: -2px;
-            //  opacity: 1;
-            //  @include main_page_event_active;
-            //}
             h2{  color: $link-color;  }
           }
         }
         &.active .content_title h2{  color: $link-color;  }
-      }
-      &.basic_mode_js{
-        .table{
-          .event-title a{  display: none;  }
-          .event-content{
-            //.container{
-            //  margin-top: 5px;
-            //  margin-bottom: -5px;
-            //}
-
-            .button-container{
-              &:first-child{
-                button.event{ transform: scaleX(1.21) scaleY(1.19) translateX(-15px); }
-              }
-              &:last-child{
-                button.event{ transform: scaleX(1.21) scaleY(1.19) translateX(15px); }
-              }
-            }
-            .buy .button:not(:first-child), .buy button:not(:first-child){  display: none;  }
-            .sell .button:not(:last-child), .sell button:not(:last-child){  display: none;  }
-            button.event{ transform: scaleX(1.21) scaleY(1.19); }
-          }
-        }
       }
       .waves-ripple{  display: none;  }
       h2, h3 {
@@ -231,57 +572,10 @@
       }
       .help{  right: -8px;  }
       .help_message{  width: 210px;  }
-      .event_info{
-        width: calc(24% - 20px);
-        position: absolute;
-        left: 10px;
-        top: 10px;
-        z-index: 1;
-        text-align: left;
-        &:before{
-          content: '';
-          display: inline-block;
-          width: 24px;
-          height: 22px;
-          margin-right: 5px;
-          background: url("#{$pathImage}/sprite.svg") no-repeat;
-        }
-        @include main_page_event_icon;
-        span {
-          font-size: 12px;
-          display: inline-block;
-          margin-right: 5px;
-          vertical-align: top;
-          &.date{
-						width: auto;
-						height: auto;
-						color: $main-color;
-						position: relative;
-						&:after{  display: none;  }
-						span{
-							width: 100px;
-							right: 0;
-						}
-					}
-          &.time{  color: $main-color-darker;  }
-        }
-        i { float: right; padding: 3px 7px; line-height: 12px; color: #ffffff; border-radius: 4px; font-style: normal; font-weight: 700;
-            font-size: 12px; vertical-align: top;
-          &.live{  background-image: linear-gradient(to bottom, #84d65b, #4dac2e);  }
-          &.half_time{  color: transparent; background-image: linear-gradient(to bottom, $clr1Status, $clr1Status * 0.9); }
-          &.end{   background-image: linear-gradient(to bottom, #646470, #34343d);  }
-          span{  display: inline-block;  margin: 0;  margin-left: -11px;  color: #ffffff;  }
-          @include md(1550){
-            &.half_time{
-              //color: #ffffff;
-              span{ max-width: 30px; overflow: hidden;
-                &:after { content: ''; display: block; position: absolute; right: 2px; top: 1px; width: 20px; height: 16px; background: linear-gradient(to right, rgba(255, 255, 255, 0), $clr1Status) }
-              }
-              //span{  display: none;  }
-            }
-          }
-        }
-      }
+
+      .event_info_bottom { position: absolute; right: 0; bottom: 5px; padding: 0 5px 2px 5px; font-size: 11px;
+          background: #211e25; border-radius: 5px 0 0 5px; z-index: 1; }
+
       .content_title, .table{
         display: inline-block;
       }
@@ -295,31 +589,14 @@
         margin-right: 2px;
         border-radius: 6px 0 0 6px;
         @include main_page_event_bg;
-        &.command{
-          padding: 30px 10px 20px 30px;
-          position: relative;
-          &:before{
-            content: '';
-            width: 20px;
-            height: 18px;
-            position: absolute;
-            top: calc(50% - 3px);
-            left: 10px;
-            background: url("#{$pathImage}/sprite.svg") no-repeat -27px -356px;
-          }
-          h2{
-            &:before{
-              content: '';
-              display: block;
-              height: 10px;
-              width: 15px;
-              position: absolute;
-              top: calc(50% - 5px);
-              left: -19px;
-              background: url("#{$pathImage}/sprite.svg") no-repeat;
-            }
-            &:first-of-type:before{  background-position: -27px -346px;  }
-            &:last-of-type:before{  background-position: -27px -372px;  }
+        &.command { position: relative; padding: 30px 10px 30px 30px;
+          .inner { display: block; }
+          .vs { position: relative; left: -20px; top: -8px; height: 1px; color: #5f626c; font-size: 12px; text-align: left; }
+          h2 { font-size: 13px;
+            &:before { content: ''; display: block; position: absolute; left: -19px; width: 15px; height: 10px;
+                background: url("#{$pathImage}/sprite.svg") no-repeat; }
+            &:first-of-type:before{ bottom: 5px; background-position: -27px -346px;  }
+            &:last-of-type:before{ top: 5px; background-position: -27px -372px;  }
           }
         }
       }
@@ -376,224 +653,63 @@
             display: block;
             padding-left: 2px;
           }
-          .container{
-            display: flex;
-            margin-top: 18px;
-            //margin-bottom: -18px;
-            position: relative;
-            z-index: 2;
-          }
-          .button-container{
-            display: inline-flex;
-            width: 50%;
-            height: 35px;
-            vertical-align: middle;
-            &:first-of-type{
-              justify-content: flex-end;
-              padding-right: 3px;
-            }
-            &:last-of-type{
-              justify-content: flex-start;
-              padding-left: 2px;
-            }
-          }
-          button.event {
-            height: 32px;
-            padding: 0;
-            margin: 0 2px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            background: $default-button-bg;
-            vertical-align: middle;
-            @include main_page_event_button;
-            position: relative;
-            &:first-child{  margin-left: 0;  }
-            &:last-child{  margin-right: 0;  }
-            &:not([disabled]):after{
-              content: '';
-              display: block;
-              width: 100%;
-              height: 100%;
-              position: absolute;
-              top: 0;
-              left: 0;
-              z-index: 1;
-              background: #000000;
-              opacity: 0;
-              transition: 0.4s ease-out;
-              border-radius: 4px;
-            }
-            &:hover:after{  opacity: 0.15;  }
-            &:active:after{  opacity: 0;  }
-            &:before{
-              content: '';
-              display: block;
-              width: 100%;
-              height: 100%;
-              position: absolute;
-              top: 0;
-              left: 0;
-              border-radius: 4px;
-            }
-            &[disabled]{  opacity: 0.6;  }
-            &.empty{
-              width: 48px;
-              span{
-                display: block;
-                height: 32px;
-                line-height: 32px;
-                padding: 0 !important;
-              }
-            }
-            span{
-              display: block;
-              line-height: 13px;
-              color: $main_page_event_title;
-              font-weight: 600;
-              position: relative;
-              z-index: 2;
-              &.price{
-                padding: 3px 8px 0;
-                font-size: 13px;
-              }
-              &.volume{
-                padding-bottom: 3px;
-                font-size: 10px;
-                color: transparentize($main_page_event_title, 0.4);
-              }
-            }
-          }
           //.buy, .sell{
           //  display: inline-block;
           //}
-          .buy{
-              &>button:first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
-            .button { margin-right: 3px;
-              &:first-child{
-                button { background-image: linear-gradient(to bottom, #f88447, #ef4d22);
-                  span{ color: #fff; opacity: 0.8; }
-                }
-              }
-              @include md(1360) {
-                &:nth-of-type(3) { display: none; }
-              }
-            }
-          }
-          .sell {
-            &>button:last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
-            .button { margin-left: 3px;
-              &:last-child{
-                button { background-image: linear-gradient(to bottom, #64c9ef, #3498da);
-                  span{ color: #fff; opacity: 0.8; }
-                }
-              }
-              @include md(1360) {
-                &:nth-last-of-type(3) { display: none; }
-              }
-            }
-          }
+
           .pl, .pos{
-            width: 145px;
-            height: 22px;
-            //padding-top: 4px;
-            //visibility: hidden;
+            width: 108px;
+            height: 37px;
             position: absolute;
             bottom: -45px;
-            font-size: 12px;
+            font-size: 11px;
+						font-weight: normal;
+						line-height: 16px;
             color: $main-color;
-            background: url("#{$pathImage}/sprite.svg") no-repeat;
+            background: url("#{$pathImage}/sprite_components.svg") no-repeat;
             overflow: hidden;
+            transition: 0.4s ease-out;
+            transform: scaleY(0.55) translateY(14px);
+            &.active{  transform: none;  }
             strong{
               display: block;
-              margin-top: -25px;
+              width: 102px;
+              transform: translateY(-20px);
               transition: 0.2s ease-out;
+							font-weight: normal;
             }
           }
           .pl{
-            padding-left: 25px;
-            padding-right: 30px;
-            right: -6px;
+            padding-left: 13px;
+            padding-right: 0;
+            right: -5px;
             background-position: $main_page_event_info_pl_bg;
             //.profit{  color: #4dac2e;  }
             //.loss{  color: #ff3905;  }
+            strong{  float: left;  }
             span{
               &.win{  color: #4dac2e;  }
               &.lose{  color: #ff3905;  }
             }
           }
           .pos{
-            padding-right: 25px;
-            padding-left: 30px;
+            padding-right: 13px;
+            padding-left: 0;
             left: -6px;
             background-position: $main_page_event_info_pos_bg;
+            strong{  float: right;  }
             span{
               color: $main_page_pos_color;
             }
           }
         }
       }
-      .show-schedule{
-        display: block;
-        width: 40px;
-        height: 20px;
-        min-height: inherit;
-        position: absolute;
-        left: calc(50% - 20px);
-        top: 108px;
-        z-index: 2;
-        cursor: pointer;
-        background: $main_page_event_chart_button;
-        transition: 0.4s ease-out;
-        &:before, &:after{
-          content: '';
-          display: block;
-          width: 15px;
-          height: 1px;
-          background: #eeeeef * 0.5;
-          position: absolute;
-          left: 12px;
-          transition: 0.4s ease-out;
-        }
-        &:before{  top: 9px;  }
-        &:after{  top: 13px;  }
-        &.active{
-          &:before{
-            transform: rotate(45deg);
-            top: 12px;
-          }
-          &:after{
-            transform: rotate(-45deg);
-            top: 12px;
-          }
-        }
-      }
-      .schedule{
-        //display: none;
-        height: 0;
-        margin: 0 10px;
-        position: relative;
-        z-index: 2;
-        clear: both;
-        overflow: hidden;
-        transition: 0.4s ease-out;
-        &:after{
-          content: '';
-          display: block;
-          width: 100%;
-          height: 0;
-          background: $main_page_gif no-repeat center $main_page_tab_color_active;
-          position: absolute;
-          top: 0;
-          left: 0;
-        }
-        &.active{  height: 400px;  }
-        &.loader:after{  height: 100%;  }
-        svg{  max-width: 100% !important;  }
-        @include chart;
-        img{  width: 100%;  }
-      }
+
     }
+
+    //.pagination { display: none; }
   }
+  .mp-exchanges {  padding-top: 5px;  }
   .tab_item:first-child {
     display: block;
   }

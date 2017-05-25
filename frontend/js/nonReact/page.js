@@ -1,8 +1,19 @@
 window.ee = new EventEmitter();
+const DS = '/';
+
+
+/**
+ * Localization function
+ */
+function _t(inStr)
+{
+    return ABpp.Localization.translate(inStr);
+}
+
 
 
 // BM: for Discuss
-if( appData && appData.pageEventData )
+if( !globalData.landingPage && appData && appData.pageEventData )
 {
     try {
         var disqus_config = function () {
@@ -32,20 +43,20 @@ $(document).ready(function ()
 	new inputNumber('.order');
 	new inputNumber('.sing_up_form');
 
-	if(location.hostname == "altbet.html-monster.ru"){
-		let letAccess = new accessClass('.access_container input[name="login"]', '.access_container input[name="pass"]', $('.access_container input.required').parent());
+	// if(location.hostname === "altbet.html-monster.ru"){
+	// 	let letAccess = new accessClass('.access_container input[name="login"]', '.access_container input[name="pass"]', $('.access_container input.required').parent());
+	//
+	// 	$('.access_container form').submit(function (event) {
+	// 		event = event || window.event;
+	// 		event.preventDefault ? event.preventDefault() : (event.returnValue=false);
+	// 		letAccess.checkAccess('access');
+	// 	});
+	// }
 
-		$('.access_container form').submit(function (event) {
-			event = event || window.event;
-			event.preventDefault ? event.preventDefault() : (event.returnValue=false);
-			letAccess.checkAccess('access');
-		});
-	}
-
-	new menuClass();
+	// new menuClass();
 	new footerClass();
 
-	new userInspectionClass();
+	// new userInspectionClass();
 
 	// if($('.content_bet').length)
 	// 	globalData.mainPage = true;
@@ -62,31 +73,35 @@ $(document).ready(function ()
 	// tabsClass.tabsChange('.top_reg'); // page registration
 	// tabsClass.tabsChange('.wrapper_user_page'); // page registration
 
-	tabsClass.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
+
+	// анимация рынков на главной
+	// tabsClass.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
+	// $(".nav_items").find('.wrapper .tab').eq(0).addClass("active");
+
 
 	popUpClass.popUpOpen('.log_out .sign_in', '.sign_in_form', '#login-email'); // pop-up login
 	popUpClass.popUpOpen('[data-log-out]', '.sign_in_form', '#login-email');
-	popUpClass.popUpOpen('.sign_in_form a.register', '.sign_up_form', '#f_name');
-	// popUpClass.popUpOpen('.sign_up_form input.submit', '.sign_up_form .confirm');
-	popUpClass.popUpOpen('.first_page_wrapper .join', '.sign_up_form', '#f_name');
+	// popUpClass.popUpOpen('.sign_in_form a.register', '.sign_up_form', '#f_name');
+	// popUpClass.popUpOpen('.first_page_wrapper .join', '.sign_up_form', '#f_name');
 	popUpClass.popUpOpen('.video button', '.video_form');
 	popUpClass.popUpOpen('header .price_plan', '.price_plan_form');
 
 	popUpClass.popUpClose('.sign_in_form a.register', 'fadeOut', '.sign_in_form');
 	popUpClass.popUpClose('.sign_in_form .close', 'fadeOut', '.sign_in_form'); // pop-up login
 	popUpClass.popUpClose('.wrapper_user_page .payment_message .hide', 'hide', '.wrapper_user_page .payment_message'); //payment message
+	popUpClass.popUpClose('.sign_up_form .close', 'fadeOut', '.sign_up_form'); // register
 
 	popUpClass.globalPopUpClose('.warning'); // all warning message
 	popUpClass.globalPopUpClose('.user-menu', 'slideUp', '.log_in'); // login user menu
-	popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_in_form a.register', '.first_page_wrapper .join',
-	'#ui-datepicker-div', '.ui-corner-all'); // pop-up registration
+	popUpClass.globalPopUpClose('.odds_list', 'slideUp', '.odds_converter'); // login user menu
+	// popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_in_form a.register', '.first_page_wrapper .join', '#ui-datepicker-div', '.ui-corner-all', /*'.sign_up_content *'*/); // pop-up registration
 	popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in', 'header .deposit',
 			'header .my_order', '.order_screening', '[data-log-out]'); //pop-up login
 	popUpClass.globalPopUpClose('.video_form', 'fadeOut', '.pop_up_content', '.video button');
 	popUpClass.globalPopUpClose('.price_plan_js', 'fadeOut', '.pop_up_content', 'header .price_plan');
 	popUpClass.globalPopUpClose('.wrapper_user_page .payment_message', 'fadeOut', '.wrapper_user_page .payment_message .pop_up_content');//payment message
 
-	defaultMethods.maxHeight('.sign_up_form  .tab_content ', 105 + window.innerHeight * 0.1);
+	// defaultMethods.maxHeight('.sign_up_form  .tab_content ', 105 + window.innerHeight * 0.1);
 	defaultMethods.activated('.content_bet .add_favorite');
 
 	// messageClass.showHelpMessage('.active_trader .help', '.tab_item');
@@ -98,11 +113,11 @@ $(document).ready(function ()
 	new activeTraderClass(); //active trader activation
 	new eventPageClass(); //active order on the event page
 
-	new myPosClass(); // activate my pos script
+	// new myPosClass(); // activate my pos script
 
-	new modeSwitchClass(); //mode switch activate
+	// new modeSwitchClass(); //mode switch activate
 
-	new themeChangeClass();
+	// new themeChangeClass();
 	// (function changeSelect(){
 	// 	try {
 	// 		$("body select").msDropDown();
@@ -117,7 +132,10 @@ $(document).ready(function ()
 
 	// BM: Waves
 	Waves.init();
-	Waves.attach('.wave:not([disabled])', ['waves-button']);
+	Waves.attach('.wave:not([disabled])', null);
+
+	// Waves.calm('.not_wave');
+	// Waves.ripple('.not_wave', {wait: null});
 
 	(function showPass () {
 		let input = $('.input__field');
@@ -127,40 +145,15 @@ $(document).ready(function ()
 		});
 
 		input.change(function () {
-			if($(this).val() == '') $(this).parent().removeClass('input--filled');
+			if($(this).val() === '') $(this).parent().removeClass('input--filled');
 			else $(this).parent().addClass('input--filled');
 		});
 		input.blur(function () {
-			if($(this).val() == '') $(this).parent().removeClass('input--filled');
+			if($(this).val() === '') $(this).parent().removeClass('input--filled');
 			else $(this).parent().addClass('input--filled');
 		});
 	})();
 
-	$('.show-schedule').click(function(){ // show chart on the main page
-		$(this).toggleClass('active')
-					 .next().toggleClass('active');
-		$(this).parents('.table').toggleClass('active');
-		if($(this).hasClass('active'))
-			$(this).parents('.content_bet').find('.content_title').css('max-height', 'inherit');
-		else{
-			setTimeout(() => {
-				$(this).parents('.content_bet').find('.content_title').removeAttr('style');
-			}, 400);
-		}
-
-		if($('.show-schedule').hasClass('active'))
-			globalData.MainCharOn = true;
-		else
-			globalData.MainCharOn = false;
-
-		// var schedule = $(this).next();
-		// setTimeout(function(){
-		// 	schedule.addClass('loader');
-		// }, 400);
-		// setTimeout(function(){
-		// 	schedule.removeClass('loader');
-		// }, 1000);
-	});
 
 	// $('.schedule').sortable('disabled') ; //drug disable
 
@@ -183,12 +176,13 @@ $(document).ready(function ()
 		input.keypress(function () { return false; });
 		input.datepicker({  // remove "hasDatepicker" !!!!!!!!!!!!!!
 			yearRange: "1901:c+0",
-			dateFormat: "d M y",
+			dateFormat: "d M yy",
 			maxDate: "0",
 			minDate: new Date(1, 1 - 1, 1),
 			changeMonth: true,
 			changeYear: true,
-			showAnim: 'slideDown'
+			showAnim: 'slideDown',
+			onClose: (p1, p2) => 0||console.log( 'p1', p1, p2 )
 		});
 
 		//validation =======================================================================================================
@@ -225,10 +219,10 @@ $(document).ready(function ()
 		$(this).parents('.pass_container').find('input[type=text]').attr('type', 'password').focus();
 	});
 
-	$('.help').mouseenter(function () {
-		$('.help').css('zIndex', 10);
-		$(this).css('zIndex', 80);
-	});
+	// $('.help').mouseenter(function () {
+	// 	$('.help').css('zIndex', 10);
+	// 	$(this).css('zIndex', 80);
+	// });
 
 	$('.page_content_plan a').click(function (e) {
 		var target = $($(this).attr('href'));
@@ -236,14 +230,21 @@ $(document).ready(function ()
 
 		$('html,body').animate({
 			scrollTop: target.offset().top - 70
-		}, 1000);
+		}, 1000)
 	});
 
 
 	new ajaxLoginControllerClass();
-	new ajaxRegistrationControllerClass();
+	// new ajaxRegistrationControllerClass();
 	new accountClass();
 	new ajaxThemeChangeClass();
+	// mainChartController = new mainChartController();
+
+
+  // злобный костыль за 10 минут для горизонт скрола.
+
+  $(window).trigger('resize')
+
 });
 
 

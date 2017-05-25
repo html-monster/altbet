@@ -19,13 +19,21 @@ export class WebsocketModel
     private noSupportMessage = "Your browser cannot support WebSocket!";
     private connectionString = "ws://localhost:2001/";
     // private connectionString = "ws://54.171.212.235:2001/";    // IP
+    // private connectionString = "ws://192.168.1.249:2001/";
 
-    private ws = null;
+    private ws = null;                  // socket instance
     private SocketSubscribe = null;
     private callbacks = {};
     private socketData: any = null;
     private lastErrorSendObj = null;    // save send object if socket not connected
     private lastSendObj = null;         // save send last object
+    private testTime = null;
+
+
+    constructor()
+    {
+        if (globalData.webSocketUrl) this.connectionString = globalData.webSocketUrl;
+    }
 
 
     public connectSocketServer()
@@ -44,6 +52,7 @@ export class WebsocketModel
         //appendMessage("* Connecting to server ..<br/>");
         // create a new websocket and connect
         self.ws = new WebSocket(this.connectionString);
+        this.testTime = new Date(); // socket started
 
         //self.ws.
 
@@ -100,9 +109,9 @@ export class WebsocketModel
     };
 
 
-    public connectWebSocket() {
-        this.connectSocketServer();
-    };
+    // public connectWebSocket() {
+    //     this.connectSocketServer();
+    // };
 
 
 
@@ -128,6 +137,12 @@ export class WebsocketModel
 
         return params;
     };
+
+
+    public testClose()
+    {
+        this.ws.close(3001, "manual disconnect");
+    }
 
 
 
@@ -159,8 +174,11 @@ export class WebsocketModel
 // console.log(data);
 
         if (data.Result) {
-            // defaultMethods.showWarning(data.Result);
-            __DEV__&&console.log( data.Result );
+            // code - тип сообщения (closedmarket|logout|etc)
+            // message - текст
+            // type - вид сообщения - success|info|warning|error
+            defaultMethods.showMessage(data.Message, defaultMethods.MESSAGE_TYPES[data.Type]);
+            __DEV__&&console.log( data );
         }
 
         if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn)) window.ee.emit('yourOrders.update', data.CurrentOrders);//myOrdersControllerClass.updateData(data.CurrentOrders);
@@ -171,13 +189,13 @@ export class WebsocketModel
             window.ee.emit('myOrderHistory.update', data.OrdersPositionsHistory.HistoryTradeItems);
         }
         if(data.AccountData) {
-            dataController && dataController.updateHeaderData(data.AccountData);
+            // dataController && dataController.updateHeaderData(data.AccountData);
             window.ee.emit('accountData.update', data.AccountData)
         }
 
 
         // main page charts
-        if(globalData.mainPage && globalData.MainCharOn) mainChartController.drawMainCharts(data.Bars);
+        if(globalData.mainPage && globalData.MainCharOn) mainChartController && mainChartController.drawMainCharts(data.Bars);
 
         // BM: main page events data
 // 0||console.debug( 'data.SymbolsAndOrders', data.SymbolsAndOrders );
@@ -195,8 +213,7 @@ export class WebsocketModel
         // Send chart data
         if(globalData.eventPageOn) { window.ee.emit('EventPage.Chart.setData', data.Bars); }
         // if(globalData.eventPageOn) eventChartController.drawEventChart(data.Bars);
-
-        if(globalData.tradeOn)
+        if(ABpp.config.tradeOn && !ABpp.config.basicMode)
         {
             window.ee.emit('activeOrders.update', data.ActiveOrders);//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
         }
@@ -230,9 +247,11 @@ export class WebsocketModel
         // self.ws.send($('span.user-name').text());
 
         // if was a failed requests before open
-        if( this.lastErrorSendObj )
+        var sendObj = this.lastErrorSendObj || this.lastSendObj || null;
+        // 0||console.log( 'sendObj', sendObj );
+        if( sendObj )
         {
-            self.ws.send(JSON.stringify(this.lastErrorSendObj));
+            self.ws.send(JSON.stringify(sendObj));
             this.lastErrorSendObj = null;
         } // endif
 
@@ -244,6 +263,18 @@ export class WebsocketModel
     private onClose() {
         // defaultMethods.showError('socket closed');
         $("[data-js-connect-label]").fadeIn(200);
-        setTimeout(() => { this.connectSocketServer(); }, 1000);
+        // setTimeout(() => { this.connectSocketServer(); }, 1000);
+
+        var duration = moment.duration(moment(new Date()).diff(this.testTime));
+        let data = {
+            "StartTime": moment(this.testTime).format("H:mm:s DD MMM"),
+            // "EndTime": moment(moment(this.testTime).diff(new Date())).format("H:mm:s DD MMM"),
+            "EndTime": moment(new Date()).format("H:mm:s DD MMM"),
+            "Duration": `${parseInt(duration.asHours())}h ${parseInt(duration.asMinutes())}m ${parseInt(duration.asSeconds())}s`,
+        };
+        console.group("Socket time debug");
+        // console.groupCollapsed("Debug");
+        console.info(data);
+        console.groupEnd();
     }
 }

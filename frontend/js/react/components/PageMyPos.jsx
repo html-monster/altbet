@@ -12,6 +12,8 @@ import {TabMyOrderHistory} from './pageMyPos/TabHistory';
 import BaseController from '../containers/BaseController';
 import actions from '../actions/ordersPageActions';
 import myPositionsActions from '../actions/OrderPage/myPositionsActions.ts';
+import yourOrdersActions from '../actions/Sidebar/yourOrderActions.ts';
+import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
 // import {Common} from '../common/Common';
 
 
@@ -58,6 +60,7 @@ class PageMyPos extends BaseController //React.Component
     render()
     {
         const { openOrdersData, positionData, historyData } = this.state.data;
+        const { defaultOrderActions, yourOrdersActions } = this.props;
         // __DEV__ && console.log( 'PageMyPos props', this.props.route );
 
         // const myOpenOrdersFilters = ['openOrders_Sport', 'openOrders_Finance', 'openOrders_E-sport', 'openOrders_Society'];
@@ -65,9 +68,9 @@ class PageMyPos extends BaseController //React.Component
 
         return <div className="my_position">
                 <div className="container">
-                    <div className="tabs">
-                        <span className="tab">Open orders</span>
-                        <span className="tab active">My positions</span>
+                    <div className="tabs tabs_left">
+                        <span className="tab">Open Games</span>
+                        <span className="tab active">My Games</span>
                         <span className="tab">History</span>
                     </div>
 
@@ -75,10 +78,10 @@ class PageMyPos extends BaseController //React.Component
 
 
                         {/* // BM: --------------------------------------------------- OPENED ORDERS ---*/}
-                        <TabOpenOrders data={openOrdersData}/>
+                        <TabOpenOrders data={openOrdersData} yourOrdersActions={yourOrdersActions}/>
 
                         {/* // BM: --------------------------------------------------- MY POSITIONS ---*/}
-                        <TabMyPos data={positionData} actions={this.props.myPositionsActions}/>
+                        <TabMyPos data={positionData} defaultOrderActions={defaultOrderActions} actions={this.props.myPositionsActions}/>
 
 
                         {/* // BM: --------------------------------------------------- ORDER HISTORY ---*/}
@@ -96,6 +99,8 @@ export default connect(
         // test: state.Ttest,
     }),
     dispatch => ({
+		defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
+		yourOrdersActions: bindActionCreators(yourOrdersActions, dispatch),
         actions: bindActionCreators(actions, dispatch),
         myPositionsActions: bindActionCreators(myPositionsActions, dispatch),
     })

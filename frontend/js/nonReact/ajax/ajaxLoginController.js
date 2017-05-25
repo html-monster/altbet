@@ -20,15 +20,15 @@ class ajaxLoginControllerClass{
 			popUpClass.nativePopUpClose('.sign_in_form');
 			console.log('Welcome to hell }:-)');
 			$('#submit_sign_in').removeAttr('disabled');
-			$('header .log_out').removeClass('active');
-			$('header .log_in').addClass('active');
-			$('header .log_in .user-name').text(e.UserName);
-			$('header .user_info').show();
-			$('.left_order .tab').removeAttr('data-disabled');
-			$('.left_order .tab input.limit').removeAttr('disabled');
-			popUpClass.removeEventPopUp('header .deposit, header .my_order');
-			globalData.userIdentity = 'True';
-0||console.debug( 'here' );
+			// $('header .log_out').removeClass('active');
+			// $('header .log_in').addClass('active');
+			// $('header .log_in .user-name').text(e.UserName);
+			// $('header .user_info').show();
+			// $('.left_order .tab').removeAttr('data-disabled');
+			// $('.left_order .tab input.limit').removeAttr('disabled');
+			// popUpClass.removeEventPopUp('header .deposit, header .my_order');
+			// globalData.userIdentity = 'True';
+
 			if(!globalData.landingPage) AppStateClass.updateAppState(e);
 			if(!globalData.landingPage) ABpp.Websocket.changeUser(e.UserName);
 			// if(!globalData.landingPage) wsActiveBettor.changeUser(e.UserName);

@@ -6,21 +6,21 @@ import {Dialog} from '../../models/Dialog.ts';
 
 export class TabMyPos extends React.Component
 {
-    filters = {'Sport': 'Sport', 'Economy': 'Economy', 'E-Sport': 'E-Sport', 'Society': 'Society', };
+    filters = {'fantasy sport': 'Fantasy Sport', 'economy': 'Economy', 'e-sport': 'E-Sport', 'society': 'Society', };
 
     constructor(props)
     {
         super(props);
 
         var filters = {};
-        Object.keys(this.filters).forEach((item) => { filters[this.filters[item]] = true });
+        Object.keys(this.filters).forEach((item) => { filters[item] = true });
         this.state = {filters: filters};
     }
 
 
     _onFilterChange(ee)
     {
-        // 0||console.log( 'ee', ee.target, ee.target.dataset, this.state );
+        0||console.log( 'ee', ee.target, ee.target.dataset, this.state );
         // 0||console.log( 'this.state.filters[ee.target.dataset.filter]', this.state.filters[ee.target.dataset.filter], this.state );
         this.state.filters[ee.target.dataset.filter] = !this.state.filters[ee.target.dataset.filter];
         this.setState({...this.state});
@@ -46,34 +46,33 @@ export class TabMyPos extends React.Component
     render()
     {
         // 0||console.log( 'this.props.route', this.props.route );
-        var {data: positionData, actions} = this.props;
-        var plClass;
-
+        const {data: positionData, actions, defaultOrderActions} = this.props;
+        let plClass;
 
         // filter btn
-        var filterBtn = (inCatName) => [<input key={inCatName + "1"} id={inCatName + "2"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '3'} htmlFor={inCatName + "2"} className={inCatName.toLowerCase().replace("-", "_")}><span className="sub_tab">{inCatName}</span></label>];
+        var filterBtn = (inCatName, $ca) => [<input key={inCatName + "22"} id={$ca = inCatName.replace(" ", "_").replace("-", "_") + "22"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '23'} htmlFor={$ca} className={this.filters[inCatName].toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{this.filters[inCatName]}</span></label>];
 
 
         return <div className="tab_item active">
                     <div className="my_position_tab">
                         <div className="wrapper">
                             <div className="filters">
-                                {filterBtn(this.filters['Sport'])}&nbsp;
-                                {filterBtn(this.filters['Economy'])}&nbsp;
-                                {filterBtn(this.filters['E-Sport'])}&nbsp;
-                                {filterBtn(this.filters['Society'])}
+                                {filterBtn('fantasy sport')}&nbsp;
+                                {/*{filterBtn('economy')}&nbsp;*/}
+                                {filterBtn('e-sport')}
+                                {/*{filterBtn('society')}*/}
                             </div>
                             <div className="tab_content">
                                 <div className="my_position_container table_content">
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>Symbol</th>
+                                                <th>{_t('Symbol')}</th>
                                                 <th>Type</th>
-                                                <th>Quantity</th>
+                                                <th>Units</th>
                                                 <th>Price</th>
-                                                <th><span className="sell">BID</span> | <span className="buy">ASK</span></th>
-                                                <th><span className="profit">Profit</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>
+                                                <th><span className="sell">{_t('buy')}</span> | <span className="buy">{_t('ask')}</span></th>
+                                                <th><span className="profit">{_t('Profit')}</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -89,7 +88,8 @@ export class TabMyPos extends React.Component
                                                     if(item.CommonSymbolProfitLoss < 0) plClass = 'loss';
                                                     else if(item.CommonSymbolProfitLoss > 0) plClass = 'profit';
 
-                                                    if( this.state.filters[item.Category] ) return <table key={key} className="pos tmp">
+//0||console.log( 'this.state.filters', this.state.filters,item.Category.toLowerCase() )
+                                                    if( this.state.filters[item.Category.toLowerCase()] ) return <table key={key} className="pos tmp">
                                                         <thead>
                                                         <tr>
                                                             <th className="title">{item.Symbol.HomeName + ' - ' + item.Symbol.AwayName}</th>
@@ -99,17 +99,26 @@ export class TabMyPos extends React.Component
                                                             <th>{}</th>
                                                             <th>
                                                                         <span className={'pl ' + plClass}>
-                                                                            {(item.CommonSymbolProfitLoss < 0 ? '($' + (item.CommonSymbolProfitLoss).toString().slice(1) + ')' : '$' + item.CommonSymbolProfitLoss)}
+                                                                            {(item.CommonSymbolProfitLoss < 0 ?
+                                                                                `($${(Math.abs(item.CommonSymbolProfitLoss)).toFixed(2)})`
+                                                                                :
+                                                                                '$' + (item.CommonSymbolProfitLoss).toFixed(2))}
                                                                         </span>
                                                             </th>
-                                                            <th><button className="btn close_out wave" onClick={this._handleCloseOut.bind(this, {symbol: `${item.Symbol.Exchange}_${item.Symbol.Name}_${item.Symbol.Currency}`, name: item.Symbol.HomeName + ' - ' + item.Symbol.AwayName})}>Close Out</button></th>
+                                                            <th>
+                                                                <button className="btn close_out wave"
+                                                                        onClick={this._handleCloseOut.bind(this, {
+                                                                            symbol: `${item.Symbol.Exchange}_${item.Symbol.Name}_${item.Symbol.Currency}`,
+                                                                            name: item.Symbol.HomeName + ' - ' + item.Symbol.AwayName})}
+                                                                >Close Out</button>
+                                                            </th>
                                                         </tr>
                                                         </thead>
                                                         <tbody className="showhide active">
                                                         {
                                                             item.SubPositions.map((item2, key) =>
                                                             {
-                                                                var commProps = {
+                                                                let commProps = {
                                                                     isMirror: item2.IsMirror,
                                                                     // symbolName: symbol,
                                                                     // Orders: data.Orders,
@@ -119,7 +128,19 @@ export class TabMyPos extends React.Component
                                                                     Exchange : item.Symbol.Exchange,
                                                                     Name : item.Symbol.Name,
                                                                     Currency : item.Symbol.Currency,
+																	Ask : item.Symbol.LastAsk,
+																	Bid : item.Symbol.LastBid,
                                                                 };
+
+																const bid = item2.IsMirror ?
+																	(item.Symbol && item.Symbol.LastAsk !== 1) ? (Math.round10(1 - item.Symbol.LastAsk, -2)).toFixed(2) : '-'
+																	:
+																	(item.Symbol && item.Symbol.LastBid) ? (item.Symbol.LastBid).toFixed(2) : '-';
+																const ask = item2.IsMirror ?
+																	(item.Symbol && item.Symbol.LastBid) ? (Math.round10(1 - item.Symbol.LastBid, -2)).toFixed(2) : '-'
+																	:
+																	(item.Symbol && item.Symbol.LastAsk !== 1) ? (item.Symbol.LastAsk).toFixed(2) : '-';
+
                                                                 plClass = '';
                                                                 if(item.CommonSymbolProfitLoss < 0) plClass = 'loss';
                                                                 else if(item.CommonSymbolProfitLoss > 0) plClass = 'profit';
@@ -132,20 +153,20 @@ export class TabMyPos extends React.Component
                                                                         <strong className="title">{item2.EventName} <span className="muted">{item2.EventHandicap && ` (${item2.EventHandicap})`}</span></strong>
                                                                         <span className="hidden symbol_name">{item2.ID}</span>
                                                                     </td>
-                                                                    <td className="side">{(item2.Side ? 'Short' : 'Long')}</td>
+                                                                    <td className="side">{(item2.Side ? _t('Sold') : _t('Bought'))}</td>
                                                                     <td className="quantity">{item2.CommonVolume}</td>
-                                                                    <td className="avg_price">{Math.round10(item2.AvgPrice, -2)}</td>
+                                                                    <td className="avg_price">{(Math.round10(item2.AvgPrice, -2)).toFixed(2)}</td>
                                                                     <td className="spread">
-                                                                        <span className="sell">{(item2.IsMirror ? Math.round10(1 - item.Symbol.LastAsk, -2) : item.Symbol.LastBid)}</span> |
-                                                                        <span className="buy"> {(item2.IsMirror ? Math.round10(1 - item.Symbol.LastBid, -2) : item.Symbol.LastAsk)}</span>
+                                                                        <span className="buy"> {bid}</span>|
+                                                                        <span className="sell">{ask}</span>
                                                                     </td>
-                                                                    <td className={'pl ' + plClass}>{(item2.CommonProfitLoss < 0) ? '($' + (item2.CommonProfitLoss).toString().slice(1) + ')' : '$' + item2.CommonProfitLoss}</td>
+                                                                    <td className={'pl ' + plClass}>{(item2.CommonProfitLoss < 0) ? `($${(Math.abs(item2.CommonProfitLoss)).toFixed(2)})` : '$' + (item2.CommonProfitLoss).toFixed(2)}</td>
                                                                     <td>
                                                                         <span className="buy"><button className="buy btn event wave empty btnJs"
-                                                                            onClick={() => actions.actionOnBuySellClick({type: 0, exdata: commProps})}
+                                                                            onClick={() => actions.actionOnBuySellClick({type: 0, exdata: commProps}, defaultOrderActions)}
                                                                         >Buy</button></span>
                                                                         <span className="sell"><button className="sell btn event wave empty btnJs"
-                                                                            onClick={() => actions.actionOnBuySellClick({type: 1, exdata: commProps})}
+                                                                            onClick={() => actions.actionOnBuySellClick({type: 1, exdata: commProps}, defaultOrderActions)}
                                                                         style={{marginLeft : 10}}>Sell</button></span>
                                                                     </td>
                                                                 </tr>

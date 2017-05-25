@@ -71,12 +71,12 @@ class activeTraderClass{
 		// }();
 
 		this.eventChange = function () {
-			var checkbox = $('.left_order .tab input.limit'),
-					event_container = '.content_bet',
-					event_content = $('.event-content'),
-					tabs = $('.active_trader .event_title .event_name');
-
-			tabs.eq(0).addClass('active');
+			// var checkbox = $('.left_order .tab input.limit'),
+			// 		event_container = '.content_bet',
+			// 		event_content = $('.event-content'),
+			// 		tabs = $('.active_trader .event_title .event_name');
+			//
+			// tabs.eq(0).addClass('active');
 
 			// BM: tab_item onClick TODEL
 			// $('.tab_item').on('click', 'event_container', function () {
@@ -146,17 +146,17 @@ class activeTraderClass{
 		}();
 
 		this.addOrder = function () {
-			let //quantityButton = $('.active_trader .control .button.quantity'),
-					trader = $('.active_trader'),
-					size = trader.width(),
-					html;
-
-			trader.find('.active_trader_footer').css('width', size);
-			$(window).resize(function () {
-				size = $('.active_trader').width();
-				trader.find('#order_content').css('width', size);
-				trader.find('.active_trader_footer').css('width', size);
-			});
+			// let //quantityButton = $('.active_trader .control .button.quantity'),
+			// 		trader = $('.active_trader'),
+			// 		size = trader.width(),
+			// 		html;
+			//
+			// trader.find('.active_trader_footer').css('width', size);
+			// $(window).resize(function () {
+			// 	size = $('.active_trader').width();
+			// 	trader.find('#order_content').css('width', size);
+			// 	trader.find('.active_trader_footer').css('width', size);
+			// });
 
 			// $('.active_trader .control .button button').click(function () {
 				// activeTraderClass.buttonActivation($(this));
@@ -412,7 +412,7 @@ class activeTraderClass{
 			let trader = $('.active_trader');
 
 			trader.on('click', '.active_trader_footer td', function () {
-				$(this).find('.confirm_window').removeClass('bounceOutDown').addClass('bounceInUp');
+				$(this).find('.confirm_window').removeClass('fadeOutDown').addClass('fadeInUp');
 				$(this).find('.confirm_window').addClass('active');
 			});
 			$('.active_trader_footer button').click(function (e) {
@@ -421,7 +421,7 @@ class activeTraderClass{
 					let method = ($(this).parents('td').find('a').attr('class')).slice(0, -2);
 					ajaxControlTraderClass.ajaxDataSender(method);
 				}
-				$(this).parents('.confirm_window').removeClass('bounceInUp').addClass('bounceOutDown');
+				$(this).parents('.confirm_window').removeClass('fadeInUp').addClass('fadeOutDown');
 				setTimeout(() => {
 					$(this).parents('.confirm_window').removeClass('active');
 				}, 500);
@@ -702,11 +702,11 @@ class activeTraderClass{
 
 		if(tbody.hasClass('scroll_dis')) return false;
 
-		if(indexBuy == -1 && indexSell == -1)
+		if(indexBuy === -1 && indexSell === -1)
 			indexSell = 49;
-		if(indexBuy == -1)
+		if(indexBuy === -1)
 			indexBuy = indexSell;
-		else if(indexSell == -1)
+		else if(indexSell === -1)
 			indexSell = indexBuy;
 
 		center = center ? 0 : (indexSell - indexBuy) / 2;
@@ -881,13 +881,12 @@ class activeTraderClass{
 	 * @param showFooter bool включен футер или нет
 	 */
 	static tbodyResize(showFooter){
-		var windowHeight = window.innerHeight,
+		let windowHeight = window.innerHeight,
 				footer = $('footer'),
 				footerHeight = footer.outerHeight(),
 				tbody = $('.left_order table.limit tbody'),
 				delay = 400;
 		// order = $('#order');
-
 		if(showFooter) delay = 0;
 
 		// order.css('overflow-y', 'hidden');
@@ -895,6 +894,9 @@ class activeTraderClass{
 			let orderSidebarHeight = windowHeight - ($('.left_order .tabs').outerHeight(true) + $('header').outerHeight(true)),
 				eventTitleHeight = $('.active_trader .event_title').length ? 35 : 0,
 				activeTraderHeight = orderSidebarHeight - (eventTitleHeight + 214);
+		// console.log(orderSidebarHeight);
+		// console.log(eventTitleHeight);
+		// console.log(activeTraderHeight);
 
 			if(footer.hasClass('active')){
 				tbody.css('max-height', activeTraderHeight - footerHeight);

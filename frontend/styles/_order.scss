@@ -1,16 +1,5 @@
-.order {
-  @include span(last 2.6 of 12);
-  //width: 325px;
-  height: 100%;
-  background: $order_sidebar_bg;
-  position: fixed;
-  right: 0;
-  top: 70px;
-  z-index: 99;
-  transition: 0.4s ease-out;
-  //&.active {
-  //  right: -20.76796%;
-  //}
+.order { @include span(last 2.6 of 12); position: fixed; right: 0; top: 70px; z-index: 99; min-width: 295px; height: 100%;
+      background: $order_sidebar_bg; transition: 0.4s ease-out;
   @include wave;
   label{
     color: #000000;
@@ -21,16 +10,8 @@
     width: 95px;
     &.right:after{  right: 2px;  }
   }
-  .profit, .risk{
-    .help_message{  width: 166px;  left: -151px;  }
-  }
-  //.order_screening{
-  //  width: 100%;
-  //  height: 100%;
-  //  position: absolute;
-  //  top: 0;
-  //  left: 0;
-  //  z-index: 100;
+  //.profit, .risk{
+  //  .help_message{  width: 166px;  left: -147px;  }
   //}
   .wrapper {  text-align: center;  margin-top: 10px;  }
   .left_order > label {
@@ -67,7 +48,7 @@
         border: none;
         color: $main_page_tab_color_active;
       }
-      @include order_sidebar_tab_separator;
+      &.divide{ @include order_sidebar_tab_separator; }
       &:last-child {
         //&.active{  border-left: 1px solid #445b69;  }
         border-radius: 0 4px 4px 0;
@@ -86,540 +67,9 @@
     position: relative;
     &.footer_active:before{  bottom: -9px;  }
   }
-  .active_trader{
-    overflow: hidden;
-    &.loading:after{
-      content: '';
-      display: block;
-      width: 100%;
-      height: 100%;
-      background: url("#{$pathImage}/ajax-loader.gif") rgba(0, 0, 0, 0.7) no-repeat;
-      background-position: center center;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 100;
-    }
-    .event_title{
-      display: flex;
-      .event_name{
-        width: 50%;
-        height: 35px;
-        line-height: 35px;
-        font-size: 13px;
-        font-weight: 600;
-        text-align: center;
-        cursor: pointer;
-        transition: 0.4s ease-out;
-        overflow: hidden;
-        @include trader_event_name;
-      }
-    }
-    .active_trader_footer{
-      position: fixed;
-      bottom: 2px;
-      z-index: 15;
-      box-shadow: 0 -6px 15px -3px rgba(0, 0, 0, 0.3);
-      transition: 0.4s ease-out;
-    }
-    span.close{  height: 31px; background: url("#{$pathImage}/ico-delete-w.png") no-repeat center #969696;  border-radius: 5px; cursor: pointer; }
-    .help{
-      right: 0;
-      @include md(1450){  right: -3px;  }
-    }
-    .submit_wrapper{
-      width: 66.66%;
-      i.submit{
-        display: block;
-        width: 100%;
-        height: 100%;
-        background: none !important;
-        color: transparent !important;
-      }
-    }
-    table{
-      width: 100%;
-      font-size: 12px;
-      //font-size: 13px;
-      //@include md(1400){  font-size: 12px;  }
-      &.info{
-        border-top: 1px solid $trader_table_td;
-        tr{
-          &:first-of-type td{  border-top: none;  }
-          td{
-            width: 33.33%;  padding: 5px;
-            a{  padding: 0;  }
-          }
-        }
-      }
-      &.control{
-        position: relative;
-        &:nth-of-type(1), &:nth-of-type(2){
-          tr input{  text-align: center !important;  }
-        }
-        &:nth-of-type(2) tr:nth-of-type(2) td{  border: none;  }
-        &:nth-of-type(3) tr:last-of-type td{  border: none;  }
-        &.remote {
-          tr:first-of-type td:nth-of-type(2){  border-right: 1px solid $trader_table_td;  }
-          td{
-            user-select: none;
-            //@include btn-hover;
-            //position: static;
-            //overflow: inherit;
-          }
-        }
-        #order_content{  margin: 0;  }
-        .confirm_window{
-          width: 100%;
-          padding: 10px;
-          position: absolute;
-          top: 150px;
-          left: 0;
-          z-index: 10;
-          text-align: center;
-          @include order_sidebar_confirm_window;
-          &.active{  top: -74px;  }
-          //&:before{
-          //  content: '';
-          //  display: block;
-          //  width: calc(100% + 20px);
-          //  height: calc(100% + 20px);
-          //  background: linear-gradient(to bottom, #53515e, #292830);
-          //  border-radius: 4px;
-          //  position: absolute;
-          //  top: -10px;
-          //  left: -10px;
-          //  z-index: -1;
-          //}
-        }
-        tr{
-          //&:first-of-type td:last-of-type{  border-top: 1px solid #313d62;  }
-          @include trader_spread_separator;
-          //&:nth-of-type(6) td:nth-of-type(2){  border-right: 1px solid #313d62;  }
-          //&:nth-of-type(6) td:last-of-type{  border-bottom: 1px solid #313d62;  }
-          &:last-of-type input.number{  text-align: left;  }
-        }
-        td{
-          width: 33%;
-          text-align: center;
-          &:not(.label){  text-align: center;  }
-          &.active{
-            box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            transition: 0.2s ease;
-            text-align: center;
-            &[disabled]{  cursor: default;  }
-            &:not([disabled]):active {  box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0); }
-            //&.activated{  box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);  }
-            a{  cursor: pointer;  }
-            .order_content:active{  box-shadow: none;  }
-          }
-          &.button.quantity .waves-ripple{  display: block;  }
-          //&:not(.clickable) .waves-ripple{  display: none;  }
-          &.clickable{  @include btn-hover;  }
-          &.market_button{
-            &:after{  display: none;  }
-            &.active{
-              button{  cursor: pointer; color: #ffffff; }
-              //a{  opacity: 1;  }
-            }
-            //a{  opacity: 0.5;  }
-            button{
-              color: #ffffff;
-              width: 100%;
-              border: none;
-              cursor: default;
-            }
-          }
-          input{
-            width: 100%;  padding: 3px 5px;  text-align: center; @include trader_input;
-            &.quantity{  padding-right: 25px;  }
-          }
-          .clear{
-            width: 14px;
-            height: 14px;
-            padding: 0;
-            line-height: 0;
-            border: none;
-          }
-          #order_content{  width: 100% !important;  }
-        }
-        .input{
-          span{  padding: 0;  }
-          input{  padding-right: 14px;  }
-          .regulator.min{
-            width: 12px;
-            height: 100%;
-            border-radius: 0;
-            border: none;
-            @include trader_regulator;
-          }
-          .warning{
-            left: auto;
-            right: 2px;
-            &:before{  left: 75px;  }
-            &:after{  left: 71px;  }
-          }
-        }
-        input{
-          &::-webkit-input-placeholder {  color: #ffffff;  }
-          &::-moz-placeholder {  color: #ffffff;  }
-          &:-moz-placeholder {  color: #ffffff;  }
-          &:-ms-input-placeholder {  color: #ffffff;  }
-        }
-      }
-      tr.zoom{  width: 100%;  }
-      th{
-        max-width: 70px;
-        padding: 5px 0;
-        color: #ffffff;
-        border-right: 1px solid $trader_table_th_border_color;
-        text-align: center;
-      }
-      td{
-        border: 1px solid $trader_table_td;
-        border-left: none;
-        border-bottom: none;
-        //position: relative;
-        &.label{
-          height: 24px;
-          @include trader_label;
-        }
-        span.container{
-          display: block;
-          height: 19px;
-          position: relative;
-        }
-        &:last-of-type{  border-right: none;  }
-        &.trader_info{
-          a{  font-size: 11px;  }
-          span{
-            padding: 0;
-            padding-left: 3px;
-            &.up{  color: #1196d4;  }
-            &.down{  color: #ef4d22;  }
-            &.profit{  color: #4dac2e;  }
-            &.loss{  color: #ff3905;  }
-          }
-        }
-        &.market_button{
-          &.active span, &.active button{  color: #fff;  opacity: 1; }
-          button{  opacity: 0.6;  }
-          span, button{  color: #fff;  }
-        }
-        &.sell_mkt{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
-        &.buy_mkt{  background: linear-gradient(to bottom, #64c9ef, #3498da); }
-        &.join_ask{
-          background: linear-gradient(to bottom, transparentize(#f88447, 0.7), transparentize(#ef4d22, 0.7));
-          span, button{  color: $trader_join_button !important;  }
-          &.active span, &.active button{  color: $trader_join_button !important;  }
-        }
-        &.join_bid{
-          background: linear-gradient(to bottom, transparentize(#64c9ef, 0.7), transparentize(#3498da, 0.7));
-          span, button{  color: $trader_join_button !important;  }
-          &.active span, &.active button{  color: $trader_join_button !important;  }
-        }
-        &.join_bid span, &.join_ask span{  padding: 0; }
-        &.reverse{   background-image: linear-gradient(to bottom, #f8b747, #ef8022);  a{color: #ffffff;} }
-        &.spreader{  background-image: linear-gradient(to bottom, #f8b747, #ef8022);  color: #ffffff; }
-        &.button{
-          &.spread button {
-            @include trader_spread_button;
-          }
-        }
-        //&[rowspan]{  width: 34%;  }
-        a{
-          display: block;
-          padding: 2px 5px;
-          color: $main-color;
-          position: relative;
-          cursor: default;
-          //z-index: 2;
-          //box-shadow: inset 0 -9px 15px -4px rgba(0, 0, 0, 0.5);
-          //&:active{  box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);  }
-        }
-        span{  padding: 0 5px;  }
-        button{
-          width: 50%;
-          height: 24px;
-          line-height: 15px;
-          border-radius: 0;
-          color: $trader_button_color;
-          &:last-of-type{
-            border-left: 1px solid $trader_button_separator;
-          }
-        }
-        &.cancel_all{  background-image: linear-gradient(to bottom, #646470, #34343d); a{  color: #ffffff;} } //#a3a3a3
-        &.close_out{  background-image: linear-gradient(to bottom, #f88447, #ef4d22); a{color: #fff;}  }
-      }
-    }
-    .table_limit{
-      position: relative;
-      &:before{
-        content: '';
-        display: block;
-        width: 20%;
-        height: calc(100% - 28px);
-        position: absolute;
-        top: 28px;
-        transform: scaleX(0);
-        opacity: $order_sidebar_activation_column_opacity;
-        transition: 0.4s ease-out;
-      }
-      &:before {
-        left: calc(20% - 1px);
-        //transform: translateX(-50%) scaleX(0.01);
-        background: #b5e5ec;
-      }
-      &.clickable{
-        &:before{
-          transform: scaleX(0.98);
-        }
-      }
-      //.show_spread{
-      //  min-width: 93px;
-      //  padding: 0 5px;
-      //  position: absolute;
-      //  top: calc(50% + 110px);
-      //  right: -61px;
-      //  transform: rotate(-90deg);
-      //  border-radius: 3px 3px 0 0;
-      //  box-shadow: 0 -2px 6px 0px rgba(0, 0, 0, 0.5);
-      //  font-size: 14px;
-      //  text-align: center;
-      //  cursor: pointer;
-      //  transition: 0.4s ease;
-      //  z-index: 10;
-      //  background: $trader_show_spread;
-      //  &.active{
-      //    right: -37px;
-      //    animation-name: active;
-      //    animation-duration: 2s;
-      //    animation-fill-mode: both;
-      //    @keyframes active {
-      //      0% {  color: orange;  }
-      //      100% {  color: black;  }
-      //    }
-      //  }
-      //  span{  transition: 0s;  }
-      //}
-    }
-    table.limit{
-      position: relative;
-      &:not(.webkit) tbody tr{  width: calc(100% + 14px);  }
-      &:before{
-        content: '';
-        display: block;
-        width: 20%;
-        height: calc(100% - 28px);
-        position: absolute;
-        top: 28px;
-        transform: scaleX(0);
-        opacity: $order_sidebar_activation_column_opacity;
-        transition: 0.4s ease-out;
-      }
-      &:before{
-        right: calc(20% + 3px);
-        //transform: translateX(50%) scaleX(0.01);
-        background: #ffcbc2;
-      }
-      &.clickable{
-        &:before{
-          transform: scaleX(1);
-        }
-      }
-      thead{
-        background: $trader_table_thead_bg;
-        &:after{
-          content: '';
-          display: block;
-          position: absolute;
-          height: 10px;
-          width: 100%;
-          top: 18px;
-          left: 0;
-          box-shadow: 0 5px 7px 0 rgba(0, 0, 0, 0.3);
-          z-index: 2;
-        }
-        tr{  width: calc(100% - 4px);  }
-      }
-      tbody{
-        display: block;
-        width: 100%;
-        overflow: hidden;
-        overflow-y: auto;
-        transition: 0.4s ease-out;
-        position: relative;
-        @include scroll;
-        text-align: center;
-        tr{
-          display: block;
-          &.visible{
-            display: table;
-            @include trader_table_tr;
-            td:nth-of-type(1){  width: 20%;  } //58px
-            td:nth-of-type(5){  width: 20%;  } //68px
-          }
-        }
-      }
-      tr{
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-        overflow: hidden;
-      }
-      th{
-        &:nth-of-type(1){  width: 20%;  }//58px
-        &:nth-of-type(5){  width: 20%; }//68px
-        &:last-of-type{  border-right: none;  }
-      }
-      td{
-        user-select: none;
-        transition: 0s;
-        &:nth-of-type(1){  width: 60px;  }
-        &:nth-of-type(5){  width: 68px; }
-        &.active{  cursor: pointer;  }
-        &.price_value.active{
-          position: relative;
-          z-index: 4;
-          &:hover{  background: #ffc11a !important;  }
-          &:not(.best_buy):not(.best_sell){
-            background: $trader_spread_button_bg;
-          }
-          &.hovered{  background: #ffc11a !important;  }
-        }
-        &:last-of-type{  width: 0;  }
-        &.size span.value, &.price span.value{  position: relative;  z-index: 3;  }
-        &.my_bids.animated,
-        &.my_offers.animated{
-          position: relative;
-        }
-        &.size.animated .value,
-        &.my_bids.animated .value,
-        &.my_offers.animated .value {
-          position: static;
-          &:after{
-            content: '';
-            display: block;
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transition: 0.4s ease-out;
-            z-index: 2;
-          }
-        }
-        &.size .container:not(.best_buy):not(.best_sell):after,
-        &.size .container:not(.best_buy):not(.best_sell):before{
-          content: '';
-          display: block;
-          width: 100%;
-          //width: 0;
-          height: 100%;
-          position: absolute;
-          top: 0;
-          left: 0;
-          transition: 0.4s ease-out;
-          opacity: 0.2;
-          z-index: 1;
-          transform: translateX(-50%) scaleX(0.01);
-        }
-        &.size .container:not(.best_buy):not(.best_sell):before{
-          transition: 0.3s ease-out;
-          z-index: 2;
-        }
-        &.size.size_sell .container:not(.best_buy):not(.best_sell):before,
-        &.size.size_sell .container:not(.best_buy):not(.best_sell):after{
-          transform: translateX(50%) scaleX(0.01);
-        }
-        &.clickable{  cursor: pointer; }
-        &.size_sell{
-          background-color: transparentize(#ef4d22, 0.92);
-          &.clickable{
-            &:hover .container:before{
-              transform: translateX(-51%) scaleX(2.01) !important;
-              background: #f88447;
-            }
-            //.container:after{
-            //  transform: scaleX(1) !important;
-            //  background: #ffcbc2;
-            //}
-          }
-        }
-        &.best_sell, &.best_buy{
-          @include btn-hover;
-        }
-        &.best_sell{
-          color: #ffffff;
-          background-image: linear-gradient(to bottom, #f88447, #ef4d22); font-weight: bold;  }
-        &.size_buy{
-          background-color: transparentize(#64c9ef, 0.92);
-          &.clickable{
-            &:hover .container:before{
-              transform: translateX(51%) scaleX(2.01) !important;
-              background: #64c9ef;
-            }
-            //.container:after{
-            //  transform: scaleX(1) !important;
-            //  background: #b5e5ec;
-            //}
-          }
-        }
-        &.best_buy{
-          color: #ffffff;
-          background-image: linear-gradient(to bottom, #64c9ef, #3498da); font-weight: bold;  }
-      }
-    }
-    #order_content{
-      //visibility: hidden;
-      position: absolute;
-      left: 0;
-      right: 0;
-      z-index: 10;
-      //margin: 0;
-      margin-top: 10px;
-      padding: 0;
-      background: $order_sidebar_bg;
-      box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.5);
-      font-weight: normal;
-      transition: 0.5s ease-out;
-      &.animated{
-        animation-duration: 0.5s;
-      }
-      &.active{
-        //transform: translateY(5px);
-        //margin-top: 0 !important;
-        //visibility: visible;
-        //opacity: 1 !important;
-      }
-      &.spread i.submit{
-        width: 100%;
-        height: 100%;
-        position: relative;
-        z-index: 1;
-      }
-      form{
-        margin-bottom: 0;
-        border-radius: 0;
-      }
-      input{
-        text-align: center;
-        padding-right: 5px;
-      }
-      .delete{
-        width: 33.33%;
-        height: 31px;
-        position: relative;
-        border-left: none;
-        border-bottom: none;
-      }
-      @include trader_order_delete;
-    }
-  }
   .tab_item {
     display: none;
-    padding-bottom: 35px;
+    padding-bottom: 80px;
     overflow-x: hidden;
     @include scroll;
     transition: 0.4s ease-out;
@@ -645,6 +95,7 @@
           @include md(1400){  padding: 5px;  }
         }
         form input[type="submit"]{  border-left: none;  }
+        //.container .obligations label{  width: 100%;  }
         .close{
           margin: 0;
           position: absolute;
@@ -652,11 +103,7 @@
           right: 1px;
         }
       }
-      .basic_mode{
-        .switch{  display: none;  }
-        i.submit{  width: 100%;  }
-        [type=submit]{  border-right: none;  }
-      }
+
     }
   }
   .default_orders{
@@ -665,10 +112,12 @@
       justify-content: space-between;
       background: linear-gradient(to bottom, #53515e, #292830);
       position: relative;
-      h3, .current-order{  color: #ffffff;  }
+      h3, .current-order{ color: #ffffff; }
       h3{  line-height: 20px;  }
       //strong.last-price{  margin-top: 0;  }
+      .current-order{ min-width: 75px; text-align: right; }
       .close{
+        height: 24px;
         margin-right: 0;
         position: absolute;
         top: 4px;
@@ -676,12 +125,6 @@
         cursor: pointer;
       }
     }
-		.basic_mode{
-			.switch{  display: none;  }
-			i.submit{  width: 100%;  }
-      [type=submit]{  border-right: none;  }
-		}
-    .order_content form .container .obligations label{  width: calc(100% - 18px);  }
   }
   .ui-state-highlight{
     height: 100px;
@@ -715,11 +158,11 @@
     }
     .sell{
       left: calc(100% + 1px);
-      background-image: linear-gradient(to bottom, #f88447, #ef4d22);
+      background: linear-gradient(to bottom, #f88447, #ef4d22);
     }
     .buy{
       right: calc(100% + 1px);
-      background-image: linear-gradient(to bottom, #64c9ef, #3498da);
+      background: linear-gradient(to bottom, #64c9ef, #3498da);
     }
     &.active{
       //span.confirm_button{
@@ -741,35 +184,17 @@
     padding-bottom: 10px;
     &:last-child {  border-bottom: none;  }
     &.sell .my_order{
-      .order-title, .current-order-title{
-        background-color: #fff1f1;
-        //background: linear-gradient(to bottom, #ff6464, #921515);
-      }
+      .order-title, .current-order-title{ background-color: #fff1f1; }
     }
     &.buy .my_order{
-      .order-title, .current-order-title{
-        background-color: #ebf7f9;
-        //background: linear-gradient(to bottom, #2D8A8E, #1A484A);
-      }
+      .order-title, .current-order-title{ background-color: #ebf7f9; }
     }
-    .order_container{
-      border-bottom: 1px solid $order_sidebar_head_separator;
-      position: relative;
+    .order_container{ position: relative; border-bottom: 1px solid $order_sidebar_head_separator;
       &:last-child{  border-bottom: none;  }
-      &:before{
-        content: '';
-        display: block;
-        width: 100%;
-        height: 1px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background: rgba(255, 255, 255, 0.1);
-      }
+      &:before{ content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 1px;
+          background: rgba(255, 255, 255, 0.1); }
     }
-    .order_info{
-      padding: 0 5px 0 15px;
-      position: relative;
+    .order_info { position: relative; padding: 0 5px 0 5px;
       @include md(1400){
         padding: 0;
         padding-left: 5px;
@@ -793,141 +218,103 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      //position: relative;
-      //&:nth-child(2){
-      //  justify-content: flex-start;
-      //}
+      &.close_btn div:last-of-type label{ width: calc(100% - 18px); }
     }
     h3{
-      margin-right: 10px;
-      max-width: 55%;
+      //max-width: calc(100% - 115px);
       font-size: 13px;
       vertical-align: middle;
       color: transparentize(#ffffff, 0.2);
     }
     .timestamp{
-      min-width: 100px;
       font-size: 10px;
       &:before{  right: 9px;  }
       .time{  color: $order_sidebar_current_order_title_color;  }
-      .help_message{
-        width: 160px;
-        top: 25px;
-        right: 4px;
-      }
+      .help_message{ width: 160px; right: 4px; top: 25px; }
     }
-    .close{
-      float: right;
-      margin-top: 4px;
-      margin-right: 2px;
-      height: 16px;
-      width: 16px;
-      position: relative;
-      //border-radius: 50%;
-      //border: 1px solid #fff;
-      &:hover{
-        &:before, span:before{  transform: rotate(90deg);  }
-        &:after, span:after{  transform: rotate(-90deg);  }
-        //&:before{  transform: rotate(135deg);  }
-        //&:after{  transform: rotate(45deg);  }
-        //span{
-        //  &:before{  transform: rotate(135deg);  }
-        //  &:after{  transform: rotate(45deg);  }
-        //}
-      }
-      &:before, &:after, span:before, span:after{
-        content: '';
-        display: block;
-        width: 4px;
-        height: 12px;
-        position: absolute;
-        top: calc(50% - 6px);
-        left: calc(50% - 2px);
-        background: #fff;
-        border-radius: 2px;
-        transition: 0.4s ease-out;
-      }
-      &:before{  transform: rotate(45deg);  }
-      &:after{  transform: rotate(-45deg);  }
-      span{
-        display: block;
-        height: 100%;
-        &:before, &:after{
-          width: 2px;
-          height: 10px;
-          top: calc(50% - 5px);
-          left: calc(50% - 1px);
-          background: #292830;
-          z-index: 2;
-        }
-        &:before{  transform: rotate(45deg);  }
-        &:after{  transform: rotate(-45deg);  }
-      }
+    .info_string{
+      color: #ffffff;
+      span{  color: $color-green  }
     }
-    strong {
-      display: inline-block;
-      padding-right: 6px;
-      font-size: 12px;
-      color: transparentize($order_sidebar_current_order_title_color, 0.5);
-      line-height: 23px;
-      letter-spacing: 0.2px;
-      &.current-order{
-        padding: 0;
-        color: transparentize(#ffffff, 0.2);
+    //.close{
+    //  float: right;
+    //  margin-top: 4px;
+    //  margin-right: 2px;
+    //  height: 16px;
+    //  width: 16px;
+    //  position: relative;
+    //  //border-radius: 50%;
+    //  //border: 1px solid #fff;
+    //  &:hover{
+    //    &:before, span:before{  transform: rotate(90deg);  }
+    //    &:after, span:after{  transform: rotate(-90deg);  }
+    //    //&:before{  transform: rotate(135deg);  }
+    //    //&:after{  transform: rotate(45deg);  }
+    //    //span{
+    //    //  &:before{  transform: rotate(135deg);  }
+    //    //  &:after{  transform: rotate(45deg);  }
+    //    //}
+    //  }
+    //  &:before, &:after, span:before, span:after{
+    //    content: '';
+    //    display: block;
+    //    width: 4px;
+    //    height: 12px;
+    //    position: absolute;
+    //    top: calc(50% - 6px);
+    //    left: calc(50% - 2px);
+    //    background: #fff;
+    //    border-radius: 2px;
+    //    transition: 0.4s ease-out;
+    //  }
+    //  &:before{  transform: rotate(45deg);  }
+    //  &:after{  transform: rotate(-45deg);  }
+    //  span{
+    //    display: block;
+    //    height: 100%;
+    //    &:before, &:after{
+    //      width: 2px;
+    //      height: 10px;
+    //      top: calc(50% - 5px);
+    //      left: calc(50% - 1px);
+    //      background: #292830;
+    //      z-index: 2;
+    //    }
+    //    &:before{  transform: rotate(45deg);  }
+    //    &:after{  transform: rotate(-45deg);  }
+    //  }
+    //}
+    strong { display: inline-block; font-size: 12px; line-height: 23px; letter-spacing: 0.2px;
+          color: transparentize($order_sidebar_current_order_title_color, 0.5);
+      &.amount { width: 60px; text-align: center }
+      &.qty { width: calc(100% - 204px); text-align: center }
+      &.dt { width: 80px }
+      &.current-order { padding: 0; color: transparentize(#ffffff, 0.2);
         &.up span{  color: #3498da;  }
         &.down span{  color: #ef4d22;  }
       }
-      &.last-price{
-        //margin-top: -1px;
-        //vertical-align: middle;
-        position: absolute;
-        top: calc(50% - 11px);
-        right: 70px;
-        &:before{
-          content: '';
-          display: inline-block;
-          width: 9px;
-          height: 9px;
-          vertical-align: middle;
-          background: url("#{$pathImage}/sprite.svg") no-repeat;
+      &.last-price { position: absolute; right: 70px; top: calc(50% - 11px);
+        &:before{ content: ''; display: inline-block; width: 9px; height: 9px; vertical-align: middle;
+            background: url("#{$pathImage}/sprite.svg") no-repeat; }
+        &.up { color: #1196d4;
+          &:before{ margin-top: -2px; background-position: -234px -155px; }
         }
-        &.up{
-          color: #1196d4;
-          &:before{
-            margin-top: -2px;
-            background-position: -234px -155px;
-            //margin-top: 2px;
-            //margin-right: 2px;
-            //border: 4px solid transparent;
-            //border-bottom: 8px solid #ef4d22;
-          }
-        }
-        &.down{
-          color: #ef4d22;
-          &:before{
-            background-position: -234px -135px;
-            //margin-top: 7px;
-            //margin-right: 2px;
-            //border: 4px solid transparent;
-            //border-top: 8px solid red;
-          }
+        &.down { color: #ef4d22;
+          &:before { background-position: -234px -135px; }
         }
       }
-      .price, .volume {
-        color: $order_sidebar_current_order_title_color;
-        font-family: 'open_sans_bold', sans-serif;
-      }
+      .price, .volume { color: $order_sidebar_current_order_title_color; font-family: 'open_sans_bold', sans-serif; }
     }
     .button_container{
       display: flex;
-      max-width: 44px;
+      width: 44px;
     }
     .edit, .delete{
       //display: flex;
       //align-items: center;
       //justify-content: center;
       width: 22px;
-      //height: 30px;
+      height: 30px;
       padding: 0;
       border-radius: 0;
       //position: absolute;
@@ -935,6 +322,7 @@
       cursor: pointer;
       transition: 0.4s ease-out;
       position: relative;
+      background: none;
       &:hover{  background-color: rgba(0, 0, 0, 0.1);  }
       &:active{  background-color: rgba(255, 255, 255, 0.5);  }
       &:after{
@@ -947,9 +335,17 @@
         left: calc(50% - 7px);
       }
     }
-    .price, .volume{
-      input.number[disabled]{
-        border-right: 1px solid $order_sidebar_order_border_color;
+    .price, .volume, .risk, .profit{
+      flex-grow: 1;
+      input.number[disabled]{  border-right: 1px solid $order_sidebar_order_border_color;  }
+    }
+    .fees{
+      position: absolute; right: 4px; bottom: 32px;
+      .info_string{
+        font-size: 9px;
+        line-height: 26px;
+        color: gray;
+        span{ color: gray; }
       }
     }
     .edit{
@@ -991,37 +387,36 @@
         }
       }
     }
-    .error_pop_up {
-      display: none;
-      height: 100%;
-      padding: 10px;
-      position: absolute;
-      top: 0;
-      left: 100%;
-      z-index: 6;
-      color: #ef4d22;
-      background: rgba(0, 0, 0, 0.8);
-      &.active{
-        display: block;
-        left: 0;
-        animation-duration: 0.7s;
-        animation-fill-mode: both;
-      }
-      .container{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-      }
-      .close{
-        width: 16px;
-        height: 16px;
-        position: absolute;
-        top: 1px;
-        right: 1px;
-        cursor: pointer;
-      }
-    }
+    //.error_pop_up {
+    //  display: none;
+    //  height: 100%;
+    //  padding: 10px;
+    //  position: absolute;
+    //  top: 0;
+    //  left: 100%;
+    //  z-index: 6;
+    //  color: #ef4d22;
+    //  background: rgba(0, 0, 0, 0.8);
+    //  &.active{
+    //    display: block;
+    //    left: 0;
+    //    animation-duration: 0.7s;
+    //    animation-fill-mode: both;
+    //  }
+    //  .container{
+    //    display: flex;
+    //    align-items: center;
+    //    justify-content: center;
+    //    height: 100%;
+    //  }
+    //  .close{
+    //    width: 16px;
+    //    height: 16px;
+    //    position: absolute;
+    //    top: 1px;
+    //    right: 1px;
+    //  }
+    //}
     .sell-container form{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));  }
     .buy-container form{  background: linear-gradient(to bottom, transparentize(#64c9ef, 0.9), transparentize(#3498da, 0.9));  }
     .sell-buy-container form{
@@ -1029,7 +424,7 @@
       .price, .volume{  width: 40%;  }
       .success, .delete{
         width: 20% !important;
-        height: 59px !important;
+        height: 58px !important;
       }
       .delete{
         &:hover{  background: $trader_order_button_hover;  }
@@ -1054,7 +449,7 @@
         width: 100%;
         height: 100%;
         box-shadow: none;
-        border-top: 1px solid $order_sidebar_order_border_color;
+        //border-top: 1px solid $order_sidebar_order_border_color;
         background: transparent;
         &:hover{  background: $trader_order_button_hover;  }
         &:active{
@@ -1078,30 +473,27 @@
       text-align: center;
       position: relative;
       .container{
-        display: flex;
-        div:nth-of-type(1) label, div:nth-of-type(2) label{  border-left: none;  }
-        div:nth-of-type(3) label{  border-left: none;  border-right: none;  }
-        .obligations{
-          .warning{
-            left: auto;
-            right: 0;
-            &:before{  left: 88px;  }
-            &:after{  left: 83px;  }
-          }
-        }
+        &:first-of-type{  border-top: 1px solid $order_sidebar_order_border_color;  }
+        //&:last-of-type{  position: relative;  }
+        border-bottom: 1px solid $order_sidebar_order_border_color;
+        &.info{  justify-content: center;  }
+        //div:nth-of-type(1) label, div:nth-of-type(2) label{  border-left: none;  }
+        //div:nth-of-type(3) label{  border-left: none;  border-right: none;  }
       }
       .input{
         width: 100%;
         text-align: left;
+        //background: $color-max;
         input{
           width: calc(100% - 18px);
-          padding-right: 10px;
+          //padding-right: 10px;
           font-size: 14px;
           &[disabled]{  width: 100%;  }
         }
       }
       .col-3 .btn{  display: inline-block;  width: 46%;  background-size: 18px;  vertical-align: bottom;  }
       .cancel{  background: url("#{$pathImage}/ico-delete.png") no-repeat center;  }
+
       label:not(.checkbox){
         display: block;
         width: 100%;
@@ -1109,64 +501,71 @@
         color: $order_sidebar_order_label_color;
         font-weight: 600;
         text-align: center;
-        border: 1px solid $order_sidebar_order_border_color;
+        border-bottom: 1px solid $order_sidebar_order_border_color;
+        border-right: 1px solid $order_sidebar_order_border_color;
         position: relative;
+        &.with_info{  padding-right: 15px;  }
       }
+      //.obligations label{  width: calc(100% - 18px);  }
+
       input {
         height: 31px;
-        padding-left: 10px;
+        //padding-left: 10px;
         text-align: center;
         @include order_sidebar_order_input;
       }
-      label.checkbox{
-        display: block;
-        width: 33.33%;
-        height: 31px;
-        color: #707070;
-        line-height: 31px;
-        text-align: left;
-        border-top: 1px solid $order_sidebar_order_border_color;
-        border-right: 1px solid $order_sidebar_order_border_color;
-        @include checkbox_vertical;
-        padding-left: calc(6% + 25px);
-        &>span{
-          color: $checkbox_label_color;
-          &:before{  left: calc(6% + 16px); background: #4dac2e; transition: 0.4s ease-out;  }
-          &:after{  left: calc(6% + 17px);  }
-        }
-        input:checked ~ span{
-          &:before{  background: #ef8022;  }
-        }
-      }
-      .switch{
-        width: 33.33%;
-        height: 31px;
-        border-top: 1px solid $order_sidebar_order_border_color;
-        border-right: 1px solid $order_sidebar_order_border_color;
-        label.checkbox{
-          width: 100%;
-          //padding-left: calc(6% + 25px);
-          padding: 0;
-          border: none;
-          text-align: center;
-          span{
-            display: inline-block;
-            width: 45px;
-            position: relative;
-            &:before{
-              left: -20px;
-            }
-            &:after{
-              left: -19px;
-            }
-          }
-        }
-        //.profit{
-        //  padding: 0;
-        //  color: $main-color;
-        //  span{  color: #4dac2e;  }
-        //}
-      }
+      //label.checkbox{
+      //  display: block;
+      //  width: 33.33%;
+      //  height: 31px;
+      //  color: #707070;
+      //  line-height: 31px;
+      //  text-align: left;
+      //  border-top: 1px solid $order_sidebar_order_border_color;
+      //  border-right: 1px solid $order_sidebar_order_border_color;
+      //  @include checkbox_vertical;
+      //  padding-left: calc(6% + 25px);
+      //  &>span{
+      //    color: $checkbox_label_color;
+      //    &:before{  left: calc(6% + 16px); background: #4dac2e; transition: 0.4s ease-out;  }
+      //    &:after{  left: calc(6% + 17px);  }
+      //  }
+      //  input:checked ~ span{
+      //    &:before{  background: #ef8022;  }
+      //  }
+      //}
+      //.switch{
+      //  width: 33.33%;
+      //  height: 31px;
+      //  border-top: 1px solid $order_sidebar_order_border_color;
+      //  border-right: 1px solid $order_sidebar_order_border_color;
+      //  label.checkbox{
+      //    width: 100%;
+      //    //padding-left: calc(6% + 25px);
+      //    padding: 0;
+      //    border: none;
+      //    text-align: center;
+      //    span{
+      //      display: inline-block;
+      //      width: 45px;
+      //      position: relative;
+      //      &:before{
+      //        left: -20px;
+      //      }
+      //      &:after{
+      //        left: -19px;
+      //      }
+      //    }
+      //  }
+      //}
+      //span.close{
+      //  width: 18px;
+      //  height: 27px;
+      //  position: absolute;
+      //  top: 0;
+      //  right: 0;
+      //  background: none;
+      //}
       .delete{
         display: flex;
         width: 18px;
@@ -1175,8 +574,7 @@
         top: 0;
         right: 0;
         cursor: pointer;
-        border: 1px solid $order_sidebar_order_border_color;
-        border-right: none;
+        border-bottom: 1px solid $order_sidebar_order_border_color;
       }
       button {
         height: 31px;
@@ -1185,21 +583,65 @@
         &.buy{  background-color: #2dc7ca;  }
         //&.success{  background: url("#{$pathImage}/ico-success-w.png") no-repeat center #969696;  }
       }
-      i.submit{  display: block;  width: 66.66%; border-radius: 0;  }
-      input[type=submit]{
+      i.submit{
+        display: block;  flex-grow: 1;  border-radius: 0;
+        &:hover{  overflow: inherit !important;  }
+        &:active{
+          overflow: hidden !important;
+          .help_message{  visibility: hidden; }
+        }
+        &:first-of-type{
+          border-right: 1px solid $order_sidebar_order_border_color;
+          //.amount{
+          //  float: right;
+          //  border-left: 1px solid #fff;
+          //}
+        }
+        //.help_message{
+        //  t
+        //}
+        //.amount{  border-left: 1px solid #fff;  }
+        //&:last-of-type .amount{
+        //  float: left;
+        //  border-right: 1px solid #fff;
+        //}
+      }
+      input[type=submit], button.submit{
         width: 100%;
         height: 31px;
         padding: 0;
         font-size: 12px;
         color: #ffffff;
-        border: 1px solid $order_sidebar_order_border_color;
+        //border: 1px solid $order_sidebar_order_border_color;
         border-bottom: none;
         border-left: none;
+        border-radius: 0;
         cursor: pointer;
         transition: 0.4s ease-out;
-        &.sell{  background-image: linear-gradient(to bottom, #f88447, #ef4d22);  }
-        &.buy{  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
+        &.sell{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
+        &.buy{  background: linear-gradient(to bottom, #64c9ef, #3498da);  }
       }
+      .amount{
+        float: right;
+        padding: 0 10px;
+        border-left: 1px solid #fff;
+        .help_message{
+          width: 150px;
+          top: 24px;
+          &.right{  left: auto; right: -20px;  }
+        }
+      }
+      //.help.amount{
+      //  position: absolute;
+      //  top: calc(50% - 9px);
+      //  z-index: 1;
+      //  font-size: 12px;
+      //  color: transparent;
+      //  cursor: pointer;
+      //  user-select: none;
+      //  &.right{  right: 10px;  }
+      //  &.left{  right: calc(50% + 11px);  }
+      //}
     }
   }
   .my_order{

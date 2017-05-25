@@ -1,0 +1,7 @@
+.status-dialog {
+  .chk-settmnt { vertical-align: top }
+  .settlement { display: inline-block;
+    [type=text] { display: inline-block; width: 30px; text-align: center }
+    span { display: inline-block; margin-left: 5px; line-height: 34px }
+  }
+}

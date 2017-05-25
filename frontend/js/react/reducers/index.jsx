@@ -1,17 +1,22 @@
 import { combineReducers } from 'redux';
 
 import appState from './appReducer';
+import header from './headerReducer';
+import mainMenu from './menuReduser';
 import mainPage from './mainPageReducer';
 import eventPage from './eventPageReducer';
 import accountPage from './accountPageReducer';
 import sidebar from './sidebarReducer';
-import tradeSlip from './sidebar/defaultOrders';
-import activeTrader from './sidebar/activeTrader';
+import defaultOrders from './sidebar/tradeSlip/defaultOrders';
+import activeTrader from './sidebar/tradeSlip/activeTrader';
 import yourOrders from './sidebar/yourOrders';
 import deposit from './userPage/deposit';
 import withdraw from './userPage/withdraw';
 import transHistory from './userPage/transHistory';
 import myPosReduce from './MyPosReducer';
+import accountSetting from './userPage/settingReducer';
+// import tradeSlip from './sidebar/tradeSlipReducer';
+import registerBox from './registerReducer';
 
 
 let reducers = {};
@@ -30,51 +35,98 @@ let constants = ABpp.ABpp;
 ABpp = ABpp.ABpp.getInstance();
 ABpp.CONSTS = constants;
 
-switch (ABpp.config.currentPage){
-	case  ABpp.CONSTS.PAGE_MAIN:{
+const common = {
+	registerBox,
+};
+
+
+switch (ABpp.config.currentPage)
+{
+	case  ABpp.CONSTS.PAGE_LANDING: {
+		reducers = {
+			registerBox,
+		};
+		break;
+	}
+	case  ABpp.CONSTS.PAGE_MAIN: {
 		reducers = {
 			App: appState,
+			header,
+			mainMenu,
 			mainPage,
 			myPosReduce,
 			sidebar,
-			tradeSlip,
+			// tradeSlip,
+			defaultOrders,
 			activeTrader,
-			yourOrders
+			yourOrders,
+			...common,
 		};
 		break;
 	}
 	case ABpp.CONSTS.PAGE_EVENT:{
 		reducers = {
 			App: appState,
+			header,
+			mainMenu,
 			eventPage,
 			sidebar,
-			tradeSlip,
+			// tradeSlip,
+			defaultOrders,
 			activeTrader,
-			yourOrders
+			yourOrders,
+			...common,
 		};
 		break;
 	}
 	case ABpp.CONSTS.PAGE_ACCOUNT:{
 		reducers = {
-			'App': appState,
+			App: appState,
+			header,
+			mainMenu,
 			accountPage,
 			deposit,
 			withdraw,
-			transHistory
+			transHistory,
+			accountSetting,
+			...common,
 		};
 		break;
 	}
 	case ABpp.CONSTS.PAGE_MYPOS:{
 		reducers = {
 			App: appState,
+			header,
+			mainMenu,
 			myPosReduce,
 			sidebar,
-			tradeSlip,
+			// tradeSlip,
+			defaultOrders,
 			activeTrader,
-			yourOrders
+			yourOrders,
+			...common,
 		};
 		break;
 	}
+	case ABpp.CONSTS.PAGE_STATIC:{
+		reducers = {
+			App: appState,
+			header,
+			mainMenu,
+			...common,
+		};
+		break;
+	}
+	case ABpp.CONSTS.PAGE_ANSWER:{
+		reducers = {
+			App: appState,
+			header,
+			mainMenu,
+			...common,
+		};
+		break;
+	}
+
 }
 
 export default combineReducers(reducers);

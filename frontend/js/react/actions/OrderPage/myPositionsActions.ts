@@ -20,7 +20,7 @@ var __LDEV__ = true;
 
 class Actions extends BaseActions
 {
-    public actionOnBuySellClick(props)
+    public actionOnBuySellClick(props, defaultOrderActions)
     {
         let flag = false;
         let qt : any = 0,
@@ -36,6 +36,8 @@ class Actions extends BaseActions
             "EventTitle": props.exdata.isMirror ? props.exdata.AwayName : props.exdata.HomeName,
             "Positions": props.exdata.Positions,
             "isMirror": props.exdata.isMirror ? 1 : 0,
+            "Bid": props.exdata.Bid,
+            "Ask": props.exdata.Ask,
             "Orders": [
                 {
                     "Price": bpr,
@@ -60,7 +62,8 @@ class Actions extends BaseActions
         return (dispatch, getState) =>
         {
             // 0||console.debug( 'getState()', getState() );
-            getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+            // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
+            defaultOrderActions.actionOnOrderCreate(outStruc);
             // dispatch({
             //     type: ON_POS_PRICE_CLICK,
             //     payload: {}

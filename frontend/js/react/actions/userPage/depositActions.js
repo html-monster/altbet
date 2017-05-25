@@ -109,12 +109,20 @@ export function actionOnQuantityValidate(values)
 	}
 }
 
-export function actionOnAjaxSend(context, payment,
-								 values, serverValidation, event)
+/**
+ *
+ * @param context - this компонента в которой нахоидтся функция
+ * @param payment string - название платежки
+ * @param values - данные собранные с формы
+ * @param serverValidation - функция обратной связи для серверной валидации
+ * @param event
+ * @returns {function(*, *)}
+ */
+export function actionOnAjaxSend(context, payment, values, serverValidation, event)
 {
 	return (dispatch, getState) =>
 	{
-		__DEV__ && console.log(values);
+		__DEV__ && console.log('transactionData:', values);
 		const { approved } = getState().deposit;
 		const form = $(event.target);
 		const submit = $(event.target).find('[type=submit]');
@@ -127,6 +135,12 @@ export function actionOnAjaxSend(context, payment,
 			case 'Skrill':{
 				onSuccessAjax =  context.props.actions.onSuccessAjaxSkrill.bind(null, context, form, serverValidation);
 				break;}
+			case 'Bitpay':{
+				onSuccessAjax =  context.props.actions.onSuccessAjaxBitpay.bind(null, context, form, serverValidation);
+				break;}
+			case 'Visa':{
+				onSuccessAjax =  context.props.actions.onSuccessAjaxVisa.bind(null, context, form, serverValidation);
+				break;}
 		}
 
 		const jQAjax = defaultMethods.sendAjaxRequest.bind(null ,{
@@ -138,11 +152,15 @@ export function actionOnAjaxSend(context, payment,
 			beforeSend: OnBeginAjax,
 		});
 		let error = null;
-		if(!values.sum)
+		if(!values.Sum){
 			error = 'Required';
+			$('html, body').animate({scrollTop: $('.quantity_control').offset().top - $('header').outerHeight(true)}, 800);
+		}
 
-		if(values.sum && values.sum < 10)
+		if(values.Sum && values.Sum < 10){
 			error = 'Minimum deposit is $10';
+			$('html, body').animate({scrollTop: $('.quantity_control').offset().top - $('header').outerHeight(true)}, 800);
+		}
 
 		// if(values.sum){
 		// 	new Promise(resolve => {
@@ -170,8 +188,7 @@ export function actionOnAjaxSend(context, payment,
 
 		function onErrorAjax()
 		{
-			let data = {};
-			data.error = 'The payment failed. Please check your internet connection or reload the page or try again later';
+			let data = {error: 'The payment failed. Please check your internet connection or reload the page or try again later'};
 			submit.removeAttr('disabled');
 			form.removeClass('loading');
 			serverValidation(data);
@@ -239,10 +256,9 @@ export function onSuccessAjaxNeteller(context, form, serverValidation, data)
 				break;}
 			case '20020':{
 				serverValidation({error: 'Insufficient balance to complete the transaction'});
-				error = ' ';
 				dispatch({
 					type: DEPOSIT_QUANTITY_VALIDATE,
-					payload: error
+					payload: ' '
 				});
 				break;}
 			case '20021':{
@@ -275,18 +291,25 @@ export function onSuccessAjaxNeteller(context, form, serverValidation, data)
 
 export function onSuccessAjaxSkrill(context, form, serverValidation, data)
 {
-	return (dispatch) =>
+	return () =>
 	{
 		__DEV__ && console.log(data);
-		const {Answer: { code }} = data;
+		const { Code, Message } = data;
 		// serverValidation(obj);
-		switch (code) {
+		switch (Code) {
 			case '200':{
-				const { transaction: { amount = null, fees = null } } = data;
-				// popUpClass.nativePopUpOpen('.wrapper_user_page .deposit.message');
-
+				location.href = Message;
+				/*popUpClass.nativePopUpOpen('.wrapper_user_page .deposit.message');
 				$(context.refs.paymentMessage).find('.amount').text('$' + ((amount - fees[0].feeAmount) / 100));
-				serverValidation({message: 'The payment pending'});
+				serverValidation({message: 'The payment pending'});*/
+				break;}
+			case '404':{
+				__DEV__ && console.error('error while getting response from Skrill');
+				serverValidation({error: 'The payment failed. Please reload the page or try again later'});
+				break;}
+			case '500':{
+				__DEV__ && console.error('error while getting URL from response');
+				serverValidation({error: 'The payment failed. Please reload the page or try again later'});
 				break;}
 			case '555':{
 				serverValidation({error: 'The payment failed. Please reload the page or try again later'});
@@ -294,13 +317,74 @@ export function onSuccessAjaxSkrill(context, form, serverValidation, data)
 			default:{
 				serverValidation({error: 'The payment failed. Try again later'});
 			}
-		}//20008, 20011, 20015, 20020, 20021, 20022, 20031, 20035, 20301
-		// // case 20003:
-		// // 	serverValidation({error: 'Your NETELLER Merchant Account does not support this currency.'});
-		// // 	break;?????????????????????????????????????????????????????
+		}
 		form.find('[type=submit]').removeAttr('disabled');
 		form.removeClass('loading');
-		// $(context.refs.paymentMessage).find('.hide').unbind('click');
 	}
 }
 
+export function onSuccessAjaxBitpay(context, form, serverValidation, data) {
+	return (dispatch) =>
+	{
+		__DEV__ && console.log(data);
+		const { Code, Message } = data;
+		// serverValidation(obj);
+		switch (Code) {
+			case '200':{
+				location.href = Message;
+				/*popUpClass.nativePopUpOpen('.wrapper_user_page .deposit.message');
+				 $(context.refs.paymentMessage).find('.amount').text('$' + ((amount - fees[0].feeAmount) / 100));
+				 serverValidation({message: 'The payment pending'});*/
+				break;}
+			case '404':{
+				__DEV__ && console.error('error while getting response from Skrill');
+				serverValidation({error: 'The payment failed. Please reload the page or try again later'});
+				break;}
+			case '500':{
+				__DEV__ && console.error('error while getting URL from response');
+				serverValidation({error: 'The payment failed. Please reload the page or try again later'});
+				break;}
+			case '555':{
+				serverValidation({error: 'The payment failed. Please reload the page or try again later'});
+				break;}
+			default:{
+				serverValidation({error: 'The payment failed. Try again later'});
+			}
+		}
+		form.find('[type=submit]').removeAttr('disabled');
+		form.removeClass('loading');
+	}
+}
+
+export function onSuccessAjaxVisa(context, form, serverValidation, data) {
+	return (dispatch) =>
+	{
+		__DEV__ && console.log(data);
+		const { Code, Message } = data;
+		// serverValidation(obj);
+		switch (Code) {
+			case '200':{
+				location.href = Message;
+				/*popUpClass.nativePopUpOpen('.wrapper_user_page .deposit.message');
+				 $(context.refs.paymentMessage).find('.amount').text('$' + ((amount - fees[0].feeAmount) / 100));
+				 serverValidation({message: 'The payment pending'});*/
+				break;}
+			case '404':{
+				__DEV__ && console.error('error while getting response from Skrill');
+				serverValidation({error: 'The payment failed. Please reload the page or try again later'});
+				break;}
+			case '500':{
+				__DEV__ && console.error('error while getting URL from response');
+				serverValidation({error: 'The payment failed. Please reload the page or try again later'});
+				break;}
+			case '555':{
+				serverValidation({error: 'The payment failed. Please reload the page or try again later'});
+				break;}
+			default:{
+				serverValidation({error: 'The payment failed. Try again later'});
+			}
+		}
+		form.find('[type=submit]').removeAttr('disabled');
+		form.removeClass('loading');
+	}
+}
