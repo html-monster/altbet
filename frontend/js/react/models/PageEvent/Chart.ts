@@ -382,6 +382,7 @@ export class Chart
         // correct group for All
         if (inGr == Chart.GROUP_ALL) inGr = this.getGroupCorrect();
 
+
         let rdata = this.dataRaw;
         let grData = this.dataGrouped = [];
         if( rdata.length )
@@ -504,7 +505,20 @@ export class Chart
                 var minDiff = duration.asMinutes();
             } // endif
 
-            if( !this.dataGrouped.length || minDiff > this.groups[this.currGroup] )
+
+            this.dataGrouped.push({x: dt,
+                y: val.Open,
+                open: val.Open,
+                min: val.Open,
+                max: val.Open,
+                close: val.Open,
+                vol: val.Volume,
+                virtual: false,
+                dt: moment.unix(dt/1000).format('Do h:mm:ss a'),
+                items: [val],
+            });
+
+/*            if( !this.dataGrouped.length || minDiff > this.groups[this.currGroup] )
             {
                 this.dataGrouped.push({x: dt,
                     y: val.Open,
@@ -526,7 +540,7 @@ export class Chart
                 if (lastPoint.min > val.Open) lastPoint.min = val.Open;
                 if (lastPoint.max < val.Open) lastPoint.max = val.Open;
                 lastPoint.items && lastPoint.items.push(val);
-            } // endif
+            }*/ // endif
         } // endfor
 
         // __LDEV__&&console.debug( 'this.dataGrouped  this.groups[this.currGroup]', this.dataGrouped, this.dataRaw, this.groups[this.currGroup] );
@@ -866,7 +880,8 @@ export class Chart
 
             $(Highcharts.charts).each(function ()
             {
-                $(inData).each(function (key) {
+                $(inData).each(function (key)
+                {
                     if (this.Symbol.Exchange == identificators[0]
                         && this.Symbol.Name == identificators[1]
                         && this.Symbol.Currency == identificators[2]) {

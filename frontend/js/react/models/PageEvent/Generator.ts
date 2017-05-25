@@ -14,7 +14,7 @@ export class Generator
     private FLAG_GEN_STARTED = 0;
     private genLastPoint = 0;
     // private flagForceStop = true; // !!!!!!!!!!!!!!!
-    private flagForceStop = true;
+    private flagForceStop = false;
 
     private flagActive = false;
     private TiGenerator = [];
@@ -45,6 +45,8 @@ export class Generator
      */
     public restart()
     {
+        if (this.flagForceStop) return;
+
         if( this.TiGenerator.length )
         {
             this.cancel();
@@ -132,6 +134,7 @@ export class Generator
      */
     public cancel()
     {
+        if (this.flagForceStop) return;
         // __HiDEV__||console.warn( 'Try cancel' );
         this._stopTimer();
 
