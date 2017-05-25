@@ -10,7 +10,7 @@ let __HiDEV__ = !true;
  */
 export class Generator
 {
-    private genTickTime = 30; // generate new point, seconds
+    private genTickTime = 10; // generate new point, seconds
     private FLAG_GEN_STARTED = 0;
     private genLastPoint = 0;
     // private flagForceStop = true; // !!!!!!!!!!!!!!!
@@ -57,11 +57,99 @@ export class Generator
 
 
     /**
-     * Generates new virtual point
+     * Cancel virtual point and stop generator
+     */
+    public cancel()
+    {
+        if (this.flagForceStop) return;
+        // __HiDEV__||console.warn( 'Try cancel' );
+        this._stopTimer();
+
+        this._deleteVirtPoint();
+    }
+
+
+    /**
+     * add new point
      */
     public addPoint()
     {
-// __HiDEV__||console.debug( 'addPoint' );
+        this._refreshVPoint();
+    }
+
+
+
+    /**
+     * @private
+     * Start generator
+     */
+    private _startGenerator()
+    {
+        var self = this;
+        this.flagActive = true;
+
+        var timer = setInterval(function ()
+        {
+            self.addPoint();
+        }, this.genTickTime * 1000);
+
+        this.TiGenerator.push(timer);
+        // __HiDEV__||console.debug( 'this.TiGenerator', this.TiGenerator );
+    };
+
+
+
+    /**
+     * delete virtual point from real data
+     */
+    private _deleteVirtPoint(props : any = {})
+    {
+        const { notLast } = props;
+
+        let delPoints = [];
+        let data = Highcharts.charts[0].series[0].data;
+        // search for virtual points
+        let countii = notLast ? data.length - 1 : data.length;
+
+        for(let ii = 0; ii < countii; ii++ )
+        {
+            if( data[ii].virtual ) delPoints.push(ii);
+        } // endfor
+
+        // del virtual point from chart
+        delPoints.forEach((val) => Highcharts.charts[0].series[0].removePoint(val, true));
+
+        if (!notLast) this.genLastPoint = 0;
+
+        this.chartObj.setChartData(null, true);
+    };
+
+
+
+    /**
+     * stop generator Timer
+     * @private
+     */
+    private _stopTimer()
+    {
+        // __HiDEV__||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
+        while( this.TiGenerator.length )
+        {
+            clearInterval(this.TiGenerator[0]);
+            this.TiGenerator.pop();
+        } // endwhile
+        // __HiDEV__||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
+
+        this.flagActive = false;
+    }
+
+
+    /**
+     * Generates new virtual point
+     */
+    private _refreshVPoint()
+    {
+__DEV__&&console.debug( '_refreshVPoint' );
         // for turn off generator
         if (this.flagForceStop) return;
 
@@ -70,9 +158,6 @@ export class Generator
 
         if( data.length )
         {
-            // delete virtual point
-            this.genLastPoint > 0 && this._deleteVirtPoint();
-
             // Set virtual point
             let yy = data[data.length-1].y;
 
@@ -109,7 +194,8 @@ export class Generator
 
                 // Highcharts.charts[0].redraw();
 
-
+                // delete virtual point
+                this.genLastPoint > 0 && this._deleteVirtPoint({notLast: true});
             } catch (e) {
                 // __HiDEV__&&console.debug( 'set v point', e.getMessage() );
             }
@@ -125,81 +211,5 @@ export class Generator
 
 
         // prevTi && this._startGenerator();
-    };
-
-
-
-    /**
-     * Cancel virtual point and stop generator
-     */
-    public cancel()
-    {
-        if (this.flagForceStop) return;
-        // __HiDEV__||console.warn( 'Try cancel' );
-        this._stopTimer();
-
-        this._deleteVirtPoint();
-    };
-
-
-
-    /**
-     * @private
-     * Start generator
-     */
-    private _startGenerator()
-    {
-        var self = this;
-        this.flagActive = true;
-
-        var timer = setInterval(function ()
-        {
-            self.addPoint();
-        }, this.genTickTime * 1000);
-
-        this.TiGenerator.push(timer);
-        // __HiDEV__||console.debug( 'this.TiGenerator', this.TiGenerator );
-    };
-
-
-
-    /**
-     * delete virtual point from real data
-     */
-    private _deleteVirtPoint()
-    {
-        let delPoints = [];
-        let data = Highcharts.charts[0].series[0].data;
-        // search for virtual points
-        for(let ii = 0, countii = data.length; ii < countii; ii++ )
-        {
-            if( data[ii].virtual ) delPoints.push(ii);
-        } // endfor
-
-        // del virtual point from chart
-        delPoints.forEach((val) => Highcharts.charts[0].series[0].removePoint(val, true));
-
-        this.genLastPoint = 0;
-
-        this.chartObj.setChartData(null, true);
-    };
-
-
-
-    /**
-     * stop generator Timer
-     * @private
-     */
-    private _stopTimer()
-    {
-        // __HiDEV__||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
-        while( this.TiGenerator.length )
-        {
-            clearInterval(this.TiGenerator[0]);
-            this.TiGenerator.pop();
-        } // endwhile
-        // __HiDEV__||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
-
-        this.flagActive = false;
     }
 }
