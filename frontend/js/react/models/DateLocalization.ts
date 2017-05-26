@@ -3,6 +3,7 @@
  */
 
 
+
 export class DateLocalization
 {
     private currentTimestamp = 0;
@@ -32,10 +33,11 @@ export class DateLocalization
      * @param inTimeStamp
      * @return {string}
      */
-    public unixToLocalDate(inProps = {timestamp: '', format: 'MM/DD/Y'})
+    public unixToLocalDate(inProps: any = {timestamp: '', format: 'MM/DD/Y', TZOffset: false})
     {
         let ts : any = inProps.timestamp;
         if (!ts) ts = this.currentTimestamp;
+        if (inProps.TZOffset) ts -= (new Date()).getTimezoneOffset() * 60 * 1000;
         return ts > 0 ? moment.unix(ts/1000).format(inProps.format) : undefined;
         // return ts > 0 ? moment.unix(ts/1000).utcOffset(moment().utcOffset()).format(inProps.format) : undefined;
         // return ts > 0 ? moment.unix(ts/1000).utc().format(inProps.format) : undefined;

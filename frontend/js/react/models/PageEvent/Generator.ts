@@ -10,6 +10,8 @@ let __HiDEV__ = !true;
  */
 export class Generator
 {
+    public lastVirtualX = 0;
+
     private genTickTime = 10; // generate new point, seconds
     private FLAG_GEN_STARTED = 0;
     private genLastPoint = 0;
@@ -194,6 +196,7 @@ export class Generator
                 // else
                 // {
                 // } // endif
+                this.lastVirtualX = virtPoint.x;
                 Highcharts.charts[0].series[0].addPoint(virtPoint, true);
 
 
