@@ -24,7 +24,8 @@ export default class mainChartController
 		this.chart = new Highcharts.Chart({
 			chart      : {
 				type    : 'line',
-				renderTo: context
+				renderTo: context,
+				height: 400
 			},
 			title      : {
 				text: ''

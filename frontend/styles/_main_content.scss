@@ -35,7 +35,7 @@
   }
 
   //&.active &__tab_content { opacity: 1; transition: .4s; }
-  &__tab_content {  position: relative; padding-top: 20px !important; overflow: hidden; /*opacity: 0;*/}
+  &__tab_content {  position: relative; padding-top: 20px !important; height: 100%; overflow: hidden; /*opacity: 0;*/}
 
   //&__tab1_item { padding-bottom: 40px; }
 
@@ -186,7 +186,7 @@
         &.down i { display: inline-block; top: 2px; background-position: -309px -308px; }
         &.up i { display: inline-block; top: 0; background-position: -292px -306px; }
         i { display: none; position: relative; margin-right: -5px; width: 15px; height: 16px; background-size: cover;
-            background: url(../../Images/sprite.svg) no-repeat; }
+            background: url("#{$pathImage}/sprite.svg") no-repeat; }
             //background: url(../../Images/temp/sprite-01.svg) no-repeat; background-position: 0px 0px; }
       }
     }
@@ -235,7 +235,7 @@
           opacity: 1; transition: .4s;
         button { padding: 0 10px; color: #333; font-size: 14px; background: linear-gradient(to top, #bdc0cd, #ffffff); font-weight: bold; text-transform: none }
         i { display: inline-block; position: relative; margin-right: 10px; top: 3px; width: 18px; height: 18px;
-            background: url(../../Images/sprite.svg) no-repeat; background-position: -269px -305px; }
+            background: url("#{$pathImage}/sprite.svg") no-repeat; background-position: -269px -305px; }
       }
 
 
