@@ -110,6 +110,7 @@ export class Generator
         let data = Highcharts.charts[0].series[0].data;
         // search for virtual points
         let countii = notLast ? data.length - 1 : data.length;
+        // let countii = data.length;
 
         for(let ii = 0; ii < countii; ii++ )
         {
@@ -117,11 +118,15 @@ export class Generator
         } // endfor
 
         // del virtual point from chart
+        // 0||console.log( 'delPoints', delPoints );
         delPoints.forEach((val) => Highcharts.charts[0].series[0].removePoint(val, true));
 
-        if (!notLast) this.genLastPoint = 0;
+        if (!notLast)
+            this.genLastPoint = 0;
 
         this.chartObj.setChartData(null, true);
+        // setTimeout(() => {
+        // }, 200);
     };
 
 
@@ -149,7 +154,7 @@ export class Generator
      */
     private _refreshVPoint()
     {
-__DEV__&&console.debug( '_refreshVPoint' );
+    // __DEV__&&console.debug( '_refreshVPoint' );
         // for turn off generator
         if (this.flagForceStop) return;
 
@@ -182,14 +187,14 @@ __DEV__&&console.debug( '_refreshVPoint' );
                 };
 
 
-                if( Highcharts.charts[0].series[0].data[Highcharts.charts[0].series[0].data.length-1].virtual )
-                {
-                    Highcharts.charts[0].series[0].data[Highcharts.charts[0].series[0].data.length-1] = virtPoint;
-                }
-                else
-                {
-                    Highcharts.charts[0].series[0].addPoint(virtPoint, true);
-                } // endif
+                // if( Highcharts.charts[0].series[0].data[Highcharts.charts[0].series[0].data.length-1].virtual )
+                // {
+                //     Highcharts.charts[0].series[0].data[Highcharts.charts[0].series[0].data.length-1] = virtPoint;
+                // }
+                // else
+                // {
+                // } // endif
+                Highcharts.charts[0].series[0].addPoint(virtPoint, true);
 
 
                 // Highcharts.charts[0].redraw();

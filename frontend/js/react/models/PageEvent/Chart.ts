@@ -207,6 +207,17 @@ export class Chart
             tooltip: {
                 enabled: false,
                 valueDecimals: 2,
+                formatter: function ()
+                {
+                    0||console.log( 'tooltip', this );
+                    if (this.series.data.pop()['virtual']) {
+                        return false;
+                        // to disable the tooltip at a point return false
+                    } else {
+                        return '<b>' + this.series.name + '</b><br/>' +
+                            this.x + ': ' + this.y + '°C';
+                    }
+                }
                 // pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}</b><br/>'
             },
             rangeSelector: {
@@ -601,117 +612,10 @@ export class Chart
 
             var container = $(this).attr('id');
 
-            // Show highlights
-            // $('#' + container).bind('mousemove touchmove touchstart', function (e) { self.showHighlights(e) });
-            // $('#' + container).bind('mouseleave', function (e) { self.showHighlights(e, 1) });
-
-
-/*
-            Highcharts.Point.prototype.highlight = function (event, data, isClose = 0)
-            {
-                //this.onMouseOver(); // Show the hover marker
-                //this.series.chart.tooltip.refresh(this); // Show the tooltip
-                if (!data) return;
-
-                // var localDate = new Date(data.date + new Date().getTimezoneOffset() * 60 * 1000);
-
-                var $label = '<b>Time:</b> ' + //('0' + localDate.getMonth() + 1).slice(-2) +
-                    (new DateLocalization()).unixToLocalDate({timestamp: data.date, format: "d MMM YY h:mm:ss "}) +
-                    '<b>Vol:</b> ' + data.volume.toString().substr(0, 3) + '  <br/> ' +
-                    '<b>Close:</b> ' + parseFloat("0" + data.close).toFixed(2).substr(1, 3) + ' ' +
-                    '<b>Open:</b> ' + parseFloat("0" + data.open).toFixed(2).substr(1, 3) + ' ' +
-                    '<b>Low:</b> ' + parseFloat("0" + data.low).toFixed(2).substr(1, 3) + ' ' +
-                    '<b>High:</b> ' + parseFloat("0" + data.high).toFixed(2).substr(1, 3) + ' ';
-                self.createLabel(Highcharts.charts[0],
-                    !isClose ? $label : ""
-                );
-
-
-                this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
-            };
-*/
-
-
-            // $('#' + container).bind('mouseleave', function (e) {
-            //     //label.destroy();
-            //     $(Highcharts.charts).each(function () {
-            //         var event = this.pointer.normalize(e.originalEvent); // Find coordinates within the chart
-            //         var point = this.series[0].searchPoint(event, true); // Get the hovered point
-            //
-            //         if (point) {
-            //             this.xAxis[0].hideCrosshair();
-            //         }
-            //     });
-            // });
 
             __LDEV__ && (self.chartData.tooltip.enabled = true);
 
 
-            // Add inData to charts options
-            // var flag = false;
-/*
-            $(self.chartData).each(function (key) {
-                self.chartData.series[key] = {
-                    data: self.chartData[key].data,
-                    name: self.chartData[key].name,
-                    type: self.chartData[key].type,
-                     // This saves expensive inData checking and indexing in long series
-/!*                    states: {
-                        hover: {
-                            enabled: false
-                        }
-                    },
-                    marker: {
-                        enabled: false,
-/!*                        states: {
-                            hover: {
-                                enabled: false
-                            },
-                            select: {
-                                enabled: false
-                            }
-                        }*!/
-                    },
-                    fillColor: {
-                        linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1},
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    }*!/
-                };
-                flag && (chartsOptions.series[key].yAxis = 1);
-                flag || (flag = true);
-                chartsOptions.yAxis[key] = self.chartData[key].yAxis;
-            });
-*/
-
-
-            // Highcharts.themeOpts = {
-            //     // colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee',
-            //     //     '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
-            //     // chart: {
-            //     //     backgroundColor: {
-            //     //         linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},
-            //     //         stops: [
-            //     //             [0, '#2a2a2b'],
-            //     //             [1, '#3e3e40']
-            //     //         ]
-            //     //     },
-            //     //     style: {
-            //     //         fontFamily: '\'Unica One\', sans-serif'
-            //     //     },
-            //     //     // plotBorderColor: '#606063'
-            //     // },
-            //     // legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
-            //     // background2: '#505053',
-            //     // dataLabelsColor: '#B0B0B3',
-            //     // textColor: '#C0C0C0',
-            //     // contrastTextColor: '#F0F0F3',
-            //     // maskColor: 'rgba(255,255,255,0.3)'
-            // };
-            //
-            // Highcharts.setOptions(Highcharts.themeOpts);
 
             var  tempOoptions = {
                 chart: {
@@ -741,36 +645,48 @@ export class Chart
                     }
                 },
                 tooltip: {
-                    crosshairs: true,
-                    shared: true
+                    // crosshairs: true,
+                    // shared: true,
+                    formatter: function ()
+                    {
+                        0||console.log( 'tooltip', this.series );
+                        // if (this.series.name == 'Tokyo' && this.y == 26.5) {
+                        //     return false;
+                        //     // to disable the tooltip at a point return false
+                        // } else {
+                        // }
+                            return '<b>' + this.series.name + '</b><br/>' +
+                                this.x + ': ' + this.y + '°C';
+                    }
+
                 },
-                        rangeSelector: {
-                            allButtonsEnabled: true,
-                            buttons: [
-                                {
-                                    type: 'minute',
-                                    count: 1, // диапазон отображения
-                                    text: '1m',
-                                },
-                                                    {
-                                    type: 'minute',
-                                    count: 5,
-                                    text: '5m',
-                                },
-                                {
-                                    type: 'all',
-                                    text: 'All',
-                                    // dataGrouping: {
-                                    //     units: [
-                                    //         // ['minute', [1, 3, 10, 30]],
-                                    //         ['hour', [2]]
-                                    //     ]
-                                    // }
-                                },
-                              ],
-                                            enabled: true,
-                            selected: 1,
-                          },
+                rangeSelector: {
+                    allButtonsEnabled: true,
+                    buttons: [
+                        {
+                            type: 'minute',
+                            count: 1, // диапазон отображения
+                            text: '1m',
+                        },
+                                            {
+                            type: 'minute',
+                            count: 5,
+                            text: '5m',
+                        },
+                        {
+                            type: 'all',
+                            text: 'All',
+                            // dataGrouping: {
+                            //     units: [
+                            //         // ['minute', [1, 3, 10, 30]],
+                            //         ['hour', [2]]
+                            //     ]
+                            // }
+                        },
+                      ],
+                                    enabled: true,
+                    selected: 1,
+                  },
                 plotOptions: {
                     spline: {
                         marker: {
