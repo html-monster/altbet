@@ -1,6 +1,7 @@
 import {
     MP_ON_POS_PRICE_CLICK,
     MP_ON_SOCKET_MESSAGE,
+	MP_CHART_ON_SOCKET_MESSAGE,
     MP_ON_BASIC_MODE_CH,
 	MP_TRAIDER_MODE_CH,
     MP_ON_CHANGE_SUBSCRIBING,
@@ -11,6 +12,8 @@ const initialState = {
     marketsData: appData.pageHomeData ? appData.pageHomeData.Data : null,
     isBasicMode: globalData.basicMode,
     isTraiderOn: globalData.autoTradeOn,
+	serverChartsData: null, // need for comparison
+	charts: null,
     chartSubscribing: false,
     activeExchange: {name: '', // exchange unique name
         isMirror: false},
@@ -26,6 +29,9 @@ export default function mainPage(state = initialState, action)
             // 0||console.debug( 'newVar', newVar );
             //     let newVar = {...state, marketsData: action.payload};
             return {...state, marketsData: action.payload};
+
+        case MP_CHART_ON_SOCKET_MESSAGE:
+            return {...state, charts: action.payload.newObj, serverChartsData: action.payload.serverChartsData};
 
         case MP_ON_POS_PRICE_CLICK:
             return {...state, activeExchange: {name: action.payload[0], isMirror: action.payload[1]}};

@@ -10,8 +10,8 @@
 		else
 			createCharts(data);
 
-
-		console.log('chart rendered', data["0"].Symbol.Exchange);
+		// console.log('data:', data);
+		console.log('chart rendered');
 	};
 
 	let createCharts = function (data)
@@ -44,7 +44,7 @@
 			self.charts.push(new Highcharts.Chart({
 				chart      : {
 					type    : 'line',
-					renderTo: ($(this).attr('id'))
+					renderTo: this
 				},
 				title      : {
 					text: ''
@@ -67,7 +67,7 @@
 					title : '',
 					labels: {
 						formatter: function () {
-							return '$' + eval(this.value).toFixed(2).toString();
+							return '$' + (this.value).toFixed(2);
 						}
 					},
 					//max: 1
