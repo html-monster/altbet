@@ -209,8 +209,9 @@ export class Chart
                 valueDecimals: 2,
                 formatter: function ()
                 {
-                    0||console.log( 'tooltip', this );
-                    if (this.series.data.pop()['virtual']) {
+                    0||console.log( 'tooltip', this.series.data );
+                    0||console.log( 'dataGrouped', self.dataGrouped.pop() );
+                    if (this.series.data.pop()['x']) {
                         return false;
                         // to disable the tooltip at a point return false
                     } else {
@@ -647,18 +648,6 @@ export class Chart
                 tooltip: {
                     // crosshairs: true,
                     // shared: true,
-                    formatter: function ()
-                    {
-                        0||console.log( 'tooltip', this.series );
-                        // if (this.series.name == 'Tokyo' && this.y == 26.5) {
-                        //     return false;
-                        //     // to disable the tooltip at a point return false
-                        // } else {
-                        // }
-                            return '<b>' + this.series.name + '</b><br/>' +
-                                this.x + ': ' + this.y + '°C';
-                    }
-
                 },
                 rangeSelector: {
                     allButtonsEnabled: true,
