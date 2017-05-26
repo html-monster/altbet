@@ -357,8 +357,8 @@
         &__tab { display: inline-block; width: 103px; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
               transition: color .4s; cursor: pointer;
           &:hover { color: $color-blue; }
-          &_1 { margin-right: 1px; padding-left: 16px; padding-right: 13px; @include main_page_lineup_button; }
-          &_2 { margin-left: 1px; padding-left: 13px; padding-right: 16px; @include main_page_chart_button; }
+          &_1 { height: auto; margin-right: 1px; padding: 0 16px 0 14px; @include main_page_lineup_button; }
+          &_2 { height: auto; margin-left: 1px; padding: 0 16px 0 14px; @include main_page_chart_button; }
         }
       }
     }
