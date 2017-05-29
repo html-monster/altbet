@@ -209,13 +209,12 @@ export class Chart
                 valueDecimals: 2,
                 formatter: function ()
                 {
-                    0||console.log( 'tooltip', this );
-
-                    if (this.x == self.Generator.lastVirtualX) {
+                    if (this.x == self.Generator.lastVirtualX)
+                    {
                         return "<span>Mediana</span>";
                         // to disable the tooltip at a point return false
                     } else {
-                        let date = (new DateLocalization()).unixToLocalDate({timestamp: this.x, format: 'DD MMM Y h:mm A'});
+                        let date = (new DateLocalization()).unixToLocalDate({timestamp: this.x, format: 'DD MMM Y h:mm A', TZOffset: true});
                         return '<b>' + date + '</b><br/>' +
                             'Price: $' + this.y;
                     }

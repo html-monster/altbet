@@ -19,12 +19,15 @@ export class DateLocalization
         try {
             // "/Date(1489287600000+0000)/"
             retval = this.currentTimestamp = inDate.match(/(\d+)/i)[1] * 1;
+
+            // time zone offset
             if (props.TZOffset) retval -= (new Date()).getTimezoneOffset() * 60 * 1000;
-            // retval = this.currentTimestamp = inDate.replace('/Date(', '').replace(')/', '') * 1 - (new Date()).getTimezoneOffset() * 60 * 1000;
+
         } catch (e) {
             retval = undefined;
         }
-            return inReturn ? retval : this;
+
+        return inReturn ? retval : this;
     }
 
 
@@ -37,7 +40,10 @@ export class DateLocalization
     {
         let ts : any = inProps.timestamp;
         if (!ts) ts = this.currentTimestamp;
-        if (inProps.TZOffset) ts -= (new Date()).getTimezoneOffset() * 60 * 1000;
+
+        // time zone offset
+        if (inProps.TZOffset) ts += (new Date()).getTimezoneOffset() * 60 * 1000;
+
         return ts > 0 ? moment.unix(ts/1000).format(inProps.format) : undefined;
         // return ts > 0 ? moment.unix(ts/1000).utcOffset(moment().utcOffset()).format(inProps.format) : undefined;
         // return ts > 0 ? moment.unix(ts/1000).utc().format(inProps.format) : undefined;
