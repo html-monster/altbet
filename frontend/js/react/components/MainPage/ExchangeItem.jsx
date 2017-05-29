@@ -3,6 +3,7 @@ import React from 'react';
 import ButtonContainer from './ButtonContainer';
 import {DateLocalization} from './../../models/DateLocalization';
 import {LineupPage} from './LineupPage';
+import Chart from './Chart';
 // import {Common} from './../../common/Common';
 
 
@@ -17,16 +18,26 @@ export default class ExchangeItem extends React.Component
         this.data = gLineupPageData;
 
         this.state = {
-            isLPOpen: false,
             activeTab: (this.data[props.data.Symbol.HomeName] && this.data[props.data.Symbol.AwayName] &&
                         this.data[props.data.Symbol.HomeName].team && this.data[props.data.Symbol.AwayName].team) ?
-                [" active", ""] : ["", " active"]
+                [" active", ""] : ["", " active"],
+			chart: null,
+            isLPOpen: false,
         };
     }
 
     componentWillUpdate(nextProps, nextState)
     {
-        // if( newProps.data.currentExchange !== newProps.data.Symbol.Exchange && this.state.isLPOpen ) this._lupClose();
+		// if(nextProps.data.currentExchange === nextProps.data.Symbol.Exchange && nextState.activeTab[1] && nextState.isLPOpen)
+		// {
+		// 	if(nextProps.chartData && !nextState.chart)
+		// 	{
+		// 		nextState.chart = new Chart(this.refs.chartContainer, nextProps.chartData);
+		// 		console.log('this.state.chart:', nextProps.data.Symbol.Exchange, nextState.chart);
+		// 	}
+		// 	else if(nextState.chart) nextState.chart.updateChart(nextProps.chartData);
+		// 	nextState.olol = 'ollol';
+		// }
 
         // if not active -> close
         if(nextProps.data.currentExchange !== nextProps.data.Symbol.Exchange && this.state.isLPOpen && nextState.isLPOpen)
@@ -38,12 +49,30 @@ export default class ExchangeItem extends React.Component
         }
     }
 
+    componentDidUpdate()
+	{
+		let currentProps = this.props;
+		let currentState = this.state;
+
+		if(currentProps.data.currentExchange === currentProps.data.Symbol.Exchange && currentState.activeTab[1] && currentState.isLPOpen)
+		{
+			if(currentProps.chartData && !currentState.chart)
+			{
+				currentState.chart = new Chart(this.refs.chartContainer, currentProps.chartData);
+				this.setState(currentState);
+				// console.log('this.state.chart:', currentProps.data.Symbol.Exchange, currentState.chart);
+			}
+			else if(currentState.chart) currentState.chart.updateChart(currentProps.chartData);
+		}
+	}
+
 
     render()
     {
-        const { actions, data, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange }, mainContext, setCurrentExchangeFn } = this.props;
-        let { isLPOpen, activeTab } = this.state;
-        // 0||console.log( 'activeExchange', activeExchange, currentExchange );
+        const { actions, chartData, data, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange }, mainContext, setCurrentExchangeFn } = this.props;
+        let { activeTab, chart, isLPOpen,  } = this.state;
+        // console.log('this.props:', this.props);
+        // if(chart) console.log( 'chart', Symbol.Exchange, chart );
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
         let isExpertMode;
@@ -128,7 +157,7 @@ export default class ExchangeItem extends React.Component
         };
 
 
-        let $lastPriceClass = data.Symbol.PriceChangeDirection == -1 ? ["down", "up"] : data.Symbol.PriceChangeDirection == 1 ? ["up", "down"] : ["", ""];
+        let $lastPriceClass = data.Symbol.PriceChangeDirection === -1 ? ["down", "up"] : data.Symbol.PriceChangeDirection === 1 ? ["up", "down"] : ["", ""];
 /*
         var exchangeSideClickFn = actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
                         isMirror: false,
@@ -142,14 +171,18 @@ export default class ExchangeItem extends React.Component
             <div className={`h-event ${noTeamsWrappClass} categoryFilterJs animated fadeIn ${expModeClass}` + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")} //+ (isBasicMode ? " basic_mode_js basic_mode" : "")
                 onClick={() =>
                 {
-                    setCurrentExchangeFn(Symbol.Exchange);
+                	// if(this.props.data.currentExchange !== this.props.data.Symbol.Exchange)
+					// {
+						setCurrentExchangeFn(Symbol.Exchange);
 
-                    //ABpp.config.tradeOn &&
-                    actions.exchangeSideClick({name: Symbol.Exchange,
-                        isMirror: false,
-                        title: [Symbol.HomeName, Symbol.AwayName],
-                        symbol: symbol,
-                    })
+						//ABpp.config.tradeOn &&
+						actions.exchangeSideClick({name: Symbol.Exchange,
+							isMirror: false,
+							title: [Symbol.HomeName, Symbol.AwayName],
+							symbol: symbol,
+						})
+
+					// }
                 }}
                 id={symbol} data-js-hevent=""
             >
@@ -265,10 +298,10 @@ export default class ExchangeItem extends React.Component
 							</div>
 
                             <div className={`lpnc_tabs ${isLPOpen ? "lpnc_tabs__opened" : ""}`}>
-                                <div className={`lpnc_tabs__tab lpnc_tabs__tab_1 ${noTeamsClass}` + activeTab[0]} title="Show teams info"
-                                     onClick={this._onLPTabClick.bind(this, 0)}>Lineups</div>
-                                <div className={`lpnc_tabs__tab lpnc_tabs__tab_2 ${noTeamsClass}` + activeTab[1]} title="Show chart info"
-                                     onClick={this._onLPTabClick.bind(this, 1)}>Chart</div>
+                                <button className={`lpnc_tabs__tab lpnc_tabs__tab_1 ${noTeamsClass}` + activeTab[0]} title="Show teams info"
+                                     onClick={this._onLPTabClick.bind(this, 0)}>Lineups</button>
+                                <button className={`lpnc_tabs__tab lpnc_tabs__tab_2 ${noTeamsClass}` + activeTab[1]} title="Show chart info"
+                                     onClick={this._onLPTabClick.bind(this, 1)}>Chart</button>
                             </div>
                             <button ref="LPOpenBtn" className={'show-plnc' + (isLPOpen ? ' active' : '')} data-js-lineup="" title="Show chart"
                                     onClick={::this._onLPOpenCloseClick}>{}</button>
@@ -288,7 +321,8 @@ export default class ExchangeItem extends React.Component
                                                   ref="lineupContainer"/>
                                 }
 
-                                <div className={"h-lup__tab_item tab_item loading highcharts-tab" + activeTab[1]} id={"container_" + symbol} data-js-highchart="" ref={'chartContainer'}>{}</div>
+                                <div className={"h-lup__tab_item tab_item highcharts-tab" + (chart ? '' : ' loading') + activeTab[1]}
+									 id={"container_" + symbol} data-js-highchart="" ref={'chartContainer'}>{}</div>
                                 {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                             </div>
                         </div>
@@ -393,20 +427,20 @@ export default class ExchangeItem extends React.Component
 		{
 			this.props.actions.actionSetChartsSymbol({exchange: this.props.data.Symbol.Exchange});
 
-			for( let val of mainChartController.charts  )
-			{
-				if(val.renderTo.id === this.refs.chartContainer.id)
-				{
-					let containerWidth = $(this.refs.chartContainer).width();
-					let chart = $(val.container);
-
-					if(chart.width() > containerWidth) setTimeout(() => val.reflow(), 400);
-
-
-					// 0||console.log( 'val.renderTo.id', val.renderTo.id );
-					// setTimeout(() => val.reflow(), 2000);
-				}
-			} // endfor
+			// for( let val of mainChartController.charts  )
+			// {
+			// 	if(val.renderTo.id === this.refs.chartContainer.id)
+			// 	{
+			// 		let containerWidth = $(this.refs.chartContainer).width();
+			// 		let chart = $(val.container);
+			//
+			// 		if(chart.width() > containerWidth) setTimeout(() => val.reflow(), 400);
+			//
+			//
+			// 		// 0||console.log( 'val.renderTo.id', val.renderTo.id );
+			// 		// setTimeout(() => val.reflow(), 2000);
+			// 	}
+			// } // endfor
 		}
 		else
 		{

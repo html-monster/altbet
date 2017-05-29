@@ -14,6 +14,7 @@ import { SocketSubscribe } from "./SocketSubscribe";
 export class WebsocketModel
 {
     public static CALLBACK_MAINPAGE_EXCHANGES = "CMPE1";      // a main page receive data callback
+    public static CALLBACK_MAINPAGE_CHART = "CMC1";      // a main page chart receive data callback
     public static CALLBACK_EVENTPAGE_ORDERS = "CEPO2";      // a event page receive data callback
 
     private noSupportMessage = "Your browser cannot support WebSocket!";
@@ -195,7 +196,11 @@ export class WebsocketModel
 
 
         // main page charts
-        if(globalData.mainPage && globalData.MainCharOn) mainChartController && mainChartController.drawMainCharts(data.Bars);
+        if(globalData.mainPage && globalData.MainCharOn)
+        {
+            // mainChartController && mainChartController.drawMainCharts(data.Bars);
+            self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_CHART](data.Bars)
+        }
 
         // BM: main page events data
 // 0||console.debug( 'data.SymbolsAndOrders', data.SymbolsAndOrders );

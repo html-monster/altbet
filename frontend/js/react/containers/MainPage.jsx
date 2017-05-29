@@ -86,7 +86,7 @@ class MainPage extends BaseController
     {
         // let isBasicMode = ABpp.config.basicMode;
         const data = this.props.data;
-        const { actions, data:{ activeExchange, chartSubscribing, isBasicMode, isTraiderOn } } = this.props;
+        const { actions, data:{ activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn } } = this.props;
         const { currentExchange } = this.state;
         let $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
@@ -130,6 +130,7 @@ class MainPage extends BaseController
                                 {data.marketsData.map((item, key) =>
                                     <ExchangeItem key={key}
                                         data={{...item, activeExchange, chartSubscribing, isBasicMode, isTraiderOn, currentExchange}}
+                                        chartData={charts && charts[item.Symbol.Exchange]}
                                         mainContext={this}
                                         setCurrentExchangeFn={::this._setCurrentExchange}
                                         actions={actions} />
