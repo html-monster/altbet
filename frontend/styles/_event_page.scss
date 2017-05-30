@@ -184,8 +184,8 @@
 					user-select: none;
           transition: 0.3s ease-out;
 					&.animated{  animation-duration: 0s; }
-          &:nth-of-type(2),
-          &:nth-of-type(3){
+          //&:nth-of-type(2),
+          //&:nth-of-type(3){
             position: relative;
 						&.clickable{
 							cursor: pointer;
@@ -207,7 +207,7 @@
               transition: 0.3s ease-out;
               z-index: 2;
             }
-          }
+          //}
 					&.sell{
 						&:after{  background: #ef4d22;  }
 						&.fadeColorOut {  animation-name: fadeColorOutSell;  }

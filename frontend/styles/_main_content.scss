@@ -382,8 +382,9 @@
       { display: none; }
   }
 }
-.content { @include span(7.6 of 12); @include push (1.8 of 12); position: relative; margin-top: 70px; padding: 15px; min-width: 800px;
-    color: $main-color;
+.content {
+  //@include span(7.6 of 12); @include push (1.8 of 12); min-width: 800px;
+  position: relative; margin-left: 70px; padding: 15px; padding-top: 85px; width: calc(78% - 70px); color: $main-color;
   .nav_items {
     &.loaded .pagination { display: block; }
     .wrapper>.tab_content{  padding-top: 50px;  }
@@ -429,13 +430,18 @@
       }
     }
     .stattabs {
-      width: 63.33%;
+      width: calc(78% - 70px);
       padding: 15px;
       background: $main-bg;
       position: fixed;
       top: 70px;
-      left: 15%;
+      left: 70px;//15%;
       z-index: 93;
+      @include md(1360){
+        position: absolute;
+        left: 0;
+        width: 100%;
+      }
       a.stab {
         display: inline-block;
         margin-right: 10px;

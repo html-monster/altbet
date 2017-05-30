@@ -1,5 +1,6 @@
-.main_menu {  position: fixed; top: 70px; left: 0; z-index: 100; width: 40px; height: 100%;
-              color: #d0d0d0; transition: 0.2s ease-out;
+.main_menu {  position: fixed; top: 70px; left: 0; z-index: 100; width: 70px; height: 100%;
+  color: #d0d0d0; transition: 0.2s ease-out;
+  @include md(1360){ position: absolute; bottom: 0; height: auto; }
   /*.menu-btn{
     display: none;
     width: 50px;
@@ -76,15 +77,15 @@
   }*/
   &:not(.opened){ overflow: hidden; }
   &.opened, &:hover{
-    width: 15%;
+    width: 205px;//15%;
     .main span.main{ color: #d0d0d0; }
   }
   .nav_bet{ height: 100%; }
-  .root_menu{ position: relative; z-index: 1; padding-top: 10px; height: 100%; background: linear-gradient(to bottom, #3a3943, #292830);
+  .root_menu{ position: relative; z-index: 1; padding-top: 16px; height: 100%; background: linear-gradient(to bottom, #3a3943, #292830);
               box-shadow: 5px 0 15px -6px rgba(0, 0, 0, 0.5); }
   .nav_bet.root_menu ul{ display: none; } //кастыль чтобы убрать плохой внешний вид до загрузки реакт меню
   button.return{
-    position: absolute; left: 1px; padding: 13px; transform: rotate(180deg); background: url(../../Images/sprite.svg) no-repeat;
+    position: absolute; left: 1px; padding: 13px; transform: rotate(180deg); background: url("#{$pathImage}/sprite.svg") no-repeat;
     background-position: -54px -197px; transition: 0.4s ease-out;
     &:hover{
       background-position: -49px -197px; }
@@ -105,12 +106,17 @@
   ul{
     &.child_list{
       display: none;
-      &.active{ display: block; position: absolute; top: 0; bottom: 0; left: 100%; padding: 15px 0; width: 15vw;
+      &.active{ display: block; position: absolute; top: 0; bottom: 0; left: 100%; padding: 15px 0; width: 205px;//width: 15vw;
         box-shadow: 5px 0 15px -6px rgba(0, 0, 0, 0.5);
 
         li{
           padding: 5px 10px 0 15px;
-          &:first-of-type{ position: relative; padding-bottom: 5px; }
+          &:first-of-type{ position: relative; padding-bottom: 10px;
+            a{ font-size: 16px; }
+          }
+          &:nth-of-type(2){
+
+          }
           &:hover, &.active{ color: $color-blue !important }
         }
         span{ font-size: 14px; }
@@ -127,16 +133,16 @@
     }
   }
   .main{
-    &.sport > span.main:before {  background-position: -66px -275px;  }
+    &.sport > span.main:before {  background-position: -379px -263px;  }//-66px -275px
     &.finance > span.main:before {  background-position: -107px -275px;  }
-    &.cybersport > span.main:before {  background-position: -187px -275px;  }
+    &.cybersport > span.main:before {  background-position: -426px -263px;  }//-187px -275px
     &.society > span.main:before {  background-position: -26px -275px;  }
     &.favorite > span.main:before {  background-position: -146px -275px;  }
-    &.live_event > span.main:before{  background-position: -236px -275px;  }
+    &.live_event > span.main:before{  background-position: -336px -263px;  }//-236px -275px;
     span.main{
-      display: flex; align-items: center; width: 15vw; height: 40px; color: transparent;
+      display: flex; align-items: center; width: 205px/*15vw*/; height: 50px; color: transparent;
       &:before{
-        content: ''; display: inline-block; width: 22px; height: 25px; vertical-align: bottom; margin: 0 9px;
+        content: ''; display: inline-block; width: 50px; height: 50px; vertical-align: bottom; margin: 0 9px;
         background: url("#{$pathImage}/sprite.svg") no-repeat;
       }
     }

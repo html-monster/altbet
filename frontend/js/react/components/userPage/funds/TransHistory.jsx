@@ -71,7 +71,7 @@ class TransHistory extends React.Component{
 						<li onClick={actions.actionSetPaymentFilter.bind(this, 'Visa MC')}>Visa MC</li>
 						<li onClick={actions.actionSetPaymentFilter.bind(this, 'Skrill')}>Skrill</li>
 						<li onClick={actions.actionSetPaymentFilter.bind(this, 'Neteller')}>Neteller</li>
-						<li onClick={actions.actionSetPaymentFilter.bind(this, 'Ecopayz')}>Ecopayz</li>
+						<li onClick={actions.actionSetPaymentFilter.bind(this, 'Bitpay')}>Bitpay</li>
 					</ul>
 				</div>
 			</div>

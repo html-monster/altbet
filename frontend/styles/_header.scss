@@ -4,7 +4,7 @@ header {
   top: 0;
   z-index: 101;
   width: 100%;
-  min-width: 1250px;
+  min-width: 1360px;
   height: 70px;
   background: #292830;
   box-shadow: 0 6px 24px -5px rgba(0, 0, 0, 0.5);
@@ -15,6 +15,10 @@ header {
     .user-name:after {
       top: 6px;
     }
+  }
+  @include md(1360){
+    position: absolute;
+
   }
 
   // reconntct button

@@ -245,51 +245,51 @@ var gLineupPageData = {
 
 
 $(document).ready(function () {
-	if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){
-		var flag = 0,
-				flagRevers = 0;
-
-		$('.event-content').each(function () {
-			if($(this).hasClass('revers')){
-				$(this).attr('id', 'event-revers' + flagRevers++);
-			}
-			else{
-				$(this).attr('id', 'event' + flag++);
-			}
-		});
-		//my position=======================================================================================================
-		(function myPosition() {
-			for(var ii = 2; ii < 5; ii++){
-				let html = $('#tab1').clone(),
-						parent = $('#tab1').parents('table');
-
-				html.removeAttr('id').attr('id', 'tab' + ii);
-				parent.append(html);
-			}
-			for(ii = 6; ii < 9; ii++){
-				let html = $('#tab5').clone(),
-						parent = $('#tab5').parents('table');
-
-				html.removeAttr('id').attr('id', 'tab' + ii);
-				parent.append(html);
-			}
-		})();
-		//my position=======================================================================================================
-
-
-		// $('#current-orders span.price').each(function () {
-		// 	$(this).text(defaultMethods.randomInteger(0.01, 0.99));
-		// });
-		// $('#current-orders span.volume').each(function () {
-		// 	$(this).text(defaultMethods.randomInteger(1, 999))
-		// });
-		// $('#current-orders .current-order span').each(function () {
-		// 	$(this).text(defaultMethods.randomInteger(1, 99));
-		// });
-		// $('#current-orders .last-price').each(function () {
-		// 	$(this).text(defaultMethods.randomInteger(0.01, 0.99));
-		// });
-	}
+	// if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){
+	// 	var flag = 0,
+	// 			flagRevers = 0;
+	//
+	// 	$('.event-content').each(function () {
+	// 		if($(this).hasClass('revers')){
+	// 			$(this).attr('id', 'event-revers' + flagRevers++);
+	// 		}
+	// 		else{
+	// 			$(this).attr('id', 'event' + flag++);
+	// 		}
+	// 	});
+	// 	//my position=======================================================================================================
+	// 	(function myPosition() {
+	// 		for(var ii = 2; ii < 5; ii++){
+	// 			let html = $('#tab1').clone(),
+	// 					parent = $('#tab1').parents('table');
+	//
+	// 			html.removeAttr('id').attr('id', 'tab' + ii);
+	// 			parent.append(html);
+	// 		}
+	// 		for(ii = 6; ii < 9; ii++){
+	// 			let html = $('#tab5').clone(),
+	// 					parent = $('#tab5').parents('table');
+	//
+	// 			html.removeAttr('id').attr('id', 'tab' + ii);
+	// 			parent.append(html);
+	// 		}
+	// 	})();
+	// 	//my position=======================================================================================================
+	//
+	//
+	// 	// $('#current-orders span.price').each(function () {
+	// 	// 	$(this).text(defaultMethods.randomInteger(0.01, 0.99));
+	// 	// });
+	// 	// $('#current-orders span.volume').each(function () {
+	// 	// 	$(this).text(defaultMethods.randomInteger(1, 999))
+	// 	// });
+	// 	// $('#current-orders .current-order span').each(function () {
+	// 	// 	$(this).text(defaultMethods.randomInteger(1, 99));
+	// 	// });
+	// 	// $('#current-orders .last-price').each(function () {
+	// 	// 	$(this).text(defaultMethods.randomInteger(0.01, 0.99));
+	// 	// });
+	// }
 
 
 
@@ -318,24 +318,24 @@ $(document).ready(function () {
 	// 	$(this).parents('.order_content').remove();
 	// });
 
-	if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){
-		let id = 0, setId = 0, orderId = 0;
-
-		$('.my_position_container tbody tr').each(function () {
-			$(this).attr('id', 'new_event_' + setId++);
-		});
-		$('.open_orders tbody tr').each(function () {
-			$(this).attr('id', 'event_' + id++);
-		});
-
-		for(let ii = 0; ii < 3; ii++){
-			let html = $('#current-orders .order_content').eq(0).clone();
-			$('#current-orders').append(html);
-		}
-		$('#current-orders .order_container').each(function () {
-			$(this).attr('id', 'event_' + orderId++ + '_order');
-		});
-	}
+	// if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){
+	// 	let id = 0, setId = 0, orderId = 0;
+	//
+	// 	$('.my_position_container tbody tr').each(function () {
+	// 		$(this).attr('id', 'new_event_' + setId++);
+	// 	});
+	// 	$('.open_orders tbody tr').each(function () {
+	// 		$(this).attr('id', 'event_' + id++);
+	// 	});
+	//
+	// 	for(let ii = 0; ii < 3; ii++){
+	// 		let html = $('#current-orders .order_content').eq(0).clone();
+	// 		$('#current-orders').append(html);
+	// 	}
+	// 	$('#current-orders .order_container').each(function () {
+	// 		$(this).attr('id', 'event_' + orderId++ + '_order');
+	// 	});
+	// }
 	$('.schedule, .show-schedule').mousedown(function (e) {
 		e.stopPropagation();
 	});
@@ -346,37 +346,10 @@ $(document).ready(function () {
 
 	// new teamClass();
 });
-if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){
-	var globalData;
-	globalData.userIdentity = 'True';
-}
-
-// злобный костыль за 10 минут для горизонт скрола.
-
-$( window ).resize(function() {
-  let width = $(window).width();
-  let height = $(window).height();
-
-  if (width <= 1360){
-    $('#mountPoint').addClass('scroll');
-    $('#DiMPHeader').addClass('scroll_header');
-    $('.main_menu').addClass('scroll_main_menu').css('height', height);
-    $('.order ').addClass('scroll_sidebar');
-    $('.content').addClass('scroll_content');
-    $('.content_my_position').addClass('scroll_position');
-    $('.wrapper_user_page').addClass('user_scroll');
-    $('.co-account').css('overflow-y', 'hidden');
-  }
-  else {
-    $('#mountPoint').removeClass('scroll');
-    $('#DiMPHeader').removeClass('scroll_header');
-    $('.main_menu').removeClass('scroll_main_menu').removeAttr('style');
-    $('.order').removeClass('scroll_sidebar');
-    $('.content').removeClass('scroll_content');
-    $('.co-account').css('overflow-y', 'visible');
-  }
-});
-
+// if(location.host == 'localhost:3000' || location.host == 'altbet.html-monster.ru'){
+// 	var globalData;
+// 	globalData.userIdentity = 'True';
+// }
 
 /*class teamClass{
 	constructor(){

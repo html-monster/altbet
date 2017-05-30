@@ -30,12 +30,14 @@
 			}
 		}
 		.active_trader_footer{
-			@include span(last 2.6 of 12);
+			//@include span(last 2.6 of 12);
 			position: fixed;
 			bottom: 2px;
 			z-index: 15;
+			width: 22%;
 			box-shadow: 0 -6px 15px -3px rgba(0, 0, 0, 0.3);
 			transition: 0.4s ease-out;
+			@include md(1360){ position: absolute; width: 100%; }
 		}
 		//span.close{  height: 31px; background: url("#{$pathImage}/ico-delete-w.png") no-repeat center #969696;  border-radius: 5px; cursor: pointer; }
 		.price_value .help{
@@ -65,6 +67,7 @@
 			top: 150px;
 			left: 0;
 			z-index: 10;
+			display: none;
 			text-align: center;
 			font-size: 12px;
 			animation-duration: 0.4s;
@@ -88,7 +91,7 @@
 				justify-content: center;
 				margin-top: 10px;
 			}
-			&.active{  top: -74px;  }
+			&.active{  top: -74px; display: block;  }
 		}
 		.submit_wrapper{
 			width: 66.66%;

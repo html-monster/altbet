@@ -243,9 +243,6 @@ $(document).ready(function ()
 	// mainChartController = new mainChartController();
 
 
-  // злобный костыль за 10 минут для горизонт скрола.
-
-  $(window).trigger('resize')
 
 });
 
