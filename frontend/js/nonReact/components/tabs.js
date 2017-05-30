@@ -6,20 +6,25 @@ class tabsClass
 	}
 
 
-	// анимация рынков на главной
+	// BM: анимация рынков на главной
+/*
 	static tabsChangeAnimate(container, animated_row){
 
         var itemsAnimation = function (items)
         {
             let ii = 1;
             items.find(animated_row).css('display', 'none'); //'.content_bet'
-            items.hide().eq($(this).index()).show().find(animated_row).each(function(){
-                $(this).delay(100 * ii).addClass('list-animate animate');
+            // items.hide().eq($(this).index()).show().find(animated_row).each(function(){
+            items.show().find(animated_row).each(function(){
+				$(this).addClass('list-animate2');
+				setInterval(() => {
+					$(this).addClass('animate2'); // /!*.delay(100 * ii)*!/.animate({}, 1500, function() { $(this).addClass('animate2') });
+				}, 100 * ii);
+				ii++;
                 // .css({display: 'flex', opacity: 0, marginTop: '10px'}).animate({
                 //     opacity: '1',
                 //     marginTop: '2px'
                 // }, 300);
-                ii++;
             });
             ii = 1;
         };
@@ -36,6 +41,7 @@ class tabsClass
 
         setTimeout(() => itemsAnimation($(container).find('.tab_item')), 2000);
 	}
+*/
 
 
     /**
