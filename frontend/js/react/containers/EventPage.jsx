@@ -9,6 +9,7 @@ import * as chartActions from '../actions/EventPage/chartActions.ts';
 import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
 import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 import eventPageActions from '../actions/eventPageActions.ts';
+import {DateLocalization} from '../models/DateLocalization';
 
 
 class EventPage extends BaseController
@@ -174,6 +175,7 @@ class EventPage extends BaseController
             $fsclass = "active";
         } // endif
 
+
         return <div className="wrapper_event_page" data-id={symbol} id={symbol}>
             <h1>
                 <a href={appData.pageEventData.fsideLink} className={$fsclass} title={$titleFside}>{data.SymbolsAndOrders.Symbol.HomeName}</a>
@@ -188,6 +190,7 @@ class EventPage extends BaseController
                     <div className="current_price">
                         <div className="wrapper">
                             <h2>{data.IsMirrorName}</h2>
+                            <div className="startdate">{(new DateLocalization()).fromSharp(data.SymbolsAndOrders.Symbol.StartDate, 0, {TZOffset: false}).unixToLocalDate({format: 'DD MMM Y h:mm A'})}</div>
                             <div className="current_price">
                                 <span className="title">Last Price:</span>
                                 <span className="value">{lastPrice}</span>

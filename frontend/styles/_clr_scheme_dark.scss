@@ -61,7 +61,7 @@ $warning_message_arrow: #3a3943;
 //$breadcrumbs-color: transparentize(#ffffff, 0.5);
 
 @mixin chartEP{
-	svg > text:last-of-type{  visibility: hidden;  }
+	/*svg > text:last-of-type{  visibility: hidden;  }
 	//.highcharts-container{
 	rect.highcharts-background{
 		fill: transparent;
@@ -74,7 +74,7 @@ $warning_message_arrow: #3a3943;
 		fill: transparentize(#ffffff, 0.6) !important;
 	}
 	.highcharts-tooltip path { fill: #53515e; }
-	//.highcharts-input-group { display: none; }
+	//.highcharts-input-group { display: none; }*/
 }
 
 @mixin chartMP{

@@ -9,14 +9,15 @@
     }
     .lower { text-transform: lowercase }
   }
-	h2{
-		padding-bottom: 15px;
-		font-size: 14px;
-		font-weight: 600;
-		color: $main-color;
-		//border-bottom: 1px solid $event_page_block_separate;
-	}
-	.container{  display: flex;  }
+  h2 {
+      padding-bottom: 5px;
+      font-size: 14px;
+      font-weight: 600;
+      color: $main-color;
+      //border-bottom: 1px solid $event_page_block_separate;
+  }
+  .startdate { margin-bottom: 10px; font-size: 11px; }
+  .container { display: flex; }
   .chart_container { position: relative;
     width: 67.66%;
     margin-bottom: 10px;

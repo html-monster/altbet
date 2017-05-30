@@ -47,7 +47,7 @@ export class Chart
     private groups = []; // for btn groups
     private currGroup = 0;
 
-    private chartData = [];
+    private chartData : any = [];
     private charts = [];
     //var boxplotMultiplier = 500;
     //var volumeMultiplier = 150;
@@ -65,19 +65,26 @@ export class Chart
 
     private themeOpts: any = {
         dark: {
+            color: "#919096", // также поставлен как цвет для линий сетки
+            gridColor2: "#4d4c52", // также поставлен как цвет для линий сетки
+            backgroundColor: "#211e25",
             fill: '#53515E',
             stroke: '#53515E',
             select: {
                 fill: '#8F8D9A',
-                stroke: '#8F8D9A'
+                stroke: '#8F8D9A',
+                color: '#fff',
             }
         },
         light: {
+            color: "#919096",
+            backgroundColor: "#ffffff",
             fill: '#F7F7F7',
             stroke: '#F7F7F7',
             select: {
                 fill: '#E7E7E7',
-                stroke: '#E7E7E7'
+                stroke: '#E7E7E7',
+                color: '#fff',
             }
         }
     };
@@ -176,213 +183,200 @@ export class Chart
 
 
         // часть настроек в createChart и PlotOptions
-        this.chartData = [{
-            height: 450,
-            type: self.chartType,
-            animation: {
-                    duration: 700,
-                    // easing: 'easeOutBounce'
-                },
-            // type: 'spline',
-            name: 'Price',
+        this.chartData = {
+            chart: {
+                height: 450,
+                type: self.chartType,
+                animation: {
+                        duration: 700,
+                        // easing: 'easeOutBounce'
+                    },
+                backgroundColor: self.themeOpts[self.chartTheme].backgroundColor,
+                plotBackgroundColor: self.themeOpts[self.chartTheme].backgroundColor,
+                // type: 'spline',
+            },
+            title: {
+                text: ''
+            },
+            credits: {
+                enabled: false
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                enabled: false,
+                valueDecimals: 2,
+                formatter: function ()
+                {
+                    if (this.x == self.Generator.lastVirtualX)
+                    {
+                        return "<span>Mediana</span>";
+                        // to disable the tooltip at a point return false
+                    } else {
+                        let date = (new DateLocalization()).unixToLocalDate({timestamp: this.x, format: 'DD MMM Y h:mm A', TZOffset: true});
+                        return '<b>' + date + '</b><br/>' +
+                            'Price: $' + this.y;
+                    }
+                }
+                // pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}</b><br/>'
+            },
             rangeSelector: {
                 buttonTheme: {
-                     fill: self.themeOpts[self.chartTheme].fill,
-                     stroke: self.themeOpts[self.chartTheme].stroke,
-                     'stroke-linejoin': 'round',
-                     'stroke-radius': 2,
-                     'stroke-width': 3,
-                     states: {
+                    fill: self.themeOpts[self.chartTheme].fill,
+                    stroke: self.themeOpts[self.chartTheme].stroke,
+                    'stroke-linejoin': 'round',
+                    'stroke-radius': 2,
+                    'stroke-width': 3,
+                    style: {
+                        color: self.themeOpts[self.chartTheme].color,
+                    },
+                    states: {
                         select: {
-                           fill: self.themeOpts[self.chartTheme].select.fill,
-                           stroke: self.themeOpts[self.chartTheme].select.stroke
+                            fill: self.themeOpts[self.chartTheme].select.fill,
+                            stroke: self.themeOpts[self.chartTheme].select.stroke,
+                            style: {
+                                color: self.themeOpts[self.chartTheme].select.color,
+                                fontWeight: 'bold',
+                            },
                         },
                         hover: {
-                           fill: self.themeOpts[self.chartTheme].select.fill,
-                           stroke: self.themeOpts[self.chartTheme].select.stroke
+                            fill: self.themeOpts[self.chartTheme].select.fill,
+                            stroke: self.themeOpts[self.chartTheme].select.stroke,
+                            style: {
+                                color: self.themeOpts[self.chartTheme].select.color,
+                                fontWeight: 'bold',
+                            },
                         }
-                     },
+                    },
                     'borderRadius': 6,
                 },
                 allButtonsEnabled: true,
                 buttons: [
                     {
                         type: 'minute',
-                        count: 3*60, // диапазон отображения
+                        count: 1, // диапазон отображения
                         text: '1m',
-                        // dataGrouping: {
-                        //     units: [
-                        //         ['minute', [1]]
-                        //     ]
-                        // }
                     }, {
                         type: 'minute',
-                        count: 6*60,
+                        count: 5,
                         text: '5m',
-                        // dataGrouping: {
-                        //     units: [
-                        //         ['minute', [5]]
-                        //     ]
-                        // }
                     }, {
                         type: 'minute',
-                        count: 24*60,
+                        count: 15,
                         text: '15m',
-                        // dataGrouping: {
-                        //     units: [
-                        //         ['minute', [1]]
-                        //     ]
-                        // }
+                    }, {
+                        type: 'minute',
+                        count: 30,
+                        text: '30m',
                     }, {
                         type: 'hour',
-                        count: 96,
+                        count: 1,
                         text: '1h',
-                        // dataGrouping: {
-                        //     units: [
-                        //         ['hour', [1]]
-                        //     ]
-                        // }
                     }, {
                         type: 'day',
-                        count: 30,
+                        count: 1,
                         text: '1d',
-                        // dataGrouping: {
-                        //     units: [
-                        //         ['day', [1]]
-                        //     ]
-                        // }
+                    }, {
+                        type: 'week',
+                        count: 1,
+                        text: '1w',
                     }, {
                         type: 'all',
                         text: 'All',
-                        // dataGrouping: {
-                        //     units: [
-                        //         // ['minute', [1, 3, 10, 30]],
-                        //         ['hour', [2]]
-                        //     ]
-                        // }
                     },
                 ],
                 enabled: true,
-                // selected: 1,
-                buttonPosition: {
-                    x: xx, //310,
-                    y: 10
-                },
+                selected: 1,
+                /*                buttonPosition: {
+                 x: xx, //310,
+                 y: 10
+                 },*/
                 labelStyle: {
                     display: 'none'
                 },
-                //align: 'center'
+                align: 'center',
             },
             navigator: {
                 enabled: true,
+                outlineColor: self.themeOpts[self.chartTheme].color,
                 series: {
                     type: 'spline',
                     lineWidth: 2,
-                }
-            },
-            xAxis: {
-                crosshair: true,
-                type: 'datetime',
-                lineWidth: 0,
-                minorGridLineWidth: 0,
-                lineColor: 'transparent',
-                labels: {
-                    enabled: true
                 },
-                minorTickLength: 0,
-                tickLength: 0,
-/*                events: {
-                    // afterSetExtremes: function (e) {
-                    //     var min = this.min;
-                    //     var max = this.max;
-                    //
-                    //     if (this.series[0].groupedData != null) {
-                    //
-                    //     }
-                    //     //console.log(this.series[0].groupedData.length);
-                    //
-                    //     $(Highcharts.charts).each(function () {
-                    //         this.xAxis[0].setExtremes(min, max);
-                    //     });
-                    //
-                    //     self.redraw();
-                    //     //this.chart.xAxis[1].setExtremes(this.min, this.max);
-                    // }
-                }*/
+                xAxis: {
+                    gridLineColor: self.themeOpts[self.chartTheme].gridColor2,
+                },
+            },
+/*                plotOptions: {
+                areaspline: {
+                    lineWidth: 3,
+                },
+                spline: {
+                    lineWidth: 3,
+                    dataGrouping: {
+                        enabled: false,
+                    }
+                },
+                column: {
+                    dataGrouping: {
+                    //     approximation: 'sum',
+                        enabled: false,
+                    //     forced: true,
+                    //     units: [
+                    //         ['minute', [1, 3, 10, 30]],
+                    //         ['hour', [2]]
+                    //     ],
+                    },
+                    grouping: false,
+                    borderWidth: 0,
+                },
+            },*/
+            xAxis: {
+                crosshair: false,
+                type: 'datetime',
+                // lineWidth: 5,
+                // gridLineDashStyle: 'longdash',
+                gridLineWidth: 0,
+                labels: {
+                    enabled: true,
+                    style: {
+                        color: self.themeOpts[self.chartTheme].color,
+                    },                },
+                title: {
+                    text: 'Time'
+                },
+                // minorTickLength: 0,
+                // tickLength: 100,
+                // tickColor: '#dc0000',
+                tickWidth: 0,
             },
             yAxis: {
+                gridLineColor: self.themeOpts[self.chartTheme].gridColor2,
                 labels: {
+                    style: {
+                        color: self.themeOpts[self.chartTheme].color,
+                    },
                     formatter: function () {
-                        return '$' + (eval(this.value) / self.volumeScale).toFixed(2).toString();
+                        // return '$' + (eval(this.value) / self.volumeScale).toFixed(2).toString();
+                        return '$' + this.value.toFixed(2).toString();
                     }
                 },
                 // height: '50%',
-                opposite: false,
-                endOnTick: false,
-                maxPadding: 0.2,
-                minPadding: 0.1,
-/*                title: {
-                    text: ''
-                }*/
-            },
-/*            events: {
-                load: function () {
-                    self.redraw();
-                    //createLabel(this, "How do I move this center and under the legend.");
-                },
-                // redraw: function () {
-                //     redraw();
-                // }
-            },*/
-            data: [],
-        },
-/*        {
-            height: 170,
-            type: 'column',
-            name: 'Volume',
-            rangeSelector: {
-                enabled: false
-            },
-            navigator: {
-                enabled: true
-            },
-            xAxis: {
-                crosshair: true,
-                type: 'datetime',
-                events: {
-                    // setExtremes: function (e) {
-                    //     setGrouping();
-                    // },
-                    // afterSetExtremes: function (e) {
-                    //     var min = this.min;
-                    //     var max = this.max;
-                    //
-                    //     $(Highcharts.charts).each(function () {
-                    //         this.xAxis[0].setExtremes(min, max);
-                    //     });
-                    //
-                    //     redraw();
-                    //     //this.chart.xAxis[1].setExtremes(this.min, this.max);
-                    // }
-                }
-            },
-            yAxis: {
-                opposite: true,
-                enabled: true,
-                endOnTick: false,
-                maxPadding: 0.2,
-                minPadding: 0.1,
+                // opposite: false,
+                // endOnTick: false,
+                // maxPadding: 0.2,
+                // minPadding: 0.1,
                 title: {
-                    text: ''
-                }
+                    text: 'Price'
+                },
             },
-            // events: {
-            //     redraw: function () {
-            //         //redraw();
-            //     }
-            // },
-            data: []
-        }*/]
+            series: [{
+                data: [],
+                name: 'Price',
+                // turboThreshold: 0,
+            }],
+        };
     }
 
 
@@ -399,6 +393,7 @@ export class Chart
     {
         // correct group for All
         if (inGr == Chart.GROUP_ALL) inGr = this.getGroupCorrect();
+
 
         let rdata = this.dataRaw;
         let grData = this.dataGrouped = [];
@@ -419,7 +414,7 @@ export class Chart
                 let duration = moment.duration(end.diff(moment.unix(firstGrDate/1000)));
                 let minDiff = duration.asMinutes();
                 // BM: true to remove grouping
-                if( jj == -1 || minDiff > inGr )
+                if( true || jj == -1 || minDiff > inGr )
                 {
                     jj++;
 
@@ -522,7 +517,20 @@ export class Chart
                 var minDiff = duration.asMinutes();
             } // endif
 
-            if( !this.dataGrouped.length || minDiff > this.groups[this.currGroup] )
+
+            this.dataGrouped.push({x: dt,
+                y: val.Open,
+                open: val.Open,
+                min: val.Open,
+                max: val.Open,
+                close: val.Open,
+                vol: val.Volume,
+                virtual: false,
+                dt: moment.unix(dt/1000).format('Do h:mm:ss a'),
+                items: [val],
+            });
+
+/*            if( !this.dataGrouped.length || minDiff > this.groups[this.currGroup] )
             {
                 this.dataGrouped.push({x: dt,
                     y: val.Open,
@@ -544,7 +552,7 @@ export class Chart
                 if (lastPoint.min > val.Open) lastPoint.min = val.Open;
                 if (lastPoint.max < val.Open) lastPoint.max = val.Open;
                 lastPoint.items && lastPoint.items.push(val);
-            } // endif
+            }*/ // endif
         } // endfor
 
         // __LDEV__&&console.debug( 'this.dataGrouped  this.groups[this.currGroup]', this.dataGrouped, this.dataRaw, this.groups[this.currGroup] );
@@ -574,7 +582,7 @@ export class Chart
                         var timeValue = this.Time.replace('/Date(', '').replace(')/', '') * 1 - new Date().getTimezoneOffset() * 60 * 1000;
                         // var timeValue = this.Time.replace('/Date(', '').replace(')/', '') * 1;
 
-                        self.chartData[0].data.push({
+                        self.chartData.series[0].data.push({
                             x: timeValue,
                             y: isMirror ? 1 - this.Open : this.Open,
                             Close: isMirror ? 1 - this.Close : this.Close,
@@ -597,250 +605,124 @@ export class Chart
 
 
             // make group inData from raw
-            self.dataRaw = self.chartData[0].data;
+            self.dataRaw = self.chartData.series[0].data;
             self.groupData(Chart.GROUP_DEF);
-            self.chartData[0].data = self.dataGrouped;
+            self.chartData.series[0].data = self.dataGrouped;
             // 0||console.debug( 'self.chartData[0].inData', self.chartData[0].data );
 
 
             var container = $(this).attr('id');
 
-            // Show highlights
-            $('#' + container).bind('mousemove touchmove touchstart', function (e) { self.showHighlights(e) });
-            $('#' + container).bind('mouseleave', function (e) { self.showHighlights(e, 1) });
+
+            __LDEV__ && (self.chartData.tooltip.enabled = true);
 
 
-            Highcharts.Point.prototype.highlight = function (event, data, isClose = 0)
-            {
-                //this.onMouseOver(); // Show the hover marker
-                //this.series.chart.tooltip.refresh(this); // Show the tooltip
-                if (!data) return;
 
-                // var localDate = new Date(data.date + new Date().getTimezoneOffset() * 60 * 1000);
-
-                var $label = '<b>Time:</b> ' + //('0' + localDate.getMonth() + 1).slice(-2) +
-                    (new DateLocalization()).unixToLocalDate({timestamp: data.date, format: "d MMM YY h:mm:ss "}) +
-                    '<b>Vol:</b> ' + data.volume.toString().substr(0, 3) + '  <br/> ' +
-                    '<b>Close:</b> ' + parseFloat("0" + data.close).toFixed(2).substr(1, 3) + ' ' +
-                    '<b>Open:</b> ' + parseFloat("0" + data.open).toFixed(2).substr(1, 3) + ' ' +
-                    '<b>Low:</b> ' + parseFloat("0" + data.low).toFixed(2).substr(1, 3) + ' ' +
-                    '<b>High:</b> ' + parseFloat("0" + data.high).toFixed(2).substr(1, 3) + ' ';
-                self.createLabel(Highcharts.charts[0],
-                    !isClose ? $label : ""
-                );
-
-
-                this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
-            };
-
-
-            // $('#' + container).bind('mouseleave', function (e) {
-            //     //label.destroy();
-            //     $(Highcharts.charts).each(function () {
-            //         var event = this.pointer.normalize(e.originalEvent); // Find coordinates within the chart
-            //         var point = this.series[0].searchPoint(event, true); // Get the hovered point
-            //
-            //         if (point) {
-            //             this.xAxis[0].hideCrosshair();
-            //         }
-            //     });
-            // });
-
-            var chartsOptions : any = {
+            var  tempOoptions = {
                 chart: {
-                    height: self.chartData[0].height,
-                    spacingTop: 20,
-
-                    events: this.events,
-                    //spacingBottom: 20,
+                    type: 'spline',
+                    height: 450,
                 },
                 title: {
-                    text: ''
+                    text: 'Monthly Average Temperature'
                 },
-                credits: {
-                    enabled: false
+                subtitle: {
+                    text: 'Source: WorldClimate.com'
                 },
-                legend: {
-                    enabled: false
+                xAxis: {
+                        type: 'datetime',
+                    title: {
+                        text: 'Time'
+                    },
+                },
+                yAxis: {
+                    title: {
+                        text: 'Temperature'
+                    },
+                    labels: {
+                        formatter: function () {
+                            return this.value + '°';
+                        }
+                    }
                 },
                 tooltip: {
-                    enabled: false,
-                    valueDecimals: 2,
-                    // pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}</b><br/>'
+                    // crosshairs: true,
+                    // shared: true,
                 },
-                rangeSelector: self.chartData[0].rangeSelector,
-                navigator: self.chartData[0].navigator,
-                plotOptions: {
-                    areaspline: {
-                        lineWidth: 3,
-                        dataGrouping: {
-                            enabled: false,
-                            // approximation: 'average',
-                            // forced: true,
-                        //     units: [
-                        //         // ['minute', [1]],
-                        //         ['minute', [1, 5, 15]],
-                        //         ['hour', [1]],
-                        //         ['day', [1]],
-                        //     ],
-                        }
-                    },
-                    spline: {
-                        lineWidth: 3,
-                        dataGrouping: {
-                            enabled: false,
-                            // approximation: 'average',
-                            // forced: true,
-                            // units: [
-                            //     ['minute', [1, 5, 15]],
-                            //     ['hour', [1]],
-                            //     ['day', [1]],
-                            // ],
-                        }
-                    },
-                    column: {
-                        dataGrouping: {
-                        //     approximation: 'sum',
-                            enabled: false,
-                        //     forced: true,
-                        //     units: [
-                        //         ['minute', [1, 3, 10, 30]],
-                        //         ['hour', [2]]
-                        //     ],
+                rangeSelector: {
+                    allButtonsEnabled: true,
+                    buttons: [
+                        {
+                            type: 'minute',
+                            count: 1, // диапазон отображения
+                            text: '1m',
                         },
-                        grouping: false,
-                        borderWidth: 0,
-/*                        events: {
-                            // mouseOut: function() {
-                            //     0||console.debug( 'mousout' );
-                            //     redraw();
+                                            {
+                            type: 'minute',
+                            count: 5,
+                            text: '5m',
+                        },
+                        {
+                            type: 'all',
+                            text: 'All',
+                            // dataGrouping: {
+                            //     units: [
+                            //         // ['minute', [1, 3, 10, 30]],
+                            //         ['hour', [2]]
+                            //     ]
                             // }
-                        }*/
+                        },
+                      ],
+                                    enabled: true,
+                    selected: 1,
+                  },
+                plotOptions: {
+                    spline: {
+                        marker: {
+                            radius: 4,
+                            lineColor: '#666666',
+                            lineWidth: 1
+                        }
                     },
                 },
-                xAxis: self.chartData[0].xAxis,
-                yAxis: [],
-                series: []
-            };
-            __LDEV__ && (chartsOptions.tooltip.enabled = true);
-
-
-            // Add inData to charts options
-            var flag = false;
-            $(self.chartData).each(function (key) {
-                chartsOptions.series[key] = {
-                    data: self.chartData[key].data,
-                    name: self.chartData[key].name,
-                    type: self.chartData[key].type,
-                    turboThreshold: 0, // This saves expensive inData checking and indexing in long series
-                    states: {
-                        hover: {
-                            enabled: false
-                        }
-                    },
-                    marker: {
-                        enabled: false,
-                        states: {
-                            hover: {
-                                enabled: false
-                            },
-                            select: {
-                                enabled: false
+                        navigator: {
+                            enabled: true,
+                            series: {
+                                type: 'spline',
+                                lineWidth: 2,
                             }
-                        }
+                        },
+                series: [{
+                    name: 'Tokyo',
+                    marker: {
+                        symbol: 'square'
                     },
-                    fillColor: {
-                        linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1},
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    }
-                };
-                flag && (chartsOptions.series[key].yAxis = 1);
-                flag || (flag = true);
-                chartsOptions.yAxis[key] = self.chartData[key].yAxis;
-            });
+                    data: [ { "x": 1495456349000, "y": 0.57, "Close": 0.57, "High": 0.57, "Low": 0.57, "Vol": 5, "dt": "22nd 3:32:29 pm"}, { "x": 1495456350000, "y": 0.57, "Close": 0.57, "High": 0.57, "Low": 0.57, "Vol": 5, "dt": "22nd 3:32:30 pm"}, { "x": 1495456354000, "y": 0.52, "Close": 0.52, "High": 0.52, "Low": 0.52, "Vol": 5, "dt": "22nd 3:32:34 pm"}, { "x": 1495456355000, "y": 0.52, "Close": 0.52, "High": 0.52, "Low": 0.52, "Vol": 5, "dt": "22nd 3:32:35 pm"}, { "x": 1495457103000, "y": 0.52, "Close": 0.52, "High": 0.52, "Low": 0.52, "Vol": 5, "dt": "22nd 3:45:03 pm"}, { "x": 1495457104000, "y": 0.52, "Close": 0.52, "High": 0.52, "Low": 0.52, "Vol": 5, "dt": "22nd 3:45:04 pm"}, { "x": 1495457105000, "y": 0.52, "Close": 0.52, "High": 0.52, "Low": 0.52, "Vol": 5, "dt": "22nd 3:45:05 pm"}, { "x": 1495457106000, "y": 0.46, "Close": 0.46, "High": 0.46, "Low": 0.46, "Vol": 5, "dt": "22nd 3:45:06 pm"}, { "x": 1495457909000, "y": 0.57, "Close": 0.57, "High": 0.57, "Low": 0.57, "Vol": 5, "dt": "22nd 3:58:29 pm"}, { "x": 1495457910000, "y": 0.57, "Close": 0.57, "High": 0.57, "Low": 0.57, "Vol": 5, "dt": "22nd 3:58:30 pm"}, { "x": 1495457911000, "y": 0.63, "Close": 0.63, "High": 0.63, "Low": 0.63, "Vol": 5, "dt": "22nd 3:58:31 pm"}, { "x": 1495457913000, "y": 0.65, "Close": 0.65, "High": 0.65, "Low": 0.65, "Vol": 5, "dt": "22nd 3:58:33 pm"}, { "x": 1495458329000, "y": 0.71, "Close": 0.71, "High": 0.71, "Low": 0.71, "Vol": 5, "dt": "22nd 4:05:29 pm"}, { "x": 1495459025000, "y": 0.42, "Close": 0.42, "High": 0.42, "Low": 0.42, "Vol": 5, "dt": "22nd 4:17:05 pm"}, { "x": 1495459052000, "y": 0.42, "Close": 0.42, "High": 0.42, "Low": 0.42, "Vol": 5, "dt": "22nd 4:17:32 pm"} ]
 
-
-            // Highcharts.themeOpts = {
-            //     // colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee',
-            //     //     '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
-            //     // chart: {
-            //     //     backgroundColor: {
-            //     //         linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},
-            //     //         stops: [
-            //     //             [0, '#2a2a2b'],
-            //     //             [1, '#3e3e40']
-            //     //         ]
-            //     //     },
-            //     //     style: {
-            //     //         fontFamily: '\'Unica One\', sans-serif'
-            //     //     },
-            //     //     // plotBorderColor: '#606063'
-            //     // },
-            //     // legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
-            //     // background2: '#505053',
-            //     // dataLabelsColor: '#B0B0B3',
-            //     // textColor: '#C0C0C0',
-            //     // contrastTextColor: '#F0F0F3',
-            //     // maskColor: 'rgba(255,255,255,0.3)'
-            // };
-            //
-            // Highcharts.setOptions(Highcharts.themeOpts);
-
+                }]
+            };
 
             // render chart
             if( __DEV__ )
             {
                 console.groupCollapsed("Charts");
-                console.info( 'chartsOptions', chartsOptions );
-                console.info( 'chartsOptions', JSON.stringify(chartsOptions) );
+                console.info( 'chartsOptions', self.chartData );
+                console.info( 'chartsOptions', JSON.stringify(self.chartData) );
                 console.info( 'self.dataRaw  self.dataGrouped', self.dataRaw, self.dataGrouped );
                 console.groupEnd();
             } // endif
 
-            this.chartContainer = $('<div class="chart"></div>');
+            this.chartContainer = $('<div class="chart" id="DiChartObj"></div>');
             this.chartContainer.appendTo('#' + container);
-            this.chartContainer = this.chartContainer.highcharts(chartsOptions);
+            // this.chartContainer = this.chartContainer.highcharts(tempOoptions);
+            this.chartContainer = this.chartContainer.highcharts(self.chartData);
+            // Highcharts.chart('DiChartObj', chartsOptions);
+            // Highcharts.chart('DiChartObj', tempOoptions);
 
             // start gen virtual point
             self.Generator.start(self);
         });
 
-
-        // set default range to 15 min
-        try {
-            // Highcharts.charts[0].series[0].xAxis.setExtremes(Highcharts.charts[0].series[0].xAxis.max - 60 * 60 * 1000 * 24, Highcharts.charts[0].series[0].xAxis.max, true);
-            // Highcharts.charts[0].rangeSelector.buttons[2].setState(2);
-            // Highcharts.charts[0].rangeSelector.setSelected(2);
-        } catch (e) {
-        }
-
-        // if (Highcharts.charts[0].rangeSelector && Highcharts.charts[0].rangeSelector.buttons.length != 0) {
-        //     // $(Highcharts.charts[0].rangeSelector.buttons).each(function () {
-        //     //     this.hide();
-        //     //     this.setState(0)
-        //     // });
-        //     // Highcharts.charts[0].rangeSelector.buttons[0].show();
-        //     //
-        //     //
-        //     // // show buttons always
-        //     // Highcharts.charts[0].rangeSelector.buttons[1].show();
-        //     // Highcharts.charts[0].rangeSelector.buttons[2].show();
-        //     // Highcharts.charts[0].rangeSelector.buttons[3].show();
-        //     // Highcharts.charts[0].rangeSelector.buttons[4].show();
-        //     // Highcharts.charts[0].rangeSelector.buttons[5].show();
-        //     // var rangeMin = (Highcharts.charts[0].series[0].xAxis.max - Highcharts.charts[0].series[0].xAxis.min) / 1000 / 60;
-        //     // if (rangeMin > 100) {
-        //     //     // Highcharts.charts[0].series[1].xAxis.setExtremes(Highcharts.charts[0].series[1].xAxis.max - 100 * 1000 * 60, Highcharts.charts[0].series[1].xAxis.max, Highcharts.charts[0].series[1].xAxis.max);
-        //     // }
-        //     // if (rangeMin >= 300) {
-        //     //     // Highcharts.charts[0].series[1].xAxis.setExtremes(Highcharts.charts[0].series[1].xAxis.max - 300 * 1000 * 60, Highcharts.charts[0].series[1].xAxis.max, Highcharts.charts[0].series[1].xAxis.max);
-        //     //     // Highcharts.charts[0].rangeSelector.buttons[1].setState(0);
-        //     //     // Highcharts.charts[0].rangeSelector.buttons[2].setState(2);
-        //     // }
-        // }
 
 
         // setGrouping();
@@ -848,9 +730,9 @@ export class Chart
 
 
         // $('.highcharts-input-group').remove();
-        self.activateGroupBtns();
+        // self.activateGroupBtns();
 
-        $(".highcharts-button.gb2").click();
+        // $(".highcharts-button.gb2").click();
     }
 
 
@@ -903,7 +785,8 @@ export class Chart
 
             $(Highcharts.charts).each(function ()
             {
-                $(inData).each(function (key) {
+                $(inData).each(function (key)
+                {
                     if (this.Symbol.Exchange == identificators[0]
                         && this.Symbol.Name == identificators[1]
                         && this.Symbol.Currency == identificators[2]) {
