@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 
-import * as actions from '../../../actions/userPage/transHistoryActions';
+import actions from '../../../actions/userPage/transHistoryActions';
 import {DateLocalization} from '../../../models/DateLocalization';
 
 
@@ -68,10 +68,10 @@ class TransHistory extends React.Component{
 					<span className="active_selection active_filter btn wave" onClick={this.listSlide.bind(this, true)}>{data.paymentFilter}</span>
 					<ul className="select_list" ref="paymentList" onClick={this.listSlide.bind(this, false)}>
 						<li onClick={actions.actionSetPaymentFilter.bind(this, 'All')}>All</li>
-						<li onClick={actions.actionSetPaymentFilter.bind(this, 'Visa MC')}>Visa MC</li>
+						<li onClick={actions.actionSetPaymentFilter.bind(this, 'VisaSkrill')}>Visa MC</li>
 						<li onClick={actions.actionSetPaymentFilter.bind(this, 'Skrill')}>Skrill</li>
 						<li onClick={actions.actionSetPaymentFilter.bind(this, 'Neteller')}>Neteller</li>
-						<li onClick={actions.actionSetPaymentFilter.bind(this, 'Bitpay')}>Bitpay</li>
+						<li onClick={actions.actionSetPaymentFilter.bind(this, 'BitPaySkrill')}>Bitpay</li>
 					</ul>
 				</div>
 			</div>
@@ -89,7 +89,7 @@ class TransHistory extends React.Component{
 					<tbody>
 						{
 							(data.transHistory.filter((item)=>(data.rangeFilter.from <= item.date && data.rangeFilter.to >= item.date) &&
-							(data.paymentFilter === item.system || data.paymentFilter === 'All')).length)
+							((data.paymentFilter).toLowerCase() === (item.system).toLowerCase() || data.paymentFilter === 'All')).length)
 									?
 										data.transHistory.map((item, index) =>
 											(data.rangeFilter.from <= item.date && data.rangeFilter.to >= item.date) &&

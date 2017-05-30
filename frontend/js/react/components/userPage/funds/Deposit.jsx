@@ -188,10 +188,10 @@ class Deposit extends React.Component{
 			</div>
 			<div className="payment_container">
 				<div className="tabs">
-					<span className="tab btn wave VisaMC" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Skrill" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Neteller" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Bitpay" onClick={this.scrollBottom}><span>{}</span></span>
+					<button className="tab btn wave VisaMC" onClick={this.scrollBottom}><span>{}</span></button>
+					<button className="tab btn wave Skrill" onClick={this.scrollBottom}><span>{}</span></button>
+					<button className="tab btn wave Neteller" onClick={this.scrollBottom}><span>{}</span></button>
+					<button className="tab btn wave Bitpay" onClick={this.scrollBottom}><span>{}</span></button>
 				</div>
 				<div className="tab_content">
 					<div className="tab_item payment_tab">
