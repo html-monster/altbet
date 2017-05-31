@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 
 import FormValidation from '../FormValidation';
 import InputValidation from '../formValidation/InputValidation';
+// import ChangePassword from './settings/ChangePassword';
 import { emptyValidation, lengthValidation, lettersOnlyValidation,
     regexValidation, mailValidation, phoneValidation } from '../formValidation/validation';
 import {DateLocalization} from '../../models/DateLocalization';
@@ -16,7 +17,7 @@ import settingsActions from '../../actions/userPage/settingsActions';
 
 class Settings extends React.Component
 {
-    loadFile(event)
+    _loadFile(event)
     {
 		event.preventDefault();
 		event.target.nextSibling.click();
@@ -57,38 +58,12 @@ class Settings extends React.Component
                                      label={'First Name'} type={'text'} filled={FirstName}
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]}
                                      input={input} maxLength="20"/>
-                    {/*<span className="input_animate input--yoshiko input--filled">
-                        <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 2-50 characters"
-                               data-val-length-max="50" data-val-length-min="2" data-val-regex="Use letters only please"
-                               data-val-regex-pattern="^[a-zA-Z]+$" data-val-required="First Name is required" id="f_name"
-                               maxLength="50" name="FirstName" type="text" defaultValue={FirstName}/>
-                        <label className="input__label input__label--yoshiko" htmlFor="f_name">
-                            <span className="input__label-content input__label-content--yoshiko" data-content="First Name">First Name</span>
-                        </label>
-                        <span className="validation-summary-errors">{}</span>
-                        <span className="info top">
-                            <i>Your first name as specified in your passport</i>
-                        </span>
-                    </span>*/}
 
                     <InputValidation renderContent={inputRender} id={'l_name'} name="LastName"
                                      initialValue={LastName} info="Your second name as specified in your passport"
                                      label={'Last Name'} type={'text'} filled={LastName}
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]} input={input}
                                      maxLength="20"/>
-                    {/*<span className="input_animate input--yoshiko  input--filled">
-                        <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 2-50 characters"
-                               data-val-length-max="50" data-val-length-min="2" data-val-regex="Use letters only please"
-                               data-val-regex-pattern="^[a-zA-Z]+$" data-val-required="Last Name is required" id="l_name"
-                               maxLength="50" name="LastName" type="text" defaultValue={LastName}/>
-                        <label className="input__label input__label--yoshiko" htmlFor="l_name">
-                            <span className="input__label-content input__label-content--yoshiko" data-content="Last Name">Last Name</span>
-                        </label>
-                        <span className="validation-summary-errors">{}</span>
-                        <span className="info top">
-                            <i>Your second name as specified in your passport</i>
-                        </span>
-                    </span>*/}
 
 
                     <InputValidation renderContent={inputRender} id={'n_name'} name="UserName"
@@ -96,28 +71,12 @@ class Settings extends React.Component
                                      label={'User Name'} type={'text'} filled={UserName}
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20})]} input={input}
                                      maxLength="20"/>
-                    {/*<span className="input_animate input--yoshiko input--filled">
-                        <input className="input__field input__field--yoshiko" disabled="disabled" id="n_name" name="UserName" type="text" defaultValue={UserName}/>
-                        <label className="input__label input__label--yoshiko" htmlFor="n_name">
-                            <span className="input__label-content input__label-content--yoshiko" data-content="User Name">User Name</span>
-                        </label>
-                        <span className="validation-summary-errors">{}</span>
-                    </span>*/}
 
                     <InputValidation renderContent={inputRender} id={'user_b_day'} name="DateOfBirth"
                                      className={'datePickerJs'}
                                      initialValue={(new DateLocalization()).fromSharp(DateOfBirth, 0).unixToLocalDate({format: "DD MMM Y"})}
                                      label={'Date of birth'} type={'text'} filled={true}
                                      validate={emptyValidation} input={input}/>
-                    {/*<span className="input_animate input--yoshiko input--filled">
-                        <input className="input__field input__field--yoshiko datePickerJs" data-val-date="The field DateOfBirth must be a date."
-                               data-val-required="Date Of birth is required" id="user_b_day" name="DateOfBirth" type="text"
-                               defaultValue={(new DateLocalization()).fromSharp(DateOfBirth, 0).unixToLocalDate({format: "DD MMM Y"})}/>
-                        <label className="input__label input__label--yoshiko" htmlFor="user_b_day">
-                            <span className="input__label-content input__label-content--yoshiko" data-content="Date of birth">Date of birth</span>
-                        </label>
-                        <span className="validation-summary-errors">{}</span>
-                    </span>*/}
 
 
                     <h3 className="section_user">Contact Info</h3>
@@ -130,74 +89,24 @@ class Settings extends React.Component
                                      will be used for communication with you`}
                                      label={'Email Address'} type={'email'} filled={Email}
                                      validate={[emptyValidation, mailValidation]} input={input}/>
-                    {/*<span className="input_animate input--yoshiko input--filled">
-                        <input className="input__field input__field--yoshiko" disabled="disabled" id="e_name" name="Email" type="text" defaultValue={Email}/>
-                        <label className="input__label input__label--yoshiko" htmlFor="e_name">
-                            <span className="input__label-content input__label-content--yoshiko" data-content="Email Address">Email Address</span>
-                        </label>
-                        <span className="validation-summary-errors">{}</span>
-                        <span className="info bottom">
-                            <i>
-                                Specify your valid email. A message with registration
-                                confirmation will be sent at that address.Also that address
-                                will be used for communication with you
-                            </i>
-                        </span>
-                    </span>*/}
 
                     <InputValidation renderContent={inputRender} id={'c_name'} name="Country"
                                      initialValue={Country} info="Indicate the country of your permanent residence"
                                      label={'Country'} type={'text'} filled={Country}
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 128})]}
                                      input={input} maxLength="20"/>
-                    {/*<span className="input_animate input--yoshiko input--filled">
-                        <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 3-50 characters"
-                               data-val-length-max="128" data-val-length-min="3" data-val-regex="Use letters only please"
-                               data-val-regex-pattern="^[a-zA-Z]+$" data-val-required="Country is required" id="c_name"
-                               maxLength="128" name="Country" type="text" defaultValue={Country}/>
-                        <label className="input__label input__label--yoshiko" htmlFor="c_name">
-                            <span className="input__label-content input__label-content--yoshiko" data-content="Country">Country</span>
-                        </label>
-                        <span className="validation-summary-errors">{}</span>
-                        <span className="info top">
-                            <i>Indicate the country of your permanent residence</i>
-                        </span>
-                    </span>*/}
 
                     <InputValidation renderContent={inputRender} id={'s_name'} name="Address"
                                      initialValue={Address} info="Enter address manually"
                                      label={'Address'} type={'text'} filled={Address}
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 200}), regexValidation.bind(null, {tmpl: /^[a-zA-Z.,-/'`()\d\s]+$/, message: "Not available special symbols like @#$%^~ etc."})]} input={input}
                                      maxLength="200"/>
-                    {/*<span className="input_animate input--yoshiko input--filled">
-                        <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 3-50 characters"
-                               data-val-length-max="200" data-val-length-min="3" data-val-required="Address is required" id="s_name"
-                               maxLength="200" name="Address" type="text" defaultValue={Address}/>
-                        <label className="input__label input__label--yoshiko" htmlFor="s_name">
-                            <span className="input__label-content input__label-content--yoshiko"
-                                  data-content="Address">Address</span>
-                        </label>
-                        <span className="validation-summary-errors">{}</span>
-                        <span className="info top">
-                            <i>Enter address manually</i>
-                        </span>
-                    </span>*/}
 
                     <InputValidation renderContent={inputRender} id={'t_number'} name="Phone"
                                      initialValue={Phone}
                                      label={'Phone'} type={'tel'} filled={Phone}
                                      validate={[emptyValidation, phoneValidation]} input={input}
                                      maxLength="20"/>
-                    {/*<span className="input_animate input--yoshiko input--filled">
-                        <input className="input__field input__field--yoshiko" data-val-length="Please enter at least 3-50 characters"
-                               data-val-length-max="30" data-val-length-min="3" data-val-regex="Not a valid phone number"
-                               data-val-regex-pattern="^[0-9]+$" data-val-required="Phone is required" id="t_number" maxLength="30"
-                               name="Phone" type="tel" defaultValue={Phone}/>
-                        <label className="input__label input__label--yoshiko" htmlFor="t_number">
-                            <span className="input__label-content input__label-content--yoshiko" data-content="Phone">Phone</span>
-                        </label>
-                        <span className="validation-summary-errors">{}</span>
-                    </span>*/}
 
                     <span className="input_animate input--yoshiko submit_container">
                         <input type="submit" value="Submit" className="btn wave submit"/>
@@ -295,7 +204,7 @@ class Settings extends React.Component
                                 <p>Add your documents files</p>
 						}
                     </div>
-                    <button className="btn btn_green wave upload load_btn left" ref={'uploadButton'} onClick={this.loadFile}>Load file</button>
+                    <button className="btn btn_green wave upload load_btn left" ref={'uploadButton'} onClick={this._loadFile}>Load file</button>
                     <input type="file" name="file" accept=".png,.jpeg,.jpg"
                            //.doc,.docx,.xls,.xlsx,.txt,
                            onChange={actions.onFileChosen.bind(null, this)}
@@ -307,44 +216,8 @@ class Settings extends React.Component
                 </form>
             </div>
 
+            {/*<ChangePassword />*/}
 
-            <form action={appData.pageAccountChangePassUrl}
-                  className="change_password" data-ajax="true" data-ajax-failure="ajaxChangePassClass.onErrorAjax"
-                  data-ajax-success="ajaxChangePassClass.onSuccessAjax" data-ajax-url={appData.pageAccountChangePassUrl}
-                  id="form2" method="post" noValidate="novalidate" style={{marginTop: 25}}>
-                <h3 className="section_user">Change Password</h3>
-                <hr/>
-                <span className="input_animate input--yoshiko pass_container">
-                    <input className="input__field input__field--yoshiko" id="user_curr_pass" name="OldPassword" type="password"/>
-                    <span className="show_password">{}</span>
-                    <label className="input__label input__label--yoshiko" htmlFor="user_curr_pass">
-                        <span className="input__label-content input__label-content--yoshiko" data-content="Current Password">Current Password</span>
-                    </label>
-                    <span className="validation-summary-errors">{}</span>
-                </span>
-
-                <span className="input_animate input--yoshiko pass_container">
-                    <input className="input__field input__field--yoshiko" id="user_pass" name="NewPassword" type="password"/>
-                    <span className="show_password">{}</span>
-                    <label className="input__label input__label--yoshiko" htmlFor="user_pass">
-                        <span className="input__label-content input__label-content--yoshiko" data-content="New Password">New Password</span>
-                    </label>
-                    <span className="validation-summary-errors">{}</span>
-                </span>
-
-                <span className="input_animate input--yoshiko pass_container">
-                    <input className="input__field input__field--yoshiko" id="user_confirm_pass" name="ConfirmPassword" type="password"/>
-                    <span className="show_password">{}</span>
-                    <label className="input__label input__label--yoshiko" htmlFor="user_confirm_pass">
-                        <span className="input__label-content input__label-content--yoshiko" data-content="Confirm Password">Confirm Password</span>
-                    </label>
-                    <span className="validation-summary-errors">{}</span>
-                </span>
-                <span className="input_animate input--yoshiko submit_container">
-                    <input type="submit" value="ChangePassword" id="submit" className="btn wave submit"/>
-                    <span className="answer_message">{}</span>
-                </span>
-            </form>
         </div>;
     }
 }

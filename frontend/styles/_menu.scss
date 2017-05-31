@@ -1,6 +1,6 @@
 .main_menu {  position: fixed; top: 70px; left: 0; z-index: 100; width: 70px; height: 100%;
   color: #d0d0d0; transition: 0.2s ease-out; box-shadow: 5px 0 15px -6px rgba(0, 0, 0, 0.5);
-  @include md(1360){ position: absolute; bottom: 0; height: auto; }
+  @include md(1350){ position: absolute; bottom: 0; height: auto; }
   /*.menu-btn{
     display: none;
     width: 50px;

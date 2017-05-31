@@ -1,6 +1,6 @@
 header.first_page {
   background: none;
-  @include md(1360){ min-width: inherit; }
+  @include md(1350){ min-width: inherit; }
   .header_info {
     justify-content: space-between;
     float: none;

@@ -5,11 +5,6 @@ import React from 'react';
 
 export default class MenuItemsList extends React.Component
 {
-	constructor()
-	{
-		super();
-	}
-
 	render()
 	{
 		const { actions, categoryMenu, exchanges, currentData, } = this.props;

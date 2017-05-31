@@ -11,11 +11,6 @@ import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 class MainMenu extends React.Component
 {
-	constructor()
-	{
-		super();
-	}
-
 	render()
 	{
 		// const { Exchanges: exchanges, Menu: categoryMenu } = appData.menuData;
