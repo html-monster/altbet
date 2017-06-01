@@ -157,6 +157,7 @@
         }
         &.opener { @include hiddAttr; visibility: hidden; opacity: 0; transition: .2s; }
       }
+      .l-title{ width: calc(100% - 300px); }
       .l-buttons .inner { @include visibleAttr; visibility: visible; opacity: 1; transition: .4s }
     }
 
@@ -177,7 +178,7 @@
     .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 45px 25px 15px 15px; height: 100%;
         font-size: 13px; transition: .4s; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; min-height: 35px; }
-    .l-title { width: calc(100% - 300px); position: relative; font-weight: bold;
+    .l-title { width: calc(100% - 110px); position: relative; font-weight: bold;
       .score { display: inline-block; width: 90px; color: #4ade1a; } // для показа
       //.title{ display: inline-block; width: 330px; } // для показа
       .handicap{ display: inline-block; width: 50px; position: absolute; right: 45px; } // для показа

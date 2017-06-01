@@ -184,7 +184,7 @@ export default class ExchangeItem extends React.Component
 
 					// }
                 }}
-                id={symbol} data-js-hevent="" style={$homeTotal ? {} : {display: 'none'}}
+                id={symbol} data-js-hevent=""
             >
             {/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
