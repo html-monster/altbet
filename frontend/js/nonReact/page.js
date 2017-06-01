@@ -81,8 +81,8 @@ $(document).ready(function ()
 
 	popUpClass.popUpOpen('.log_out .sign_in', '.sign_in_form', '#login-email'); // pop-up login
 	popUpClass.popUpOpen('[data-log-out]', '.sign_in_form', '#login-email');
-	// popUpClass.popUpOpen('.sign_in_form a.register', '.sign_up_form', '#f_name');
-	// popUpClass.popUpOpen('.first_page_wrapper .join', '.sign_up_form', '#f_name');
+	popUpClass.popUpOpen('.sign_in_form a.register', '.sign_up_form', '#f_name');
+	popUpClass.popUpOpen('.first_page_wrapper .join', '.sign_up_form', '#f_name');
 	popUpClass.popUpOpen('.video button', '.video_form');
 	popUpClass.popUpOpen('header .price_plan', '.price_plan_form');
 

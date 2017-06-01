@@ -8,14 +8,15 @@ import React from 'react';
 
 import FormValidation from './FormValidation';
 import InputValidation from './formValidation/InputValidation';
-import {passwordValidation, regexValidation, lengthValidation, mailValidation, emptyValidation, phoneValidation} from './formValidation/validation';
+import {passwordValidation, regexValidation, lengthValidation, mailValidation, emptyValidation, customValidation} from './formValidation/validation';
 import {DropBox2} from './common/DropBox2';
 import {DatePicker} from './common/DatePicker';
 
 
 export class RegisterForm extends React.PureComponent
 {
-    countries = [];
+    /**@private*/ countries = [];
+    /**@private*/ birthDate = {date: null};
 
 	constructor(props)
 	{
@@ -45,14 +46,14 @@ export class RegisterForm extends React.PureComponent
 
     componentDidMount()
     {
-        if( __DEV__ )
+/*        if( __DEV__ )
         {
             0||console.log( 'emulate here' )
             setTimeout(() =>
                 {$(".log_out .sign_in").click();
                     setTimeout(() => $(".register").click(), 500)
                 }, 700)
-        } // endif
+        }*/ // endif
 
 
         var { onCustomChange } = this.props;
@@ -102,11 +103,14 @@ export class RegisterForm extends React.PureComponent
     }
 
 
-    datePickerRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty, onCustomChange }, ...input })
+    datePickerRender({ id, className, label, hint, inputLabel, type, afterChange, meta: { error, dirty, onCustomChange }, ...input })
     {
         return <span className="input_animate input--yoshiko">
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
-                <DatePicker className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id} afterChange={onCustomChange} {...input}/>
+                <DatePicker className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id}
+                    exdata={{afterChange: afterChange.bind(null, onCustomChange), dateFormat: "d M yy"}}
+                    {...input}
+                />
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
                     <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                 </label>
@@ -153,6 +157,52 @@ export class RegisterForm extends React.PureComponent
 			return <input type={type} {...input}/>
 		};
 */
+
+    dateBirthCheck(props)
+    {
+        0||console.log( 'props', props );
+    }
+
+
+    /**
+     * Check for states
+     * @private
+     * @param onCustomChange - for validation
+     * @param val - new dd value
+     * @param item - item from source array
+     */
+	dropCountryChange(onCustomChange, val, item)
+    {
+        let newItems = [];
+
+        if( item && item[0] && item[0].States )
+        {
+            newItems = item[0].States.map(val => {return{value: val['Code'], label: val['State']}});
+        } // endif
+
+        this.setState({...this.state, States: newItems});
+
+        onCustomChange(val);
+    }
+
+
+
+    /**
+     * Date birth change
+     * @private
+     * @param birthStore - object for validation
+     * @param onCustomChange - for validation
+     * @param val - new value for user
+     * @param date - date from datepicker in common format
+     */
+	dateBirthChange(onCustomChange, val, date)
+    {
+        this.birthDate = {date};
+        // 0||console.log( 'onCustomChange, val, date', onCustomChange, val, date );
+
+        onCustomChange(val);
+    }
+
 
 	render()
 	{
@@ -204,19 +254,12 @@ export class RegisterForm extends React.PureComponent
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20}),
 										 passwordValidation.bind(null, "r_pass")]} input={input}/>
 
-					<InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
-									 className={'input__field input__field--yoshiko js-dateofbirth'}
-									 label="Date of birth" type='text'
-									 // initialValue="12 Apr 2017"
-									 validate={[emptyValidation]} input={input}/>
-
-
                     <InputValidation renderContent={this.dropBoxRender} id='c_name' name="Country"
                                      className=""
                                      items={this.countries}
                                      initLabel="Select country ..."
                                      validate={[emptyValidation]} input={input}
-                                     afterChange={::this._dropCountryChange}
+                                     afterChange={::this.dropCountryChange}
                                      hint="Indicate the country of your permanent residence"/>
 
                     <InputValidation renderContent={this.dropBoxRender} id='st_name' name="State"
@@ -226,6 +269,12 @@ export class RegisterForm extends React.PureComponent
                                      validate={this.state.States.length ? [emptyValidation] : []} input={input}
                                      hint=""/>
 
+					<InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
+									 className={'input__field input__field--yoshiko js-dateofbirth'}
+									 label="Date of birth" type='text'
+									 afterChange={this.dateBirthChange.bind(this)}
+									 // initialValue="12 Apr 2017"
+									 validate={[emptyValidation, customValidation.bind(null, this.dateBirthCheck)]} input={input}/>
 
 
                     <div className="agreement">
@@ -263,26 +312,4 @@ export class RegisterForm extends React.PureComponent
 			serverValidation={true}
 		/>;
 	}
-
-
-    /**
-     * Check for states
-     * @private
-     * @param onCustomChange - for validation
-     * @param val - new dd value
-     * @param item - item from source array
-     */
-	_dropCountryChange(onCustomChange, val, item)
-    {
-        let newItems = [];
-
-        if( item && item[0] && item[0].States )
-        {
-            newItems = item[0].States.map(val => {return{value: val['Code'], label: val['State']}});
-        } // endif
-
-        this.setState({...this.state, States: newItems});
-
-        onCustomChange(val);
-    }
 }

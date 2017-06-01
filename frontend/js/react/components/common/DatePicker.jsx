@@ -20,6 +20,8 @@ export class DatePicker extends React.PureComponent
 
     componentDidMount()
     {
+		// this.props.dateFormat
+
 		let input = $( this.textInput );
 		input.keyup(() => false);
 		input.keydown(() => false);
@@ -32,7 +34,7 @@ export class DatePicker extends React.PureComponent
 			changeMonth: true,
 			changeYear: true,
 			showAnim: 'slideDown',
-			onClose: (text, p2) => this.props.afterChange(text),
+			onClose: (text, dtObj) => {this.props.exdata.afterChange(text, `${dtObj.selectedYear}-${dtObj.currentMonth}-${dtObj.selectedDay}`)},
 		});
     }
 
@@ -40,7 +42,7 @@ export class DatePicker extends React.PureComponent
 
     render()
     {
-        const { id, name, className, afterChange, ...input } = this.props;
+        const { id, name, className, exdata, ...input } = this.props;
 
         return <input ref={(input) => { this.textInput = input; }} type="text" name={name} className={className} id={id} {...input}/>;
     }

@@ -4,10 +4,44 @@
 
 export default class mainChartController
 {
+    /**@public*/ static THEME_DARK = 'dark';
+    /**@public*/ static THEME_LIGHT = 'light';
+
+    /**@private*/ themeOpts = {
+        dark: {
+            color: "#919096", // также поставлен как цвет для линий сетки
+            gridColor2: "#4d4c52", // также поставлен как цвет для линий сетки
+            backgroundColor: "#211e25",
+            fill: '#53515E',
+            stroke: '#53515E',
+            select: {
+                fill: '#8F8D9A',
+                stroke: '#8F8D9A',
+                color: '#fff',
+            }
+        },
+        light: {
+            color: "#919096",
+            backgroundColor: "#ffffff",
+            fill: '#F7F7F7',
+            stroke: '#F7F7F7',
+            select: {
+                fill: '#E7E7E7',
+                stroke: '#E7E7E7',
+                color: '#fff',
+            }
+        }
+    };
+    /**@private*/ chartTheme = null;
+
+
 	constructor(context, data)
 	{
 		let graphData = [];
 		let graphDataMirror = [];
+
+        // set curr theme
+        this.chartTheme = mainChartController.THEME_LIGHT === ABpp.config.currentTheme ? mainChartController.THEME_LIGHT : mainChartController.THEME_DARK;
 
 		data.Ticks.forEach((item) =>
 		{
@@ -25,7 +59,10 @@ export default class mainChartController
 			chart      : {
 				type    : 'line',
 				renderTo: context,
-				height: 400
+				height: 400,
+
+                backgroundColor: this.themeOpts[this.chartTheme].backgroundColor,
+                plotBackgroundColor: this.themeOpts[this.chartTheme].backgroundColor,
 			},
 			title      : {
 				text: ''
@@ -43,8 +80,10 @@ export default class mainChartController
 			// },
 			xAxis      : {
 				type: 'datetime',
+                tickColor: this.themeOpts[this.chartTheme].gridColor2,
 			},
 			yAxis      : {
+                gridLineColor: this.themeOpts[this.chartTheme].gridColor2,
 				title : '',
 				labels: {
 					formatter: function () {
