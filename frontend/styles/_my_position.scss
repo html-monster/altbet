@@ -116,7 +116,7 @@
 							}
 							&.selection:after{  margin-left: -16px;  }
 						}
-						@include md(1600){  font-size: 12px;  }
+						@include mdmax(1600){  font-size: 12px;  }
 					}
 				}
 				tbody {

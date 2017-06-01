@@ -1,6 +1,6 @@
 .order { /*@include span(last 2.6 of 12);*/ position: fixed; right: 0; top: 70px; z-index: 99; width: 22%; min-width: 295px; height: 100%;
       background: $order_sidebar_bg; transition: 0.4s ease-out;
-  @include md(1350){ position: absolute; bottom: 0; height: auto; }
+  @include mdmax(1350){ position: absolute; bottom: 0; height: auto; }
   @include wave;
   label{
     color: #000000;
@@ -93,7 +93,7 @@
         .order-title{
           padding: 5px 10px 5px 15px;
           background: linear-gradient(to bottom, #53515e, #292830);
-          @include md(1400){  padding: 5px;  }
+          @include mdmax(1400){  padding: 5px;  }
         }
         form input[type="submit"]{  border-left: none;  }
         //.container .obligations label{  width: 100%;  }
@@ -196,7 +196,7 @@
           background: rgba(255, 255, 255, 0.1); }
     }
     .order_info { position: relative; padding: 0 5px 0 5px;
-      @include md(1400){
+      @include mdmax(1400){
         padding: 0;
         padding-left: 5px;
       }

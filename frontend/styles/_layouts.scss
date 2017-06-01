@@ -32,7 +32,7 @@ body {
   &>.wrapper {
     height: 100%;
     min-width: 1350px;
-    @include md(1350){ position: relative; }
+    @include mdmax(1350){ position: relative; }
     //  &.blur{  filter: url('#{$pathImage}/blur.svg#blur') blur(5px);  }
   }
 }
