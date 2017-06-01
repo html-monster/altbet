@@ -200,7 +200,7 @@ export default class ExchangeItem extends React.Component
                         <h3 className="l-title">{ do {
 
                             let html = [<span key="0" data-js-title="" style={{paddingRight: 5}}><span className="score" style={{paddingRight: 5}}>{$homeTotal} : {$awayTotal} </span>
-								<span className="title">{`Will ${Symbol.HomeName} (vs. ${Symbol.AwayName})`}</span></span>
+								<span className="title">{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}</span></span>
                                     , (Symbol.HomeHandicap !== null) ? <span key="1" className="handicap" style={{paddingRight: 5}}> {(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
                                     , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}> <i>{}</i>${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
 							$classActiveExch ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
@@ -228,7 +228,7 @@ export default class ExchangeItem extends React.Component
                                 </div>
                                 <div className={`button-container opener`}>
                                     <div className="button">
-                                        <button className={`event`}><i>{}</i>Trade</button>
+                                        <button className={`event`}><i>{}</i>Enter</button>
                                     </div>
                                 </div>
                         </div>
