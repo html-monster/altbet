@@ -48,7 +48,7 @@ footer {
         color: $link-color;
       }
     }
-    @include md(1700) {
+    @include mdmax(1700) {
       padding: 0 10px;
       .copy-right {
         font-size: 10px;

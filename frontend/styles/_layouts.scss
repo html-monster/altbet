@@ -31,8 +31,8 @@ body {
   &.no-scroll { overflow: hidden; }
   &>.wrapper {
     height: 100%;
-    min-width: 1360px;
-    @include md(1360){ position: relative; }
+    min-width: 1350px;
+    @include mdmax(1350){ position: relative; }
     //  &.blur{  filter: url('#{$pathImage}/blur.svg#blur') blur(5px);  }
   }
 }

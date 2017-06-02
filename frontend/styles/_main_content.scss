@@ -63,6 +63,8 @@
 .l-lup { padding: 0 10px 40px;
   &__rules { position: absolute; right: 15px; font-size: 11px; }
   &__link { color: $main-color }
+  .lineup_container{ display: flex; justify-content: space-between; }
+  .team_table{ width: 49%; }
 }
 .l-team { width: 100%; /*color: #bdc0cd;*/ font-size: 13px;
   //&:nth-of-type(2), &:nth-of-type(5) { padding-right: 5px }
@@ -120,10 +122,10 @@
 .ac-index.co-home {
   .mp-exchanges { display: flex; flex-wrap: wrap; justify-content: space-between; }
   .h-event { display: flex;  flex-direction: column;  justify-content: space-between; position: relative; margin: 1px 0;
-		width: calc(50% - 1px); min-width: 410px; border-radius: 6px; z-index: 10; color: $color4TextWhite;
-    &:nth-child(odd) { margin-right: 2px; }
+		width: 100%; min-width: 410px; border-radius: 6px; z-index: 10; color: $color4TextWhite;
+    //&:nth-child(odd) { margin-right: 2px; }
 
-    // ovverride on activate exchange
+    // ovverride on activate exchange\
     &.active-exch { z-index: 11; color: $color4TextBlack;
       &>.bg { background: linear-gradient(to bottom, #EBEBEB, #B8B8B8); }
       .l-title {
@@ -157,8 +159,11 @@
         }
         &.opener { @include hiddAttr; visibility: hidden; opacity: 0; transition: .2s; }
       }
+      .l-title{ width: calc(100% - 300px); }
       .l-buttons .inner { @include visibleAttr; visibility: visible; opacity: 1; transition: .4s }
     }
+
+    &.active_nearby .l-title{ width: calc(100% - 300px); }
 
     &>.bg { position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-radius: 6px;
         background: linear-gradient(to bottom, #53515e, #292830); z-index: -1; transition: .4s ease-out;
@@ -174,15 +179,16 @@
       }
     }
 
-    .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 45px 25px 15px 15px; height: 100%;
+    .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 45px 15px 15px; height: 100%;
         font-size: 13px; transition: .4s; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; min-height: 35px; }
-    .l-title { font-weight: bold;
-      @include md(1600) { max-width: 270px; }
-      .score { color: #4ade1a; }
+    .l-title { width: calc(100% - 110px); position: relative; font-weight: bold;
+      .score { display: inline-block; width: 90px; color: #4ade1a; } // для показа
+      //.title{ display: inline-block; width: 330px; } // для показа
+      .handicap{ display: inline-block; width: 50px; position: absolute; right: 45px; } // для показа
       .seemore-lnk { color: $color4TextWhite; transition: color .1s; }
       a.seemore-lnk:hover { color: $color-blue; }
-      .last-price { white-space: nowrap;
+      .last-price { position: absolute; top: -2px; right: 0; white-space: nowrap; // для показа
         &.down i { display: inline-block; top: 2px; background-position: -309px -308px; }
         &.up i { display: inline-block; top: 0; background-position: -292px -306px; }
         i { display: none; position: relative; margin-right: -5px; width: 15px; height: 16px; background-size: cover;
@@ -191,9 +197,9 @@
       }
     }
     .l-buttons {
-      .inner { display: block; position: relative; min-width: 281px; text-align: right;  @include hiddAttr; visibility: hidden; opacity: 0;
+      .inner { display: block; position: relative; min-width: 281px; text-align: right; visibility: hidden; opacity: 0; //@include hiddAttr;
             transition: .2s;
-        @include md(1600) { min-width: 191px; }
+        @include mdmax(1600) { min-width: 191px; }
       }
     }
 
@@ -261,9 +267,9 @@
               span{ color: #fff; opacity: 0.8; }
             }
           }
-          @include md(1600) {
-            &:nth-last-of-type(3) { display: none !important; }
-          }
+          //@include md(1600) {
+          //  &:nth-last-of-type(3) { display: none !important; }
+          //}
         }
       }
       // right buttons
@@ -294,29 +300,29 @@
               span{ color: #fff; opacity: 0.8; }
             }
           }
-          @include md(1600) {
-            &:nth-of-type(3) { display: none !important; }
-          }
+          //@include md(1600) {
+          //  &:nth-of-type(3) { display: none !important; }
+          //}
         }
       }
     }
 
     // lineup tabs
-		&.no_lineups{
-          .lpnc_tabs {display: none; }
-          .lpnc-loc{
-            .pl, .pos{ width: 140px; height: 20px; transform: none;
-              &:not(.active){ height: 0; transform: scaleY(0); }
-              strong{  margin-top: 3px;  }
-            }
-            .pl{ left: calc(50% - 140px); background-position: -28px -73px;
-              strong { float: left; margin-left: 25px; }
-            }
-            .pos { background-position: -124px -73px;
-              strong { float: right; margin-right: 25px; }
-            }
-          }
-		}
+		//&.no_lineups{
+    //  .lpnc_tabs {display: none; }
+    //  .lpnc-loc{
+    //    .pl, .pos{ height: 20px; transform: none;
+    //      &:not(.active){ height: 0; transform: scaleY(0); }
+    //      strong{  margin-top: 3px;  }
+    //    }
+    //    .pl{ background-position: -28px -73px;
+    //      strong { float: left; margin-left: 25px; }
+    //    }
+    //    .pos { background-position: -124px -73px;
+    //      strong { float: right; margin-right: 25px; }
+    //    }
+    //  }
+		//}
     // &.active .lpnc-loc { bottom: -12px; }
     .lpnc-loc { position: relative; bottom: -2px; height: 37px; text-align: center; transition: 0.4s ease-out;
       //.loc1, .loc2 { display: inline-block; width: 108px; height: 37px; transform: scaleY(0.55) translateY(14px);
@@ -325,14 +331,14 @@
       //.loc2 { background-position: -163px -11px; }
 
 			.pl, .pos{
-				width: 108px;  height: 37px;  position: absolute;  bottom: 0;  font-size: 11px;  font-weight: normal;
+				width: 140px;  height: 37px;  position: absolute;  bottom: 0;  font-size: 11px;  font-weight: normal;
 				line-height: 16px;  color: $main-color;  background: url("#{$pathImage}/sprite_components.svg") no-repeat;
 				overflow: hidden;  transition: 0.4s ease-out;  transform: scaleY(0.55) translateY(14px);
 				&.active{  transform: none;  }
-				strong{  display: block;  width: 90px;  transform: translateY(-20px);  transition: 0.2s ease-out;  font-weight: normal;  }
+				strong{  display: block;  width: 120px;  transform: translateY(-20px);  transition: 0.2s ease-out;  font-weight: normal;  }
 			}
 			.pl{
-				left: calc(50% - 108px); background-position: $main_page_event_info_pl_bg;
+				left: calc(50% - 140px); background-position: $main_page_event_info_pl_bg;
 				//padding-left: 13px;  padding-right: 0;  right: -5px;
 				//.profit{  color: #4dac2e;  }
 				//.loss{  color: #ff3905;  }
@@ -354,7 +360,7 @@
       }
       .lpnc_tabs { position: absolute; left: 0; bottom: 0; width: 100%; line-height: 21px; font-size: 13px; text-align: center;
           color: #fff;  transition: color 0.4s ease-out;
-        &__tab { display: inline-block; width: 103px; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
+        &__tab { display: inline-block; width: 135px; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
               transition: color .4s; cursor: pointer;
           &:hover { color: $color-blue; }
           &_1 { height: auto; margin-right: 1px; padding: 0 16px 0 14px; @include main_page_lineup_button; }
@@ -437,7 +443,7 @@
       top: 70px;
       left: 70px;//15%;
       z-index: 93;
-      @include md(1360){
+      @include mdmax(1350){
         position: absolute;
         left: 0;
         width: 100%;

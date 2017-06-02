@@ -38,7 +38,7 @@ export default class mainChartController
 	constructor(context, data)
 	{
 		let graphData = [];
-		let graphDataMirror = [];
+		// let graphDataMirror = [];
 
         // set curr theme
         this.chartTheme = mainChartController.THEME_LIGHT === ABpp.config.currentTheme ? mainChartController.THEME_LIGHT : mainChartController.THEME_DARK;
@@ -49,10 +49,10 @@ export default class mainChartController
 				x: item.Time,
 				y: Math.round10(+item.Close, -2)
 			});
-			graphDataMirror.push({
-				x: item.Time,
-				y: Math.round10(1 - item.Close, -2)
-			})
+			// graphDataMirror.push({
+			// 	x: item.Time,
+			// 	y: Math.round10(1 - item.Close, -2)
+			// })
 		});
 
 		this.chart = new Highcharts.Chart({
@@ -106,15 +106,16 @@ export default class mainChartController
 				color         : 'rgba(59,89,152,0.5)',
 				name          : data.Symbol.HomeName,
 				data          : graphData
-			}, {
-				turboThreshold: 0,
-				color         : 'rgba(211,0,21,0.5)',
-				name          : data.Symbol.AwayName,
-				data          : graphDataMirror
-			}]
+			},]
 		})
 	}
 
+// {
+// 	turboThreshold: 0,
+// 	color         : 'rgba(211,0,21,0.5)',
+// 	name          : data.Symbol.AwayName,
+// 	data          : graphDataMirror
+// }
 	updateChart(newData)
 	{
 		let newTicks = newData.Ticks.slice(newData.Ticks.length - (newData.Ticks.length - this.chart.series[0].points.length));
@@ -126,10 +127,10 @@ export default class mainChartController
 				x: item.Time,
 				y: Math.round10(+item.Close, -2)
 			});
-			this.chart.series[1].addPoint({
-				x: item.Time,
-				y: Math.round10(1 - item.Close, -2)
-			});
+			// this.chart.series[1].addPoint({
+			// 	x: item.Time,
+			// 	y: Math.round10(1 - item.Close, -2)
+			// });
 		});
 		// console.log('this.chart:', this.chart);
 		// console.log('data:', newData);

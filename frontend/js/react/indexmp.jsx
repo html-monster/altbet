@@ -70,6 +70,7 @@ if( !globalData.landingPage  )
 						<Route path='/funds(/:tabname)' component={AccountPage} tab="funds" />
 						<Route path='/preferences' component={AccountPage} tab="pref" />
 						<Route path='/settings' component={AccountPage} tab="sett" />
+						<Route path='/change_password' component={AccountPage} tab="pass" />
 					</Route>
 				</Router>
 			</Provider>,

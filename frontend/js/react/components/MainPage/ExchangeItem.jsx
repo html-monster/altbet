@@ -76,14 +76,14 @@ export default class ExchangeItem extends React.Component
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
         let isExpertMode;
-        let noTeamsClass, noTeamsWrappClass = "", $homeTotal, $awayTotal ;
+        let noTeamsClass, $homeTotal, $awayTotal ;//noTeamsWrappClass = "",
 
         // todo: check for no team hardcode
         const $HomeTeamObj = this.data[Symbol.HomeName];
         const $AwayTeamObj = this.data[Symbol.AwayName];
         noTeamsClass = $HomeTeamObj && $AwayTeamObj && $HomeTeamObj.team && $AwayTeamObj.team ? "" : " hidden";
         if( noTeamsClass ) {
-            noTeamsWrappClass = "no_lineups";
+            // noTeamsWrappClass = "no_lineups";
             activeTab = ['', " active"];
         }
         else
@@ -168,7 +168,8 @@ export default class ExchangeItem extends React.Component
         // 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
 
         return (
-            <div className={`h-event ${noTeamsWrappClass} categoryFilterJs animated fadeIn ${expModeClass}` + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")} //+ (isBasicMode ? " basic_mode_js basic_mode" : "")
+            <div className={`h-event categoryFilterJs animated fadeIn ${expModeClass}` + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "") +
+			(currentExchange && !expModeClass ? ' active_nearby' : '')} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
                 onClick={() =>
                 {
                 	// if(this.props.data.currentExchange !== this.props.data.Symbol.Exchange)
@@ -184,7 +185,7 @@ export default class ExchangeItem extends React.Component
 
 					// }
                 }}
-                id={symbol} data-js-hevent=""
+                id={symbol} data-js-hevent="" style={$homeTotal ? {} : {display: 'none'}}
             >
             {/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
@@ -199,9 +200,10 @@ export default class ExchangeItem extends React.Component
                 <div className="h-symbol">
                         <h3 className="l-title">{ do {
 
-                            let html = [<span key="0" data-js-title=""><span className="score">{$homeTotal}&nbsp;&nbsp;</span> {Symbol.HomeName}</span>
-                                    , (Symbol.HomeHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
-                                    , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}>&nbsp;&nbsp;<i></i>${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
+                            let html = [<span key="0" data-js-title="" style={{paddingRight: 5}}><span className="score" style={{paddingRight: 5}}>{$homeTotal} : {$awayTotal} </span>
+								<span className="title">{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}</span></span>
+                                    , (Symbol.HomeHandicap !== null) ? <span key="1" className="handicap" style={{paddingRight: 5}}> {(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
+                                    , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}> <i>{}</i>${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
 							$classActiveExch ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
                                 : <span className="seemore-lnk">{html}</span>
                             }}
@@ -227,43 +229,43 @@ export default class ExchangeItem extends React.Component
                                 </div>
                                 <div className={`button-container opener`}>
                                     <div className="button">
-                                        <button className={`event`}><i></i>Trade</button>
+                                        <button className={`event`}><i>{}</i>Enter</button>
                                     </div>
                                 </div>
                         </div>
                     </div>
-                    <div className="h-symbol">
-                        <h3 className="l-title">{ do {
-                                let html = [<span key="0" data-js-title><span className="score">{$awayTotal}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>
-                                    , (Symbol.AwayHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap}</span> : ''
-                                    , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[1]}`}>&nbsp;&nbsp;<i></i>${(1 - data.Symbol.LastPrice).toFixed(2)}</span> : ""];
-							$classActiveExch ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>
-                                : <span className="seemore-lnk">{html}</span>
-                            }}
-                        </h3>
+                    {/*<div className="h-symbol">*/}
+                        {/*<h3 className="l-title">{ do {*/}
+                                {/*let html = [<span key="0" data-js-title><span className="score">{$awayTotal}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>*/}
+                                    {/*, (Symbol.AwayHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap}</span> : ''*/}
+                                    {/*, data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[1]}`}>&nbsp;&nbsp;<i>{}</i>${(1 - data.Symbol.LastPrice).toFixed(2)}</span> : ""];*/}
+							{/*$classActiveExch ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>*/}
+                                {/*: <span className="seemore-lnk">{html}</span>*/}
+                            {/*}}*/}
+                        {/*</h3>*/}
 
-                        <div className="l-buttons">
-                            <div className="inner">
-                                <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                                    type: 'sell',
-                                    side: 1,
-                                    ismirror: true,
-                                    symbolName: symbol,
-                                    Orders: data.Orders,
-                                    ...commProps
-                                }}/>
+                        {/*<div className="l-buttons">*/}
+                            {/*<div className="inner">*/}
+                                {/*<ButtonContainer actions={actions} mainContext={mainContext} data={{*/}
+                                    {/*type: 'sell',*/}
+                                    {/*side: 1,*/}
+                                    {/*ismirror: true,*/}
+                                    {/*symbolName: symbol,*/}
+                                    {/*Orders: data.Orders,*/}
+                                    {/*...commProps*/}
+                                {/*}}/>*/}
 
-                                <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                                    type: 'buy',
-                                    side: 0,
-                                    ismirror: true,
-                                    symbolName: symbol,
-                                    Orders: data.Orders,
-                                    ...commProps
-                                }}/>
-                            </div>
-                        </div>
-                    </div>
+                                {/*<ButtonContainer actions={actions} mainContext={mainContext} data={{*/}
+                                    {/*type: 'buy',*/}
+                                    {/*side: 0,*/}
+                                    {/*ismirror: true,*/}
+                                    {/*symbolName: symbol,*/}
+                                    {/*Orders: data.Orders,*/}
+                                    {/*...commProps*/}
+                                {/*}}/>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
 
                     {/*<div className={"event-content" + $classActiveNM} data-symbol={symbol} data-id={Symbol.Exchange} data-mirror="0"
                         onClick={ABpp.config.tradeOn && actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
