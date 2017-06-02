@@ -16,6 +16,7 @@ import {Common} from '../common/Common';
 
 export class RegisterForm extends React.PureComponent
 {
+    /**@private*/ defaultAgeRestriction = "18";
     /**@private*/ countries = [];
     /**@private*/ currentCountry = {age: 0, States: null};
     /**@private*/ birthDate = {date: null};
@@ -178,14 +179,14 @@ export class RegisterForm extends React.PureComponent
         if( this.currentCountry.States === null )
         {
             let $age = this.currentCountry.age;
-            if( $age > years ) {
-                $error = errorAge.replace("<var>", $age);
-            }
-            else if( $age === 0 ) $error = "Select your Country";
+            if( $age === 0 ) $error = "Select your Country";
             else if( $age === -1 )
             {
                 deniedText = errorDeny.replace("<var>", this.currentCountry.label);
-                if (18 > years) $error = errorAge.replace("<var>", 18);
+                if (18 > years) $error = errorAge.replace("<var>", this.defaultAgeRestriction);
+            }
+            else if( $age > years ) {
+                $error = errorAge.replace("<var>", $age);
             }
             else $error = false;
         }
@@ -196,17 +197,17 @@ export class RegisterForm extends React.PureComponent
         else if( this.currentCountry.States.age )
         {
             let $age = this.currentCountry.States.age;
-            if( $age > years ) $error = errorAge.replace("<var>", $age);
-            else if( $age === -1 )
+            if( $age === -1 )
             {
                 deniedText = errorDeny.replace("<var>", this.currentCountry.States.label);
-                if (18 > years) errorAge.replace("<var>", 18);
+                if (18 > years) errorAge.replace("<var>", this.defaultAgeRestriction);
             }
+            else if( $age > years ) $error = errorAge.replace("<var>", $age);
             else $error = false;
         }
         else $error = false;
 
-        if( deniedText ) this.setState({...this.state, deniedText});
+        this.setState({...this.state, deniedText});
         return $error;
     }
 
@@ -227,7 +228,7 @@ export class RegisterForm extends React.PureComponent
         {
             this.currentCountry = {...item[0]};
             this.currentCountry.States = item[0].States ? true : null; // set no state choosed
-            this.state.ageRestrict = this.currentCountry.age;
+            this.state.ageRestrict = this.currentCountry.age > -1 ? this.currentCountry.age : this.defaultAgeRestriction;
 
             if( item && item[0] && item[0].States )
             {
@@ -255,7 +256,7 @@ export class RegisterForm extends React.PureComponent
         if( item && item[0] )
         {
             this.currentCountry.States = item[0];
-            this.setState({...this.state, ageRestrict: this.currentCountry.States.age});
+            this.setState({...this.state, ageRestrict: this.currentCountry.States.age > -1 ? this.currentCountry.States.age : this.defaultAgeRestriction});
         }
 
 
@@ -364,10 +365,6 @@ export class RegisterForm extends React.PureComponent
                             I confirm that I am at least {this.state.ageRestrict} years of age.
                         </InputValidation>
 
-                        {this.state.deniedText &&
-                            <div className="denied-text">{this.state.deniedText}</div>
-                        }
-
                         {/*<div className="checkbox_container">
                             <input type="checkbox" id="agreement"/><label htmlFor="agreement">Agree to the <a href="/conditions.html" className="text_decoration">Terms of Use</a> and <a href="#" className="text_decoration">Privacy Notice</a></label>
                         </div>
@@ -375,6 +372,10 @@ export class RegisterForm extends React.PureComponent
                             <input type="checkbox" id="agreement_age"/><label htmlFor="agreement_age">I confirm that I am at least 18 years of age.</label>
                         </div>*/}
                     </div>
+
+                    {this.state.deniedText &&
+                        <div className="denied-text">{this.state.deniedText}</div>
+                    }
                 </div>
 
                 <hr/>
