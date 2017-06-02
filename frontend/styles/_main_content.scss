@@ -63,6 +63,8 @@
 .l-lup { padding: 0 10px 40px;
   &__rules { position: absolute; right: 15px; font-size: 11px; }
   &__link { color: $main-color }
+  .lineup_container{ display: flex; justify-content: space-between; }
+  .team_table{ width: 49%; }
 }
 .l-team { width: 100%; /*color: #bdc0cd;*/ font-size: 13px;
   //&:nth-of-type(2), &:nth-of-type(5) { padding-right: 5px }
@@ -161,6 +163,8 @@
       .l-buttons .inner { @include visibleAttr; visibility: visible; opacity: 1; transition: .4s }
     }
 
+    &.active_nearby .l-title{ width: calc(100% - 300px); }
+
     &>.bg { position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-radius: 6px;
         background: linear-gradient(to bottom, #53515e, #292830); z-index: -1; transition: .4s ease-out;
       &.active {  }
@@ -175,7 +179,7 @@
       }
     }
 
-    .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 45px 25px 15px 15px; height: 100%;
+    .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 45px 15px 15px; height: 100%;
         font-size: 13px; transition: .4s; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; min-height: 35px; }
     .l-title { width: calc(100% - 110px); position: relative; font-weight: bold;
@@ -193,7 +197,7 @@
       }
     }
     .l-buttons {
-      .inner { display: block; position: relative; min-width: 281px; text-align: right;  @include hiddAttr; visibility: hidden; opacity: 0;
+      .inner { display: block; position: relative; min-width: 281px; text-align: right; visibility: hidden; opacity: 0; //@include hiddAttr;
             transition: .2s;
         @include mdmax(1600) { min-width: 191px; }
       }
@@ -304,21 +308,21 @@
     }
 
     // lineup tabs
-		&.no_lineups{
-          .lpnc_tabs {display: none; }
-          .lpnc-loc{
-            .pl, .pos{ height: 20px; transform: none;
-              &:not(.active){ height: 0; transform: scaleY(0); }
-              strong{  margin-top: 3px;  }
-            }
-            .pl{ background-position: -28px -73px;
-              strong { float: left; margin-left: 25px; }
-            }
-            .pos { background-position: -124px -73px;
-              strong { float: right; margin-right: 25px; }
-            }
-          }
-		}
+		//&.no_lineups{
+    //  .lpnc_tabs {display: none; }
+    //  .lpnc-loc{
+    //    .pl, .pos{ height: 20px; transform: none;
+    //      &:not(.active){ height: 0; transform: scaleY(0); }
+    //      strong{  margin-top: 3px;  }
+    //    }
+    //    .pl{ background-position: -28px -73px;
+    //      strong { float: left; margin-left: 25px; }
+    //    }
+    //    .pos { background-position: -124px -73px;
+    //      strong { float: right; margin-right: 25px; }
+    //    }
+    //  }
+		//}
     // &.active .lpnc-loc { bottom: -12px; }
     .lpnc-loc { position: relative; bottom: -2px; height: 37px; text-align: center; transition: 0.4s ease-out;
       //.loc1, .loc2 { display: inline-block; width: 108px; height: 37px; transform: scaleY(0.55) translateY(14px);

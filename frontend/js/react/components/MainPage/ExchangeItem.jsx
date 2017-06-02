@@ -76,14 +76,14 @@ export default class ExchangeItem extends React.Component
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
         let isExpertMode;
-        let noTeamsClass, noTeamsWrappClass = "", $homeTotal, $awayTotal ;
+        let noTeamsClass, $homeTotal, $awayTotal ;//noTeamsWrappClass = "",
 
         // todo: check for no team hardcode
         const $HomeTeamObj = this.data[Symbol.HomeName];
         const $AwayTeamObj = this.data[Symbol.AwayName];
         noTeamsClass = $HomeTeamObj && $AwayTeamObj && $HomeTeamObj.team && $AwayTeamObj.team ? "" : " hidden";
         if( noTeamsClass ) {
-            noTeamsWrappClass = "no_lineups";
+            // noTeamsWrappClass = "no_lineups";
             activeTab = ['', " active"];
         }
         else
@@ -168,7 +168,8 @@ export default class ExchangeItem extends React.Component
         // 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
 
         return (
-            <div className={`h-event ${noTeamsWrappClass} categoryFilterJs animated fadeIn ${expModeClass}` + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")} //+ (isBasicMode ? " basic_mode_js basic_mode" : "")
+            <div className={`h-event categoryFilterJs animated fadeIn ${expModeClass}` + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "") +
+			(currentExchange && !expModeClass ? ' active_nearby' : '')} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
                 onClick={() =>
                 {
                 	// if(this.props.data.currentExchange !== this.props.data.Symbol.Exchange)
@@ -184,7 +185,7 @@ export default class ExchangeItem extends React.Component
 
 					// }
                 }}
-                id={symbol} data-js-hevent=""
+                id={symbol} data-js-hevent="" style={$homeTotal ? {} : {display: 'none'}}
             >
             {/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
