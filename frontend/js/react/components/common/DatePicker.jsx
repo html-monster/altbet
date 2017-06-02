@@ -34,7 +34,7 @@ export class DatePicker extends React.PureComponent
 			changeMonth: true,
 			changeYear: true,
 			showAnim: 'slideDown',
-			onClose: (text, dtObj) => {this.props.exdata.afterChange(text, `${dtObj.selectedYear}-${dtObj.currentMonth}-${dtObj.selectedDay}`)},
+			onClose: (text, dtObj) => {this.props.exdata.afterChange(text, `${dtObj.selectedYear}-${dtObj.currentMonth+1}-${dtObj.selectedDay}`)},
 		});
     }
 

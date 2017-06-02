@@ -11,12 +11,15 @@ import InputValidation from './formValidation/InputValidation';
 import {passwordValidation, regexValidation, lengthValidation, mailValidation, emptyValidation, customValidation} from './formValidation/validation';
 import {DropBox2} from './common/DropBox2';
 import {DatePicker} from './common/DatePicker';
+import {Common} from '../common/Common';
 
 
 export class RegisterForm extends React.PureComponent
 {
     /**@private*/ countries = [];
+    /**@private*/ currentCountry = {age: 0, States: null};
     /**@private*/ birthDate = {date: null};
+
 
 	constructor(props)
 	{
@@ -28,7 +31,7 @@ export class RegisterForm extends React.PureComponent
 		    const $countries = JSON.parse(appData.Registration.countries);
 		    for( let val of $countries.Countries  )
 		    {
-                let item = {value: val['Code'], label: val['Country'], States: val['States']};
+                let item = {value: val['Code'], label: val['Country'], States: val['States'], age: val['ageRestrict']};
                 // if (appData.Registration.currentCountry == val['Code']) item.selected = true;
                 this.countries.push(item);
 		    } // endfor
@@ -40,20 +43,20 @@ export class RegisterForm extends React.PureComponent
         }
 
 
-        this.state = {States: []};
+        this.state = {States: [], ageRestrict: 18, deniedText: ''};
 	}
 
 
     componentDidMount()
     {
-/*        if( __DEV__ )
+        if( __DEV__ )
         {
             0||console.log( 'emulate here' )
             setTimeout(() =>
                 {$(".log_out .sign_in").click();
                     setTimeout(() => $(".register").click(), 500)
                 }, 700)
-        }*/ // endif
+        } // endif
 
 
         var { onCustomChange } = this.props;
@@ -158,9 +161,53 @@ export class RegisterForm extends React.PureComponent
 		};
 */
 
+    /**
+     * Check age restrictions
+     * @param props - form verify data
+     * @return {boolean,string} - false if verify success
+     */
     dateBirthCheck(props)
     {
-        0||console.log( 'props', props );
+        // 0||console.log( 'this.currentCountry', this.currentCountry );
+        let deniedText = '', $error = '';
+        let errorAge = `Your must be greater than <var> years of age`;
+        let errorDeny = `Notice: Residents of <var> are NOT eligible to participate in the service for real money.`;
+        let duration = Common.dateDiff(this.birthDate.date, Date.now());
+        let years = Math.floor(duration.asYears());
+
+        if( this.currentCountry.States === null )
+        {
+            let $age = this.currentCountry.age;
+            if( $age > years ) {
+                $error = errorAge.replace("<var>", $age);
+            }
+            else if( $age === 0 ) $error = "Select your Country";
+            else if( $age === -1 )
+            {
+                deniedText = errorDeny.replace("<var>", this.currentCountry.label);
+                if (18 > years) $error = errorAge.replace("<var>", 18);
+            }
+            else $error = false;
+        }
+        else if( this.currentCountry.States === true )
+        {
+            $error = "Select your State";
+        }
+        else if( this.currentCountry.States.age )
+        {
+            let $age = this.currentCountry.States.age;
+            if( $age > years ) $error = errorAge.replace("<var>", $age);
+            else if( $age === -1 )
+            {
+                deniedText = errorDeny.replace("<var>", this.currentCountry.States.label);
+                if (18 > years) errorAge.replace("<var>", 18);
+            }
+            else $error = false;
+        }
+        else $error = false;
+
+        if( deniedText ) this.setState({...this.state, deniedText});
+        return $error;
     }
 
 
@@ -174,13 +221,43 @@ export class RegisterForm extends React.PureComponent
 	dropCountryChange(onCustomChange, val, item)
     {
         let newItems = [];
+        // 0||console.log( 'val,', val,  item, this.countries);
 
-        if( item && item[0] && item[0].States )
+        if( item && item[0] )
         {
-            newItems = item[0].States.map(val => {return{value: val['Code'], label: val['State']}});
-        } // endif
+            this.currentCountry = {...item[0]};
+            this.currentCountry.States = item[0].States ? true : null; // set no state choosed
+            this.state.ageRestrict = this.currentCountry.age;
+
+            if( item && item[0] && item[0].States )
+            {
+                newItems = item[0].States.map(val => {return{value: val['Code'], label: val['State'], age: val['ageRestrict']}});
+            } // endif
+        }
 
         this.setState({...this.state, States: newItems});
+
+        onCustomChange(val);
+    }
+
+
+    /**
+     * States change
+     * @private
+     * @param onCustomChange - for validation
+     * @param val - new dd value
+     * @param item - item from source array
+     */
+	dropStateChange(onCustomChange, val, item)
+    {
+        // 0||console.log( 'val,', val,  item);
+
+        if( item && item[0] )
+        {
+            this.currentCountry.States = item[0];
+            this.setState({...this.state, ageRestrict: this.currentCountry.States.age});
+        }
+
 
         onCustomChange(val);
     }
@@ -226,7 +303,7 @@ export class RegisterForm extends React.PureComponent
 
                     <InputValidation renderContent={this.inputRender} id='n_name' name="NickName"
                                      className={'input__field input__field--yoshiko'}
-                                     // initialValue="FedoryakaBest"
+                                     initialValue="FedoryakaBest"
                                      label="User Name" type='text'
                                      validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
                                      hint="User's login allow to use symbols such as: symbols, digits, dot, underscore, dash"/>
@@ -234,7 +311,7 @@ export class RegisterForm extends React.PureComponent
                     <InputValidation renderContent={this.inputRender} id='e_name' name="Email"
                                      className={'input__field input__field--yoshiko'}
                                      label="Email Address" type='text'
-                                     // initialValue="Zotaper@yandex.ru"
+                                     initialValue="Zotaper@yandex.ru"
                                      validate={[emptyValidation, mailValidation, lengthValidation.bind(null, {max: 128})]} input={input}
                                      hint="Specify your valid email. A message with registration
                                         confirmation will be sent at that address. Also that address
@@ -242,14 +319,14 @@ export class RegisterForm extends React.PureComponent
 
                     <InputValidation renderContent={this.inputRender} id='r_pass' name="Password"
                                      className={'input__field input__field--yoshiko'}
-                                     // initialValue="123"
+                                     initialValue="123"
                                      label="Password" type='password'
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20}),
 										 passwordValidation.bind(null, "r_confirm_pass")]} input={input}/>
 
                     <InputValidation renderContent={this.inputRender} id='r_confirm_pass' name="ComparePassword"
                                      className={'input__field input__field--yoshiko'}
-									 // initialValue="123"
+									 initialValue="123"
                                      label="Confirm Password" type='password'
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20}),
 										 passwordValidation.bind(null, "r_pass")]} input={input}/>
@@ -266,6 +343,7 @@ export class RegisterForm extends React.PureComponent
                                      className={'country-states' + (this.state.States.length ? "" : " states-hidden")}
                                      items={this.state.States}
                                      initLabel="Select state ..."
+                                     afterChange={::this.dropStateChange}
                                      validate={this.state.States.length ? [emptyValidation] : []} input={input}
                                      hint=""/>
 
@@ -273,8 +351,8 @@ export class RegisterForm extends React.PureComponent
 									 className={'input__field input__field--yoshiko js-dateofbirth'}
 									 label="Date of birth" type='text'
 									 afterChange={this.dateBirthChange.bind(this)}
-									 // initialValue="12 Apr 2017"
-									 validate={[emptyValidation, customValidation.bind(null, this.dateBirthCheck)]} input={input}/>
+									 initialValue="12 Apr 1999"
+									 validate={[emptyValidation, customValidation.bind(null, ::this.dateBirthCheck)]} input={input}/>
 
 
                     <div className="agreement">
@@ -283,8 +361,12 @@ export class RegisterForm extends React.PureComponent
                         </InputValidation>
 
                         <InputValidation renderContent={this.chkBoxRender} id='agreement_age' input={input}>
-                            I confirm that I am at least 18 years of age.
+                            I confirm that I am at least {this.state.ageRestrict} years of age.
                         </InputValidation>
+
+                        {this.state.deniedText &&
+                            <div className="denied-text">{this.state.deniedText}</div>
+                        }
 
                         {/*<div className="checkbox_container">
                             <input type="checkbox" id="agreement"/><label htmlFor="agreement">Agree to the <a href="/conditions.html" className="text_decoration">Terms of Use</a> and <a href="#" className="text_decoration">Privacy Notice</a></label>
