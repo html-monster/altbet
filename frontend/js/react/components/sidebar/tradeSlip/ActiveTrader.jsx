@@ -67,25 +67,25 @@ class ActiveTrader extends React.Component {
 		return <div className="active_trader" id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
-			{
-				ABpp.config.currentPage === ABpp.CONSTS.PAGE_MAIN ?
-					<div className="event_title">
-						<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}
-							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>
-							{
-								activeExchange.homeName//JSON.stringify(data) !== '{}' && ${data.Symbol.HomeHandicap}
-							}
-						</div>
-						<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}
-							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, true)}>
-							{
-								activeExchange.awayName// JSON.stringify(data) !== '{}' && ${data.Symbol.AwayHandicap}
-							}
-						</div>
-					</div>
-					:
-					''
-			}
+			{/*{*/}
+				{/*ABpp.config.currentPage === ABpp.CONSTS.PAGE_MAIN ?*/}
+					{/*<div className="event_title">*/}
+						{/*<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}*/}
+							 {/*onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>*/}
+							{/*{*/}
+								{/*activeExchange.homeName//JSON.stringify(data) !== '{}' && ${data.Symbol.HomeHandicap}*/}
+							{/*}*/}
+						{/*</div>*/}
+						{/*<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}*/}
+							 {/*onClick={traderActions.actionOnTabMirrorClick.bind(null, this, true)}>*/}
+							{/*{*/}
+								{/*activeExchange.awayName// JSON.stringify(data) !== '{}' && ${data.Symbol.AwayHandicap}*/}
+							{/*}*/}
+						{/*</div>*/}
+					{/*</div>*/}
+					{/*:*/}
+					{/*''*/}
+			{/*}*/}
 			<table className="info">
 				<tbody>
 					<tr>
