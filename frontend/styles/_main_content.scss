@@ -183,7 +183,7 @@
         font-size: 13px; transition: .4s; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; min-height: 35px; }
     .l-title { width: calc(100% - 110px); position: relative; font-weight: bold;
-      .score { display: inline-block; width: 90px; color: #4ade1a; } // для показа
+      .score { display: inline-block; width: 100px; color: #4ade1a; } // для показа
       //.title{ display: inline-block; width: 330px; } // для показа
       .handicap{ display: inline-block; width: 50px; position: absolute; right: 45px; } // для показа
       .seemore-lnk { color: $color4TextWhite; transition: color .1s; }
