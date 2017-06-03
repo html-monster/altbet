@@ -50,14 +50,14 @@ export class RegisterForm extends React.PureComponent
 
     componentDidMount()
     {
-        if( __DEV__ )
+/*        if( __DEV__ )
         {
             0||console.log( 'emulate here' )
             setTimeout(() =>
                 {$(".log_out .sign_in").click();
                     setTimeout(() => $(".register").click(), 500)
                 }, 700)
-        } // endif
+        }*/ // endif
 
 
         var { onCustomChange } = this.props;
@@ -304,7 +304,7 @@ export class RegisterForm extends React.PureComponent
 
                     <InputValidation renderContent={this.inputRender} id='n_name' name="NickName"
                                      className={'input__field input__field--yoshiko'}
-                                     initialValue="FedoryakaBest"
+                                     // initialValue="FedoryakaBest"
                                      label="User Name" type='text'
                                      validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
                                      hint="User's login allow to use symbols such as: symbols, digits, dot, underscore, dash"/>
@@ -312,7 +312,7 @@ export class RegisterForm extends React.PureComponent
                     <InputValidation renderContent={this.inputRender} id='e_name' name="Email"
                                      className={'input__field input__field--yoshiko'}
                                      label="Email Address" type='text'
-                                     initialValue="Zotaper@yandex.ru"
+                                     // initialValue="Zotaper@yandex.ru"
                                      validate={[emptyValidation, mailValidation, lengthValidation.bind(null, {max: 128})]} input={input}
                                      hint="Specify your valid email. A message with registration
                                         confirmation will be sent at that address. Also that address
@@ -320,14 +320,14 @@ export class RegisterForm extends React.PureComponent
 
                     <InputValidation renderContent={this.inputRender} id='r_pass' name="Password"
                                      className={'input__field input__field--yoshiko'}
-                                     initialValue="123"
+                                     // initialValue="123"
                                      label="Password" type='password'
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20}),
 										 passwordValidation.bind(null, "r_confirm_pass")]} input={input}/>
 
                     <InputValidation renderContent={this.inputRender} id='r_confirm_pass' name="ComparePassword"
                                      className={'input__field input__field--yoshiko'}
-									 initialValue="123"
+									 // initialValue="123"
                                      label="Confirm Password" type='password'
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20}),
 										 passwordValidation.bind(null, "r_pass")]} input={input}/>
@@ -352,7 +352,7 @@ export class RegisterForm extends React.PureComponent
 									 className={'input__field input__field--yoshiko js-dateofbirth'}
 									 label="Date of birth" type='text'
 									 afterChange={this.dateBirthChange.bind(this)}
-									 initialValue="12 Apr 1999"
+									 // initialValue="12 Apr 1999"
 									 validate={[emptyValidation, customValidation.bind(null, ::this.dateBirthCheck)]} input={input}/>
 
 
