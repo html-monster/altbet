@@ -202,18 +202,23 @@ export default class ExchangeItem extends React.Component
 
                             let html = [
 									<span key="0" data-js-title="" style={{paddingRight: 5}}><span className="score" style={{paddingRight: 5}} title="Score">
-									{$homeTotal} : {$awayTotal} </span>
+									<span className="title">Score</span>{$homeTotal} : {$awayTotal} </span>
 									{
 										$classActiveExch ?
-											<a href={ABpp.baseUrl + data.CategoryUrl + "0"} title="See more">{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}</a>
+											<a href={ABpp.baseUrl + data.CategoryUrl + "0"}  className="event_title" title="See more">
+												<span className="title">Market </span>{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}
+											</a>
 											:
-											<span className="title" title="Event title">{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}</span>
+											<span className="event_title" title="Event title">
+												<span className="title">Market </span>{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}
+											</span>
 									}
 									</span>
-                                    , (Symbol.HomeHandicap !== null) ? <span key="1" className="handicap" style={{paddingRight: 5}}
-																			 title="Handicap"> {(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
+                                    , (Symbol.HomeHandicap !== null) ? <span key="1" className="handicap" style={{paddingRight: 5}} title="Handicap">
+										<span className="title">Spread</span> {(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
                                     , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}
-																	title={'Last price' + ($lastPriceClass[0] === 'up' ? ' increased' : 'decreased')}> <i>{}</i>${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
+																	title={'Last price' + ($lastPriceClass[0] === 'up' ? ' increased' : 'decreased')}>
+									<span className="title">Last price </span><i>{}</i><span className="value">${data.Symbol.LastPrice.toFixed(2)}</span></span> : ''];
 
                             	<span className="seemore-lnk">{html}</span>
                             }}

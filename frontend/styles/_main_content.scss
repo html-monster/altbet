@@ -117,7 +117,7 @@
 
 
 // BM: Exchanges (events)
-@mixin visibleAttr { position: static; transition: .5s; /*transition-delay: .3s*/ };
+@mixin visibleAttr { position: static; transition: .5s; }; //transition-delay: .3s
 @mixin hiddAttr { position: absolute };
 .ac-index.co-home {
   .mp-exchanges { display: flex; flex-wrap: wrap; justify-content: space-between; }
@@ -133,6 +133,7 @@
         .seemore-lnk { color: $color4TextBlack;
           a{ color: $color4TextBlack }
         }
+        .title{ color: $color4TextBlack }
       }
       .button-container {
         button.event.empty { background: #8D9095 linear-gradient(to bottom, lighten(#8D9095, 10%), lighten(#54525D, 20%)) } //#8D9095
@@ -161,11 +162,11 @@
         }
         &.opener { @include hiddAttr; visibility: hidden; opacity: 0; transition: .2s; }
       }
-      .l-title{ width: calc(100% - 300px); }
+      //.l-title{ width: calc(100% - 300px); }
       .l-buttons .inner { @include visibleAttr; display: block; visibility: visible; opacity: 1; transition: .4s }
     }
 
-    &.active_nearby .l-title{ width: calc(100% - 300px); }
+    //&.active_nearby .l-title{ width: calc(100% - 300px); }
 
     &>.bg { position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-radius: 6px;
         background: linear-gradient(to bottom, #53515e, #292830); z-index: -1; transition: .4s ease-out;
@@ -184,21 +185,23 @@
     .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 45px 15px 15px; height: 100%;
         font-size: 13px; transition: .4s; }
     .h-symbol { display: flex; justify-content: space-between; align-items: center; min-height: 35px; }
-    .l-title { width: calc(100% - 120px); position: relative; font-weight: bold;
+    .l-title { width: calc(100% - 300px); position: relative; top: -3px; font-weight: bold;
       .score { display: inline-block; width: 100px; color: #4ade1a; } // для показа
-      .title{ transition: 0s; }
-      .handicap{ display: inline-block; width: 50px; position: absolute; right: 45px; } // для показа
-      .seemore-lnk { color: $color4TextWhite; transition: color .1s;
+      .event_title{ display: inline-block; max-width: 450px; transition: 0s; }
+      .handicap{ display: inline-block; width: 50px; position: absolute; right: 70px; } // для показа
+      .seemore-lnk { color: $color4TextWhite; transition: color 0s;
         a{ color: $color4TextWhite }
         a:hover { color: $color-blue; }
       }
-      .last-price { position: absolute; top: -2px; right: 0; white-space: nowrap; // для показа
+      .last-price { position: absolute; top: 0; right: 0; white-space: nowrap; // для показа
         &.down i { display: inline-block; top: 2px; background-position: -309px -308px; }
         &.up i { display: inline-block; top: 0; background-position: -292px -306px; }
-        i { display: none; position: relative; margin-right: -5px; width: 15px; height: 16px; background-size: cover;
+        .value{ display: inline-block; margin-top: -2px; transition: 0s; }
+        i { display: none; position: relative; margin-top: -2px; margin-right: -5px; width: 15px; height: 16px; background-size: cover;
             background: url("#{$pathImage}/sprite.svg") no-repeat; }
             //background: url(../../Images/temp/sprite-01.svg) no-repeat; background-position: 0px 0px; }
       }
+      .title{ display: block; color: $color4TextWhite; }
     }
     .l-buttons {
       .inner { display: none; position: relative; min-width: 281px; text-align: right; visibility: hidden; opacity: 0; //@include hiddAttr;
@@ -241,7 +244,7 @@
         }
       }
 
-      &.opener { @include visibleAttr; visibility: visible; position: absolute; right: 35px; top: calc(50% - 35px/2); width: auto;
+      &.opener { visibility: visible; position: absolute; right: 35px; top: calc(50% - 35px/2); width: auto; //@include visibleAttr;
           opacity: 1; transition: .4s;
         button { padding: 0 10px; color: #333; font-size: 14px; background: linear-gradient(to top, #bdc0cd, #ffffff); font-weight: bold; text-transform: none }
         i { display: inline-block; position: relative; margin-right: 10px; top: 3px; width: 18px; height: 18px;
