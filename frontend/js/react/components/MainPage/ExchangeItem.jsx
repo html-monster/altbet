@@ -200,17 +200,27 @@ export default class ExchangeItem extends React.Component
                 <div className="h-symbol">
                         <h3 className="l-title">{ do {
 
-                            let html = [<span key="0" data-js-title="" style={{paddingRight: 5}}><span className="score" style={{paddingRight: 5}}>{$homeTotal} : {$awayTotal} </span>
-								<span className="title">{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}</span></span>
-                                    , (Symbol.HomeHandicap !== null) ? <span key="1" className="handicap" style={{paddingRight: 5}}> {(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
-                                    , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}> <i>{}</i>${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
-							$classActiveExch ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
-                                : <span className="seemore-lnk">{html}</span>
+                            let html = [
+									<span key="0" data-js-title="" style={{paddingRight: 5}}><span className="score" style={{paddingRight: 5}} title="Score">
+									{$homeTotal} : {$awayTotal} </span>
+									{
+										$classActiveExch ?
+											<a href={ABpp.baseUrl + data.CategoryUrl + "0"} title="See more">{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}</a>
+											:
+											<span className="title" title="Event title">{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}</span>
+									}
+									</span>
+                                    , (Symbol.HomeHandicap !== null) ? <span key="1" className="handicap" style={{paddingRight: 5}}
+																			 title="Handicap"> {(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
+                                    , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}
+																	title={'Last price' + ($lastPriceClass[0] === 'up' ? ' increased' : 'decreased')}> <i>{}</i>${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
+
+                            	<span className="seemore-lnk">{html}</span>
                             }}
                         </h3>
 
                         <div className="l-buttons">
-                                <div className="inner">
+                                <div className="inner animated dur4 mainButtonAnimate">
                                     <ButtonContainer actions={actions} mainContext={mainContext} data={{
                                         type: 'sell',
                                         side: 0,
