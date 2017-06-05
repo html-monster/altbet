@@ -103,11 +103,12 @@ export default class ExchangeItem extends React.Component
 			let coefficient = Math.abs(Symbol.HomeHandicap / $HomeTeamObj.Totals.eppg);
 			spreadTitle = 'Moneyline';
 
-			if(coefficient <= 0.1) spreadValue = `$0.55/$0.45`;
-			else if(coefficient <= 0.15) spreadValue = `$0.65/$0.35`;
-			else if(coefficient <= 0.2) spreadValue = `$0.75/$0.25`;
-			else if(coefficient <= 0.25) spreadValue = `$0.80/$0.20`;
-			else spreadValue = `$0.90/$0.10`;
+			if(coefficient <= 0.05) spreadValue = `$0.70`;
+			else if(coefficient <= 0.1) spreadValue = `$0.75`;
+			else if(coefficient <= 0.15) spreadValue = `$0.80`;
+			else if(coefficient <= 0.2) spreadValue = `$0.85`;
+			else if(coefficient <= 0.25) spreadValue = `$0.90`;
+			else spreadValue = `$0.95`;
 		}
 		else {
         	spreadTitle = 'Spread';

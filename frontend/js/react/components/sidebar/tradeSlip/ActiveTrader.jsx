@@ -283,7 +283,7 @@ class ActiveTrader extends React.Component {
 								<a href="#" className="ReverseAllJs wave">Reverse</a>
 								<div className="confirm_window animated">
 									<div className="container">
-										<span>Do you really want do it?</span>
+										<span>Do you really want Reverse?</span>
 										<div className="button_container">
 											<button className="btn wave yes">Yes</button>
 											<button className="btn wave no">No</button>
@@ -295,7 +295,7 @@ class ActiveTrader extends React.Component {
 								<a href="#" className="CancelAllJs wave">Cancel All</a>
 								<div className="confirm_window animated">
 									<div className="container">
-										<span>Do you really want do it?</span>
+										<span>Do you really want Cancel All?</span>
 										<div className="button_container">
 											<button className="btn wave yes">Yes</button>
 											<button className="btn wave no">No</button>
@@ -307,7 +307,7 @@ class ActiveTrader extends React.Component {
 								<a href="#" className="CloseOutJs wave">Close Out</a>
 								<div className="confirm_window animated">
 									<div className="container">
-										<span>Do you really want do it?</span>
+										<span>Do you really want Close Out?</span>
 										<div className="button_container">
 											<button className="btn wave yes">Yes</button>
 											<button className="btn wave no">No</button>
