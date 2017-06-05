@@ -218,7 +218,7 @@ export default class ExchangeItem extends React.Component
 										<span className="title">Spread</span> {(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
                                     , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}
 																	title={'Last price' + ($lastPriceClass[0] === 'up' ? ' increased' : 'decreased')}>
-									<span className="title">Last price </span><i>{}</i><span className="value">${data.Symbol.LastPrice.toFixed(2)}</span></span> : ''];
+									<span className="title">Last P22rice </span><i>{}</i><span className="value">${data.Symbol.LastPrice.toFixed(2)}</span></span> : ''];
 
                             	<span className="seemore-lnk">{html}</span>
                             }}
