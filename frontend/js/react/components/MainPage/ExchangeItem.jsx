@@ -76,22 +76,43 @@ export default class ExchangeItem extends React.Component
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
         let isExpertMode;
-        let noTeamsClass, $homeTotal, $awayTotal ;//noTeamsWrappClass = "",
+        let noTeamsClass, $homeTotal, $awayTotal, spreadTitle, spreadValue ;//noTeamsWrappClass = "",
 
         // todo: check for no team hardcode
         const $HomeTeamObj = this.data[Symbol.HomeName];
         const $AwayTeamObj = this.data[Symbol.AwayName];
         noTeamsClass = $HomeTeamObj && $AwayTeamObj && $HomeTeamObj.team && $AwayTeamObj.team ? "" : " hidden";
-        if( noTeamsClass ) {
+        if( noTeamsClass )
+        {
             // noTeamsWrappClass = "no_lineups";
             activeTab = ['', " active"];
         }
-        else
-        {
+        else {
             $homeTotal = $HomeTeamObj.Totals.score;
             $awayTotal = $AwayTeamObj.Totals.score;
             // 0||console.log( '$awayTotal', $awayTotal );
         } // endif
+
+		if(Symbol.ResultExchange === 'OU')
+		{
+			spreadTitle = 'Total Points';
+			spreadValue = 'O/U ' + Math.round10(+$HomeTeamObj.Totals.eppg + +$AwayTeamObj.Totals.eppg, -2);
+		}
+		else if(Symbol.ResultExchange === 'ML')
+		{
+			let coefficient = Math.abs(Symbol.HomeHandicap / $HomeTeamObj.Totals.eppg);
+			spreadTitle = 'Moneyline';
+
+			if(coefficient <= 0.1) spreadValue = `$0.55/$0.45`;
+			else if(coefficient <= 0.15) spreadValue = `$0.65/$0.35`;
+			else if(coefficient <= 0.2) spreadValue = `$0.75/$0.25`;
+			else if(coefficient <= 0.25) spreadValue = `$0.80/$0.20`;
+			else spreadValue = `$0.90/$0.10`;
+		}
+		else {
+        	spreadTitle = 'Spread';
+        	spreadValue = Symbol.HomeHandicap;
+		}
 
 
         // mode basic/expert ============== костыль на событии присустсвую 2 класс expert_mode basic_mode =============
@@ -214,11 +235,11 @@ export default class ExchangeItem extends React.Component
 											</span>
 									}
 									</span>
-                                    , (Symbol.HomeHandicap !== null) ? <span key="1" className="handicap" style={{paddingRight: 5}} title="Handicap">
-										<span className="title">Spread</span> {(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
+                                    , (Symbol.HomeHandicap !== null) ? <span key="1" className="handicap" style={{paddingRight: 5}} title={spreadTitle}>
+										<span className="title">{spreadTitle}</span> {spreadValue}</span> : ''
                                     , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}
-																	title={'Last price' + ($lastPriceClass[0] === 'up' ? ' increased' : 'decreased')}>
-									<span className="title">Last P22rice </span><i>{}</i><span className="value">${data.Symbol.LastPrice.toFixed(2)}</span></span> : ''];
+																	title={'Last Price' + ($lastPriceClass[0] === 'up' ? ' increased' : 'decreased')}>
+									<span className="title">Last price </span><i>{}</i><span className="value">${data.Symbol.LastPrice.toFixed(2)}</span></span> : ''];
 
                             	<span className="seemore-lnk">{html}</span>
                             }}
