@@ -190,7 +190,7 @@
     }
     .l-buttons {
       .inner { display: block; position: relative; min-width: 281px; text-align: right;
-          @include md(1600) { min-width: 191px; }
+          @include mdmax(1600) { min-width: 191px; }
       }
     }
 
