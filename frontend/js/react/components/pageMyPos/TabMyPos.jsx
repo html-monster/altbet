@@ -1,7 +1,6 @@
 import React from 'react';
 
 // import {DateLocalization} from '../../models/DateLocalization';
-import {Dialog} from '../../models/Dialog.ts';
 
 
 export class TabMyPos extends React.Component

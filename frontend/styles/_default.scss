@@ -688,7 +688,7 @@ input ~ .info{
     &_full { display: flex; margin-top: auto; width: 90%; height: 90%;
     }
   }
-  &__message { color: #53515e; }
+  &__message { color: $color2About; }
   &__buttons { display: flex; justify-content: center; }
   button { display: block; margin: 15px 5px 0; width: 75px; }
   button.btn1 { background-image: linear-gradient(to bottom, #84d65b, #4dac2e); }

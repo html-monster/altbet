@@ -9,11 +9,15 @@
 
 export class Dialog
 {
+    public static TYPE_DIALOG = 1;
+    public static TYPE_MESSAGE = 2;
+
     private dialogObj;
 
     private options = {
             target: "[data-js-dialog-mp]",  // mount point for html template
             render: false,                  // render after construct
+            type: 1,
             vars: {
                 contentHtml: 'Please, confirm your action',
                 btn1Text: "Yes",
@@ -50,6 +54,8 @@ export class Dialog
         let $wrapper = $("[data-js-dialog-win].template").clone().removeClass("template");
         this.dialogObj = $wrapper;
 
+        // dialog type
+        if (this.options.type == Dialog.TYPE_MESSAGE) $("[data-js-btn2]", $wrapper).hide();
 
 
         // apply dialog vars
@@ -117,7 +123,7 @@ export class Dialog
 
         var $target = $(ee.target);
         $target.prop("disabled", true);
-        0||console.log( 'btn 1 click', 0 );
+        __DEV__&&console.log( 'btn 1 click', 0 );
 
         if (this.options.callbackOK)
         {

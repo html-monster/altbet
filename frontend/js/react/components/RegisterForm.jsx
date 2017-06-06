@@ -188,6 +188,7 @@ export class RegisterForm extends React.PureComponent
         let errorDeny = `Notice: Residents of <var> are NOT eligible to participate in the service for real money.`;
         let duration = Common.dateDiff(this.birthDate.date, Date.now());
         let years = Math.floor(duration.asYears());
+        0||console.log( 'years', years );
 
         if( this.currentCountry.States === null )
         {
@@ -366,8 +367,8 @@ export class RegisterForm extends React.PureComponent
 									 className={'input__field input__field--yoshiko js-dateofbirth'}
 									 label="Date of birth" type='text'
 									 afterChange={this.dateBirthChange.bind(this)}
-									 initialValue={__DEBUG__ ? "12 Apr 1999" : ""}
-									 currVal={this.state.birthDate}
+									 // initialValue={__DEBUG__ ? "12 Apr 1999" : ""}
+									 currVal={this.state.birthDate ? this.state.birthDate : __DEBUG__ ? "12 Apr 1999" : ""}
 									 validate={[emptyValidation, customValidation.bind(null, ::this.dateBirthCheck)]} input={input}/>
 
 {/*

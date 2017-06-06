@@ -48,6 +48,7 @@ module.exports = {
 
     devtool: process.env.NODE_ENV === 'production' ?
         'source-map' :
+        // 'eval',
         'inline-source-map',
 
     resolve: {
