@@ -182,31 +182,15 @@
       }
     }
 
-    .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 45px 15px 15px; height: 100%;
-        font-size: 13px; transition: .4s; }
-    .h-symbol { display: flex; justify-content: space-between; align-items: center; min-height: 35px; }
-    .l-title { width: calc(100% - 300px); position: relative; top: -3px; font-weight: bold;
-      .score { display: inline-block; width: 100px; color: #4ade1a; } // для показа
-      .event_title{ display: inline-block; max-width: 450px; transition: 0s; }
-      .handicap{ display: inline-block; width: 80px; position: absolute; right: 70px; } // для показа
-      .seemore-lnk { color: $color4TextWhite; transition: color 0s;
-        a{ color: $color4TextWhite }
-        a:hover { color: $color-blue; }
-      }
-      .last-price { position: absolute; top: 0; right: 0; white-space: nowrap; // для показа
-        &.down i { display: inline-block; top: 2px; background-position: -309px -308px; }
-        &.up i { display: inline-block; top: 0; background-position: -292px -306px; }
-        .value{ display: inline-block; margin-top: -2px; transition: 0s; }
-        i { display: none; position: relative; margin-top: -2px; margin-right: -5px; width: 15px; height: 16px; background-size: cover;
-            background: url("#{$pathImage}/sprite.svg") no-repeat; }
-            //background: url(../../Images/temp/sprite-01.svg) no-repeat; background-position: 0px 0px; }
-      }
-      .title{ display: block; color: $color4TextWhite; font-size: 11px }
+    .event-symbols { padding: 30px 25px 10px 15px; font-size: 13px; transition: .4s; }
+    .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
+    .l-title { font-weight: bold;
+      .score { color: #4ade1a; }
+      .seemore-lnk { color: $color4TextWhite; transition: none; }
     }
     .l-buttons {
-      .inner { display: none; position: relative; min-width: 281px; text-align: right; visibility: hidden; opacity: 0; //@include hiddAttr;
-            transition: .2s;
-        //@include mdmax(1600) { min-width: 191px; }
+      .inner { display: block; position: relative; min-width: 281px; text-align: right;
+          @include md(1600) { min-width: 191px; }
       }
     }
 

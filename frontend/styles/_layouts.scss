@@ -1,5 +1,4 @@
 html{
-  height: 100%;
   overflow: auto;
   &::-webkit-scrollbar { width: 10px; height: 10px; }
 
@@ -16,7 +15,7 @@ html{
   }
 }
 
-:root{ background: $main-bg; }
+:root{  overflow-x: hidden;  background-color: transparent;  }
 
 body,
 html{
@@ -25,14 +24,93 @@ html{
   //height: 100%;
   font-family: "open_sans_regular", sans-serif;
 }
+
 body {
   height: 100%;
-  background: $main-bg;
   &.no-scroll { overflow: hidden; }
-  &>.wrapper {
+  & > .wrapper {
     height: 100%;
-    min-width: 1350px;
-    @include mdmax(1350){ position: relative; }
+    min-width: 1360px;
+    @include md(1360) { position: relative; }
     //  &.blur{  filter: url('#{$pathImage}/blur.svg#blur') blur(5px);  }
+  }
+}
+
+// Greater than 1920 px
+@media screen and (min-width: 1930px) {
+  body {
+    .bg_cont_left,
+    .bg_cont_riht {
+      position: fixed;
+      width: 50%;
+      height: 100%;
+      background: url(../../Images/first_page/textura.jpg) repeat;
+      span {
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .bg_cont_left {
+      left: 0;
+      span {
+        background: url(../../Images/first_page/more1920_l.png) no-repeat -2px -2px;
+        background-size: 100%;
+        margin-left: -240px;
+      }
+    }
+    .bg_cont_riht {
+      right: 0;
+      span {
+        background: url(../../Images/first_page/more1920_r.png) no-repeat -2px -2px;
+        background-size: 100%;
+      }
+    }
+    .wr_more_1920 {
+      max-width: 1900px;
+      height: 100%;
+      position: fixed;
+      left: calc(50% - 960px);
+      top: 0;
+      background: #211e25;
+      .wrapper {
+        .main_menu, .order {
+          position: absolute;
+        }
+        header {
+          background: linear-gradient(to bottom, #53515e, #292830);
+          .header_info {
+            width: 1900px;
+            margin-left: calc(50% - 960px);
+          }
+        }
+        .content {
+          width: 74.33333%;
+          margin-left: 70px;
+          .wrapper {
+            position: relative;
+            .stattabs {
+              position: absolute;
+              width: 100%;
+              padding: 15px 0;
+              left: 0;
+              top: -15px;
+            }
+          }
+        }
+      }
+      footer {
+        position: absolute !important;
+      }
+    }
+  }
+}
+@media screen and (min-width: 2430px) {
+  body {
+    .bg_cont_left {
+      span {
+        margin-left: -100px;
+      }
+    }
   }
 }
