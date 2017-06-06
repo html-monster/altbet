@@ -42,30 +42,6 @@
 	100% { transform: rotate(1080deg); }
 }
 
-@-o-keyframes spin {
-	0% { -o-transform: rotate(0deg); }
-	50% { -o-transform: rotate(360deg); }
-	100% { -o-transform: rotate(1080deg); }
-}
-
-@-ms-keyframes spin {
-	0% { -ms-transform: rotate(0deg); }
-	50% { -ms-transform: rotate(360deg); }
-	100% { -ms-transform: rotate(1080deg); }
-}
-
-@-webkit-keyframes spin {
-	0% { -webkit-transform: rotate(0deg); }
-	50% { -webkit-transform: rotate(360deg); }
-	100% { -webkit-transform: rotate(1080deg); }
-}
-
-@-moz-keyframes spin {
-	0% { -moz-transform: rotate(0deg); }
-	50% { -moz-transform: rotate(360deg); }
-	100% { -moz-transform: rotate(1080deg); }
-}
-
 @keyframes pulse {
 	0% { background-color: rgba(221,187,0,0.2); }
 	13% { background-color: rgba(221,187,0,0.2); }
@@ -79,83 +55,7 @@
 	100% { background-color: rgba(255,234,119,0.9); }
 }
 
-@-o-keyframes pulse {
-	0% { background-color: rgba(221,187,0,0.2); }
-	13% { background-color: rgba(221,187,0,0.2); }
-	15% { background-color: rgba(255,234,119,0.9); }
-	28% { background-color: rgba(255,234,119,0.9); }
-	30% { background-color: rgba(221,187,0,0.2); }
-	43% { background-color: rgba(221,187,0,0.2); }
-	45% { background-color: rgba(255,234,119,0.9); }
-	70% { background-color: rgba(255,234,119,0.9); }
-	74% { background-color: rgba(221,187,0,0.2); }
-	100% { background-color: rgba(255,234,119,0.9); }
-}
-
-@-ms-keyframes pulse {
-	0% { background-color: rgba(221,187,0,0.2); }
-	13% { background-color: rgba(221,187,0,0.2); }
-	15% { background-color: rgba(255,234,119,0.9); }
-	28% { background-color: rgba(255,234,119,0.9); }
-	30% { background-color: rgba(221,187,0,0.2); }
-	43% { background-color: rgba(221,187,0,0.2); }
-	45% { background-color: rgba(255,234,119,0.9); }
-	70% { background-color: rgba(255,234,119,0.9); }
-	74% { background-color: rgba(221,187,0,0.2); }
-	100% { background-color: rgba(255,234,119,0.9); }
-}
-
-@-webkit-keyframes pulse {
-	0% { background-color: rgba(221,187,0,0.2); }
-	13% { background-color: rgba(221,187,0,0.2); }
-	15% { background-color: rgba(255,234,119,0.9); }
-	28% { background-color: rgba(255,234,119,0.9); }
-	30% { background-color: rgba(221,187,0,0.2); }
-	43% { background-color: rgba(221,187,0,0.2); }
-	45% { background-color: rgba(255,234,119,0.9); }
-	70% { background-color: rgba(255,234,119,0.9); }
-	74% { background-color: rgba(221,187,0,0.2); }
-	100% { background-color: rgba(255,234,119,0.9); }
-}
-
-@-moz-keyframes pulse {
-	0% { background-color: rgba(221,187,0,0.2); }
-	13% { background-color: rgba(221,187,0,0.2); }
-	15% { background-color: rgba(255,234,119,0.9); }
-	28% { background-color: rgba(255,234,119,0.9); }
-	30% { background-color: rgba(221,187,0,0.2); }
-	43% { background-color: rgba(221,187,0,0.2); }
-	45% { background-color: rgba(255,234,119,0.9); }
-	70% { background-color: rgba(255,234,119,0.9); }
-	74% { background-color: rgba(221,187,0,0.2); }
-	100% { background-color: rgba(255,234,119,0.9); }
-}
-
 @keyframes borderPulse {
-	0% { box-shadow: 0 0 0 0 rgb(255,255,255), 0 0 0 1px rgba(221,187,0,0.8); }
-	40% { box-shadow: 0 0 0 1px rgb(255,255,255), 0 0 0 2px rgba(221, 187, 0, 0.8); }
-	80% { box-shadow: 0 0 0 3px #FFF, 0 0 1px 3px rgba(221, 187, 0, 0.8); }
-}
-
-@-o-keyframes borderPulse {
-	0% { box-shadow: 0 0 0 0 rgb(255,255,255), 0 0 0 1px rgba(221,187,0,0.8); }
-	40% { box-shadow: 0 0 0 1px rgb(255,255,255), 0 0 0 2px rgba(221, 187, 0, 0.8); }
-	80% { box-shadow: 0 0 0 3px #FFF, 0 0 1px 3px rgba(221, 187, 0, 0.8); }
-}
-
-@-ms-keyframes borderPulse {
-	0% { box-shadow: 0 0 0 0 rgb(255,255,255), 0 0 0 1px rgba(221,187,0,0.8); }
-	40% { box-shadow: 0 0 0 1px rgb(255,255,255), 0 0 0 2px rgba(221, 187, 0, 0.8); }
-	80% { box-shadow: 0 0 0 3px #FFF, 0 0 1px 3px rgba(221, 187, 0, 0.8); }
-}
-
-@-webkit-keyframes borderPulse {
-	0% { box-shadow: 0 0 0 0 rgb(255,255,255), 0 0 0 1px rgba(221,187,0,0.8); }
-	40% { box-shadow: 0 0 0 1px rgb(255,255,255), 0 0 0 2px rgba(221, 187, 0, 0.8); }
-	80% { box-shadow: 0 0 0 3px #FFF, 0 0 1px 3px rgba(221, 187, 0, 0.8); }
-}
-
-@-moz-keyframes borderPulse {
 	0% { box-shadow: 0 0 0 0 rgb(255,255,255), 0 0 0 1px rgba(221,187,0,0.8); }
 	40% { box-shadow: 0 0 0 1px rgb(255,255,255), 0 0 0 2px rgba(221, 187, 0, 0.8); }
 	80% { box-shadow: 0 0 0 3px #FFF, 0 0 1px 3px rgba(221, 187, 0, 0.8); }
