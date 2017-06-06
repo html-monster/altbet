@@ -178,7 +178,6 @@ export default class ExchangeItem extends React.Component
             StartDate: Symbol.StartDate ? date : null, // moment obj
         };
 
-
         let $lastPriceClass = data.Symbol.PriceChangeDirection === -1 ? ["down", "up"] : data.Symbol.PriceChangeDirection === 1 ? ["up", "down"] : ["", ""];
 /*
         var exchangeSideClickFn = actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
@@ -224,7 +223,8 @@ export default class ExchangeItem extends React.Component
 
                             let html = [
 									<span key="0" data-js-title="" style={{paddingRight: 5}}><span className="score" style={{paddingRight: 5}} title="Score">
-									<span className="title">Score</span>{$homeTotal} : {$awayTotal} </span>
+									<span className="title">Score</span>
+										<span className={spreadTitle === 'Spread' && +$homeTotal + spreadValue < $awayTotal ? 'low' : ''}>{$homeTotal}</span> : {$awayTotal} </span>
 									{
 										$classActiveExch ?
 											<a href={ABpp.baseUrl + data.CategoryUrl + "0"}  className="event_title" title="See more">
