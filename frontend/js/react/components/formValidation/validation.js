@@ -165,6 +165,17 @@ export const netellerSecureId = (value) => {
 };
 
 
+/**
+ * custom checker
+ */
+export const customValidation = (customFunc, value) =>
+{
+	if (customFunc) return customFunc({value});
+
+	return false;
+};
+
+
 
 // злоебучий адский валидатор от Лёхи, Я его люблю
 export const orderForm = function (context) {

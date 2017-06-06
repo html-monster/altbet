@@ -201,7 +201,7 @@
             background: url("#{$pathImage}/sprite.svg") no-repeat; }
             //background: url(../../Images/temp/sprite-01.svg) no-repeat; background-position: 0px 0px; }
       }
-      .title{ display: block; color: $color4TextWhite; }
+      .title{ display: block; color: $color4TextWhite; font-size: 11px }
     }
     .l-buttons {
       .inner { display: none; position: relative; min-width: 281px; text-align: right; visibility: hidden; opacity: 0; //@include hiddAttr;

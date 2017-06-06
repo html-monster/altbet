@@ -614,10 +614,11 @@ export class Chart
             var container = $(this).attr('id');
 
 
-            __LDEV__ && (self.chartData.tooltip.enabled = true);
+            // __LDEV__ && (self.chartData.tooltip.enabled = true);
 
 
 
+/*
             var  tempOoptions = {
                 chart: {
                     type: 'spline',
@@ -701,6 +702,7 @@ export class Chart
 
                 }]
             };
+*/
 
             // render chart
             if( __DEV__ )
@@ -714,10 +716,7 @@ export class Chart
 
             this.chartContainer = $('<div class="chart" id="DiChartObj"></div>');
             this.chartContainer.appendTo('#' + container);
-            // this.chartContainer = this.chartContainer.highcharts(tempOoptions);
             this.chartContainer = this.chartContainer.highcharts(self.chartData);
-            // Highcharts.chart('DiChartObj', chartsOptions);
-            // Highcharts.chart('DiChartObj', tempOoptions);
 
             // start gen virtual point
             self.Generator.start(self);
