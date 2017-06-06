@@ -17,12 +17,13 @@ export default class NewOrder extends React.Component{
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
 		};
+		// console.log('data:', data);
 
 		return <div className="order_content new animated">
 			<div className="order-title">
 				<h3>{data.EventTitle}</h3>
 				<span className="close" onClick={actions.actionOnDeleteOrder.bind(null, data)}><span>{}</span></span>
-				<strong className="current-order up">Entries: <span>{data.Positions}</span></strong>
+				<strong className="current-order up">Units: <span>{data.Positions}</span></strong>
 			</div>
 			{
 				data.Orders.map((item) =>
@@ -48,12 +49,13 @@ export default class NewOrder extends React.Component{
 							id={`${symbol}_${item.Side}_${item.isMirror}`}
 							limit={item.Limit}
 							side={item.Side ? 'sell' : 'buy'}
+							ask={data.Ask}
+							bid={data.Bid}
 							price={item.Price}
 							quantity={item.Volume}
 							isMirror={item.isMirror}
 							symbol={symbol}
 							newOrder={true}
-							orderMode={'basic'}
 							showDeleteButton={true}
 							onSubmit={actions.actionOnAjaxSend.bind(null, actions, {...item, formUrl: formData.url})}
 							//onDelete={actions.actionOnDeleteOrder.bind(null, item)}

@@ -5,7 +5,7 @@ import {Common} from './../../common/Common';
 import AnimateOnUpdate from '../Animation';
 
 
-export default class ButtonContainer extends React.Component
+export default class ButtonContainer extends React.PureComponent
 {
     render()
     {
@@ -15,6 +15,7 @@ export default class ButtonContainer extends React.Component
         let price, className, emptyBtnName, mirrorClass, btnsPreviewClass = "", side1 = 0, side2 = 1;
         let debug = "";
 
+        // console.log('props:', this.props);
 
         if( data.ismirror )
         {
@@ -40,9 +41,9 @@ export default class ButtonContainer extends React.Component
             emptyBtnName = 'trade';
 
             // check for bets
-            if( items1 && !items2 ) btnsPreviewClass = "onebtn";
-            else if (!items1 && !items2) btnsPreviewClass = "nobets";
-            else btnsPreviewClass = "hideall";
+            // if( items1 && !items2 ) btnsPreviewClass = "onebtn";
+            if (!items1 && !items2) btnsPreviewClass = "nobets";
+            // else btnsPreviewClass = "hideall";
         }
         else
         {
@@ -50,8 +51,8 @@ export default class ButtonContainer extends React.Component
             emptyBtnName = 'trade';
 
             // check for bets
-            if( items2 ) btnsPreviewClass = "onebtn";
-            else if( items1 && !items2 ) btnsPreviewClass = "hideall";
+            // if( items2 ) btnsPreviewClass = "onebtn";
+            // else if( items1 && !items2 ) btnsPreviewClass = "hideall";
             if( !items1 && !items2 ) btnsPreviewClass = "nobets";
         } // endif
 
@@ -65,6 +66,7 @@ export default class ButtonContainer extends React.Component
                     {
                         let SummaryPositionPrice = item.SummaryPositionPrice.slice();
                         // data.ismirror && SummaryPositionPrice.reverse();
+                        if (data.type === 'sell' && !data.ismirror || data.type !== 'sell' && data.ismirror) SummaryPositionPrice.reverse();
 
                         let html = [];
 
@@ -73,6 +75,7 @@ export default class ButtonContainer extends React.Component
                             for( let jj = 0, ii = 0, countii = 3; jj < countii; jj++ )
                             {
                                 ii = data.type === 'sell' ? countii - (jj + 1) : jj;
+                                // ii = jj;
                                 let item2 = SummaryPositionPrice[ii];
                                 if( item2 )
                                 {
@@ -94,7 +97,7 @@ export default class ButtonContainer extends React.Component
                                                     {
                                                         PosPrice: item.SummaryPositionPrice,
                                                         ismirror: data.ismirror,
-                                                        price: price,
+                                                        price: item2.Price,
                                                         quantity: item2.Quantity,
                                                         type: data.type === "sell" ? 1 : 2,
                                                         data: data,
@@ -115,12 +118,9 @@ export default class ButtonContainer extends React.Component
                                             </button>
                                         </div>);
                                 } // endif
-
-                            // html = SummaryPositionPrice.map((item2) =>
-                            // );
                             } // endfor
                         }
-                        else html = '';
+                        else html = [];
                         return html;
                     })
                     :
@@ -136,8 +136,7 @@ export default class ButtonContainer extends React.Component
                                         type: data.type === "sell" ? 1 : 2,
                                         data: data,
                                     })}
-                                    //style={data.type === "sell" && !data.Orders.length ? {display: 'none'} :  data.type === "buy" && !data.Orders.length ? {marginLeft: -24} : {} }
-                                    /*disabled={isTraiderOn}*/ title="Click to place entry">
+                                    title="Click to place entry">
                                 <span className="price empty">{emptyBtnName}</span>
                                 <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
                             </button>
@@ -166,24 +165,6 @@ export default class ButtonContainer extends React.Component
                     })
                 )
             }
-{/*                                @if (Model.Orders.Where(x => x.Side == AltBet.Exchange.Side.Buy && x.SummaryPositionPrice.Sum(y => y.Quantity) != 0).Any())
-            {
-                foreach (var spsItem in Model.Orders.Single(x => x.Side == AltBet.Exchange.Side.Buy).SummaryPositionPrice.Where(x => x.Quantity != 0).ToList())
-                {
-                    <button className="event animated sell real not-sort">
-                        <span className="price">@((Session["Mode"] != null) ? ((bool)Session["Mode"]) ? string.Format("${0}", spsItem.Price.ToString("0.00")) : spsItem.Price.ToString("0.00") : string.Format("${0}", spsItem.Price.ToString("0.00")))</span>
-                        <span className="volume">@spsItem.Quantity</span>
-                        <div className="symbolName" style="display: none">data.Symbol</div>
-                    </button>
-                }
-            }
-            else
-            {
-                <button className="event animated empty sell real not-sort">
-                    <span className="price empty">OFFER</span>
-                    <div className="symbolName" style="display: none">data.Symbol</div>
-                </button>
-            }*/}
             {/*{debug ? <span style={{position: "absolute", zIndex: "1", left: "0", top: "0"}}>{debug}</span>:""}*/}
         </div>;
     }

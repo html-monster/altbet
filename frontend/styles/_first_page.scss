@@ -1,12 +1,14 @@
 header.first_page {
   background: none;
+  @include md(1360){ min-width: inherit; }
   .header_info {
     justify-content: space-between;
     float: none;
     width: 1200px;
     margin: 0 auto;
     background: transparent;
-    border-bottom: 1px solid transparentize(#ffffff, 0.9);
+    //border-bottom: 1px solid transparentize(#ffffff, 0.9);
+    @include md(1300){ width: auto; }
   }
   .header_right {
     border: none;
@@ -65,9 +67,7 @@ header.first_page {
   .user {
     padding-left: 0;
     padding-right: 0;
-    &:before {
-      display: none;
-    }
+    &:before, &:after { display: none; }
     .log_out a {
       width: auto;
       padding-right: 0;

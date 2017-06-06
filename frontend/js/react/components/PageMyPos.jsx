@@ -68,9 +68,9 @@ class PageMyPos extends BaseController //React.Component
 
         return <div className="my_position">
                 <div className="container">
-                    <div className="tabs">
-                        <span className="tab">Open entries</span>
-                        <span className="tab active">My entries</span>
+                    <div className="tabs tabs_left">
+                        <span className="tab">Open Games</span>
+                        <span className="tab active">My Games</span>
                         <span className="tab">History</span>
                     </div>
 

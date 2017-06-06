@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
-import AnimateOnUpdateChild from './animation/animationChild.jsx';
+import AnimateOnUpdateChild from './animation/AnimationChild.jsx';
 
 export default class AnimateOnUpdate extends ReactCSSTransitionGroup
 {

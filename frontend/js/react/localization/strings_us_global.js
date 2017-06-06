@@ -9,20 +9,18 @@
 class Strings
 {
     buy = 'BID';
-    sell = 'OFFER';
     ask = 'ASK';
 
     TradeSlip = 'Trade Slip';
     YourOrders = 'Your Orders';
 
     Symbol = 'Symbol';
-    Quantity = 'Quantity';
+    Quantity = 'Entries';
     Fees = 'Fees';
     Bought = 'Long';
     Sold = 'Short';
     Profit = 'Profit';
-    // Amount = 'Amount';
-    // Total = 'Sum';
-    MaxAltBetFees = 'Max fees for this order';
-    // TotalCost = 'Total Cost';
+    WinLoss = "Win/Loss";
+    AtStake = "At Stake";
+    Balance = "Balance";
 }

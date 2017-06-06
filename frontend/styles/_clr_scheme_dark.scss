@@ -57,11 +57,11 @@ $warning_message_arrow: #3a3943;
 	}
 }
 
-$breadcrumbs-bg: linear-gradient(to bottom, #53515e, #292830);
-$breadcrumbs-color: transparentize(#ffffff, 0.5);
+//$breadcrumbs-bg: linear-gradient(to bottom, #53515e, #292830);
+//$breadcrumbs-color: transparentize(#ffffff, 0.5);
 
 @mixin chartEP{
-	svg > text:last-of-type{  visibility: hidden;  }
+	/*svg > text:last-of-type{  visibility: hidden;  }
 	//.highcharts-container{
 	rect.highcharts-background{
 		fill: transparent;
@@ -74,7 +74,7 @@ $breadcrumbs-color: transparentize(#ffffff, 0.5);
 		fill: transparentize(#ffffff, 0.6) !important;
 	}
 	.highcharts-tooltip path { fill: #53515e; }
-	//.highcharts-input-group { display: none; }
+	//.highcharts-input-group { display: none; }*/
 }
 
 @mixin chartMP{
@@ -104,7 +104,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
 
 
 @import "color_scheme/main_page_dark";
-@import "color_scheme/ordred_sidebar_dark";
+@import "color_scheme/_order_sidebar_dark";
 @import "color_scheme/trader_dark";
 @import "color_scheme/sign_in_dark";
 @import "color_scheme/registration_dark";

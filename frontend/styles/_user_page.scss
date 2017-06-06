@@ -1,6 +1,6 @@
 .wrapper_user_page {
   display: flex;
-  padding-left: 15%;
+  padding-left: 70px;
   padding-top: 80px;
   padding-right: 10px;
   color: $main-color;
@@ -69,7 +69,8 @@
   }
   .input--yoshiko .validation-summary-errors{  max-width: 265px;  }
   & > .tab_content {
-    width: 960px;
+    width: 63%;
+    min-width: 960px;
     padding: 30px;
     border-radius: 4px;
     background-image: $sign_in_bg;
@@ -135,7 +136,7 @@
   .funds_tab {
     margin-top: 20px;
     .tabs {
-      span.tab {
+      .tab {
         display: inline-block;
         padding: 8px 15px;
         margin-right: 4px;
@@ -363,25 +364,27 @@
           margin-bottom: 15px;
         }
         .tab{
-          width: 210px;
+          width: 25%;
+          min-width: 210px;
           height: 50px;
-          padding-right: 10px;
+          padding: 0;
           text-align: center;
           position: relative;
           @include user_tab_border;
           &.active{  background: $main_page_tab_bg; border: 1px solid $color-max; }
           span{
             display: block;
-            width: 100%;
+            margin: 0 auto;
+            width: 210px;
             height: 30px;
             background: url("#{$pathImage}/payment_logos_sprite.png") no-repeat;
             background-size: 150px;
           }
-          &.Skrill span{  background-position: 44px -48px;  }
-          &.Neteller span{  background-position: 13px -1px;  }
+          &.Skrill span{  background-position: 58px -48px;  }
+          &.Neteller span{  background-position: 29px -1px;  }
           //&.Ecopayz span{  background-position: 10px -123px;  }
-          &.VisaMC span{  background-position: 27px -92px;  }
-          &.Bitpay span{  background-position: 20px -142px;  }
+          &.VisaMC span{  background-position: 41px -92px;  }
+          &.Bitpay span{  background-position: 37px -142px;  }
           //span{
           //  display: block;
           //  width: 16px;
@@ -415,6 +418,7 @@
         }
         i.wave{
           width: calc(100% - 10px);
+          max-width: 440px;
           margin-top: 27px;
         }
         label{
@@ -520,9 +524,7 @@
         border-bottom: 1px solid $user_page_tr_separate;
         &:last-of-type{  border-bottom: none;  }
         //&:first-of-type{  border-bottom: 1px solid $user_page_tr_separate;  }
-        &.empty{
-          background: linear-gradient(to bottom, transparentize(#bfc5bc, 0.9), transparentize(#80857d, 0.9));
-        }
+        &.empty{ background: linear-gradient(to bottom, transparentize(#bfc5bc, 0.9), transparentize(#80857d, 0.9)); }
         &.Withdraw{
           background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));
           td.amount{  color: #ef4d22;  }
@@ -572,7 +574,7 @@
         &.VisaSkrill{  background-position: -6px -92px;  }
         &.Skrill{  background-position: -5px -48px;  }
         &.Neteller{  background-position: -4px -1px;  }
-        &.BitpaySkrill{  background-position: -6px -143px;  }
+        &.BitPaySkrill{  background-position: -6px -143px;  }
         //&.EcoPayz{  background-position: -22px -132px;  }
       }
       .csv{  display: inline-block; margin: 15px 0;  }
@@ -587,16 +589,6 @@
       display: inline-block;
       width: 100%;
       li{  height: 22px;  }
-      .sms_action{
-        margin-top: 20px;
-        display: none;
-        a{
-          color: #e4e4e4;
-          &:hover{
-            color: #3498da;
-          }
-        }
-      }
 			label{
 				padding-left: 325px;
 				position: relative;

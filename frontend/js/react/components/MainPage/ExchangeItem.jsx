@@ -3,7 +3,8 @@ import React from 'react';
 import ButtonContainer from './ButtonContainer';
 import {DateLocalization} from './../../models/DateLocalization';
 import {LineupPage} from './LineupPage';
-import {Common} from './../../common/Common';
+import Chart from './Chart';
+// import {Common} from './../../common/Common';
 
 
 export default class ExchangeItem extends React.Component
@@ -13,35 +14,89 @@ export default class ExchangeItem extends React.Component
         super(props);
         // __DEV__&&console.debug( 'ExchangeItem.props.data', this.props.data );
 
-        this.state = {isLPOpen: false, activeTab: [" active", ""]};
-
         // эмуляция времени игроков
         this.data = gLineupPageData;
+
+        this.state = {
+            activeTab: (this.data[props.data.Symbol.HomeName] && this.data[props.data.Symbol.AwayName] &&
+                        this.data[props.data.Symbol.HomeName].team && this.data[props.data.Symbol.AwayName].team) ?
+                [" active", ""] : ["", " active"],
+			chart: null,
+            isLPOpen: false,
+        };
     }
 
-    componentWillUpdate(newProps)
+    componentWillUpdate(nextProps, nextState)
     {
+		// if(nextProps.data.currentExchange === nextProps.data.Symbol.Exchange && nextState.activeTab[1] && nextState.isLPOpen)
+		// {
+		// 	if(nextProps.chartData && !nextState.chart)
+		// 	{
+		// 		nextState.chart = new Chart(this.refs.chartContainer, nextProps.chartData);
+		// 		console.log('this.state.chart:', nextProps.data.Symbol.Exchange, nextState.chart);
+		// 	}
+		// 	else if(nextState.chart) nextState.chart.updateChart(nextProps.chartData);
+		// 	nextState.olol = 'ollol';
+		// }
+
         // if not active -> close
-        if( newProps.data.currentExchange !== newProps.data.Symbol.Exchange && this.state.isLPOpen ) this._lupClose();
+        if(nextProps.data.currentExchange !== nextProps.data.Symbol.Exchange && this.state.isLPOpen && nextState.isLPOpen)
+        {
+            //chart socket unsubscribe
+            if(nextProps.data.currentExchange !== nextProps.data.chartSubscribing) this._chartSubscribing(false);
+            //close open lineup
+            this._onLPOpenCloseClick(true);
+        }
     }
+
+    componentDidUpdate()
+	{
+		let currentProps = this.props;
+		let currentState = this.state;
+
+		if(currentProps.data.currentExchange === currentProps.data.Symbol.Exchange && currentState.activeTab[1] && currentState.isLPOpen)
+		{
+			if(currentProps.chartData && !currentState.chart)
+			{
+				currentState.chart = new Chart(this.refs.chartContainer, currentProps.chartData);
+				this.setState(currentState);
+				// console.log('this.state.chart:', currentProps.data.Symbol.Exchange, currentState.chart);
+			}
+			else if(currentState.chart) currentState.chart.updateChart(currentProps.chartData);
+		}
+	}
 
 
     render()
     {
-        const { actions, data, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange }, mainContext, setCurrentExchangeFn } = this.props;
-        let { isLPOpen, activeTab } = this.state;
-        // 0||console.log( 'activeExchange', activeExchange, currentExchange );
+        const { actions, chartData, data, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange }, mainContext, setCurrentExchangeFn } = this.props;
+        let { activeTab, chart, isLPOpen,  } = this.state;
+        // console.log('this.props:', this.props);
+        // if(chart) console.log( 'chart', Symbol.Exchange, chart );
         const symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
         let $DateLocalization = new DateLocalization();
         let isExpertMode;
-        let noTeamsClass, noTeamsWrappClass = "";
+        let noTeamsClass, noTeamsWrappClass = "", $homeTotal, $awayTotal ;
 
         // todo: check for no team hardcode
-        noTeamsClass = this.data[Symbol.HomeName] && this.data[Symbol.AwayName] && this.data[Symbol.HomeName].team && this.data[Symbol.AwayName].team ? "" : " hidden";
-        if( noTeamsClass ) { noTeamsWrappClass = "no_lineups"; activeTab = ['', " active"];}
+        const $HomeTeamObj = this.data[Symbol.HomeName];
+        const $AwayTeamObj = this.data[Symbol.AwayName];
+        noTeamsClass = $HomeTeamObj && $AwayTeamObj && $HomeTeamObj.team && $AwayTeamObj.team ? "" : " hidden";
+        if( noTeamsClass ) {
+            noTeamsWrappClass = "no_lineups";
+            activeTab = ['', " active"];
+        }
+        else
+        {
+            $homeTotal = $HomeTeamObj.Totals.score;
+            $awayTotal = $AwayTeamObj.Totals.score;
+            // 0||console.log( '$awayTotal', $awayTotal );
+        } // endif
 
-        // mode basic/expert
-        isExpertMode = currentExchange === data.Symbol.Exchange || !isBasicMode;
+
+        // mode basic/expert ============== костыль на событии присустсвую 2 класс expert_mode basic_mode =============
+        isExpertMode = currentExchange === data.Symbol.Exchange ||
+            currentExchange === "" && isTraiderOn && activeExchange.name === data.Symbol.Exchange || !isBasicMode;
         const expModeClass = isExpertMode ? 'expert-mode' : '';
 
 
@@ -59,34 +114,50 @@ export default class ExchangeItem extends React.Component
                 Exchange : data.Symbol.Exchange,
                 Name : data.Symbol.Name,
                 Currency : data.Symbol.Currency,
+				Bid : data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid,
+				Ask : data.Symbol.LastAsk === 1 ? null : data.Symbol.LastAsk ,
             }
         };
 
+        //lineupContainer height
+		let height;
+		if(this.refs.lineupContainer)
+        {
+			height = $(this.refs.lineupContainer.refs.container).height();
+			height = height > 400 ? height : 400;
+        }
+        else
+        {
+            height = 400;
+        }
 
         // activate current exchange global
         let $classActive = '', $classActiveNM = '', $classActiveM = '';
         if( data.activeExchange.name === data.Symbol.Exchange )
         {
             $classActive = ' active';
-            if( !data.activeExchange.isMirror ) $classActiveNM = ' active';
-            else $classActiveM = ' active';
+            // if( !data.activeExchange.isMirror ) $classActiveNM = ' active';
+            // else $classActiveM = ' active';
         } // endif
 
 
         // activate local curr. exchange
         let $classActiveExch = "";
         // if( currentExchange === data.Symbol.Exchange ) $classActiveExch = ' active-exch'; // endif
+        // console.log('currentExchange:', currentExchange);
+        // console.log('data.Symbol.Exchange:', data.Symbol.Exchange);
         if( currentExchange === data.Symbol.Exchange || currentExchange === "" && isTraiderOn && activeExchange.name === data.Symbol.Exchange ) $classActiveExch = ' active-exch'; // endif
 
 
         // exdata for lineup
-        var date = $DateLocalization.fromSharp(Symbol.StartDate, 0, {TZOffset: false});
+        let date = $DateLocalization.fromSharp(Symbol.StartDate, 0, {TZOffset: false});
         const exdata = {HomeAlias: Symbol.HomeAlias,
             AwayAlias: Symbol.AwayAlias,
             StartDate: Symbol.StartDate ? date : null, // moment obj
         };
 
 
+        let $lastPriceClass = data.Symbol.PriceChangeDirection === -1 ? ["down", "up"] : data.Symbol.PriceChangeDirection === 1 ? ["up", "down"] : ["", ""];
 /*
         var exchangeSideClickFn = actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
                         isMirror: false,
@@ -97,17 +168,21 @@ export default class ExchangeItem extends React.Component
         // 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
 
         return (
-            <div className={`h-event ${noTeamsWrappClass} categoryFilterJs animated fadeIn ${expModeClass}` + (isBasicMode ? " basic_mode_js basic_mode" : "") + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")}
+            <div className={`h-event ${noTeamsWrappClass} categoryFilterJs animated fadeIn ${expModeClass}` + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "")} //+ (isBasicMode ? " basic_mode_js basic_mode" : "")
                 onClick={() =>
                 {
-                    setCurrentExchangeFn(Symbol.Exchange);
+                	// if(this.props.data.currentExchange !== this.props.data.Symbol.Exchange)
+					// {
+						setCurrentExchangeFn(Symbol.Exchange);
 
-                    //ABpp.config.tradeOn &&
-                    actions.exchangeSideClick({name: Symbol.Exchange,
-                        isMirror: false,
-                        title: [Symbol.HomeName, Symbol.AwayName],
-                        symbol: symbol,
-                    })
+						//ABpp.config.tradeOn &&
+						actions.exchangeSideClick({name: Symbol.Exchange,
+							isMirror: false,
+							title: [Symbol.HomeName, Symbol.AwayName],
+							symbol: symbol,
+						})
+
+					// }
                 }}
                 id={symbol} data-js-hevent=""
             >
@@ -115,7 +190,7 @@ export default class ExchangeItem extends React.Component
 
                 <div className={"event-date " + data.CategoryIcon}>
                     <span className="date" title={Symbol.Exchange}>
-                        {(date = date.unixToLocalDate({format: 'DD MMM Y'})) ? date : ''}
+                        {(date = date.unixToLocalDate({format: 'DD MMM Y h:mm A'})) ? date : ''}
                         {/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>
                 </div>
@@ -123,40 +198,46 @@ export default class ExchangeItem extends React.Component
                 <div className="event-symbols">
                 <div className="h-symbol">
                         <h3 className="l-title">{ do {
-                                let html = [<span key="0" data-js-title=""><span className="score">{this.data[Symbol.HomeName].Totals.score}&nbsp;&nbsp;</span> {Symbol.HomeName}</span>
+
+                            let html = [<span key="0" data-js-title=""><span className="score">{$homeTotal}&nbsp;&nbsp;</span> {Symbol.HomeName}</span>
                                     , (Symbol.HomeHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.HomeHandicap > 0 ? " +" : " ") + Symbol.HomeHandicap}</span> : ''
-                                    , data.Symbol.LastPrice ? <span>&nbsp;&nbsp;${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
-                                isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
+                                    , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}>&nbsp;&nbsp;<i></i>${data.Symbol.LastPrice.toFixed(2)}</span> : ''];
+							$classActiveExch ? <a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="seemore-lnk" title="see more">{html}</a>
                                 : <span className="seemore-lnk">{html}</span>
                             }}
                         </h3>
 
                         <div className="l-buttons">
-                            <div className="inner">
-                                <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                                    type: 'sell',
-                                    side: 0,
-                                    ismirror: false,
-                                    Orders: data.Orders,
-                                    ...commProps
-                                }}/>
-                                <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                                    type: 'buy',
-                                    side: 1,
-                                    ismirror: false,
-                                    symbolName: symbol,
-                                    Orders: data.Orders,
-                                    ...commProps
-                                }}/>
-                            </div>
+                                <div className="inner">
+                                    <ButtonContainer actions={actions} mainContext={mainContext} data={{
+                                        type: 'sell',
+                                        side: 0,
+                                        ismirror: false,
+                                        Orders: data.Orders,
+                                        ...commProps
+                                    }}/>
+                                    <ButtonContainer actions={actions} mainContext={mainContext} data={{
+                                        type: 'buy',
+                                        side: 1,
+                                        ismirror: false,
+                                        symbolName: symbol,
+                                        Orders: data.Orders,
+                                        ...commProps
+                                    }}/>
+                                </div>
+                                <div className={`button-container opener`}>
+                                    <div className="button">
+                                        <button className={`event`}><i></i>Trade</button>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                     <div className="h-symbol">
                         <h3 className="l-title">{ do {
-                                let html = [<span key="0" data-js-title><span className="score">{this.data[Symbol.AwayName].Totals.score}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>
+                                let html = [<span key="0" data-js-title><span className="score">{$awayTotal}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>
                                     , (Symbol.AwayHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap}</span> : ''
-                                    , data.Symbol.LastPrice ? <span>&nbsp;&nbsp;${(1 - data.Symbol.LastPrice).toFixed(2)}</span> : ""];
-                                isExpertMode ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>
+                                    , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[1]}`}>&nbsp;&nbsp;<i></i>${(1 - data.Symbol.LastPrice).toFixed(2)}</span> : ""];
+							$classActiveExch ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>
                                 : <span className="seemore-lnk">{html}</span>
                             }}
                         </h3>
@@ -217,13 +298,16 @@ export default class ExchangeItem extends React.Component
 							</div>
 
                             <div className={`lpnc_tabs ${isLPOpen ? "lpnc_tabs__opened" : ""}`}>
-                                <div className={`lpnc_tabs__tab lpnc_tabs__tab_1 ${noTeamsClass}` + activeTab[0]} title="Show teams info" onClick={this._onLPTabClick.bind(this, 0)}>Lineups</div>
-                                <div className={`lpnc_tabs__tab lpnc_tabs__tab_2 ${noTeamsClass}` + activeTab[1]} title="Show chart info" onClick={this._onLPTabClick.bind(this, 1)}>Chart</div>
+                                <button className={`lpnc_tabs__tab lpnc_tabs__tab_1 ${noTeamsClass}` + activeTab[0]} title="Show teams info"
+                                     onClick={this._onLPTabClick.bind(this, 0)}>Lineups</button>
+                                <button className={`lpnc_tabs__tab lpnc_tabs__tab_2 ${noTeamsClass}` + activeTab[1]} title="Show chart info"
+                                     onClick={this._onLPTabClick.bind(this, 1)}>Chart</button>
                             </div>
-                            <button ref="LPOpenBtn" className="show-plnc" data-js-lineup="" title="Show chart" onClick={::this._onLPOpenCloseClick}>{}</button>
+                            <button ref="LPOpenBtn" className={'show-plnc' + (isLPOpen ? ' active' : '')} data-js-lineup="" title="Show chart"
+                                    onClick={::this._onLPOpenCloseClick}>{}</button>
                         </div>
 
-                        <div className="h-lup" data-js-hlup="">
+                        <div className="h-lup" data-js-hlup="" style={isLPOpen ? {height: height + 30} : {height: 0}}>
 {/*
                             <div className={`tabs h-lup__tabs ${isLPOpen ? "h-lup__tabs__opened" : ""}`}>
                                 <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
@@ -232,14 +316,17 @@ export default class ExchangeItem extends React.Component
 */}
                             <div className="h-lup__tab_content tab_content">
                                 { noTeamsClass ? <div className="h-lup__tab_item tab_item">{}</div>
-                                    : <LineupPage className={"h-lup__tab_item tab_item" + activeTab[0]} exdata={exdata} data={this.data} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName} />
+                                    : <LineupPage className={"h-lup__tab_item h-lup__tab1_item tab_item" + activeTab[0]} exdata={exdata}
+                                                  data={this.data} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName}
+                                                  ref="lineupContainer"/>
                                 }
 
-                                <div className={"h-lup__tab_item tab_item loading highcharts-tab" + activeTab[1]} id={"container_" + symbol} data-js-highchart="" ref={'chartContainer'}>{}</div>
+                                <div className={"h-lup__tab_item tab_item highcharts-tab" + (chart ? '' : ' loading') + activeTab[1]}
+									 id={"container_" + symbol} data-js-highchart="" ref={'chartContainer'}>{}</div>
                                 {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                             </div>
                         </div>
-                        <div className="bg" data-js-bg="">{}</div>
+                        <div className="bg" data-js-bg="" style={isLPOpen ? {bottom: -1 * (height + 40)} : {bottom: 0}}>{}</div>
 
                 {/*
                  <div className="table not-sort wave waves-effect waves-button"> id="exchange_table"
@@ -269,35 +356,21 @@ export default class ExchangeItem extends React.Component
     }
 
 
-    /**
-     * @private
-     */
-    _onLPTabClick(index)
+	/**
+     * On lineup or chart tab click
+	 * @param index number - index of active tab
+	 * @private
+	 */
+	_onLPTabClick(index)
     {
-        var activeTab = ["", ""];
+        let activeTab = ["", ""];
 
         activeTab[index] = " active";
 
-        var newStates = {...this.state, activeTab};
+        let newStates = {...this.state, isLPOpen: true, activeTab};
         this.setState(newStates);
 
-        if(index)
-        {
-            for( let val of mainChartController.charts  )
-            {
-                if(val.renderTo.id === this.refs.chartContainer.id)
-                {
-                    let containerWidth = $(this.refs.chartContainer).width();
-                    let chart = $(val.container);
-
-                    if(chart.width() > containerWidth) setTimeout(() => val.reflow(), 400);
-
-
-                    // 0||console.log( 'val.renderTo.id', val.renderTo.id );
-                    // setTimeout(() => val.reflow(), 2000);
-                }
-            } // endfor
-        }
+        this._chartSubscribing(index);
         // this.state.isLPOpen||this._onLPOpenCloseClick({newStates});
 /*
         $(container).find('.wrapper .tab').click(function ()
@@ -312,17 +385,67 @@ export default class ExchangeItem extends React.Component
     }
 
 
-    /**
+	/**
      * On open/close lineup btn click
-     * @private
-     */
-    _onLPOpenCloseClick({newStates})
+	 * @param close boolean - use if you need close the tab
+	 * @private
+	 */
+	_onLPOpenCloseClick(close)
     {
-        this.setState({...this.state, ...newStates, isLPOpen: !this.state.isLPOpen});
+		const { data:{ chartSubscribing } } = this.props;
 
-        let target = this.refs.LPOpenBtn;
-        if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this.lineupOpen('[data-js-lineup].active', 1);
-        this.lineupOpen(target);
+		close = typeof close === 'boolean' && close;
+
+        let isLPOpen = this.state.isLPOpen;
+        this.setState({...this.state, isLPOpen: close ? false : !isLPOpen});
+
+		if(!close)
+        {
+            if(isLPOpen || this.state.activeTab[0])
+            {
+				if(chartSubscribing) this._chartSubscribing(false);
+            }
+            else
+            {
+				this._chartSubscribing(true);
+            }
+        }
+
+        // let target = this.refs.LPOpenBtn;
+        // if (!$(target).hasClass('active') && $('[data-js-lineup].active').length) this._lineupOpen('[data-js-lineup].active', 1);
+        // this._lineupOpen(target);
+    }
+
+	/**
+     * chart socket subscribing
+	 * @param subscribe boolean
+	 * @private
+	 */
+	_chartSubscribing(subscribe)
+    {
+		if(subscribe)
+		{
+			this.props.actions.actionSetChartsSymbol({exchange: this.props.data.Symbol.Exchange});
+
+			// for( let val of mainChartController.charts  )
+			// {
+			// 	if(val.renderTo.id === this.refs.chartContainer.id)
+			// 	{
+			// 		let containerWidth = $(this.refs.chartContainer).width();
+			// 		let chart = $(val.container);
+			//
+			// 		if(chart.width() > containerWidth) setTimeout(() => val.reflow(), 400);
+			//
+			//
+			// 		// 0||console.log( 'val.renderTo.id', val.renderTo.id );
+			// 		// setTimeout(() => val.reflow(), 2000);
+			// 	}
+			// } // endfor
+		}
+		else
+		{
+			this.props.actions.actionSetChartsSymbol({exchange: ""})
+		}
     }
 
 
@@ -332,10 +455,10 @@ export default class ExchangeItem extends React.Component
      */
     _lupClose()
     {
-        this.setState({...this.state, isLPOpen: false});
-
-        let target = this.refs.LPOpenBtn;
-        this.lineupOpen(target, 1);
+        // this.setState({...this.state, isLPOpen: false});
+		//
+        // let target = this.refs.LPOpenBtn;
+        // this._lineupOpen(target, 1);
     }
 
 
@@ -345,15 +468,16 @@ export default class ExchangeItem extends React.Component
      * @param that - opener
      * @param isCLose Boolean - need if just close
      */
-    lineupOpen(that, isCLose)
+    _lineupOpen(that, isCLose)
     {
+        // console.log('that:', that);
         let $that = $(that);
         if (!$that.length) return;
 
         let $wrapper = $that.closest('[data-js-hevent]');
         let $lpnc = $wrapper.find('[data-js-hlup]');
         let $lpncBg = $wrapper.find('[data-js-bg]');
-        let $chartWrp = $wrapper.find('[data-js-highchart]');
+        // let $chartWrp = $wrapper.find('[data-js-highchart]');
 
 		$that.toggleClass('active');
         $lpnc.toggleClass('active');
@@ -370,6 +494,7 @@ export default class ExchangeItem extends React.Component
         {
             // set subscribe for chart data
             this.props.actions.actionSetChartsSymbol({exchange: this.props.data.Symbol.Exchange});
+            globalData.MainCharOn = true;
 
 
             let height = $wrapper.find("[data-js-team]").height();
@@ -378,19 +503,19 @@ export default class ExchangeItem extends React.Component
             $lpncBg.css('bottom', -1 * (height + 40));
             $lpnc.css('height', height + 30);
             // $contentTitle.css('max-height', 'inherit');
-
-            globalData.MainCharOn = true;
+            // console.log('55:', 55);
         }
 		else
 		{
+		    // console.log('666:', 666);
             // set unsubscribe from chart data if close btn click
             if (!isCLose) this.props.actions.actionSetChartsSymbol({exchange: ""});
+			globalData.MainCharOn = false;
 
             $lpnc.removeAttr('style');
             $lpncBg.removeAttr('style');
 			// setTimeout(() => { $contentTitle.removeAttr('style'); }, 400);
 
-			globalData.MainCharOn = false;
 		}
 
 		// if($('[data-js-lineup]').hasClass('active'))

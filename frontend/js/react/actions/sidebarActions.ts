@@ -69,7 +69,8 @@ class Actions extends BaseActions
 					executedOrders = $('.wrapper_event_page .executed_orders');
 
             // call socket if allow active trader
-			getState().sidebar.isAllowAT && ABpp.Websocket.sendSubscribe({tradeOn: isChecked}, SocketSubscribe.TRADER_ON);
+            // getState().sidebar.isAllowAT &&
+			ABpp.Websocket.sendSubscribe({tradeOn: isChecked}, SocketSubscribe.TRADER_ON);
 			// 0||console.log( 'getState().sidebar.activeExchange', getState().sidebar.activeExchange );
 
 			if( isChecked )
@@ -88,49 +89,8 @@ class Actions extends BaseActions
 					$('#active_trader').addClass('loading');
 					initialLoad = false;
 				}
-				// buttons.attr('disabled', true);
 
-
-                // set tabs titles
-                // $('.active_trader .event_title .event_name').each(function () {
-					// $(this).text(titles.eq(ii++).text());
-				// });
-
-				// === Vlasakh === 17-01-03 ===============================================
-				// ABpp.actions['MainPage.firstExchangeActivate'] && ABpp.actions['MainPage.firstExchangeActivate']();
-				// ABpp.actions['EventPage.activeTraiderActivate'] && ABpp.actions['EventPage.activeTraiderActivate']();
-
-				// if(event_container.hasClass('active')){
-				// 	event_container.addClass('clickable');
-				// } else {
-				// 	if(symbol) $('[data-symbol=' + symbol + ']').addClass('active');
-				// 	event_container.addClass('clickable').eq(0).addClass('active');
-				// 	titles = $('.content_bet.active .event-title .title');
-				// 	$('.active_trader .event_title .event_name').each(function () {
-				// 		$(this).text(titles.eq(ii++).text());
-				// 	});
-				// }
-				// === ==================== ===============================================
-
-
-				// setTimeout(function () {
-				// 	if($('.active_trader .best_buy').text() == '' && $('.active_trader .best_sell').text() == ''){
-				// 		if(globalData.mainPage || globalData.myPosOn)
-				// 			activeTraderClass.takeData($('.content_bet').eq(0));
-				// 		else
-				// 			activeTraderClass.takeData($('.wrapper_event_page'));
-				// 	}
-				// 	// === Vlasakh === 17-01-12 ===============================================
-				// 	// ABpp.Websocket.sendSubscribe({exchange: data.Symbol.Exchange}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
-				// 	// let id = $('.active_trader').attr('id').replace("trader_", "");
-				// 	// ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: id, isMirror: $(this).index()});
-				// 	// ABpp.actions['MainPage.getExchange'] && ABpp.actions['MainPage.getExchange']();
-				// 	// === ==================== ===============================================
-				// }, 700);
-				// if($('.wrapper_event_page').length)
-				// 	executedOrders.find('td.clickable').removeClass('clickable');
-
-				globalData.tradeOn = true;
+				// globalData.tradeOn = true;
 				// === Vlasakh === 23-01-12 ===============================================
 				ABpp.config.tradeOn = true;
 				// /** @var ABpp ABpp */ ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, true);
@@ -154,7 +114,7 @@ class Actions extends BaseActions
 				// if($('.wrapper_event_page').length)
 				// 	executedOrders.find('td.clickable').addClass('clickable');
 
-				globalData.tradeOn = false;
+				// globalData.tradeOn = false;
 				// === Vlasakh === 17-01-12 ===============================================
 				ABpp.config.tradeOn = false;
 				// /** @var ABpp ABpp */ ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, false);

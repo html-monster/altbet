@@ -36,24 +36,22 @@ $(document).ready(function ()
 		location.reload();
 	});
 
-
-
 	new defaultMethods();
 	// new inputValidationClass();
 	new inputNumber('.order');
 	new inputNumber('.sing_up_form');
 
-	if(location.hostname == "altbet.html-monster.ru"){
-		let letAccess = new accessClass('.access_container input[name="login"]', '.access_container input[name="pass"]', $('.access_container input.required').parent());
+	// if(location.hostname === "altbet.html-monster.ru"){
+	// 	let letAccess = new accessClass('.access_container input[name="login"]', '.access_container input[name="pass"]', $('.access_container input.required').parent());
+	//
+	// 	$('.access_container form').submit(function (event) {
+	// 		event = event || window.event;
+	// 		event.preventDefault ? event.preventDefault() : (event.returnValue=false);
+	// 		letAccess.checkAccess('access');
+	// 	});
+	// }
 
-		$('.access_container form').submit(function (event) {
-			event = event || window.event;
-			event.preventDefault ? event.preventDefault() : (event.returnValue=false);
-			letAccess.checkAccess('access');
-		});
-	}
-
-	new menuClass();
+	// new menuClass();
 	new footerClass();
 
 	// new userInspectionClass();
@@ -76,27 +74,25 @@ $(document).ready(function ()
 
 	// анимация рынков на главной
 	// tabsClass.tabsChangeAnimate('.nav_items', '.content_bet'); // page index
-	$(".nav_items").find('.wrapper .tab').eq(0).addClass("active");
+	// $(".nav_items").find('.wrapper .tab').eq(0).addClass("active");
 
 
 	popUpClass.popUpOpen('.log_out .sign_in', '.sign_in_form', '#login-email'); // pop-up login
 	popUpClass.popUpOpen('[data-log-out]', '.sign_in_form', '#login-email');
-	popUpClass.popUpOpen('.sign_in_form a.register', '.sign_up_form', '#f_name');
-	// popUpClass.popUpOpen('.sign_up_form input.submit', '.sign_up_form .confirm');
-	popUpClass.popUpOpen('.first_page_wrapper .join', '.sign_up_form', '#f_name');
+	// popUpClass.popUpOpen('.sign_in_form a.register', '.sign_up_form', '#f_name');
+	// popUpClass.popUpOpen('.first_page_wrapper .join', '.sign_up_form', '#f_name');
 	popUpClass.popUpOpen('.video button', '.video_form');
 	popUpClass.popUpOpen('header .price_plan', '.price_plan_form');
 
 	popUpClass.popUpClose('.sign_in_form a.register', 'fadeOut', '.sign_in_form');
 	popUpClass.popUpClose('.sign_in_form .close', 'fadeOut', '.sign_in_form'); // pop-up login
 	popUpClass.popUpClose('.wrapper_user_page .payment_message .hide', 'hide', '.wrapper_user_page .payment_message'); //payment message
-	popUpClass.popUpClose('.sign_up_form .close', 'fadeOut', '.sign_up_form'); // r egister
+	popUpClass.popUpClose('.sign_up_form .close', 'fadeOut', '.sign_up_form'); // register
 
 	popUpClass.globalPopUpClose('.warning'); // all warning message
 	popUpClass.globalPopUpClose('.user-menu', 'slideUp', '.log_in'); // login user menu
 	popUpClass.globalPopUpClose('.odds_list', 'slideUp', '.odds_converter'); // login user menu
-	popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_in_form a.register', '.first_page_wrapper .join', '#ui-datepicker-div', '.ui-corner-all', /*'.sign_up_content *'*/); // pop-up registration
-	// popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_up_content *',);
+	// popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_in_form a.register', '.first_page_wrapper .join', '#ui-datepicker-div', '.ui-corner-all', /*'.sign_up_content *'*/); // pop-up registration
 	popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in', 'header .deposit',
 			'header .my_order', '.order_screening', '[data-log-out]'); //pop-up login
 	popUpClass.globalPopUpClose('.video_form', 'fadeOut', '.pop_up_content', '.video button');
@@ -117,7 +113,7 @@ $(document).ready(function ()
 
 	// new myPosClass(); // activate my pos script
 
-	new modeSwitchClass(); //mode switch activate
+	// new modeSwitchClass(); //mode switch activate
 
 	// new themeChangeClass();
 	// (function changeSelect(){
@@ -147,11 +143,11 @@ $(document).ready(function ()
 		});
 
 		input.change(function () {
-			if($(this).val() == '') $(this).parent().removeClass('input--filled');
+			if($(this).val() === '') $(this).parent().removeClass('input--filled');
 			else $(this).parent().addClass('input--filled');
 		});
 		input.blur(function () {
-			if($(this).val() == '') $(this).parent().removeClass('input--filled');
+			if($(this).val() === '') $(this).parent().removeClass('input--filled');
 			else $(this).parent().addClass('input--filled');
 		});
 	})();
@@ -241,12 +237,9 @@ $(document).ready(function ()
 	new accountClass();
 	new ajaxThemeChangeClass();
 	// mainChartController = new mainChartController();
-  
-  
-  // злобный костыль за 10 минут для горизонт скрола.
-  
-  $(window).trigger('resize')
-  
+
+
+
 });
 
 

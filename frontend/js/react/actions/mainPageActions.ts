@@ -1,8 +1,10 @@
 import {
-    ON_POS_PRICE_CLICK,
-    ON_SOCKET_MESSAGE,
-    ON_BASIC_MODE_CH,
-    TRAIDER_MODE_CH,
+    MP_ON_POS_PRICE_CLICK,
+    MP_ON_SOCKET_MESSAGE,
+    MP_CHART_ON_SOCKET_MESSAGE,
+    MP_ON_BASIC_MODE_CH,
+    MP_TRAIDER_MODE_CH,
+    MP_ON_CHANGE_SUBSCRIBING
 } from '../constants/ActionTypesPageMain';
 import { WebsocketModel } from '../models/Websocket';
 import { Common } from '../common/Common';
@@ -39,7 +41,7 @@ class Actions extends BaseActions
                 let state = getState().mainPage.marketsData;
 
                 let compare = inData.some((item, index)=>{
-                    delete item.TimeRemains;
+                    delete item.TimeRemains;// костыль убирает TimeRemains (надо этот момент подправить)
                     delete state[index].TimeRemains;
                     return JSON.stringify(item) !== JSON.stringify(state[index])
                 });
@@ -47,7 +49,7 @@ class Actions extends BaseActions
                 if( compare )
                 {
                     dispatch({
-                        type: ON_SOCKET_MESSAGE,
+                        type: MP_ON_SOCKET_MESSAGE,
                         payload: inData
                     });
                     __DEV__ && console.log('re-render');
@@ -55,9 +57,40 @@ class Actions extends BaseActions
 
             }, WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES);
 
+            ABpp.Websocket.subscribe((inData) =>
+            {
+                const fromSocket = JSON.stringify(inData); // copy inData and create pure not changed data
+                // console.log('inData:', inData);
+                // console.log('serverChartsData:', JSON.stringify(getState().mainPage.serverChartsData));
+                // console.log(JSON.stringify(fromSocket) !== JSON.stringify(getState().mainPage.serverChartsData));
+                // if(fromSocket !== JSON.stringify(getState().mainPage.serverChartsData))
+                // {
+                    let newObj = {};
+
+                    inData.forEach((item) =>
+                    {
+                        item.Ticks.map((subItem) =>
+                        {
+                            subItem.Time = +subItem.Time.replace(/[^0-9]+/gi, ''); // правка серверного timestamp-а
+                            return subItem;
+                        });
+                        newObj[item.Symbol.Exchange] = item; // переделка массива в объект с ключами Exchange
+                    });
+
+                    dispatch({
+                        type: MP_CHART_ON_SOCKET_MESSAGE,
+                        payload: { serverChartsData: JSON.parse(fromSocket), newObj }
+                    });
+
+                    __DEV__ && console.log('chart rendered');
+                // }
+
+            }, WebsocketModel.CALLBACK_MAINPAGE_CHART);
+// let ap = '[{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"MUN","AwayHandicap":-0.5,"AwayName":"Manchester United","AwayPoints":null,"CategoryId":"ff73369e-c374-455a-a9fb-afbdffcac949","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"ARS-MUN-5132017","FullName":"Arsenal_vs_Manchester United","HomeAlias":"ARS","HomeHandicap":0.5,"HomeName":"Arsenal","HomePoints":null,"LastAsk":0.59,"LastBid":0.54,"LastPrice":0,"LastSide":null,"Name":"ARS-MUN","PriceChangeDirection":0,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1526202060000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"arsenal-vs-manchester-united-5132017"},"Ticks":[]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"CHI","AwayHandicap":12.5,"AwayName":"Team Quintana, CHI","AwayPoints":66.1,"CategoryId":"27ce6e77-c184-4c6e-91e4-010c2b494e02","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"CSD-QCHI-5122017","FullName":"Team Cahill, SD_vs_Team Quintana, CHI","HomeAlias":"SD","HomeHandicap":-12.5,"HomeName":"Team Cahill, SD","HomePoints":78.6,"LastAsk":0.61,"LastBid":0.55,"LastPrice":0,"LastSide":null,"Name":"CSD-QCHI","PriceChangeDirection":0,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1526127000000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"team-cahill-sd-vs-team-quintana-chi-5122017"},"Ticks":[]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"WAS","AwayHandicap":5.3,"AwayName":"Team Hotby, WAS","AwayPoints":70.3,"CategoryId":"c65aa34d-26da-4d63-80df-8a9be456e5fb","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"LPIT-HWAS-5102017","FullName":"Team Fleury, PIT_vs_Team Hotby, WAS","HomeAlias":"PIT","HomeHandicap":-5.3,"HomeName":"Team Fleury, PIT","HomePoints":75.6,"LastAsk":0.6,"LastBid":0.57,"LastPrice":0.59,"LastSide":1,"Name":"LPIT-HWAS","PriceChangeDirection":1,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1525984200000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"team-fleury-pit-vs-team-holby-was-5102017"},"Ticks":[{"Close":0.59,"EndDate":"/Date(-6847812000000+0200)/","High":0.59,"Low":0.59,"Open":0.59,"Side":true,"Time":"/Date(1495118566000)/","Volume":5},{"Close":0.58,"EndDate":"/Date(-6847812000000+0200)/","High":0.58,"Low":0.58,"Open":0.58,"Side":true,"Time":"/Date(1495118569000)/","Volume":5},{"Close":0.59,"EndDate":"/Date(1495449341000)/","High":0.59,"Low":0.59,"Open":0.59,"Side":true,"Time":"/Date(1495449341000)/","Volume":5}]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"HOU","AwayHandicap":-17.1,"AwayName":"Team Harden, HOU","AwayPoints":236.5,"CategoryId":"433f9ebe-2309-47ff-bc28-0fb8bc9684f3","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"LSA-HHOU-5122017","FullName":"Team Leonard, SA_vs_Team Harden, HOU","HomeAlias":"SA","HomeHandicap":17.1,"HomeName":"Team Leonard, SA","HomePoints":219.4,"LastAsk":1,"LastBid":0.59,"LastPrice":0.46,"LastSide":1,"Name":"LSA-HHOU","PriceChangeDirection":1,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1526162400000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"team-leonard-sa-vs-team-harden-hou-5122017"},"Ticks":[{"Close":0.46,"EndDate":"/Date(-6847812000000+0200)/","High":0.46,"Low":0.46,"Open":0.46,"Side":true,"Time":"/Date(1494582749000)/","Volume":25},{"Close":0.46,"EndDate":"/Date(1494599961000)/","High":0.46,"Low":0.46,"Open":0.46,"Side":true,"Time":"/Date(1494599961000)/","Volume":25}]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"WAS","AwayHandicap":-1.5,"AwayName":"Washignton Capitals","AwayPoints":null,"CategoryId":"c65aa34d-26da-4d63-80df-8a9be456e5fb","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"PIT-WAS-5102017","FullName":"Pittsburgh Penguins_vs_Washignton Capitals","HomeAlias":"PIT","HomeHandicap":1.5,"HomeName":"Pittsburgh Penguins","HomePoints":null,"LastAsk":0.54,"LastBid":0.46,"LastPrice":0.5,"LastSide":1,"Name":"PIT-WAS","PriceChangeDirection":1,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1525984200000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"pittsburgh-penguins-vs-washignton-capitals-5102017"},"Ticks":[{"Close":0.5,"EndDate":"/Date(1495467463000)/","High":0.5,"Low":0.5,"Open":0.5,"Side":true,"Time":"/Date(1495467463000)/","Volume":15}]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"HOU","AwayHandicap":-6.5,"AwayName":"Houston Rockets","AwayPoints":null,"CategoryId":"433f9ebe-2309-47ff-bc28-0fb8bc9684f3","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"SA-HOU-5122017","FullName":"San Antonio Spurs_vs_Houston Rockets","HomeAlias":"SA","HomeHandicap":6.5,"HomeName":"San Antonio Spurs","HomePoints":null,"LastAsk":0.58,"LastBid":0.5,"LastPrice":0,"LastSide":null,"Name":"SA-HOU","PriceChangeDirection":0,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1526162400000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"san-antonio-spurs-vs-houston-rockets-5122017"},"Ticks":[]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"MUN","AwayHandicap":-5.5,"AwayName":"Team Ibrahimovic, MUN","AwayPoints":60.7,"CategoryId":"ff73369e-c374-455a-a9fb-afbdffcac949","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"SARS-IMUN-5132017","FullName":"Team Sanchez, ARS_vs_Team Ibrahimovic, MUN","HomeAlias":"ARS","HomeHandicap":5.5,"HomeName":"Team Sanchez, ARS","HomePoints":55.2,"LastAsk":0.59,"LastBid":0.55,"LastPrice":0,"LastSide":null,"Name":"SARS-IMUN","PriceChangeDirection":0,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1526202000000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"team-sanchez-ars-vs-team-ibrahimovic-mun-5132017"},"Ticks":[]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"CHI","AwayHandicap":-2.5,"AwayName":"Chicago White Sox (Quintana)","AwayPoints":null,"CategoryId":"27ce6e77-c184-4c6e-91e4-010c2b494e02","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"SD-CHI-5122017","FullName":"San Diego Padres (Cahill)_vs_Chicago White Sox (Quintana)","HomeAlias":"SD","HomeHandicap":2.5,"HomeName":"San Diego Padres (Cahill)","HomePoints":null,"LastAsk":0.53,"LastBid":0.43,"LastPrice":0,"LastSide":null,"Name":"SD-CHI","PriceChangeDirection":0,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1526127000000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"san-diego-padres-cahill-vs-chicago-white-sox-quintana-5122017"},"Ticks":[]}]';
+// let ap = '[{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"MUN","AwayHandicap":-0.5,"AwayName":"Manchester United","AwayPoints":null,"CategoryId":"ff73369e-c374-455a-a9fb-afbdffcac949","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"ARS-MUN-5132017","FullName":"Arsenal_vs_Manchester United","HomeAlias":"ARS","HomeHandicap":0.5,"HomeName":"Arsenal","HomePoints":null,"LastAsk":0.59,"LastBid":0.54,"LastPrice":0,"LastSide":null,"Name":"ARS-MUN","PriceChangeDirection":0,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1526202060000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"arsenal-vs-manchester-united-5132017"},"Ticks":[]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"CHI","AwayHandicap":12.5,"AwayName":"Team Quintana, CHI","AwayPoints":66.1,"CategoryId":"27ce6e77-c184-4c6e-91e4-010c2b494e02","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"CSD-QCHI-5122017","FullName":"Team Cahill, SD_vs_Team Quintana, CHI","HomeAlias":"SD","HomeHandicap":-12.5,"HomeName":"Team Cahill, SD","HomePoints":78.6,"LastAsk":0.61,"LastBid":0.55,"LastPrice":0,"LastSide":null,"Name":"CSD-QCHI","PriceChangeDirection":0,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1526127000000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"team-cahill-sd-vs-team-quintana-chi-5122017"},"Ticks":[]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"WAS","AwayHandicap":5.3,"AwayName":"Team Hotby, WAS","AwayPoints":70.3,"CategoryId":"c65aa34d-26da-4d63-80df-8a9be456e5fb","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"LPIT-HWAS-5102017","FullName":"Team Fleury, PIT_vs_Team Hotby, WAS","HomeAlias":"PIT","HomeHandicap":-5.3,"HomeName":"Team Fleury, PIT","HomePoints":75.6,"LastAsk":0.6,"LastBid":0.57,"LastPrice":0.59,"LastSide":1,"Name":"LPIT-HWAS","PriceChangeDirection":1,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1525984200000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"team-fleury-pit-vs-team-holby-was-5102017"},"Ticks":[{"Close":0.59,"EndDate":"/Date(-6847812000000+0200)/","High":0.59,"Low":0.59,"Open":0.59,"Side":true,"Time":1495118566000,"Volume":5},{"Close":0.58,"EndDate":"/Date(-6847812000000+0200)/","High":0.58,"Low":0.58,"Open":0.58,"Side":true,"Time":1495118569000,"Volume":5},{"Close":0.59,"EndDate":"/Date(1495449341000)/","High":0.59,"Low":0.59,"Open":0.59,"Side":true,"Time":1495449341000,"Volume":5}]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"HOU","AwayHandicap":-17.1,"AwayName":"Team Harden, HOU","AwayPoints":236.5,"CategoryId":"433f9ebe-2309-47ff-bc28-0fb8bc9684f3","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"LSA-HHOU-5122017","FullName":"Team Leonard, SA_vs_Team Harden, HOU","HomeAlias":"SA","HomeHandicap":17.1,"HomeName":"Team Leonard, SA","HomePoints":219.4,"LastAsk":1,"LastBid":0.59,"LastPrice":0.46,"LastSide":1,"Name":"LSA-HHOU","PriceChangeDirection":1,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1526162400000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"team-leonard-sa-vs-team-harden-hou-5122017"},"Ticks":[{"Close":0.46,"EndDate":"/Date(-6847812000000+0200)/","High":0.46,"Low":0.46,"Open":0.46,"Side":true,"Time":1494582749000,"Volume":25},{"Close":0.46,"EndDate":"/Date(1494599961000)/","High":0.46,"Low":0.46,"Open":0.46,"Side":true,"Time":1494599961000,"Volume":25}]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"WAS","AwayHandicap":-1.5,"AwayName":"Washignton Capitals","AwayPoints":null,"CategoryId":"c65aa34d-26da-4d63-80df-8a9be456e5fb","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"PIT-WAS-5102017","FullName":"Pittsburgh Penguins_vs_Washignton Capitals","HomeAlias":"PIT","HomeHandicap":1.5,"HomeName":"Pittsburgh Penguins","HomePoints":null,"LastAsk":0.54,"LastBid":0.46,"LastPrice":0.5,"LastSide":1,"Name":"PIT-WAS","PriceChangeDirection":1,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1525984200000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"pittsburgh-penguins-vs-washignton-capitals-5102017"},"Ticks":[{"Close":0.5,"EndDate":"/Date(1495467463000)/","High":0.5,"Low":0.5,"Open":0.5,"Side":true,"Time":1495467463000,"Volume":15}]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"HOU","AwayHandicap":-6.5,"AwayName":"Houston Rockets","AwayPoints":null,"CategoryId":"433f9ebe-2309-47ff-bc28-0fb8bc9684f3","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"SA-HOU-5122017","FullName":"San Antonio Spurs_vs_Houston Rockets","HomeAlias":"SA","HomeHandicap":6.5,"HomeName":"San Antonio Spurs","HomePoints":null,"LastAsk":0.58,"LastBid":0.5,"LastPrice":0,"LastSide":null,"Name":"SA-HOU","PriceChangeDirection":0,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1526162400000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"san-antonio-spurs-vs-houston-rockets-5122017"},"Ticks":[]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"MUN","AwayHandicap":-5.5,"AwayName":"Team Ibrahimovic, MUN","AwayPoints":60.7,"CategoryId":"ff73369e-c374-455a-a9fb-afbdffcac949","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"SARS-IMUN-5132017","FullName":"Team Sanchez, ARS_vs_Team Ibrahimovic, MUN","HomeAlias":"ARS","HomeHandicap":5.5,"HomeName":"Team Sanchez, ARS","HomePoints":55.2,"LastAsk":0.59,"LastBid":0.55,"LastPrice":0,"LastSide":null,"Name":"SARS-IMUN","PriceChangeDirection":0,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1526202000000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"team-sanchez-ars-vs-team-ibrahimovic-mun-5132017"},"Ticks":[]},{"Symbol":{"ApprovedDate":"/Date(1493894217787+0300)/","AwayAlias":"CHI","AwayHandicap":-2.5,"AwayName":"Chicago White Sox (Quintana)","AwayPoints":null,"CategoryId":"27ce6e77-c184-4c6e-91e4-010c2b494e02","Currency":"USD","EndDate":null,"EndDateStr":null,"Exchange":"SD-CHI-5122017","FullName":"San Diego Padres (Cahill)_vs_Chicago White Sox (Quintana)","HomeAlias":"SD","HomeHandicap":2.5,"HomeName":"San Diego Padres (Cahill)","HomePoints":null,"LastAsk":0.53,"LastBid":0.43,"LastPrice":0,"LastSide":null,"Name":"SD-CHI","PriceChangeDirection":0,"ResultExchange":null,"SettlementDate":null,"SortingData":[],"StartDate":"/Date(1526127000000+0300)/","StartDateStr":null,"Status":1,"StatusEvent":"scheduled","TypeEvent":1,"UrlExchange":"san-diego-padres-cahill-vs-chicago-white-sox-quintana-5122017"},"Ticks":[]}]';
 
             dispatch({
-                type: ON_POS_PRICE_CLICK,
+                type: MP_ON_POS_PRICE_CLICK,
                 payload: [data.Symbol.Exchange, false]
             });
         }
@@ -90,11 +123,12 @@ class Actions extends BaseActions
             {
                 if( props.ismirror )
                 {
-                    if( props.type == 1 )
+                    if( props.type == 1 ) // buy
                     {
                         qt += val.Quantity;
+                        if( val.Price == props.price ) break;
                     }
-                    else
+                    else // sell
                     {
                         if( val.Price == props.price ) flag = true;
 
@@ -124,70 +158,17 @@ class Actions extends BaseActions
                     } // endif
                 } // endif
             } // endfor
-            // if( isBasicMode )
-            // {
-            //     qt = props.quantity;
-            //     bpr = props.price;
-            // }
-            // else
-            // {
-            //     for( let val of props.PosPrice )
-            //     {
-            //         if( props.ismirror )
-            //         {
-            //             if( props.type == 1 )
-            //             {
-            //                 qt += val.Quantity;
-            //                 if( val.Price == props.price )
-            //                 {
-            //                     bpr = props.PosPrice[0].Price;
-            //                     break;
-            //                 } // endif
-            //             }
-            //             else
-            //             {
-            //                 if( val.Price == props.price ) flag = true;
-            //
-            //                 if( flag )
-            //                 {
-            //                     qt += val.Quantity;
-            //                     bpr = val.Price;
-            //                 } // endif
-            //             } // endif
-            //         }
-            //         else
-            //         {
-            //             if (!flag && val.Price == props.price) flag = true;
-            //
-            //             if( props.type == 1 )
-            //             {
-            //                 if( flag )
-            //                 {
-            //                     qt += val.Quantity;
-            //                     bpr < val.Price && (bpr = val.Price);
-            //                 } // endif
-            //             }
-            //             else
-            //             {
-            //                 if( !flag || val.Price == props.price )
-            //                 {
-            //                     qt += val.Quantity;
-            //                     bpr > val.Price && (bpr = val.Price);
-            //                 } // endif
-            //             } // endif
-            //         } // endif
-            //     } // endfor
-            // } // endif
         } // endif
 
         props.ismirror && !props.isempty && (bpr = Common.toFixed(1 - bpr, 2));
 
-// 0||console.debug( '!!props.isempty', !!props.isempty );
         let outStruc = {
             "ID": `${props.data.exdata.Exchange}_${props.data.exdata.Name}_${props.data.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
             "EventTitle": props.ismirror ? props.data.exdata.AwayName : props.data.exdata.HomeName,
             "Positions": props.data.exdata.Positions,
             "isMirror": props.ismirror ? 1 : 0,
+            "Bid": props.data.exdata.Bid,
+            "Ask": props.data.exdata.Ask,
             "Orders": [
                 {
                     "Price": bpr === '0.' ? bpr : (+bpr).toFixed(2),
@@ -229,7 +210,7 @@ class Actions extends BaseActions
             // 0||console.debug( 'getState()', getState() );
             // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
             // dispatch({
-            //     type: ON_POS_PRICE_CLICK,
+            //     type: MP_ON_POS_PRICE_CLICK,
             //     payload: {}
             // });
         }
@@ -310,11 +291,11 @@ class Actions extends BaseActions
             // 0||console.log( 'inProps, val.Symbol.Exchange', inProps, inProps.name, inProps.isMirror );
 
             // dispatch({
-            //     type: ON_POS_PRICE_CLICK,
+            //     type: MP_ON_POS_PRICE_CLICK,
             //     payload: [inProps.name, inProps.isMirror]
             // });
             return {
-                type: ON_POS_PRICE_CLICK,
+                type: MP_ON_POS_PRICE_CLICK,
                 data: [inProps.name, inProps.isMirror]
             };
     }
@@ -355,7 +336,7 @@ class Actions extends BaseActions
         return (dispatch, getState) =>
         {
             dispatch({
-                type: ON_BASIC_MODE_CH,
+                type: MP_ON_BASIC_MODE_CH,
                 payload: inMode
             });
         };
@@ -370,7 +351,7 @@ class Actions extends BaseActions
             inMode && context.lastExchangeActivate();
 
             dispatch({
-                type: TRAIDER_MODE_CH,
+                type: MP_TRAIDER_MODE_CH,
                 payload: inMode
             });
         };
@@ -416,16 +397,15 @@ class Actions extends BaseActions
      */
     public actionSetChartsSymbol(inProps)
     {
-        return (dispatch, getState) =>
+        return (dispatch) =>
         {
-            // let state = getState().mainPage;
-
             ABpp.Websocket.sendSubscribe({exchange: inProps.exchange}, SocketSubscribe.MP_CHARTS_SYMBOL);
+            globalData.MainCharOn = !!inProps.exchange;
 
-            // dispatch({
-            //     type: type,
-            //     payload: data,
-            // });
+            dispatch({
+                type: MP_ON_CHANGE_SUBSCRIBING,
+                payload: inProps.exchange,
+            });
         };
     }
 }

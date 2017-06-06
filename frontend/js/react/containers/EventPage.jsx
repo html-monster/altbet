@@ -9,6 +9,7 @@ import * as chartActions from '../actions/EventPage/chartActions.ts';
 import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
 import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 import eventPageActions from '../actions/eventPageActions.ts';
+import {DateLocalization} from '../models/DateLocalization';
 
 
 class EventPage extends BaseController
@@ -101,7 +102,7 @@ class EventPage extends BaseController
 
         // form ask and bid orders
 // 0||console.debug( 'socket', socket );
-        if( socket.activeOrders && socket.activeOrders.Orders )
+        if( socket.activeOrders && socket.activeOrders.Orders.length )
         {
             if( socket.activeOrders.Orders[0].Side === 1 )
             {
@@ -153,6 +154,8 @@ class EventPage extends BaseController
             Exchange : data.SymbolsAndOrders.Symbol.Exchange,
             Name : data.SymbolsAndOrders.Symbol.Name,
             Currency : data.SymbolsAndOrders.Symbol.Currency,
+            Ask : data.SymbolsAndOrders.Symbol.LastAsk,
+            Bid : data.SymbolsAndOrders.Symbol.LastBid,
         };
 
 
@@ -172,6 +175,7 @@ class EventPage extends BaseController
             $fsclass = "active";
         } // endif
 
+
         return <div className="wrapper_event_page" data-id={symbol} id={symbol}>
             <h1>
                 <a href={appData.pageEventData.fsideLink} className={$fsclass} title={$titleFside}>{data.SymbolsAndOrders.Symbol.HomeName}</a>
@@ -186,14 +190,13 @@ class EventPage extends BaseController
                     <div className="current_price">
                         <div className="wrapper">
                             <h2>{data.IsMirrorName}</h2>
+                            <div className="startdate">{(new DateLocalization()).fromSharp(data.SymbolsAndOrders.Symbol.StartDate, 0, {TZOffset: false}).unixToLocalDate({format: 'DD MMM Y h:mm A'})}</div>
                             <div className="current_price">
                                 <span className="title">Last Price:</span>
                                 <span className="value">{lastPrice}</span>
-                                { StatusEvent &&
-                                    [ <br />,
-                                    <span className="title">Event status: </span>,
-                                    <span className="value">{StatusEvent}</span>]
-                                }
+                                { StatusEvent && <br /> }
+                                { StatusEvent && <span className="title">Event status: </span> }
+                                { StatusEvent && <span className="value">{StatusEvent}</span> }
                             </div>
                         </div>
                         <div className="price_scope">
@@ -270,6 +273,7 @@ class EventPage extends BaseController
                     </table>
                 </div>
             </div>
+{/*
             <div className="comparison">
                 <div className="table_wrap">
                     <table className="comparison_table">
@@ -319,6 +323,7 @@ class EventPage extends BaseController
                 </div>
                 <div className="table_wrap">{}</div>
             </div>
+*/}
             <div className="information">{}</div>
 
             <div id="disqus_thread">{}</div>

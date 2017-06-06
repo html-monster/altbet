@@ -7,7 +7,7 @@ import ExchangeItem from '../components/MainPage/ExchangeItem';
 import mainPageActions from '../actions/MainPageActions.ts';
 import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
 import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
-
+import sidebarActions from '../actions/sidebarActions.ts';
 // class MainPage extends React.Component
 class MainPage extends BaseController
 {
@@ -86,7 +86,7 @@ class MainPage extends BaseController
     {
         // let isBasicMode = ABpp.config.basicMode;
         const data = this.props.data;
-        const { actions, data:{ activeExchange, isBasicMode, isTraiderOn } } = this.props;
+        const { actions, data:{ activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn } } = this.props;
         const { currentExchange } = this.state;
         let $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
@@ -100,6 +100,12 @@ class MainPage extends BaseController
 
         return (
             <div className={`nav_items ${this.state.loaded}`}>
+                {/*<ul className="breadcrumbs">*/}
+                    {/*<li><a href="#">Sport</a></li>*/}
+                    {/*<li><a href="#">Footbool</a></li>*/}
+                    {/*<li><a href="#">UK Premiership League</a></li>*/}
+                    {/*<li>Manchester United vs. Chelsea</li>*/}
+                {/*</ul>*/}
                 <div className="wrapper" id="exchange">
                     <div className="stattabs">
                         {
@@ -112,8 +118,8 @@ class MainPage extends BaseController
                         <span className="stab"><a href="?sort=movers"><span data-content="Movers">{}</span></a></span>*/}
                         <div className="mode_wrapper">
                             <label className="mode_switch">
-                                <input defaultChecked={!isBasicMode} id="Mode" name="Mode" type="checkbox" />
-                                <input name="Mode" type="hidden" defaultValue={!isBasicMode} />
+                                <input defaultChecked={!isBasicMode} id="Mode" name="Mode" type="checkbox"
+                                       onChange={::this._modeSwitch}/>
                                 { isBasicMode ? <span>Basic View</span> : <span>Detailed View</span> }
                             </label>
                         </div>
@@ -123,7 +129,8 @@ class MainPage extends BaseController
                             <div className="mp-exchanges">
                                 {data.marketsData.map((item, key) =>
                                     <ExchangeItem key={key}
-                                        data={{...item, activeExchange, isBasicMode, isTraiderOn, currentExchange}}
+                                        data={{...item, activeExchange, chartSubscribing, isBasicMode, isTraiderOn, currentExchange}}
+                                        chartData={charts && charts[item.Symbol.Exchange]}
                                         mainContext={this}
                                         setCurrentExchangeFn={::this._setCurrentExchange}
                                         actions={actions} />
@@ -188,6 +195,33 @@ class MainPage extends BaseController
     {
         this.setState({...this.state, currentExchange: item});
     }
+
+	_modeSwitch(event)
+    {
+        const checked = event.target.checked;
+        const { sidebarActions } = this.props;
+
+        if(checked)
+        {
+            globalData.basicMode = false;
+
+			ABpp.config.basicMode = false;
+			// ABpp.config.tradeOn = false;
+			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
+
+			if(globalData.tradeOn) sidebarActions.actionOnTraderOnChange(checked);
+		}
+		else
+		{
+			globalData.basicMode = true;
+
+			ABpp.config.basicMode = true;
+			// ABpp.config.tradeOn = true;
+			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
+
+			sidebarActions.actionOnTraderOnChange(checked);
+		}
+    }
 }
 
 // __DEV__&&console.debug( 'connect', connect );
@@ -200,7 +234,8 @@ export default connect(
     })
     },
     dispatch => ({
-        traderActions: bindActionCreators(traderActions, dispatch),
+		sidebarActions: bindActionCreators(sidebarActions, dispatch),
+		traderActions: bindActionCreators(traderActions, dispatch),
 		defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
         actions: bindActionCreators(mainPageActions, dispatch),
     })

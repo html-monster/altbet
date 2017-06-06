@@ -63,12 +63,14 @@ export class BetsTable extends React.Component
             Exchange : exdata.SymbolsAndOrders.Symbol.Exchange,
             Name : exdata.SymbolsAndOrders.Symbol.Name,
             Currency : exdata.SymbolsAndOrders.Symbol.Currency,
+            Ask : symbol.LastAsk,
+			Bid : symbol.LastBid,
         };
 
         return <table>
             <thead>
                 <tr>
-                    <th><span>ID</span></th>
+                    {/*<th><span>ID</span></th>*/}
                     <th><span>{$fieldName}</span></th>
                     <th><span>Quantity</span></th>
                 </tr>
@@ -93,7 +95,7 @@ export class BetsTable extends React.Component
                             transitionLeaveTimeout={500}
                             data={val}
                         >
-                            <td><span>alt.bet</span></td>
+                            {/*<td><span>alt.bet</span></td>*/}
                             <td className={`price ${$class} animated`} data-verify="Quantity"
                                 onClick={() => self.props.actions.onPriceClick({
 								Price   : val.Price,
@@ -115,10 +117,10 @@ export class BetsTable extends React.Component
 									type    : $type,
 									data    : data, // orders
 									exdata  : commProps, // for trader object
-                                    bestPrice: exdata.IsMirror ?
-                                                    $type ? Math.round10(1 - symbol.LastBid, -2) : Math.round10(1 - symbol.LastAsk, -2)
-                                                    :
-                                                    $type ? symbol.LastAsk : symbol.LastBid
+                                    // bestPrice: exdata.IsMirror ?
+                                    //                 $type ? Math.round10(1 - symbol.LastBid, -2) : Math.round10(1 - symbol.LastAsk, -2)
+                                    //                 :
+                                    //                 $type ? symbol.LastAsk : symbol.LastBid
 								}, (ABpp.config.tradeOn ? traderActions : defaultOrderActions))}
                             >
                                 <span>{val.Quantity}</span>

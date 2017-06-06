@@ -1,31 +1,32 @@
-﻿var mainChartController = new function () {
-	var charts = [];
+﻿let mainChartController = new function () {
+	// let charts = [];
 
-    var self = this;
+    let self = this;
 	this.charts = [];
 
 	this.drawMainCharts = function (data) {
-		if (this.charts.length == 0)
-			createCharts(data);
+		if (this.charts.length)
+			updateCharts(this.charts, data);
 		else
-			updateCharts(this.charts, data)
+			createCharts(data);
 
-        console.log(':', 1);
-	}
+		// console.log('data:', data);
+		console.log('chart rendered');
+	};
 
-	var createCharts = function (data)
+	let createCharts = function (data)
 	{
 		$('div[id^="container_"]').each(function () {
-			var identificators = $(this).attr('id').replace('container_', '').split('_');
-			var graphData = [];
-			var graphDataMirror = [];
-			var graphStraightName = $(this).parents('.mp-exchanges').find('[data-js-title]').first().text();
-			var graphMirrorName = $(this).parents('.mp-exchanges').find('[data-js-title]').last().text();
+			let identificators = $(this).attr('id').replace('container_', '').split('_');
+			let graphData = [];
+			let graphDataMirror = [];
+			let graphStraightName = $(this).parents('.h-event').find('[data-js-title]').first().text();
+			let graphMirrorName = $(this).parents('.h-event').find('[data-js-title]').last().text();
 
 			$(data).each(function () {
-				if (this.Symbol.Exchange == identificators[0]
-					&& this.Symbol.Name == identificators[1]
-					&& this.Symbol.Currency == identificators[2]) {
+				if (this.Symbol.Exchange === identificators[0]
+					&& this.Symbol.Name === identificators[1]
+					&& this.Symbol.Currency === identificators[2]) {
 					$(this.Ticks).each(function () {
 						graphData.push({
 							x: this.Time.replace('/Date(', '').replace(')/', '') * 1,
@@ -39,11 +40,11 @@
 				}
 			});
 
-            let $Chart;
-			self.charts.push($Chart = new Highcharts.Chart({
+            // let $Chart;
+			self.charts.push(new Highcharts.Chart({
 				chart      : {
 					type    : 'line',
-					renderTo: ($(this).attr('id'))
+					renderTo: this
 				},
 				title      : {
 					text: ''
@@ -66,7 +67,7 @@
 					title : '',
 					labels: {
 						formatter: function () {
-							return '$' + eval(this.value).toFixed(2).toString();
+							return '$' + (this.value).toFixed(2);
 						}
 					},
 					//max: 1
@@ -96,20 +97,20 @@
 			// setTimeout(() => $Chart.reflow(), 2000);
 		});
 		$('.h-lup__tab_item.loading').removeClass('loading');
-	}
+	};
 
-	var updateCharts = function (charts, data) {
+	let updateCharts = function (charts, data) {
 		$(charts).each(function () {
 
-			var identificators = $(this.container).parent().attr('id').replace('container_', '').split('_');
-			var currentChart = this;
+			let identificators = $(this.container).parent().attr('id').replace('container_', '').split('_');
+			let currentChart = this;
 
 			$(data).each(function () {
-				if (this.Symbol.Exchange == identificators[0]
-					&& this.Symbol.Name == identificators[1]
-					&& this.Symbol.Currency == identificators[2]) {
+				if (this.Symbol.Exchange === identificators[0]
+					&& this.Symbol.Name === identificators[1]
+					&& this.Symbol.Currency === identificators[2]) {
 
-					var additionalValues = this.Ticks.slice(this.Ticks.length - (this.Ticks.length - currentChart.series[0].points.length));
+					let additionalValues = this.Ticks.slice(this.Ticks.length - (this.Ticks.length - currentChart.series[0].points.length));
 
 					// console.log('Ticks = ' + this.Ticks.length + " Series = " + currentChart.series[0].points.length + " Add = " + additionalValues.length);
 
@@ -129,4 +130,4 @@
 		$('.h-lup__tab_item.loading').removeClass('loading');
 	}
 
-}
+};

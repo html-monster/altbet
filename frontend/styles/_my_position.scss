@@ -1,10 +1,13 @@
 .content_my_position {
-  @include span(7.6 of 12);
-  @include push (1.8 of 12);
-  margin-top: 70px;
+  //@include span(7.6 of 12);
+  //@include push (1.8 of 12);
+  //margin-top: 70px;
+	margin-left: 70px;
+	padding-top: 70px;
+	width: calc(78% - 70px);
 
   .time { opacity: 0.5 }
-  .fullname { font-size: 10px; }
+  .fullname { font-size: 10px; opacity: 0.6; }
   .my_position {
 		padding: 15px;
     .container {
@@ -12,7 +15,7 @@
 			background: $my_pos_main_bg;
 			border-radius: 4px;
 		}
-		.tabs { @include my_pos_tab_container_styles; }
+		.tabs { @include my_pos_tab_container_styles; text-align: left }
 		.tab {
 			display: inline-block;
 			margin-right: 4px;
@@ -133,7 +136,8 @@
 						position: relative;
 						@include my_pos_td_and_button;
 						.waves-ripple{  display: block;  }
-						span{
+						&.spread span{ display: inline-block; width: 30px; }
+						span {
 							&.last_price:before{
 								content: '';
 								display: inline-block;

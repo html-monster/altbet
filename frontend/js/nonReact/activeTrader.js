@@ -412,7 +412,7 @@ class activeTraderClass{
 			let trader = $('.active_trader');
 
 			trader.on('click', '.active_trader_footer td', function () {
-				$(this).find('.confirm_window').removeClass('bounceOutDown').addClass('bounceInUp');
+				$(this).find('.confirm_window').removeClass('fadeOutDown').addClass('fadeInUp');
 				$(this).find('.confirm_window').addClass('active');
 			});
 			$('.active_trader_footer button').click(function (e) {
@@ -421,7 +421,7 @@ class activeTraderClass{
 					let method = ($(this).parents('td').find('a').attr('class')).slice(0, -2);
 					ajaxControlTraderClass.ajaxDataSender(method);
 				}
-				$(this).parents('.confirm_window').removeClass('bounceInUp').addClass('bounceOutDown');
+				$(this).parents('.confirm_window').removeClass('fadeInUp').addClass('fadeOutDown');
 				setTimeout(() => {
 					$(this).parents('.confirm_window').removeClass('active');
 				}, 500);

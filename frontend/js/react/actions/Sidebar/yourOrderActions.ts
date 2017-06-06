@@ -147,7 +147,7 @@ class Actions extends BaseActions
 			id = `#${id}__order`;
 			const activeFirstTab = this._prepeareToMove(id, 'edit');
 			const scrollPos = $(id)[0].offsetTop + 150;
-			console.log('1: ', scrollPos);
+			// console.log('1: ', scrollPos);
 
 			if(this._checkOnLastElement(id)){
 				$(id).find('.form-container').slideToggle(200, ()=>{
@@ -186,7 +186,7 @@ class Actions extends BaseActions
 		const activeTadFirst = tab.eq(0).hasClass('active');
 		const scrollPos = $(id)[0].offsetTop - 150;
 
-		console.log('2: ', scrollPos);
+		// console.log('2: ', scrollPos);
 		currentOrders.find('.form-container').slideUp(200);
 		currentOrders.find('.pop_up').fadeOut();
 

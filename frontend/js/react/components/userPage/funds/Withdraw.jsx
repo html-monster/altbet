@@ -9,7 +9,7 @@ import Visa from './transactionForms/Visa';
 import NetellerForm from './transactionForms/NetellerForm';
 import ScrillForm from './transactionForms/SkrillForm';
 import Bitpay from './transactionForms/Bitpay';
-import InputNumber from '../../inputNumber';
+import InputNumber from '../../InputNumber';
 import * as actions from '../../../actions/userPage/withdrawActions';
 
 class Withdraw extends React.Component{
@@ -40,7 +40,7 @@ class Withdraw extends React.Component{
 // console.log(actions);
 		return <div className="tab_item funds">
 			<h3>Withdraw funds</h3>
-			<span className="account_balance">You currently have <span className="value">${Math.round10(data.UserAssets.CurrentBalance, -2)}</span> in your account</span>
+			<span className="account_balance">You currently have <span className="value">${(Math.round10(data.UserAssets.CurrentBalance, -2)).toFixed(2)}</span> in your account</span>
 			<div className="quantity_control">
 				<strong>Select withdrawal amount</strong>
 				<button className="btn wave" onClick={actions.actionOnButtonQuantityClick.bind(null, actions)}>10</button>
@@ -56,10 +56,10 @@ class Withdraw extends React.Component{
 			</div>
 			<div className="payment_container">
 				<div className="tabs">
-					<span className="tab btn wave VisaMC" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Skrill" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Neteller" onClick={this.scrollBottom}><span>{}</span></span>
-					<span className="tab btn wave Bitpay" onClick={this.scrollBottom}><span>{}</span></span>
+					<button className="tab btn wave VisaMC" onClick={this.scrollBottom}><span>{}</span></button>
+					<button className="tab btn wave Skrill" onClick={this.scrollBottom}><span>{}</span></button>
+					<button className="tab btn wave Neteller" onClick={this.scrollBottom}><span>{}</span></button>
+					<button className="tab btn wave Bitpay" onClick={this.scrollBottom}><span>{}</span></button>
 				</div>
 				<div className="tab_content">
 					<div className="tab_item payment_tab">

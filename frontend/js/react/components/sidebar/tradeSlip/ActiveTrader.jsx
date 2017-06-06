@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import AnimateOnUpdate from '../../Animation.jsx';
-import TraderDefaultForm from './activeTrader/traderDefaultForm';
-import TraderSpreadForm from './activeTrader/traderSpreadForm';
+import TraderDefaultForm from './activeTrader/TraderDefaultForm';
+import TraderSpreadForm from './activeTrader/TraderSpreadForm';
 import traderActions from '../../../actions/Sidebar/tradeSlip/traderActions';
 import * as defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderActions';
 import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
@@ -43,12 +43,15 @@ class ActiveTrader extends React.Component {
 		let className = '';
 		// className = $active = $activeM = '';
 		// ( !activeExchange.isMirror ) ? ($active = 'active') : ($activeM = 'active');
-		
-        let gainLoss = data && data.GainLoss ? data.GainLoss : '';
-        if (data) {
-            if (gainLoss < 0)
+
+        let gainLoss = JSON.stringify(data) !== '{}' ? data.GainLoss : '$0.00';
+
+        if(gainLoss !== '$0.00') gainLoss = gainLoss < 0 ? `($${(Math.abs(gainLoss)).toFixed(2)})` : '$' + (gainLoss).toFixed(2);
+
+        if (JSON.stringify(data) !== '{}') {
+            if (data.GainLoss < 0)
                 className = 'loss';
-            else if (gainLoss > 0)
+            else if (data.GainLoss > 0)
                 className = 'profit';
         }
         const bid = isMirror ?
@@ -89,23 +92,22 @@ class ActiveTrader extends React.Component {
 						<td className="open_pnl trader_info">
 							<a href="#">
 								P/L
-								<span className={'quantity ' + className}>{gainLoss && gainLoss < 0 ? `($${(gainLoss).toString().slice(1)})` :
-								''}</span>
+								<span className={'quantity ' + className}>{gainLoss}</span>
 								<span className="help"><span className="help_message right"><strong>Profit in this event</strong></span></span>
 							</a>
 						</td>
 						<td className="open_contracts trader_info">
 							<a href="#">
-								Quantity
-								<span className="quantity up">{data.Positions}</span>
-								<span className="help"><span className="help_message"><strong>Open postions</strong></span></span>
+								Units
+								<span className="pos">{data.Positions || 0}</span>
+								<span className="help"><span className="help_message"><strong>Open positions</strong></span></span>
 							</a>
 						</td>
 						<td className="amount trader_info">
 							<a href="#">
 								Avg. Price
-								<span className="quantity up">26</span>
-								<span className="help"><span className="help_message"><strong>Average price of postion</strong></span></span>
+								<span className="quantity up">{}</span>
+								<span className="help"><span className="help_message"><strong>Average price of position</strong></span></span>
 							</a>
 						</td>
 					</tr>
@@ -118,14 +120,14 @@ class ActiveTrader extends React.Component {
 							<button className="wave waves-effect waves-button" onClick={
 								traderActions.actionAddDefaultOrder.bind(null, this, {
 									direction: 'buy',
-									price    : bid,
+									price    : bid ? bid.toFixed(2) : bid,
 									limit    : true,
 									outputOrder: false
 								}, 'limit')}
 									disabled={!quantity || !bid}>
 								Join BID <span className="price">
 									{
-										bid
+										bid ? bid.toFixed(2) : ''
 									}
 								</span>
 							</button>
@@ -134,14 +136,14 @@ class ActiveTrader extends React.Component {
 							<button className="wave waves-effect waves-button" onClick={
 								traderActions.actionAddDefaultOrder.bind(null, this, {
 									direction: 'sell',
-									price    : ask,
+									price    : ask ? ask.toFixed(2) : ask,
 									limit    : true,
 									outputOrder: false
 								}, 'limit')}
 									disabled={!quantity || !ask}>
 								<span className="price">
 									{
-										ask
+										ask ? ask.toFixed(2) : ''
 									}
 								</span> Join ASK
 							</button>
@@ -182,6 +184,7 @@ class ActiveTrader extends React.Component {
 
 								<TraderDefaultForm
 									activeString={orderInfo.activeString}
+									bestPrice={{ask, bid}}
 									index={'market'}
 									mainData={data}
 									quantity={quantity}
@@ -196,6 +199,7 @@ class ActiveTrader extends React.Component {
 
 								<TraderDefaultForm
 									activeString={orderInfo.activeString}
+									bestPrice={{ask, bid}}
 									index={'limit'}
 									mainData={data}
 									quantity={quantity}
@@ -232,7 +236,7 @@ class ActiveTrader extends React.Component {
 						<td className="spread_container ">
 							<div className="input">
 								<button className="clear" onClick={traderActions.actionOnSpreadClear.bind(null, this)}>{}</button>
-								<input type="text" className="number spreader" maxLength="4" data-validation="0.1"
+								<input type="text" className="number spreader" maxLength="5" data-validation="0.1"
 									   onMouseUp={spread ? null : traderActions.actionOnButtonSpreadChange.bind(null, this, '0.')}
 									   onKeyDown={traderActions.actionOnButtonSpreadRegulator.bind(null, this)}
 									   onChange={traderActions.actionOnSpreadChange.bind(null, this)}
@@ -251,18 +255,18 @@ class ActiveTrader extends React.Component {
 			<table className="control">
 				<tbody>
 					<tr>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 5)}>5</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 10)}>10</button></td>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 15)}>15</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 20)}>20</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 5)}>+5</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 10)}>+10</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 15)}>+15</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 20)}>+20</button></td>
 						<td className="button spread"><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.01)} disabled={!quantity}>0.01</button><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.05)} disabled={!quantity}>0.05</button></td>
 					</tr>
 					<tr>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 25)}>25</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 50)}>50</button></td>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 100)}>100</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 250)}>250</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 25)}>+25</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 50)}>+50</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 100)}>+100</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 250)}>+250</button></td>
 						<td className="button spread"><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.10)} disabled={!quantity}>0.10</button><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.15)} disabled={!quantity}>0.15</button></td>
 					</tr>
 					<tr>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 500)}>500</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1000)}>1000</button></td>
-						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1500)}>1500</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 2000)}>2000</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 500)}>+500</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1000)}>+1000</button></td>
+						<td className="button quantity"><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 1500)}>+1500</button><button className="btn wave" onClick={traderActions.actionOnButtonQuantityChange.bind(null, this, 2000)}>+2000</button></td>
 						<td className="button spread"><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.25)} disabled={!quantity}>0.25</button><button className={'wave waves-effect waves-button' + (!quantity ? '' : ' btn')} onClick={traderActions.actionOnButtonSpreadChange.bind(null, this, 0.30)} disabled={!quantity}>0.30</button></td>
 					</tr>
 					<tr>
@@ -276,7 +280,7 @@ class ActiveTrader extends React.Component {
 					<tbody>
 						<tr>
 							<td className="reverse active">
-								<a href="#" className="ReverseAllJs">Reverse</a>
+								<a href="#" className="ReverseAllJs wave">Reverse</a>
 								<div className="confirm_window animated">
 									<div className="container">
 										<span>Do you really want do it?</span>
@@ -288,7 +292,7 @@ class ActiveTrader extends React.Component {
 								</div>
 							</td>
 							<td className="cancel_all active">
-								<a href="#" className="CancelAllJs">Cancel All</a>
+								<a href="#" className="CancelAllJs wave">Cancel All</a>
 								<div className="confirm_window animated">
 									<div className="container">
 										<span>Do you really want do it?</span>
@@ -300,7 +304,7 @@ class ActiveTrader extends React.Component {
 								</div>
 							</td>
 							<td className="close_out active">
-								<a href="#" className="CloseOutJs">Close Out</a>
+								<a href="#" className="CloseOutJs wave">Close Out</a>
 								<div className="confirm_window animated">
 									<div className="container">
 										<span>Do you really want do it?</span>
@@ -354,6 +358,7 @@ class ActiveTrader extends React.Component {
 
 					<TraderDefaultForm
 						activeString={orderInfo.activeString}
+						bestPrice={{ask, bid}}
 						index={'empty'}
 						mainData={data}
 						quantity={quantity}
@@ -454,10 +459,24 @@ class TraderString extends React.Component {
 		// console.log(this.props);
 		const spreadPricePos = Math.round10(data.Price + +spread, -2);
 		const spreadPriceNeg = Math.round10(data.Price - spread, -2);
-		const dragAvailable = !!data.ParticularUserQuantityBuy || !!data.ParticularUserQuantitySell;
+		// const dragAvailable = !!data.ParticularUserQuantityBuy || !!data.ParticularUserQuantitySell;
 		let className = '';
 		let addOrder = null;
 		let spreadHighLightFunc = null;
+		let bidsProb = '';
+		let offersProb = '';
+
+		if(data.AskValue && data.Price >= data.AskValue) bidsProb = ' high';
+		if(data.AskValue && data.Price >= Math.round10(data.AskValue - 0.05, -2) && data.Price < data.AskValue) bidsProb = ' high_middle';
+		if(data.AskValue && data.Price >= Math.round10(data.AskValue - 0.1, -2) && data.Price < Math.round10(data.AskValue - 0.05, -2)) bidsProb = ' middle';
+		if(data.AskValue && data.Price >= Math.round10(data.AskValue - 0.15, -2) && data.Price < Math.round10(data.AskValue - 0.1, -2)) bidsProb = ' low_middle';
+		if(data.AskValue && data.Price < Math.round10(data.AskValue - 0.15, -2)) bidsProb = ' low';
+
+		if(data.BidValue && data.Price <= data.BidValue) offersProb = ' high';
+		if(data.BidValue && data.Price <= Math.round10(data.BidValue + 0.05, -2) && data.Price > data.BidValue) offersProb = ' high_middle';
+		if(data.BidValue && data.Price <= Math.round10(data.BidValue + 0.1, -2) && data.Price > Math.round10(data.BidValue + 0.05, -2)) offersProb = ' middle';
+		if(data.BidValue && data.Price <= Math.round10(data.BidValue + 0.15, -2) && data.Price > Math.round10(data.BidValue + 0.1, -2)) offersProb = ' low_middle';
+		if(data.BidValue && data.Price > Math.round10(data.BidValue + 0.15, -2)) offersProb = ' low';
 		// spread && console.log(data.BidValue < data.Price);
 		if(+spread){
 			if(data.Spread === 'mid'){
@@ -514,7 +533,7 @@ class TraderString extends React.Component {
 				ref={'tr'}
 				data={data}
 		>
-			<td className={'my_offers my_size animated' + (!!data.ParticularUserQuantityBuy ? ' clickable' : '')}
+			<td className={'my_size my_offers animated' + (!!data.ParticularUserQuantityBuy ? ' clickable' : '')}
 				data-verify={'ParticularUserQuantityBuy'}
 				// draggable={!!data.ParticularUserQuantityBuy}
 				onClick={!!data.ParticularUserQuantityBuy ? other.traderActions.deleteOrders.bind(null, this, data.Price, 'Buy') : null}
@@ -531,13 +550,13 @@ class TraderString extends React.Component {
 				}
 			</td>
 
-			<td className={'size buy size_buy animated ' + (data.Bid ? 'best_buy' : '') + (quantity ? ' clickable' : '')}
+			<td className={'size buy size_buy animated' + bidsProb + (data.Bid ? ' best_buy' : '') + (quantity ? ' clickable' : '')}
 				data-verify="QuantityBuy"
 				onClick={
 					quantity ?
 						other.traderActions.actionAddDefaultOrder.bind(null, this, {
 							direction: 'buy',
-							price: data.Price,
+							price: (data.Price).toFixed(2),
 							limit: true,
 							outputOrder: false
 						}, index)
@@ -597,13 +616,13 @@ class TraderString extends React.Component {
 					}
 				</div>
 			</td>
-			<td className={'size sell size_sell animated ' + (data.Ask ? 'best_sell' : '') + (quantity ? ' clickable' : '')}
+			<td className={'size sell size_sell animated ' + offersProb + (data.Ask ? ' best_sell' : '') + (quantity ? ' clickable' : '')}
 				data-verify="QuantitySell"
 				onClick={
 					quantity ?
 						other.traderActions.actionAddDefaultOrder.bind(null, this, {
 							direction: 'sell',
-							price: data.Price,
+							price: (data.Price).toFixed(2),
 							limit: true,
 							outputOrder: false
 						}, index)
@@ -622,7 +641,7 @@ class TraderString extends React.Component {
 					</span>
 				</span>
 			</td>
-			<td className={'my_bids my_size animated'  + (!!data.ParticularUserQuantitySell ? ' clickable' : '')}
+			<td className={'my_size my_bids animated'  + (!!data.ParticularUserQuantitySell ? ' clickable' : '')}
 				data-verify="ParticularUserQuantitySell"
 				// draggable={!!data.ParticularUserQuantitySell}
 				onClick={!!data.ParticularUserQuantitySell ? other.traderActions.deleteOrders.bind(null, this, data.Price, 'Sell') : null}
@@ -647,6 +666,7 @@ class TraderString extends React.Component {
 						(info.showDefaultOrder &&
 							<TraderDefaultForm
 								activeString={info.activeString}
+								bestPrice={{ask: data.AskValue, bid: data.BidValue}}
 								cmpData={this.props.cmpData}
 								index={index}
 								quantity={quantity}
@@ -660,6 +680,7 @@ class TraderString extends React.Component {
 						(spread && info.showSpreadOrder &&
 							<TraderSpreadForm
 								activeString={info.activeString}
+								data={data}
 								cmpData={this.props.cmpData}
 								index={index}
 								quantity={quantity}

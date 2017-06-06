@@ -27,7 +27,6 @@ export class RebuildServerData
         this.Price = price;
         if(backendData && backendData[price]){
         // console.log(data.className);
-        // data.className = 'lalal';
         // console.log(data.className);
             if(backendData[price].Side) {
                 this.ParticularUserQuantitySell = backendData[price].ParticularUserQuantity;
@@ -61,7 +60,7 @@ export class RebuildServerData
             }
         }
         this.Spread = spread;
-        if(!data.Symbol) {spread = 'mid'; }
+        if(!data.Symbol || data.Symbol.LastAsk === null && data.Symbol.LastBid === null) {spread = 'mid'; }
         this.Spread = spread;
         if(this.Ask){
             if(data.Symbol.LastAsk && data.Symbol.LastBid)

@@ -35,7 +35,9 @@
   }
 
   //&.active &__tab_content { opacity: 1; transition: .4s; }
-  &__tab_content {  position: relative; padding-top: 20px !important; overflow: hidden; /*opacity: 0;*/}
+  &__tab_content {  position: relative; padding-top: 20px !important; height: 100%; overflow: hidden; /*opacity: 0;*/}
+
+  //&__tab1_item { padding-bottom: 40px; }
 
   &__tab_item { display: none !important;
     &.loading:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%;
@@ -44,8 +46,7 @@
   }
 
   .lineup_swch{
-    .h-tab1__tab{
-      width: calc(25% - 1px);  height: 20px;  line-height: 17px;  font-size: 12px; transition: 0s;
+    .h-tab1__tab { padding: 0 10px; width: auto;  height: 20px; line-height: 17px; font-size: 12px; transition: 0s;
       &.active{  line-height: 18px;  }
     }
   }
@@ -59,7 +60,7 @@
 
 
 // BM: Lineup page teams
-.l-lup { padding: 0 10px;
+.l-lup { padding: 0 10px 40px;
   &__rules { position: absolute; right: 15px; font-size: 11px; }
   &__link { color: $main-color }
 }
@@ -81,9 +82,9 @@
 }
 
 // BM: player info block
-//.l-team__team tr:hover .b-pl-info { display: block; }
-.l-team__team tr:active .b-pl-info { visibility: visible; opacity: 1 }
-.b-pl-info { position: absolute; left: 0; top: 100%; padding: 10px;
+.l-team__team tr:hover .b-pl-info { visibility: visible; opacity: 1 }
+//.l-team__team tr:active .b-pl-info { visibility: visible; opacity: 1 }
+.b-pl-info { position: absolute; left: 20px; top: 100%; padding: 10px;
       text-align: right;  text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
       @include main_page_lineup_hind;
   &__main-inf {  }
@@ -117,27 +118,27 @@
 @mixin visibleAttr { position: static; transition: .5s; /*transition-delay: .3s*/ };
 @mixin hiddAttr { position: absolute };
 .ac-index.co-home {
-	.mp-exchanges{
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-	}
+  .mp-exchanges { display: flex; flex-wrap: wrap; justify-content: space-between; }
   .h-event { display: flex;  flex-direction: column;  justify-content: space-between; position: relative; margin: 1px 0;
 		width: calc(50% - 1px); min-width: 410px; border-radius: 6px; z-index: 10; color: $color4TextWhite;
     &:nth-child(odd) { margin-right: 2px; }
 
     // ovverride on activate exchange
-    &.active-exch { z-index: 100; color: $color4TextBlack;
+    &.active-exch { z-index: 11; color: $color4TextBlack;
       &>.bg { background: linear-gradient(to bottom, #EBEBEB, #B8B8B8); }
       .l-title {
         .score { color: #3f9622; }
         .seemore-lnk { color: $color4TextBlack; }
       }
-      .button-container button.event.empty { background: #8D9095 linear-gradient(to bottom, lighten(#8D9095, 10%), lighten(#54525D, 20%)) } //#8D9095
+      .button-container {
+        button.event.empty { background: #8D9095 linear-gradient(to bottom, lighten(#8D9095, 10%), lighten(#54525D, 20%)) } //#8D9095
+        &.opener { @include hiddAttr; visibility: hidden; opacity: 0; transition: .2s; }
+      }
       .button-container.buy .button:first-child button.empty span { color: $color4TextWhite }
       .button-container.sell .button:last-child button.empty span { color: $color4TextWhite }
       .event-date{  @include main_page_event_icon_invert;  }
       .button-container.buy.nobets { width: 52px; }
+      .l-buttons .inner { @include visibleAttr; visibility: visible; opacity: 1; transition: .4s }
     }
 
     //&.basic_mode .button-container {
@@ -148,14 +149,15 @@
       .event-symbols { padding-right: 15px; }
       .button-container {
         &.sell, &.buy {
-          &.onebtn, &.hideall { width: 50%;
-            //.button { display: inline-block; }
+          //&.onebtn!*, &.hideall*! { width: 50%;
+          &.nobets {
             .button { @include visibleAttr; visibility: visible; opacity: 1; }
           }
           &.buy.nobets { width: 52px }
-          //&.buy.nobets .button { width: 52px }
         }
+        &.opener { @include hiddAttr; visibility: hidden; opacity: 0; transition: .2s; }
       }
+      .l-buttons .inner { @include visibleAttr; visibility: visible; opacity: 1; transition: .4s }
     }
 
     &>.bg { position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-radius: 6px;
@@ -163,7 +165,7 @@
       &.active {  }
     }
 
-    .event-date { position: absolute; left: 10px; top: 10px;
+    .event-date { position: absolute; left: 10px; top: 15px;
       &:before { content: ''; display: inline-block; margin-right: 5px; width: 24px; height: 22px; background: url("#{$pathImage}/sprite.svg") no-repeat; }
       @include main_page_event_icon;
       span { /*display: inline-block; margin-right: 5px;*/ font-size: 12px; vertical-align: top;
@@ -172,15 +174,26 @@
       }
     }
 
-    .event-symbols { padding: 30px 25px 10px 15px; font-size: 13px; transition: .4s; }
-    .h-symbol { display: flex; justify-content: space-between; align-items: center; /*height: 40px;*/ }
+    .event-symbols { display: flex; flex-direction: column; justify-content: space-around; padding: 45px 25px 15px 15px; height: 100%;
+        font-size: 13px; transition: .4s; }
+    .h-symbol { display: flex; justify-content: space-between; align-items: center; min-height: 35px; }
     .l-title { font-weight: bold;
+      @include md(1600) { max-width: 270px; }
       .score { color: #4ade1a; }
-      .seemore-lnk { color: $color4TextWhite; transition: none; }
+      .seemore-lnk { color: $color4TextWhite; transition: color .1s; }
+      a.seemore-lnk:hover { color: $color-blue; }
+      .last-price { white-space: nowrap;
+        &.down i { display: inline-block; top: 2px; background-position: -309px -308px; }
+        &.up i { display: inline-block; top: 0; background-position: -292px -306px; }
+        i { display: none; position: relative; margin-right: -5px; width: 15px; height: 16px; background-size: cover;
+            background: url("#{$pathImage}/sprite.svg") no-repeat; }
+            //background: url(../../Images/temp/sprite-01.svg) no-repeat; background-position: 0px 0px; }
+      }
     }
     .l-buttons {
-      .inner { display: block; position: relative; min-width: 281px; text-align: right;
-          @include md(1600) { min-width: 191px; }
+      .inner { display: block; position: relative; min-width: 281px; text-align: right;  @include hiddAttr; visibility: hidden; opacity: 0;
+            transition: .2s;
+        @include md(1600) { min-width: 191px; }
       }
     }
 
@@ -189,7 +202,7 @@
       &:first-of-type { padding-right: 3px; text-align: left }
       &:last-of-type { padding-left: 2px; text-align: right }
 
-      .button { display: inline-block; }
+      .button { display: inline-block; /*@include hiddAttr; visibility: hidden; opacity: 0*/ }
 
       button.event { position: relative; margin: 0 2px; padding: 0; min-width: 43px; height: 32px; border-radius: 4px; text-transform: uppercase;
           background: $default-button-bg; vertical-align: middle; transition: all 0.4s ease-out !important;
@@ -207,12 +220,22 @@
             &.price { font-size: 11px; }
           }
         }
-        &.empty-balvan { background: rgba(0, 0, 0, 0.27); box-shadow: inset 0px -9px 25px -14px rgba(255, 255, 255, 0.1) }
+        &.empty-balvan {
+					background: transparent; box-shadow: inset 0 1px 7px 0 rgba(0, 0, 0, 0.3);
+					//background: transparent; box-shadow: inset 0 3px 11px 0 rgba(0, 0, 0, 0.3);
+				}
 
         span { display: block; position: relative; line-height: 13px; /*color: $main_page_event_title;*/ font-weight: 600; z-index: 2;
           &.price { padding: 3px 8px 0; font-size: 13px; }
           &.volume { padding-bottom: 3px; font-size: 10px; color: darken($color4TextWhite, 25%); }
         }
+      }
+
+      &.opener { @include visibleAttr; visibility: visible; position: absolute; right: 35px; top: calc(50% - 35px/2); width: auto;
+          opacity: 1; transition: .4s;
+        button { padding: 0 10px; color: #333; font-size: 14px; background: linear-gradient(to top, #bdc0cd, #ffffff); font-weight: bold; text-transform: none }
+        i { display: inline-block; position: relative; margin-right: 10px; top: 3px; width: 18px; height: 18px;
+            background: url("#{$pathImage}/sprite.svg") no-repeat; background-position: -269px -305px; }
       }
 
 
@@ -221,14 +244,13 @@
       &.sell { text-align: right;
         &>button:not(.empty):last-child { background-image: linear-gradient(to bottom, #64c9ef, #3498da); }
         // for preview
+        /*
         &.onebtn { width: 43px;
-          //.button { display: none; }
           .button { @include hiddAttr; visibility: hidden; opacity: 0 }
-          //.button:last-of-type { display: inline-block; }
           .button:last-of-type { @include visibleAttr; visibility: visible; opacity: 1; }
         }
-        &.hideall, &.nobets { width: 0;
-          //.button { display: none; }
+        */
+        /*&.hideall, */&.nobets { width: 0;
           .button { @include hiddAttr; visibility: hidden; opacity: 0 }
         }
 
@@ -236,7 +258,6 @@
           &:last-child{
             button { background-image: linear-gradient(to bottom, #64c9ef, #3498da);
               &:not(.empty){  background-image: linear-gradient(to bottom, #64c9ef, #3498da);  }
-              //&.empty span { /*color: $color4TextBlack;*/ }
               span{ color: #fff; opacity: 0.8; }
             }
           }
@@ -249,17 +270,21 @@
       &.buy { text-align: left  ;
         &>button:not(.empty):first-child { background-image: linear-gradient(to bottom, #f88447, #ef4d22); }
         // for preview
-        &.nobets { width: 43px; }
+        //&.nobets { width: 43px; }
+        &.nobets { width: 0;
+          .button { @include hiddAttr; visibility: hidden; opacity: 0 }
+        }
+        /*
         &.onebtn { width: 43px;
-          //.button { display: inline-block; }
           .button { @include hiddAttr; visibility: hidden; opacity: 0; }
-          //.button:first-of-type { display: inline-block; }
           .button:first-of-type { @include visibleAttr; visibility: visible; opacity: 1; }
         }
+        */
+        /*
         &.hideall { width: 0;
-          //.button { display: none; }
           .button { @include hiddAttr; visibility: hidden; opacity: 0; }
         }
+        */
 
         .button { margin-right: 3px;
           &:first-child{
@@ -278,34 +303,19 @@
 
     // lineup tabs
 		&.no_lineups{
-			.lpnc_tabs {display: none; }
-			.lpnc-loc{
-				.pl, .pos{
-					width: 140px;
-					height: 20px;
-					transform: none;
-					&:not(.active){
-						height: 0;
-						transform: scaleY(0);
-					}
-					strong{  margin-top: 3px;  }
-				}
-				.pl{
-					left: calc(50% - 140px);
-					background-position: -28px -73px;
-					strong{
-						float: left;
-						margin-left: 25px;
-					}
-				}
-				.pos{
-					background-position: -124px -73px;
-					strong{
-						float: right;
-						margin-right: 25px;
-					}
-				}
-			}
+          .lpnc_tabs {display: none; }
+          .lpnc-loc{
+            .pl, .pos{ width: 140px; height: 20px; transform: none;
+              &:not(.active){ height: 0; transform: scaleY(0); }
+              strong{  margin-top: 3px;  }
+            }
+            .pl{ left: calc(50% - 140px); background-position: -28px -73px;
+              strong { float: left; margin-left: 25px; }
+            }
+            .pos { background-position: -124px -73px;
+              strong { float: right; margin-right: 25px; }
+            }
+          }
 		}
     // &.active .lpnc-loc { bottom: -12px; }
     .lpnc-loc { position: relative; bottom: -2px; height: 37px; text-align: center; transition: 0.4s ease-out;
@@ -347,8 +357,8 @@
         &__tab { display: inline-block; width: 103px; background: url("#{$pathImage}/sprite_components.svg") no-repeat;
               transition: color .4s; cursor: pointer;
           &:hover { color: $color-blue; }
-          &_1 { margin-right: 1px; padding-left: 16px; padding-right: 13px; @include main_page_lineup_button; }
-          &_2 { margin-left: 1px; padding-left: 13px; padding-right: 16px; @include main_page_chart_button; }
+          &_1 { height: auto; margin-right: 1px; padding: 0 16px 0 14px; @include main_page_lineup_button; }
+          &_2 { height: auto; margin-left: 1px; padding: 0 16px 0 14px; @include main_page_chart_button; }
         }
       }
     }
@@ -372,8 +382,9 @@
       { display: none; }
   }
 }
-.content { @include span(7.6 of 12); @include push (1.8 of 12); position: relative; margin-top: 70px; padding: 15px; min-width: 800px;
-    color: $main-color;
+.content {
+  //@include span(7.6 of 12); @include push (1.8 of 12); min-width: 800px;
+  position: relative; margin-left: 70px; padding: 15px; padding-top: 85px; width: calc(78% - 70px); color: $main-color;
   .nav_items {
     &.loaded .pagination { display: block; }
     .wrapper>.tab_content{  padding-top: 50px;  }
@@ -419,13 +430,18 @@
       }
     }
     .stattabs {
-      width: 63.33%;
+      width: calc(78% - 70px);
       padding: 15px;
       background: $main-bg;
       position: fixed;
       top: 70px;
-      left: 15%;
+      left: 70px;//15%;
       z-index: 93;
+      @include md(1360){
+        position: absolute;
+        left: 0;
+        width: 100%;
+      }
       a.stab {
         display: inline-block;
         margin-right: 10px;

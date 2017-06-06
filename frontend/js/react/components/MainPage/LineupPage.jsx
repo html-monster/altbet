@@ -46,7 +46,7 @@ export class LineupPage extends React.Component
         var date;
 
 
-        return <div className={"l-lup " + className} data-js-team="">
+        return <div className={"l-lup " + className} data-js-team="" ref={'container'}>
                 { data[HomeName] && data[AwayName] &&
                     <Tabs className="h-lineup_container" tabsClass="lineup_swch h-tab1">
                         {[
@@ -75,14 +75,15 @@ export class LineupPage extends React.Component
                                                     <td className="pl">
                                                         <strong>{itm.name} ({itm.team.toUpperCase()})</strong>
                                                         <div className="b-pl-info">
-                                                            <div className="b-pl-info__main-inf">{`${exdata.HomeAlias} vs ${exdata.AwayAlias} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>
+                                                            {/*<div className="b-pl-info__main-inf">{`${exdata.HomeAlias} vs ${exdata.AwayAlias} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>*/}
+                                                            <div className="b-pl-info__main-inf">{`${itm.plInfo.vs} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>
                                                             <div className="b-pl-info__statistic">{itm.plInfo.action}</div>
                                                         </div>
                                                     </td>
                                                     <td>{itm.status}</td>
                                                     <td>{itm.fppg}</td>
                                                     <td>{itm.eppg}</td>
-                                                    <td><strong>{itm.score}</strong></td>
+                                                    <td><strong>{itm.score || "-"}</strong></td>
                                                     <td title="Estimated Time Remaining">{itm.timeEnd}</td>
                                                 </tr>)
                                         }
@@ -106,24 +107,28 @@ export class LineupPage extends React.Component
                                         <tbody>
                                         <tr>
                                             <th>{}</th>
-                                            <th>Pos</th>
                                             <th className="pl">Name</th>
                                             <th>Status</th>
                                             <th>FPPG</th>
+                                            <th>EPPG</th>
                                             <th>Score</th>
                                             <th title="Estimated Time Remaining">ETR</th>
                                         </tr>
                                         {
                                             data[AwayName].team.map((itm, key) => <tr key={key}>
                                                 <td>{key + 1}</td>
-                                                <td className="pos">
-                                                    {itm.pos}
+                                                <td className="pl">
+                                                    <strong>{itm.name} ({itm.team.toUpperCase()})</strong>
                                                     <div className="b-pl-info">
-                                                        <div className="b-pl-info__main-inf">{`${exdata.HomeAlias} vs ${exdata.AwayAlias} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>
+                                                        <div className="b-pl-info__main-inf">{`${itm.plInfo.vs} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>
                                                         <div className="b-pl-info__statistic">{itm.plInfo.action}</div>
                                                     </div>
+
                                                 </td>
-                                                <td className="pl"><strong>{itm.name} ({itm.team.toUpperCase()})</strong></td><td>{itm.status}</td><td>{itm.fppg}</td><td><strong>{itm.score}</strong></td>
+                                                <td>{itm.status}</td>
+                                                <td>{itm.fppg}</td>
+                                                <td>{itm.eppg}</td>
+                                                <td><strong>{itm.score || "-"}</strong></td>
                                                 <td title="Estimated Time Remaining">{itm.timeEnd}</td>
                                             </tr>)
                                         }
