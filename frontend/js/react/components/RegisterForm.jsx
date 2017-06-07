@@ -188,7 +188,7 @@ export class RegisterForm extends React.PureComponent
         let errorDeny = `Notice: Residents of <var> are NOT eligible to participate in the service for real money.`;
         let duration = Common.dateDiff(this.birthDate.date, Date.now());
         let years = Math.floor(duration.asYears());
-        0||console.log( 'years', years );
+        // 0||console.log( 'years', years );
 
         if( this.currentCountry.States === null )
         {

@@ -11,6 +11,7 @@ import MainPage from './containers/MainPage';
 import Header from './containers/Header';
 import MainMenu from './containers/MainMenu';
 import EventPage from './containers/EventPage';
+import ConfirmRegisterPage from './containers/ConfirmRegisterPage';
 import AccountPage from './containers/UserPage';
 import PageMyPos from './components/PageMyPos.jsx';
 import Sidebar from './components/Sidebar.jsx';
@@ -136,6 +137,16 @@ if( !globalData.landingPage  )
 		);
 	}
 } // endif
+
+
+	if( ABpp.config.currentPage === ABpp.CONSTS.PAGE_ACCOUNT_CONFIRM ) {
+		ReactDOM.render(
+			<Provider store={store}>
+				<ConfirmRegisterPage />
+			</Provider>,
+		    document.getElementById('DiConfirmPage')
+		);
+	}
 
 
 // Registration form

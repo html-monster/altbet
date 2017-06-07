@@ -7,6 +7,7 @@ import Actions from '../actions/NewFeedExchangeActions.ts';
 import {DropBox} from '../components/common/DropBox';
 import {PlayersTable} from '../components/NewFeedExchange/PlayersTable';
 import {Team1} from '../components/NewFeedExchange/Team1';
+import {DateLocalization} from '../common/DateLocalization';
 
 
 class NewFeedExchange extends BaseController
@@ -84,7 +85,10 @@ class NewFeedExchange extends BaseController
                                     <div className="form-group">
                                         <label>Event</label>
                                         <DropBox name="selected-state" items={items = Object.keys(AppData.TimeEvent).map((key) =>
-                                                { return {value: key, label: AppData.TimeEvent[key]}}
+                                                { return {
+                                                    value: AppData.TimeEvent[key].EventId,
+                                                    label: `${AppData.TimeEvent[key].HomeTeam} vs ${AppData.TimeEvent[key].AwayTeam} (${(new DateLocalization).fromSharp2(AppData.TimeEvent[key].StartDate, 0).toLocalDate({format: 'MM/DD/Y h:mm A'})})`
+                                                }}
                                             )} clearable={false} value={items[0]} searchable={true} afterChange={actions.actionChangeEvent}/>
                                     </div>
                                 </div>
