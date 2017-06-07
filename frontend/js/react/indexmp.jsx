@@ -17,7 +17,7 @@ import PageMyPos from './components/PageMyPos.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import RegisterBox from './containers/RegisterBox.jsx';
 
-
+var $node ;
 
 // Altbet App object
 // let constants = ABpp.ABpp;
@@ -85,7 +85,7 @@ if( !globalData.landingPage  )
 		// 	document.getElementById('withdraw')
 		// );
 	}
-	else if(ABpp.config.currentPage !== ABpp.CONSTS.PAGE_STATIC && ABpp.config.currentPage !== ABpp.CONSTS.PAGE_ANSWER){
+	else if( $node = document.getElementById('sidebar') ){
 		ReactDOM.render(
 			<Provider store={store}>
 				<Sidebar
@@ -93,7 +93,7 @@ if( !globalData.landingPage  )
 					globalData={globalData}
 				/>
 			</Provider>,
-			document.getElementById('sidebar')
+			$node
 		);
 	}
 

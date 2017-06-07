@@ -21,11 +21,11 @@ class ConfirmRegisterPage extends BaseController
 
     render()
     {
-
+        
 
 
         return (
-            <div className="wrapper_event_page" data-id={symbol} id={symbol}>
+            <div className="wrapper_event_page">
                 <h1>Hello</h1>
             </div>
         );
