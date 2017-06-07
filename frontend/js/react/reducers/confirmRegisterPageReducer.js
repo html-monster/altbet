@@ -4,13 +4,7 @@ import {
 
 
 const initialState = {
-    pageEventData: appData.pageEventData,
-    socket: { activeOrders: null, bars: null },
-    isTraiderOn: false,
-    Chart: {
-            ChartObj: null,
-            types: null,
-        },
+    confirmPageData: appData.ConfirmPageData,
 };
 
 

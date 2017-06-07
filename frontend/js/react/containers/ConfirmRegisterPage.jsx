@@ -21,8 +21,17 @@ class ConfirmRegisterPage extends BaseController
 
     render()
     {
-        
-
+        const { confirmRegisterPage: { confirmPageData: data, }, } = this.props;
+// appData.ConfirmPageData = JSON.parse('@Html.Raw(JsonConvert.SerializeObject(new System.Collections.Hashtable()
+//             {
+//                 {"isRegisterActivated", Model.Result},
+//                 {"ErrorCode", Model.ErrorCode},
+//                 {"ErrorMessage", Model.ErrorMessage},
+//                 {"Generate", "GenerateNewConfirmationHash"},
+// //                {"userName", Request.QueryString["userName"]},
+// //                {"confirmationCode", this. Request.QueryString["confirmationCode"]},
+//             }))')
+        0||console.log( 'data', data, this.props );
 
         return (
             <div className="wrapper_event_page">
@@ -35,7 +44,7 @@ class ConfirmRegisterPage extends BaseController
 // __DEV__&&console.debug( 'connect', connect );
 
 export default connect(state => ({
-    // confirmRegisterPage: state.confirmRegisterPage,
+    confirmRegisterPage: state.confirmRegisterPage,
 }),
 dispatch => ({
 	// actions: bindActionCreators(actions, dispatch),
