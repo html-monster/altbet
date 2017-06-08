@@ -346,7 +346,7 @@ export default class ExchangeItem extends React.Component
                                     onClick={::this._onLPOpenCloseClick}>{}</button>
                         </div>
 
-                        <div className="h-lup" data-js-hlup="" style={isLPOpen ? {height: height + 30} : {height: 0}}>
+                        <div className="h-lup" data-js-hlup="" style={isLPOpen ? {height: height + 30, marginBottom: 10} : {height: 0}}>
 {/*
                             <div className={`tabs h-lup__tabs ${isLPOpen ? "h-lup__tabs__opened" : ""}`}>
                                 <div className="h-lup__tab h-lup__tab_1 tab active" title="Show teams info" onClick={::this.onLPOpenClick}>Lineups</div>
@@ -365,7 +365,7 @@ export default class ExchangeItem extends React.Component
                                 {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                             </div>
                         </div>
-                        <div className="bg" data-js-bg="" style={isLPOpen ? {bottom: -1 * (height + 40)} : {bottom: 0}}>{}</div>
+                        {/*<div className="bg" data-js-bg="" style={isLPOpen ? {bottom: -1 * (height + 40)} : {bottom: 0}}>{}</div>*/}
 
                 {/*
                  <div className="table not-sort wave waves-effect waves-button"> id="exchange_table"
