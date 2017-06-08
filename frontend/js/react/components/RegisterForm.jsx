@@ -14,7 +14,7 @@ import {DatePicker} from './common/DatePicker';
 import {Common} from '../common/Common';
 
 
-var __DEBUG__ = !true;
+var __DEBUG__ = true;
 
 
 export class RegisterForm extends React.PureComponent

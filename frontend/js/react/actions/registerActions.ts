@@ -5,6 +5,9 @@
 import {
     ON_CHECK_FIELDS,
 } from '../constants/ActionTypesRegister';
+import {
+    ON_SEND_CONFIRMATION,
+} from '../constants/ActionTypesPageConfirmRegister';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../models/AjaxSend';
 import {Dialog} from '../models/Dialog';
@@ -23,7 +26,7 @@ class Actions extends BaseActions
             __DEV__ && console.log('registrationAjax:', values);
             let flag = true;
 
-            // 0||console.log( 'here 11', context, values, serverValidation, event.target, p1,  p2);
+            0||console.log( 'here 11', values/*, serverValidation, event.target, p1,  p2*/);
             const $form = $(event.currentTarget);
             if( (this.checkAreement('agreement', $form) && this.checkAreement('agreement_age', $form)) )
             {
@@ -90,6 +93,64 @@ class Actions extends BaseActions
             //     type: ON_CHECK_FIELDS,
             //     payload: []
             // });
+        }
+    }
+
+
+    /**
+     * Send confirmation letter
+     */
+    public actionSendConfirmEmail(userName, confCode, inUrl)
+    {
+        // __DEV__ && console.log('actionSendConfirmEmail 111111', {userName, confCode, inUrl});
+        return (dispatch, getState) =>
+        {
+            const ajaxPromise = (new AjaxSend()).send({
+                formData: {},
+                message: `Error while activating user, please, try again later`,
+                url: ABpp.baseUrl + `/${globalData.controller}/` + inUrl,
+                // url: inUrl,
+                respCodeName: 'ErrorCode',
+                respCodes: [
+                    {code: 100, message: ""},
+                    // {code: -101, message: "Some custom error"},
+                ],
+/*                    beforeChkResponse: (data) =>
+                {
+                    // DEBUG: emulate
+                    data = {ErrorCode: 200};
+                    // data.Param1 = "TOR-PHI-3152017"; // id
+
+                    return data;
+                },*/
+            });
+
+
+            ajaxPromise.then( result =>
+                {
+                    0||console.log( 'success', result );
+                    dispatch({
+                        type: ON_SEND_CONFIRMATION,
+                        payload: {success: true}
+                    });
+                },
+                result => {
+                    0||console.log( 'result', result );
+                    dispatch({
+                        type: ON_SEND_CONFIRMATION,
+                        payload: {success: false, message: result.data ? result.data.ErrorMessage : result.message}
+                    })
+/*
+                    switch( result.code )
+                    {
+                        case -101:
+                            // serverValidation({error: 'User name failed, correct it, please', FirstName: "User name failed"});
+                            break;
+                        default: ;
+                            // serverValidation({error: 'User registration failed, please, refresh the page and try again'});
+                    }
+*/
+                });
         }
     }
 
