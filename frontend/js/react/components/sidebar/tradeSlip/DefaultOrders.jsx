@@ -55,7 +55,7 @@ class DefaultOrders extends React.Component
 						/* // BM: --------------------------------------------------- NEW ORDER ---*/
 						orderNewData.map((item) =>
 							<NewOrder
-								allData={orderNewData}
+								// allData={orderNewData}
 								data={item}
 								key={`${item.ID}-${item.isMirror}-${item.Price}-${item.Volume}`}
 								//onDeleteOrderHandler={actions.actionOnDeleteOrder.bind(this, item)}

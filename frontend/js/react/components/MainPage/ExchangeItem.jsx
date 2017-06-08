@@ -4,6 +4,7 @@ import ButtonContainer from './ButtonContainer';
 import {DateLocalization} from './../../models/DateLocalization';
 import {LineupPage} from './LineupPage';
 import Chart from './Chart';
+import NewOrder from '../sidebar/order/NewOrder';
 // import {Common} from './../../common/Common';
 
 
@@ -365,6 +366,7 @@ export default class ExchangeItem extends React.Component
                                 {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
                             </div>
                         </div>
+						{/*<NewOrder  />*/}
                         {/*<div className="bg" data-js-bg="" style={isLPOpen ? {bottom: -1 * (height + 40)} : {bottom: 0}}>{}</div>*/}
 
                 {/*
