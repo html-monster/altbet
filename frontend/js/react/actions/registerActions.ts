@@ -105,11 +105,13 @@ class Actions extends BaseActions
         // __DEV__ && console.log('actionSendConfirmEmail 111111', {userName, confCode, inUrl});
         return (dispatch, getState) =>
         {
+            let formData = confCode ? {UserName: userName, confirmationCode: confCode} : {};
+            __DEV__&&console.log( 'formData', formData );
             const ajaxPromise = (new AjaxSend()).send({
-                formData: {},
+                formData: formData,
                 message: `Error while activating user, please, try again later`,
+                // url: "http://192.168.1.249/AltBet/order/TestAction", // DEBUG: remove it
                 url: ABpp.baseUrl + `/${globalData.controller}/` + inUrl,
-                // url: inUrl,
                 respCodeName: 'ErrorCode',
                 respCodes: [
                     {code: 100, message: ""},
@@ -131,14 +133,14 @@ class Actions extends BaseActions
                     0||console.log( 'success', result );
                     dispatch({
                         type: ON_SEND_CONFIRMATION,
-                        payload: {success: true}
+                        payload: {Success: true, ErrorMessage: ''}
                     });
                 },
                 result => {
                     0||console.log( 'result', result );
                     dispatch({
                         type: ON_SEND_CONFIRMATION,
-                        payload: {success: false, message: result.data ? result.data.ErrorMessage : result.message}
+                        payload: {Success: false, ErrorMessage: result.data ? result.data.ErrorMessage : result.message}
                     })
 /*
                     switch( result.code )

@@ -12,9 +12,9 @@ class ConfirmRegisterPage extends BaseController
     {
         super(props);
 
-        __DEV__&&console.debug( 'this.props', props );
+        __DEV__&&console.log( 'ConfirmRegisterPage props', props );
 
-        this.state = {isSending: false, sendCodeMessage: ''};
+        this.state = {sendConfirmation: {isSending: false, ErrorMessage: props.data.sendConfirmation.ErrorMessage, Success: false}};
     }
 
 
@@ -22,12 +22,12 @@ class ConfirmRegisterPage extends BaseController
     componentWillUpdate(next)
     {
         // 0||console.log( 'next, this.props', next, this.props );
-        const { sendConfirmationErrorMessage, sendConfirmation } = next.confirmRegisterPage;
+        const { sendConfirmation: {ErrorMessage, sending, Success} } = next.data;
 
         //sendConfirmationErrorMessage
-        if( sendConfirmation !== this.props.confirmRegisterPage.sendConfirmation)
+        if( sending !== this.props.data.sendConfirmation.sending)
         {
-            this.setState({...this.state, sendCodeMessage: sendConfirmationErrorMessage, isSending: false})
+            this.setState({...this.state, sendConfirmation: {ErrorMessage, isSending: false, Success}});
         } // endif
 
         // return true;
@@ -36,48 +36,46 @@ class ConfirmRegisterPage extends BaseController
 
     render()
     {
-        const { confirmRegisterPage: { confirmPageData: data, sendConfirmationSuccess}, } = this.props;
-        const { sendCodeMessage } = this.state;
-// appData.ConfirmPageData = JSON.parse('@Html.Raw(JsonConvert.SerializeObject(new System.Collections.Hashtable()
-//             {
-//                 {"isRegisterActivated", Model.Result},
-//                 {"ErrorCode", Model.ErrorCode},
-//                 {"ErrorMessage", Model.ErrorMessage},
-//                 {"Generate", "GenerateNewConfirmationHash"},
-// //                {"userName", Request.QueryString["userName"]},
-// //                {"confirmationCode", this. Request.QueryString["confirmationCode"]},
-//             }))')
-        0||console.log( 'sendCodeMessage', sendConfirmationSuccess );
+        const { data: { confirmPageData: data, sendConfirmation}, } = this.props;
+        const { ErrorMessage, Success, isSending } = this.state.sendConfirmation;
+        // 0||console.log( 'ErrorMessage', this.state );
 
-        return data.isRegisterActivated ?
-            <div className="wrapper_event_page">Your account has been activated, <a href={globalData.Urls.Home}>see exchanges</a> for playing</div>
-            :
-            <div>
-                Your account need to be activated, see the letter with activation link on your email.
-                <br />
-                To ask activation link again click button below:&nbsp;
-                <br /><br />
-                <button className="btn btn-md btn_green" disabled={this.state.isSending} onClick={this._onSendConfirmEmailClick.bind(this, data.confirmationCode, data.Generate)}>{this.state.isSending ? "sending..." : "Send Letter"}</button>
-                {!sendCodeMessage ||
-                    <span className={sendConfirmationSuccess === false ? "-red" : ""}>&nbsp;&nbsp;{sendCodeMessage}</span>
-                }
-            </div>
-
+        return do {
+            if( data.isRegisterActivated )
+                <div>Your account has been activated, <a href={globalData.Urls.Home}>see exchanges</a> for playing</div>
+            else if( data.ErrorCode === 102 )
+                <div>{data.ErrorMessage}</div>
+            else
+                <div>
+                    {data.ErrorMessage ? data.ErrorMessage + '.' : "Your account need to be activated, see the letter with activation link on your email."}
+                    <br />
+                    To ask activation link again click button below:&nbsp;
+                    <br /><br />
+                    <button className="btn btn-md btn_green" disabled={isSending} onClick={::this._onSendConfirmEmailClick}>{isSending ? "sending..." : "Send Letter"}</button>
+                    {ErrorMessage ?
+                        <span className={Success === false ? "-red" : ""}>&nbsp;&nbsp;{ErrorMessage}</span>
+                        :
+                        !Success || <span>&nbsp;&nbsp;Letter was sent, please, check your email</span>
+                    }
+                </div>
+        }
         ;
     }
 
 
-    _onSendConfirmEmailClick(confirmationCode, generateUrl)
+    _onSendConfirmEmailClick()
     {
-        this.setState({...this.state, isSending: true, sendCodeMessage: ''});
-        this.props.actions.actionSendConfirmEmail(ABpp.User.login, confirmationCode, generateUrl)
+        const { data: { confirmPageData: data, }, } = this.props;
+
+        this.setState({...this.state, sendConfirmation: {ErrorMessage: '', isSending: true, Success: false}});
+        this.props.actions.actionSendConfirmEmail(ABpp.User.login ? ABpp.User.login : data.UserName, data.confirmationCode, data.Generate)
     }
 }
 
 // __DEV__&&console.debug( 'connect', connect );
 
 export default connect(state => ({
-    confirmRegisterPage: state.confirmRegisterPage,
+    data: state.confirmRegisterPage,
 }),
 dispatch => ({
 	actions: bindActionCreators(actions, dispatch),

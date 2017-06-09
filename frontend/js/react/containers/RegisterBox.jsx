@@ -20,7 +20,7 @@ class RegisterBox extends BaseController
     constructor(props)
     {
         super(props);
-        __DEV__ && console.log( 'RegisterBox props', props );
+        // __DEV__ && console.log( 'RegisterBox props', props );
     }
 
 

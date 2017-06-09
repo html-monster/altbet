@@ -7,6 +7,9 @@ import React from 'react' ;
 
 export default class BaseController extends React.Component
 {
+    /**@public*/ actions;
+
+
     constructor(props)
     {
         super(props);
