@@ -55,6 +55,7 @@ class Actions extends BaseActions
         return (dispatch, getState) =>
         {
             // console.log( 'inProps', inProps );
+            // console.log( 'actions', actions );
 
             // if( !ABpp.config.tradeOn )
             // {
