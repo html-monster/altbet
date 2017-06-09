@@ -48,13 +48,16 @@ export function actionOnDeleteOrder(order)
 		// console.log('order:', order);
 
 		let orderId;
+		let state = JSON.stringify(getState().defaultOrdersSidebar.orderNewData);
+		state = JSON.parse(state);
+
 		if(order.Side !== undefined)
 			orderId = order.Side;
 		else
 			orderId = order.ID;
 
 		// debugger;
-		let newOrders = getState().defaultOrders.orderNewData.filter(function(itemContainer) {
+		let newOrders = state.filter(function(itemContainer) {
 			if(order.Side !== undefined && itemContainer.ID === `${order.Symbol.Exchange}_${order.Symbol.Name}_${order.Symbol.Currency}` &&
 				itemContainer.isMirror === order.isMirror){
 
@@ -83,7 +86,7 @@ export function actionOnDeleteOrder(order)
 // 		// let price = $(formData.refs.inputPrice);
 // 		// let quantity = $(formData.refs.inputQuantity);
 // 		const orderID = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
-// 		let state = getState().defaultOrders.orderNewData;
+// 		let state = getState().defaultOrdersSidebar.orderNewData;
 //
 // 		state.forEach(function (thisItem) {
 // 			if(orderID === thisItem.ID){
@@ -118,7 +121,8 @@ export function actionOnOrderCreate(newOrder)
 {
 	return (dispatch, getState) =>
 	{
-		let state = getState().defaultOrders.orderNewData;
+		let state = JSON.stringify(getState().defaultOrdersSidebar.orderNewData);
+		state = JSON.parse(state);
 		let removedChild;
 		// console.log('newOrder', newOrder);
 		// console.log('state', state);

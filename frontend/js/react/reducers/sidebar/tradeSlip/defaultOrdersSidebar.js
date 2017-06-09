@@ -1,4 +1,4 @@
-/**
+	/**
  * Created by Htmlbook on 22.12.2016.
  */
 import {
@@ -123,7 +123,7 @@ const initialState = {
 };
 
 
-export default function defaultOrders(state = initialState, action)
+export default function defaultOrdersSidebar(state = initialState, action)
 {
 	switch (action.type)
 	{

@@ -6,7 +6,7 @@ import AnimateOnUpdate from '../../Animation.jsx';
 import TraderDefaultForm from './activeTrader/TraderDefaultForm';
 import TraderSpreadForm from './activeTrader/TraderSpreadForm';
 import traderActions from '../../../actions/Sidebar/tradeSlip/traderActions';
-import * as defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderActions';
+import * as defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
 import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
 // import RebuildServerData from '../../../actions/Sidebar/activeTrader/rebuildServerData';
 

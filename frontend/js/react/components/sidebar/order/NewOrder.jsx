@@ -3,10 +3,11 @@ import OrderForm from './OrderForm.jsx';
 
 import AnimateOnUpdate from '../../Animation.jsx';
 
-export default class NewOrder extends React.Component{
-	constructor()
+export default class NewOrder extends React.Component
+{
+	shouldComponentUpdate(nextProps)
 	{
-		super();
+		return !(JSON.stringify(nextProps) === JSON.stringify(this.props));
 	}
 
 	render()
@@ -17,7 +18,6 @@ export default class NewOrder extends React.Component{
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
 		};
-		// console.log('data:', data);
 
 		return <div className="order_content new animated">
 			<div className="order-title">
