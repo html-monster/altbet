@@ -49,8 +49,8 @@ export default class NewOrder extends React.Component
 							id={`${symbol}_${item.Side}_${item.isMirror}`}
 							limit={item.Limit}
 							side={item.Side ? 'sell' : 'buy'}
-							ask={data.Ask}
-							bid={data.Bid}
+							ask={data.Ask === 1 ? null : data.Ask}
+							bid={data.Bid === 0 ? null : data.Bid}
 							price={item.Price}
 							quantity={item.Volume}
 							isMirror={item.isMirror}
