@@ -21,9 +21,10 @@ header {
 
   }
 
-  // reconntct button
-  .reconnect .help_message {
-    top: 40px
+  // reconnect button
+  .reconnect{
+    padding-right: 10px;
+    .help_message { top: 40px }
   }
   .connect {
     display: none;

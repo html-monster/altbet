@@ -172,7 +172,7 @@
     //    background: linear-gradient(to bottom, #53515e, #292830); z-index: -1; transition: .4s ease-out;
     //  //&.active {  }
     //}
-
+    //.order_container{ display: none; }
     .event-date { position: absolute; left: 10px; top: 15px;
       &:before { content: ''; display: inline-block; margin-right: 5px; width: 24px; height: 22px; background: url("#{$pathImage}/sprite.svg") no-repeat; }
       @include main_page_event_icon;
@@ -405,6 +405,8 @@
     .wrapper>.tab_content{  padding-top: 30px;  }
   }
 }
+
+@import "mainPage/_orders_mp";
 
 
 // ------------- ВСЁ ЧТО НИЖЕ БУДЕТ УДАЛЕНО !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ----------------------------------
@@ -737,7 +739,6 @@
   .help_message{
     strong{
       display: block;
-      margin-bottom: 10px;
       font-size: 13px;
       font-weight: bolder;
       color: $main-color;

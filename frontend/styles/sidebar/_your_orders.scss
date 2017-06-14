@@ -1,0 +1,45 @@
+#current-orders{
+	overflow-y: auto;
+	.order_content{
+		&:last-child{  padding: 0;  }
+		//&.ui-sortable-handle .order-title{  cursor: move;  }
+		.order-title{
+			padding: 5px 10px 5px 15px;
+			background: linear-gradient(to bottom, #53515e, #292830);
+			@include mdmax(1400){  padding: 5px;  }
+		}
+		form input[type="submit"]{  border-left: none;  }
+		.close{
+			margin: 0;
+			position: absolute;
+			top: calc(50% - 8px);
+			right: 1px;
+		}
+	}
+}
+//.ui-state-highlight{
+//	height: 100px;
+//	margin-bottom: 15px;
+//	border: 1px dashed #fcefa1;
+//	//animation-name: pulse;
+//	//animation-duration: 0.5s;
+//	//animation-fill-mode: both;
+//}
+.my_order{
+	.form-container{
+		display: none;
+		margin-bottom: 10px;
+		form{
+			margin: 0;
+			text-align: center;
+			&.sell{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#EF4D22, 0.9));  }
+			&.buy{  background: linear-gradient(to bottom, transparentize(#64C9EF, 0.9), transparentize(#3498DA, 0.9));  }
+		}
+	}
+	.order-title{  padding-left: 5px; }
+	.current-order-content{
+		padding: 5px 5px 10px;
+		text-align: center;
+		.btn{  width: 100%!important;  }
+	}
+}
