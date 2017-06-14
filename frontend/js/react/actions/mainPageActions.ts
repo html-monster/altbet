@@ -100,7 +100,7 @@ class Actions extends BaseActions
 
     /**
      * Create bet form in side bar
-     * @param context - контекст MainPage (для проброски defaultOrderActions)
+     * @param context - контекст MainPage (для проброски defaultOrderSidebarActions)
      * @param props
      * @return {(dispatch:any, getState:any)=>undefined}
      */

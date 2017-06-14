@@ -6,7 +6,7 @@ import BaseController from './BaseController';
 import Chart from '../components/EventPage/Chart';
 import {BetsTable} from '../components/EventPage/BetsTable';
 import * as chartActions from '../actions/EventPage/chartActions.ts';
-import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
+import * as defaultOrderSidebarActions from '../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
 import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 import eventPageActions from '../actions/eventPageActions.ts';
 import {DateLocalization} from '../models/DateLocalization';
@@ -339,7 +339,7 @@ export default connect(state => ({
     // test: state.Ttest,
 }),
 dispatch => ({
-	defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
+	defaultOrderActions: bindActionCreators(defaultOrderSidebarActions, dispatch),
     eventPageActions: bindActionCreators(eventPageActions, dispatch),
     chartActions: bindActionCreators(chartActions, dispatch),
 	traderActions: bindActionCreators(traderActions, dispatch),

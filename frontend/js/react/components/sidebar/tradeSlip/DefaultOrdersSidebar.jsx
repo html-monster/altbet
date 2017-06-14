@@ -7,15 +7,21 @@ import { connect } from 'react-redux';
 import React from 'react';
 import NewOrder from '../order/NewOrder.jsx'
 
-import * as defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderActions';
+import * as defaultOrderSidebarActions from '../../../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
 import AnimateOnUpdate from '../../Animation.jsx';
 
-class DefaultOrders extends React.Component
+class DefaultOrdersSidebar extends React.Component
 {
-	constructor()
-	{
-		super();
-	}
+	// shouldComponentUpdate(nextProps)
+	// {
+	// 	// return !(JSON.stringify(nextProps) === JSON.stringify(this.props));
+	// 	if(this.props.data.orderNewData.length)
+	// 	{
+	// 		console.log('nextProps:', nextProps.data.orderNewData["0"].Orders["0"].Side);
+	// 		console.log('this.props:', this.props.data.orderNewData["0"].Orders["0"].Side);
+	// 	}
+	// 	return true;
+	// }
 
 	render()
 	{
@@ -55,7 +61,7 @@ class DefaultOrders extends React.Component
 						/* // BM: --------------------------------------------------- NEW ORDER ---*/
 						orderNewData.map((item) =>
 							<NewOrder
-								allData={orderNewData}
+								// allData={orderNewData}
 								data={item}
 								key={`${item.ID}-${item.isMirror}-${item.Price}-${item.Volume}`}
 								//onDeleteOrderHandler={actions.actionOnDeleteOrder.bind(this, item)}
@@ -68,9 +74,9 @@ class DefaultOrders extends React.Component
 }
 
 export default connect(state => ({
-		data: state.defaultOrders,
+		data: state.defaultOrdersSidebar,
 	}),
 	dispatch => ({
-		actions: bindActionCreators(defaultOrderActions, dispatch),
+		actions: bindActionCreators(defaultOrderSidebarActions, dispatch),
 	})
-)(DefaultOrders)
+)(DefaultOrdersSidebar)

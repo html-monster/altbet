@@ -3,10 +3,11 @@ import OrderForm from './OrderForm.jsx';
 
 import AnimateOnUpdate from '../../Animation.jsx';
 
-export default class NewOrder extends React.Component{
-	constructor()
+export default class NewOrder extends React.Component
+{
+	shouldComponentUpdate(nextProps)
 	{
-		super();
+		return !(JSON.stringify(nextProps) === JSON.stringify(this.props));
 	}
 
 	render()
@@ -17,7 +18,6 @@ export default class NewOrder extends React.Component{
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
 		};
-		// console.log('data:', data);
 
 		return <div className="order_content new animated">
 			<div className="order-title">
@@ -49,8 +49,8 @@ export default class NewOrder extends React.Component{
 							id={`${symbol}_${item.Side}_${item.isMirror}`}
 							limit={item.Limit}
 							side={item.Side ? 'sell' : 'buy'}
-							ask={data.Ask}
-							bid={data.Bid}
+							ask={data.Ask === 1 ? null : data.Ask}
+							bid={data.Bid === 0 ? null : data.Bid}
 							price={item.Price}
 							quantity={item.Volume}
 							isMirror={item.isMirror}
