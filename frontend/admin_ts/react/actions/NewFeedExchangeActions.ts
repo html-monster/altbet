@@ -2,20 +2,24 @@ import {
     ON_ADD_TEAM_PLAYER,
     ON_DEL_TEAM_PLAYER,
     ON_CHANGE_EVENT,
+    ON_ENTER_PPG,
+    ON_ADD_TEAM_UP_PLAYER,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
 import {MainConfig} from '../../inc/MainConfig';
 
 
-var __LDEV__ = !true;
+var __DEBUG__ = !true;
 
 declare let orderClass;
 
 class Actions extends BaseActions
 {
+    marker;
+
     /**
-     * Change current event
+     * Change current event in dropbox
      */
     public actionChangeEvent(inProps)
     {
@@ -52,7 +56,7 @@ class Actions extends BaseActions
                 {
                     dispatch({
                         type: ON_CHANGE_EVENT,
-                        payload: [result.data.Param1, inProps, this.markPlayers],
+                        payload: [result.data.Param1, inProps],
                     });
                 },
                 result => {
@@ -72,13 +76,50 @@ class Actions extends BaseActions
     /**
      * Add team player action
      */
+    public actionPPGValues(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            this.marker || (this.marker = 1);
+            0||console.log( 'this.marker', this.marker );
+            this.marker++;
+
+            dispatch({
+                type: ON_ENTER_PPG,
+                payload: inProps, //this.setPPGValues.bind(this, inProps),
+                // payload: this.setPPGValues.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Add team player action
+     */
     public actionAddTeamplayer(inProps)
     {
         return (dispatch, getState) =>
         {
             dispatch({
                 type: ON_ADD_TEAM_PLAYER,
-                payload: this.addTeamPlayer.bind(this, inProps),
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Add team universal player action
+     */
+    public actionAddUPTeamplayer(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_ADD_TEAM_UP_PLAYER,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
             });
         };
     }
@@ -93,7 +134,7 @@ class Actions extends BaseActions
         {
             dispatch({
                 type: ON_DEL_TEAM_PLAYER,
-                payload: this.delTeamPlayer.bind(this, inProps),
+                payload: inProps, // this.delTeamPlayer.bind(this, inProps),
             });
         };
     }
@@ -102,8 +143,10 @@ class Actions extends BaseActions
     /**
      * Remove player from said team
      */
+/*
     private delTeamPlayer({player, team}, state)
     {
+        0||console.log( 'player', player );
         // return to player
         // for( let val of state.Players  )
         // {
@@ -132,10 +175,13 @@ class Actions extends BaseActions
 
         return state;
     }
+*/
+
 
     /**
      * Add player to said team
      */
+/*
     private addTeamPlayer({player, team}, state)
     {
         let $Team = state["PlayersTeam"+team];
@@ -159,11 +205,13 @@ class Actions extends BaseActions
 
         return state;
     }
+*/
 
 
     /**
      * Sort team by positions and name
      */
+/*
     private sortTeam(itms)
     {
         itms.players.sort(sortFunction);
@@ -185,11 +233,13 @@ class Actions extends BaseActions
             }
         }
     }
+*/
 
 
     /**
      * Recount team used positions
      */
+/*
     private recountPositions(inTeam)
     {
         inTeam.positions = {};
@@ -201,11 +251,13 @@ class Actions extends BaseActions
 
         return inTeam;
     }
+*/
 
 
-    /**
+/*
+    /!**
      * Recount team used positions
-     */
+     *!/
     private markPlayers(state)
     {
         // reset players states
@@ -231,6 +283,28 @@ class Actions extends BaseActions
             } // endfor
         }
     }
+*/
+
+
+/*
+    /!**
+     * Add team player action
+     *!/
+    private setPPGValues({player, team, type, num}, state)
+    {
+        let $Team = state["PlayersTeam"+team];
+        for( let val of $Team.players )
+        {
+            if( player.Id == val.Id )
+            {
+                val[type] = num;
+                break;
+            } // endif;
+        } // endfor
+
+        return state;
+    }
+*/
 }
 
 export default (new Actions()).export();

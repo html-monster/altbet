@@ -11,5 +11,11 @@
       //.fa-remove { color: #dd4b39; }
     }
   }
+  .teams-table {
+    tr.empty td { color: gray; }
+    tr.empty td+td+td { font-size: 12px }
+    .empty {}
+    .eppg, .fppg { width: 50px; text-align: center }
+  }
 }
 
