@@ -17,6 +17,7 @@ import myPosReduce from './MyPosReducer';
 import accountSetting from './userPage/settingReducer';
 // import tradeSlip from './sidebar/tradeSlipReducer';
 import registerBox from './registerReducer';
+import confirmRegisterPage from './confirmRegisterPageReducer';
 
 
 let reducers = {};
@@ -122,6 +123,16 @@ switch (ABpp.config.currentPage)
 			App: appState,
 			header,
 			mainMenu,
+			...common,
+		};
+		break;
+	}
+	case ABpp.CONSTS.PAGE_ACCOUNT_CONFIRM:{
+		reducers = {
+			App: appState,
+			header,
+			mainMenu,
+			confirmRegisterPage,
 			...common,
 		};
 		break;

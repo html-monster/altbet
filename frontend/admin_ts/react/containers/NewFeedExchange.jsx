@@ -7,6 +7,7 @@ import Actions from '../actions/NewFeedExchangeActions.ts';
 import {DropBox} from '../components/common/DropBox';
 import {PlayersTable} from '../components/NewFeedExchange/PlayersTable';
 import {Team1} from '../components/NewFeedExchange/Team1';
+import {DateLocalization} from '../common/DateLocalization';
 
 
 class NewFeedExchange extends BaseController
@@ -22,17 +23,19 @@ class NewFeedExchange extends BaseController
     }
 
 
+/*
     componentDidUpdate()
     {
         __DEV__&&console.debug( 'this.props', this.props );
     }
+*/
 
 
     render()
     {
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
-        const { Players, PlayersTeam1, PlayersTeam2, CurrentEventId } = this.props.data;
+        const { Players, PlayersTeam1, PlayersTeam2, CurrentEventId, Positions} = this.props.data;
         var items = [];
 
 
@@ -84,7 +87,10 @@ class NewFeedExchange extends BaseController
                                     <div className="form-group">
                                         <label>Event</label>
                                         <DropBox name="selected-state" items={items = Object.keys(AppData.TimeEvent).map((key) =>
-                                                { return {value: key, label: AppData.TimeEvent[key]}}
+                                                { return {
+                                                    value: AppData.TimeEvent[key].EventId,
+                                                    label: `${AppData.TimeEvent[key].HomeTeam} vs ${AppData.TimeEvent[key].AwayTeam} (${(new DateLocalization).fromSharp2(AppData.TimeEvent[key].StartDate, 0).toLocalDate({format: 'MM/DD/Y h:mm A'})})`
+                                                }}
                                             )} clearable={false} value={items[0]} searchable={true} afterChange={actions.actionChangeEvent}/>
                                     </div>
                                 </div>
@@ -99,6 +105,7 @@ class NewFeedExchange extends BaseController
                                             eventId={CurrentEventId}
                                             team1={AppData.Team1name} team2={AppData.Team2name}
                                             t1pos={PlayersTeam1.positions} t2pos={PlayersTeam2.positions}
+                                            positions={Positions}
                                         actions={actions} />
                                     </div>
                                 </div>
@@ -108,7 +115,7 @@ class NewFeedExchange extends BaseController
                                     <div className="col-xs-12">
                                         <div className="box-body" >
                                             <div className="form-group">
-                                                <Team1 data={PlayersTeam1.players} actions={actions} teamNum="1" />
+                                                <Team1 data={PlayersTeam1.players} positions={Positions} actions={actions} teamNum="1" />
                                             </div>
                                         </div>
                                     </div>
@@ -118,7 +125,7 @@ class NewFeedExchange extends BaseController
                                     <div className="col-xs-12">
                                         <div className="box-body" >
                                             <div className="form-group">
-                                                <Team1 data={PlayersTeam2.players} actions={actions} teamNum="2" />
+                                                <Team1 data={PlayersTeam2.players} positions={Positions} actions={actions} teamNum="2" />
                                             </div>
                                         </div>
                                     </div>

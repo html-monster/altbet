@@ -14,12 +14,15 @@ import {DatePicker} from './common/DatePicker';
 import {Common} from '../common/Common';
 
 
+var __DEBUG__ = !true;
+
+
 export class RegisterForm extends React.PureComponent
 {
     /**@private*/ defaultAgeRestriction = "18";
     /**@private*/ countries = [];
     /**@private*/ currentCountry = {age: 0, States: null};
-    /**@private*/ birthDate = {date: null};
+    /**@private*/ birthDate = {date: null}; // for standart format value
 
 
 	constructor(props)
@@ -44,20 +47,20 @@ export class RegisterForm extends React.PureComponent
         }
 
 
-        this.state = {States: [], ageRestrict: 18, deniedText: ''};
+        this.state = {States: [], ageRestrict: 18, deniedText: '', birthDate: ""};
 	}
 
 
     componentDidMount()
     {
-/*        if( __DEV__ )
+        if( __DEBUG__ )
         {
             0||console.log( 'emulate here' )
             setTimeout(() =>
                 {$(".log_out .sign_in").click();
                     setTimeout(() => $(".register").click(), 500)
                 }, 700)
-        }*/ // endif
+        } // endif
 
 
         var { onCustomChange } = this.props;
@@ -88,6 +91,14 @@ export class RegisterForm extends React.PureComponent
     }
 
 
+    hiddenInputRender({ id, className, label, hint, inputLabel, currVal, type, meta: { error, dirty }, ...input })
+    {
+        delete input.value;
+        0||console.log( 'input', input );
+        return <input type="hidden" value={currVal} {...input}/>;
+    }
+
+
     inputRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty }, ...input })
     {
         return <span className={'input_animate input--yoshiko' + (type === 'password' ? ' pass_container' : '')}>
@@ -107,12 +118,14 @@ export class RegisterForm extends React.PureComponent
     }
 
 
-    datePickerRender({ id, className, label, hint, inputLabel, type, afterChange, meta: { error, dirty, onCustomChange }, ...input })
+    datePickerRender({ id, className, label, hint, inputLabel, currVal, type, afterChange, meta: { error, dirty, onCustomChange }, ...input })
     {
+        delete input.value;
         return <span className="input_animate input--yoshiko">
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 <DatePicker className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id}
                     exdata={{afterChange: afterChange.bind(null, onCustomChange), dateFormat: "d M yy"}}
+                    value={currVal}
                     {...input}
                 />
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
@@ -175,6 +188,7 @@ export class RegisterForm extends React.PureComponent
         let errorDeny = `Notice: Residents of <var> are NOT eligible to participate in the service for real money.`;
         let duration = Common.dateDiff(this.birthDate.date, Date.now());
         let years = Math.floor(duration.asYears());
+        // 0||console.log( 'years', years );
 
         if( this.currentCountry.States === null )
         {
@@ -276,9 +290,10 @@ export class RegisterForm extends React.PureComponent
 	dateBirthChange(onCustomChange, val, date)
     {
         this.birthDate = {date};
+        this.setState({...this.state, birthDate: val});
         // 0||console.log( 'onCustomChange, val, date', onCustomChange, val, date );
 
-        onCustomChange(val);
+        onCustomChange(date);
     }
 
 
@@ -304,7 +319,7 @@ export class RegisterForm extends React.PureComponent
 
                     <InputValidation renderContent={this.inputRender} id='n_name' name="NickName"
                                      className={'input__field input__field--yoshiko'}
-                                     // initialValue="FedoryakaBest"
+                                     initialValue={__DEBUG__ ? "FedoryakaBest" : ""}
                                      label="User Name" type='text'
                                      validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
                                      hint="User's login allow to use symbols such as: symbols, digits, dot, underscore, dash"/>
@@ -312,7 +327,7 @@ export class RegisterForm extends React.PureComponent
                     <InputValidation renderContent={this.inputRender} id='e_name' name="Email"
                                      className={'input__field input__field--yoshiko'}
                                      label="Email Address" type='text'
-                                     // initialValue="Zotaper@yandex.ru"
+                                     initialValue={__DEBUG__ ? "Zotaper@yandex.ru" : ""}
                                      validate={[emptyValidation, mailValidation, lengthValidation.bind(null, {max: 128})]} input={input}
                                      hint="Specify your valid email. A message with registration
                                         confirmation will be sent at that address. Also that address
@@ -320,14 +335,14 @@ export class RegisterForm extends React.PureComponent
 
                     <InputValidation renderContent={this.inputRender} id='r_pass' name="Password"
                                      className={'input__field input__field--yoshiko'}
-                                     // initialValue="123"
+                                     initialValue={__DEBUG__ ? "123" : ""}
                                      label="Password" type='password'
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20}),
 										 passwordValidation.bind(null, "r_confirm_pass")]} input={input}/>
 
                     <InputValidation renderContent={this.inputRender} id='r_confirm_pass' name="ComparePassword"
                                      className={'input__field input__field--yoshiko'}
-									 // initialValue="123"
+									 initialValue={__DEBUG__ ? "123" : ""}
                                      label="Confirm Password" type='password'
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20}),
 										 passwordValidation.bind(null, "r_pass")]} input={input}/>
@@ -352,9 +367,18 @@ export class RegisterForm extends React.PureComponent
 									 className={'input__field input__field--yoshiko js-dateofbirth'}
 									 label="Date of birth" type='text'
 									 afterChange={this.dateBirthChange.bind(this)}
-									 // initialValue="12 Apr 1999"
+									 // initialValue={__DEBUG__ ? "12 Apr 1999" : ""}
+									 currVal={this.state.birthDate ? this.state.birthDate : __DEBUG__ ? "12 Apr 1999" : ""}
 									 validate={[emptyValidation, customValidation.bind(null, ::this.dateBirthCheck)]} input={input}/>
 
+{/*
+                    <InputValidation renderContent={::this.hiddenInputRender} name="DateOfBirth"
+									 // afterChange={this.dateBirthChange.bind(this)}
+									 currVal={this.state.birthDate}
+									 validate={[]} input={input}/>
+*/}
+
+                    {/*<input type="hidden" name="DateOfBirth" value={this.state.birthDate}/>*/}
 
                     <div className="agreement">
                         <InputValidation renderContent={this.chkBoxRender} id='agreement' input={input}>

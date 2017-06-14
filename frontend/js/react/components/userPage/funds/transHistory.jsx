@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 
-import actions from '../../../actions/userPage/transHistoryActions.ts';
+import actions from '../../../actions/userPage/transHistoryActions';
 import {DateLocalization} from '../../../models/DateLocalization';
 
 

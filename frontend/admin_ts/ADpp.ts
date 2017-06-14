@@ -22,6 +22,8 @@ export default class ADpp
 
     private controllers = {};
     private currentController = null;
+    private Store = null;
+
 
     constructor()
     {
