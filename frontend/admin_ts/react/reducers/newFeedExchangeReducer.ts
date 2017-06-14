@@ -13,14 +13,15 @@ import {
 
 class Reducer
 {
-    initialState = {
+    private initialState = {
         ...globalData.AppData,
         PlayersTeam1: {positions: {}, players: []},
         PlayersTeam2: {positions: {}, players: []},
         Positions: null,
         CurrentEventId: null,
+        uniPositionName: 'Util',
+        uniPositionIndex: 5,
     };
-
 
 
     constructor()
@@ -60,7 +61,6 @@ class Reducer
             default:
                 return state
         }
-
     }
 
 
@@ -153,6 +153,11 @@ class Reducer
             if( player.Id == val.Id && !val.used )
             {
                 val.used = team;
+                val.meta = { PositionOrig: val.Position,
+                    IndexOrig: val.Index,
+                };
+                val.Index = state.uniPositionIndex;
+                val.Position = state.uniPositionName;
                 $Team.players.push(val);
                 break;
             } // endif;
@@ -280,6 +285,10 @@ class Reducer
             let val = $Team.players[ii];
             if( player.Id == val.Id )
             {
+                val.used = false;
+                val.Index = val.meta.IndexOrig;
+                val.Position = val.meta.PositionOrig;
+                val.meta = null;
                 $Team.players.splice(ii, 1);
                 break;
             } // endif;

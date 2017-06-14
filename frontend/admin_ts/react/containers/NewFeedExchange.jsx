@@ -35,7 +35,7 @@ class NewFeedExchange extends BaseController
     {
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
-        const { Players, PlayersTeam1, PlayersTeam2, CurrentEventId, Positions} = this.props.data;
+        const { Players, PlayersTeam1, PlayersTeam2, CurrentEventId, Positions, uniPositionIndex, uniPositionName} = this.props.data;
         var items = [];
 
 
@@ -106,6 +106,7 @@ class NewFeedExchange extends BaseController
                                             team1={AppData.Team1name} team2={AppData.Team2name}
                                             t1pos={PlayersTeam1.positions} t2pos={PlayersTeam2.positions}
                                             positions={Positions}
+                                            uplayerdata={{uniPositionIndex, uniPositionName}}
                                         actions={actions} />
                                     </div>
                                 </div>

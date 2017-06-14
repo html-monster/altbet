@@ -143,5 +143,4 @@ export default function defaultOrders(state = initialState, action)
 		default:
 			return state
 	}
-
 }

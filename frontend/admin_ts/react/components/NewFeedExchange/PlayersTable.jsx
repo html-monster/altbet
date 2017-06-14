@@ -8,7 +8,9 @@ import React from 'react' ;
 export class PlayersTable extends React.Component
 {
     // filters = {};
-    currFilter = "";
+    /**@private*/ currFilter = "";
+    /**@private*/ uniPositionName = 'Util';
+
 
     constructor(props)
     {
@@ -33,7 +35,7 @@ export class PlayersTable extends React.Component
 
     render()
     {
-        const { team1, team2, t1pos, t2pos, actions, positions } = this.props;
+        const { team1, team2, t1pos, t2pos, actions, positions, uplayerdata: {uniPositionIndex, uniPositionName} } = this.props;
         const { data, filters } = this.state;
 
 
@@ -61,13 +63,13 @@ export class PlayersTable extends React.Component
                         data.map((itm, key) =>
                             (this.currFilter === "All" || this.currFilter === itm.Team) &&
                             do {
-                                // 0||console.log( 'positions[itm.Index], itm.Index', positions[itm.Index], itm.Index );
+                                // 0||console.log( 'positions[itm.Index], itm.Index', positions[itm.Index], itm.Index, t1pos[itm.Index] );
                                 // block add for full team position
                                 let addTeam1disable = positions[itm.Index].Quantity == t1pos[itm.Index];
                                 // block add for full uni position
-                                let addTeam1UPdisable = false;
+                                let addTeam1UPdisable = positions[uniPositionIndex].Quantity == t1pos[uniPositionIndex];
                                 let addTeam2disable = positions[itm.Index].Quantity == t2pos[itm.Index];
-                                let addTeam2UPdisable = false;
+                                let addTeam2UPdisable = false&&positions[uniPositionIndex].Quantity == t2pos[uniPositionIndex];
 
                                 <tr key={key} className={`${itm.used ? "used team" + itm.used : ""}`}>
                                     <td> {itm.Position} </td>
@@ -85,7 +87,7 @@ export class PlayersTable extends React.Component
                                                 <button type="button" className="btn btn-default -btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="fa fa-plus">{}</i> Add T1 <span className="caret">{}</span></button>
                                                 <ul className="dropdown-menu">
                                                     <li className={addTeam1disable ? "disabled" : ""} title={addTeam1disable ? `The ${itm.Position} position is full` : ""}><a href="#" className={addTeam1disable ? "-silver" : ""} onClick={() => addTeam1disable || actions.actionAddTeamplayer({player: itm, team: 1})}>Add to {itm.Position}</a></li>
-                                                    <li className={addTeam1UPdisable ? "disabled" : ""} title={addTeam1UPdisable ? `The ${itm.Position} position is full` : ""}><a href="#" className={addTeam1UPdisable ? "-silver" : ""} onClick={() => addTeam1disable || actions.actionAddUPTeamplayer({player: itm, team: 1})}>Add to universal position </a></li>
+                                                    <li className={addTeam1UPdisable ? "disabled" : ""} title={addTeam1UPdisable ? `The Universal position is full` : ""}><a href="#" className={addTeam1UPdisable ? "-silver" : ""} onClick={() => addTeam1disable || actions.actionAddUPTeamplayer({player: itm, team: 1})}>Add to universal position </a></li>
                                                     {/*<li role="separator" className="divider"></li>*/}
                                                 </ul>
                                             </div>
@@ -94,7 +96,7 @@ export class PlayersTable extends React.Component
                                                 <button type="button" className="btn btn-default -btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="fa fa-plus">{}</i> Add T2 <span className="caret">{}</span></button>
                                                 <ul className="dropdown-menu">
                                                     <li className={addTeam2disable ? "disabled" : ""} title={addTeam2disable ? `The ${itm.Position} position is full` : ""}><a href="#" className={addTeam2disable ? "-silver" : ""} onClick={() => addTeam2disable || actions.actionAddTeamplayer({player: itm, team: 2})}>Add to {itm.Position}</a></li>
-                                                    <li className={addTeam2UPdisable ? "disabled" : ""} title={addTeam2UPdisable ? `The ${itm.Position} position is full` : ""}><a href="#" className={addTeam2UPdisable ? "-silver" : ""}>Add to universal position </a></li>
+                                                    <li className={addTeam2UPdisable ? "disabled" : ""} title={addTeam2UPdisable ? `The Universal position is full` : ""}><a href="#" className={addTeam2UPdisable ? "-silver" : ""}>Add to universal position </a></li>
                                                     {/*<li role="separator" className="divider"></li>*/}
                                                 </ul>
                                             </div>

@@ -98,7 +98,7 @@
         "webpack-uglify-js-plugin": "^1.1.9"
     },
     "name": "Altbet",
-    "version": "3.2.78",
+    "version": "3.2.79",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/html-monster/altbet.git"

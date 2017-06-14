@@ -16,8 +16,6 @@ declare let orderClass;
 
 class Actions extends BaseActions
 {
-    marker;
-
     /**
      * Change current event in dropbox
      */
@@ -80,10 +78,6 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            this.marker || (this.marker = 1);
-            0||console.log( 'this.marker', this.marker );
-            this.marker++;
-
             dispatch({
                 type: ON_ENTER_PPG,
                 payload: inProps, //this.setPPGValues.bind(this, inProps),
