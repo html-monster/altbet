@@ -1,7 +1,9 @@
 .ac-newfeedexchange {
   .content-wrapper {
+    .form-group-filters { display: inline-block; margin-left: 20px;
+      a { padding: 0 2px }
+    }
     .h-players {
-      .filters { display: inline-block; margin-left: 20px }
       .f-btn.active { font-weight: bold }
       .fa-plus { color: #00a65a; }
       tr.used td { background: #f2fbe9 }

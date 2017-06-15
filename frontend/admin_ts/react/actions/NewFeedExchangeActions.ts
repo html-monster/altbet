@@ -54,7 +54,7 @@ class Actions extends BaseActions
                 {
                     dispatch({
                         type: ON_CHANGE_EVENT,
-                        payload: [result.data.Param1, inProps],
+                        payload: [result.data.Players, inProps],
                     });
                 },
                 result => {
@@ -64,6 +64,66 @@ class Actions extends BaseActions
                         dispatch({
                             type: ON_CHANGE_EVENT,
                             payload: [[], inProps],
+                        });
+                    }
+                });
+        };
+    }
+
+
+
+    /**
+     * Change events period
+     */
+    public actionChangeEventsPeriod({EventId, filterVal})
+    {
+        return (dispatch, getState) =>
+        {
+            let data = new FormData();
+            data.set('EventId', EventId);
+            data.set('Period', filterVal);
+
+            const ajaxPromise = (new AjaxSend()).send({
+                formData: data,
+                message: `Error ...`,
+                // url: ABpp.baseUrl + $form.attr('action'),
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GETTIMEEVENT,
+                respCodes: [
+                    {code: 100, message: ""},
+                    // {code: -101, message: "Some custom error"},
+                ],
+                // beforeChkResponse: (data) =>
+                // {
+                //     // DEBUG: emulate
+                //     data = {Error: 101};
+                //     // data.Param1 = "TOR-PHI-3152017"; // id
+                //     // data.Param1 = "?path=sport&status=approved";
+                //     // data.Param1 = "?status=New";
+                //     // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                //     // data.Param3 = "TOR-PHI-3152017"; // id
+                //
+                //     return data;
+                // },
+            });
+
+
+            ajaxPromise.then( result =>
+                {
+                    0||console.log( 'result', result );
+                    return;
+                    dispatch({
+                        type: ON_CHANGE_EVENT,
+                        payload: [],
+                    });
+                },
+                result => {
+                    0||console.log( 'result', result );
+                    return;
+                    if( result.code != 100 )
+                    {
+                        dispatch({
+                            type: ON_CHANGE_EVENT,
+                            payload: [[], ],
                         });
                     }
                 });

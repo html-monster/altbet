@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import BaseController from './BaseController';
 import Actions from '../actions/NewFeedExchangeActions.ts';
 import {DropBox} from '../components/common/DropBox';
-import {PlayersTable} from '../components/NewFeedExchange/PlayersTable';
+import {PlayersTable} from 'components/NewFeedExchange/PlayersTable';
 import {Team1} from '../components/NewFeedExchange/Team1';
 import {DateLocalization} from '../common/DateLocalization';
 
@@ -35,7 +35,7 @@ class NewFeedExchange extends BaseController
     {
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
-        const { Players, PlayersTeam1, PlayersTeam2, CurrentEventId, Positions, uniPositionIndex, uniPositionName} = this.props.data;
+        const { Players, PlayersTeam1, PlayersTeam2, CurrentEventId, Positions, UPlayerData, EventFilter, Period} = this.props.data;
         var items = [];
 
 
@@ -85,7 +85,10 @@ class NewFeedExchange extends BaseController
                             <div className="col-sm-6">
                                 <div className="box-body" >
                                     <div className="form-group">
-                                        <label>Event</label>
+                                        <label>Event </label>
+                                        <div className="form-group-filters" title="Filter events by period">
+                                            { Object.keys(EventFilter).map((val) => <a href="#" key={val} class={Period == val ? '-bold' : ''} onClick={this._onEventFilterChange.bind(this, val)}> {EventFilter[val]} </a>) }
+                                        </div>
                                         <DropBox name="selected-state" items={items = Object.keys(AppData.TimeEvent).map((key) =>
                                                 { return {
                                                     value: AppData.TimeEvent[key].EventId,
@@ -106,7 +109,7 @@ class NewFeedExchange extends BaseController
                                             team1={AppData.Team1name} team2={AppData.Team2name}
                                             t1pos={PlayersTeam1.positions} t2pos={PlayersTeam2.positions}
                                             positions={Positions}
-                                            uplayerdata={{uniPositionIndex, uniPositionName}}
+                                            uplayerdata={UPlayerData}
                                         actions={actions} />
                                     </div>
                                 </div>
@@ -116,7 +119,7 @@ class NewFeedExchange extends BaseController
                                     <div className="col-xs-12">
                                         <div className="box-body" >
                                             <div className="form-group">
-                                                <Team1 data={PlayersTeam1.players} positions={Positions} actions={actions} teamNum="1" />
+                                                <Team1 data={PlayersTeam1.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />
                                             </div>
                                         </div>
                                     </div>
@@ -126,7 +129,17 @@ class NewFeedExchange extends BaseController
                                     <div className="col-xs-12">
                                         <div className="box-body" >
                                             <div className="form-group">
-                                                <Team1 data={PlayersTeam2.players} positions={Positions} actions={actions} teamNum="2" />
+                                                <Team1 data={PlayersTeam1.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div className="row">
+                                    <div className="col-xs-12">
+                                        <div className="box-body" >
+                                            <div className="form-group">
+                                                <Team1 data={PlayersTeam2.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />
                                             </div>
                                         </div>
                                     </div>
@@ -152,6 +165,18 @@ class NewFeedExchange extends BaseController
             </div>
         );
         // return <Chart data={this.props.MainPage} actions={this.props.chartActions} />
+    }
+
+
+
+    _onEventFilterChange(filterVal, ee)
+    {
+        ee.preventDefault();
+
+        const { actions, data: {EventId} } = this.props;
+        // const { Players, PlayersTeam1, PlayersTeam2, CurrentEventId, Positions, UPlayerData, EventFilter, Period} = this.props.data;
+
+        actions.actionChangeEventsPeriod({EventId, filterVal});
     }
 }
 

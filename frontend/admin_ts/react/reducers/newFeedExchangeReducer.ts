@@ -19,8 +19,11 @@ class Reducer
         PlayersTeam2: {positions: {}, players: []},
         Positions: null,
         CurrentEventId: null,
-        uniPositionName: 'Util',
-        uniPositionIndex: 5,
+        UPlayerData: {
+            uniPositionName: 'Util',
+            uniPositionIndex: 5,
+        },
+        EventFilter: {'0': '1min', '2': '2h', '4': '4h', '8': '8h'},
     };
 
 
@@ -156,8 +159,8 @@ class Reducer
                 val.meta = { PositionOrig: val.Position,
                     IndexOrig: val.Index,
                 };
-                val.Index = state.uniPositionIndex;
-                val.Position = state.uniPositionName;
+                val.Index = state.UPlayerData.uniPositionIndex;
+                val.Position = state.UPlayerData.uniPositionName;
                 $Team.players.push(val);
                 break;
             } // endif;

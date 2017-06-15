@@ -55,6 +55,14 @@ module.exports = {
         'inline-source-map',
 
     resolve: {
+        alias: {
+            'actions': path.resolve(__dirname, '../frontend/admin_ts/react/actions'),
+            'common': path.resolve(__dirname, '../frontend/admin_ts/react/common'),
+            'constants': path.resolve(__dirname, '../frontend/admin_ts/react/constants'),
+            'components': path.resolve(__dirname, '../frontend/admin_ts/react/components'),
+            'containers': path.resolve(__dirname, '../frontend/admin_ts/react/containers'),
+            'reducers': path.resolve(__dirname, '../frontend/admin_ts/react/reducers'),
+        },
         extensions: [
             '',
             '.ts',
@@ -99,20 +107,20 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: "babel-loader",
-                exclude: [/node_modules/, /public/],
-                query: {
-                    presets: ['es2015', 'stage-0', 'react'],
-                    plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
-                  }
+                // exclude: [/node_modules/, /public/],
+                // query: {
+                //     presets: ['es2015', 'stage-0', 'react'],
+                //     plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
+                //   }
             },
             {
                 test: /\.jsx$/,
                 loader: "babel-loader",
-                exclude: [/node_modules/, /public/],
-                query: {
-                    presets: ['es2015', 'stage-0', 'react'],
-                    plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
-                  }
+                // exclude: [/node_modules/, /public/],
+                // query: {
+                //     presets: ['es2015', 'stage-0', 'react'],
+                //     plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
+                //   }
             },
         ]
     },

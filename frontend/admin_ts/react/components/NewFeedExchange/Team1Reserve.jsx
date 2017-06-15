@@ -1,21 +1,13 @@
 /**
- * Created by Vlasakh on 20.04.2017.
+ * Created by Vlasakh on 15.06.2017.
  */
 
 import React from 'react' ;
 import NumericInput from 'react-numeric-input';
 
 
-export class Team1 extends React.Component
+export class Team1Reserve extends React.Component
 {
-/*
-    constructor(props)
-    {
-        super(props);
-    }
-*/
-
-
     render()
     {
         const { data, positions, teamNum, actions, uplayerdata: {uniPositionIndex, uniPositionName} } = this.props;
@@ -24,7 +16,7 @@ export class Team1 extends React.Component
 
         return (
             <div className="h-team">
-                <label>Players team {teamNum}</label>
+                <label>Reserve players team {teamNum}</label>
                 <table class="table teams-table">
                     <thead>
                     <tr>

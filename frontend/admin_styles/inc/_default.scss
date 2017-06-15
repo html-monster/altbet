@@ -25,6 +25,7 @@
 .-gray { color: #777 !important; }
 .-silver { color: silver !important; }
 .-nobold { font-weight: normal !important; }
+.-bold { font-weight: bold !important; }
 .-icon-before-16 { position: relative; padding-left: 22px;
   &::before { content: ' '; @include box(b,a, 21 16 px); left: 0; top: 2px; @include bg("ico-icons-03.png"); }
 }
