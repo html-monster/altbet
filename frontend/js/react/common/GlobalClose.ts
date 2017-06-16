@@ -14,26 +14,34 @@
 //     customCloseFunction();
 // }
 
+
+
 export default class GlobalCloseClass
 {
     public SLIDEUP = 'slideUp';
-    private state;
+    private defaultProps = {
+        element: null, //element: object || string - element what we want to close
+        method: 'fadeOut', //method: string - jQuery method of closing
+        customCloseFunction: null, //customCloseFunction: function - custom function, what we want bind to method
+        defaultClose: true, //boolean - true, if we want use jQuery closing
+    };
+    private props;
 
     constructor(props)
     {
-        this.state = {
-            element: null, //element: object || string - element what we want to close
-            method: 'fadeOut', //method: string - jQuery method of closing
-            customCloseFunction: null, //customCloseFunction: function - custom function, what we want bind to method
-            defaultClose: true, //boolean - true, if we want use jQuery closing
+        this.props = {
+            ...this.defaultProps,
             ...props
         }
     }
 
-
+    /**
+     * bind click on document that close element
+     * @returns {boolean}
+     */
     public bindGlobalClick()
     {
-        if(!this.state.element)
+        if(!this.props.element)
         {
             console.error('Global close error, we must element transfer to bindGlobalClick method');
             return false;
@@ -41,26 +49,26 @@ export default class GlobalCloseClass
 
         $(document).bind('click', (event) => {
             __DEV__ && console.log('element close');
-            if($(event.target).closest(this.state.element).length !== 0)
+            if($(event.target).closest(this.props.element).length !== 0)
                 return false;
 
 
-            if(this.state.defaultClose)
+            if(this.props.defaultClose)
             {
-                switch (this.state.method){
+                switch (this.props.method){
                     case this.SLIDEUP:
-                        $(this.state.element).slideUp();
+                        $(this.props.element).slideUp();
                         break;
                     default:
-                        $(this.state.element).fadeOut();
+                        $(this.props.element).fadeOut();
                 }
             }
-            if(this.state.customCloseFunction)
+            if(this.props.customCloseFunction)
             {
-                if(this.state.defaultClose)
-                    setTimeout(()=> this.state.customCloseFunction(), 400);
+                if(this.props.defaultClose)
+                    setTimeout(()=> this.props.customCloseFunction(), 400);
                 else
-                    this.state.customCloseFunction();
+                    this.props.customCloseFunction();
             }
             $(document).unbind(event)
         })
