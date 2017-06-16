@@ -23,7 +23,7 @@ export default class NewOrder extends React.PureComponent
 			<div className="order-title">
 				<h3>{data.EventTitle}</h3>
 				<span className="close" onClick={actions.actionOnDeleteOrder.bind(null, data)}><span>{}</span></span>
-				<strong className="current-order up">Units: <span>{data.Positions}</span></strong>
+				<strong className="current-order pos">Units: <span>{data.Positions}</span></strong>
 			</div>
 			{
 				data.Orders.map((item) =>

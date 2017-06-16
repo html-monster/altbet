@@ -84,7 +84,7 @@ class GroupingOrder extends React.Component
 							:
 								''
 						}
-						<strong className="current-order up"> Total: <span>{data.Positions}</span></strong>
+						<strong className="current-order pos"> Total: <span>{data.Positions}</span></strong>
 					</div>
 				</div>
 				<div className="order_info">

@@ -195,16 +195,16 @@ class Actions extends BaseActions
             let order : any = outStruc.Orders[0];
             let index = order.Price === '0.' ? 'empty' : Math.round(99 - order.Price * 100);
 
-            if(ABpp.config.tradeOn){
-                context.props.traderActions.actionAddDefaultOrder(null, {
-                    direction: order.Side ? 'sell' : 'buy',
-                    price: order.Price,
-                    quantity: order.Volume,
-                    limit: order.Limit,
-                    outputOrder: true
-                }, order.Limit ? index : 'market');
-            }
-            else
+            // if(ABpp.config.tradeOn){
+            //     context.props.traderActions.actionAddDefaultOrder(null, {
+            //         direction: order.Side ? 'sell' : 'buy',
+            //         price: order.Price,
+            //         quantity: order.Volume,
+            //         limit: order.Limit,
+            //         outputOrder: true
+            //     }, order.Limit ? index : 'market');
+            // }
+            // else
                 context.props.defaultOrderActions.actionOnOrderCreate(outStruc);
             // 0||console.debug( 'getState()', getState() );
             // getState().App.controllers.TradeSlip.createNewOrder(outStruc);

@@ -49,12 +49,11 @@ export default class GlobalCloseClass
         }
 
         $(document).bind('click', (event) => {
-            __DEV__ && console.log('document click');
-            // if(!($(event.target).closest(this.props.element).length !== 0))
-            console.log('someelemnt:', this.props.excludeElements.some((element) =>  $(event.target).closest(element).length !== 0));
-            if(!($(event.target).closest(this.props.element).length !== 0 || this.props.excludeElements.some((element) =>  $(event.target).closest(element).length !== 0)))
+            // __DEV__ && console.log('document click');
+            if(!($(event.target).closest(this.props.element).length !== 0 ||
+                this.props.excludeElements.some((element) =>  $(event.target).closest(element).length !== 0)))
             {
-                __DEV__ && console.log('element close');
+                // __DEV__ && console.log('element close');
 
                 if(this.props.defaultClose)
                 {

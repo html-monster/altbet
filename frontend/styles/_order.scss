@@ -108,8 +108,9 @@
     &.qty { width: calc(100% - 204px); text-align: center }
     &.dt { width: 80px }
     &.current-order { padding: 0; color: transparentize(#ffffff, 0.2);
-      &.up span{  color: #3498da;  }
-      &.down span{  color: #ef4d22;  }
+      //&.up span{  color: #3498da;  }
+      //&.down span{  color: #ef4d22;  }
+      &.pos span{ color: #bab500; }
     }
     &.last-price { position: absolute; right: 70px; top: calc(50% - 11px);
       &:before{ content: ''; display: inline-block; width: 9px; height: 9px; vertical-align: middle;

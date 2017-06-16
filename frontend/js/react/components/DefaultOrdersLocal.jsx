@@ -19,8 +19,6 @@ class DefaultOrdersLocal extends React.PureComponent
 
 	componentDidUpdate(prevProps)
 	{
-		// console.log('this.props.showOrder:', this.props.showOrder);
-		// console.log('prevProps.showOrder:', prevProps.showOrder);
 		if(this.props.showOrder && this.props.showOrder !== prevProps.showOrder)
 		{
 			(new GlobalCloseClass({element: this.refs.orderContainer, customCloseFunction: this.props.actions.actionOnDeleteOrder,
@@ -33,7 +31,7 @@ class DefaultOrdersLocal extends React.PureComponent
 		const { actions, eventData, orderData, showOrder } = this.props;
 		// console.log('actions:', actions);
 
-		return <div className="order_container" style={showOrder && eventData.ID === orderData.ID ? {} : {display: 'none'}} ref="orderContainer">
+		return <div className="order_container_local" style={showOrder && eventData.ID === orderData.ID ? {} : {display: 'none'}} ref="orderContainer">
 			{
 				showOrder && eventData.ID === orderData.ID &&
 				<div className="order_wrapper">
