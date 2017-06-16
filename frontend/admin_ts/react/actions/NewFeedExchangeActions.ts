@@ -4,6 +4,8 @@ import {
     ON_CHANGE_EVENT,
     ON_ENTER_PPG,
     ON_ADD_TEAM_UP_PLAYER,
+    ON_CHANGE_EVENTS_PERIOD,
+    ON_ADD_TEAM_PLAYER_RESERVE,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -16,6 +18,8 @@ declare let orderClass;
 
 class Actions extends BaseActions
 {
+    private T1 = 0;
+
     /**
      * Change current event in dropbox
      */
@@ -88,10 +92,10 @@ class Actions extends BaseActions
                 message: `Error ...`,
                 // url: ABpp.baseUrl + $form.attr('action'),
                 url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GETTIMEEVENT,
-                respCodes: [
-                    {code: 100, message: ""},
-                    // {code: -101, message: "Some custom error"},
-                ],
+                // respCodes: [
+                //     {code: 100, message: ""},
+                //     // {code: -101, message: "Some custom error"},
+                // ],
                 // beforeChkResponse: (data) =>
                 // {
                 //     // DEBUG: emulate
@@ -109,22 +113,16 @@ class Actions extends BaseActions
 
             ajaxPromise.then( result =>
                 {
-                    0||console.log( 'result', result );
-                    return;
                     dispatch({
-                        type: ON_CHANGE_EVENT,
-                        payload: [],
+                        type: ON_CHANGE_EVENTS_PERIOD,
+                        payload: [result.data.TimeEvent, filterVal],
                     });
                 },
                 result => {
-                    0||console.log( 'result', result );
-                    return;
                     if( result.code != 100 )
                     {
-                        dispatch({
-                            type: ON_CHANGE_EVENT,
-                            payload: [[], ],
-                        });
+                        0||console.warn( 'Result code: ', result.code );
+                        return;
                     }
                 });
         };
@@ -138,11 +136,15 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            dispatch({
-                type: ON_ENTER_PPG,
-                payload: inProps, //this.setPPGValues.bind(this, inProps),
-                // payload: this.setPPGValues.bind(this, inProps),
-            });
+            clearTimeout(this.T1);
+            this.T1 = setTimeout(() => {
+                dispatch({
+                    type: ON_ENTER_PPG,
+                    payload: inProps, //this.setPPGValues.bind(this, inProps),
+                    // payload: this.setPPGValues.bind(this, inProps),
+                })},
+                800
+            );
         };
     }
 
@@ -158,6 +160,21 @@ class Actions extends BaseActions
                 type: ON_ADD_TEAM_PLAYER,
                 payload: inProps,
                 // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Add team reserver player
+     */
+    public actionAddTeamplayerReserve(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_ADD_TEAM_PLAYER_RESERVE,
+                payload: inProps,
             });
         };
     }

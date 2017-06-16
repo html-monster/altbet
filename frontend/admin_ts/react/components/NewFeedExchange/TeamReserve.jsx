@@ -6,12 +6,11 @@ import React from 'react' ;
 import NumericInput from 'react-numeric-input';
 
 
-export class Team1Reserve extends React.Component
+export class TeamReserve extends React.Component
 {
     render()
     {
-        const { data, positions, teamNum, actions, uplayerdata: {uniPositionIndex, uniPositionName} } = this.props;
-        let jj = 0, kk = 1;
+        const { players, teamNum, actions } = this.props;
         // 0||console.log( 'da', data );
 
         return (
@@ -27,41 +26,27 @@ export class Team1Reserve extends React.Component
                         <th>EPPG</th>
                         <th>FPPG</th>
                         <th>Status</th>
-                        <th></th>
+                        <th/>
                     </tr>
                     </thead>
                     <tbody>
-                    { positions.map((itm) =>
-                        do {
-                            let ret = [];
-                            for( let ii = 0; ii < itm.Quantity; ii++ )
-                            {
-                                if( data[jj] && data[jj].Index == itm.Index )
-                                {
-                                    ret.push(<tr key={itm.Name + ii}>
-                                        <td> {kk++} </td>
-                                        <td> {itm.Name === uniPositionName ? <span title="Universal player">UP ({data[jj].meta.PositionOrig})</span> : data[jj].Position} </td>
-                                        <td> {data[jj].Team} </td>
-                                        <td> {data[jj].Name} </td>
-                                        <td><NumericInput className="eppg" value={data[jj].Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: data[jj], team: teamNum, type: 'Eppg'})} style={ false } /></td>
-                                        <td><NumericInput className="fppg" value={data[jj].Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: data[jj], team: teamNum, type: 'Fppg'})} style={ false } /></td>
-                                        <td> {data[jj].Status} </td>
-                                        <td><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: data[jj], team: teamNum})} title="Remove player"><i className="fa fa-remove -red">{}</i></button></td>
-                                    </tr>);
-                                    jj++;
-                                }
-                                else
-                                {
-                                    ret.push(<tr className="empty">
-                                        <td>{}</td>
-                                        <td>{itm.Name === uniPositionName ? <span title="Universal player">UP</span> : itm.Name}</td>
-                                        <td colSpan="5"><i>Add player to this position...</i></td>
-                                    </tr>)
-                                } // endif
-                            } // endfor
-
-                            ret;
-                        })
+                    { players.length ?
+                        players.map((itm, key) =>
+                            <tr key={key}>
+                                <td> {key+1} </td>
+                                <td> {itm.Position} </td>
+                                <td> {itm.Team} </td>
+                                <td> {itm.Name} </td>
+                                <td><NumericInput className="eppg" value={itm.Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: itm, team: `PlayersTeam${teamNum}Reserve`, type: 'Eppg'})} style={ false } /></td>
+                                <td><NumericInput className="fppg" value={itm.Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: itm, team: `PlayersTeam${teamNum}Reserve`, type: 'Fppg'})} style={ false } /></td>
+                                <td> {itm.Status} </td>
+                                <td><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: itm, team: teamNum, used: itm.used})} title="Remove player"><i className="fa fa-remove -red">{}</i></button></td>
+                            </tr>)
+                        :
+                        <tr className="empty">
+                            <td/>
+                            <td colSpan="5"><i>Add players to reserve...</i></td>
+                        </tr>
                     }
                     </tbody>
                 </table>

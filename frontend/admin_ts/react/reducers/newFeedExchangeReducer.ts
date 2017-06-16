@@ -8,15 +8,26 @@ import {
     ON_CHANGE_EVENT,
     ON_ENTER_PPG,
     ON_ADD_TEAM_UP_PLAYER,
+    ON_CHANGE_EVENTS_PERIOD,
+    ON_ADD_TEAM_PLAYER_RESERVE,
 } from '../constants/ActionTypesNewFeedExchange';
+
 
 
 class Reducer
 {
+    public static USING_TEAM = 1;
+    public static USING_TEAM_UP = 2;
+    public static USING_RESERVE = 3;
+    public static USING_VARIABLE = 4;
+
+
     private initialState = {
-        ...globalData.AppData,
+        Players: [],
         PlayersTeam1: {positions: {}, players: []},
+        PlayersTeam1Reserve: {players: []},
         PlayersTeam2: {positions: {}, players: []},
+        PlayersTeam2Reserve: {players: []},
         Positions: null,
         CurrentEventId: null,
         UPlayerData: {
@@ -24,6 +35,10 @@ class Reducer
             uniPositionIndex: 5,
         },
         EventFilter: {'0': '1min', '2': '2h', '4': '4h', '8': '8h'},
+        Rules: {
+            reserveLen: 5, // reserve players count
+        },
+        ...globalData.AppData,
     };
 
 
@@ -31,7 +46,8 @@ class Reducer
     {
         this.initialState.Positions = this.preparePositions(globalData.AppData.Positions);
         // load saved teams
-        // this.initialState = {...this.initialState, ...this.loadData()};
+        let loadedData = this.loadData();
+        this.initialState = {...this.initialState, ...loadedData};
     }
 
 
@@ -49,6 +65,10 @@ class Reducer
                 state = this.addTeamUPPlayer(action.payload, state);
                 return {...state};
 
+            case ON_ADD_TEAM_PLAYER_RESERVE:
+                state = this.addTeamPlayerReserve(action.payload, state);
+                return {...state};
+
             case ON_DEL_TEAM_PLAYER:
                 state = this.delTeamPlayer(action.payload, state);
                 return {...state};
@@ -59,6 +79,10 @@ class Reducer
 
             case ON_CHANGE_EVENT:
                 state = this.setCurrentEvent(action.payload, state);
+                return {...state};
+
+            case ON_CHANGE_EVENTS_PERIOD:
+                state = this.setEventsPeriod(action.payload, state);
                 return {...state};
 
             default:
@@ -80,7 +104,19 @@ class Reducer
         {
             data = JSON.parse(data);
 
-            if( $CurrentEventId && data.CurrentEventId.EventId == $CurrentEventId.EventId ) return data;
+            if( $CurrentEventId && data.CurrentEventId && data.CurrentEventId.EventId == $CurrentEventId.EventId )
+            {
+                this.initialState.Players.map((val, key) => {
+                    if (val.ID == data.Players[key].Id && data.Players[key].used)
+                    {
+                        val.usedTeam = data.Players[key].usedTeam;
+                        val.used = data.Players[key].used;
+                    }
+                    return val
+                });
+
+                return data;
+            }
         } // endif
 
         return {
@@ -93,11 +129,11 @@ class Reducer
 
     /**
      * Save user teams data
-     * @param state {PlayersTeam1, PlayersTeam2, CurrentEventId}
+     * @param state {PlayersTeam1, PlayersTeam2, CurrentEventId, Players}
      */
-    private saveData({ PlayersTeam1, PlayersTeam2, CurrentEventId })
+    private saveData({ PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, CurrentEventId, Players })
     {
-        let data = { PlayersTeam1, PlayersTeam2, CurrentEventId };
+        let data = { PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, CurrentEventId, Players };
         localStorage.setItem('newFeedExchange', JSON.stringify(data));
     }
 
@@ -123,13 +159,14 @@ class Reducer
         {
             if( player.Id == val.Id && !val.used )
             {
-                val.used = team;
+                val.used = Reducer.USING_TEAM;
+                val.usedTeam = team;
                 $Team.players.push(val);
                 break;
             } // endif;
         } // endfor
 
-        state["PlayersTeam"+team] = this.sortTeam($Team);
+        state["PlayersTeam"+team].players = this.sortTeam($Team.players);
 
         // count positions limits
         state["PlayersTeam"+team] = this.recountPositions($Team);
@@ -149,13 +186,13 @@ class Reducer
      */
     private addTeamUPPlayer({player, team}, state)
     {
-        console.debug( 'uni pl', 0 );
         let $Team = state["PlayersTeam"+team];
         for( let val of state.Players  )
         {
             if( player.Id == val.Id && !val.used )
             {
-                val.used = team;
+                val.used = Reducer.USING_TEAM_UP;
+                val.usedTeam = team;
                 val.meta = { PositionOrig: val.Position,
                     IndexOrig: val.Index,
                 };
@@ -166,10 +203,39 @@ class Reducer
             } // endif;
         } // endfor
 
-        state["PlayersTeam"+team] = this.sortTeam($Team);
+        state["PlayersTeam"+team].players = this.sortTeam($Team.players);
 
         // count positions limits
         state["PlayersTeam"+team] = this.recountPositions($Team);
+
+        // mark used players
+        this.markPlayers(state);
+
+        // save teams data
+        this.saveData(state);
+
+        return state;
+    }
+
+
+    /**
+     * Add reserve player to said team
+     */
+    private addTeamPlayerReserve({player, team}, state)
+    {
+        let $Team = state[`PlayersTeam${team}Reserve`];
+        for( let val of state.Players  )
+        {
+            if( player.Id == val.Id && !val.used )
+            {
+                val.used = Reducer.USING_RESERVE;
+                val.usedTeam = team;
+                $Team.players.push(val);
+                break;
+            } // endif;
+        } // endfor
+
+        state[`PlayersTeam${team}Reserve`].players = this.sortTeam($Team.players);
 
         // mark used players
         this.markPlayers(state);
@@ -186,7 +252,7 @@ class Reducer
      */
     private sortTeam(itms)
     {
-        itms.players.sort(sortFunction);
+        itms.sort(sortFunction);
 
         return itms;
 
@@ -229,7 +295,7 @@ class Reducer
     private markPlayers(state)
     {
         // reset players states
-        state.Players.forEach((val) => val.used = false);
+        /*state.Players.forEach((val) => val.used = false);
 
         // set team1 players states
         for( let val of state.PlayersTeam1.players )
@@ -249,7 +315,7 @@ class Reducer
                 let val2 = state.Players[ii];
                 if( val.Id == val2.Id ) { val2.used = 2; } // endif;
             } // endfor
-        }
+        }*/
     }
 
 
@@ -259,7 +325,7 @@ class Reducer
      */
     private setPPGValues({player, team, type, num}, state)
     {
-        let $Team = state["PlayersTeam"+team];
+        let $Team = state[team];
         for( let val of $Team.players )
         {
             if( player.Id == val.Id )
@@ -279,19 +345,30 @@ class Reducer
     /**
      * Remove player from said team
      */
-    private delTeamPlayer({player, team}, state)
+    private delTeamPlayer({player, team, used}, state)
     {
+        0||console.log( '{player, team, used}', {player, team, used} );
         // remove from team
-        let $Team = state["PlayersTeam"+team];
+        switch( used )
+        {
+            case 1:
+            case 2 : team = "PlayersTeam"+team; break;
+            case 3 : team = `PlayersTeam${team}Reserve`; break;
+        }
+
+        let $Team = state[team];
         for( let ii in $Team.players  )
         {
             let val = $Team.players[ii];
             if( player.Id == val.Id )
             {
+                if( val.used === 2 )
+                {
+                    val.Index = val.meta.IndexOrig;
+                    val.Position = val.meta.PositionOrig;
+                    val.meta = null;
+                } // endif
                 val.used = false;
-                val.Index = val.meta.IndexOrig;
-                val.Position = val.meta.PositionOrig;
-                val.meta = null;
                 $Team.players.splice(ii, 1);
                 break;
             } // endif;
@@ -299,7 +376,7 @@ class Reducer
 
 
         // count positions limits
-        state["PlayersTeam"+team] = this.recountPositions($Team);
+        state[team] = this.recountPositions($Team);
 
         // mark used players
         this.markPlayers(state);
@@ -321,6 +398,16 @@ class Reducer
         state.Players = Players;
         if (Players.length) this.markPlayers(state);
         return {...state, CurrentEventId};
+    }
+
+
+    /**
+     * Change current event in dropbox
+     */
+    private setEventsPeriod(inProps, state)
+    {
+        const [TimeEvent, Period]  = inProps;
+        return {...state, TimeEvent, Period};
     }
 }
 

@@ -7,6 +7,7 @@ import Actions from '../actions/NewFeedExchangeActions.ts';
 import {DropBox} from '../components/common/DropBox';
 import {PlayersTable} from 'components/NewFeedExchange/PlayersTable';
 import {Team1} from '../components/NewFeedExchange/Team1';
+import {TeamReserve} from 'components/NewFeedExchange/TeamReserve';
 import {DateLocalization} from '../common/DateLocalization';
 
 
@@ -35,9 +36,8 @@ class NewFeedExchange extends BaseController
     {
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
-        const { Players, PlayersTeam1, PlayersTeam2, CurrentEventId, Positions, UPlayerData, EventFilter, Period} = this.props.data;
+        const { Players, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, Positions, UPlayerData, EventFilter, Period, CurrentEventId, EventId, Rules} = this.props.data;
         var items = [];
-
 
         return (
             <div className="box box-default">
@@ -85,7 +85,7 @@ class NewFeedExchange extends BaseController
                             <div className="col-sm-6">
                                 <div className="box-body" >
                                     <div className="form-group">
-                                        <label>Event </label>
+                                        <label>Event <span class="-nobold" title="Available events">({Object.keys(AppData.TimeEvent).length})</span></label>
                                         <div className="form-group-filters" title="Filter events by period">
                                             { Object.keys(EventFilter).map((val) => <a href="#" key={val} class={Period == val ? '-bold' : ''} onClick={this._onEventFilterChange.bind(this, val)}> {EventFilter[val]} </a>) }
                                         </div>
@@ -104,13 +104,18 @@ class NewFeedExchange extends BaseController
                             <div className="col-sm-6">
                                 <div className="box-body" >
                                     <div className="form-group">
-                                        <PlayersTable data={Players}
-                                            eventId={CurrentEventId}
-                                            team1={AppData.Team1name} team2={AppData.Team2name}
-                                            t1pos={PlayersTeam1.positions} t2pos={PlayersTeam2.positions}
-                                            positions={Positions}
-                                            uplayerdata={UPlayerData}
-                                        actions={actions} />
+                                        <PlayersTable data={{ Players,
+                                            CurrentEventId,
+                                            EventId,
+                                            t1pos: PlayersTeam1.positions,
+                                            t2pos: PlayersTeam2.positions,
+                                            PlayersTeam1Reserve,
+                                            PlayersTeam2Reserve,
+                                            positions: Positions,
+                                            uplayerdata: UPlayerData,
+                                            Rules,
+                                            actions,
+                                        }} />
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +134,7 @@ class NewFeedExchange extends BaseController
                                     <div className="col-xs-12">
                                         <div className="box-body" >
                                             <div className="form-group">
-                                                <Team1 data={PlayersTeam1.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />
+                                                <TeamReserve players={PlayersTeam1Reserve.players} actions={actions} teamNum="1" />
                                             </div>
                                         </div>
                                     </div>
@@ -140,6 +145,16 @@ class NewFeedExchange extends BaseController
                                         <div className="box-body" >
                                             <div className="form-group">
                                                 <Team1 data={PlayersTeam2.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div className="row">
+                                    <div className="col-xs-12">
+                                        <div className="box-body" >
+                                            <div className="form-group">
+                                                <TeamReserve players={PlayersTeam2Reserve.players} actions={actions} teamNum="2" />
                                             </div>
                                         </div>
                                     </div>
