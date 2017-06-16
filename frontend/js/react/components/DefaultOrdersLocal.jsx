@@ -11,11 +11,20 @@ import GlobalCloseClass from '../common/GlobalClose';
 
 class DefaultOrdersLocal extends React.PureComponent
 {
-	componentDidUpdate()
+	componentDidMount()
 	{
-		if(this.props.showOrder)
+		(new GlobalCloseClass({element: this.refs.orderContainer, customCloseFunction: this.props.actions.actionOnDeleteOrder,
+			excludeElements: ['#DiMPMainpage button.event']})).bindGlobalClick();
+	}
+
+	componentDidUpdate(prevProps)
+	{
+		// console.log('this.props.showOrder:', this.props.showOrder);
+		// console.log('prevProps.showOrder:', prevProps.showOrder);
+		if(this.props.showOrder && this.props.showOrder !== prevProps.showOrder)
 		{
-			(new GlobalCloseClass({element: this.refs.orderContainer, customCloseFunction: this.props.actions.actionOnDeleteOrder})).bindGlobalClick();
+			(new GlobalCloseClass({element: this.refs.orderContainer, customCloseFunction: this.props.actions.actionOnDeleteOrder,
+				excludeElements: ['#DiMPMainpage button.event']})).bindGlobalClick();
 		}
 	}
 
@@ -31,8 +40,10 @@ class DefaultOrdersLocal extends React.PureComponent
 					<NewOrder actions={actions} data={{
 						ID: eventData.ID,
 						EventTitle: eventData.EventTitle,
-						Position: eventData.Positions,
+						Positions: eventData.Positions,
 						isMirror: orderData.isMirror,
+						Ask: orderData.Ask,
+						Bid: orderData.Bid,
 						Orders: [{
 							Price: orderData.Orders[0].Price,
 							Side: orderData.Orders[0].Side,

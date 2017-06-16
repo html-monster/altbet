@@ -20,10 +20,11 @@ export default class GlobalCloseClass
 {
     public SLIDEUP = 'slideUp';
     private defaultProps = {
-        element: null, //element: object || string - element what we want to close
-        method: 'fadeOut', //method: string - jQuery method of closing
-        customCloseFunction: null, //customCloseFunction: function - custom function, what we want bind to method
+        element: null, //object || string - element what we want to close
+        method: 'fadeOut', //string - jQuery method of closing
+        customCloseFunction: null, //function - custom function, what we want bind to method
         defaultClose: true, //boolean - true, if we want use jQuery closing
+        excludeElements: [] //string[] || object[] - elements what we want to exclude from clicking
     };
     private props;
 
@@ -43,34 +44,38 @@ export default class GlobalCloseClass
     {
         if(!this.props.element)
         {
-            console.error('Global close error, we must element transfer to bindGlobalClick method');
+            // console.error('Global close error, we must element transfer to bindGlobalClick method');
             return false;
         }
 
         $(document).bind('click', (event) => {
-            __DEV__ && console.log('element close');
-            if($(event.target).closest(this.props.element).length !== 0)
-                return false;
-
-
-            if(this.props.defaultClose)
+            __DEV__ && console.log('document click');
+            // if(!($(event.target).closest(this.props.element).length !== 0))
+            console.log('someelemnt:', this.props.excludeElements.some((element) =>  $(event.target).closest(element).length !== 0));
+            if(!($(event.target).closest(this.props.element).length !== 0 || this.props.excludeElements.some((element) =>  $(event.target).closest(element).length !== 0)))
             {
-                switch (this.props.method){
-                    case this.SLIDEUP:
-                        $(this.props.element).slideUp();
-                        break;
-                    default:
-                        $(this.props.element).fadeOut();
-                }
-            }
-            if(this.props.customCloseFunction)
-            {
+                __DEV__ && console.log('element close');
+
                 if(this.props.defaultClose)
-                    setTimeout(()=> this.props.customCloseFunction(), 400);
-                else
-                    this.props.customCloseFunction();
+                {
+                    switch (this.props.method){
+                        case this.SLIDEUP:
+                            $(this.props.element).slideUp();
+                            break;
+                        default:
+                            $(this.props.element).fadeOut();
+                    }
+                }
+                if(this.props.customCloseFunction)
+                {
+                    if(this.props.defaultClose)
+                        setTimeout(()=> this.props.customCloseFunction(), 400);
+                    else
+                        this.props.customCloseFunction();
+                }
+                $(document).unbind(event)
             }
-            $(document).unbind(event)
+
         })
     }
 }

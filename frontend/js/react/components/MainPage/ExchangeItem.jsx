@@ -373,7 +373,7 @@ export default class ExchangeItem extends React.Component
 								eventData={{
 									ID: `${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`,
 									EventTitle: Symbol.HomeName,
-									Position: data.Positions,
+									Positions: data.Positions,
 									Symbol:{
 										Exchange : Symbol.Exchange,
 										Name: Symbol.Name,
