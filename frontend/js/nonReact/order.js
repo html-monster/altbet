@@ -58,7 +58,7 @@ class orderClass{
 
 		// order validation ============================================================================================
 		self.formValidation = function() {
-			let order = $('.order');
+			let order = $('#sidebar, #DiMPMainpage');
 
 			// order.on('submit','form', function () {
 			//

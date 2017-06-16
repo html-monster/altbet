@@ -11,7 +11,6 @@ import { Common } from '../common/Common';
 import BaseActions from './BaseActions';
 import { SocketSubscribe } from "../models/SocketSubscribe";
 
-
 var __LDEV__ = !true;
 
 declare let orderClass;

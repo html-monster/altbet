@@ -3,8 +3,12 @@
  */
 import BaseActions from './BaseActions';
 import { orderForm } from '../components/formValidation/validation';
+/// <reference path="../../.d/common.d.ts" />
+declare let __DEV__;
+declare function $(object: any);
+declare let defaultMethods;
 
-export default class OrderActions extends BaseActions
+abstract class OrderActions extends BaseActions
 {
     public actionOnAjaxSend(actions, data, event)
     {
@@ -52,4 +56,4 @@ export default class OrderActions extends BaseActions
     }
 }
 
-// export default (new OrderActions()).export();
+export default OrderActions;

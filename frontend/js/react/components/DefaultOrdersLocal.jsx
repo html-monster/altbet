@@ -7,16 +7,24 @@ import { connect } from 'react-redux';
 import React from 'react';
 import NewOrder from './sidebar/order/NewOrder.jsx'
 import defaultOrderLocalActions from '../actions/OrderActions/defaultOrdersLocalActions';
+import GlobalCloseClass from '../common/GlobalClose';
 
 class DefaultOrdersLocal extends React.PureComponent
 {
+	componentDidUpdate()
+	{
+		if(this.props.showOrder)
+		{
+			(new GlobalCloseClass({element: this.refs.orderContainer, customCloseFunction: this.props.actions.actionOnDeleteOrder})).bindGlobalClick();
+		}
+	}
 
 	render()
 	{
 		const { actions, eventData, orderData, showOrder } = this.props;
 		// console.log('actions:', actions);
 
-		return <div className="order_container" style={showOrder && eventData.ID === orderData.ID ? {} : {display: 'none'}}>
+		return <div className="order_container" style={showOrder && eventData.ID === orderData.ID ? {} : {display: 'none'}} ref="orderContainer">
 			{
 				showOrder && eventData.ID === orderData.ID &&
 				<div className="order_wrapper">
