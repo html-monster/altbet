@@ -3,7 +3,7 @@ import OrderForm from './OrderForm.jsx';
 
 import AnimateOnUpdate from '../../Animation.jsx';
 
-export default class NewOrder extends React.Component
+export default class NewOrder extends React.PureComponent
 {
 	shouldComponentUpdate(nextProps)
 	{

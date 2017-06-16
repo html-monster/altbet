@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import NewOrder from '../order/NewOrder.jsx'
 
-import * as defaultOrderSidebarActions from '../../../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
+import defaultOrderSidebarActions from '../../../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
 import AnimateOnUpdate from '../../Animation.jsx';
 
 class DefaultOrdersSidebar extends React.Component

@@ -8,6 +8,7 @@ import eventPage from './eventPageReducer';
 import accountPage from './accountPageReducer';
 import sidebar from './sidebarReducer';
 import defaultOrdersSidebar from './sidebar/tradeSlip/defaultOrdersSidebar';
+import defaultOrdersLocal from './defaultOrdersLocal';
 import activeTrader from './sidebar/tradeSlip/activeTrader';
 import yourOrders from './sidebar/yourOrders';
 import deposit from './userPage/deposit';
@@ -59,6 +60,7 @@ switch (ABpp.config.currentPage)
 			sidebar,
 			// tradeSlip,
 			defaultOrdersSidebar,
+			defaultOrdersLocal,
 			activeTrader,
 			yourOrders,
 			...common,

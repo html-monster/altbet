@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import BaseController from './BaseController';
 import ExchangeItem from '../components/MainPage/ExchangeItem';
 import mainPageActions from '../actions/MainPageActions.ts';
-import * as defaultOrderSidebarActions from '../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
+// import defaultOrderSidebarActions from '../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
+import defaultOrderLocalActions from '../actions/OrderActions/defaultOrdersLocalActions';
 import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 import sidebarActions from '../actions/sidebarActions.ts';
 // class MainPage extends React.Component
@@ -236,7 +237,8 @@ export default connect(
     dispatch => ({
 		sidebarActions: bindActionCreators(sidebarActions, dispatch),
 		traderActions: bindActionCreators(traderActions, dispatch),
-		defaultOrderActions: bindActionCreators(defaultOrderSidebarActions, dispatch),
+		// defaultOrderActions: bindActionCreators(defaultOrderSidebarActions, dispatch),
+		defaultOrderActions: bindActionCreators(defaultOrderLocalActions, dispatch),
         actions: bindActionCreators(mainPageActions, dispatch),
     })
 )(MainPage)
