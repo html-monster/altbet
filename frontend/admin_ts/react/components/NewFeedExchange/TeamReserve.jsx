@@ -15,7 +15,6 @@ export class TeamReserve extends React.Component
 
         return (
             <div className="h-team">
-                <label>Reserve players team {teamNum}</label>
                 <table class="table teams-table">
                     <thead>
                     <tr>

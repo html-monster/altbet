@@ -24,7 +24,6 @@ export class Team1 extends React.Component
 
         return (
             <div className="h-team">
-                <label>Players team {teamNum}</label>
                 <table class="table teams-table">
                     <thead>
                     <tr>

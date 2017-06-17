@@ -104,12 +104,12 @@ export class PlayersTable extends React.Component
                                             <button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: itm, team: itm.usedTeam, used: itm.used})} title="Remove player"><i className="fa fa-remove -red"/> remove</button>&nbsp;&nbsp;
                                             <span>
                                                 Team {itm.usedTeam}&nbsp;
-                                                {itm.used === 2 ? <span title="Universal player">UP</span> : ''}
-                                                {itm.used === 3 ? <span title="reserve">RES</span> : ''}
+                                                {itm.used === 2 ? <span title="Universal Player">UP</span> : ''}
+                                                {itm.used === 3 ? <span title="Reserve">RES</span> : ''}
                                             </span>
                                         </td>
                                         :
-                                        <td>
+                                        <td class="nowrap">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-default -btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus"/> Add T1 <span class="caret"/></button>
                                                 <ul class="dropdown-menu">

@@ -119,46 +119,106 @@ class NewFeedExchange extends BaseController
                                     </div>
                                 </div>
                             </div>
+
                             <div className="col-sm-6">
-                                <div className="row">
-                                    <div className="col-xs-12">
-                                        <div className="box-body" >
-                                            <div className="form-group">
+
+                                <div class="box-group" id="accordion">
+                                    <div class="panel box box-primary">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" class="">
+                                                    Players team 1
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true">
+                                            <div class="box-body">
                                                 <Team1 data={PlayersTeam1.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <br />
-                                <div className="row">
-                                    <div className="col-xs-12">
-                                        <div className="box-body" >
-                                            <div className="form-group">
+                                    <div class="panel box box-danger">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false">
+                                                    Reserve players team 1
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style={{height: '0'}}>
+                                        <div class="box-body">
                                                 <TeamReserve players={PlayersTeam1Reserve.players} actions={actions} teamNum="1" />
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <br />
-                                <div className="row">
-                                    <div className="col-xs-12">
-                                        <div className="box-body" >
-                                            <div className="form-group">
+                                    <div class="panel box box-success">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed" aria-expanded="false">
+                                                    Players team 2
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseThree" class="panel-collapse collapse" aria-expanded="false" style={{height: '0'}}>
+                                        <div class="box-body">
                                                 <Team1 data={PlayersTeam2.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <br />
-                                <div className="row">
-                                    <div className="col-xs-12">
-                                        <div className="box-body" >
-                                            <div className="form-group">
+                                    <div class="panel box box-success">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed" aria-expanded="false">
+                                                    Reserve players team 2
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseThree" class="panel-collapse collapse" aria-expanded="false" style={{height: '0'}}>
+                                        <div class="box-body">
                                                 <TeamReserve players={PlayersTeam2Reserve.players} actions={actions} teamNum="2" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+{/*                                <div className="row">
+                                    <div className="col-xs-12">
+                                        <div className="box-body" >
+                                            <div className="form-group">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div className="row">
+                                    <div className="col-xs-12">
+                                        <div className="box-body" >
+                                            <div className="form-group">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div className="row">
+                                    <div className="col-xs-12">
+                                        <div className="box-body" >
+                                            <div className="form-group">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div className="row">
+                                    <div className="col-xs-12">
+                                        <div className="box-body" >
+                                            <div className="form-group">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                */}
                             </div>
                         </div>
 
