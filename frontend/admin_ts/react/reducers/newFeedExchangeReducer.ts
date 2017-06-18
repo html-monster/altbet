@@ -10,6 +10,7 @@ import {
     ON_ADD_TEAM_UP_PLAYER,
     ON_CHANGE_EVENTS_PERIOD,
     ON_ADD_TEAM_PLAYER_RESERVE,
+    ON_SET_CURR_TEAM,
 } from '../constants/ActionTypesNewFeedExchange';
 
 
@@ -37,6 +38,10 @@ class Reducer
         EventFilter: {'0': '1min', '2': '2h', '4': '4h', '8': '8h'},
         Rules: {
             reserveLen: 5, // reserve players count
+        },
+        currentTeam: {
+            num: 1,
+            type: 1,
         },
         ...globalData.AppData,
     };
@@ -84,6 +89,10 @@ class Reducer
             case ON_CHANGE_EVENTS_PERIOD:
                 state = this.setEventsPeriod(action.payload, state);
                 return {...state};
+
+            case ON_SET_CURR_TEAM:
+                const {type, team} = action.payload;
+                return {...state, currentTeam: {num: team, type}};
 
             default:
                 return state

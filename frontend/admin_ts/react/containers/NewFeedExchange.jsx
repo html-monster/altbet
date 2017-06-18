@@ -9,6 +9,8 @@ import {PlayersTable} from 'components/NewFeedExchange/PlayersTable';
 import {Team1} from '../components/NewFeedExchange/Team1';
 import {TeamReserve} from 'components/NewFeedExchange/TeamReserve';
 import {DateLocalization} from '../common/DateLocalization';
+// import {classNames} from 'classnames';
+const classNames = require('classnames');
 
 
 class NewFeedExchange extends BaseController
@@ -36,8 +38,14 @@ class NewFeedExchange extends BaseController
     {
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
-        const { Players, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, Positions, UPlayerData, EventFilter, Period, CurrentEventId, EventId, Rules} = this.props.data;
+        const { Players, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, Positions, UPlayerData, EventFilter, Period, CurrentEventId, EventId, Rules, currentTeam} = this.props.data;
         var items = [];
+        const playersComponents = [[1, 1, 'Players team 1', <Team1 data={PlayersTeam1.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
+            [1, 2, 'Reserve players team 1', <TeamReserve players={PlayersTeam1Reserve.players} actions={actions} teamNum="1" />,],
+            [2, 1, 'Players team 2', <Team1 data={PlayersTeam2.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />,],
+            [2, 2, 'Reserve players team 2', <TeamReserve players={PlayersTeam2Reserve.players} actions={actions} teamNum="2" />,],
+        ];
+
 
         return (
             <div className="box box-default">
@@ -102,123 +110,48 @@ class NewFeedExchange extends BaseController
 
                         <div className="row">
                             <div className="col-sm-6">
-                                <div className="box-body" >
-                                    <div className="form-group">
-                                        <PlayersTable data={{ Players,
-                                            CurrentEventId,
-                                            EventId,
-                                            t1pos: PlayersTeam1.positions,
-                                            t2pos: PlayersTeam2.positions,
-                                            PlayersTeam1Reserve,
-                                            PlayersTeam2Reserve,
-                                            positions: Positions,
-                                            uplayerdata: UPlayerData,
-                                            Rules,
-                                            actions,
-                                        }} />
+                                <div class="panel box box-default">
+                                    <div class="box-header with-border">
+                                        <h4 class="box-title">
+                                            Players <span className="-nobold">(avaliable)</span>
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse">
+                                        <div class="box-body">
+                                            <PlayersTable data={{
+                                                Players,
+                                                CurrentEventId,
+                                                EventId,
+                                                t1pos: PlayersTeam1.positions,
+                                                t2pos: PlayersTeam2.positions,
+                                                PlayersTeam1Reserve,
+                                                PlayersTeam2Reserve,
+                                                positions: Positions,
+                                                uplayerdata: UPlayerData,
+                                                Rules,
+                                                currentTeam,
+                                                actions,
+                                            }}/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="col-sm-6">
-
                                 <div class="box-group" id="accordion">
-                                    <div class="panel box box-primary">
-                                        <div class="box-header with-border">
-                                            <h4 class="box-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" class="">
-                                                    Players team 1
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true">
-                                            <div class="box-body">
-                                                <Team1 data={PlayersTeam1.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />
+                                    {playersComponents.map(([$team, $type, $header, $component], key) =>
+                                        <div key={key} class={`panel box box-team${$team}`}>
+                                            <div class="box-header with-border" onClick={this._onAccordionOpenClick.bind(this, $type, $team)}>
+                                                <h4 class="box-title">
+                                                    <a data-toggle="collapse" data-js-opener="" data-parent="#accordion" href={"#collapse" + key} aria-expanded={key === 0} class={classNames({"collapsed": key === 0})}>{$header}</a>
+                                                </h4>
+                                            </div>
+                                            <div id={"collapse" + key} class={classNames("panel-collapse collapse", {"in": key === 0})} aria-expanded="true">
+                                                <div class="box-body">{$component}</div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="panel box box-danger">
-                                        <div class="box-header with-border">
-                                            <h4 class="box-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false">
-                                                    Reserve players team 1
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style={{height: '0'}}>
-                                        <div class="box-body">
-                                                <TeamReserve players={PlayersTeam1Reserve.players} actions={actions} teamNum="1" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="panel box box-success">
-                                        <div class="box-header with-border">
-                                            <h4 class="box-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed" aria-expanded="false">
-                                                    Players team 2
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseThree" class="panel-collapse collapse" aria-expanded="false" style={{height: '0'}}>
-                                        <div class="box-body">
-                                                <Team1 data={PlayersTeam2.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="panel box box-success">
-                                        <div class="box-header with-border">
-                                            <h4 class="box-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed" aria-expanded="false">
-                                                    Reserve players team 2
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseThree" class="panel-collapse collapse" aria-expanded="false" style={{height: '0'}}>
-                                        <div class="box-body">
-                                                <TeamReserve players={PlayersTeam2Reserve.players} actions={actions} teamNum="2" />
-                                            </div>
-                                        </div>
-                                    </div>
+                                    )}
                                 </div>
-
-{/*                                <div className="row">
-                                    <div className="col-xs-12">
-                                        <div className="box-body" >
-                                            <div className="form-group">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br />
-                                <div className="row">
-                                    <div className="col-xs-12">
-                                        <div className="box-body" >
-                                            <div className="form-group">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br />
-                                <div className="row">
-                                    <div className="col-xs-12">
-                                        <div className="box-body" >
-                                            <div className="form-group">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br />
-                                <div className="row">
-                                    <div className="col-xs-12">
-                                        <div className="box-body" >
-                                            <div className="form-group">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                */}
                             </div>
                         </div>
 
@@ -240,6 +173,14 @@ class NewFeedExchange extends BaseController
             </div>
         );
         // return <Chart data={this.props.MainPage} actions={this.props.chartActions} />
+    }
+
+
+
+    _onAccordionOpenClick(inType, inTeam, ee)
+    {
+        this.props.actions.actionSetCurrTeam(inType, inTeam);
+        $(ee.target).find("[data-js-opener]").click();
     }
 
 

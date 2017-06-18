@@ -6,6 +6,7 @@ import {
     ON_ADD_TEAM_UP_PLAYER,
     ON_CHANGE_EVENTS_PERIOD,
     ON_ADD_TEAM_PLAYER_RESERVE,
+    ON_SET_CURR_TEAM,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -175,6 +176,20 @@ class Actions extends BaseActions
             dispatch({
                 type: ON_ADD_TEAM_PLAYER_RESERVE,
                 payload: inProps,
+            });
+        };
+    }
+
+    /**
+     * Set current team for adding
+     */
+    public actionSetCurrTeam(type, team)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_SET_CURR_TEAM,
+                payload: {type, team},
             });
         };
     }

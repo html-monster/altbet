@@ -48,7 +48,6 @@ export class PlayersTable extends React.Component
 
         return (
             <div className="h-players">
-                <label>Players <span className="-nobold">(avaliable)</span></label>
                 <div className="form-group-filters" title="Filter players">
                     { Object.keys(filters).map((val) => (filterBtn(val))) }
                 </div>
@@ -79,8 +78,9 @@ export class PlayersTable extends React.Component
                                 if( positions[uniPositionIndex].Quantity == t1pos[uniPositionIndex] )
                                 {
                                     addTeam1UPdisable = 1;
-                                }
-                                else if ( positions[uniPositionIndex].Locks.filter((val) => itm.Position === val).length )
+
+                                // check position for restriction
+                                } else if (positions[uniPositionIndex].Locks.filter((val) => itm.Position === val).length )
                                 {
                                     addTeam1UPdisable = addTeam2UPdisable = 2;
                                     upAdd1Title = upAdd2Title = `This position is not avaliable for Universal player`;
@@ -111,24 +111,29 @@ export class PlayersTable extends React.Component
                                         :
                                         <td class="nowrap">
                                             <div class="btn-group">
-                                                <button type="button" class="btn btn-default -btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus"/> Add T1 <span class="caret"/></button>
+                                                <button type="button" class="btn btn-default -btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={this._onAddPlayerClick.bind(this, addTeam1disable, actions.actionAddTeamplayer, {player: itm, team: 1})}><i class="fa fa-plus"/> Add T1</button>
+                                                <button class={addTeam1UPdisable ? "disabled" : ""} title={upAdd1Title}><a href="#" class={addTeam1UPdisable ? "-silver" : ""} onClick={this._onAddPlayerClick.bind(this, addTeam1UPdisable, actions.actionAddUPTeamplayer, {player: itm, team: 1})}>Add to universal position </a></button>
+                                                <button class={addTeam1ReserveDisable ? "disabled" : ""} title={upAdd1Title}><a href="#" class={addTeam1ReserveDisable ? "-silver" : ""} onClick={this._onAddPlayerClick.bind(this, addTeam1ReserveDisable, actions.actionAddTeamplayerReserve, {player: itm, team: 1})}>Add to reserve </a></button>
+
+{/*
                                                 <ul class="dropdown-menu">
                                                     <li class={addTeam1disable ? "disabled" : ""} title={addTeam1disable ? `The ${itm.Position} position is full` : ""}><a href="#" class={addTeam1disable ? "-silver" : ""} onClick={this._onAddPlayerClick.bind(this, addTeam1disable, actions.actionAddTeamplayer, {player: itm, team: 1})}>Add to {itm.Position}</a></li>
                                                     <li class={addTeam1UPdisable ? "disabled" : ""} title={upAdd1Title}><a href="#" class={addTeam1UPdisable ? "-silver" : ""} onClick={this._onAddPlayerClick.bind(this, addTeam1UPdisable, actions.actionAddUPTeamplayer, {player: itm, team: 1})}>Add to universal position </a></li>
                                                     <li class={addTeam1ReserveDisable ? "disabled" : ""} title={upAdd1Title}><a href="#" class={addTeam1ReserveDisable ? "-silver" : ""} onClick={this._onAddPlayerClick.bind(this, addTeam1ReserveDisable, actions.actionAddTeamplayerReserve, {player: itm, team: 1})}>Add to reserve </a></li>
-                                                    {/*<li role="separator" class="divider"></li>*/}
+                                                    <li role="separator" class="divider"></li>
                                                 </ul>
+*/}
                                             </div>
-                                            &nbsp;
+                                            {/*&nbsp;
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-default -btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus"/> Add T2 <span class="caret"/></button>
                                                 <ul class="dropdown-menu">
                                                     <li class={addTeam2disable ? "disabled" : ""} title={addTeam2disable ? `The ${itm.Position} position is full` : ""}><a href="#" class={addTeam2disable ? "-silver" : ""} onClick={this._onAddPlayerClick.bind(this, addTeam2disable, actions.actionAddTeamplayer, {player: itm, team: 2})}>Add to {itm.Position}</a></li>
                                                     <li class={addTeam2UPdisable ? "disabled" : ""} title={upAdd2Title}><a href="#" class={addTeam2UPdisable ? "-silver" : ""} onClick={this._onAddPlayerClick.bind(this, addTeam2disable, actions.actionAddUPTeamplayer, {player: itm, team: 2})}>Add to universal position </a></li>
                                                     <li class={addTeam2ReserveDisable ? "disabled" : ""} title={upAdd2Title}><a href="#" class={addTeam2ReserveDisable ? "-silver" : ""} onClick={this._onAddPlayerClick.bind(this, addTeam2ReserveDisable, actions.actionAddTeamplayerReserve, {player: itm, team: 2})}>Add to reserve </a></li>
-                                                    {/*<li role="separator" class="divider"></li>*/}
+                                                    <li role="separator" class="divider"></li>
                                                 </ul>
-                                            </div>
+                                            </div>*/}
                                             {/*<button className={"btn btn-default -btn-default btn-xs"} title={addTeam1disable ? `The ${itm.Position} position is full` : "Add to team 1"} onClick={() => addTeam1disable || actions.actionAddTeamplayer({player: itm, team: 1})} disabled={addTeam1disable}><i className={"fa fa-plus" + (addTeam1disable ? " -gray" : "")}></i> Add T1</button>&nbsp;*/}
                                         </td>
                                     }
