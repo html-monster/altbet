@@ -10,7 +10,7 @@ export class TeamReserve extends React.Component
 {
     render()
     {
-        const { players, teamNum, actions } = this.props;
+        const { players, teamVar, teamNum, actions } = this.props;
         // 0||console.log( 'da', data );
 
         return (
@@ -36,8 +36,8 @@ export class TeamReserve extends React.Component
                                 <td> {itm.Position} </td>
                                 <td> {itm.Team} </td>
                                 <td> {itm.Name} </td>
-                                <td><NumericInput className="eppg" value={itm.Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: itm, team: `PlayersTeam${teamNum}Reserve`, type: 'Eppg'})} style={ false } /></td>
-                                <td><NumericInput className="fppg" value={itm.Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: itm, team: `PlayersTeam${teamNum}Reserve`, type: 'Fppg'})} style={ false } /></td>
+                                <td><NumericInput className="eppg" value={itm.Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: itm, team: teamVar, type: 'Eppg'})} style={ false } /></td>
+                                <td><NumericInput className="fppg" value={itm.Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: itm, team: teamVar, type: 'Fppg'})} style={ false } /></td>
                                 <td> {itm.Status} </td>
                                 <td><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: itm, team: teamNum, used: itm.used})} title="Remove player"><i className="fa fa-remove -red">{}</i></button></td>
                             </tr>)

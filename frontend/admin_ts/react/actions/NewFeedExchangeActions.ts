@@ -7,6 +7,7 @@ import {
     ON_CHANGE_EVENTS_PERIOD,
     ON_ADD_TEAM_PLAYER_RESERVE,
     ON_SET_CURR_TEAM,
+    ON_ADD_TEAM_PLAYER_VARIABLE,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -179,6 +180,22 @@ class Actions extends BaseActions
             });
         };
     }
+
+
+    /**
+     * Add team reserver player
+     */
+    public actionAddTeamplayerVariable(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_ADD_TEAM_PLAYER_VARIABLE,
+                payload: inProps,
+            });
+        };
+    }
+
 
     /**
      * Set current team for adding

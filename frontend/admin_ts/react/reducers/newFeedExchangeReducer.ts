@@ -11,6 +11,7 @@ import {
     ON_CHANGE_EVENTS_PERIOD,
     ON_ADD_TEAM_PLAYER_RESERVE,
     ON_SET_CURR_TEAM,
+    ON_ADD_TEAM_PLAYER_VARIABLE,
 } from '../constants/ActionTypesNewFeedExchange';
 
 
@@ -27,8 +28,10 @@ class Reducer
         Players: [],
         PlayersTeam1: {positions: {}, players: []},
         PlayersTeam1Reserve: {players: []},
+        PlayersTeam1Variable: {players: []},
         PlayersTeam2: {positions: {}, players: []},
         PlayersTeam2Reserve: {players: []},
+        PlayersTeam2Variable: {players: []},
         Positions: null,
         CurrentEventId: null,
         UPlayerData: {
@@ -38,8 +41,9 @@ class Reducer
         EventFilter: {'0': '1min', '2': '2h', '4': '4h', '8': '8h'},
         Rules: {
             reserveLen: 5, // reserve players count
+            variableLen: 5, // reserve players count
         },
-        currentTeam: {
+        CurrentTeam: {
             num: 1,
             type: 1,
         },
@@ -74,6 +78,10 @@ class Reducer
                 state = this.addTeamPlayerReserve(action.payload, state);
                 return {...state};
 
+            case ON_ADD_TEAM_PLAYER_VARIABLE:
+                state = this.addTeamPlayerVariable(action.payload, state);
+                return {...state};
+
             case ON_DEL_TEAM_PLAYER:
                 state = this.delTeamPlayer(action.payload, state);
                 return {...state};
@@ -92,7 +100,7 @@ class Reducer
 
             case ON_SET_CURR_TEAM:
                 const {type, team} = action.payload;
-                return {...state, currentTeam: {num: team, type}};
+                return {...state, CurrentTeam: {num: team, type}};
 
             default:
                 return state
@@ -245,6 +253,35 @@ class Reducer
         } // endfor
 
         state[`PlayersTeam${team}Reserve`].players = this.sortTeam($Team.players);
+
+        // mark used players
+        this.markPlayers(state);
+
+        // save teams data
+        this.saveData(state);
+
+        return state;
+    }
+
+
+    /**
+     * Add variable player to said team
+     */
+    private addTeamPlayerVariable({player, team}, state)
+    {
+        let $Team = state[`PlayersTeam${team}Variable`];
+        for( let val of state.Players  )
+        {
+            if( player.Id == val.Id && !val.used )
+            {
+                val.used = Reducer.USING_VARIABLE;
+                val.usedTeam = team;
+                $Team.players.push(val);
+                break;
+            } // endif;
+        } // endfor
+
+        state[`PlayersTeam${team}Variable`].players = this.sortTeam($Team.players);
 
         // mark used players
         this.markPlayers(state);

@@ -23,6 +23,7 @@
   }
 
   .box {
+    &-header a.unactive { color: $color4Def; }
     .box-team1 {
       border-top-color: $color1;
     }
