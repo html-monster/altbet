@@ -9,9 +9,11 @@
 //     'Test Validator works');
 // });
 
-class accountClass{
-	constructor(){
-		// var hello = 1;
+class accountClass
+{
+	constructor()
+	{
+		// let hello = 1;
 		// BM: passwordCompare
 		this.passwordCompare = function () {
 			let currentPass = '.wrapper_user_page #user_curr_pass',
@@ -79,14 +81,14 @@ class accountClass{
 							sameTextLength = $(elements.sameText).val().length >= 3,
 							anotherTextLength = $(elements.anotherText).val().length >= 3;
 
-					if($(elements.context).val() != $(elements.sameText).val() &&
+					if($(elements.context).val() !== $(elements.sameText).val() &&
 							contextLength && sameTextLength){
 						$(elements.context).addClass('invalidJs').removeClass('validJs');
 						$(elements.sameText).addClass('invalidJs').removeClass('validJs');
 						showMessage('Password aren`t match', elements.context, elements.sameText);
 						valid = false;
-						if($(elements.context).val() != $(elements.anotherText).val() &&
-								$(elements.sameText).val() != $(elements.anotherText).val()){
+						if($(elements.context).val() !== $(elements.anotherText).val() &&
+								$(elements.sameText).val() !== $(elements.anotherText).val()){
 							$(elements.anotherText).addClass('validJs').removeClass('invalidJs');
 							showMessage('',	elements.anotherText);
 						}
@@ -109,7 +111,7 @@ class accountClass{
 						}
 					}
 
-					if($(elements.context).val() == $(elements.anotherText).val() &&
+					if($(elements.context).val() === $(elements.anotherText).val() &&
 					contextLength && anotherTextLength){
 						$(elements.context).addClass('invalidJs').removeClass('validJs');
 						$(elements.anotherText).addClass('invalidJs').removeClass('validJs');
@@ -117,7 +119,7 @@ class accountClass{
 						valid = false;
 					}
 
-					if($(elements.sameText).val() == $(elements.anotherText).val() &&
+					if($(elements.sameText).val() === $(elements.anotherText).val() &&
 					sameTextLength && anotherTextLength){
 						$(elements.sameText).addClass('invalidJs').removeClass('validJs');
 						$(elements.anotherText).addClass('invalidJs').removeClass('validJs');
@@ -147,12 +149,12 @@ class accountClass{
 			profitPositive;
 
 		let animate = function (options) {
-			var start = Date.now(); // сохранить время начала
+			let start = Date.now(); // сохранить время начала
 
 			requestAnimationFrame(function tick() {
-				var timePassed = Date.now() - start;
-				var progress = timePassed / options.duration;
-				var timeFunction = options.timeFunction || function (progress) {
+				let timePassed = Date.now() - start;
+				let progress = timePassed / options.duration;
+				let timeFunction = options.timeFunction || function (progress) {
 						return progress;
 					};
 				progress = progress > 1 ? 1 : progress;
@@ -191,6 +193,9 @@ class accountClass{
 			$('.color_map .pl').addClass('neg');
 			profitPositive = false;
 		}
+		element.eq(0).css({width: data.pl + '%', transform: `scaleX(0)`});//translateX(0)
+		element.eq(1).css({width: data.inv + '%', transform: `scaleX(0)`});//translateX(0)
+		element.eq(2).css({width: data.av + '%', transform: `scaleX(0)`});//translateX(-${data.inv / data.av * 100}%)
 
 		setTimeout(function () {
 			animate({
@@ -208,11 +213,11 @@ class accountClass{
 				complete: function () {}
 			});
 			animate({
-				duration: 10,
+				duration: 10,//10
 				step: function (progress) {
-					element.eq(0).css('width', data.pl * progress + '%');
-					element.eq(1).css('width', data.inv * progress + '%');
-					element.eq(2).css('width', data.av * progress + '%');
+					element.eq(0).css('transform', `scaleX(${progress})`);//translateX(0)
+					element.eq(1).css('transform', `scaleX(${progress})`);//translateX(0)
+					element.eq(2).css('transform', `scaleX(${progress})`);//(data.inv / data.av * 100) - (data.inv / data.av * 100 *
 				},
 				easing: 'swing',
 				complete: function () {}

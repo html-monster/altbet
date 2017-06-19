@@ -7,6 +7,7 @@ import {
     SETTING_LOAD_FILE_ERROR,
 } from "../../constants/ActionTypesSetting";
 import BaseActions from '../BaseActions';
+/// <reference path="../../.d/common.d.ts" />
 
 class Actions extends BaseActions
 {
