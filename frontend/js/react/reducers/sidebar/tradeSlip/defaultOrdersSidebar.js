@@ -143,5 +143,4 @@ export default function defaultOrdersSidebar(state = initialState, action)
 		default:
 			return state
 	}
-
 }

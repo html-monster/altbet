@@ -1,0 +1,70 @@
+// BM: buttons
+button, input[type=submit] { user-select: none; }
+
+button, a.button {
+  height: 30px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  &.close_red {
+    display: block;
+    width: 15px;
+    height: 15px;
+    min-height: 10px;
+    padding: 0;
+    background: url("#{$pathImage}/sprite.svg") no-repeat -47px -137px;
+  }
+}
+
+.btn:not([type=submit]):not(i) {
+  box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
+  transition: 0.2s ease;
+  @include btn-hover;
+  &[disabled] { cursor: default !important; opacity: 0.6;
+    &:after { display: none; }
+  }
+  &:not([disabled]):active {
+    box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);
+  }
+  &.color { color: $main-color; }
+}
+
+.btn_lg_icon {
+  display: block;
+  width: 150px;
+  padding: 9px 5px 9px 45px;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
+  transition: 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  &:before{
+    content: '';
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 15px;
+    top: calc(50% - 15px);
+  }
+}
+
+.btn-md { height: 32px;
+  &:disabled { background: #dedede; color: #716767; box-shadow: none !important; }
+}
+
+.btn_green { background: linear-gradient(to bottom, #84d65b, #4dac2e); }
+
+.btn_orange { background: linear-gradient(to bottom, #f88447, #ef4d22); }
+
+.btn_blue { background: linear-gradient(to bottom, #64c9ef, #3498da); color: #fff;
+  &:visited{ color: #fff;  }
+  &:focus{ color: #fff;  }
+  &:active{ color: #fff;  }
+}
+
+.btn_yellow { background: linear-gradient(to bottom, #f8b747, #ef8022); }
+

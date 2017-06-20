@@ -15,7 +15,10 @@ import App from "./ADpp";
 import NewFeedExchange from "./react/containers/NewFeedExchange.jsx";
 
 
+const store = configureStore();
 var ADpp = new App();
+ADpp.Store = store;
+
 
 $(document).ready(function()
 {
@@ -23,8 +26,6 @@ $(document).ready(function()
 });
 
 
-
-const store = configureStore();
 
 // BM: Mount points
 if( document.getElementById('DiNewFeedExchange') ) {

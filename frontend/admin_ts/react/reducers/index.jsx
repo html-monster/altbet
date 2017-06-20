@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import newFeedExchange from './newFeedExchangeReducer';
+import newFeedExchange from './newFeedExchangeReducer.ts';
 
 
 let reducers = {};
