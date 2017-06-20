@@ -23,7 +23,7 @@
   }
 
   .box {
-    &-header a.unactive { color: $color4Def; }
+    &-header a.unactive { color: darken($colorB, 20%); }
     .box-team1 {
       border-top-color: $color1;
     }

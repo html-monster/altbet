@@ -40,7 +40,8 @@ class NewFeedExchange extends BaseController
         const { Players, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, CurrentEventId, EventId, Rules, CurrentTeam} = this.props.data;
         const { currTeamKey } = this.state;
         var items = [];
-        const playersComponents = [[1, 1, 'Players team 1', <Team1 data={PlayersTeam1.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
+        const playersComponents = [
+            [1, 1, 'Players team 1', <Team1 data={PlayersTeam1.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
             [1, 2, 'Reserve players team 1', <TeamResVar players={PlayersTeam1Reserve.players} teamVar="PlayersTeam1Reserve" actions={actions} teamNum="1" />,],
             [1, 3, 'Variable players team 1', <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
             [2, 1, 'Players team 2', <Team1 data={PlayersTeam2.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />,],
@@ -122,7 +123,7 @@ class NewFeedExchange extends BaseController
                                         <div class="box-body">
                                             <PlayersTable data={{
                                                 Players,
-                                                CurrentEventId,
+                                                CurrEvtId: CurrentEventId.EventId,
                                                 EventId,
                                                 t1pos: PlayersTeam1.positions,
                                                 t2pos: PlayersTeam2.positions,

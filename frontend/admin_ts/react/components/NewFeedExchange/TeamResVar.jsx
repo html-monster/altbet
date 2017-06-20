@@ -6,12 +6,12 @@ import React from 'react' ;
 import NumericInput from 'react-numeric-input';
 
 
-export class TeamReserve extends React.Component
+export class TeamResVar extends React.Component
 {
     render()
     {
         const { players, teamVar, teamNum, actions } = this.props;
-        // 0||console.log( 'da', data );
+        // 0||console.log( 'da', players );
 
         return (
             <div className="h-team">

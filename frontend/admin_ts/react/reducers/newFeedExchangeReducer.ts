@@ -393,13 +393,14 @@ class Reducer
      */
     private delTeamPlayer({player, team, used}, state)
     {
-        0||console.log( '{player, team, used}', {player, team, used} );
+        // 0||console.log( '{player, team, used}', {player, team, used} );
         // remove from team
         switch( used )
         {
             case 1:
             case 2 : team = "PlayersTeam"+team; break;
             case 3 : team = `PlayersTeam${team}Reserve`; break;
+            case 4 : team = `PlayersTeam${team}Variable`; break;
         }
 
         let $Team = state[team];
@@ -442,8 +443,9 @@ class Reducer
     {
         const [ Players, CurrentEventId ]  = inProps;
         state.Players = Players;
+        state.CurrentEventId.EventId = CurrentEventId;
         if (Players.length) this.markPlayers(state);
-        return {...state, CurrentEventId};
+        return {...state};
     }
 
 

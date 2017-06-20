@@ -26,27 +26,20 @@ export class PlayersTable extends React.Component
 
     componentWillUpdate(newData, props)
     {
-        if( newData.data.eventId !== this.props.data.eventId )
+        if( newData.data.CurrEvtId !== this.props.data.CurrEvtId )
         {
-            this.setState({...this.state, data: newData.Players, filters: this._prepareFilters(newData.Players)})
+            this.setState({...this.state, data: newData.data.Players, filters: this._prepareFilters(newData.data.Players)})
         } // endif
     }
 
 
     render()
     {
-        const { data, data: {t1pos, t2pos, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, actions, positions, CurrentEventId, EventId, uplayerdata: {uniPositionIndex, uniPositionName}, Rules, CurrentTeam} } = this.props;
+        const { data, data: {t1pos, t2pos, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, actions, positions, CurrEvtId, EventId, uplayerdata: {uniPositionIndex, uniPositionName}, Rules, CurrentTeam} } = this.props;
         // const data = this.props.data;
         const { data: Players, filters } = this.state;
 
         // 0||console.log( 'Rules, this.props.data', Rules, this.props.data );
-        const addTeamReserveDisable = [];
-        addTeamReserveDisable[1] = CurrentEventId.EventId !== EventId || PlayersTeam1Reserve.players.length >= Rules.reserveLen;
-        addTeamReserveDisable[2] = CurrentEventId.EventId !== EventId || PlayersTeam2Reserve.players.length >= Rules.reserveLen;
-        const addTeamVariableDisable = [];
-        addTeamVariableDisable[1] = CurrentEventId.EventId === EventId || PlayersTeam1Variable.players.length >= Rules.variableLen;
-        addTeamVariableDisable[2] = CurrentEventId.EventId === EventId || PlayersTeam2Variable.players.length >= Rules.variableLen;
-
 
         // filter btn
         var filterBtn = (filter) => <span key={filter + '11'}><a href="#" className={"f-btn" + (this.state.filters[filter] ? " active" : "")} data-filter={filter} onClick={::this._onFilterChange}>{filter}</a>&nbsp;</span>;
@@ -76,7 +69,9 @@ export class PlayersTable extends React.Component
                                 // 0||console.log( 'positions[itm.Index], itm.Index', positions[itm.Index], itm.Index, t1pos[itm.Index] );
                                 let addTeamdisable = [];
                                 let addTeamUPdisable = [], upAddTitle = [], resAddTitle = [];
+                                const addTeamReserveDisable = [], addTeamVariableDisable = [];
                                 let $TNum = CurrentTeam.num;
+                                // add to main team
                                 if( CurrentTeam.type === 1 )
                                 {
                                     // block add for full team position
@@ -91,7 +86,7 @@ export class PlayersTable extends React.Component
                                     {
                                         addTeamUPdisable[$TNum] = 1;
 
-                                    // check position for restriction
+                                    // check uni position for restriction
                                     } else if (positions[uniPositionIndex].Locks.filter((val) => itm.Position === val).length )
                                     {
                                         addTeamUPdisable[$TNum] = 2;
@@ -100,15 +95,35 @@ export class PlayersTable extends React.Component
 
                                     // if( positions[uniPositionIndex].Quantity == t2pos[uniPositionIndex] ) addTeam2UPdisable = 1;
                                     // else upAdd2Title = '';
-                                }
-                                else if( CurrentTeam.type === 2 )
+
+                                // check add to reserve
+                                } else if (CurrentTeam.type === 2 )
                                 {
-                                    upAddTitle[$TNum] = `Team ${$TNum} reserve is full`;
+                                    if (data[`PlayersTeam${$TNum}Reserve`].players.length >= Rules.reserveLen)
+                                    {
+                                        addTeamReserveDisable[$TNum] = true;
+                                        upAddTitle[$TNum] = `Team ${$TNum} reserve is full`;
+                                    }
+                                    if (CurrEvtId !== EventId)
+                                    {
+                                        addTeamReserveDisable[$TNum] = true;
+                                        upAddTitle[$TNum] = `Add to team reserve allow only from main event`;
+                                    }
                                     if (!addTeamReserveDisable[$TNum]) upAddTitle[$TNum] = `Add to team ${$TNum} reserve`;
-                                }
-                                else
+
+                                // check add to variable
+                                } else
                                 {
-                                    resAddTitle[$TNum] = `Team ${$TNum} variable players is full`;
+                                    if (data[`PlayersTeam${$TNum}Variable`].players.length >= Rules.variableLen)
+                                    {
+                                        addTeamVariableDisable[$TNum] = true;
+                                        resAddTitle[$TNum] = `Team ${$TNum} variable players is full`;
+                                    }
+                                    if (CurrEvtId === EventId)
+                                    {
+                                        addTeamVariableDisable[$TNum] = true;
+                                        resAddTitle[$TNum] = 'Adding to team variable players is allow only from not main event';
+                                    }
                                     if (!addTeamVariableDisable[$TNum]) upAddTitle[$TNum] = `Add to team ${$TNum} variable players`;
                                 } // endif
 
@@ -140,9 +155,9 @@ export class PlayersTable extends React.Component
                                                     </div>
                                                     :
                                                  CurrentTeam.type === 2 ?
-                                                    <button type="button" class={classNames("btn btn-default -btn-default btn-xs", {"disabled": addTeamReserveDisable[$TNum]})} title={upAddTitle[$TNum]} onClick={this._onAddPlayerClick.bind(this, addTeamReserveDisable[$TNum], actions.actionAddTeamplayerReserve, {player: itm, team: CurrentTeam.num})}><i class="fa fa-plus"/> Add to RES</button>
+                                                    <button type="button" class="btn btn-default -btn-default btn-xs" disabled={addTeamReserveDisable[$TNum]} title={upAddTitle[$TNum]} onClick={this._onAddPlayerClick.bind(this, addTeamReserveDisable[$TNum], actions.actionAddTeamplayerReserve, {player: itm, team: CurrentTeam.num})}><i class="fa fa-plus"/> Add to RES</button>
                                                     :
-                                                    <button type="button" class={classNames("btn btn-default -btn-default btn-xs", {"disabled": addTeamVariableDisable[$TNum]})} title={resAddTitle[$TNum]} onClick={this._onAddPlayerClick.bind(this, addTeamVariableDisable[$TNum], actions.actionAddTeamplayerVariable, {player: itm, team: CurrentTeam.num})}><i class="fa fa-plus"/> Add to RES</button>
+                                                    <button type="button" class="btn btn-default -btn-default btn-xs" disabled={addTeamVariableDisable[$TNum]} title={resAddTitle[$TNum]} onClick={this._onAddPlayerClick.bind(this, addTeamVariableDisable[$TNum], actions.actionAddTeamplayerVariable, {player: itm, team: CurrentTeam.num})}><i class="fa fa-plus"/> Add to VAR</button>
                                                 }
 
 {/*
@@ -154,17 +169,6 @@ export class PlayersTable extends React.Component
                                                 </ul>
 */}
                                             </div>
-                                            {/*&nbsp;
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default -btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus"/> Add T2 <span class="caret"/></button>
-                                                <ul class="dropdown-menu">
-                                                    <li class={addTeam2disable ? "disabled" : ""} title={addTeam2disable ? `The ${itm.Position} position is full` : ""}><a href="#" class={addTeam2disable ? "-silver" : ""} onClick={this._onAddPlayerClick.bind(this, addTeam2disable, actions.actionAddTeamplayer, {player: itm, team: 2})}>Add to {itm.Position}</a></li>
-                                                    <li class={addTeam2UPdisable ? "disabled" : ""} title={upAdd2Title}><a href="#" class={addTeam2UPdisable ? "-silver" : ""} onClick={this._onAddPlayerClick.bind(this, addTeam2disable, actions.actionAddUPTeamplayer, {player: itm, team: 2})}>Add to universal position </a></li>
-                                                    <li class={addTeam2ReserveDisable ? "disabled" : ""} title={upAdd2Title}><a href="#" class={addTeam2ReserveDisable ? "-silver" : ""} onClick={this._onAddPlayerClick.bind(this, addTeam2ReserveDisable, actions.actionAddTeamplayerReserve, {player: itm, team: 2})}>Add to reserve </a></li>
-                                                    <li role="separator" class="divider"></li>
-                                                </ul>
-                                            </div>*/}
-                                            {/*<button className={"btn btn-default -btn-default btn-xs"} title={addTeam1disable ? `The ${itm.Position} position is full` : "Add to team 1"} onClick={() => addTeam1disable || actions.actionAddTeamplayer({player: itm, team: 1})} disabled={addTeam1disable}><i className={"fa fa-plus" + (addTeam1disable ? " -gray" : "")}></i> Add T1</button>&nbsp;*/}
                                         </td>
                                     }
                                 </tr>
