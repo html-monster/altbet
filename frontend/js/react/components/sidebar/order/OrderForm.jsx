@@ -34,6 +34,7 @@ export default class OrderForm extends React.Component{
 		this.state = {
 			focus: 'normal', // свойство показывающее в какое поле надо поставить фокус
 			focusOn: true, // надо ли вообще ставить фокус
+			submitOnEnter: false, // отключение включение submit-а формы по enter-ру
 			currentOddSystem: ABpp.config.currentOddSystem,
 			...props
 		};
@@ -359,8 +360,8 @@ export default class OrderForm extends React.Component{
 										 onFocus={::this.onPriceFocus}
 										 onBlur={::this.onBlur}
 										 value={checkboxProp ? stateData.price : price}
-										 key={price}
-										 hard={true} label={true} disabled={!limit}
+										 key={price} cancelSubmiting={stateData.submitOnEnter} hard={true}
+										 label={true} disabled={!limit}
 										 ref="inputPrice" inputValidate = 'price'/>
 							<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
 							{
@@ -383,7 +384,7 @@ export default class OrderForm extends React.Component{
 										 maxLength="7" name="Quantity" autoComplete="off"
 										 onChange={this.onInputChange.bind(this, 'quantity')}
 										 onKeyDown={this.onInputKeyDown.bind(this, 'quantity')}
-										 value={stateData.quantity}
+										 value={stateData.quantity} cancelSubmiting={stateData.submitOnEnter}
 										 ref="inputQuantity" inputValidate = 'integer'/>
 							<div className="warning" style={{display: 'none'}}>
 								<p>Available integer value more than 0</p>

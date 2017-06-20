@@ -11,7 +11,7 @@ export default class TraderSpreadForm extends React.Component {
 
 	render()
 	{
-		const { traderActions, activeString, mainData: { Symbol }, cmpData: { activeExchange }, direction, price, index, inputQuantityContext,
+		const { traderActions, activeString, mainData: { Symbol }, cmpData: { activeExchange }, direction, price, index, traderContext,//inputQuantityContext,
 			isMirror, quantity, spread } = this.props;
 		let spreadPricePos = Math.round10(price + +spread, -2);
 		spreadPricePos = spreadPricePos > 0.98 ? 0.99 : spreadPricePos.toFixed(2);
@@ -52,7 +52,7 @@ export default class TraderSpreadForm extends React.Component {
 							<div className="input">
 								<input type="tel" className={'number' + offersProb} data-validation="0.33" maxLength="4"
 									   value={spreadPricePos}
-									   onChange={traderActions.actionOnQuantityChange.bind(null, inputQuantityContext)}
+									   onChange={traderActions.actionOnQuantityChange.bind(null, traderContext)}
 									   disabled="disabled"/>
 								<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
 							</div>
@@ -61,15 +61,15 @@ export default class TraderSpreadForm extends React.Component {
 							<label>Quantity</label>
 							<div className="input">
 								<input className="number quantity" data-validation="123" maxLength="8" name="SellOrderQuantity" type="text"
-									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, inputQuantityContext)}
-									   onChange={traderActions.actionOnQuantityChange.bind(null, inputQuantityContext)}
+									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, traderContext)}
+									   onChange={traderActions.actionOnQuantityChange.bind(null, traderContext)}
 									   value={quantity}/>
 								<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>
 								<div className="regulator">
 									<span className="plus" title="Press Arrow Up"
-										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, 1)}>{}</span>
+										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, traderContext, 1)}>{}</span>
 									<span className="minus" title="Press Arrow Down"
-										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, -1)}>{}</span>
+										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, traderContext, -1)}>{}</span>
 								</div>
 							</div>
 						</div>
@@ -92,7 +92,7 @@ export default class TraderSpreadForm extends React.Component {
 							<div className="input">
 								<input type="tel" className={'number' + bidsProb} data-validation="0.33" maxLength="4"
 									   value={spreadPriceNeg}
-									   onChange={traderActions.actionOnQuantityChange.bind(null, inputQuantityContext)}
+									   onChange={traderActions.actionOnQuantityChange.bind(null, traderContext)}
 									   disabled="disabled"/>
 								<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
 							</div>
@@ -101,15 +101,15 @@ export default class TraderSpreadForm extends React.Component {
 							<label>Quantity</label>
 							<div className="input">
 								<input className="number quantity" data-validation="123" maxLength="8" name="BuyOrderQuantity" type="text"
-									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, inputQuantityContext)}
-									   onChange={traderActions.actionOnQuantityChange.bind(null, inputQuantityContext)}
+									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, traderContext)}
+									   onChange={traderActions.actionOnQuantityChange.bind(null, traderContext)}
 									   value={quantity}/>
 								<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>
 								<div className="regulator">
 									<span className="plus" title="Press Arrow Up"
-										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, 1)}>{}</span>
+										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, traderContext, 1)}>{}</span>
 									<span className="minus" title="Press Arrow Down"
-										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, -1)}>{}</span>
+										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, traderContext, -1)}>{}</span>
 								</div>
 							</div>
 						</div>

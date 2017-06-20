@@ -687,6 +687,7 @@ class TraderString extends React.Component {
 								spread={spread}
 								isMirror={isMirror}
 								traderContext={traderContext}
+								// inputQuantityContext={inputQuantityContext}
 								{...other}
 								{...info}
 							/>

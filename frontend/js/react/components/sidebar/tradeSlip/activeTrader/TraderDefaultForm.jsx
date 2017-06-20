@@ -54,6 +54,7 @@ export default class TraderDefaultForm extends React.Component {
 					newOrder={true}
 					orderView={'simple'}
 					showDeleteButton={true}
+					submitOnEnter={true}
 					//focus={'quantity'}
 					focusOn={focusOn}
 					onSubmit={traderActions.actionOnAjaxSend.bind(null, this)}

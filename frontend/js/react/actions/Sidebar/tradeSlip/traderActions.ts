@@ -17,8 +17,13 @@ import BaseActions from '../../BaseActions';
 import {RebuildServerData} from './activeTrader/rebuildServerData';
 import { orderForm } from '../../../components/formValidation/validation';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
+/// <reference path="../../.d/common.d.ts" />
+// declare let __DEV__;
+// declare function $(object: any);
+// declare let defaultMethods;
 
-declare var orderClass;
+
+declare let orderClass;
 let initialStart = true;
 
 class Actions extends BaseActions
