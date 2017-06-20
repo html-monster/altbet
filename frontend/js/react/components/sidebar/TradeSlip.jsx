@@ -5,10 +5,10 @@
 // import { connect } from 'react-redux';
 import React from 'react';
 
-import DefaultOrders from './tradeSlip/DefaultOrders';
+import DefaultOrders from './tradeSlip/DefaultOrdersSidebar';
 import ActiveTrader from './tradeSlip/ActiveTrader';
 // import tradeSlipActions from '../../actions/Sidebar/tradeSlipActions';
-// import * as defaultOrderActions from '../../actions/Sidebar/defaultOrderActions';
+// import * as defaultOrderLocalActions from '../../actions/Sidebar/defaultOrderLocalActions';
 
 export default class TradeSlip extends React.Component
 {

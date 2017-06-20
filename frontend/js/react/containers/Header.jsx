@@ -69,7 +69,7 @@ class Header extends React.Component
 			{/*</div>*/}
 			<div className="header_left">
 				<div className="logo-container">
-					<a className="logo" href="/AltBet/eng/home/index"> </a>
+					<a className="logo" href={globalData.Urls.Home}> </a>
 				</div>
 				<div className="fast_menu">
 					<a href={globalData.Urls.Home} className={`f_button f_but_bor${globalData.action === 'index' && globalData.controller === 'home' && $filter !== 'live' ? " active" : ''}`}><span>Exchange</span> </a>

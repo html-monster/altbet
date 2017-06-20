@@ -1,4 +1,4 @@
-/**
+	/**
  * Created by Htmlbook on 22.12.2016.
  */
 import {
@@ -7,7 +7,7 @@ import {
 	ON_DEFAULT_ORDER_CREATE,
 	// ON_DEFAULT_ORDER_AJAX_SEND,
 	// ON_TAB_MIRROR_CHANGE,
-} from '../../../constants/ActionTypesDefaultOrders.js';
+} from '../../../constants/ActionTypesDefaultOrdersSidabar.js';
 // console.log(ABpp);
 
 	// mode: ABpp.config.basicMode,
@@ -123,7 +123,7 @@ const initialState = {
 };
 
 
-export default function defaultOrders(state = initialState, action)
+export default function defaultOrdersSidebar(state = initialState, action)
 {
 	switch (action.type)
 	{
@@ -143,5 +143,4 @@ export default function defaultOrders(state = initialState, action)
 		default:
 			return state
 	}
-
 }

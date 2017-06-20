@@ -12,11 +12,11 @@ export class Generator
 {
     public lastVirtualX = 0;
 
-    private genTickTime = 10; // generate new point, seconds
+    private genTickTime = 30; // generate new point, seconds
     private FLAG_GEN_STARTED = 0;
     private genLastPoint = 0;
     // private flagForceStop = true; // !!!!!!!!!!!!!!!
-    private flagForceStop = true;
+    private flagForceStop = false;
 
     private flagActive = false;
     private TiGenerator = [];

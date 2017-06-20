@@ -39,7 +39,7 @@ $lgmin:1201;
   }
 }
 
-@mixin md($bp){
+@mixin mdmax($bp){
   @if $bp == "xs"{
     @media (max-width: $xsmax + px){
       @content;
@@ -62,6 +62,34 @@ $lgmin:1201;
   }
   @else{
     @media (max-width: $bp + px){
+      @content;
+    }
+  }
+}
+
+@mixin mdmin($bp){
+  @if $bp == "xs"{
+    @media (min-width: $xsmin + px){
+      @content;
+    }
+  }
+  @else if $bp == "sm"{
+    @media (min-width: $smmin + px){
+      @content;
+    }
+  }
+  @else if $bp == "md"{
+    @media (min-width: $mdmin + px){
+      @content;
+    }
+  }
+  @else if $bp == "lg"{
+    @media (min-width: $lgmin + px){
+      @content;
+    }
+  }
+  @else{
+    @media (min-width: $bp + px){
       @content;
     }
   }

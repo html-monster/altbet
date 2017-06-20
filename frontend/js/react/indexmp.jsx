@@ -1,5 +1,5 @@
 
-import 'babel-polyfill';
+// import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -11,12 +11,13 @@ import MainPage from './containers/MainPage';
 import Header from './containers/Header';
 import MainMenu from './containers/MainMenu';
 import EventPage from './containers/EventPage';
+import ConfirmRegisterPage from './containers/ConfirmRegisterPage';
 import AccountPage from './containers/UserPage';
 import PageMyPos from './components/PageMyPos.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import RegisterBox from './containers/RegisterBox.jsx';
 
-
+var $node ;
 
 // Altbet App object
 // let constants = ABpp.ABpp;
@@ -70,6 +71,7 @@ if( !globalData.landingPage  )
 						<Route path='/funds(/:tabname)' component={AccountPage} tab="funds" />
 						<Route path='/preferences' component={AccountPage} tab="pref" />
 						<Route path='/settings' component={AccountPage} tab="sett" />
+						<Route path='/change_password' component={AccountPage} tab="pass" />
 					</Route>
 				</Router>
 			</Provider>,
@@ -83,7 +85,7 @@ if( !globalData.landingPage  )
 		// 	document.getElementById('withdraw')
 		// );
 	}
-	else if(ABpp.config.currentPage !== ABpp.CONSTS.PAGE_STATIC && ABpp.config.currentPage !== ABpp.CONSTS.PAGE_ANSWER){
+	else if( $node = document.getElementById('sidebar') ){
 		ReactDOM.render(
 			<Provider store={store}>
 				<Sidebar
@@ -91,7 +93,7 @@ if( !globalData.landingPage  )
 					globalData={globalData}
 				/>
 			</Provider>,
-			document.getElementById('sidebar')
+			$node
 		);
 	}
 
@@ -135,6 +137,16 @@ if( !globalData.landingPage  )
 		);
 	}
 } // endif
+
+
+	if( ABpp.config.currentPage === ABpp.CONSTS.PAGE_ACCOUNT_CONFIRM ) {
+		ReactDOM.render(
+			<Provider store={store}>
+				<ConfirmRegisterPage />
+			</Provider>,
+		    document.getElementById('DiConfirmPage')
+		);
+	}
 
 
 // Registration form

@@ -7,7 +7,8 @@ import mainPage from './mainPageReducer';
 import eventPage from './eventPageReducer';
 import accountPage from './accountPageReducer';
 import sidebar from './sidebarReducer';
-import defaultOrders from './sidebar/tradeSlip/defaultOrders';
+import defaultOrdersSidebar from './sidebar/tradeSlip/defaultOrdersSidebar';
+import defaultOrdersLocal from './defaultOrdersLocal';
 import activeTrader from './sidebar/tradeSlip/activeTrader';
 import yourOrders from './sidebar/yourOrders';
 import deposit from './userPage/deposit';
@@ -17,6 +18,7 @@ import myPosReduce from './MyPosReducer';
 import accountSetting from './userPage/settingReducer';
 // import tradeSlip from './sidebar/tradeSlipReducer';
 import registerBox from './registerReducer';
+import confirmRegisterPage from './confirmRegisterPageReducer';
 
 
 let reducers = {};
@@ -57,7 +59,8 @@ switch (ABpp.config.currentPage)
 			myPosReduce,
 			sidebar,
 			// tradeSlip,
-			defaultOrders,
+			defaultOrdersSidebar,
+			defaultOrdersLocal,
 			activeTrader,
 			yourOrders,
 			...common,
@@ -72,7 +75,7 @@ switch (ABpp.config.currentPage)
 			eventPage,
 			sidebar,
 			// tradeSlip,
-			defaultOrders,
+			defaultOrdersSidebar,
 			activeTrader,
 			yourOrders,
 			...common,
@@ -101,7 +104,7 @@ switch (ABpp.config.currentPage)
 			myPosReduce,
 			sidebar,
 			// tradeSlip,
-			defaultOrders,
+			defaultOrdersSidebar,
 			activeTrader,
 			yourOrders,
 			...common,
@@ -122,6 +125,16 @@ switch (ABpp.config.currentPage)
 			App: appState,
 			header,
 			mainMenu,
+			...common,
+		};
+		break;
+	}
+	case ABpp.CONSTS.PAGE_ACCOUNT_CONFIRM:{
+		reducers = {
+			App: appState,
+			header,
+			mainMenu,
+			confirmRegisterPage,
 			...common,
 		};
 		break;

@@ -10,11 +10,13 @@
 
 .hidden { display: none !important; }
 
-.blur {
-  *:not(.pop_up) {
+.blur{
+  *:not(.pop_up){
     filter: url("#{$pathImage}/blur.svg#blur") blur(5px);
   }
 }
+
+.-red { color: $color-red !important; }
 
 h1 {
   font-size: 35px;
@@ -40,27 +42,23 @@ select {
   color: #666666;
   cursor: pointer;
 }
-
-ul { list-style-type: none; }
-
-*:focus { outline: none; }
-
-body {
+ul{  list-style-type: none;  }
+*:focus{  outline: none;  }
+body{
   //overflow-x: auto;
-  background: $main-bg;
-  & > .wrapper {
-    //@include container(12);
-    //min-height:100%;
-    //transition: 0.4s ease-out;
-    &.scroll {
+  &>.wrapper{
+  //@include container(12);
+  //min-height:100%;
+  //transition: 0.4s ease-out;
+    &.scroll{
       min-width: 1500px !important;
-      .scroll_header {
+      .scroll_header{
         position: relative;
         width: 80%;
         min-width: 1250px;
         margin-left: 188px;
-        .header_info {
-          width: 1315px;
+        .header_info{
+          width:1315px ;
           float: left;
           margin-right: 0;
         }
@@ -68,9 +66,9 @@ body {
       .scroll_main_menu {
         position: relative;
         width: 186px;
-        margin-top: -70px;
+        margin-top:-70px;
       }
-      .scroll_content {
+      .scroll_content{
         width: 963px;
         margin-left: 15px;
         margin-top: 0;
@@ -80,17 +78,17 @@ body {
           padding: 15px 15px 15px 0;
           position: static;
         }
-        .tab_content {
+        .tab_content{
           padding-top: 0;
         }
       }
-      .scroll_position {
+      .scroll_position{
         width: 992px;
         margin-left: 0;
         margin-top: 0;
-        padding: 0;
+        padding:0;
       }
-      .user_scroll {
+      .user_scroll{
         height: 900px;
         padding-left: 0;
         padding-top: 15px;
@@ -556,10 +554,10 @@ input ~ .info {
     @include scroll;
   }
   li { padding: 2px 35px 2px 10px; transition: 0.2s ease-out; cursor: pointer; @include user_page_li; }
-  li:last-of-type { border-bottom: none; }
-  .has-value.is-pseudo-focused .Select-input {
-    opacity: 0;
-  }
+  li:last-of-type{  border-bottom: none;  }
+    .has-value.is-pseudo-focused .Select-input {
+      opacity: 0;
+    }
 }
 
 .timestamp {
@@ -664,7 +662,7 @@ input ~ .info {
     &_full { display: flex; margin-top: auto; width: 90%; height: 90%;
     }
   }
-  &__message { color: #53515e; }
+  &__message { color: $color2About; }
   &__buttons { display: flex; justify-content: center; }
   button { display: block; margin: 15px 5px 0; width: 75px; }
   button.btn1 { background-image: linear-gradient(to bottom, #84d65b, #4dac2e); }

@@ -20,7 +20,7 @@ class RegisterBox extends BaseController
     constructor(props)
     {
         super(props);
-        __DEV__ && console.log( 'RegisterBox props', props );
+        // __DEV__ && console.log( 'RegisterBox props', props );
     }
 
 
@@ -32,7 +32,7 @@ class RegisterBox extends BaseController
                     <div className="sign_up_content pop_up_content">
                         <div className="header">
                             <div className="logo_container">
-                                <a href="/" className="logo"><strong>alt.bet</strong></a>
+                                <a href={ABpp.baseUrl + '/eng/home/index'} className="logo"><strong>alt.bet</strong></a>
                             </div>
                             <div className="warning_container">
                                 <span>Over 18 only</span>
@@ -47,7 +47,7 @@ class RegisterBox extends BaseController
                                 </div>
                                 <div className="tab_content">
                                     <div className="tab_item real">
-                                        <span className="close"><span></span></span>
+                                        <span className="close"><span>{}</span></span>
 
                                         <RegisterForm onSubmit={this.props.actions.actionFormSubmit.bind(null, this)} />
                                     </div>

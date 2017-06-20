@@ -11,7 +11,6 @@ import { Common } from '../common/Common';
 import BaseActions from './BaseActions';
 import { SocketSubscribe } from "../models/SocketSubscribe";
 
-
 var __LDEV__ = !true;
 
 declare let orderClass;
@@ -100,7 +99,7 @@ class Actions extends BaseActions
 
     /**
      * Create bet form in side bar
-     * @param context - контекст MainPage (для проброски defaultOrderActions)
+     * @param context - контекст MainPage (для проброски defaultOrderSidebarActions)
      * @param props
      * @return {(dispatch:any, getState:any)=>undefined}
      */

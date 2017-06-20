@@ -206,8 +206,8 @@ class OrderItem extends React.Component
 						data.Side ? 'buy' : 'sell'
 						:
 						data.Side ? 'sell' : 'buy'}
-					ask={data.Symbol.LastAsk}
-					bid={data.Symbol.LastBid}
+					ask={data.Symbol.LastAsk === 1 ? null : data.Symbol.LastAsk}
+					bid={data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid}
 					price={data.Price}
 					quantity={data.Volume}
 					isMirror={data.isMirror}

@@ -1,6 +1,6 @@
 header.first_page {
   background: none;
-  @include md(1360){ min-width: inherit; }
+  @include mdmax(1350){ min-width: inherit; }
   .header_info {
     justify-content: space-between;
     float: none;
@@ -8,7 +8,7 @@ header.first_page {
     margin: 0 auto;
     background: transparent;
     //border-bottom: 1px solid transparentize(#ffffff, 0.9);
-    @include md(1300){ width: auto; }
+    @include mdmax(1300){ width: auto; }
   }
   .header_right {
     border: none;

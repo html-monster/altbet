@@ -11,17 +11,13 @@ import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 class MainMenu extends React.Component
 {
-	constructor()
-	{
-		super();
-	}
-
 	render()
 	{
 		// const { Exchanges: exchanges, Menu: categoryMenu } = appData.menuData;
 		const { actions, activeCat, menuData: { Exchanges: exchanges, Menu: categoryMenu }, currentData, showSubmenu } = this.props;
 
 		// categoryMenu.forEach(function (item) {console.log('CatName:', item.CatName);})
+		// onMouseLeave={actions.showHideSubMenu.bind(null, false)}
 		return <div className="nav_bet" onMouseLeave={actions.showHideSubMenu.bind(null, false)}>
 			{
 				showSubmenu &&

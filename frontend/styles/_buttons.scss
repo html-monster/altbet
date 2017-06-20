@@ -52,6 +52,10 @@ button, a.button {
   }
 }
 
+.btn-md { height: 32px;
+  &:disabled { background: #dedede; color: #716767; box-shadow: none !important; }
+}
+
 .btn_green { background: linear-gradient(to bottom, #84d65b, #4dac2e); }
 
 .btn_orange { background: linear-gradient(to bottom, #f88447, #ef4d22); }

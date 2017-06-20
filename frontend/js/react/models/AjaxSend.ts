@@ -31,13 +31,14 @@ export class AjaxSend
                 success: function(data)
                 {
                     var error = -1001;
+                    console.debug( 'here', 0 );
                     try
                     {
-                        __LDEV__&&console.debug( 'data AJAX', data );
 
                         // before check response callback
                         if (props.beforeChkResponse) data = props.beforeChkResponse(data);
 
+                        __LDEV__&&console.debug( 'data AJAX', data );
 
 
                         // user defined error

@@ -6,7 +6,7 @@ import AnimateOnUpdate from '../../Animation.jsx';
 import TraderDefaultForm from './activeTrader/TraderDefaultForm';
 import TraderSpreadForm from './activeTrader/TraderSpreadForm';
 import traderActions from '../../../actions/Sidebar/tradeSlip/traderActions';
-import * as defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderActions';
+import defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
 import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
 // import RebuildServerData from '../../../actions/Sidebar/activeTrader/rebuildServerData';
 
@@ -67,25 +67,25 @@ class ActiveTrader extends React.Component {
 		return <div className="active_trader" id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
-			{
-				ABpp.config.currentPage === ABpp.CONSTS.PAGE_MAIN ?
-					<div className="event_title">
-						<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}
-							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>
-							{
-								activeExchange.homeName//JSON.stringify(data) !== '{}' && ${data.Symbol.HomeHandicap}
-							}
-						</div>
-						<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}
-							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, true)}>
-							{
-								activeExchange.awayName// JSON.stringify(data) !== '{}' && ${data.Symbol.AwayHandicap}
-							}
-						</div>
-					</div>
-					:
-					''
-			}
+			{/*{*/}
+				{/*ABpp.config.currentPage === ABpp.CONSTS.PAGE_MAIN ?*/}
+					{/*<div className="event_title">*/}
+						{/*<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}*/}
+							 {/*onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>*/}
+							{/*{*/}
+								{/*activeExchange.homeName//JSON.stringify(data) !== '{}' && ${data.Symbol.HomeHandicap}*/}
+							{/*}*/}
+						{/*</div>*/}
+						{/*<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}*/}
+							 {/*onClick={traderActions.actionOnTabMirrorClick.bind(null, this, true)}>*/}
+							{/*{*/}
+								{/*activeExchange.awayName// JSON.stringify(data) !== '{}' && ${data.Symbol.AwayHandicap}*/}
+							{/*}*/}
+						{/*</div>*/}
+					{/*</div>*/}
+					{/*:*/}
+					{/*''*/}
+			{/*}*/}
 			<table className="info">
 				<tbody>
 					<tr>
@@ -283,7 +283,7 @@ class ActiveTrader extends React.Component {
 								<a href="#" className="ReverseAllJs wave">Reverse</a>
 								<div className="confirm_window animated">
 									<div className="container">
-										<span>Do you really want do it?</span>
+										<span>Do you really want Reverse?</span>
 										<div className="button_container">
 											<button className="btn wave yes">Yes</button>
 											<button className="btn wave no">No</button>
@@ -295,7 +295,7 @@ class ActiveTrader extends React.Component {
 								<a href="#" className="CancelAllJs wave">Cancel All</a>
 								<div className="confirm_window animated">
 									<div className="container">
-										<span>Do you really want do it?</span>
+										<span>Do you really want Cancel All?</span>
 										<div className="button_container">
 											<button className="btn wave yes">Yes</button>
 											<button className="btn wave no">No</button>
@@ -307,7 +307,7 @@ class ActiveTrader extends React.Component {
 								<a href="#" className="CloseOutJs wave">Close Out</a>
 								<div className="confirm_window animated">
 									<div className="container">
-										<span>Do you really want do it?</span>
+										<span>Do you really want Close Out?</span>
 										<div className="button_container">
 											<button className="btn wave yes">Yes</button>
 											<button className="btn wave no">No</button>

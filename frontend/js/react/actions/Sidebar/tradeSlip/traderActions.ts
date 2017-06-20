@@ -868,4 +868,5 @@ class Actions extends BaseActions
 		// console.log(980 - tbody.height() / 2);
 	}
 }
+
 export default (new Actions()).export();
