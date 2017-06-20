@@ -35,7 +35,7 @@ export class PlayersTable extends React.Component
 
     render()
     {
-        const { data, data: {t1pos, t2pos, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, actions, positions, CurrEvtId, EventId, uplayerdata: {uniPositionIndex, uniPositionName}, Rules, CurrentTeam} } = this.props;
+        const { data, data: {t1pos, t2pos, actions, positions, CurrEvtId, EventId, uplayerdata: {uniPositionIndex, uniPositionName}, Rules, CurrentTeam} } = this.props;
         // const data = this.props.data;
         const { data: Players, filters } = this.state;
 
@@ -141,7 +141,8 @@ export class PlayersTable extends React.Component
                                             <span>
                                                 Team {itm.usedTeam}&nbsp;
                                                 {itm.used === 2 ? <span title="Universal Player">UP</span> : ''}
-                                                {itm.used === 3 ? <span title="Reserve">RES</span> : ''}
+                                                {itm.used === 3 ? <span title="Team Reserve">RES</span> : ''}
+                                                {itm.used === 4 ? <span title="In team Variable players list">VAR</span> : ''}
                                             </span>
                                         </td>
                                         :

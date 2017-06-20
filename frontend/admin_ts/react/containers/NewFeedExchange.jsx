@@ -37,7 +37,7 @@ class NewFeedExchange extends BaseController
     {
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
-        const { Players, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, CurrentEventId, EventId, Rules, CurrentTeam} = this.props.data;
+        const { Players, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, Rules, CurrentTeam} = this.props.data;
         const { currTeamKey } = this.state;
         var items = [];
         const playersComponents = [
@@ -91,7 +91,6 @@ class NewFeedExchange extends BaseController
                             </div>
                         </div>
 
-
                         <div className="row">
                             <div className="col-sm-6">
                                 <div className="box-body" >
@@ -105,7 +104,12 @@ class NewFeedExchange extends BaseController
                                                     value: AppData.TimeEvent[key].EventId,
                                                     label: `${AppData.TimeEvent[key].HomeTeam} vs ${AppData.TimeEvent[key].AwayTeam} (${(new DateLocalization).fromSharp2(AppData.TimeEvent[key].StartDate, 0).toLocalDate({format: 'MM/DD/Y h:mm A'})})`
                                                 }}
-                                            )} clearable={false} value={items[0]} searchable={true} afterChange={actions.actionChangeEvent}/>
+                                            )}
+                                            /*items={[
+                                                { value: '1', label: 'var 1'},
+                                                { value: '2', label: 'var 2'},
+                                            ]}*/
+                                            clearable={false} value={items[0]} searchable={true} afterChange={actions.actionChangeEvent}/>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +127,7 @@ class NewFeedExchange extends BaseController
                                         <div class="box-body">
                                             <PlayersTable data={{
                                                 Players,
-                                                CurrEvtId: CurrentEventId.EventId,
+                                                CurrEvtId: LastEventId,
                                                 EventId,
                                                 t1pos: PlayersTeam1.positions,
                                                 t2pos: PlayersTeam2.positions,

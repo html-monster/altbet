@@ -33,7 +33,8 @@ class Reducer
         PlayersTeam2Reserve: {players: []},
         PlayersTeam2Variable: {players: []},
         Positions: null,
-        CurrentEventId: null,
+        EventId: null,
+        LastEventId: null,
         UPlayerData: {
             uniPositionName: 'Util',
             uniPositionIndex: 5,
@@ -110,19 +111,21 @@ class Reducer
 
     /**
      * Load user teams data
-     * @return {PlayersTeam1, PlayersTeam2, CurrentEventId}
+     * @return {PlayersTeam1, PlayersTeam2, LastEventId}
      */
-    private loadData() : {PlayersTeam1, PlayersTeam2, CurrentEventId}
+    private loadData() : {PlayersTeam1, PlayersTeam2, LastEventId}
     {
-        let $CurrentEventId = globalData.AppData && globalData.AppData.TimeEvent.length ? globalData.AppData.TimeEvent[0] : "";
+        let $LastEventId = globalData.AppData.EventId;
         let data : any = localStorage.getItem('newFeedExchange');
 
         if( data )
         {
             data = JSON.parse(data);
 
-            if( $CurrentEventId && data.CurrentEventId && data.CurrentEventId.EventId == $CurrentEventId.EventId )
+            // 0||console.log( 'data.CurrentEventId.EventId , $LastEventId.EventId', data.EventId , $LastEventId.EventId );
+            if( $LastEventId && data.EventId && data.EventId == $LastEventId )
             {
+                // 0||console.log( 'data', data );
                 this.initialState.Players.map((val, key) => {
                     if (val.ID == data.Players[key].Id && data.Players[key].used)
                     {
@@ -139,18 +142,18 @@ class Reducer
         return {
             PlayersTeam1: {positions: {}, players: []},
             PlayersTeam2: {positions: {}, players: []},
-            CurrentEventId: $CurrentEventId,
+            LastEventId: $LastEventId,
         };
     }
 
 
     /**
      * Save user teams data
-     * @param state {PlayersTeam1, PlayersTeam2, CurrentEventId, Players}
+     * @param state { PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId }
      */
-    private saveData({ PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, CurrentEventId, Players })
+    private saveData({ PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId })
     {
-        let data = { PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, CurrentEventId, Players };
+        let data = { PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId };
         localStorage.setItem('newFeedExchange', JSON.stringify(data));
     }
 
@@ -341,15 +344,38 @@ class Reducer
     private markPlayers(state)
     {
         // reset players states
-        /*state.Players.forEach((val) => val.used = false);
+        // state.Players.forEach((val) => val.used = false);
 
+            // case 1:
+            // case 2 : team = "PlayersTeam"+team; break;
+            // case 3 : team = `PlayersTeam${team}Reserve`; break;
+            // case 4 : team = `PlayersTeam${team}Variable`; break;
         // set team1 players states
         for( let val of state.PlayersTeam1.players )
         {
             for( let ii in state.Players )
             {
                 let val2 = state.Players[ii];
-                if( val.Id == val2.Id ) { val2.used = 1; } // endif;
+                if( val.Id == val2.Id )
+                {
+                    if( state.UPlayerData.uniPositionIndex == val.Index )
+                    {
+                        val.used = Reducer.USING_TEAM_UP;
+                        val.usedTeam = 1;
+                        val.meta = { PositionOrig: val.Position,
+                            IndexOrig: val.Index,
+                        };
+                        val.Index = state.UPlayerData.uniPositionIndex;
+                        val.Position = state.UPlayerData.uniPositionName;
+                    }
+                    else
+                    {
+                        val.used = Reducer.USING_TEAM;
+                        val.usedTeam = 1;
+                    } // endif
+
+                    break;
+                } // endif;
             } // endfor
         }
 
@@ -359,9 +385,87 @@ class Reducer
             for( let ii in state.Players )
             {
                 let val2 = state.Players[ii];
-                if( val.Id == val2.Id ) { val2.used = 2; } // endif;
+                if( val.Id == val2.Id )
+                {
+                    if( state.UPlayerData.uniPositionIndex == val.Index )
+                    {
+                        val.used = Reducer.USING_TEAM_UP;
+                        val.usedTeam = 2;
+                        val.meta = { PositionOrig: val.Position,
+                            IndexOrig: val.Index,
+                        };
+                        val.Index = state.UPlayerData.uniPositionIndex;
+                        val.Position = state.UPlayerData.uniPositionName;
+                    }
+                    else
+                    {
+                        val.used = Reducer.USING_TEAM;
+                        val.usedTeam = 2;
+                    } // endif
+                    break;
+                } // endif;
             } // endfor
-        }*/
+        }
+
+        // set team1 reserve players states
+        for( let val of state.PlayersTeam1Reserve.players )
+        {
+            for( let ii in state.Players )
+            {
+                let val2 = state.Players[ii];
+                if( val.Id == val2.Id )
+                {
+                    val.used = Reducer.USING_RESERVE;
+                    val.usedTeam = 1;
+                    break;
+                } // endif;
+            } // endfor
+        }
+
+        // set team2 reserve players states
+        for( let val of state.PlayersTeam2Reserve.players )
+        {
+            for( let ii in state.Players )
+            {
+                let val2 = state.Players[ii];
+                if( val.Id == val2.Id )
+                {
+                    val.used = Reducer.USING_RESERVE;
+                    val.usedTeam = 2;
+                    break;
+                } // endif;
+            } // endfor
+        }
+
+        // set team1 variable players states
+        for( let val of state.PlayersTeam1Variable.players )
+        {
+            for( let ii in state.Players )
+            {
+                let val2 = state.Players[ii];
+                if( val.Id == val2.Id )
+                {
+                    val.used = Reducer.USING_VARIABLE;
+                    val.usedTeam = 1;
+                    break;
+                } // endif;
+            } // endfor
+        }
+
+        // set team2 variable players states
+        for( let val of state.PlayersTeam2Variable.players )
+        {
+            for( let ii in state.Players )
+            {
+                let val2 = state.Players[ii];
+                if( val.Id == val2.Id )
+                {
+                    val.used = Reducer.USING_VARIABLE;
+                    val.usedTeam = 2;
+                    break;
+                } // endif;
+            } // endfor
+        }
     }
 
 
@@ -441,9 +545,9 @@ class Reducer
      */
     private setCurrentEvent(inProps, state)
     {
-        const [ Players, CurrentEventId ]  = inProps;
+        const [ Players, LastEventId ]  = inProps;
         state.Players = Players;
-        state.CurrentEventId.EventId = CurrentEventId;
+        state.LastEventId = LastEventId;
         if (Players.length) this.markPlayers(state);
         return {...state};
     }
