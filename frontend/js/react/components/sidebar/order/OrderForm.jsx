@@ -565,7 +565,7 @@ export default class OrderForm extends React.Component{
 					}
 						{
 							showDeleteButton && onDelete ?
-								<span className="delete" onClick={onDelete}>{}</span>
+								<button className="delete close_red" onClick={onDelete}>{}</button>
 								:
 								''
 						}

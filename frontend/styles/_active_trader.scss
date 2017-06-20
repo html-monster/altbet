@@ -237,7 +237,7 @@
 			border-left: none;
 			border-bottom: none;
 			//position: relative;
-			&:hover .close_red{  opacity: 1;  }
+			&:hover .delete_ord{  opacity: 1;  }
 			&.label{
 				height: 24px;
 				@include trader_label;
@@ -300,8 +300,8 @@
 				}
 				&:active:after{  opacity: 1;  }
 			}
-			&.my_bids .close_red{  right: 0;  }
-			&.my_offers .close_red{  left: 0;  }
+			&.my_bids .delete_ord{  right: 0;  }
+			&.my_offers .delete_ord{  left: 0;  }
 			//&[rowspan]{  width: 34%;  }
 			a { display: block; position: relative; padding: 2px 5px; color: $main-color; cursor: default; }
 
@@ -321,15 +321,17 @@
 				color: $trader_button_color;
 				&:last-of-type{  border-left: 1px solid $trader_button_separator;  }
 			}
-			.close_red{
+			.delete_ord{
 				width: 15px;
 				height: 15px;
 				position: absolute;
 				top: calc(50% - 8px);
 				min-height: 10px;
 				border: none !important;
+				background: url("#{$pathImage}/sprite.svg") no-repeat -162px -178px;
 				opacity: 0;
 				transition: 0.2s ease-out;
+				transform: scale(0.8);
 			}
 			&.cancel_all{  background-image: linear-gradient(to bottom, #646470, #34343d); a{  color: #ffffff;} } //#a3a3a3
 			&.close_out{  background-image: linear-gradient(to bottom, #f88447, #ef4d22); a{color: #fff;}  }

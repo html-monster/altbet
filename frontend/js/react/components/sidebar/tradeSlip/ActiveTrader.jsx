@@ -91,7 +91,7 @@ class ActiveTrader extends React.Component {
 					<tr>
 						<td className="open_pnl trader_info">
 							<a href="#">
-								P/L
+								W/L
 								<span className={'quantity ' + className}>{gainLoss}</span>
 								<span className="help"><span className="help_message right"><strong>Profit in this event</strong></span></span>
 							</a>
@@ -546,7 +546,7 @@ class TraderString extends React.Component {
 						}
 					</span>
 				{
-					!!data.ParticularUserQuantityBuy ? <button className="close_red">{}</button> : ''
+					!!data.ParticularUserQuantityBuy ? <button className="delete_ord">{}</button> : ''
 				}
 			</td>
 
@@ -654,7 +654,7 @@ class TraderString extends React.Component {
 					}
 				</span>
 				{
-					!!data.ParticularUserQuantitySell ? <button className="close_red">{}</button> : ''
+					!!data.ParticularUserQuantitySell ? <button className="delete_ord">{}</button> : ''
 				}
 			</td>
 			<td>

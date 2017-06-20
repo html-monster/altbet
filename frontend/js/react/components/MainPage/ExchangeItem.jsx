@@ -323,7 +323,7 @@ export default class ExchangeItem extends React.Component
                             {/*<div className="loc1">{}</div>*/}
                             {/*<div className="loc2">{}</div>*/}
 							<div className={'pl mode_info_js' + (data.Positions ? ' active' : '')}>
-								<strong style={data.Positions ? {transform: `translateY(0)`} : {}}>P/L:
+								<strong style={data.Positions ? {transform: `translateY(0)`} : {}}>W/L:
 									<span className={(data.GainLoss < 0 ? 'lose' : '') + (data.GainLoss > 0 ? 'win' : '')}>
                                         {data.GainLoss ?
 											data.GainLoss < 0 ? ` ($${(Math.abs(data.GainLoss)).toFixed(2)})` :  ' $' + (data.GainLoss).toFixed(2)

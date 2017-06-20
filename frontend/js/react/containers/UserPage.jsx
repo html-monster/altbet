@@ -11,7 +11,7 @@ import BaseController from './BaseController';
 import Funds from '../components/userPage/Funds';
 import Preferences from '../components/userPage/Preferences';
 import Settings from '../components/userPage/Settings';
-import ChangePassword from '../components/userPage/settings/ChangePassword';
+import ChangePassword from '../components/userPage/settings/ChangePassword.jsx';
 
 class UserPage extends BaseController
 {
