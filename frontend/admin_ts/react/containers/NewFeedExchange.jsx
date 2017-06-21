@@ -51,46 +51,37 @@ class NewFeedExchange extends BaseController
 
 
         return (
-            <div className="box box-default">
-                <div className="box-header">
-                    {/*<i className="fa fa-navicon"></i>*/}
-                    <h3 className="box-title">Event approving “{AppData.FullName}”</h3>
-                </div>
-                <div className="box-body pad table-responsive">
-                    <div className="box box-widget">
+            <div>
+                <h3 className="">Event approving “{AppData.FullName}”</h3>
+                <div className="box box-default">
+{/*
+                    <div className="box-header">
+                        <i className="fa fa-navicon"></i>
+                    </div>
+*/}
+                    <div className="box-body pad table-responsive">
+                        {/*<div className="box box-widget"></div>*/}
                         {/*<!-- /.box-header -->*/}
-                        {/*<div className="box-header with-border"></div>*/}
-                        {/*<!-- /.box-body -->*/}
-                        <div className="row">
-                            <div className="col-sm-3">
-                                <div className="box-body" >
-                                    <div className="form-group">
-                                        <label>Category</label>
-                                        <div className="">{AppData.Category}</div>
+                            {/*<div className="box-header with-border"></div>*/}
+                            {/*<!-- /.box-body -->*/}
+                            <div className="row">
+                                <div className="col-sm-3">
+                                    <div className="box-body" >
+                                        <div className="form-group">
+                                            <label>Category</label>
+                                            <div className="">{AppData.Category}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-sm-4">
-                                <div className="box-body" >
-                                    <div className="form-group">
-                                        <label>Event start date</label>
-                                        <div className="">{moment(AppData.StartDate).format('DD MMM Y H:mm A')}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                <div className="box box-default">
+                    <div className="box-header with-border">
+                        <h4>Manage team</h4>
+                    </div>
 
-                        <div className="row">
-                            <div className="col-sm-6">
-                                <div className="box-body" >
-                                    <div className="form-group">
-                                        <label>Full name</label>
-                                        <input className="form-control" type="text" name="url" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div className="box-body pad table-responsive">
                         <div className="row">
                             <div className="col-sm-6">
                                 <div className="box-body" >
@@ -163,6 +154,31 @@ class NewFeedExchange extends BaseController
                                 </div>
                             </div>
                         </div>
+                            {/*<!-- /.box-footer -->*/}
+                            {/*<div class="box-footer" style="display: block;"></div>*/}
+                    </div>
+                </div>
+
+                <div className="box box-default">
+                    <div className="box-body pad table-responsive">
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <div className="box-body" >
+                                    <div className="form-group">
+                                        <label>Full name</label>
+                                        <input className="form-control" type="text" name="url" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-sm-6">
+                                <div className="box-body" >
+                                    <div className="form-group">
+                                        <label>Event start date</label>
+                                        <div className="">{moment(AppData.StartDate).format('DD MMM Y H:mm A')}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div className="row">
                             <div className="col-sm-6">
@@ -174,11 +190,9 @@ class NewFeedExchange extends BaseController
                                 </div>
                             </div>
                         </div>
-
-                        {/*<!-- /.box-footer -->*/}
-                        {/*<div class="box-footer" style="display: block;"></div>*/}
                     </div>
                 </div>
+
             </div>
         );
         // return <Chart data={this.props.MainPage} actions={this.props.chartActions} />

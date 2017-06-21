@@ -148,4 +148,10 @@ export class Common
     {
         return haystack.some(vv => vv == needle);
     }
+
+
+    public static lastItem(inArr)
+    {
+        return inArr[inArr.length-1];
+    }
 }
