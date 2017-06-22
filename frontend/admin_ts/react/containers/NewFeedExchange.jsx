@@ -10,6 +10,8 @@ import {Team1} from '../components/NewFeedExchange/Team1';
 import {TeamResVar} from 'components/NewFeedExchange/TeamResVar';
 import {DateLocalization} from '../common/DateLocalization';
 import classNames from 'classnames';
+import {Common} from "common/Common.ts";
+import {InfoMessages} from "common/InfoMessages.ts";
 
 
 class NewFeedExchange extends BaseController
@@ -41,12 +43,12 @@ class NewFeedExchange extends BaseController
         const { currTeamKey } = this.state;
         var items = [];
         const playersComponents = [
-            [1, 1, 'Players team 1', <Team1 data={PlayersTeam1.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
-            [1, 2, 'Reserve players team 1', <TeamResVar players={PlayersTeam1Reserve.players} teamVar="PlayersTeam1Reserve" actions={actions} teamNum="1" />,],
-            [1, 3, 'Variable players team 1', <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
-            [2, 1, 'Players team 2', <Team1 data={PlayersTeam2.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />,],
-            [2, 2, 'Reserve players team 2', <TeamResVar players={PlayersTeam2Reserve.players} teamVar="PlayersTeam2Reserve" actions={actions} teamNum="2" />,],
-            [2, 3, 'Variable players team 2', <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
+            [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={PlayersTeam1.players} name={PlayersTeam1.name} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
+            [1, 2, 'Reserve players team 1', PlayersTeam1Reserve.players, <TeamResVar players={PlayersTeam1Reserve.players} teamVar="PlayersTeam1Reserve" actions={actions} teamNum="1" />,],
+            [1, 3, 'Variable players team 1', PlayersTeam1Variable.players, <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
+            [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={PlayersTeam2.players} name={PlayersTeam2.name} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />,],
+            [2, 2, 'Reserve players team 2', PlayersTeam2Reserve.players, <TeamResVar players={PlayersTeam2Reserve.players} teamVar="PlayersTeam2Reserve" actions={actions} teamNum="2" />,],
+            [2, 3, 'Variable players team 2', PlayersTeam2Variable.players, <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
         ];
 
 
@@ -139,11 +141,11 @@ class NewFeedExchange extends BaseController
 
                             <div className="col-sm-6">
                                 <div class="box-group" id="accordion">
-                                    {playersComponents.map(([$team, $type, $header, $component], key) =>
+                                    {playersComponents.map(([$team, $type, $header, $players, $component], key) =>
                                         <div key={key} class={`panel box box-team${$team}`}>
                                             <div class="box-header with-border" onClick={this._onAccordionOpenClick.bind(this, $type, $team, key)}>
                                                 <h4 class="box-title">
-                                                    <a data-toggle="collapse" data-js-opener="" data-parent="#accordion" href={"#collapse" + key} aria-expanded={key === 0} class={classNames({"collapsed": key !== currTeamKey, "unactive": key !== currTeamKey})}>{$header}</a>
+                                                    <a data-toggle="collapse" data-js-opener="" data-parent="#accordion" href={"#collapse" + key} aria-expanded={key === 0} class={classNames({"collapsed": key !== currTeamKey, "unactive": key !== currTeamKey})}>{$header} <span className="-silver" title="Players count">({$players.length})</span></a>
                                                 </h4>
                                             </div>
                                             <div id={"collapse" + key} class={classNames("panel-collapse collapse", {"in": key === 0})} aria-expanded="true">
@@ -164,9 +166,10 @@ class NewFeedExchange extends BaseController
                         <div className="row">
                             <div className="col-sm-6">
                                 <div className="box-body" >
-                                    <div className="form-group">
-                                        <label>Full name</label>
-                                        <input className="form-control" type="text" name="url" />
+                                    <label>Full name</label>
+                                    <div class="input-group">
+                                        <input className="form-control" type="text" name="fullname" value={AppData.FormData.fullName} onChange={this._onChangeFormData.bind(this, 'fullName')} />
+                                        <span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateFullName} title="Generate full name"><i class="fa fa-repeat"/></button></span>
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +177,7 @@ class NewFeedExchange extends BaseController
                                 <div className="box-body" >
                                     <div className="form-group">
                                         <label>Event start date</label>
-                                        <div className="">{moment(AppData.StartDate).format('DD MMM Y H:mm A')}</div>
+                                        <div className="">{AppData.FormData.startDate ? moment(AppData.FormData.startDate).format('DD MMM Y H:mm A') : <i>It is not possible to calculate due to the lack of players in teams</i>}</div>
                                     </div>
                                 </div>
                             </div>
@@ -183,10 +186,17 @@ class NewFeedExchange extends BaseController
                         <div className="row">
                             <div className="col-sm-6">
                                 <div className="box-body" >
+                                    <label>Url</label>
+                                    <div class="input-group">
+                                        <input className="form-control" type="text" name="url" value={AppData.FormData.url} onChange={this._onChangeFormData.bind(this, 'url')} />
+                                        <span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateUrl} title="Generate event url"><i class="fa fa-repeat"/></button></span>
+                                    </div>
+
+{/*
                                     <div className="form-group">
-                                        <label>Url</label>
                                         <input className="form-control" type="text" name="url" />
                                     </div>
+*/}
                                 </div>
                             </div>
                         </div>
@@ -219,6 +229,39 @@ class NewFeedExchange extends BaseController
         // const { Players, PlayersTeam1, PlayersTeam2, CurrentEventId, Positions, UPlayerData, EventFilter, Period} = this.props.data;
 
         actions.actionChangeEventsPeriod({EventId, filterVal});
+    }
+
+
+    /**@private*/ _onChangeFormData(fieldName, ee)
+    {
+        const { actions, } = this.props;
+        actions.actionChangeFormData({fieldName, val: ee.target.value});
+    }
+
+
+    /**@private*/ _onGenerateFullName(ee)
+    {
+        const { actions } = this.props;
+        actions.actionGenerateFullName();
+    }
+
+
+    /**@private*/ _onGenerateUrl(ee)
+    {
+        const { actions, data } = this.props;
+
+        if( !data.FormData.fullName )
+        {
+            (new InfoMessages).show({
+                title: '',
+                message: 'You need to fill the full name!',
+                color: 'yellow', // blue, red, green, yellow,
+            });
+        }
+        else
+        {
+            actions.actionGenerateUrl();
+        } // endif
     }
 }
 

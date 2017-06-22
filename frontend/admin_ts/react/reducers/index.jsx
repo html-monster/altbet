@@ -22,11 +22,13 @@ let reducers = {};
 const common = {
 };
 
-let view = "";
+let page = "";
 
-switch (view)
+if ( globalData.ac.controller === "feed" && globalData.ac.action === "newfeedexchange" ) page = "applyfeedexchange";
+
+switch (page)
 {
-	default:
+	case "applyfeedexchange":
 		reducers = {
 			newFeedExchange: newFeedExchange,
 			...common,

@@ -2,6 +2,7 @@
   $color1: #f2fbe9;
   $color1: #d9f1c2;
   .content-wrapper {
+    .input-button { padding: 5px 12px; }
     .form-group-filters { display: inline-block; margin-left: 20px;
       a { padding: 0 2px; }
     }
@@ -12,7 +13,6 @@
       tr.used.team2 td { background: darken($color1, 10%) }
     }
     .h-team {
-      //.fa-remove { color: #dd4b39; }
     }
   }
   .teams-table {

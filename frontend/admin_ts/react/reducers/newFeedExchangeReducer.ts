@@ -12,6 +12,11 @@ import {
     ON_ADD_TEAM_PLAYER_RESERVE,
     ON_SET_CURR_TEAM,
     ON_ADD_TEAM_PLAYER_VARIABLE,
+    ON_CH_TEAM_NAME,
+    ON_GEN_TEAM_NAME,
+    ON_CH_FORM_DATA,
+    ON_GEN_FULL_NAME,
+    ON_GEN_URL,
 } from '../constants/ActionTypesNewFeedExchange';
 import {Common} from "common/Common.ts";
 
@@ -27,10 +32,10 @@ class Reducer
 
     private initialState = {
         Players: [],
-        PlayersTeam1: {positions: {}, players: []},
+        PlayersTeam1: {name: '', positions: {}, players: []},
         PlayersTeam1Reserve: {players: []},
         PlayersTeam1Variable: {players: []},
-        PlayersTeam2: {positions: {}, players: []},
+        PlayersTeam2: {name: '', positions: {}, players: []},
         PlayersTeam2Reserve: {players: []},
         PlayersTeam2Variable: {players: []},
         Positions: null,
@@ -110,8 +115,29 @@ class Reducer
                 return {...state};
 
             case ON_SET_CURR_TEAM:
-                const {type, team} = action.payload;
+                let {type, team} = action.payload;
                 return {...state, CurrentTeam: {num: team, type}};
+
+            case ON_CH_TEAM_NAME:
+                let {name, teamNum} = action.payload;
+                state['PlayersTeam' + teamNum].name = name;
+                return {...state};
+
+            case ON_GEN_TEAM_NAME:
+                state = this.generateTeamName(action.payload, state);
+                return {...state};
+
+            case ON_CH_FORM_DATA:
+                state = this.changeFormData(action.payload, state);
+                return {...state};
+
+            case ON_GEN_FULL_NAME:
+                state = this.generateFullName(action.payload, state);
+                return {...state};
+
+            case ON_GEN_URL:
+                state = this.generateUrl(action.payload, state);
+                return {...state};
 
             default:
                 this.init();
@@ -608,12 +634,12 @@ class Reducer
     private afterAddPlayer({player, addedPlayer}, state)
     {
         // add StartDate to every player
-        let item;
-        if (item = state.TimeEvent.find((val) => val.EventId == addedPlayer.TeamId))
+/*        let item;
+        if (item = state.TimeEvent.find((val) => addedPlayer.TeamId == val.AwayId || addedPlayer.TeamId == val.HomeId))
         {
             player.StartDate = item.StartDate;
             addedPlayer.StartDate = item.StartDate;
-        }
+        }*/
 
         this.recountStartDate(state);
     }
@@ -634,7 +660,7 @@ class Reducer
 
         state.TimeEvent.forEach((val) =>
         {
-            if (teams.find((val2) => val2 == val.TeamId))
+            if (teams.find((val2) => val2 == val.AwayId || val2 == val.HomeId))
             {
                 let dt1 = moment(val.StartDate);
                 if (!startDate) startDate = dt1;
@@ -642,9 +668,71 @@ class Reducer
             }
         });
 
-        0||console.log( 'startDate', startDate );
-
         state.FormData.startDate = startDate;
+    }
+
+
+
+    /**
+     * Generate team name from top player
+     */
+    private generateTeamName({teamNum}, state)
+    {
+        let leadPlayer: any = {Eppg: 0};
+        for( let val of state['PlayersTeam' + teamNum].players )
+        {
+            if (val.Eppg && val.Eppg > leadPlayer.Eppg) leadPlayer = val;
+        } // endfor
+
+        if (!leadPlayer.Name && state['PlayersTeam' + teamNum].players.length) leadPlayer = state['PlayersTeam' + teamNum].players[0];
+
+        if (leadPlayer.Name) state['PlayersTeam' + teamNum].name = "Team " + leadPlayer.Name.split(' ')[1].trim();
+
+        // save teams data
+        this.saveData(state);
+
+        return state;
+    }
+
+
+    /**
+     * Generate full name from teams
+     */
+    private generateFullName(inProps, state)
+    {
+        state.FormData.fullName = `${state['PlayersTeam1'].name} vs ${state['PlayersTeam2'].name}`;
+
+        return state;
+    }
+
+
+    /**
+     * Generate url of exchange form full name
+     */
+    private generateUrl(inProps, state)
+    {
+        let $name = state.FormData.fullName;
+        if( $name != '' )
+        {
+            // 0||console.log( 'Common.createUrlAlias($name)', Common.createUrlAlias($name), state.FormData.startDate.format('MMDDY') );
+            state.FormData.url = Common.createUrlAlias($name);
+            if (state.FormData.startDate) state.FormData.url += '-' + state.FormData.startDate.format('MDY');
+        } // endif
+
+
+        return state;
+    }
+
+
+
+    /**
+     * Change form data from some input
+     */
+    private changeFormData({fieldName, val}, state)
+    {
+        state.FormData[fieldName] = val;
+
+        return state;
     }
 }
 

@@ -6,6 +6,49 @@
 
 export class Common
 {
+    public static showMessage(message, messageName)
+    {
+        let error = $('#global_message').clone(),
+            windowHeight = $(window).outerHeight(),
+            allMessages,
+            position = 0,
+            totalHeight = 0,
+            ii = 1;
+
+        error.removeAttr('id').addClass('clone ' + messageName);
+        error.find('p').text(message);
+        $('body').append(error);
+
+        position = error.outerHeight(true);
+        allMessages = $('.global_message_container.clone');
+        allMessages.each(function () {
+            let currentPosition = +$(this).css('bottom').replace('px', '');
+
+            totalHeight += $(this).outerHeight(true);
+
+            if (allMessages.length != ii++) {
+                $(this).css('bottom', currentPosition + position);
+            }
+
+            if (totalHeight > windowHeight)
+                allMessages.eq(0).remove();
+        });
+        error.hide().fadeIn(200)
+            .removeClass('bounceOutRight').addClass('bounceInRight active');
+    }
+
+
+    /**
+     * Convert spaces in the input string
+     * @param inStr
+     * @return {string}
+     */
+    public static createUrlAlias(inStr)
+    {
+        return inStr.replace(/[^a-zA-Z0-9 ]/g, '').trim().replace(/[ ]/g, "-").toLowerCase();
+    }
+
+
     /**
      * format number to some digits after coma
      * @param value

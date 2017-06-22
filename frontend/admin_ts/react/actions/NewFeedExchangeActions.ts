@@ -8,6 +8,11 @@ import {
     ON_ADD_TEAM_PLAYER_RESERVE,
     ON_SET_CURR_TEAM,
     ON_ADD_TEAM_PLAYER_VARIABLE,
+    ON_CH_TEAM_NAME,
+    ON_GEN_TEAM_NAME,
+    ON_CH_FORM_DATA,
+    ON_GEN_FULL_NAME,
+    ON_GEN_URL,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -145,11 +150,90 @@ class Actions extends BaseActions
                     payload: inProps, //this.setPPGValues.bind(this, inProps),
                     // payload: this.setPPGValues.bind(this, inProps),
                 })},
-                800
+                500
             );
         };
     }
 
+
+    /**
+     * Add change team name
+     */
+    public actionChangeTeamName(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_CH_TEAM_NAME,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Add change form data from some input
+     */
+    public actionChangeFormData(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_CH_FORM_DATA,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Generate full name from teams names
+     */
+    public actionGenerateFullName(inProps?)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_GEN_FULL_NAME,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Generate
+     */
+    public actionGenerateUrl(inProps?)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_GEN_URL,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Add generate team name
+     */
+    public actionGenerateTeamName(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_GEN_TEAM_NAME,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
 
     /**
      * Add team player action

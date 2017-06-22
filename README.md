@@ -39,6 +39,7 @@
 - AdminLTE (https://almsaeedstudio.com/themes/AdminLTE/pages/UI/buttons.html)
 - Handlebar (http://handlebarsjs.com/)
 - Select2 (https://select2.github.io/examples.html)
+- IZITOAST (http://www.jqueryrain.com/?H40wqtcG)
 
 
 ## Disqus
