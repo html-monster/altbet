@@ -39,14 +39,14 @@ class NewFeedExchange extends BaseController
     {
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
-        const { Players, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, Rules, CurrentTeam} = this.props.data;
+        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, Rules, CurrentTeam} = this.props.data;
         const { currTeamKey } = this.state;
         var items = [];
         const playersComponents = [
-            [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={PlayersTeam1.players} name={PlayersTeam1.name} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
+            [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={PlayersTeam1.players} name={FormData['teamName1']} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
             [1, 2, 'Reserve players team 1', PlayersTeam1Reserve.players, <TeamResVar players={PlayersTeam1Reserve.players} teamVar="PlayersTeam1Reserve" actions={actions} teamNum="1" />,],
             [1, 3, 'Variable players team 1', PlayersTeam1Variable.players, <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
-            [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={PlayersTeam2.players} name={PlayersTeam2.name} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />,],
+            [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={PlayersTeam2.players} name={FormData['teamName2']} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />,],
             [2, 2, 'Reserve players team 2', PlayersTeam2Reserve.players, <TeamResVar players={PlayersTeam2Reserve.players} teamVar="PlayersTeam2Reserve" actions={actions} teamNum="2" />,],
             [2, 3, 'Variable players team 2', PlayersTeam2Variable.players, <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
         ];
@@ -241,8 +241,23 @@ class NewFeedExchange extends BaseController
 
     /**@private*/ _onGenerateFullName(ee)
     {
-        const { actions } = this.props;
-        actions.actionGenerateFullName();
+        const { actions, data: {PlayersTeam1, PlayersTeam2} } = this.props;
+        let flag = false;
+        if (!PlayersTeam2.name) flag = 2;
+        if (!PlayersTeam1.name) flag = 1;
+
+        if( flag )
+        {
+            (new InfoMessages).show({
+                title: '',
+                message: `You need to fill the team ${flag} name!`,
+                color: 'yellow', // blue, red, green, yellow,
+            });
+        }
+        else
+        {
+            actions.actionGenerateFullName();
+        }
     }
 
 

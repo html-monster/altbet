@@ -32,10 +32,10 @@ class Reducer
 
     private initialState = {
         Players: [],
-        PlayersTeam1: {name: '', positions: {}, players: []},
+        PlayersTeam1: {positions: {}, players: []},
         PlayersTeam1Reserve: {players: []},
         PlayersTeam1Variable: {players: []},
-        PlayersTeam2: {name: '', positions: {}, players: []},
+        PlayersTeam2: {positions: {}, players: []},
         PlayersTeam2Reserve: {players: []},
         PlayersTeam2Variable: {players: []},
         Positions: null,
@@ -55,8 +55,8 @@ class Reducer
             type: 1,
         },
         FormData: {
-            team1name: '',
-            team2name: '',
+            teamName1: '',
+            teamName2: '',
             startDate: '',
             fullName: '',
             category: '',
@@ -120,7 +120,7 @@ class Reducer
 
             case ON_CH_TEAM_NAME:
                 let {name, teamNum} = action.payload;
-                state['PlayersTeam' + teamNum].name = name;
+                state.FormData[`teamName` + teamNum] = name;
                 return {...state};
 
             case ON_GEN_TEAM_NAME:
@@ -192,9 +192,9 @@ class Reducer
      * Save user teams data
      * @param state { PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId }
      */
-    private saveData({ PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId })
+    private saveData({ PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId, FormData })
     {
-        let data = { PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId };
+        let data = { PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId, FormData };
         localStorage.setItem('newFeedExchange', JSON.stringify(data));
     }
 
@@ -686,7 +686,7 @@ class Reducer
 
         if (!leadPlayer.Name && state['PlayersTeam' + teamNum].players.length) leadPlayer = state['PlayersTeam' + teamNum].players[0];
 
-        if (leadPlayer.Name) state['PlayersTeam' + teamNum].name = "Team " + leadPlayer.Name.split(' ')[1].trim();
+        if (leadPlayer.Name) state.FormData[`teamName` + teamNum] = "Team " + leadPlayer.Name.split(' ')[1].trim();
 
         // save teams data
         this.saveData(state);
@@ -701,6 +701,9 @@ class Reducer
     private generateFullName(inProps, state)
     {
         state.FormData.fullName = `${state['PlayersTeam1'].name} vs ${state['PlayersTeam2'].name}`;
+
+        // save teams data
+        this.saveData(state);
 
         return state;
     }
@@ -719,6 +722,8 @@ class Reducer
             if (state.FormData.startDate) state.FormData.url += '-' + state.FormData.startDate.format('MDY');
         } // endif
 
+        // save teams data
+        this.saveData(state);
 
         return state;
     }
