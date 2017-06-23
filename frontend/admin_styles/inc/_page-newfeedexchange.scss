@@ -3,6 +3,7 @@
   $color1: #d9f1c2;
   .content-wrapper {
     .input-button { padding: 5px 12px; }
+
     .form-group-filters { display: inline-block; margin-left: 20px;
       a { padding: 0 2px; }
     }
@@ -31,5 +32,7 @@
       border-top-color: darken($color1, 15%);
     }
   }
+
+  .btn-ok { width: 100px }
 }
 

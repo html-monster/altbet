@@ -2,6 +2,11 @@ declare const iziToast;
 
 export class InfoMessages
 {
+    public static INFO = 'blue';
+    public static ERROR = 'red';
+    public static SUCCESS = 'green';
+    public static WARN = 'yellow';
+
     private initOpts = {
         id: '',
         "class": '',
@@ -26,13 +31,13 @@ export class InfoMessages
         balloon: false,
         close: true,
         rtl: false,
-        position: 'bottomRight', //bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
+        position: 'topRight', //bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
         target: '',
         targetFirst: true,
         timeout: 5000,
         drag: true,
         pauseOnHover: true,
-        resetOnHover: false,
+        resetOnHover: true,
         progressBar: true,
         progressBarColor: '',
         animateInside: true,

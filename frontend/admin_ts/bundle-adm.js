@@ -28,8 +28,6 @@ $(document).ready(function()
 
 
 // BM: Mount points
-0||console.log( 'aaa', document.getElementById('DiNewFeedExchange') );
-0||console.log( 'bbb', document.getElementById('DiNewFeedExchange') );
 if( document.getElementById('DiNewFeedExchange') )
 {
     ReactDOM.render(

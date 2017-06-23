@@ -17,6 +17,7 @@ import {
     ON_CH_FORM_DATA,
     ON_GEN_FULL_NAME,
     ON_GEN_URL,
+    ON_SAVE_EVENT_OK,
 } from '../constants/ActionTypesNewFeedExchange';
 import {Common} from "common/Common.ts";
 
@@ -137,6 +138,10 @@ class Reducer
 
             case ON_GEN_URL:
                 state = this.generateUrl(action.payload, state);
+                return {...state};
+
+            case ON_SAVE_EVENT_OK:
+                state = this.saveEventSuccess(action.payload, state);
                 return {...state};
 
             default:
@@ -734,6 +739,17 @@ class Reducer
      * Change form data from some input
      */
     private changeFormData({fieldName, val}, state)
+    {
+        state.FormData[fieldName] = val;
+
+        return state;
+    }
+
+
+    /**
+     * Save feed event
+     */
+    private saveEventSuccess({fieldName, val}, state)
     {
         state.FormData[fieldName] = val;
 

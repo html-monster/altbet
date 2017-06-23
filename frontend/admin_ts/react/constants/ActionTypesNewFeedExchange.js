@@ -16,3 +16,5 @@ export const ON_GEN_TEAM_NAME = "ON_NFE_GEN_TEAM_NAME" ;
 export const ON_CH_FORM_DATA = "ON_NFE_CH_FORM_DATA" ;
 export const ON_GEN_FULL_NAME = "ON_NFE_GEN_FULL_NAME" ;
 export const ON_GEN_URL = "ON_NFE_GEN_URL" ;
+export const ON_SAVE_EVENT_OK = "ON_NFE_SAVE_EVENT_OK" ;
+export const ON_SAVE_EVENT_FAIL = "ON_NFE_SAVE_EVENT_FAIL " ;

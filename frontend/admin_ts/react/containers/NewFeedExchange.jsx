@@ -12,10 +12,13 @@ import {DateLocalization} from '../common/DateLocalization';
 import classNames from 'classnames';
 import {Common} from "common/Common.ts";
 import {InfoMessages} from "common/InfoMessages.ts";
+import {Loading} from "common/Loading.ts";
 
 
 class NewFeedExchange extends BaseController
 {
+    LoadingObj;
+
     constructor(props)
     {
         super(props);
@@ -23,7 +26,8 @@ class NewFeedExchange extends BaseController
         __DEV__&&console.debug( 'this.props', props );
 
         // const { Players } = this.props.data;
-        this.state = {currTeamKey: 0};
+        this.LoadingObj = new Loading;
+        this.state = {currTeamKey: 0, okBtnDisabled: false};
     }
 
 
@@ -40,7 +44,7 @@ class NewFeedExchange extends BaseController
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
         const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, Rules, CurrentTeam} = this.props.data;
-        const { currTeamKey } = this.state;
+        const { currTeamKey, okBtnDisabled } = this.state;
         var items = [];
         const playersComponents = [
             [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={PlayersTeam1.players} name={FormData['teamName1']} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
@@ -200,6 +204,16 @@ class NewFeedExchange extends BaseController
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div className="col-sm-6">
+                                <div className="box-body" >
+                                    <div className="form-group">
+                                        <button type="button" class="btn-ok btn btn-info" disabled={okBtnDisabled} onClick={::this._onOKClick}>OK</button>&nbsp;
+                                        <button class="btn btn-default" type="button" onClick={::this._onCancelClick}>Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -270,13 +284,70 @@ class NewFeedExchange extends BaseController
             (new InfoMessages).show({
                 title: '',
                 message: 'You need to fill the full name!',
-                color: 'yellow', // blue, red, green, yellow,
+                color: InfoMessages.WARN,
             });
         }
         else
         {
             actions.actionGenerateUrl();
         } // endif
+    }
+
+
+    /**@private*/ _onOKClick(ee)
+    {
+        const { actions, data } = this.props;
+
+        this.sendingMode(true);
+        actions.actionSaveEvent({callback: ::this._onSaveCallback});
+    }
+
+
+    /**
+     * block save btn and show loading
+     * @private
+     */
+    sendingMode(mode)
+    {
+        // turn on
+        if( mode )
+        {
+            this.LoadingObj.showLoading();
+            this.state.okBtnDisabled = true;
+
+        // turn off
+        } else {
+            this.LoadingObj.hideLoading();
+            this.state.okBtnDisabled = false;
+        } // endif
+        this.setState({...this.state});
+    }
+
+
+    /**@private*/ _onSaveCallback({errorCode, title, message})
+    {
+        this.sendingMode(false);
+
+        if( errorCode === 200)
+        {
+            // redirect
+        }
+        else
+        {
+            (new InfoMessages).show({
+                title: '',
+                message: message,
+                color: InfoMessages.WARN,
+            });
+        } // endif
+    }
+
+
+
+
+    /**@private*/ _onCancelClick(ee)
+    {
+        window.history.back();
     }
 }
 
