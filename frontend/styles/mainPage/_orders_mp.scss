@@ -21,4 +21,7 @@
 		label:not(.checkbox){ border-right: none; }
 		.regulator{ border-right: none; }
 	}
+	.blind{ position: fixed; left: 0; z-index: -1; width: 100%; background: rgba(0, 0, 0, 0.8); }
+	#blindTop{ top: 0; height: 140px; border-bottom: 1px solid #c1c1c1; }
+	#blindBottom{ bottom: 0; height: 676px; border-top: 1px solid #c1c1c1; }
 }

@@ -5,6 +5,7 @@ import {
     MP_ON_BASIC_MODE_CH,
 	MP_TRAIDER_MODE_CH,
     MP_ON_CHANGE_SUBSCRIBING,
+	MP_ON_CHANGE_ORDER_VISABLT,
 } from '../constants/ActionTypesPageMain';
 
 
@@ -15,6 +16,7 @@ const initialState = {
 	serverChartsData: null, // need for comparison
 	charts: null,
     chartSubscribing: false,
+    showOrder: false,
     activeExchange: {name: '', // exchange unique name
         isMirror: false},
 };
@@ -44,6 +46,9 @@ export default function mainPage(state = initialState, action)
 
 		case MP_ON_CHANGE_SUBSCRIBING:
 			return {...state, chartSubscribing: action.payload};
+
+        case MP_ON_CHANGE_ORDER_VISABLT:
+			return {...state, showOrder: action.payload};
 
         default:
             return state

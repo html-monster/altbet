@@ -5,6 +5,7 @@ import {DateLocalization} from './../../models/DateLocalization';
 import {LineupPage} from './LineupPage';
 import Chart from './Chart';
 import DefaultOrdersLocal from '../DefaultOrdersLocal';
+import classnames from 'classnames';
 // import {Common} from './../../common/Common';
 
 
@@ -70,7 +71,8 @@ export default class ExchangeItem extends React.Component
 
     render()
     {
-        const { actions, chartData, data, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange }, mainContext, setCurrentExchangeFn } = this.props;
+        const { actions, chartData, data, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder },
+			mainContext, setCurrentExchangeFn } = this.props;
         let { activeTab, chart, isLPOpen,  } = this.state;
         // console.log('this.props:', this.props);
         // if(chart) console.log( 'chart', Symbol.Exchange, chart );
@@ -158,7 +160,7 @@ export default class ExchangeItem extends React.Component
         let $classActive = '', $classActiveNM = '', $classActiveM = '';
         if( data.activeExchange.name === data.Symbol.Exchange )
         {
-            $classActive = ' active';
+            $classActive = 'active';
             // if( !data.activeExchange.isMirror ) $classActiveNM = ' active';
             // else $classActiveM = ' active';
         } // endif
@@ -169,7 +171,7 @@ export default class ExchangeItem extends React.Component
         // if( currentExchange === data.Symbol.Exchange ) $classActiveExch = ' active-exch'; // endif
         // console.log('currentExchange:', currentExchange);
         // console.log('data.Symbol.Exchange:', data.Symbol.Exchange);
-        if( currentExchange === data.Symbol.Exchange || currentExchange === "" && isTraiderOn && activeExchange.name === data.Symbol.Exchange ) $classActiveExch = ' active-exch'; // endif
+        if( currentExchange === data.Symbol.Exchange || currentExchange === "" && isTraiderOn && activeExchange.name === data.Symbol.Exchange ) $classActiveExch = 'active-exch'; // endif
 
 
         // exdata for lineup
@@ -190,8 +192,8 @@ export default class ExchangeItem extends React.Component
         // 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
 
         return (
-            <div className={`h-event categoryFilterJs animated fadeIn ${expModeClass}` + $classActive + $classActiveExch + (isTraiderOn ? " clickable" : "") +
-			(currentExchange && !expModeClass ? ' active_nearby' : '')} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
+            <div className={classnames(`h-event`, `categoryFilterJs`, `animated`, `fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`, {clickable: !!isTraiderOn},
+				{active_nearby: currentExchange && !expModeClass}, {with_order: showOrder})} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
                 onClick={() =>
                 {
                 	// if(this.props.data.currentExchange !== this.props.data.Symbol.Exchange)
@@ -369,14 +371,15 @@ export default class ExchangeItem extends React.Component
 
 						{/* // BM: --------------------------------------------------- Default Orders Local ---*/}
 						{
-							$classActiveExch && <DefaultOrdersLocal
+							$classActiveExch &&
+							<DefaultOrdersLocal
 								eventData={{
-									ID: `${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`,
+									ID        : `${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`,
 									EventTitle: Symbol.HomeName,
-									Positions: data.Positions,
-									Symbol:{
-										Exchange : Symbol.Exchange,
-										Name: Symbol.Name,
+									Positions : data.Positions,
+									Symbol    : {
+										Exchange: Symbol.Exchange,
+										Name    : Symbol.Name,
 										Currency: Symbol.Currency
 									},
 								}}

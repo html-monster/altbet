@@ -13,7 +13,7 @@ export default class NewOrder extends React.PureComponent
 	render()
 	{
 		// console.log(ABpp);
-		const { actions, data } = this.props;
+		const { actions, mainPageActions, data } = this.props;
 		let formData = {
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
@@ -22,7 +22,7 @@ export default class NewOrder extends React.PureComponent
 		return <div className="order_content new animated">
 			<div className="order-title">
 				<h3>{data.EventTitle}</h3>
-				<span className="close" onClick={actions.actionOnDeleteOrder.bind(null, data)}><span>{}</span></span>
+				<span className="close" onClick={actions.actionOnDeleteOrder.bind(null, {data, mainPageActions})}><span>{}</span></span>
 				<strong className="current-order pos">Units: <span>{data.Positions}</span></strong>
 			</div>
 			{
@@ -47,11 +47,12 @@ export default class NewOrder extends React.PureComponent
 						<OrderForm
 							formUrl={formData.url}
 							id={`${symbol}_${item.Side}_${item.isMirror}`}
-							limit={item.Limit}
+							// limit={item.Limit}
 							side={item.Side ? 'sell' : 'buy'}
 							ask={data.Ask === 1 ? null : data.Ask}
 							bid={data.Bid === 0 ? null : data.Bid}
 							price={item.Price}
+							priceDisabled={true}
 							quantity={item.Volume}
 							isMirror={item.isMirror}
 							symbol={symbol}

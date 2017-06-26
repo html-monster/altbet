@@ -14,6 +14,8 @@ class Actions extends OrderActions
     {
         return (dispatch) =>
         {
+            $('body').css({overflow: 'hidden', paddingRight: 10});
+
             dispatch({
                 type: ON_MP_ORDER_CREATE,
                 payload: {
@@ -24,14 +26,26 @@ class Actions extends OrderActions
         }
     }
 
-    public actionOnDeleteOrder()
+    public actionOnDeleteOrder(data)
     {
         return (dispatch) =>
         {
-            dispatch({
-                type: ON_MP_ORDER_DELETE,
-                payload: false
-            });
+
+            $('#blindTop, #blindBottom').removeClass('fadeInUpLong fadeInDownLong');
+            $('#blindTop').addClass('fadeOutUp');
+            $('#blindBottom').addClass('fadeOutDown');
+            $('#mp-orderContainer').fadeOut();
+
+            setTimeout(() => {
+                $('body').removeAttr('style');
+
+                if(data.mainPageActions) data.mainPageActions.actionShowOrder(false);
+
+                dispatch({
+                    type: ON_MP_ORDER_DELETE,
+                    payload: false
+                });
+            }, 400)
         }
     }
 }

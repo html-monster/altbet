@@ -127,6 +127,7 @@
 
     // ovverride on activate exchange\
     &.active-exch { z-index: 11; color: $color4TextBlack; background: linear-gradient(to bottom, #EBEBEB, #B8B8B8);
+      &.with_order{ z-index: 102; }
       //&>.bg { background: linear-gradient(to bottom, #EBEBEB, #B8B8B8); }
       .l-title {
         .score { color: #3f9622; }
@@ -399,7 +400,7 @@
 }
 .content {
   //@include span(7.6 of 12); @include push (1.8 of 12); min-width: 800px;
-  position: relative; margin-left: 70px; padding: 15px; padding-top: 85px; width: calc(78% - 70px); color: $main-color;
+  position: relative; margin-left: 70px; padding: 15px; padding-top: 105px; width: calc(78% - 70px); color: $main-color;
   .nav_items {
     &.loaded .pagination { display: block; }
     .wrapper>.tab_content{  padding-top: 30px;  }

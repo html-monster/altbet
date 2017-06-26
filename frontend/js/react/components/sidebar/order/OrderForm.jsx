@@ -289,7 +289,8 @@ export default class OrderForm extends React.Component{
 	render()
 	{
 		const stateData = this.state;
-		const { formUrl, id, side, ask, bid, limit, isMirror, symbol, newOrder = true, orderView = 'normal', price, showDeleteButton = true, onSubmit, onDelete} = this.props;
+		const { formUrl, id, side, ask, bid, limit, isMirror, symbol, newOrder = true, orderView = 'normal', price, priceDisabled,
+			showDeleteButton = true, onSubmit, onDelete} = this.props;
 		const fees = Math.round10(ABpp.config.takerFees * stateData.quantity, -2);
 		let checkboxProp = stateData.limit;
 		// let formClass;
@@ -361,11 +362,11 @@ export default class OrderForm extends React.Component{
 										 onBlur={::this.onBlur}
 										 value={checkboxProp ? stateData.price : price}
 										 key={price} cancelSubmiting={stateData.submitOnEnter} hard={true}
-										 label={true} disabled={!limit}
+										 label={true} disabled={priceDisabled}
 										 ref="inputPrice" inputValidate = 'price'/>
 							<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
 							{
-								!limit ?
+								priceDisabled ?
 									''
 									:
 									<div className="regulator">
@@ -468,7 +469,7 @@ export default class OrderForm extends React.Component{
 						{/*</div>*/}
 					{/*</div>*/}
 					<div className="profit">
-						<strong className="info_string">
+						<strong className="info_string" title="Potential prize">
 							Prize: <span>{stateData.quantity ? `$${(+stateData.quantity).toFixed(2)}` : '$0.00'}</span>
 						</strong>
 						{/*<label>*/}
@@ -482,7 +483,7 @@ export default class OrderForm extends React.Component{
 						{/*</div>*/}
 					</div>
 					<div className="fees">
-						<strong className="info_string">Fees: <span>${stateData.quantity ? fees.toFixed(2) || '0.00' : '0.00'}</span></strong>
+						<strong className="info_string" title="Order">Fees: <span>${stateData.quantity ? fees.toFixed(2) || '0.00' : '0.00'}</span></strong>
 					</div>
 				</div>
 				{!newOrder && id ? <input name="ID" type="hidden" value={id}/> : ''}

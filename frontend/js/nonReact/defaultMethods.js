@@ -73,8 +73,8 @@ class defaultMethods
 
 	static searchValue(array, value) {
 		var ii;
-		if(array.length != 0){
-			if(typeof array[0] == 'string'){
+		if(array.length !== 0){
+			if(typeof array[0] === 'string'){
 				for (ii = 0; ii < array.length; ii++) {
 					if (array[ii] === value) return ii;
 				}
@@ -124,12 +124,12 @@ class defaultMethods
 		});
 	}
 
-	static getClass(obj) {
+	static getType(obj) {
 		return {}.toString.call(obj).slice(8, -1);
 	}
 
 	static objectFromArray(data, obj) {
-		obj = defaultMethods.getClass(obj) == 'Object' ? obj : {};
+		obj = defaultMethods.getType(obj) === 'Object' ? obj : {};
 
 		data.forEach(function (key) {
 			let item = key.split('=');

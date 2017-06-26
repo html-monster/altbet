@@ -24,7 +24,8 @@ export default class GlobalCloseClass
         method: 'fadeOut', //string - jQuery method of closing
         customCloseFunction: null, //function - custom function, what we want bind to method
         defaultClose: true, //boolean - true, if we want use jQuery closing
-        excludeElements: [] //string[] || object[] - elements what we want to exclude from clicking
+        excludeElements: [], //string[] || object[] - elements what we want to exclude from clicking
+        actionDelay: 400 //number - delay of action executing
     };
     private props;
 
@@ -42,10 +43,11 @@ export default class GlobalCloseClass
      */
     public bindGlobalClick()
     {
-        if(!this.props.element)
+        try {
+            this.checkPropsType();
+        } catch (error)
         {
-            // console.error('Global close error, we must element transfer to bindGlobalClick method');
-            return false;
+            console.error(error);
         }
 
         $(document).bind('click', (event) => {
@@ -68,7 +70,7 @@ export default class GlobalCloseClass
                 if(this.props.customCloseFunction)
                 {
                     if(this.props.defaultClose)
-                        setTimeout(()=> this.props.customCloseFunction(), 400);
+                        setTimeout(()=> this.props.customCloseFunction(), this.props.actionDelay);
                     else
                         this.props.customCloseFunction();
                 }
@@ -76,5 +78,37 @@ export default class GlobalCloseClass
             }
 
         })
+    }
+
+    private checkPropsType()
+    {
+        if(!this.props.element)
+            throw new TypeError(`you must transfer "element" to bindGlobalClick method`);
+
+        else if(defaultMethods.getType(this.props.element).slice(0, 4) !== 'HTML' &&
+        defaultMethods.getType(this.props.element) !== 'String')
+            throw new TypeError(`"element" type is ${defaultMethods.getType(this.props.element)}, but it must be String or DOM element`);
+
+        if(this.props.method && typeof this.props.method !== 'string')
+            throw new TypeError(`"method" type is ${defaultMethods.getType(this.props.method)}, but it must be String`);
+
+        if(this.props.customCloseFunction && typeof this.props.customCloseFunction !== 'function')
+            throw new TypeError(`"customCloseFunction" type is ${defaultMethods.getType(this.props.customCloseFunction)}, but it must be Function`);
+
+        if(this.props.defaultClose && typeof this.props.defaultClose !== 'boolean')
+            throw new TypeError(`"defaultClose" type is ${defaultMethods.getType(this.props.defaultClose)}, but it must be Boolean`);
+
+        if(this.props.actionDelay && typeof this.props.actionDelay !== 'number')
+            throw new TypeError(`"actionDelay" type is ${defaultMethods.getType(this.props.actionDelay)}, but it must be Number`);
+
+        if(this.props.excludeElements && defaultMethods.getType(this.props.excludeElements) !== 'Array')
+        {
+            throw new TypeError(`"excludeElements" type is ${defaultMethods.getType(this.props.excludeElements)}, but it must be Array`);
+        }
+        else if(this.props.excludeElements && this.props.excludeElements.some((item) => defaultMethods.getType(item).slice(0, 4) !== 'HTML' &&
+            defaultMethods.getType(item) !== 'String'))
+        {
+            throw new TypeError('"excludeElements" must consist of Strings or DOM elements');
+        }
     }
 }

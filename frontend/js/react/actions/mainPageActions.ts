@@ -4,7 +4,8 @@ import {
     MP_CHART_ON_SOCKET_MESSAGE,
     MP_ON_BASIC_MODE_CH,
     MP_TRAIDER_MODE_CH,
-    MP_ON_CHANGE_SUBSCRIBING
+    MP_ON_CHANGE_SUBSCRIBING,
+    MP_ON_CHANGE_ORDER_VISABLT
 } from '../constants/ActionTypesPageMain';
 import { WebsocketModel } from '../models/Websocket';
 import { Common } from '../common/Common';
@@ -206,6 +207,7 @@ class Actions extends BaseActions
             // }
             // else
                 context.props.defaultOrderActions.actionOnOrderCreate(outStruc);
+                context.props.actions.actionShowOrder(true);
             // 0||console.debug( 'getState()', getState() );
             // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
             // dispatch({
@@ -406,6 +408,16 @@ class Actions extends BaseActions
                 payload: inProps.exchange,
             });
         };
+    }
+    public actionShowOrder(visible)
+    {
+        return (dispatch) =>
+        {
+            dispatch({
+                type: MP_ON_CHANGE_ORDER_VISABLT,
+                payload: visible
+            })
+        }
     }
 }
 

@@ -7,35 +7,43 @@ import { connect } from 'react-redux';
 import React from 'react';
 import NewOrder from './sidebar/order/NewOrder.jsx'
 import defaultOrderLocalActions from '../actions/OrderActions/defaultOrdersLocalActions';
+import mainPageActions from '../actions/MainPageActions.ts';
 import GlobalCloseClass from '../common/GlobalClose';
 
 class DefaultOrdersLocal extends React.PureComponent
 {
-	componentDidMount()
-	{
-		(new GlobalCloseClass({element: this.refs.orderContainer, customCloseFunction: this.props.actions.actionOnDeleteOrder,
-			excludeElements: ['#DiMPMainpage button.event']})).bindGlobalClick();
-	}
+	// componentDidMount()
+	// {
+		// (new GlobalCloseClass({element: this.refs.orderContainer,
+		// 	customCloseFunction: this.props.actions.actionOnDeleteOrder.bind(null, {mainPageActions: this.props.mainPageActions}),
+		// 	excludeElements: ['#DiMPMainpage button.event'],
+		// 	actionDelay: 0})).bindGlobalClick();
+	// }
 
 	componentDidUpdate(prevProps)
 	{
 		if(this.props.showOrder && this.props.showOrder !== prevProps.showOrder)
 		{
-			(new GlobalCloseClass({element: this.refs.orderContainer, customCloseFunction: this.props.actions.actionOnDeleteOrder,
-				excludeElements: ['#DiMPMainpage button.event']})).bindGlobalClick();
+			(new GlobalCloseClass({element: this.refs.orderContainer,
+				customCloseFunction: this.props.actions.actionOnDeleteOrder.bind(null, {mainPageActions: this.props.mainPageActions}),
+				excludeElements: ['#DiMPMainpage button.event'],
+				actionDelay: 0})).bindGlobalClick();
 		}
 	}
 
 	render()
 	{
-		const { actions, eventData, orderData, showOrder } = this.props;
+		const { actions, mainPageActions, eventData, orderData, showOrder } = this.props;
 		// console.log('actions:', actions);
 
-		return <div className="order_container_local" style={showOrder && eventData.ID === orderData.ID ? {} : {display: 'none'}} ref="orderContainer">
+		return <div className="order_container_local" style={showOrder && eventData.ID === orderData.ID ? {} : {display: 'none'}}
+					id="mp-orderContainer"
+					ref={'orderContainer'}
+		>
 			{
 				showOrder && eventData.ID === orderData.ID &&
 				<div className="order_wrapper">
-					<NewOrder actions={actions} data={{
+					<NewOrder actions={actions} mainPageActions={mainPageActions} data={{
 						ID: eventData.ID,
 						EventTitle: eventData.EventTitle,
 						Positions: eventData.Positions,
@@ -56,6 +64,8 @@ class DefaultOrdersLocal extends React.PureComponent
 							isMirror: orderData.isMirror
 						}]
 					}}/>
+					<div id="blindTop" className="blind animated dur4 fadeInDownLong" ref={'blindTop'}/>
+					<div id="blindBottom" className="blind animated dur4 fadeInUpLong" ref={'blindBottom'}/>
 				</div>
 			}
 		</div>
@@ -67,5 +77,6 @@ export default connect(state => ({
 	}),
 	dispatch => ({
 		actions: bindActionCreators(defaultOrderLocalActions, dispatch),
+		mainPageActions: bindActionCreators(mainPageActions, dispatch),
 	})
 )(DefaultOrdersLocal)
