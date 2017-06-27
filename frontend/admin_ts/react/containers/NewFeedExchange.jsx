@@ -10,10 +10,15 @@ import {Team1} from '../components/NewFeedExchange/Team1';
 import {TeamResVar} from 'components/NewFeedExchange/TeamResVar';
 import {DateLocalization} from '../common/DateLocalization';
 import classNames from 'classnames';
+import {Common} from "common/Common.ts";
+import {InfoMessages} from "common/InfoMessages.ts";
+import {Loading} from "common/Loading.ts";
 
 
 class NewFeedExchange extends BaseController
 {
+    LoadingObj;
+
     constructor(props)
     {
         super(props);
@@ -21,7 +26,8 @@ class NewFeedExchange extends BaseController
         __DEV__&&console.debug( 'this.props', props );
 
         // const { Players } = this.props.data;
-        this.state = {currTeamKey: 0};
+        this.LoadingObj = new Loading;
+        this.state = {currTeamKey: 0, okBtnDisabled: false};
     }
 
 
@@ -37,61 +43,51 @@ class NewFeedExchange extends BaseController
     {
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
-        const { Players, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, CurrentEventId, EventId, Rules, CurrentTeam} = this.props.data;
-        const { currTeamKey } = this.state;
+        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, Rules, CurrentTeam} = this.props.data;
+        const { currTeamKey, okBtnDisabled } = this.state;
         var items = [];
         const playersComponents = [
-            [1, 1, 'Players team 1', <Team1 data={PlayersTeam1.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
-            [1, 2, 'Reserve players team 1', <TeamResVar players={PlayersTeam1Reserve.players} teamVar="PlayersTeam1Reserve" actions={actions} teamNum="1" />,],
-            [1, 3, 'Variable players team 1', <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
-            [2, 1, 'Players team 2', <Team1 data={PlayersTeam2.players} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />,],
-            [2, 2, 'Reserve players team 2', <TeamResVar players={PlayersTeam2Reserve.players} teamVar="PlayersTeam2Reserve" actions={actions} teamNum="2" />,],
-            [2, 3, 'Variable players team 2', <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
+            [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={PlayersTeam1.players} name={FormData['teamName1']} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
+            [1, 2, 'Reserve players team 1', PlayersTeam1Reserve.players, <TeamResVar players={PlayersTeam1Reserve.players} teamVar="PlayersTeam1Reserve" actions={actions} teamNum="1" />,],
+            [1, 3, 'Variable players team 1', PlayersTeam1Variable.players, <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
+            [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={PlayersTeam2.players} name={FormData['teamName2']} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />,],
+            [2, 2, 'Reserve players team 2', PlayersTeam2Reserve.players, <TeamResVar players={PlayersTeam2Reserve.players} teamVar="PlayersTeam2Reserve" actions={actions} teamNum="2" />,],
+            [2, 3, 'Variable players team 2', PlayersTeam2Variable.players, <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
         ];
 
 
         return (
-            <div className="box box-default">
-                <div className="box-header">
-                    {/*<i className="fa fa-navicon"></i>*/}
-                    <h3 className="box-title">Event approving “{AppData.FullName}”</h3>
-                </div>
-                <div className="box-body pad table-responsive">
-                    <div className="box box-widget">
+            <div>
+                <h3 className="">Event approving “{AppData.FullName}”</h3>
+                <div className="box box-default">
+{/*
+                    <div className="box-header">
+                        <i className="fa fa-navicon"></i>
+                    </div>
+*/}
+                    <div className="box-body pad table-responsive">
+                        {/*<div className="box box-widget"></div>*/}
                         {/*<!-- /.box-header -->*/}
-                        {/*<div className="box-header with-border"></div>*/}
-                        {/*<!-- /.box-body -->*/}
-                        <div className="row">
-                            <div className="col-sm-3">
-                                <div className="box-body" >
-                                    <div className="form-group">
-                                        <label>Category</label>
-                                        <div className="">{AppData.Category}</div>
+                            {/*<div className="box-header with-border"></div>*/}
+                            {/*<!-- /.box-body -->*/}
+                            <div className="row">
+                                <div className="col-sm-3">
+                                    <div className="box-body" >
+                                        <div className="form-group">
+                                            <label>Category</label>
+                                            <div className="">{AppData.Category}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-sm-4">
-                                <div className="box-body" >
-                                    <div className="form-group">
-                                        <label>Event start date</label>
-                                        <div className="">{moment(AppData.StartDate).format('DD MMM Y H:mm A')}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                <div className="box box-default">
+                    <div className="box-header with-border">
+                        <h4>Manage team</h4>
+                    </div>
 
-                        <div className="row">
-                            <div className="col-sm-6">
-                                <div className="box-body" >
-                                    <div className="form-group">
-                                        <label>Full name</label>
-                                        <input className="form-control" type="text" name="url" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
+                    <div className="box-body pad table-responsive">
                         <div className="row">
                             <div className="col-sm-6">
                                 <div className="box-body" >
@@ -105,7 +101,12 @@ class NewFeedExchange extends BaseController
                                                     value: AppData.TimeEvent[key].EventId,
                                                     label: `${AppData.TimeEvent[key].HomeTeam} vs ${AppData.TimeEvent[key].AwayTeam} (${(new DateLocalization).fromSharp2(AppData.TimeEvent[key].StartDate, 0).toLocalDate({format: 'MM/DD/Y h:mm A'})})`
                                                 }}
-                                            )} clearable={false} value={items[0]} searchable={true} afterChange={actions.actionChangeEvent}/>
+                                            )}
+                                            /*items={[
+                                                { value: '1', label: 'var 1'},
+                                                { value: '2', label: 'var 2'},
+                                            ]}*/
+                                            clearable={false} value={items[0]} searchable={true} afterChange={actions.actionChangeEvent}/>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +124,7 @@ class NewFeedExchange extends BaseController
                                         <div class="box-body">
                                             <PlayersTable data={{
                                                 Players,
-                                                CurrEvtId: CurrentEventId.EventId,
+                                                CurrEvtId: LastEventId,
                                                 EventId,
                                                 t1pos: PlayersTeam1.positions,
                                                 t2pos: PlayersTeam2.positions,
@@ -144,11 +145,11 @@ class NewFeedExchange extends BaseController
 
                             <div className="col-sm-6">
                                 <div class="box-group" id="accordion">
-                                    {playersComponents.map(([$team, $type, $header, $component], key) =>
+                                    {playersComponents.map(([$team, $type, $header, $players, $component], key) =>
                                         <div key={key} class={`panel box box-team${$team}`}>
                                             <div class="box-header with-border" onClick={this._onAccordionOpenClick.bind(this, $type, $team, key)}>
                                                 <h4 class="box-title">
-                                                    <a data-toggle="collapse" data-js-opener="" data-parent="#accordion" href={"#collapse" + key} aria-expanded={key === 0} class={classNames({"collapsed": key !== currTeamKey, "unactive": key !== currTeamKey})}>{$header}</a>
+                                                    <a data-toggle="collapse" data-js-opener="" data-parent="#accordion" href={"#collapse" + key} aria-expanded={key === 0} class={classNames({"collapsed": key !== currTeamKey, "unactive": key !== currTeamKey})}>{$header} <span className="-silver" title="Players count">({$players.length})</span></a>
                                                 </h4>
                                             </div>
                                             <div id={"collapse" + key} class={classNames("panel-collapse collapse", {"in": key === 0})} aria-expanded="true">
@@ -159,22 +160,63 @@ class NewFeedExchange extends BaseController
                                 </div>
                             </div>
                         </div>
+                            {/*<!-- /.box-footer -->*/}
+                            {/*<div class="box-footer" style="display: block;"></div>*/}
+                    </div>
+                </div>
 
+                <div className="box box-default">
+                    <div className="box-body pad table-responsive">
                         <div className="row">
                             <div className="col-sm-6">
                                 <div className="box-body" >
+                                    <label>Full name</label>
+                                    <div class="input-group">
+                                        <input className="form-control" type="text" name="fullname" value={AppData.FormData.fullName} onChange={this._onChangeFormData.bind(this, 'fullName')} />
+                                        <span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateFullName} title="Generate full name"><i class="fa fa-repeat"/></button></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-sm-6">
+                                <div className="box-body" >
                                     <div className="form-group">
-                                        <label>Url</label>
-                                        <input className="form-control" type="text" name="url" />
+                                        <label>Event start date</label>
+                                        <div className="">{AppData.FormData.startDate ? moment(AppData.FormData.startDate).format('DD MMM Y H:mm A') : <i>It is not possible to calculate due to the lack of players in teams</i>}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/*<!-- /.box-footer -->*/}
-                        {/*<div class="box-footer" style="display: block;"></div>*/}
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <div className="box-body" >
+                                    <label>Url</label>
+                                    <div class="input-group">
+                                        <input className="form-control" type="text" name="url" value={AppData.FormData.url} onChange={this._onChangeFormData.bind(this, 'url')} />
+                                        <span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateUrl} title="Generate event url"><i class="fa fa-repeat"/></button></span>
+                                    </div>
+
+{/*
+                                    <div className="form-group">
+                                        <input className="form-control" type="text" name="url" />
+                                    </div>
+*/}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div className="col-sm-6">
+                                <div className="box-body" >
+                                    <div className="form-group">
+                                        <button type="button" class="btn-ok btn btn-info" disabled={okBtnDisabled} onClick={::this._onOKClick}>OK</button>&nbsp;
+                                        <button class="btn btn-default" type="button" onClick={::this._onCancelClick}>Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         );
         // return <Chart data={this.props.MainPage} actions={this.props.chartActions} />
@@ -201,6 +243,111 @@ class NewFeedExchange extends BaseController
         // const { Players, PlayersTeam1, PlayersTeam2, CurrentEventId, Positions, UPlayerData, EventFilter, Period} = this.props.data;
 
         actions.actionChangeEventsPeriod({EventId, filterVal});
+    }
+
+
+    /**@private*/ _onChangeFormData(fieldName, ee)
+    {
+        const { actions, } = this.props;
+        actions.actionChangeFormData({fieldName, val: ee.target.value});
+    }
+
+
+    /**@private*/ _onGenerateFullName(ee)
+    {
+        const { actions, data: {PlayersTeam1, PlayersTeam2} } = this.props;
+        let flag = false;
+        if (!PlayersTeam2.name) flag = 2;
+        if (!PlayersTeam1.name) flag = 1;
+
+        if( flag )
+        {
+            (new InfoMessages).show({
+                title: '',
+                message: `You need to fill the team ${flag} name!`,
+                color: 'yellow', // blue, red, green, yellow,
+            });
+        }
+        else
+        {
+            actions.actionGenerateFullName();
+        }
+    }
+
+
+    /**@private*/ _onGenerateUrl(ee)
+    {
+        const { actions, data } = this.props;
+
+        if( !data.FormData.fullName )
+        {
+            (new InfoMessages).show({
+                title: '',
+                message: 'You need to fill the full name!',
+                color: InfoMessages.WARN,
+            });
+        }
+        else
+        {
+            actions.actionGenerateUrl();
+        } // endif
+    }
+
+
+    /**@private*/ _onOKClick(ee)
+    {
+        const { actions, data } = this.props;
+
+        this.sendingMode(true);
+        actions.actionSaveEvent({callback: ::this._onSaveCallback});
+    }
+
+
+    /**
+     * block save btn and show loading
+     * @private
+     */
+    sendingMode(mode)
+    {
+        // turn on
+        if( mode )
+        {
+            this.LoadingObj.showLoading();
+            this.state.okBtnDisabled = true;
+
+        // turn off
+        } else {
+            this.LoadingObj.hideLoading();
+            this.state.okBtnDisabled = false;
+        } // endif
+        this.setState({...this.state});
+    }
+
+
+    /**@private*/ _onSaveCallback({errorCode, title, message})
+    {
+        this.sendingMode(false);
+
+        if( errorCode === 200)
+        {
+            // redirect
+        }
+        else
+        {
+            (new InfoMessages).show({
+                title: '',
+                message: message,
+                color: InfoMessages.WARN,
+            });
+        } // endif
+    }
+
+
+
+
+    /**@private*/ _onCancelClick(ee)
+    {
+        window.history.back();
     }
 }
 

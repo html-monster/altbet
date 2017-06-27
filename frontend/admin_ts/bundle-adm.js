@@ -28,7 +28,8 @@ $(document).ready(function()
 
 
 // BM: Mount points
-if( document.getElementById('DiNewFeedExchange') ) {
+if( document.getElementById('DiNewFeedExchange') )
+{
     ReactDOM.render(
         <Provider store={store}>
             <NewFeedExchange />
