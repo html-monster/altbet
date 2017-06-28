@@ -1,45 +1,5 @@
 .sign_up_form {
   //display: block !important;
-  .input_animate {
-    &:before {
-      content: '';
-      position: absolute;
-      top: 11px;
-      left: 8px;
-      width: 15px;
-      height: 21px;
-      font-size: 17px;
-      z-index: 9;
-      opacity: 0.7;
-    }
-    &:nth-child(1):before {
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
-    }
-    &:nth-child(2):before {
-      content: '@';
-      color: #afabc8;
-    }
-    &:nth-child(3):before {
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
-    }
-    &:nth-child(4) {
-      padding-left: 15px;
-    }
-    &:nth-child(5) {
-      .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; }
-      .Select-placeholder { padding-left: 35px; }
-      &:before {
-        background: url(../../Images/sprite.svg) no-repeat -549px -53px;
-      }
-    }
-    &:nth-child(6):before {
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
-    }
-    &:nth-child(7):before {
-      width: 20px;
-      background: url(../../Images/sprite.svg) no-repeat -573px -51px;
-    }
-  }
   .register {
     width: 100%;
     height: auto;

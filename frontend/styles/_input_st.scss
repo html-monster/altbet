@@ -28,15 +28,6 @@ input[type=text], input[type=password] {
   margin: 0 0 2em;
   height: 57px;
   text-align: center;
-  &.inpt_mail:before {
-    content: '@';
-    position: absolute;
-    top: 11px;
-    left: 8px;
-    font-size: 17px;
-    color: #afabc8;
-    z-index: 9999;
-  }
   &.inpt_password:before {
     content: '';
     position: absolute;
@@ -46,14 +37,54 @@ input[type=text], input[type=password] {
     height: 21px;
     font-size: 17px;
     background: url(../../Images/sprite.svg) no-repeat -533px -26px;
-    z-index: 9999;
+    z-index: 99;
     opacity: 0.7;
   }
-  //&.input--filled{
-  //&:before {
-  //    color: #4dac2e;
-  //  }
-  //}
+  &:before {
+      content: '';
+      position: absolute;
+      top: 11px;
+      left: 8px;
+      width: 15px;
+      height: 21px;
+      font-size: 17px;
+      z-index: 9;
+      opacity: 0.7;
+    }
+    &.inpt_mail:before {
+    content: '@';
+    position: absolute;
+    top: 11px;
+    left: 8px;
+    font-size: 17px;
+    color: #afabc8;
+    z-index: 9999;
+  }
+    &.NickName:before {
+      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+    }
+    &.Email:before {
+      content: '@';
+      color: #afabc8;
+    }
+    &.Password:before {
+      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+    }
+    &.ComparePassword {
+      padding-left: 15px;
+    }
+    &:nth-child(5) {
+      .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; }
+      .Select-placeholder { padding-left: 35px; }
+      &:before {
+        background: url(../../Images/sprite.svg) no-repeat -549px -53px;
+      }
+    }
+    &.datePickerRender:before {
+      width: 20px;
+      background: url(../../Images/sprite.svg) no-repeat -573px -51px;
+    }
+
   &.invalid {
     animation-name: shake;
     animation-duration: 1s;

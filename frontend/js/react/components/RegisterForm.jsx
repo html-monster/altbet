@@ -12,6 +12,7 @@ import {passwordValidation, regexValidation, lengthValidation, mailValidation, e
 import {DropBox2} from './common/DropBox2';
 import {DatePicker} from './common/DatePicker';
 import {Common} from '../common/Common';
+import classnames from 'classnames';
 
 
 var __DEBUG__ = !true;
@@ -101,7 +102,7 @@ export class RegisterForm extends React.PureComponent
 
     inputRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty }, ...input })
     {
-        return <span className={'input_animate input--yoshiko' + (type === 'password' ? ' pass_container' : '')}>
+        return <span className={classnames(`input_animate input--yoshiko`, {NickName: input.name === 'NickName'},{Email: input.name === 'Email'}, {Password: input.name === 'Password'},{ComparePassword: input.name === 'ComparePassword'}) }>
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 <input className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id} type={type} {...input}/>
 				{ type === 'password' ? <span className="show_password">{}</span> : '' }
@@ -121,7 +122,7 @@ export class RegisterForm extends React.PureComponent
     datePickerRender({ id, className, label, hint, inputLabel, currVal, type, afterChange, meta: { error, dirty, onCustomChange }, ...input })
     {
         delete input.value;
-        return <span className="input_animate input--yoshiko">
+        return <span className="input_animate input--yoshiko datePickerRender">
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 <DatePicker className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id}
                     exdata={{afterChange: afterChange.bind(null, onCustomChange), dateFormat: "d M yy"}}
