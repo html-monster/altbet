@@ -85,12 +85,12 @@ $warning_message_arrow: #3a3943;
 @mixin input_validation{
 	.invalidJs{
 		color: #ff3905 !important;
-		border: 1px solid #ff3905 * 0.7 !important;
+		border-bottom: 1px solid #ff3905 * 0.7 !important;
 	}
 
 	.validJs{
 		color: #4dac2e !important;
-		border: 1px solid #4dac2e * 0.7 !important;
+		border-bottom: 1px solid #4dac2e * 0.7 !important;
 	}
 }
 

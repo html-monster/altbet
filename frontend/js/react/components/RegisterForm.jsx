@@ -115,8 +115,8 @@ export class RegisterForm extends React.PureComponent
                     </span>
                 }
             </span>;
-    }
 
+    }
 
     datePickerRender({ id, className, label, hint, inputLabel, currVal, type, afterChange, meta: { error, dirty, onCustomChange }, ...input })
     {
@@ -296,7 +296,6 @@ export class RegisterForm extends React.PureComponent
         onCustomChange(date);
     }
 
-
 	render()
 	{
 		const formContent = ({ input, error, successMessage, format/*, data:{ data, plan, depositQuantity, pricePlan }*/, handleSubmit }) => {
@@ -334,14 +333,14 @@ export class RegisterForm extends React.PureComponent
                                         will be used for communication with you"/>
 
                     <InputValidation renderContent={this.inputRender} id='r_pass' name="Password"
-                                     className={'input__field input__field--yoshiko'}
+                                     className={'input__field input__field--yoshiko '}
                                      initialValue={__DEBUG__ ? "123" : ""}
                                      label="Password" type='password'
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20}),
 										 passwordValidation.bind(null, "r_confirm_pass")]} input={input}/>
 
                     <InputValidation renderContent={this.inputRender} id='r_confirm_pass' name="ComparePassword"
-                                     className={'input__field input__field--yoshiko'}
+                                     className={'input__field input__field--yoshiko '}
 									 initialValue={__DEBUG__ ? "123" : ""}
                                      label="Confirm Password" type='password'
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 3, max: 20}),
@@ -350,7 +349,7 @@ export class RegisterForm extends React.PureComponent
                     <InputValidation renderContent={this.dropBoxRender} id='c_name' name="Country"
                                      className=""
                                      items={this.countries}
-                                     initLabel="Select country ..."
+                                     initLabel="Select Country ..."
                                      validate={[emptyValidation]} input={input}
                                      afterChange={::this.dropCountryChange}
                                      hint="Indicate the country of your permanent residence"/>
@@ -365,7 +364,7 @@ export class RegisterForm extends React.PureComponent
 
 					<InputValidation renderContent={this.datePickerRender} id='user_b_day' name="DateOfBirth"
 									 className={'input__field input__field--yoshiko js-dateofbirth'}
-									 label="Date of birth" type='text'
+									 label="Date of Birth" type='text'
 									 afterChange={this.dateBirthChange.bind(this)}
 									 // initialValue={__DEBUG__ ? "12 Apr 1999" : ""}
 									 currVal={this.state.birthDate ? this.state.birthDate : __DEBUG__ ? "12 Apr 1999" : ""}
@@ -382,7 +381,7 @@ export class RegisterForm extends React.PureComponent
 
                     <div className="agreement">
                         <InputValidation renderContent={this.chkBoxRender} id='agreement' input={input}>
-                            <span>Agree to the <a href="/conditions.html" className="text_decoration">Terms of Use</a> and <a href="#" className="text_decoration">Privacy Notice</a></span>
+                            <span>Agree to the <a href="/AltBet/eng/footer/TermsAndConditions" className="text_decoration">Terms of Use</a> and <a href="/AltBet/eng/footer/CookiePolicy" className="text_decoration">Privacy Notice</a></span>
                         </InputValidation>
 
                         <InputValidation renderContent={this.chkBoxRender} id='agreement_age' input={input}>
@@ -405,7 +404,9 @@ export class RegisterForm extends React.PureComponent
                 <hr/>
                 <div className={'answer-message' + (error && ' validation-summary-errors')}>{error}</div>
                 <div className="submit">
-                    <input type="submit" value="Register" id="submit_sign_up" className="submit btn wave"/>
+                    {/*<input type="submit" value="Register" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue"/>*/}
+                    <button type="submit" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue">Join to ALT.BET!</button>
+
                 </div>
             </form>
 		};

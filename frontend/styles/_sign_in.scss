@@ -1,5 +1,5 @@
 .sign_in_form {
-  display: block !important;
+  //display: block !important;
   .waves-ripple { display: block; }
   .sign_in_content {
     width: 460px;
@@ -32,21 +32,18 @@
           text-align: center;
           color: $sign_in_title;
         }
-
-        .register {
-          &:before {
-            background: url("#{$pathImage}/sprite.svg") no-repeat -458px -22px;
-          }
-        }
         .login_btn {
           float: right;
           height: 42px;
           @include btn-shadow;
-          &:before{
+          &:before {
             background: url("../../Images/sprite.svg") no-repeat -494px -19px;
           }
         }
+        .input__label-content { padding-top: 7px; }
+        .invalid_message, .validation-summary-errors {bottom: -18px;}
       }
     }
   }
+
 }
