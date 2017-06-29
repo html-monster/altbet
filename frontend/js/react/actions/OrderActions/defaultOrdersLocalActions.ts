@@ -7,14 +7,18 @@ import {
     ON_MP_ORDER_DELETE
 } from "../../constants/ActionTypesDefaultOrdersLocal";
 import OrderActions from '../OrderActions';
+/// <reference path="../../../.d/common.d.ts" />
+declare function $(object: any);
+
 
 class Actions extends OrderActions
 {
-    public actionOnOrderCreate(order)
+    public actionOnOrderCreate(order, context)
     {
         return (dispatch) =>
         {
-            $('body').css({overflow: 'hidden', paddingRight: 10});
+            context.props.actions.actionShowOrder(true);
+            // $('body').css({overflow: 'hidden', paddingRight: 10});
 
             dispatch({
                 type: ON_MP_ORDER_CREATE,
@@ -31,13 +35,14 @@ class Actions extends OrderActions
         return (dispatch) =>
         {
 
-            $('#blindTop, #blindBottom').removeClass('fadeInUpLong fadeInDownLong');
-            $('#blindTop').addClass('fadeOutUp');
-            $('#blindBottom').addClass('fadeOutDown');
+            // $('#blindTop, #blindBottom').removeClass('fadeInUpLong fadeInDownLong');
+            // $('#blindTop').addClass('fadeOutUp');
+            $('#mainBlind').removeClass('fadeIn').addClass('fadeOut');
+            $('.button.order_open').removeClass('order_open');
             $('#mp-orderContainer').fadeOut();
 
             setTimeout(() => {
-                $('body').removeAttr('style');
+                // $('body').removeAttr('style');
 
                 if(data.mainPageActions) data.mainPageActions.actionShowOrder(false);
 

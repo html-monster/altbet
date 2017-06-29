@@ -144,67 +144,40 @@
     background: none;
     &:hover{  background-color: rgba(0, 0, 0, 0.1);  }
     &:active{  background-color: rgba(255, 255, 255, 0.5);  }
-    &:after{
-      content: '';
-      display: block;
-      width: 13px;
-      height: 14px;
-      position: absolute;
-      top: calc(50% - 6px);
-      left: calc(50% - 7px);
-    }
+    &:after{ content: ''; display: block; width: 13px; height: 14px; position: absolute; top: calc(50% - 6px); left: calc(50% - 7px); }
   }
-  .price, .volume, .risk, .profit{
+  .price, .volume{ //.risk, .profit{
     flex-grow: 1;
     input.number[disabled]{  border-right: 1px solid $order_sidebar_order_border_color;  }
   }
   .fees{
-    position: absolute; right: 4px; bottom: 32px;
-    .info_string{
-      font-size: 9px;
-      line-height: 26px;
-      color: gray;
+    margin-top: -10px; //position: absolute; right: 4px; top: 57px;
+    .info_string{ font-size: 9px; line-height: 26px; color: gray;
       span{ color: gray; }
+    }
+  }
+  .conditions{ flex-direction: column; align-items: flex-start; padding: 5px 10px;
+    .info_string{ font-size: 10px;
+      span{ color: $color-orange; }
     }
   }
   .edit{
     //right: 22px;
     &:after{  background: $order_sidebar_order_edit;  }
   }
-  .button_container .delete{
-    //right: 0;
-    &:after{  background: $order_sidebar_order_delete;  }
+  .button_container, .sell-buy-container{
+    .delete{
+      //right: 0;
+      &:after{  background: $order_sidebar_order_delete;  }
+    }
   }
   .pop_up{  position: absolute;  background: rgba(0, 0, 0, 0.5); }
-  .confirmation{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left:0;
-    background: rgba(0, 0, 0, 0.65);
-    border: 1px dashed #9b9b9b;
-    cursor: default;
-    transition: 0.4s ease-out;
-    button{
-      width: 68px;
-      height: 25px;
-      margin: 0 5px;
-      border-radius: 6px;
-      line-height: 18px;
-      font-size: 12px;
-      font-weight: 600;
-      &.no{
-        color: #211e25;
-        background-image: linear-gradient(to top, #bdc0cd, #ffffff);
-      }
-      &.yes{
-        background-image: linear-gradient(to bottom, #f8b747, #ef8022);
-      }
-    }
+  .confirmation{ display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; position: absolute;
+    top: 0; left:0; background: rgba(0, 0, 0, 0.65); border: 1px dashed #9b9b9b; cursor: default; transition: 0.4s ease-out;
+
+    button{ width: 68px; height: 25px; margin: 0 5px; border-radius: 6px; line-height: 18px; font-size: 12px; font-weight: 600;
+      &.no{ color: #211e25; background-image: linear-gradient(to top, #bdc0cd, #ffffff); }
+      &.yes{ background-image: linear-gradient(to bottom, #f8b747, #ef8022); } }
   }
   //.error_pop_up {
   //  display: none;
@@ -295,7 +268,7 @@
       &:first-of-type{  border-top: 1px solid $order_sidebar_order_border_color;  }
       //&:last-of-type{  position: relative;  }
       border-bottom: 1px solid $order_sidebar_order_border_color;
-      &.info{  justify-content: center;  }
+      &.info{ flex-direction: column; justify-content: center;  }
       //div:nth-of-type(1) label, div:nth-of-type(2) label{  border-left: none;  }
       //div:nth-of-type(3) label{  border-left: none;  border-right: none;  }
     }
@@ -466,5 +439,7 @@
   }
 }
 
-
+@import "sidebar/default_orders";
+@import "sidebar/_your_orders";
+@import "mainPage/_orders_mp";
 

@@ -282,6 +282,7 @@
 			&.spreader{  background-image: linear-gradient(to bottom, #f8b747, #ef8022);  color: #ffffff; }
 			&.button{
 				&.spread button {
+
 					@include trader_spread_button;
 				}
 			}
@@ -666,6 +667,7 @@
 				position: relative;
 				border-left: none;
 				border-bottom: none;
+				background-image: none;
 			}
 			i.submit{
 				width: 100%;

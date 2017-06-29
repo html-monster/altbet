@@ -185,6 +185,8 @@ export const orderForm = function (context) {
 	let price = +(($(context).find('.price input').val()).replace('$', '')),
 		volume = +$(context).find('.volume input').val(),
 		// sum = $(context).find('.obligations input').val() ? +(($(context).find('.obligations input').val()).replace('$', '')) : null,
+		maxPrice = $(context).find('#maxPrice').val(),
+		remainingBal = (+$(context).find('#remainingBal').val()).toFixed(2),
 		checkboxProp = $(context).find('input[type="checkbox"]').length ? $(context).find('input[type="checkbox"]').prop('checked') : 1;
 
 	if(!ABpp.User.userIdentity){
@@ -193,6 +195,16 @@ export const orderForm = function (context) {
 		return false;
 	}
 
+	if($(context).find('.side').val() === 'Sell' && maxPrice - remainingBal < Math.round10((1 - price) * volume, -2))
+	{
+		defaultMethods.showError(`Your remaining entry balance of this game is $${remainingBal}, it's not enough to create the order`);
+		return false;
+	}
+	else if( $(context).find('.side').val() === 'Buy' && maxPrice - remainingBal < Math.round10(price * volume, -2))
+	{
+		defaultMethods.showError(`Your remaining entry balance of this game is $${remainingBal}, it's not enough to create the order`);
+		return false;
+	}
 
 	if(checkboxProp){
 		if(0 >= price || price > 0.99){

@@ -71,7 +71,7 @@ export default class ExchangeItem extends React.Component
 
     render()
     {
-        const { actions, chartData, data, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder },
+        const { actions, chartData, data, data:{ activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder, orderPrice },
 			mainContext, setCurrentExchangeFn } = this.props;
         let { activeTab, chart, isLPOpen,  } = this.state;
         // console.log('this.props:', this.props);
@@ -127,6 +127,8 @@ export default class ExchangeItem extends React.Component
 
         // common props for button container
         let commProps = {
+			orderPrice,
+			showOrder,
             isTraiderOn: isTraiderOn,
             isBasicMode: isBasicMode,
             isExpertMode,
@@ -141,8 +143,13 @@ export default class ExchangeItem extends React.Component
                 Currency : data.Symbol.Currency,
 				Bid : data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid,
 				Ask : data.Symbol.LastAsk === 1 ? null : data.Symbol.LastAsk ,
+				ResultExchange: Symbol.ResultExchange,
+				StartDate: Symbol.StartDate,
+				EndDate: Symbol.EndDate,
             }
         };
+
+        let disabled = false;//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
 
         //lineupContainer height
 		let height;
@@ -182,6 +189,8 @@ export default class ExchangeItem extends React.Component
         };
 
         let $lastPriceClass = data.Symbol.PriceChangeDirection === -1 ? ["down", "up"] : data.Symbol.PriceChangeDirection === 1 ? ["up", "down"] : ["", ""];
+
+
 /*
         var exchangeSideClickFn = actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
                         isMirror: false,
@@ -192,7 +201,7 @@ export default class ExchangeItem extends React.Component
         // 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
 
         return (
-            <div className={classnames(`h-event`, `categoryFilterJs`, `animated`, `fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`, {clickable: !!isTraiderOn},
+            <div className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`, {clickable: !!isTraiderOn},
 				{active_nearby: currentExchange && !expModeClass}, {with_order: showOrder})} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
                 onClick={() =>
                 {
@@ -256,6 +265,7 @@ export default class ExchangeItem extends React.Component
                                         side: 0,
                                         ismirror: false,
                                         Orders: data.Orders,
+										btnDisabled: disabled,
                                         ...commProps
                                     }}/>
                                     <ButtonContainer actions={actions} mainContext={mainContext} data={{
@@ -264,6 +274,7 @@ export default class ExchangeItem extends React.Component
                                         ismirror: false,
                                         symbolName: symbol,
                                         Orders: data.Orders,
+										btnDisabled: disabled,
                                         ...commProps
                                     }}/>
                                 </div>
@@ -336,7 +347,7 @@ export default class ExchangeItem extends React.Component
 							</div>
 
 							<div className={'pos mode_info_js' + (data.Positions ? ' active' : '')}>
-								<strong style={data.Positions ? {transform: `translateY(0)`} : {}}>Pos: <span>{data.Positions && data.Positions}</span></strong>
+								<strong style={data.Positions ? {transform: `translateY(0)`} : {}}>Units: <span>{data.Positions && data.Positions}</span></strong>
 							</div>
 
                             <div className={`lpnc_tabs ${isLPOpen ? "lpnc_tabs__opened" : ""}`}>
@@ -377,6 +388,10 @@ export default class ExchangeItem extends React.Component
 									ID        : `${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`,
 									EventTitle: Symbol.HomeName,
 									Positions : data.Positions,
+									StartDate: Symbol.StartDate,
+									EndDate: Symbol.EndDate,
+									StartData: Symbol.StartData,
+									ResultExchange: Symbol.ResultExchange,
 									Symbol    : {
 										Exchange: Symbol.Exchange,
 										Name    : Symbol.Name,

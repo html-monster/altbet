@@ -10,21 +10,27 @@ let OddsConverterObj = new OddsConverter();
 
 /**
  * props:{
- * 	formUrl - string, form action *required
- * 	id - string
- * 	limit - boolean *required
- * 	side - string, order side *required
+ *  formView: ,
+ * 	formUrl: string, form action *required
+ * 	id: string
+ * 	limit: boolean - *required
+ * 	side: string - order side *required
  * 	price - order price
- * 	quantity
- * 	isMirror - *required
+ * 	maxPrice: number - max price of event
+ * 	remainingBal: number - user's remaining entry balance of event
+ * 	quantity - order quantity
+ * 	isMirror *required
  * 	symbol - event symbol *required
- *  orderView - string, can be: 'advanced', 'simple', 'normal'
- *  showDeleteButton - boolean
- *  focus - string, turn on or off focus on price or quantity input; can be: 'price', 'quantity', 'normal'
- *  focusOn - boolean, put focus on input or not
- *  onSubmit - function
- *  onDelete - function
- *  onTypeChange - function
+ * 	startDate: number - date of event beginning
+ * 	endDate: number or null - date of event finishing
+ * 	ResultExchange: string - event type
+ *  orderView - can be: 'advanced', 'simple', 'normal'
+ *  showDeleteButton: boolean
+ *  focus: string - turn on or off focus on price or quantity input; can be: 'price', 'quantity', 'normal'
+ *  focusOn: boolean - put focus on input or not
+ *  onSubmit: function
+ *  onDelete: function
+ *  onTypeChange: function
  * }
  */
 export default class OrderForm extends React.Component{
@@ -32,15 +38,17 @@ export default class OrderForm extends React.Component{
 	{
 		super();
 		this.state = {
-			focus: 'normal', // свойство показывающее в какое поле надо поставить фокус
+			focus: props.startDate > +moment().format('x') ? 'quantity' : 'normal', // свойство показывающее в какое поле надо поставить фокус
 			focusOn: true, // надо ли вообще ставить фокус
 			submitOnEnter: false, // отключение включение submit-а формы по enter-ру
+			maxPrice: 99999,
 			currentOddSystem: ABpp.config.currentOddSystem,
 			...props
 		};
 		const price = this.state.side === 'sell' ? Math.round10(1 - this.state.price, -2) : this.state.price;
 		this.OddsConverterObj = new OddsConverter();
 		this.state.sum = Math.round10(price * this.state.quantity, -2);
+		if(props.startDate > +moment().format('x')) this.state.quantity = '';
 		if(this.state.price === undefined) this.state.price = '0.';
 		// if(this.state.limit === undefined) this.state.limit = true;
 
@@ -211,7 +219,7 @@ export default class OrderForm extends React.Component{
 			|| this.props.limit !== nextProps.limit || this.props.focusOn !== nextProps.focusOn)
 		{
 			this.state.price = nextProps.price;
-			this.state.quantity = nextProps.quantity;
+			this.state.quantity = this.state.startDate > +moment().format('x') ? '' : nextProps.quantity;
 			this.state.limit = nextProps.limit;
 			this.state.sum = Math.round10(nextProps.price * nextProps.quantity, -2);
 			if(nextProps.focusOn !== undefined) this.state.focusOn = nextProps.focusOn
@@ -289,8 +297,8 @@ export default class OrderForm extends React.Component{
 	render()
 	{
 		const stateData = this.state;
-		const { formUrl, id, side, ask, bid, limit, isMirror, symbol, newOrder = true, orderView = 'normal', price, priceDisabled,
-			showDeleteButton = true, onSubmit, onDelete} = this.props;
+		const { formUrl, id, side, ask, bid, limit, isMirror, symbol, startDate, endDate, newOrder = true, orderView = 'normal', price, priceDisabled,
+			ResultExchange, showDeleteButton = true, onSubmit, onDelete} = this.props;
 		const fees = Math.round10(ABpp.config.takerFees * stateData.quantity, -2);
 		let checkboxProp = stateData.limit;
 		// let formClass;
@@ -322,14 +330,34 @@ export default class OrderForm extends React.Component{
 		// }
 		// else
 		// 	formClass = ABpp.config.basicMode ? ' basic_mode' : '';
-
-
+		let inputPrice, buyText, sellText, inputQuantity;
+		if(startDate < +moment().format('x'))
+		{
+			inputPrice = checkboxProp ? stateData.price : price;
+			buyText = 'BUY';
+			sellText = 'SELL';
+			// inputQuantity = stateData.quantity;
+		}
+		else
+		{
+			inputPrice = '0.50';
+			if(ResultExchange === 'OU')
+			{
+				buyText = 'If Over - BUY';
+				sellText = 'If Under - SELL';
+			}
+			else
+			{
+				buyText = 'If Yes - BUY';
+				sellText = 'If No - SELL';
+			}
+			// inputQuantity = '';
+		}
 		// const style = checkboxProp ? {display: 'block'} : {display: 'none'};
 
 		return (
-			<form action={formUrl} className={side + ' animated'} autoComplete="off"
-					  onSubmit={onSubmit} method="post"
-				  noValidate="novalidate" data-verify={['price', 'quantity']}>
+			<form action={formUrl} className={side + ' animated'} autoComplete="off" method="post" data-verify={['price', 'quantity']}
+					  onSubmit={endDate && +moment().format('x') > endDate  ? this._onSubmit : onSubmit}>
 				<div className={'container' + (showDeleteButton && onDelete ? ' close_btn' : '')}>
 					<div className="price">
 						<label className="with_info" htmlFor={`${id}_price`}>
@@ -360,7 +388,7 @@ export default class OrderForm extends React.Component{
 										 onKeyDown={this.onInputKeyDown.bind(this, 'price')}
 										 onFocus={::this.onPriceFocus}
 										 onBlur={::this.onBlur}
-										 value={checkboxProp ? stateData.price : price}
+										 value={inputPrice}
 										 key={price} cancelSubmiting={stateData.submitOnEnter} hard={true}
 										 label={true} disabled={priceDisabled}
 										 ref="inputPrice" inputValidate = 'price'/>
@@ -370,8 +398,8 @@ export default class OrderForm extends React.Component{
 									''
 									:
 									<div className="regulator">
-											<span className="plus" onClick={this.onInputIncrement.bind(this, 'price', 0.01)}
-												  title="Press Arrow Up">{}</span>
+										<span className="plus" onClick={this.onInputIncrement.bind(this, 'price', 0.01)}
+											  title="Press Arrow Up">{}</span>
 										<span className="minus" onClick={this.onInputIncrement.bind(this, 'price', -0.01)}
 											  title="Press Arrow Down">{}</span>
 									</div>
@@ -486,12 +514,13 @@ export default class OrderForm extends React.Component{
 						<strong className="info_string" title="Order">Fees: <span>${stateData.quantity ? fees.toFixed(2) || '0.00' : '0.00'}</span></strong>
 					</div>
 				</div>
-				{!newOrder && id ? <input name="ID" type="hidden" value={id}/> : ''}
-				<input name="LimitPrice" type="hidden" value={checkboxProp ? stateData.price : price}/>
-				<input name="Symbol" type="hidden" className="symbol" value={symbol}/>
-				<input name="isMirror" type="hidden" className="mirror" value={isMirror}/>
-				<input name="Side" type="hidden" className="side" value={(stateData.side)[0].toUpperCase() + (stateData.side).slice(1)}/>
-				<input name="OrderType" type="hidden" value={checkboxProp}/>
+				{
+					orderView !== 'simple' &&
+					<div className="container conditions">
+						<span className="info_string">Maximum Entry Fees <span>$10.00</span></span>
+						<span className="info_string">Minimum required purchase/sale is <span>1 Unit @$0.50</span></span>
+					</div>
+				}
 				<div className="container">
 					{/*<div className="switch">*/}
 						{/*<label className="checkbox">*/}
@@ -519,11 +548,11 @@ export default class OrderForm extends React.Component{
 					{
 						 (orderView === 'simple' && side === 'buy') || orderView !== 'simple'  ?
 							<i className="submit wave waves-input-wrapper waves-effect waves-button">
-								<button type="submit" className={`btn buy submit`}
-										style={{textTransform: 'uppercase'}}
+								<button className={`btn buy submit`}
+										//style={{textTransform: 'uppercase'}}
 										onClick={this.onClickSide.bind(this, 'buy')}
 										onMouseUp={this.rippleHide}>
-									Buy
+									{buyText}
 									<span className="amount">
 										<span className="help balloon_only">
 											${(Math.round10(stateData.price * stateData.quantity + fees, -2)).toFixed(2)}
@@ -543,8 +572,8 @@ export default class OrderForm extends React.Component{
 					{
 						(orderView === 'simple' && side === 'sell') || orderView !== 'simple'  ?
 							<i className="submit wave waves-input-wrapper waves-effect waves-button">
-								<button type="submit" className={`btn sell submit`}
-										style={{textTransform: 'uppercase'}}
+								<button className={`btn sell submit`}
+										//style={{textTransform: 'uppercase'}}
 										onClick={this.onClickSide.bind(this, 'sell')}
 										onMouseUp={this.rippleHide}>
 									<span className="amount">
@@ -558,25 +587,40 @@ export default class OrderForm extends React.Component{
 											</span>
 										</span>
 									</span>
-									Sell
+									{sellText}
 								</button>
 							</i>
 							:
 							''
 					}
-						{
-							showDeleteButton && onDelete ?
-								<button className="delete close_red" onClick={onDelete}>{}</button>
-								:
-								''
-						}
-								{/*<span className="close" onClick={onDelete}><span>{}</span></span>*/}
+					{
+						showDeleteButton && onDelete ?
+							<button className="delete close_red" onClick={onDelete}>{}</button>
+							:
+							''
+					}
+					{/*<span className="close" onClick={onDelete}><span>{}</span></span>*/}
 				</div>
 				{/*<div className="error_pop_up">*/}
 					{/*<span>The connection to the server has been lost. Please check your internet connection or try again.</span>*/}
 					{/*<span className="close"><span>{}</span></span>*/}
 				{/*</div>*/}
+				{!newOrder && id ? <input name="ID" type="hidden" value={id}/> : ''}
+				<input name="LimitPrice" type="hidden" value={checkboxProp ? stateData.price : price}/>
+				<input name="Symbol" type="hidden" className="symbol" value={symbol}/>
+				<input name="isMirror" type="hidden" className="mirror" value={isMirror}/>
+				<input name="Side" type="hidden" className="side" value={(stateData.side)[0].toUpperCase() + (stateData.side).slice(1)}/>
+				<input name="OrderType" type="hidden" value={checkboxProp}/>
+				<input type="hidden" id="maxPrice" value={stateData.maxPrice}/>
+				<input type="hidden" id="remainingBal" value={stateData.remainingBal}/>
 			</form>
 		)
+	}
+
+	_onSubmit(event)
+	{
+		event.preventDefault();
+
+		defaultMethods.showError('This game was closed');
 	}
 }

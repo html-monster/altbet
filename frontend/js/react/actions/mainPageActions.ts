@@ -5,7 +5,8 @@ import {
     MP_ON_BASIC_MODE_CH,
     MP_TRAIDER_MODE_CH,
     MP_ON_CHANGE_SUBSCRIBING,
-    MP_ON_CHANGE_ORDER_VISABLT
+    MP_ON_CHANGE_ORDER_VISABLT,
+    MP_ON_CHANGE_ORDER_PRICE
 } from '../constants/ActionTypesPageMain';
 import { WebsocketModel } from '../models/Websocket';
 import { Common } from '../common/Common';
@@ -161,6 +162,10 @@ class Actions extends BaseActions
         } // endif
 
         props.ismirror && !props.isempty && (bpr = Common.toFixed(1 - bpr, 2));
+        // if(+moment().format('x') < (props.data.exdata.StartDate).split('+')[0].slice(6)) // РАБОТАЕТ ПОКА БЭНД ПЕРЕДАЕТ ДАТУ С ЛОКАЛЬЮ!!! "/Date(1498660200000+0300)/"
+        // {
+        //
+        // }
 
         let outStruc = {
             "ID": `${props.data.exdata.Exchange}_${props.data.exdata.Name}_${props.data.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
@@ -189,7 +194,7 @@ class Actions extends BaseActions
 
         // actionOnOrderCreate(outStruc);
 
-        return () =>
+        return (dispatch) =>
         {
             // console.log(outStruc);
             // console.log('context:', context);
@@ -206,14 +211,19 @@ class Actions extends BaseActions
             //     }, order.Limit ? index : 'market');
             // }
             // else
-                context.props.defaultOrderActions.actionOnOrderCreate(outStruc);
-                context.props.actions.actionShowOrder(true);
+                context.props.defaultOrderActions.actionOnOrderCreate(outStruc, context);
+                // context.props.actions.actionShowOrder(true);
             // 0||console.debug( 'getState()', getState() );
             // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
             // dispatch({
             //     type: MP_ON_POS_PRICE_CLICK,
             //     payload: {}
             // });
+
+            dispatch({
+                type: MP_ON_CHANGE_ORDER_PRICE,
+                payload: order.Price
+            });
         }
     }
 

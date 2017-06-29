@@ -2,6 +2,7 @@ import React from 'react';
 import OrderForm from './OrderForm.jsx';
 
 import AnimateOnUpdate from '../../Animation.jsx';
+import classnames from 'classnames';
 
 export default class NewOrder extends React.PureComponent
 {
@@ -13,16 +14,20 @@ export default class NewOrder extends React.PureComponent
 	render()
 	{
 		// console.log(ABpp);
-		const { actions, mainPageActions, data } = this.props;
+		const { actions, mainPageActions, data, localView } = this.props;
 		let formData = {
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
 		};
 
-		return <div className="order_content new animated">
+		return <div className={classnames(`order_content new animated`, { local_view: localView })}>
 			<div className="order-title">
-				<h3>{data.EventTitle}</h3>
-				<span className="close" onClick={actions.actionOnDeleteOrder.bind(null, {data, mainPageActions})}><span>{}</span></span>
+				{
+					!localView &&
+					<h3>{data.EventTitle}</h3>
+				}
+				<button className="close close_blue" onClick={actions.actionOnDeleteOrder.bind(null, {data, mainPageActions})} title="Close window"/>
+				{/*<span className="close" onClick={actions.actionOnDeleteOrder.bind(null, {data, mainPageActions})}><span>{}</span></span>*/}
 				<strong className="current-order pos">Units: <span>{data.Positions}</span></strong>
 			</div>
 			{
@@ -32,7 +37,7 @@ export default class NewOrder extends React.PureComponent
 
 					return <AnimateOnUpdate
 						component="div"
-						className={item.Side ? 'sell-container' : 'buy-container' + ' form_container'}
+						className={'form_container'}
 						key={`${symbol}_${item.Side}`}
 						transitionName={{
 							appear: 'fadeIn',
@@ -47,18 +52,23 @@ export default class NewOrder extends React.PureComponent
 						<OrderForm
 							formUrl={formData.url}
 							id={`${symbol}_${item.Side}_${item.isMirror}`}
-							// limit={item.Limit}
+							limit={item.Limit}
 							side={item.Side ? 'sell' : 'buy'}
 							ask={data.Ask === 1 ? null : data.Ask}
 							bid={data.Bid === 0 ? null : data.Bid}
 							price={item.Price}
-							priceDisabled={true}
+							priceDisabled={+moment().format('x') < +(data.StartDate).split('+')[0].slice(6)}
+							maxPrice={10}
+							remainingBal={5}
 							quantity={item.Volume}
 							isMirror={item.isMirror}
 							symbol={symbol}
+							startDate={+(data.StartDate).split('+')[0].slice(6)}
+							endDate={data.EndDate ? +data.EndDate.split('+')[0].slice(6) : data.EndDate}
+							ResultExchange={data.ResultExchange}
 							newOrder={true}
 							showDeleteButton={true}
-							onSubmit={actions.actionOnAjaxSend.bind(null, actions, {...item, formUrl: formData.url})}
+							onSubmit={actions.actionOnAjaxSend.bind(null, {...item, formUrl: formData.url}, {defaultOrdersActions: actions, mainPageActions})}
 							//onDelete={actions.actionOnDeleteOrder.bind(null, item)}
 							//onTypeChange={actions.actionOnOrderTypeChange.bind(null, item)}
 							// data={{...data, ...item}}

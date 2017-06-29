@@ -41,6 +41,7 @@ export default class TraderDefaultForm extends React.Component {
 		>
 			<div className={direction === 'sell' ? 'sell-container' : 'buy-container'}>
 				<OrderForm
+					formView={'trader'}
 					formUrl={ABpp.baseUrl + (limit ? '/Order/Create' : '/Order/MarketTrading')}
 					id={`${activeExchange.symbol}_${direction}_${isMirror}`}
 					limit={limit}

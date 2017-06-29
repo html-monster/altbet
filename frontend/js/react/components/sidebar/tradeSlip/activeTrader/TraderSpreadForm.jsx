@@ -113,8 +113,8 @@ export default class TraderSpreadForm extends React.Component {
 								</div>
 							</div>
 						</div>
-						<span className="delete wave waves-input-wrapper waves-effect waves-button"
-							  onClick={traderActions.actionRemoveOrderForm}>{}</span>
+							<span className="delete wave waves-input-wrapper waves-effect waves-button"
+								  onClick={traderActions.actionRemoveOrderForm}>{}</span>
 					</div>
 				</form>
 			</div>

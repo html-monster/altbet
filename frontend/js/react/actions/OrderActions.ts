@@ -10,7 +10,7 @@ declare let defaultMethods;
 
 abstract class OrderActions extends BaseActions
 {
-    public actionOnAjaxSend(actions, data, event)
+    public actionOnAjaxSend(data, actions, event)
     {
         return () =>
         {
@@ -28,7 +28,7 @@ abstract class OrderActions extends BaseActions
 
             function onSuccessAjax(answer)
             {
-                actions.actionOnDeleteOrder(data);
+                actions.defaultOrdersActions.actionOnDeleteOrder({data, mainPageActions: actions.mainPageActions});
                 __DEV__ && console.log(`Order sending finished: ${answer}`);
             }
 
