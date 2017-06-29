@@ -8,19 +8,21 @@ import classNames from 'classnames';
 export class PlayersTable extends React.Component
 {
     // filters = {};
-    /**@private*/ currFilter = "";
+    /**@private*/ currFilter = ""; // current team filter
+    /**@private*/ currPosFilter = ""; // current position filter
     /**@private*/ uniPositionName = 'Util';
 
 
     constructor(props)
     {
         super(props);
-        const { Players, } = this.props.data;
+        const { Players, positions, uplayerdata } = this.props.data;
 
         // prepare players filter
-        var filters = this._prepareFilters(Players);
+        const filters = this._prepareTeamFilters(Players);
+        const posFilters = this._preparePosFilters(positions, uplayerdata);
 
-        this.state = {data: Players, filters};
+        this.state = {data: Players, filters, posFilters};
     }
 
 
@@ -28,7 +30,9 @@ export class PlayersTable extends React.Component
     {
         if( newData.data.CurrEvtId !== this.props.data.CurrEvtId )
         {
-            this.setState({...this.state, data: newData.data.Players, filters: this._prepareFilters(newData.data.Players)})
+            const { Players, positions, uplayerdata } = newData.data;
+
+            this.setState({...this.state, data: newData.data.Players, filters: this._prepareTeamFilters(Players), posFilters: this._preparePosFilters(positions, uplayerdata)})
         } // endif
     }
 
@@ -37,18 +41,21 @@ export class PlayersTable extends React.Component
     {
         const { data, data: {t1pos, t2pos, actions, positions, CurrEvtId, EventId, uplayerdata: {uniPositionIndex, uniPositionName}, Rules, CurrentTeam} } = this.props;
         // const data = this.props.data;
-        const { data: Players, filters } = this.state;
+        const { data: Players, filters, posFilters } = this.state;
+        let num = 1;
 
         // 0||console.log( 'Rules, this.props.data', Rules, this.props.data );
 
         // filter btn
-        var filterBtn = (filter) => <span key={filter + '11'}><a href="#" className={"f-btn" + (this.state.filters[filter] ? " active" : "")} data-filter={filter} onClick={::this._onFilterChange}>{filter}</a>&nbsp;</span>;
+        var filterBtn = (filter, filters, onClick) => <span key={filter + '11'}><a href="#" className={"f-btn" + (this.state[filters][filter] ? " active" : "")} data-filter={filter} onClick={onClick}>{filter}</a>&nbsp;</span>;
 
         return (
             <div className="h-players">
-                [{CurrentTeam.type}, {CurrentTeam.num}]
-                <div className="form-group-filters" title="Filter players">
-                    { Object.keys(filters).map((val) => (filterBtn(val))) }
+                <div className="team-filters" title="Filter players by team">
+                    { Object.keys(filters).map((val) => (filterBtn(val, 'filters', ::this._onFilterChange))) }
+                </div>
+                <div className="pos-filters" title="Filter players by position">
+                    { Object.keys(posFilters).map((val) => (filterBtn(val, 'posFilters', ::this._onFilterPosChange))) }
                 </div>
                 <table className="table">
                     <thead>
@@ -64,7 +71,7 @@ export class PlayersTable extends React.Component
                     <tbody>
                     { Players.length ?
                         Players.map((itm, key) =>
-                            (this.currFilter === "All" || this.currFilter === itm.Team) &&
+                            ( (this.currFilter === "All" || this.currFilter === itm.Team) && (this.currPosFilter === "All" || this.currPosFilter === itm.Position) ) &&
                             do {
                                 // 0||console.log( 'positions[itm.Index], itm.Index', positions[itm.Index], itm.Index, t1pos[itm.Index] );
                                 let addTeamdisable = [];
@@ -130,7 +137,7 @@ export class PlayersTable extends React.Component
 
 
                                 <tr key={key} className={`${itm.used ? "used team" + itm.usedTeam : ""}`}>
-                                    <td>{key+1}</td>
+                                    <td>{num++}</td>
                                     <td> {itm.Position === uniPositionName ? itm.meta.PositionOrig : itm.Position} </td>
                                     <td> {itm.Team} </td>
                                     <td> {itm.Name} </td>
@@ -194,7 +201,9 @@ export class PlayersTable extends React.Component
     }
 
 
-
+    /**
+     * Filter by team
+     */
     _onFilterChange(ee)
     {
         ee.preventDefault();
@@ -204,8 +213,20 @@ export class PlayersTable extends React.Component
     }
 
 
+    /**
+     * Filter by positions
+     */
+    _onFilterPosChange(ee)
+    {
+        ee.preventDefault();
 
-    _prepareFilters(inData)
+        Object.keys(this.state.posFilters).forEach((key) => (this.state.posFilters[key] = key == ee.target.dataset.filter) && (this.currPosFilter = key));
+        this.setState({...this.state});
+    }
+
+
+
+    _prepareTeamFilters(inData)
     {
         var filters = {'All': false};
 
@@ -213,6 +234,21 @@ export class PlayersTable extends React.Component
 
         // Object.keys(filters).forEach((item) => { filters[item] = false });
         filters[this.currFilter = Object.keys(filters)[0]] = true;
+        return filters;
+    }
+
+
+    /**
+     * Prepare position filters
+     */
+    _preparePosFilters(inData, Rules)
+    {
+        var filters = {'All': false};
+
+        inData.forEach((val) => { if (Rules.uniPositionIndex != val.Index) filters[val.Name] = false });
+
+        // Object.keys(filters).forEach((item) => { filters[item] = false });
+        filters[this.currPosFilter = Object.keys(filters)[0]] = true;
         return filters;
     }
 }
