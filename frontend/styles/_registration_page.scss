@@ -1,5 +1,4 @@
 .sign_up_form {
-  //display: block !important;
   .register {
     width: 100%;
     height: auto;
@@ -132,45 +131,13 @@
   }
   .tab_content { position: relative; padding: 30px; width: 450px; border-radius: 4px; background-image: $sign_in_bg;
     @include scroll;
-    //.tab_item {
-    //  display: none;
-    //  &:first-child {
-    //    display: block;
-    //  }
-    //
-    //  .column {
-    //    //float: left;
-    //    //width: 50%;
-    //  }
-    //  h2 {
-    //    margin-bottom: 10px;
-    //    font-size: 24px;
-    //    font-weight: normal;
-    //    color: $reg_title;
-    //  }
-    //  .left_column { padding-right: 20px; margin-bottom: 20px; }
-    //  .right_column { padding-left: 20px; margin-bottom: 20px; }
-    //}
-
     .tab_item {
       display: block;
     }
-
     label {
       display: block;
       color: #8b8c8b;
     }
-    //i.submit { width: 100%; }
-    //input[type=submit] {
-    //  width: 100%;
-    //  padding: 15px 0;
-    //  border-radius: 4px;
-    //  background: #f39e00;
-    //  color: #ffffff;
-    //  text-align: center;
-    //  cursor: pointer;
-    //  @include btn-shadow;
-    //}
 
     hr { margin: 0px 0 30px 0; clear: both; @include separator; }
 
@@ -254,6 +221,7 @@
   //padding: 1.7em 0 10px;
   //position: relative;
   .show_password {
+    display: none;
     position: absolute;
     top: 13px;
     right: 5px;
@@ -268,17 +236,6 @@
   }
 }
 
-//.input__field--yoshiko {
-//  width: 100%;
-//  padding: 0.4em 0.8em;
-//  border-radius: 4px;
-//  transition: background-color 0.3s, border-color 0.3s;
-//  @include reg_input_color;
-//  &[disabled]{
-//    & ~ .info{  display: none;  }
-//    color: transparentize($main-color, 0.3);
-//  }
-//}
 textarea.input__field--yoshiko {
   height: 39px;
   min-height: 39px !important;
@@ -326,8 +283,8 @@ textarea.input__field--yoshiko {
   opacity: 0;
 }
 
-//@include validation_params;
 
 #ui-datepicker-div {
   z-index: 999 !important;
 }
+

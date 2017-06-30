@@ -238,9 +238,13 @@ $(document).ready(function () {
     // mainChartController = new mainChartController();
 
 
-    // $('.forgot_password').click(function () {
-    //     $('#form5')[0].reset();
+    // $('.pop_up_container').click(function () {
+    //     $('.input_animate').removeClass('valid').removeClass('invalid').removeClass('input-validation-error');
+    //     $('#login-email').val('').blur().removeClass('valid').removeClass('input-validation-error');
+    //     $('#password').val('').blur().removeClass('valid').removeClass('input-validation-error');
+    //     // $(".validation-summary-errors").css('opacity', '0');
     // });
+
 
     $('.close').click(function () {
         $('.input_animate').removeClass('valid').removeClass('invalid').removeClass('input-validation-error');
