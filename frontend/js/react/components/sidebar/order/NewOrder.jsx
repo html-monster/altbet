@@ -61,7 +61,7 @@ export default class NewOrder extends React.PureComponent
 							price={item.Price}
 							priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.StartDate)}
 							maxEntries={10}
-							minPrice={0.6}
+							minPrice={0.5}
 							remainingBal={5}
 							quantity={item.Volume}
 							isMirror={item.isMirror}

@@ -217,7 +217,7 @@ class OrderItem extends React.Component
 					price={(data.Price).toFixed(2)}
 					priceDisabled={+moment().format('x') < +(data.Symbol.StartDate).slice(6, -2)}
 					maxEntries={10}
-					minPrice={0.6}
+					minPrice={0.5}
 					remainingBal={5}
 					quantity={data.Volume}
 					isMirror={data.isMirror}
