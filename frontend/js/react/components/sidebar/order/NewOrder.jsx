@@ -3,6 +3,8 @@ import OrderForm from './OrderForm.jsx';
 
 import AnimateOnUpdate from '../../Animation.jsx';
 import classnames from 'classnames';
+import { DateLocalization	 } from '../../../models/DateLocalization';
+
 
 export default class NewOrder extends React.PureComponent
 {
@@ -57,15 +59,15 @@ export default class NewOrder extends React.PureComponent
 							ask={data.Ask === 1 ? null : data.Ask}
 							bid={data.Bid === 0 ? null : data.Bid}
 							price={item.Price}
-							priceDisabled={+moment().format('x') < +(data.StartDate).split('+')[0].slice(6)}
+							priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.StartDate)}
 							maxEntries={10}
 							minPrice={0.6}
 							remainingBal={5}
 							quantity={item.Volume}
 							isMirror={item.isMirror}
 							symbol={symbol}
-							startDate={+(data.StartDate).split('+')[0].slice(6)}
-							endDate={data.EndDate ? +data.EndDate.split('+')[0].slice(6) : data.EndDate}
+							startDate={(new DateLocalization).fromSharp(data.StartDate)}
+							endDate={data.EndDate ? (new DateLocalization).fromSharp(data.EndDate) : data.EndDate}
 							ResultExchange={data.ResultExchange}
 							newOrder={true}
 							showDeleteButton={true}

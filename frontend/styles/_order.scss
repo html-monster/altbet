@@ -267,7 +267,7 @@
     .container{
       &:first-of-type{  border-top: 1px solid $order_sidebar_order_border_color;  }
       //&:last-of-type{  position: relative;  }
-      border-bottom: 1px solid $order_sidebar_order_border_color;
+      &:not(.info) { border-bottom: 1px solid $order_sidebar_order_border_color; }
       &.info{ flex-direction: column; justify-content: center;  }
       //div:nth-of-type(1) label, div:nth-of-type(2) label{  border-left: none;  }
       //div:nth-of-type(3) label{  border-left: none;  border-right: none;  }

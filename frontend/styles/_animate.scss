@@ -148,6 +148,7 @@
 .updateAnimation-active span:after {  animation-name: updateAnimation;  }
 .updateAnimation-active:before {  animation-name: updateAnimation;  }
 .rubberBand {  animation-name: rubberBand;  }
+.zoomIn {  animation-name: zoomIn;  }
 .animated{
 	animation-duration: 1s;
 	animation-fill-mode: both;

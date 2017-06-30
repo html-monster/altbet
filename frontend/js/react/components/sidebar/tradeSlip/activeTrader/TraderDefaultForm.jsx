@@ -4,6 +4,7 @@
 import React from 'react';
 
 import OrderForm from '../../order/OrderForm';
+import { DateLocalization	 } from '../../../../models/DateLocalization';
 
 export default class TraderDefaultForm extends React.Component {
 
@@ -49,9 +50,14 @@ export default class TraderDefaultForm extends React.Component {
 					ask={bestPrice.ask}
 					bid={bestPrice.bid}
 					price={price}
+					maxEntries={10}
+					remainingBal={5}
 					quantity={quantity}
 					isMirror={isMirror}
 					symbol={activeExchange.symbol}
+					//startDate={(new DateLocalization).fromSharp(activeExchange.StartDate)}
+					endDate={activeExchange.endDate ? (new DateLocalization).fromSharp(activeExchange.endDate) : activeExchange.endDate}
+					// ResultExchange={data.ResultExchange}
 					newOrder={true}
 					orderView={'simple'}
 					showDeleteButton={true}

@@ -214,6 +214,8 @@ export default class ExchangeItem extends React.Component
 							isMirror: false,
 							title: [Symbol.HomeName, Symbol.AwayName],
 							symbol: symbol,
+							startDate: Symbol.StartDate,
+							endDate: Symbol.EndDate,
 						})
 
 					// }

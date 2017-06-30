@@ -51,7 +51,12 @@ export default class OrderForm extends React.Component
 		const price = this.state.side === 'sell' ? Math.round10(1 - this.state.price, -2) : this.state.price;
 		this.OddsConverterObj = new OddsConverter();
 		this.state.sum = Math.round10(price * this.state.quantity, -2);
-		if(props.startDate > +moment().format('x')) this.state.quantity = '';
+		if(props.startDate > +moment().format('x'))
+		{
+			this.state.price = (+props.minPrice).toFixed(2);
+			this.state.quantity = '';
+		}
+
 		if(this.state.price === undefined) this.state.price = '0.';
 		// if(this.state.limit === undefined) this.state.limit = true;
 
@@ -337,7 +342,7 @@ export default class OrderForm extends React.Component
 
 		if(startDate && startDate > +moment().format('x'))
 		{
-			inputPrice = (+stateData.minPrice).toFixed(2);
+			// inputPrice = (+stateData.minPrice).toFixed(2);
 			if(ResultExchange === 'OU')
 			{
 				buyText = 'If Over - BUY';
@@ -352,7 +357,7 @@ export default class OrderForm extends React.Component
 		}
 		else
 		{
-			inputPrice = checkboxProp ? stateData.price : price;
+			// inputPrice = checkboxProp ? stateData.price : price;
 			buyText = 'BUY';
 			sellText = 'SELL';
 			// inputQuantity = stateData.quantity;
@@ -392,7 +397,7 @@ export default class OrderForm extends React.Component
 										 onKeyDown={this.onInputKeyDown.bind(this, 'price')}
 										 onFocus={::this.onPriceFocus}
 										 onBlur={::this.onBlur}
-										 value={inputPrice}
+										 value={stateData.price}
 										 key={price} cancelSubmiting={stateData.submitOnEnter} hard={true}
 										 label={true} disabled={priceDisabled}
 										 ref="inputPrice" inputValidate = 'price'/>
@@ -527,7 +532,7 @@ export default class OrderForm extends React.Component
 						}
 						{
 							stateData.startDate > +moment().format('x') &&
-							<span className="info_string">Minimum required purchase/sale is <span>1 Unit @${inputPrice}</span></span>
+							<span className="info_string">Minimum required purchase/sale is <span>1 Unit @${stateData.price}</span></span>
 						}
 					</div>
 				}
@@ -616,7 +621,7 @@ export default class OrderForm extends React.Component
 					{/*<span className="close"><span>{}</span></span>*/}
 				{/*</div>*/}
 				{!newOrder && id ? <input name="ID" type="hidden" value={id}/> : ''}
-				<input name="LimitPrice" type="hidden" value={inputPrice}/>
+				<input name="LimitPrice" type="hidden" value={stateData.price}/>
 				<input name="Symbol" type="hidden" className="symbol" value={symbol}/>
 				<input name="isMirror" type="hidden" className="mirror" value={isMirror}/>
 				<input name="Side" type="hidden" className="side" value={(stateData.side)[0].toUpperCase() + (stateData.side).slice(1)}/>
@@ -631,6 +636,6 @@ export default class OrderForm extends React.Component
 	{
 		event.preventDefault();
 
-		defaultMethods.showError('This game was closed');
+		defaultMethods.showError('This game is closed, please try another');
 	}
 }

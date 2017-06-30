@@ -73,7 +73,7 @@ class Sidebar extends React.Component
 		let userIdentity = this.state.globalData.userIdentity;
 		const { isAllowAT } = this.state;
 		const { actions, sidebar: { autoTradeOn, currentOddSystem, traderOn } } = this.props;
-
+		// console.log('this.props:', this.props);
         // var {traderOn} = this.props.sidebar;
         // if( this.FLAG_LOAD  )
         // {

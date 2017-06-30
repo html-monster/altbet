@@ -176,7 +176,7 @@ export default class ButtonContainer extends React.PureComponent
         const inGame = true, isEventStarted = +moment().format('x') > (this.props.data.exdata.StartDate).split('+')[0].slice(6);
 
         if(!inGame && isEventStarted)
-            defaultMethods.showWarning('This game is closed, please try another game');
+            defaultMethods.showWarning('This game is closed, please try another');
         else
             this.props.actions.actionOnPosPriceClick(mainContext, props);
     }
