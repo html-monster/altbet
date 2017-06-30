@@ -13,7 +13,7 @@ declare let activeTraderClass;
 declare let Promise;
 declare const DS;
 declare const Visibility;
-// declare function $(object: any);
+declare let $;
 
 
 interface ABpp

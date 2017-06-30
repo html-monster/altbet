@@ -456,6 +456,10 @@ input ~ .info {
   height: 16px;
   width: 16px;
   cursor: pointer;
+  &.close_blue{
+    &:before, &:after{ display: none; }
+    background: url("#{$pathImage}/sprite.svg") no-repeat -44px -114px;
+  }
   &:hover {
     &:before, span:before { transform: rotate(90deg); }
     &:after, span:after { transform: rotate(-90deg); }

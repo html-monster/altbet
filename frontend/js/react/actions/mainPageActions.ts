@@ -4,7 +4,9 @@ import {
     MP_CHART_ON_SOCKET_MESSAGE,
     MP_ON_BASIC_MODE_CH,
     MP_TRAIDER_MODE_CH,
-    MP_ON_CHANGE_SUBSCRIBING
+    MP_ON_CHANGE_SUBSCRIBING,
+    MP_ON_CHANGE_ORDER_VISABLT,
+    MP_ON_CHANGE_ORDER_PRICE
 } from '../constants/ActionTypesPageMain';
 import { WebsocketModel } from '../models/Websocket';
 import { Common } from '../common/Common';
@@ -27,13 +29,13 @@ class Actions extends BaseActions
             // prevent empty data error
             if( !data ) { data = {Symbol: {}}; flag = false; }
 
-
+            // console.log('data:', data);
             let symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
             ABpp.Websocket.sendSubscribe({exchange: data.Symbol.Exchange}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
             flag && ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false,
-                HomeName: data.Symbol.HomeName, AwayName: data.Symbol.AwayName});
-            flag && setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false,
-                HomeName: data.Symbol.HomeName, AwayName: data.Symbol.AwayName}), 700);
+                HomeName: data.Symbol.HomeName, AwayName: data.Symbol.AwayName, startDate: data.Symbol.StartDate, endDate: data.Symbol.EndDate});
+            // flag && setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false,
+            //     HomeName: data.Symbol.HomeName, AwayName: data.Symbol.AwayName, startDate: data.Symbol.StartDate, endDate: data.Symbol.EndDate}), 700);
 
             ABpp.Websocket.subscribe((inData) =>
             {
@@ -160,6 +162,10 @@ class Actions extends BaseActions
         } // endif
 
         props.ismirror && !props.isempty && (bpr = Common.toFixed(1 - bpr, 2));
+        // if(+moment().format('x') < (props.data.exdata.StartDate).split('+')[0].slice(6)) // РАБОТАЕТ ПОКА БЭНД ПЕРЕДАЕТ ДАТУ С ЛОКАЛЬЮ!!! "/Date(1498660200000+0300)/"
+        // {
+        //
+        // }
 
         let outStruc = {
             "ID": `${props.data.exdata.Exchange}_${props.data.exdata.Name}_${props.data.exdata.Currency}`, // "NYG-WAS-12252016_NYG-WAS_USD",
@@ -188,30 +194,36 @@ class Actions extends BaseActions
 
         // actionOnOrderCreate(outStruc);
 
-        return () =>
+        return (dispatch) =>
         {
             // console.log(outStruc);
             // console.log('context:', context);
             let order : any = outStruc.Orders[0];
             let index = order.Price === '0.' ? 'empty' : Math.round(99 - order.Price * 100);
 
-            if(ABpp.config.tradeOn){
-                context.props.traderActions.actionAddDefaultOrder(null, {
-                    direction: order.Side ? 'sell' : 'buy',
-                    price: order.Price,
-                    quantity: order.Volume,
-                    limit: order.Limit,
-                    outputOrder: true
-                }, order.Limit ? index : 'market');
-            }
-            else
-                context.props.defaultOrderActions.actionOnOrderCreate(outStruc);
+            // if(ABpp.config.tradeOn){
+            //     context.props.traderActions.actionAddDefaultOrder(null, {
+            //         direction: order.Side ? 'sell' : 'buy',
+            //         price: order.Price,
+            //         quantity: order.Volume,
+            //         limit: order.Limit,
+            //         outputOrder: true
+            //     }, order.Limit ? index : 'market');
+            // }
+            // else
+                context.props.defaultOrderActions.actionOnOrderCreate(outStruc, context);
+                // context.props.actions.actionShowOrder(true);
             // 0||console.debug( 'getState()', getState() );
             // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
             // dispatch({
             //     type: MP_ON_POS_PRICE_CLICK,
             //     payload: {}
             // });
+
+            dispatch({
+                type: MP_ON_CHANGE_ORDER_PRICE,
+                payload: order.Price
+            });
         }
     }
 
@@ -233,8 +245,9 @@ class Actions extends BaseActions
 
             if( aexch.name !== inProps.name || aexch.isMirror !== inProps.isMirror )
             {
+                // console.log('inProps:', inProps);
                 ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, HomeName: inProps.title[0],
-                    AwayName: inProps.title[1], isMirror: inProps.isMirror, symbol: inProps.symbol});
+                    AwayName: inProps.title[1], isMirror: inProps.isMirror, symbol: inProps.symbol, startDate: inProps.startDate, endDate: inProps.endDate});
                 ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
 
                 if($('#ChkLimit').prop('checked')) globalData.tradeOn = true;
@@ -406,6 +419,16 @@ class Actions extends BaseActions
                 payload: inProps.exchange,
             });
         };
+    }
+    public actionShowOrder(visible)
+    {
+        return (dispatch) =>
+        {
+            dispatch({
+                type: MP_ON_CHANGE_ORDER_VISABLT,
+                payload: visible
+            })
+        }
     }
 }
 

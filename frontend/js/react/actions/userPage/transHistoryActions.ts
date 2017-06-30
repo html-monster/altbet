@@ -8,6 +8,7 @@ import {
 } from "../../constants/ActionTypesTransHistory";
 import BaseActions from '../BaseActions';
 import {DateLocalization} from '../../models/DateLocalization';
+/// <reference path="../../../.d/common.d.ts" />
 
 
 class Actions extends BaseActions
