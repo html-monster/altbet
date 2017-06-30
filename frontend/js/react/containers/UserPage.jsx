@@ -12,7 +12,7 @@ import Funds from '../components/userPage/Funds';
 import Preferences from '../components/userPage/Preferences';
 import Settings from '../components/userPage/Settings';
 import ChangePassword from '../components/userPage/settings/ChangePassword';
-import SelfExclusion from '../components/userPage/SelfExclusion';
+import SelfExclusion from '../components/userPage/SelfExclusion.jsx';
 
 // import ChangePassword from '../components/userPage/settings/ChangePassword';
 
