@@ -7,49 +7,42 @@
  */
 
 import React from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 
 import BaseController from './BaseController';
 import {RegisterForm} from '../components/RegisterForm.jsx';
 import actions from '../actions/registerActions.ts';
 
 
-class RegisterBox extends BaseController
-{
-    constructor(props)
-    {
+class RegisterBox extends BaseController {
+    constructor(props) {
         super(props);
         // __DEV__ && console.log( 'RegisterBox props', props );
     }
 
 
-    render()
-    {
+    render() {
         return (
             <div className="sign_up_form pop_up">
                 <div className="pop_up_container">
                     <div className="sign_up_content pop_up_content">
-                        <div className="header">
-                            <div className="logo_container">
-                                <a href={ABpp.baseUrl + '/eng/home/index'} className="logo"><strong>alt.bet</strong></a>
-                            </div>
-                            <div className="warning_container">
-                                <span>Over 18 only</span>
-                            </div>
-                        </div>
                         <div className="top_reg">
                             <div className="wrapper_reg">
-                                <div className="tabs">
-                                    {/*<span className="tab">real</span>*/}
-                                    {/*<!--<span className="tab">Demo</span>-->*/}
-                                    {/*<span className="tab market-make">Market maker</span>*/}
-                                </div>
                                 <div className="tab_content">
+                                    <div className="header">
+                                        <div className="logo_container">
+                                            <a href={ABpp.baseUrl + '/eng/home/index'}
+                                               className="logo"><strong>alt.bet</strong></a>
+                                        </div>
+                                        <div className="warning_container">
+                                            <span>Over 18 only</span>
+                                        </div>
+                                    </div>
                                     <div className="tab_item real">
                                         <span className="close"><span>{}</span></span>
 
-                                        <RegisterForm onSubmit={this.props.actions.actionFormSubmit.bind(null, this)} />
+                                        <RegisterForm onSubmit={this.props.actions.actionFormSubmit.bind(null, this)}/>
                                     </div>
                                 </div>
                             </div>

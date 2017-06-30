@@ -8,6 +8,13 @@ import {
     ON_ADD_TEAM_PLAYER_RESERVE,
     ON_SET_CURR_TEAM,
     ON_ADD_TEAM_PLAYER_VARIABLE,
+    ON_CH_TEAM_NAME,
+    ON_GEN_TEAM_NAME,
+    ON_CH_FORM_DATA,
+    ON_GEN_FULL_NAME,
+    ON_GEN_URL,
+    ON_SAVE_EVENT_OK,
+    ON_SAVE_EVENT_FAIL,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -132,6 +139,95 @@ class Actions extends BaseActions
 
 
     /**
+     * Save feed event
+     */
+    // todo: Сделать сохранение данных, проверки, callbak и прочее
+    public actionSaveEvent(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            let data = getState().newFeedExchange;
+            let ret;
+
+            // check for correct team fillness
+            if( ret = this.checkTeam(data.PlayersTeam1, data.Positions, 1, data.UPlayerData) )
+            {
+            // check for correct team fillness
+            } else if (ret = this.checkTeam(data.PlayersTeam2, data.Positions, 2, data.UPlayerData))
+            {
+            // check for reserve
+            } else if (ret = this.checkReserveTeam(data.PlayersTeam1Reserve, 1))
+            {
+            } else if (ret = this.checkReserveTeam(data.PlayersTeam2Reserve, 2))
+            {
+            // check for variable
+            } else if (ret = this.checkVariableTeam(data.PlayersTeam1Variable, 1))
+            {
+            } else if (ret = this.checkVariableTeam(data.PlayersTeam2Variable, 2))
+            {
+            // check for empty form fields
+            } else if (ret = this.checkFormData(data.FormData))
+            {
+            } // endif
+
+
+            // some errors
+            if (ret)
+            {
+                inProps.callback && inProps.callback({errorCode: ret.error, title: '', message: ret.message});
+                return;
+            }
+
+
+
+            // post data to server
+            // let data = new FormData();
+            const ajaxPromise = (new AjaxSend()).send({
+                formData: {some: 'rrrr'},
+                message: `Error ...`,
+                // url: ABpp.baseUrl + $form.attr('action'),
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
+                // respCodes: [
+                //     {code: 100, message: ""},
+                //     // {code: -101, message: "Some custom error"},
+                // ],
+                beforeChkResponse: (data) =>
+                {
+                    // DEBUG: emulate
+                    data = {Error: 101};
+                    // data.Param1 = "TOR-PHI-3152017"; // id
+                    // data.Param1 = "?path=sport&status=approved";
+                    // data.Param1 = "?status=New";
+                    // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                    // data.Param3 = "TOR-PHI-3152017"; // id
+
+                    return data;
+                },
+            });
+
+
+            ajaxPromise.then( result =>
+                {
+                    dispatch({
+                        type: ON_SAVE_EVENT_OK,
+                        payload: inProps,
+                    });
+                },
+                result => {
+                    let message = 'Save error';
+                    switch( result.code )
+                    {
+                        case 100 :
+                        default: ;
+                    }
+
+                    inProps.callback({errorCode: result.code, title: '', message});
+                });
+        };
+    }
+
+
+    /**
      * Add team player action
      */
     public actionPPGValues(inProps)
@@ -145,11 +241,91 @@ class Actions extends BaseActions
                     payload: inProps, //this.setPPGValues.bind(this, inProps),
                     // payload: this.setPPGValues.bind(this, inProps),
                 })},
-                800
+                500
             );
         };
     }
 
+
+    /**
+     * Add change team name
+     */
+    public actionChangeTeamName(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_CH_TEAM_NAME,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+
+    /**
+     * Add change form data from some input
+     */
+    public actionChangeFormData(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_CH_FORM_DATA,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Generate full name from teams names
+     */
+    public actionGenerateFullName(inProps?)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_GEN_FULL_NAME,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Generate
+     */
+    public actionGenerateUrl(inProps?)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_GEN_URL,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Add generate team name
+     */
+    public actionGenerateTeamName(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_GEN_TEAM_NAME,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
 
     /**
      * Add team player action
@@ -244,170 +420,127 @@ class Actions extends BaseActions
 
 
     /**
-     * Remove player from said team
+     * Check for form data
      */
-/*
-    private delTeamPlayer({player, team}, state)
+    private checkFormData(data)
     {
-        0||console.log( 'player', player );
-        // return to player
-        // for( let val of state.Players  )
-        // {
-        //     if( player.Id == val.Id ) { val.used = false; break; } // endif;
-        // }
+        const { category, fullName, teamName1, teamName2, url } = data;
+        let message, error;
 
 
-        // remove from team
-        let $Team = state["PlayersTeam"+team];
-        for( let ii in $Team.players  )
+        /*if( category === '' )
         {
-            let val = $Team.players[ii];
-            if( player.Id == val.Id )
-            {
-                $Team.players.splice(ii, 1);
-                break;
-            } // endif;
-        } // endfor
+            message = 'Please set the events category';
+            error = -301;
+        }
+        else*/ if( teamName1 === '' )
+        {
+            message = 'Please fill team 1 name';
+            error = -302;
+        }
+        else if( teamName2 === '' )
+        {
+            message = 'Please fill team 2 name';
+            error = -303;
+        }
+        else if( fullName === '' )
+        {
+            message = 'Please fill full name';
+            error = -304;
+        }
+        else if( url === '' )
+        {
+            message = 'Please fill url for event';
+            error = -305;
+        } // endif
 
-
-        // count positions limits
-        state["PlayersTeam"+team] = this.recountPositions($Team);
-
-        // mark used players
-        this.markPlayers(state);
-
-        return state;
+        if (message) return {message, error};
+        else false;
     }
-*/
 
 
     /**
-     * Add player to said team
+     * Check for team positions fillness etc
      */
-/*
-    private addTeamPlayer({player, team}, state)
+    private checkTeam(data, inPositions, inTeam, Rules)
     {
-        let $Team = state["PlayersTeam"+team];
-        for( let val of state.Players  )
+        const { players, positions } = data;
+        let message, error, teams = {};
+
+
+        // check positions
+        for( let val of inPositions  )
         {
-            if( player.Id == val.Id && !val.used )
+            if (!val) continue;
+            if (positions[val.Index] != val.Quantity)
             {
-                val.used = team;
-                $Team.players.push(val);
-                break;
-            } // endif;
-        } // endfor
-
-        state["PlayersTeam"+team] = this.sortTeam($Team);
-
-        // count positions limits
-        state["PlayersTeam"+team] = this.recountPositions($Team);
-
-        // mark used players
-        this.markPlayers(state);
-
-        return state;
-    }
-*/
-
-
-    /**
-     * Sort team by positions and name
-     */
-/*
-    private sortTeam(itms)
-    {
-        itms.players.sort(sortFunction);
-
-        return itms;
-
-        function sortFunction(aa, bb)
-        {
-            aa = {...aa};
-            bb = {...bb};
-            if (aa["Index"] < 10 ) aa["Index"] = "0" + aa["Index"];
-            if (bb["Index"] < 10 ) bb["Index"] = "0" + bb["Index"];
-
-            if (aa["Index"] + aa["Name"] === bb["Index"] + bb["Name"]) {
-                return 0;
+                if (val.Index == Rules.uniPositionIndex) val.Name = 'Universal Player';
+                message = `Position "${val.Name}" in team ${inTeam} is not full`;
+                error = -306;
+                if (message) return {message, error};
+                else false;
             }
-            else {
-                return (aa["Index"] + aa["Name"] < bb["Index"] + bb["Name"]) ? -1 : 1;
-            }
-        }
+        } // endfor
+
+
+        // check for team count
+        for( let val of players  )
+        {
+            teams[val.TeamId] = true;
+        } // endfor
+
+        if( Object.keys(teams).length < 2 )
+        {
+            message = `Team ${inTeam} players have to consists from minimun 2 events`;
+            error = -307;
+        } // endif
+
+
+        if (message) return {message, error};
+        else false;
     }
-*/
 
 
     /**
-     * Recount team used positions
+     * Check for team reserve
      */
-/*
-    private recountPositions(inTeam)
+    private checkReserveTeam(data, inTeam)
     {
-        inTeam.positions = {};
-        for( let val of inTeam.players  )
+        const { players } = data;
+        let message, error;
+
+
+        if( !data.players.length )
         {
-            let itm : any = inTeam.positions[val['Index']];
-            inTeam.positions[val['Index']] = (itm||0) + 1;
-        } // endfor
+            message = `Please, fill team ${inTeam} reserve players`;
+            error = -308;
+        } // endif
 
-        return inTeam;
+
+        if (message) return {message, error};
+        else false;
     }
-*/
 
 
-/*
-    /!**
-     * Recount team used positions
-     *!/
-    private markPlayers(state)
+    /**
+     * Check for variable team players
+     */
+    private checkVariableTeam(data, inTeam)
     {
-        // reset players states
-        state.Players.forEach((val) => val.used = false);
+        const { players } = data;
+        let message, error;
 
-        // set team1 players states
-        for( let val of state.PlayersTeam1.players )
-        {
-            for( let ii in state.Players )
-            {
-                let val2 = state.Players[ii];
-                if( val.Id == val2.Id ) { val2.used = 1; } // endif;
-            } // endfor
-        }
 
-        // set team2 players states
-        for( let val of state.PlayersTeam2.players )
+        if( !data.players.length )
         {
-            for( let ii in state.Players )
-            {
-                let val2 = state.Players[ii];
-                if( val.Id == val2.Id ) { val2.used = 2; } // endif;
-            } // endfor
-        }
+            message = `Please, fill team ${inTeam} variable players`;
+            error = -309;
+        } // endif
+
+
+        if (message) return {message, error};
+        else false;
     }
-*/
-
-
-/*
-    /!**
-     * Add team player action
-     *!/
-    private setPPGValues({player, team, type, num}, state)
-    {
-        let $Team = state["PlayersTeam"+team];
-        for( let val of $Team.players )
-        {
-            if( player.Id == val.Id )
-            {
-                val[type] = num;
-                break;
-            } // endif;
-        } // endfor
-
-        return state;
-    }
-*/
 }
 
 export default (new Actions()).export();

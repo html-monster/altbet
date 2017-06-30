@@ -90,8 +90,8 @@ export class AjaxSend
                 data: props.formData || new FormData(),
                 // Options to tell jQuery not to process data or worry about the content-type
                 cache: false,
-                contentType: false,
-                processData: false
+                // contentType: false,
+                // processData: false
             }, 'json');
             // .always(function () {
             //     // form.find('.loading-ico').fadeOut(200);

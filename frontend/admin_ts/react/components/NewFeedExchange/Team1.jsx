@@ -18,12 +18,22 @@ export class Team1 extends React.Component
 
     render()
     {
-        const { data, positions, teamNum, actions, uplayerdata: {uniPositionIndex, uniPositionName} } = this.props;
+        const { data, name, positions, teamNum, actions, uplayerdata: {uniPositionIndex, uniPositionName} } = this.props;
         let jj = 0, kk = 1;
         // 0||console.log( 'da', data );
 
         return (
             <div className="h-team">
+                <label>Team {teamNum} name</label>
+                <div class="input-group">
+                    <input className="form-control" type="text" name={`team${teamNum}name`} value={name} onChange={::this._onChangeTeamName} />
+                    <span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateTeamName} title="Generate team name"><i class="fa fa-repeat"/></button></span>
+                </div>
+{/*
+                <div className="form-group">
+                </div>
+*/}
+
                 <table class="table teams-table">
                     <thead>
                     <tr>
@@ -83,5 +93,19 @@ export class Team1 extends React.Component
     {
         // if (num) this.props.actions.actionPPGValues({player, team, type, num});
         if (num) this.props.actions.actionPPGValues({...props, num});
+    }
+
+
+    /**@private*/ _onChangeTeamName(ee)
+    {
+        const { actions, teamNum } = this.props;
+        actions.actionChangeTeamName({name: ee.target.value, teamNum});
+    }
+
+
+    /**@private*/ _onGenerateTeamName(ee)
+    {
+        const { actions, teamNum } = this.props;
+        actions.actionGenerateTeamName({teamNum});
     }
 }
