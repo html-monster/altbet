@@ -353,7 +353,7 @@ header {
         position: absolute;
         top: 55px;
         right: -19px;
-				z-index: -1;
+        z-index: 999;
         li {
           background: #292830;
           a, strong {

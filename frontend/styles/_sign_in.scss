@@ -1,5 +1,5 @@
 .sign_in_form {
-  .waves-ripple{  display: block;  }
+  .waves-ripple { display: block; }
   .sign_in_content {
     width: 460px;
     padding: 30px;
@@ -15,260 +15,34 @@
         color: #333;
         max-width: 400px;
         width: 100%;
+        .logo_cont {
+          display: block;
+          width: 160px;
+          height: 50px;
+          margin: 0 auto 15px;
+          background: url(../../Images/sprite.svg) no-repeat -3px -17px;
+        }
         h2 {
           margin-bottom: 10px;
           margin-top: 5px;
-          font-size: 24px;
-          font-weight: 300;
+          font-size: 14px;
+          font-weight: 600;
           text-transform: uppercase;
           text-align: center;
           color: $sign_in_title;
         }
-        button {
-          width: 49%;
-          height: 50px;
-          border-radius: 0;
-          &:hover {  background: linear-gradient(#0159b1, #115071);  }
-        }
-        input[type=email]{
-          &:-webkit-autofill{
-            border: 1px solid green;
-            -webkit-text-fill-color: green;
-            -webkit-box-shadow: 0 0 0 50px $sign_in_autofill_email inset !important;
-            &:hover, &:focus{
-              border: 1px solid green;
-              -webkit-text-fill-color: green;
-              -webkit-box-shadow: 0 0 0 1000px $sign_in_autofill_email inset !important;
-              //transition: background-color 5000s ease-in-out 0s
-            }
-            //color: #ffffff !important; -webkit-box-shadow: inset 0 0 0 50px $sign_in_autofill_email !important;
-          }
-        }
-        input[type=text], input[type=password]{
-          &:-webkit-autofill{
-            border: 1px solid green;
-            -webkit-text-fill-color: green;
-            -webkit-box-shadow: 0 0 0 50px $sign_in_autofill_pass inset !important;
-            &:hover, &:focus{
-              border: 1px solid green;
-              -webkit-text-fill-color: green;
-              -webkit-box-shadow: 0 0 0 1000px $sign_in_autofill_pass inset !important;
-              //transition: background-color 5000s ease-in-out 0s
-            }
-            //color: #ffffff !important; -webkit-box-shadow: inset 0 0 0 50px $sign_in_autofill_pass !important;
-          }
-        }
-        .input_animate{
-          position: relative;
-          z-index: 1;
-          display: inline-block;
-          margin: 0 0 2em;
-          //padding-right: 5px;
-          //width: calc(100% - 2em);
-          height: 57px;
-          vertical-align: top;
-          text-align: center;
-          &.invalid .input__field{
-            animation-name: shake;
-            animation-duration: 1s;
-            animation-fill-mode: both;
-          }
-          //&.valid{
-          //  .input__field, .input__label-content{  color: #4dac2e;  }
-          //}
-        }
-        .input__field {
-          position: relative;
-          z-index: 5;
-          display: block;
-          padding: 1em;
+        .login_btn {
           float: right;
-          //width: calc(100% - 5px);
-          border: 1px solid $sign_in_input_border;
-          border-radius: 4px;
-          box-shadow: none;
-          color: $sign_in__input_color;
-          font-size: 14px;
-          background: transparent;
-          //opacity: 0;
-          text-align: center;
-          transition: opacity 0.3s;
-          -webkit-appearance: none; /* for box shadows to show on iOS */
-          &.input-validation-error{
-            color: #ff3905;
-            border-color: #ff3905;
-          }
-
-          &.valid{
-            color: #4dac2e;
-            border-color: #4dac2e;
-          }
-        }
-        .input__field:focus {
-          outline: none;
-        }
-
-        .pass_container{
-          padding-top: 22px;
-          margin-bottom: 4em;
-        }
-
-        .input__label {
-          display: inline-block;
-          padding: 0 1em;
-          width: 100%;
-          color: #1196d4;
-          font-weight: bold;
-          font-size: 13px;
-          position: absolute;
-          left: 0;
-        }
-        .input__label-content {
-          position: relative;
-          display: block;
-          padding: 1.2em 0;
-          width: 100%;
-          z-index: 1;
-        }
-
-        //input#login-email~.input__label--kuro{
-        //  &:before,// &:hover:before,
-        //  &:after{// &:hover:after{
-        //    background: $sign_in_autofill_email;
-        //  }
-        //}
-        //input#password~.input__label--kuro{
-        //  &:before,// &:hover:before,
-        //  &:after{// &:hover:after{
-        //    background: $sign_in_autofill_pass;
-        //  }
-        //}
-
-        //.input__label--kuro::before,
-        //.input__label--kuro::after {
-        //  content: '';
-        //  position: absolute;
-        //  top: -1px;
-        //  left: 0;
-        //  width: 50%;
-        //  height: calc(100% + 1px);
-        //  border: 1px solid $sign_in_input_border;
-        //  transition: transform 0.3s;
-        //}
-
-        //.input__label--kuro::before {
-        //  border-radius: 4px 0 0 4px;
-        //  border-right: none;
-        //}
-
-        //.input__label--kuro::after {
-        //  left: 50%;
-        //  border-radius: 0 4px 4px 0;
-        //  border-left: none;
-        //}
-
-        //.input__field--kuro:focus,
-        //.input--filled .input__field--kuro {
-        //  opacity: 1;
-        //  transition-delay: 0.3s;
-        //}
-
-        //.input__field--kuro:focus + .input__label--kuro::before,
-        //.input--filled .input__label--kuro::before {
-        //  transform: translate3d(-10%, 0, 0);
-        //}
-				//
-        //.input__field--kuro:focus + .input__label--kuro::after,
-        //.input--filled .input__label--kuro::after {
-        //  transform: translate3d(10%, 0, 0);
-        //}
-
-        .input__field--kuro:focus + .input__label--kuro .input__label-content--kuro,
-        .input--filled .input__label-content--kuro {
-          animation: anim-2 0.4s both;
-        }
-
-        //.input-validation-error{
-        //  color: #ff3905;
-        //  //& ~ .input__label--kuro{
-        //    //&:before, &:after{
-        //      border-color: #ff3905;
-        //    //}
-        //  //}
-        //}
-				//
-        //.valid{
-        //  color: #4dac2e;
-        //  //& ~ .input__label--kuro{
-        //    //&:before, &:after{
-        //      border-color: #4dac2e;
-        //    //}
-        //  //}
-        //}
-
-        @keyframes anim-2 {
-          50% {  opacity: 0;  transform: scale3d(0.01, 0.01, 1);  }
-          51% {  opacity: 0;  transform: translate3d(0, 3.2em, 0) scale3d(0.01, 0.01, 1);  }
-          100% {  opacity: 1;  transform: translate3d(0, 3.2em, 0);  }
-        }
-        .remember_forgot{
-          margin: 15px 0;
-          label:first-of-type{  display: block;  }
-          input{  display: none;  }
-          input:checked + span{  color: $checkbox_label_color;  }
-          input:checked + span:before{  background-position: -20px -140px;  }
-          span{
-            font-size: 12px;
-            color: transparentize($checkbox_label_color, 0.4);
-            &:before{
-              content: '';
-              display: inline-block;
-              margin-top: -3px;
-              margin-right: 5px;
-              width: 16px;
-              height: 16px;
-              background: url("#{$pathImage}/sprite.svg") no-repeat -20px -160px;
-              vertical-align: middle;
-            }
-          }
-          a.forgot_password{
-            float: right;
-            padding-top: 4px;
-            font-size: 12px;
-            color: $link-color;
-            @include text-decoration;
-          }
-        }
-        .register{
-          display: inline-block;
-          width: 150px;
-          padding: 1px;
-          border-radius: 4px;
-          text-align: center;
-          color: #3498da;
-          background: linear-gradient(to bottom, #64c9ef, #3498da);
-          span{
-            display: block;
-            padding: 8px 0;
-            color: #ffffff;
-            border-radius: 4px;
-          }
-        }
-        i.wave{
-          float: right;
-          border-radius: 4px;
-        }
-        #submit_sign_in{
-          width: 150px;
-          padding: 9px 0;
-          border-radius: 4px;
-          background: #f39e00;
-          color: #ffffff;
-          cursor: pointer;
-          &[disabled]{  opacity: 0.4;  }
+          height: 42px;
           @include btn-shadow;
+          &:before {
+            background: url("../../Images/sprite.svg") no-repeat -494px -19px;
+          }
         }
+        .input__label-content { padding-top: 7px; }
+        .invalid_message, .validation-summary-errors {bottom: -18px;}
       }
     }
   }
+
 }

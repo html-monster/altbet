@@ -1,4 +1,4 @@
-$(document).ready(function () {
+
 
   var $preloader = $('#p_prldr'),
       $svg_anm   = $preloader.find('.svg_anm');
@@ -7,14 +7,13 @@ $(document).ready(function () {
 
   $('#fullpage').fullpage({
     menu: '#menu',
-    anchors: (globalData.userIdentity == 'True') ? ['secondPage', 'thirdPage', 'fourthPage', 'lastPage'] : ['firstPage', 'secondPage', 'thirdPage', 'fourthPage', 'lastPage'],
+    anchors: (globalData.userIdentity == 'True') ? ['secondPage', 'thirdPage', 'fourthPage'] : ['firstPage', 'secondPage', 'thirdPage', 'fourthPage'],
     navigation: true,
-    navigationTooltips: (globalData.userIdentity == 'True') ? ['Markets', 'Advantages', 'Pricing', 'Contacts'] : ['Start', 'Markets', 'Advantages', 'Pricing', 'Contacts'],
+    navigationTooltips: (globalData.userIdentity == 'True') ? ['Markets', 'Advantages', 'Contacts'] : ['Start', 'Markets', 'Advantages', 'Contacts'],
     slidesNavigation: false,
     slidesNavPosition: 'bottom',
     loopBottom: true,
     loopTop: true,
-
   });
 
   $(".item_category").mouseenter(function () {
@@ -37,4 +36,3 @@ $(document).ready(function () {
   setTimeout(function(){$('.info_th').addClass('animated')},400);
   setTimeout(function(){$('#start_betting .join').addClass('fadeInUpBig')},500);
   $('#start_betting .join').addClass('animated');
-});
