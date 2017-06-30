@@ -169,7 +169,7 @@ class Reducer
             {
                 // 0||console.log( 'data', data );
                 this.initialState.Players.map((val, key) => {
-                    if (val.ID == data.Players[key].Id && data.Players[key].used)
+                    if (val && data.Players[key] && val.ID == data.Players[key].Id && data.Players[key].used)
                     {
                         val.StartDate = data.Players[key].StartDate;
                         val.usedTeam = data.Players[key].usedTeam;
@@ -705,7 +705,7 @@ class Reducer
      */
     private generateFullName(inProps, state)
     {
-        state.FormData.fullName = `${state['PlayersTeam1'].name} vs ${state['PlayersTeam2'].name}`;
+        state.FormData.fullName = `${state.FormData['teamName1']} vs ${state.FormData['teamName2']}`;
 
         // save teams data
         this.saveData(state);

@@ -255,10 +255,11 @@ class NewFeedExchange extends BaseController
 
     /**@private*/ _onGenerateFullName(ee)
     {
-        const { actions, data: {PlayersTeam1, PlayersTeam2} } = this.props;
+        const { actions, data: {FormData} } = this.props;
         let flag = false;
-        if (!PlayersTeam2.name) flag = 2;
-        if (!PlayersTeam1.name) flag = 1;
+
+        if (!FormData['teamName2']) flag = 2;
+        if (!FormData['teamName1']) flag = 1;
 
         if( flag )
         {

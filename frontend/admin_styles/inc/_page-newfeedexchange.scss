@@ -4,9 +4,10 @@
   .content-wrapper {
     .input-button { padding: 5px 12px; }
 
-    .form-group-filters { display: inline-block; margin-left: 20px;
+    .team-filters, .pos-filters { display: inline-block; margin-right: 30px;
       a { padding: 0 2px; }
     }
+    .pos-filters { margin-right: 0 }
     .h-players {
       .f-btn.active { font-weight: bold }
       .fa-plus { color: #00a65a; }
