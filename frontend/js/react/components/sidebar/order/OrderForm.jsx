@@ -16,7 +16,8 @@ let OddsConverterObj = new OddsConverter();
  * 	limit: boolean - *required
  * 	side: string - order side *required
  * 	price - order price
- * 	maxPrice: number - max price of event
+ * 	maxEntries: number - maximum entry fees
+ * 	minPrice: number - min price of event
  * 	remainingBal: number - user's remaining entry balance of event
  * 	quantity - order quantity
  * 	isMirror *required
@@ -33,7 +34,8 @@ let OddsConverterObj = new OddsConverter();
  *  onTypeChange: function
  * }
  */
-export default class OrderForm extends React.Component{
+export default class OrderForm extends React.Component
+{
 	constructor(props)
 	{
 		super();
@@ -41,7 +43,8 @@ export default class OrderForm extends React.Component{
 			focus: props.startDate > +moment().format('x') ? 'quantity' : 'normal', // свойство показывающее в какое поле надо поставить фокус
 			focusOn: true, // надо ли вообще ставить фокус
 			submitOnEnter: false, // отключение включение submit-а формы по enter-ру
-			maxPrice: 99999,
+			// maxEntries: 99999,
+			// minPrice: '0.50',
 			currentOddSystem: ABpp.config.currentOddSystem,
 			...props
 		};
@@ -331,16 +334,10 @@ export default class OrderForm extends React.Component{
 		// else
 		// 	formClass = ABpp.config.basicMode ? ' basic_mode' : '';
 		let inputPrice, buyText, sellText, inputQuantity;
-		if(startDate < +moment().format('x'))
+
+		if(startDate && startDate > +moment().format('x'))
 		{
-			inputPrice = checkboxProp ? stateData.price : price;
-			buyText = 'BUY';
-			sellText = 'SELL';
-			// inputQuantity = stateData.quantity;
-		}
-		else
-		{
-			inputPrice = '0.50';
+			inputPrice = (+stateData.minPrice).toFixed(2);
 			if(ResultExchange === 'OU')
 			{
 				buyText = 'If Over - BUY';
@@ -352,6 +349,13 @@ export default class OrderForm extends React.Component{
 				sellText = 'If No - SELL';
 			}
 			// inputQuantity = '';
+		}
+		else
+		{
+			inputPrice = checkboxProp ? stateData.price : price;
+			buyText = 'BUY';
+			sellText = 'SELL';
+			// inputQuantity = stateData.quantity;
 		}
 		// const style = checkboxProp ? {display: 'block'} : {display: 'none'};
 
@@ -515,10 +519,16 @@ export default class OrderForm extends React.Component{
 					</div>
 				</div>
 				{
-					orderView !== 'simple' &&
+					orderView !== 'simple' && (stateData.maxEntries || stateData.startDate > +moment().format('x')) &&
 					<div className="container conditions">
-						<span className="info_string">Maximum Entry Fees <span>$10.00</span></span>
-						<span className="info_string">Minimum required purchase/sale is <span>1 Unit @$0.50</span></span>
+						{
+							stateData.maxEntries &&
+							<span className="info_string">Maximum Entry Fees <span>${(stateData.maxEntries).toFixed(2)}</span></span>
+						}
+						{
+							stateData.startDate > +moment().format('x') &&
+							<span className="info_string">Minimum required purchase/sale is <span>1 Unit @${inputPrice}</span></span>
+						}
 					</div>
 				}
 				<div className="container">
@@ -606,14 +616,14 @@ export default class OrderForm extends React.Component{
 					{/*<span className="close"><span>{}</span></span>*/}
 				{/*</div>*/}
 				{!newOrder && id ? <input name="ID" type="hidden" value={id}/> : ''}
-				<input name="LimitPrice" type="hidden" value={checkboxProp ? stateData.price : price}/>
+				<input name="LimitPrice" type="hidden" value={inputPrice}/>
 				<input name="Symbol" type="hidden" className="symbol" value={symbol}/>
 				<input name="isMirror" type="hidden" className="mirror" value={isMirror}/>
 				<input name="Side" type="hidden" className="side" value={(stateData.side)[0].toUpperCase() + (stateData.side).slice(1)}/>
 				<input name="OrderType" type="hidden" value={checkboxProp}/>
-				<input type="hidden" id="maxPrice" value={stateData.maxPrice}/>
+				<input type="hidden" id="maxEntries" value={stateData.maxEntries}/>
 				<input type="hidden" id="remainingBal" value={stateData.remainingBal}/>
-			</form>
+			</form>//проверить лимиты
 		)
 	}
 

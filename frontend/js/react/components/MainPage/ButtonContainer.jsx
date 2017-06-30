@@ -56,8 +56,6 @@ export default class ButtonContainer extends React.PureComponent
             if( !items1 && !items2 ) btnsPreviewClass = "nobets";
         } // endif
 
-
-
         return <div className={`${className} button-container ${btnsPreviewClass}`}>
             {/*<span style={{position: "absolute", zIndex: "1", left: "0", top: "0"}}>{data.type}</span>*/}
             {
@@ -175,7 +173,12 @@ export default class ButtonContainer extends React.PureComponent
     _onBtnClick(mainContext, props)
     {
         // 0||console.debug( 'props', props, this.props.actions );
-        this.props.actions.actionOnPosPriceClick(mainContext, props);
+        const inGame = true, isEventStarted = +moment().format('x') > (this.props.data.exdata.StartDate).split('+')[0].slice(6);
+
+        if(!inGame && isEventStarted)
+            defaultMethods.showWarning('This game is closed, please try another game');
+        else
+            this.props.actions.actionOnPosPriceClick(mainContext, props);
     }
 }
 

@@ -149,7 +149,7 @@ export default class ExchangeItem extends React.Component
             }
         };
 
-        let disabled = false;//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
+        let disabled = Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
 
         //lineupContainer height
 		let height;

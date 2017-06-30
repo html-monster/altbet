@@ -58,7 +58,8 @@ export default class NewOrder extends React.PureComponent
 							bid={data.Bid === 0 ? null : data.Bid}
 							price={item.Price}
 							priceDisabled={+moment().format('x') < +(data.StartDate).split('+')[0].slice(6)}
-							maxPrice={10}
+							maxEntries={10}
+							minPrice={0.6}
 							remainingBal={5}
 							quantity={item.Volume}
 							isMirror={item.isMirror}
