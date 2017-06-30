@@ -11,7 +11,7 @@ import BaseController from './BaseController';
 import Funds from '../components/userPage/Funds';
 import Preferences from '../components/userPage/Preferences';
 import Settings from '../components/userPage/Settings';
-import ChangePassword from '../components/userPage/settings/ChangePassword';
+import ChangePassword from '../components/userPage/settings/ChangePassword.jsx';
 
 class UserPage extends BaseController
 {
@@ -38,7 +38,7 @@ class UserPage extends BaseController
                 <li className={"tab " + (this.props.route.tab === "funds" ? "active" : "")}><Link to={`/funds`}>Funds</Link></li>
                 <li className={"tab " + (this.props.route.tab === "pref" ? "active" : "")}><Link to={`/preferences`}>My Preferences</Link></li>
                 <li className={"tab " + (this.props.route.tab === "sett" ? "active" : "")}><Link to={`/settings`}>Settings</Link></li>
-                <li className={"tab " + (this.props.route.tab === "pass" ? "active" : "")}><Link to={`/change_password`}>ChangePassword</Link></li>
+                <li className={"tab " + (this.props.route.tab === "pass" ? "active" : "")}><Link to={`/change_password`}>Change Password</Link></li>
             </ul>
             <div className="tab_content">
                 <Funds data={{header: $tabHeaderHtml, active: this.props.route.tab === "funds", tab: this.props.params.tabname}}/>

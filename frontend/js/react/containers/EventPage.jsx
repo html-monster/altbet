@@ -6,7 +6,7 @@ import BaseController from './BaseController';
 import Chart from '../components/EventPage/Chart';
 import {BetsTable} from '../components/EventPage/BetsTable';
 import * as chartActions from '../actions/EventPage/chartActions.ts';
-import * as defaultOrderSidebarActions from '../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
+import defaultOrderSidebarActions from '../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
 import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 import eventPageActions from '../actions/eventPageActions.ts';
 import {DateLocalization} from '../models/DateLocalization';

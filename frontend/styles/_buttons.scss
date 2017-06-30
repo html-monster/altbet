@@ -18,7 +18,7 @@ button, a.button {
   }
 }
 
-.btn:not([type=submit]):not(i) {
+.btn:not([type=submit], .submit):not(i) {
   box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
   transition: 0.2s ease;
   @include btn-hover;

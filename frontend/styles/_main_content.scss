@@ -127,6 +127,7 @@
 
     // ovverride on activate exchange\
     &.active-exch { z-index: 11; color: $color4TextBlack; background: linear-gradient(to bottom, #EBEBEB, #B8B8B8);
+      &.with_order{ z-index: 102; }
       //&>.bg { background: linear-gradient(to bottom, #EBEBEB, #B8B8B8); }
       .l-title {
         .score { color: #3f9622; }
@@ -172,7 +173,7 @@
     //    background: linear-gradient(to bottom, #53515e, #292830); z-index: -1; transition: .4s ease-out;
     //  //&.active {  }
     //}
-
+    //.order_container{ display: none; }
     .event-date { position: absolute; left: 10px; top: 15px;
       &:before { content: ''; display: inline-block; margin-right: 5px; width: 24px; height: 22px; background: url("#{$pathImage}/sprite.svg") no-repeat; }
       @include main_page_event_icon;
@@ -217,10 +218,18 @@
       &:first-of-type { padding-right: 3px; text-align: left }
       &:last-of-type { padding-left: 2px; text-align: right }
 
-      .button { display: inline-block; /*@include hiddAttr; visibility: hidden; opacity: 0*/ }
+      .button { display: inline-block; /*@include hiddAttr; visibility: hidden; opacity: 0*/
+        &.order_open{
+          position: relative;
+          &:after{ content: ''; display: block; width: 10px; height: 10px; position: absolute; left: calc(50% - 5px); bottom: -11px;
+            background: #373540; transform: rotate(45deg);
+          }
+        }
+      }
 
       button.event { position: relative; margin: 0 2px; padding: 0; min-width: 43px; height: 32px; border-radius: 4px; text-transform: uppercase;
           background: $default-button-bg; vertical-align: middle; transition: all 0.4s ease-out !important;
+        &[disabled]:not(.empty-balvan){ opacity: 0.5; }
         @include main_page_event_button;
         &:first-child {  margin-left: 0;  }
         &:last-child {  margin-right: 0;  }
@@ -396,16 +405,17 @@
     //, .h-lup__tab_content
       { display: none; }
   }
+  .blind{ position: fixed; top: 0; left: 0; z-index: 101; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); }
+
 }
 .content {
   //@include span(7.6 of 12); @include push (1.8 of 12); min-width: 800px;
-  position: relative; margin-left: 70px; padding: 15px; padding-top: 85px; width: calc(78% - 70px); color: $main-color;
+  position: relative; margin-left: 70px; padding: 15px; padding-top: 105px; width: calc(78% - 70px); color: $main-color;
   .nav_items {
     &.loaded .pagination { display: block; }
     .wrapper>.tab_content{  padding-top: 30px;  }
   }
 }
-
 
 // ------------- ВСЁ ЧТО НИЖЕ БУДЕТ УДАЛЕНО !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ----------------------------------
 .content {
@@ -737,7 +747,6 @@
   .help_message{
     strong{
       display: block;
-      margin-bottom: 10px;
       font-size: 13px;
       font-weight: bolder;
       color: $main-color;

@@ -116,7 +116,7 @@ export default class InputValidation extends React.Component
 			{
 				check(props.validate);
 			}
-			else if(defaultMethods.getClass(props.validate) === 'Array' && props.validate.length )
+			else if(defaultMethods.getType(props.validate) === 'Array' && props.validate.length )
 			{
 				props.validate.some((item) => !!check(item));
 			}

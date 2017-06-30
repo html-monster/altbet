@@ -6,16 +6,13 @@ import AnimateOnUpdate from '../../Animation.jsx';
 import TraderDefaultForm from './activeTrader/TraderDefaultForm';
 import TraderSpreadForm from './activeTrader/TraderSpreadForm';
 import traderActions from '../../../actions/Sidebar/tradeSlip/traderActions';
-import * as defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
+import defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
 import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
+import { DateLocalization	 } from '../../../models/DateLocalization';
 // import RebuildServerData from '../../../actions/Sidebar/activeTrader/rebuildServerData';
 
-class ActiveTrader extends React.Component {
-	constructor()
-	{
-		super();
-	}
-
+class ActiveTrader extends React.Component
+{
 	componentDidMount()
 	{
 		this.props.traderActions.actionOnSocketMessage(this);
@@ -36,7 +33,7 @@ class ActiveTrader extends React.Component {
 		// 0||console.log( 'activeExchange', activeExchange );
 		// const { activeString, showDefaultOrder } = this.state;
 		const { data, ...info } = this.props;
-		const { activeExchangeSymbol, dragData: { popUpShow }, cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
+		const { activeExchangeSymbol, dragData: { popUpShow }, cmpData:{ activeExchange, traderOn, autoTradeOn, startDate }, isMirror, orderInfo:{...orderInfo},
 			rebuiltServerData, spread, showQuantityError, quantity, traderActions } = this.props;
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
@@ -63,8 +60,15 @@ class ActiveTrader extends React.Component {
 			:
 			(data.Symbol && data.Symbol.LastAsk) ? data.Symbol.LastAsk : '';
 
+        const currentDate = +moment().format('x');
+		// console.log('startDate:',(new DateLocalization).fromSharp(activeExchange.startDate) > currentDate);
+		// console.log('endDate:',activeExchange.endDate);
+		// console.log('endDate:',activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate) < currentDate);
+		// console.log('currentDate:',currentDate);
+        const blocked = (new DateLocalization).fromSharp(activeExchange.startDate) > currentDate || (activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate) < currentDate);
 
-		return <div className="active_trader" id="active_trader" style={traderOn ? {} : {display: 'none'}}
+
+		return <div className={'active_trader' + (blocked ? ' blocked' : '')} id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
 			{/*{*/}
@@ -91,7 +95,7 @@ class ActiveTrader extends React.Component {
 					<tr>
 						<td className="open_pnl trader_info">
 							<a href="#">
-								P/L
+								W/L
 								<span className={'quantity ' + className}>{gainLoss}</span>
 								<span className="help"><span className="help_message right"><strong>Profit in this event</strong></span></span>
 							</a>
@@ -395,6 +399,10 @@ class ActiveTrader extends React.Component {
 					</tbody>
 				</table>
 			</div>
+			{
+				blocked &&
+				<div className="blocked animated dur4 zoomIn">This game is closed, try another</div>
+			}
 		</div>
 	}
 }
@@ -546,7 +554,7 @@ class TraderString extends React.Component {
 						}
 					</span>
 				{
-					!!data.ParticularUserQuantityBuy ? <button className="close_red">{}</button> : ''
+					!!data.ParticularUserQuantityBuy ? <button className="delete_ord">{}</button> : ''
 				}
 			</td>
 
@@ -654,7 +662,7 @@ class TraderString extends React.Component {
 					}
 				</span>
 				{
-					!!data.ParticularUserQuantitySell ? <button className="close_red">{}</button> : ''
+					!!data.ParticularUserQuantitySell ? <button className="delete_ord">{}</button> : ''
 				}
 			</td>
 			<td>
@@ -687,6 +695,7 @@ class TraderString extends React.Component {
 								spread={spread}
 								isMirror={isMirror}
 								traderContext={traderContext}
+								// inputQuantityContext={inputQuantityContext}
 								{...other}
 								{...info}
 							/>

@@ -61,12 +61,14 @@
         "babel": "*",
         "babel-core": "*",
         "babel-loader": "*",
+        "babel-plugin-react-html-attrs": "^2.0.0",
         "babel-plugin-remove-comments": "^2.0.0",
         "babel-plugin-transform-class-properties": "^6.22.0",
         "babel-plugin-transform-runtime": "*",
         "babel-preset-es2015": "*",
         "babel-preset-react": "*",
         "babel-preset-stage-0": "*",
+        "classnames": "^2.2.5",
         "css-loader": "^0.22.0",
         "file-loader": "^0.8.5",
         "gulp-autoprefixer": "^3.1.0",
@@ -98,7 +100,7 @@
         "webpack-uglify-js-plugin": "^1.1.9"
     },
     "name": "Altbet",
-    "version": "3.2.79",
+    "version": "3.2.108",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/html-monster/altbet.git"

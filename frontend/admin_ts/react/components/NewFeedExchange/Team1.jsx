@@ -18,14 +18,13 @@ export class Team1 extends React.Component
 
     render()
     {
-        const { data, positions, teamNum, actions } = this.props;
+        const { data, positions, teamNum, actions, uplayerdata: {uniPositionIndex, uniPositionName} } = this.props;
         let jj = 0, kk = 1;
         // 0||console.log( 'da', data );
 
         return (
             <div className="h-team">
-                <label>Players team {teamNum}</label>
-                <table className="table teams-table">
+                <table class="table teams-table">
                     <thead>
                     <tr>
                         <th>{}</th>
@@ -48,13 +47,13 @@ export class Team1 extends React.Component
                                 {
                                     ret.push(<tr key={itm.Name + ii}>
                                         <td> {kk++} </td>
-                                        <td> {itm.Name === 'Util' ? <span title="Universal player">UP</span> : data[jj].Position} </td>
+                                        <td> {itm.Name === uniPositionName ? <span title="Universal player">UP ({data[jj].meta.PositionOrig})</span> : data[jj].Position} </td>
                                         <td> {data[jj].Team} </td>
                                         <td> {data[jj].Name} </td>
-                                        <td><NumericInput className="eppg" value={data[jj].Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: data[jj], team: teamNum, type: 'Eppg'})} style={ false } /></td>
-                                        <td><NumericInput className="fppg" value={data[jj].Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: data[jj], team: teamNum, type: 'Fppg'})} style={ false } /></td>
+                                        <td><NumericInput className="eppg" value={data[jj].Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: data[jj], team: "PlayersTeam"+teamNum, type: 'Eppg'})} style={ false } /></td>
+                                        <td><NumericInput className="fppg" value={data[jj].Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: data[jj], team: "PlayersTeam"+teamNum, type: 'Fppg'})} style={ false } /></td>
                                         <td> {data[jj].Status} </td>
-                                        <td><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: data[jj], team: teamNum})} title="Remove player"><i className="fa fa-remove -red">{}</i></button></td>
+                                        <td><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: data[jj], team: teamNum, used: data[jj].used})} title="Remove player"><i className="fa fa-remove -red">{}</i></button></td>
                                     </tr>);
                                     jj++;
                                 }
@@ -62,7 +61,7 @@ export class Team1 extends React.Component
                                 {
                                     ret.push(<tr className="empty">
                                         <td>{}</td>
-                                        <td>{itm.Name === 'Util' ? <span title="Universal player">UP</span> : itm.Name}</td>
+                                        <td>{itm.Name === uniPositionName ? <span title="Universal player">UP</span> : itm.Name}</td>
                                         <td colSpan="5"><i>Add player to this position...</i></td>
                                     </tr>)
                                 } // endif

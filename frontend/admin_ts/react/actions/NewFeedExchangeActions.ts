@@ -4,6 +4,10 @@ import {
     ON_CHANGE_EVENT,
     ON_ENTER_PPG,
     ON_ADD_TEAM_UP_PLAYER,
+    ON_CHANGE_EVENTS_PERIOD,
+    ON_ADD_TEAM_PLAYER_RESERVE,
+    ON_SET_CURR_TEAM,
+    ON_ADD_TEAM_PLAYER_VARIABLE,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -16,7 +20,7 @@ declare let orderClass;
 
 class Actions extends BaseActions
 {
-    marker;
+    private T1 = 0;
 
     /**
      * Change current event in dropbox
@@ -56,7 +60,7 @@ class Actions extends BaseActions
                 {
                     dispatch({
                         type: ON_CHANGE_EVENT,
-                        payload: [result.data.Param1, inProps],
+                        payload: [result.data.Players, inProps],
                     });
                 },
                 result => {
@@ -73,6 +77,60 @@ class Actions extends BaseActions
     }
 
 
+
+    /**
+     * Change events period
+     */
+    public actionChangeEventsPeriod({EventId, filterVal})
+    {
+        return (dispatch, getState) =>
+        {
+            let data = new FormData();
+            data.set('EventId', EventId);
+            data.set('Period', filterVal);
+
+            const ajaxPromise = (new AjaxSend()).send({
+                formData: data,
+                message: `Error ...`,
+                // url: ABpp.baseUrl + $form.attr('action'),
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GETTIMEEVENT,
+                // respCodes: [
+                //     {code: 100, message: ""},
+                //     // {code: -101, message: "Some custom error"},
+                // ],
+                // beforeChkResponse: (data) =>
+                // {
+                //     // DEBUG: emulate
+                //     data = {Error: 101};
+                //     // data.Param1 = "TOR-PHI-3152017"; // id
+                //     // data.Param1 = "?path=sport&status=approved";
+                //     // data.Param1 = "?status=New";
+                //     // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                //     // data.Param3 = "TOR-PHI-3152017"; // id
+                //
+                //     return data;
+                // },
+            });
+
+
+            ajaxPromise.then( result =>
+                {
+                    dispatch({
+                        type: ON_CHANGE_EVENTS_PERIOD,
+                        payload: [result.data.TimeEvent, filterVal],
+                    });
+                },
+                result => {
+                    if( result.code != 100 )
+                    {
+                        0||console.warn( 'Result code: ', result.code );
+                        return;
+                    }
+                });
+        };
+    }
+
+
     /**
      * Add team player action
      */
@@ -80,15 +138,15 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            this.marker || (this.marker = 1);
-            0||console.log( 'this.marker', this.marker );
-            this.marker++;
-
-            dispatch({
-                type: ON_ENTER_PPG,
-                payload: inProps, //this.setPPGValues.bind(this, inProps),
-                // payload: this.setPPGValues.bind(this, inProps),
-            });
+            clearTimeout(this.T1);
+            this.T1 = setTimeout(() => {
+                dispatch({
+                    type: ON_ENTER_PPG,
+                    payload: inProps, //this.setPPGValues.bind(this, inProps),
+                    // payload: this.setPPGValues.bind(this, inProps),
+                })},
+                800
+            );
         };
     }
 
@@ -104,6 +162,51 @@ class Actions extends BaseActions
                 type: ON_ADD_TEAM_PLAYER,
                 payload: inProps,
                 // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Add team reserver player
+     */
+    public actionAddTeamplayerReserve(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_ADD_TEAM_PLAYER_RESERVE,
+                payload: inProps,
+            });
+        };
+    }
+
+
+    /**
+     * Add team reserver player
+     */
+    public actionAddTeamplayerVariable(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_ADD_TEAM_PLAYER_VARIABLE,
+                payload: inProps,
+            });
+        };
+    }
+
+
+    /**
+     * Set current team for adding
+     */
+    public actionSetCurrTeam(type, team)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_SET_CURR_TEAM,
+                payload: {type, team},
             });
         };
     }

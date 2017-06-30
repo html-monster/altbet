@@ -3,13 +3,13 @@ import React from 'react';
 // import {DateLocalization} from './../../models/DateLocalization';
 import {Common} from './../../common/Common';
 import AnimateOnUpdate from '../Animation';
-
+import classnames from 'classnames';
 
 export default class ButtonContainer extends React.PureComponent
 {
     render()
     {
-        const { data, data:{ isBasicMode, isExpertMode, isTraiderOn }, mainContext } = this.props;
+        const { data, data:{ isBasicMode, isExpertMode, isTraiderOn, orderPrice, showOrder }, mainContext } = this.props;
         // let $DateLocalization = new DateLocalization();
     // console.log(data);
         let price, className, emptyBtnName, mirrorClass, btnsPreviewClass = "", side1 = 0, side2 = 1;
@@ -56,8 +56,6 @@ export default class ButtonContainer extends React.PureComponent
             if( !items1 && !items2 ) btnsPreviewClass = "nobets";
         } // endif
 
-
-
         return <div className={`${className} button-container ${btnsPreviewClass}`}>
             {/*<span style={{position: "absolute", zIndex: "1", left: "0", top: "0"}}>{data.type}</span>*/}
             {
@@ -82,7 +80,7 @@ export default class ButtonContainer extends React.PureComponent
                                     let price = Common.toFixed(data.ismirror ? 1 - item2.Price : item2.Price, 2);
                                     html.push(<AnimateOnUpdate key={item2.Price}
                                             component="div"
-                                            className="button"
+                                            className={classnames(`button`, {order_open: showOrder && +orderPrice === item2.Price})}
                                             transitionName={{
                                                 enter: 'updateAnimation',
                                                 appear: 'updateAnimation'
@@ -93,7 +91,8 @@ export default class ButtonContainer extends React.PureComponent
                                             transitionEnterTimeout={800}
                                             data={item2}
                                         >
-                                            <button className={`event animated ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this, mainContext,
+                                            <button className={`event animated ${className} ${mirrorClass} not-sort`}
+                                                    onClick={this._onBtnClick.bind(this, mainContext,
                                                     {
                                                         PosPrice: item.SummaryPositionPrice,
                                                         ismirror: data.ismirror,
@@ -102,7 +101,8 @@ export default class ButtonContainer extends React.PureComponent
                                                         type: data.type === "sell" ? 1 : 2,
                                                         data: data,
                                                     })}
-                                                     data-verify="Quantity" /*disabled={isTraiderOn}*/ title="Click to place entry">
+                                                    data-verify="Quantity" /*disabled={isTraiderOn}*/ title={data.btnDisabled ? '' : 'Click to place entry'}
+                                                    disabled={data.btnDisabled}>
                                                 <span className="price">{price}</span>
                                                 <span className="volume">{item2.Quantity}</span>
                                                 {/*<div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>*/}
@@ -111,7 +111,7 @@ export default class ButtonContainer extends React.PureComponent
                                 }
                                 else
                                 {
-                                    html.push(<div key={jj} className="button">
+                                    html.push(<div key={jj} className="button empty-balvan">
                                             <button className={`event animated ${className} ${mirrorClass} empty-balvan`} disabled={true}>
                                                 <span className="price">{}</span>
                                                 <span className="volume">{}</span>
@@ -126,7 +126,7 @@ export default class ButtonContainer extends React.PureComponent
                     :
                     (do {
                         let html = [
-                        <div className="button" key="0">
+                        <div className={classnames(`button`, {order_open: showOrder && orderPrice === '0.'})} key="0">
                             <button className={`event animated empty ${className} ${mirrorClass} not-sort`} onClick={this._onBtnClick.bind(this, mainContext,
                                     {
                                         isempty: true,
@@ -136,20 +136,20 @@ export default class ButtonContainer extends React.PureComponent
                                         type: data.type === "sell" ? 1 : 2,
                                         data: data,
                                     })}
-                                    title="Click to place entry">
+                                    title={data.btnDisabled ? '' : 'Click to place entry'} disabled={data.btnDisabled}>
                                 <span className="price empty">{emptyBtnName}</span>
                                 <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
                             </button>
                         </div>
                         ,
-                        <div className="button" key="1">
+                        <div className="button empty-balvan" key="1">
                             <button className={`event animated ${className} ${mirrorClass} empty-balvan`} disabled={true}>
                                 <span className="price">{}</span>
                                 <span className="volume">{}</span>
                             </button>
                         </div>
                         ,
-                        <div className="button" disabled={true} key="2">
+                        <div className="button empty-balvan" disabled={true} key="2">
                             <button className={`event animated ${className} ${mirrorClass} empty-balvan`} disabled={true}>
                                 <span className="price">{}</span>
                                 <span className="volume">{}</span>
@@ -173,7 +173,12 @@ export default class ButtonContainer extends React.PureComponent
     _onBtnClick(mainContext, props)
     {
         // 0||console.debug( 'props', props, this.props.actions );
-        this.props.actions.actionOnPosPriceClick(mainContext, props);
+        const inGame = true, isEventStarted = +moment().format('x') > (this.props.data.exdata.StartDate).split('+')[0].slice(6);
+
+        if(!inGame && isEventStarted)
+            defaultMethods.showWarning('This game is closed, please try another');
+        else
+            this.props.actions.actionOnPosPriceClick(mainContext, props);
     }
 }
 

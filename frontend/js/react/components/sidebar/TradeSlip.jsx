@@ -8,7 +8,7 @@ import React from 'react';
 import DefaultOrders from './tradeSlip/DefaultOrdersSidebar';
 import ActiveTrader from './tradeSlip/ActiveTrader';
 // import tradeSlipActions from '../../actions/Sidebar/tradeSlipActions';
-// import * as defaultOrderSidebarActions from '../../actions/Sidebar/defaultOrderSidebarActions';
+// import * as defaultOrderLocalActions from '../../actions/Sidebar/defaultOrderLocalActions';
 
 export default class TradeSlip extends React.Component
 {

@@ -19,7 +19,7 @@ export function actionOnSocketMessage()
 		ABpp.Websocket.sendSubscribe({}, SocketSubscribe.AP_ACCOUNT_DATA);
 		window.ee.addListener('accountData.update', (newData) =>
 		{
-			if(data != newData.Available){
+			if(data !== newData.Available){
 				data = newData.Available;
 				dispatch({
 					type: DEPOSIT_SOCKET_MESSAGE,
@@ -31,44 +31,44 @@ export function actionOnSocketMessage()
 	}
 }
 
-export function actionOnPeriodChange(context, payYearly)
-{
-	return (dispatch, getState) =>
-	{
-		let state = getState().deposit;
+// export function actionOnPeriodChange(context, payYearly)
+// {
+// 	return (dispatch, getState) =>
+// 	{
+// 		let state = getState().deposit;
+//
+// 		context.props.actions.actionOnPricePlanChange(state.plan, state.pricePlanInfo.monthly, state.pricePlanInfo.yearly, payYearly);
+//
+// 		dispatch({
+// 			type: DEPOSIT_PERIOD_CHANGE,
+// 			payload: payYearly
+// 		});
+// 	}
+// }
 
-		context.props.actions.actionOnPricePlanChange(state.plan, state.pricePlanInfo.monthly, state.pricePlanInfo.yearly, payYearly);
-
-		dispatch({
-			type: DEPOSIT_PERIOD_CHANGE,
-			payload: payYearly
-		});
-	}
-}
-
-export function actionOnPricePlanChange(plan, monthQuantity, yearQuantity, payYearly)
-{
-    return (dispatch, getState) =>
-	{
-		let state = getState().deposit;
-		payYearly = typeof payYearly == "boolean" ? payYearly : state.payYearly;
-		let quantity = payYearly ? yearQuantity : monthQuantity;
-
-		$('html, body').animate({scrollTop: $('.quantity_control').offset().top - $('header').outerHeight(true)}, 800);
-
-        dispatch({
-            type: DEPOSIT_PRICE_PLAN_CHANGE,
-            payload: {
-            	plan: plan,
-				quantity: quantity,
-				pricePlanInfo: {
-					monthly: monthQuantity,
-					yearly: yearQuantity,
-				}
-			}
-        });
-    }
-}
+// export function actionOnPricePlanChange(plan, monthQuantity, yearQuantity, payYearly)
+// {
+//     return (dispatch, getState) =>
+// 	{
+// 		let state = getState().deposit;
+// 		payYearly = typeof payYearly === "boolean" ? payYearly : state.payYearly;
+// 		let quantity = payYearly ? yearQuantity : monthQuantity;
+//
+// 		$('html, body').animate({scrollTop: $('.quantity_control').offset().top - $('header').outerHeight(true)}, 800);
+//
+//         dispatch({
+//             type: DEPOSIT_PRICE_PLAN_CHANGE,
+//             payload: {
+//             	plan: plan,
+// 				quantity: quantity,
+// 				pricePlanInfo: {
+// 					monthly: monthQuantity,
+// 					yearly: yearQuantity,
+// 				}
+// 			}
+//         });
+//     }
+// }
 
 export function actionOnInputQuantityChange(actions, event)
 {

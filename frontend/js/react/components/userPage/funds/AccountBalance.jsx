@@ -4,7 +4,8 @@
 
 import React from 'react';
 
-export default class AccountBalance extends React.Component{
+export default class AccountBalance extends React.Component
+{
 	constructor(props)
 	{
 		super();
