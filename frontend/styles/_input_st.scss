@@ -1,4 +1,4 @@
-.sign_up_form, .sign_in_form, #form2, .setting_form {
+.sign_up_form, .sign_in_form, #form2, .setting_form, .self_exclusion {
 
   input[type=email] {
     &:-webkit-autofill {
@@ -116,6 +116,9 @@
     padding-left: 35px;
     &:focus {
       outline: none;
+    }
+    &#r_confirm_pass {
+      padding-left: 20px;
     }
 
     &.input-validation-error {
@@ -329,6 +332,60 @@
     }
     .input__label {
       left: -15px;
+    }
+  }
+}
+
+.self_exclusion {
+  section {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    &:last-child {
+      border: none;
+    }
+    form {
+      margin: 40px 0;
+      &.first_form {
+        margin-top: 0;
+      }
+      h4 {
+        font-size: 18px;
+        font-weight: bold !important;
+      }
+      .alert_block {
+        display: flex;
+        align-items: center;
+        height: 20px;
+        border-left: 2px solid;
+        border-color: #f8b747;
+        padding-left: 15px;
+        margin: 15px 0 10px 0;
+        &.for_cont_pass {
+          margin-bottom: 30px;
+        }
+      }
+      .pass_container {
+        margin-top: 15px;
+        max-width: 448px;
+        margin-right: 50px;
+      }
+      .time_container {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+        border: none;
+        .h-dropdown2 {
+          width: 450px;
+          margin-right: 50px;
+        }
+        .save_button {
+          height: 36px;
+          width: 100px;
+        }
+      }
+
     }
   }
 }

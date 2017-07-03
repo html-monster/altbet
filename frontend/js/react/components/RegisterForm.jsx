@@ -102,7 +102,7 @@ export class RegisterForm extends React.PureComponent
 
     inputRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty }, ...input })
     {
-        return <span className={classnames(`input_animate input--yoshiko`, {NickName: input.name === 'NickName'},{Email: input.name === 'Email'}, {Password: input.name === 'Password'},{ComparePassword: input.name === 'ComparePassword'}) }>
+        return <span className={classnames(`input_animate input--yoshiko`, {NickName: input.name === 'NickName'},{Email: input.name === 'Email'}, {Password: input.name === 'Password'},{ComparePassword: input.name === 'ComparePassword'}) + (type === 'password' ? ' pass_container' : '')}>
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 <input className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id} type={type} {...input}/>
 				{ type === 'password' ? <span className="show_password">{}</span> : '' }
