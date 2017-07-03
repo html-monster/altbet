@@ -4,7 +4,7 @@
 
 import { Common } from "../common/Common";
 
-export default class BaseActions
+abstract class BaseActions
 {
     protected connectedActions : any = {};
 
@@ -34,3 +34,5 @@ export default class BaseActions
         return methods;
     }
 }
+
+export default BaseActions;

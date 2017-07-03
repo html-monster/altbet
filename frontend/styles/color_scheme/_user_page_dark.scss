@@ -23,6 +23,7 @@
 		height: 100%;
 		left: 0;
 		top: 0;
+		z-index: 1;
 		&.pos {  background: transparentize(#4dac2e, 0.5);  }
 		&.neg {
 			background: transparentize(#ff3905, 0.5);

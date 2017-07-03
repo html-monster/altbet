@@ -43,13 +43,17 @@ export default function sidebar(state = initialState, action)
             if (!action.payload.symbol) action.payload.symbol = state.activeExchange.symbol;
             if (!action.payload.HomeName) action.payload.HomeName = state.activeExchange.homeName;
             if (!action.payload.AwayName) action.payload.AwayName = state.activeExchange.awayName;
+            // if (!action.payload.startDate) action.payload.startDate = state.activeExchange.startDate;
+            // if (!action.payload.endDate) action.payload.endDate = state.activeExchange.endDate;
             // console.log('action.payload:', action.payload);
             return {...state, activeExchange: {
             	name: action.payload.id,
 				isMirror: action.payload.isMirror,
 				symbol: action.payload.symbol,
 				homeName: action.payload.HomeName,
-				awayName: action.payload.AwayName
+				awayName: action.payload.AwayName,
+				startDate: action.payload.startDate,
+				endDate: action.payload.endDate,
             }};
 
         default:

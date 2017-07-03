@@ -72,6 +72,7 @@ if( !globalData.landingPage  )
 						<Route path='/preferences' component={AccountPage} tab="pref" />
 						<Route path='/settings' component={AccountPage} tab="sett" />
 						<Route path='/change_password' component={AccountPage} tab="pass" />
+						<Route path='/self_exclusion' component={AccountPage} tab="self_sett" />
 					</Route>
 				</Router>
 			</Provider>,

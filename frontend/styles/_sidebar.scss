@@ -39,10 +39,7 @@
 		top: 53px;
 		left: 13px;
 		line-height: 1.6em;
-		span {
-			text-transform: capitalize;
-			font-size: 13px;
-		}
+		span { font-size: 13px; }
 		&.trader .help_message {
 			width: 250px;
 		}
@@ -106,5 +103,3 @@
 	}
 }
 .default_orders, &#current-orders{  border-top: 1px solid $order_sidebar_head_separator;  }
-@import "sidebar/default_orders";
-@import "sidebar/_your_orders";

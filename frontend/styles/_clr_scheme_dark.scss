@@ -85,12 +85,12 @@ $warning_message_arrow: #3a3943;
 @mixin input_validation{
 	.invalidJs{
 		color: #ff3905 !important;
-		border: 1px solid #ff3905 * 0.7 !important;
+		border-bottom: 1px solid #ff3905 * 0.7 !important;
 	}
 
 	.validJs{
 		color: #4dac2e !important;
-		border: 1px solid #4dac2e * 0.7 !important;
+		border-bottom: 1px solid #4dac2e * 0.7 !important;
 	}
 }
 
@@ -98,7 +98,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
 	//box-shadow: inset 0 0 0 50px #292830 * 1.3 !important;
 	&:-webkit-autofill{
 		-webkit-box-shadow: inset 0 0 0 50px #292830 * 1.3 !important;
-		border: 1px solid $color-max;
+		//border: 1px solid $color-max;
 	}
 }
 

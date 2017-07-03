@@ -193,9 +193,11 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        width: 0;
+        //width: 0;
         white-space: nowrap;
         transition: 1s ease-in;
+        transform-origin: 0;
+        transform: scaleX(0);
         @include user_balance_color;
       }
     }
