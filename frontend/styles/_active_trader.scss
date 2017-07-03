@@ -12,7 +12,7 @@
 		background-color: rgba(0, 0, 0, 0.7);
 	}
 	&.loading:not(.blocked):after{ background: url("#{$pathImage}/ajax-loader.gif") rgba(0, 0, 0, 0.7) no-repeat center center; }
-	.blocked{ width: 100%; position: absolute; top: 50%; z-index: 101; text-align: center; font-size: 14px; color: rgba(255, 255, 255, 0.8);
+	.blocked{ width: 100%; position: absolute; top: 50%; z-index: 101; padding: 0 10px; text-align: center; font-size: 14px; color: rgba(255, 255, 255, 0.8);
 		&:before{ content: ''; display: block; width: 100px; height: 100px; position: absolute; top: -120px; left: calc(50% - 50px);
 							background: url("#{$pathImage}/sprite.svg") no-repeat -138px -861px;
 							background-size: 1500%;

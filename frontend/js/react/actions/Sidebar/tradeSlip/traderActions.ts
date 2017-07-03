@@ -18,9 +18,9 @@ import {RebuildServerData} from './activeTrader/rebuildServerData';
 import { orderForm } from '../../../components/formValidation/validation';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 /// <reference path="../../../../.d/common.d.ts" />
-// declare let __DEV__;
-// declare function $(object: any);
-// declare let defaultMethods;
+declare let __DEV__;
+declare function $(object: any);
+declare let defaultMethods;
 
 
 declare let orderClass;
@@ -559,7 +559,7 @@ class Actions extends BaseActions
 	{
 		return () =>
 		{
-			event.preventDefault();
+			// event.preventDefault();
 			const { cmpData: { activeExchange }, traderActions } = context.props;
 
             if(!orderForm(event.currentTarget)) return false;
