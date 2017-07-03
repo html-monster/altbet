@@ -19,7 +19,8 @@ import {
     ON_GEN_URL,
     ON_SAVE_EVENT_OK,
 } from '../constants/ActionTypesNewFeedExchange';
-import {Common} from "common/Common.ts";
+/// TS_IGNORE
+import {Common} from "common/Common";
 
 
 

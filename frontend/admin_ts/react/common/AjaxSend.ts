@@ -1,5 +1,27 @@
 /**
  * Created by Vlasakh on 08.03.2017.
+ *
+            const ajaxPromise = (new AjaxSend()).send({
+                formData: inProps,
+                message: `Error ...`,
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GET_EVENTS,
+                respCodes: [
+                    {code: 100, message: ""},
+                    {code: -101, message: "Some custom error"},
+                ],
+                // beforeChkResponse: (data) =>
+                // {
+                //     // DEBUG: emulate
+                //     data = {Error: 101};
+                //     // data.Param1 = "TOR-PHI-3152017"; // id
+                //     // data.Param1 = "?path=sport&status=approved";
+                //     // data.Param1 = "?status=New";
+                //     // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                //     // data.Param3 = "TOR-PHI-3152017"; // id
+                //
+                //     return data;
+                // },
+            });
  */
 
 var __LDEV__ = !true;

@@ -34,7 +34,7 @@ export default class ADpp
         this.controllers['Exchanges'] = Exchanges;
         this.controllers['Index'] = IndexController;
         this.controllers['Login'] = LoginController;
-        this.controllers['Feed'] = FeedController;
+        // this.controllers['Feed'] = FeedController;
 
         if (location.host == 'localhost' || location.host == '192.168.1.249') MainConfig.BASE_URL = '/AltBet.Admin';
         else MainConfig.BASE_URL = '/Admin';
@@ -44,7 +44,7 @@ export default class ADpp
         if( globalData && globalData.controller )
         {
             // 0||console.log( 'this.controllers[globalData.controller.name]', this.controllers[globalData.controller.name] );
-            this.currentController = new this.controllers[globalData.controller.name]();
+            if (this.currentController) this.currentController = new this.controllers[globalData.controller.name]();
         } // endif;
 
 

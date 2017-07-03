@@ -12,11 +12,13 @@ import { Provider } from 'react-redux';
 
 import configureStore from './react/store/configureStore';
 import App from "./ADpp";
-import NewFeedExchange from "./react/containers/NewFeedExchange.jsx";
+import FeedEvents from "./react/containers/FeedEvents";
+import NewFeedExchange from "./react/containers/NewFeedExchange";
 
 
 const store = configureStore();
-var ADpp = new App();
+let mp;
+let ADpp = new App();
 ADpp.Store = store;
 
 
@@ -28,12 +30,25 @@ $(document).ready(function()
 
 
 // BM: Mount points
-if( document.getElementById('DiNewFeedExchange') )
+// Feed events table
+if( mp = document.getElementById('DiFeedEvents') )
+{
+    ReactDOM.render(
+        <Provider store={store}>
+            <FeedEvents />
+        </Provider>,
+      mp
+    );
+}
+
+
+// Apply feed event
+if( mp = document.getElementById('DiNewFeedExchange') )
 {
     ReactDOM.render(
         <Provider store={store}>
             <NewFeedExchange />
         </Provider>,
-      document.getElementById('DiNewFeedExchange')
+      mp
     );
 }

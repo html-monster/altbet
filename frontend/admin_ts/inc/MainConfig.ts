@@ -32,4 +32,5 @@ export class MainConfig
 
     public static AJAX_FEED_GETPLAYERS = 'Feed/GetPlayers';
     public static AJAX_FEED_GETTIMEEVENT = 'Feed/GetTimeEvent';
+    public static AJAX_FEED_GET_EVENTS = 'Feed/GetEvents';
 }
