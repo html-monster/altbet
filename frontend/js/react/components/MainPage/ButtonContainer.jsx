@@ -101,8 +101,7 @@ export default class ButtonContainer extends React.PureComponent
                                                         type: data.type === "sell" ? 1 : 2,
                                                         data: data,
                                                     })}
-                                                    data-verify="Quantity" /*disabled={isTraiderOn}*/ title={data.btnDisabled ? '' : 'Click to place entry'}
-                                                    disabled={data.btnDisabled}>
+                                                    data-verify="Quantity" /*disabled={isTraiderOn}*/ title={data.btnDisabled ? '' : 'Click to place entry'}>
                                                 <span className="price">{price}</span>
                                                 <span className="volume">{item2.Quantity}</span>
                                                 {/*<div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>*/}
@@ -136,7 +135,7 @@ export default class ButtonContainer extends React.PureComponent
                                         type: data.type === "sell" ? 1 : 2,
                                         data: data,
                                     })}
-                                    title={data.btnDisabled ? '' : 'Click to place entry'} disabled={data.btnDisabled}>
+                                    title={data.btnDisabled ? '' : 'Click to place entry'} >
                                 <span className="price empty">{emptyBtnName}</span>
                                 <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
                             </button>
@@ -173,9 +172,10 @@ export default class ButtonContainer extends React.PureComponent
     _onBtnClick(mainContext, props)
     {
         // 0||console.debug( 'props', props, this.props.actions );
-        const inGame = true, isEventStarted = +moment().format('x') > (this.props.data.exdata.StartDate).split('+')[0].slice(6);
+        const inGame = true, isEventStarted = +moment().format('x') > (this.props.data.exdata.StartDate).split('+')[0].slice(6),
+            isEventClosed = this.props.data.exdata.EndDate && +moment().format('x') > (this.props.data.exdata.EndDate).split('+')[0].slice(6);
 
-        if(!inGame && isEventStarted)
+		if(!inGame && isEventStarted || isEventClosed)
             defaultMethods.showWarning('This game is closed, please try another');
         else
             this.props.actions.actionOnPosPriceClick(mainContext, props);

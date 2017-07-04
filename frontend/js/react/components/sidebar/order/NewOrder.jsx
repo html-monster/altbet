@@ -60,7 +60,7 @@ export default class NewOrder extends React.PureComponent
 							bid={data.Bid === 0 ? null : data.Bid}
 							price={item.Price}
 							priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.StartDate)}
-							maxEntries={10}
+							maxEntries={100}
 							minPrice={0.5}
 							remainingBal={5}
 							quantity={item.Volume}
