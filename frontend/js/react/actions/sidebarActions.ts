@@ -124,7 +124,7 @@ class Actions extends BaseActions
             /** @var ABpp ABpp */ ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, isChecked);
 
 
-			orderClass.tabReturn();
+			// orderClass.tabReturn();
             dispatch({
                 type: ON_TRADER_ON,
                 payload: isChecked,

@@ -65,10 +65,25 @@ class ActiveTrader extends React.Component
 		// console.log('endDate:',activeExchange.endDate);
 		// console.log('endDate:',activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate) < currentDate);
 		// console.log('currentDate:',currentDate);
-        const blocked = (new DateLocalization).fromSharp(activeExchange.startDate) > currentDate || (activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate) < currentDate);
+        let blocked = false, blockMessage, userHasOrder = true;
+		if((new DateLocalization).fromSharp(activeExchange.startDate) > currentDate)
+		{
+			blocked = true;
+			blockMessage = 'This game hasn`t started yet, try again later';
+		}
+		else if((activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate) < currentDate))
+		{
+			blocked = true;
+			blockMessage = 'This game is closed, try another';
+		}
+		else if(!userHasOrder)
+		{
+			blocked = true;
+			blockMessage = 'This game is closed, try another';
+		}
 
 
-		return <div className={'active_trader' + (blocked ? ' blocked' : '')} id="active_trader" style={traderOn ? {} : {display: 'none'}}
+		return <div className={'active_trader'} id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
 			{/*{*/}
@@ -401,8 +416,9 @@ class ActiveTrader extends React.Component
 			</div>
 			{
 				blocked &&
-				<div className="blocked animated dur4 zoomIn">This game is closed, try another</div>
+				<div className="blocked"><span className="animated dur4 zoomIn">{blockMessage}</span></div>
 			}
+			<div className="loading"/>
 		</div>
 	}
 }

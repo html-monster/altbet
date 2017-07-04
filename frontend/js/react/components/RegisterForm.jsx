@@ -382,7 +382,7 @@ export class RegisterForm extends React.PureComponent
 
                     <div className="agreement">
                         <InputValidation renderContent={this.chkBoxRender} id='agreement' input={input}>
-                            <span>Agree to the <a href="/AltBet/eng/footer/TermsAndConditions" className="text_decoration">Terms of Use</a> and <a href="/AltBet/eng/footer/CookiePolicy" className="text_decoration">Privacy Notice</a></span>
+                            <span>Agree to the <a href={ABpp.baseUrl + '/eng/footer/TermsAndConditions'} className="text_decoration">Terms of Use</a> and <a href={ABpp.baseUrl + "/eng/footer/CookiePolicy"} className="text_decoration">Privacy Notice</a></span>
                         </InputValidation>
 
                         <InputValidation renderContent={this.chkBoxRender} id='agreement_age' input={input}>

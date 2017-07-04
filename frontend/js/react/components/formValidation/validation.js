@@ -197,12 +197,12 @@ export const orderForm = function (context) {
 
 	if($(context).find('.side').val() === 'Sell' && maxEntries - remainingBal < Math.round10((1 - price) * volume, -2))
 	{
-		defaultMethods.showError(`Your remaining entry balance of this game is $${remainingBal}, it's not enough to create the order`);
+		defaultMethods.showWarning(`Your remaining entry balance of this game is $${remainingBal}, it's not enough to create the order`);
 		return false;
 	}
 	else if( $(context).find('.side').val() === 'Buy' && maxEntries - remainingBal < Math.round10(price * volume, -2))
 	{
-		defaultMethods.showError(`Your remaining entry balance of this game is $${remainingBal}, it's not enough to create the order`);
+		defaultMethods.showWarning(`Your remaining entry balance of this game is $${remainingBal}, it's not enough to create the order`);
 		return false;
 	}
 
@@ -220,16 +220,16 @@ export const orderForm = function (context) {
 		// 	return false;
 		// }
 	}
-	else{
-		if((0 >= volume || !(defaultMethods.isInteger(volume))) && sum == ''){//|| +volume > 999999
-			$(context).find('.volume input').next().fadeIn(200);
-			return false;
-		}
-		// if(sum !== null && 0 >= sum && volume == ''){// || +sum > 999999
-		// 	$(context).find('.obligations input').next().fadeIn(200);
-		// 	return false;
-		// }
-	}
+	// else{
+	// 	if((0 >= volume || !(defaultMethods.isInteger(volume))) && sum == ''){//|| +volume > 999999
+	// 		$(context).find('.volume input').next().fadeIn(200);
+	// 		return false;
+	// 	}
+	// 	// if(sum !== null && 0 >= sum && volume == ''){// || +sum > 999999
+	// 	// 	$(context).find('.obligations input').next().fadeIn(200);
+	// 	// 	return false;
+	// 	// }
+	// }
 
 	return true;
 };
