@@ -72,7 +72,7 @@ export class TabMyPos extends React.Component
                                                 <th>Price</th>
                                                 <th><span className="sell">{_t('buy')}</span> | <span className="buy">{_t('ask')}</span></th>
                                                 <th><span className="profit">{_t('Profit')}</span>&nbsp;/&nbsp;<span className="loss">Loss</span></th>
-                                                <th></th>
+                                                <th/>
                                             </tr>
                                         </thead>
                                     </table>
@@ -123,7 +123,7 @@ export class TabMyPos extends React.Component
                                                                     // Orders: data.Orders,
                                                                     HomeName : item.Symbol.HomeName,
                                                                     AwayName : item.Symbol.AwayName,
-                                                                    Positions : item.Positions,
+                                                                    Positions : item.CommonSymbolVolume,
                                                                     Exchange : item.Symbol.Exchange,
                                                                     Name : item.Symbol.Name,
                                                                     Currency : item.Symbol.Currency,

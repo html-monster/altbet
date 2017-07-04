@@ -218,6 +218,7 @@ export class WebsocketModel
         // Send chart data
         if(globalData.eventPageOn) { window.ee.emit('EventPage.Chart.setData', data.Bars); }
         // if(globalData.eventPageOn) eventChartController.drawEventChart(data.Bars);
+
         if(ABpp.config.tradeOn && !ABpp.config.basicMode)
         {
             window.ee.emit('activeOrders.update', data.ActiveOrders);//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
