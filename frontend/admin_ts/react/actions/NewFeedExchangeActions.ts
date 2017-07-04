@@ -92,19 +92,21 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            let data = new FormData();
-            data.set('EventId', EventId);
-            data.set('Period', filterVal);
+            0||console.log( '{EventId, filterVal}', {EventId, filterVal} );
+            let data : any = new FormData();
+            // data.set('EventId', EventId);
+            // data.set('Period', filterVal);
+            data = {'EventId': EventId, 'Period': filterVal};
 
             const ajaxPromise = (new AjaxSend()).send({
                 formData: data,
                 message: `Error ...`,
                 // url: ABpp.baseUrl + $form.attr('action'),
                 url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GETTIMEEVENT,
-                // respCodes: [
-                //     {code: 100, message: ""},
-                //     // {code: -101, message: "Some custom error"},
-                // ],
+                respCodes: [
+                    {code: 100, message: ""},
+                    // {code: -101, message: "Some custom error"},
+                ],
                 // beforeChkResponse: (data) =>
                 // {
                 //     // DEBUG: emulate
@@ -118,7 +120,7 @@ class Actions extends BaseActions
                 //     return data;
                 // },
             });
-
+// 0||console.log( 'here', 0 );
 
             ajaxPromise.then( result =>
                 {
@@ -130,7 +132,7 @@ class Actions extends BaseActions
                 result => {
                     if( result.code != 100 )
                     {
-                        0||console.warn( 'Result code: ', result.code );
+                        0||console.warn( 'Result code: ', result );
                         return;
                     }
                 });

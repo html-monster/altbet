@@ -40,12 +40,23 @@ class FeedEvents extends BaseController
     render()
     {
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
-        const { actions, data: {FeedEvents, OrderBy, StartDateSort, Sport, League} } = this.props;
+        const { actions, data: {AllSport, AllLeague, Sport, League, FeedEvents, OrderBy, StartDateSort} } = this.props;
         // const { okBtnDisabled } = this.state;
+        let sportsItems, ligItems;
 
         let $DateLocalization = new DateLocalization();
 
         0||console.log( 'data', this.props.data );
+        0||console.log( 'data', AllSport.map((val) => { return { value: val, label: val} }) );
+        if (AllLeague) ligItems = AllLeague.map((val) => { return { value: val, label: val} });
+
+        const getUrlParams = () => {
+            let params = {Sport: Sport};
+            params.League = League;
+            params.sort = StartDateSort;
+            params.OrderBy = OrderBy;
+            return Object.keys(params).map((key) => params[key] ? `${key}=${params[key]}` : `${key}=`).join('&');
+        };
 
 
         return (
@@ -56,8 +67,23 @@ class FeedEvents extends BaseController
 
                     <div class="box-body pad table-responsive">
                         {/*<div class={classNames("box", {"box-widget": false})}></div>*/}
-                        <select data-js-allsports="" ></select>
-                        {0||console.log( 'StartDateSort.indexOf() > -1', StartDateSort.indexOf('StartDate') > -1 )}
+{/*
+                        <DropBox name="selected-state" items={sportsItems = AllSport.map((val) => { return { value: val, label: val} })}
+                            /*items={[
+                                { value: '1', label: 'var 1'},
+                                { value: '2', label: 'var 2'},
+                            ]}*
+                            clearable={false} value={Sport} searchable={true} afterChange={() => {}}/>
+*/}
+                        { ligItems &&
+                            <DropBox name="selected-state" items={ligItems}
+                                /*items={[
+                                    { value: '1', label: 'var 1'},
+                                    { value: '2', label: 'var 2'},
+                                ]}*/
+                                clearable={false} value={League} searchable={true} afterChange={() => {}}/>
+                        }
+
                         <table class="table exchanges">
                             <thead>
                             <tr>
@@ -67,7 +93,8 @@ class FeedEvents extends BaseController
                                 <th><span>Status</span></th>
                                 <th>
                                     <span className={classNames(`icon ${OrderBy}`, {'active': StartDateSort.indexOf('StartDate') > -1})}>
-                                        <a href="#" onClick={this._onSortClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy})}>Start date</a>
+                                        {/*<a href="#" onClick={this._onSortClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy})}>Start date</a>*/}
+                                        <a href={MainConfig.BASE_URL + `/Feed?` + getUrlParams()}>Start date</a>
                                     </span>
 {/*
                     <span class="icon @Model.OrderBy @((Model.StartDateSort.Contains(" StartDate")) ? "
