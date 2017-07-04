@@ -93,7 +93,7 @@ class NewFeedExchange extends BaseController
                                 <div className="box-body" >
                                     <div className="form-group">
                                         <label>Event <span class="-nobold" title="Available events">({Object.keys(AppData.TimeEvent).length})</span></label>
-                                        <div className="form-group-filters" title="Filter events by period">
+                                        <div className="events-filters form-group-filters" title="Filter events by period">
                                             { Object.keys(EventFilter).map((val) => <a href="#" key={val} class={Period == val ? '-bold' : ''} onClick={this._onEventFilterChange.bind(this, val)}> {EventFilter[val]} </a>) }
                                         </div>
                                         <DropBox name="selected-state" items={items = Object.keys(AppData.TimeEvent).map((key) =>
@@ -208,7 +208,7 @@ class NewFeedExchange extends BaseController
                             <div className="col-sm-6">
                                 <div className="box-body" >
                                     <div className="form-group">
-                                        <button type="button" class="btn-ok btn btn-info" disabled={okBtnDisabled} onClick={::this._onOKClick}>OK</button>&nbsp;
+                                        <button type="button" class="btn-ok btn btn-info" disabled={true} /*disabled={okBtnDisabled}*/ onClick={::this._onOKClick}>OK</button>&nbsp;
                                         <button class="btn btn-default" type="button" onClick={::this._onCancelClick}>Cancel</button>
                                     </div>
                                 </div>
