@@ -44,7 +44,7 @@ export default class ADpp
         if( globalData && globalData.controller )
         {
             // 0||console.log( 'this.controllers[globalData.controller.name]', this.controllers[globalData.controller.name] );
-            if (this.currentController) this.currentController = new this.controllers[globalData.controller.name]();
+            if (this.controllers[globalData.controller.name]) this.currentController = new this.controllers[globalData.controller.name]();
         } // endif;
 
 
