@@ -149,7 +149,7 @@ export default class ExchangeItem extends React.Component
             }
         };
 
-        let disabled = Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
+        let finished = Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
 
         //lineupContainer height
 		let height;
@@ -201,7 +201,7 @@ export default class ExchangeItem extends React.Component
         // 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
 
         return (
-            <div className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`, {clickable: !!isTraiderOn},
+            <div className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`, {finished: finished}, {clickable: !!isTraiderOn},
 				{active_nearby: currentExchange && !expModeClass}, {with_order: showOrder})} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
                 onClick={() =>
                 {
@@ -267,7 +267,6 @@ export default class ExchangeItem extends React.Component
                                         side: 0,
                                         ismirror: false,
                                         Orders: data.Orders,
-										btnDisabled: disabled,
                                         ...commProps
                                     }}/>
                                     <ButtonContainer actions={actions} mainContext={mainContext} data={{
@@ -276,7 +275,6 @@ export default class ExchangeItem extends React.Component
                                         ismirror: false,
                                         symbolName: symbol,
                                         Orders: data.Orders,
-										btnDisabled: disabled,
                                         ...commProps
                                     }}/>
                                 </div>

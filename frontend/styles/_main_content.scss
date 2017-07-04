@@ -124,9 +124,11 @@
   .h-event { position: relative; margin: 1px 0; //display: flex;  flex-direction: column;  justify-content: space-between;
 		width: 100%; min-width: 410px; border-radius: 6px; z-index: 10; color: $color4TextWhite; background: linear-gradient(to bottom, #53515e, #292830);
     //&:nth-child(odd) { margin-right: 2px; }
-
+    &.finished:after{ content: ''; width: 20px; height: 20px; position: absolute; top: 10px; right: 10px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -28px -175px; background-size: 1500%; }
     // ovverride on activate exchange\
     &.active-exch { z-index: 11; color: $color4TextBlack; background: linear-gradient(to bottom, #EBEBEB, #B8B8B8);
+      &.finished:after{ background: url("#{$pathImage}/sprite.svg") no-repeat -28px -193px; background-size: 1500%; }
       &.with_order{ z-index: 102; }
       //&>.bg { background: linear-gradient(to bottom, #EBEBEB, #B8B8B8); }
       .l-title {
