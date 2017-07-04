@@ -203,8 +203,9 @@ export default class ExchangeItem extends React.Component
         // 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
 
         return (
-            <div className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`, {finished: isEventClosed}, {clickable: !!isTraiderOn},
-				{active_nearby: currentExchange && !expModeClass}, {with_order: showOrder})} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
+            <div className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`,
+				{not_started: !isEventStarted}, {finished: isEventClosed}, {clickable: !!isTraiderOn}, {active_nearby: currentExchange && !expModeClass},
+				{with_order: showOrder})} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
                 onClick={() =>
                 {
                 	// if(this.props.data.currentExchange !== this.props.data.Symbol.Exchange)
@@ -285,8 +286,25 @@ export default class ExchangeItem extends React.Component
                                     }}/>
                                 </div>
                                 <div className={`button-container opener`}>
-                                    <div className="button">
-                                        <button className={`event`}><i>{}</i>Enter</button>
+                                    <div className={classnames(`button`, {order_open: showOrder})}>
+                                        <button className={`event`} onClick={isEventStarted ? null : ()=>{
+											this.props.actions.actionOnPosPriceClick(mainContext,
+											{
+												PosPrice: [],
+												ismirror: false,
+												price   : 0.5,
+												quantity: 0,
+												type    : 1,
+												data    : {
+													type      : 'buy',
+													side      : 1,
+													ismirror  : false,
+													symbolName: symbol,
+													Orders    : data.Orders,
+													...commProps
+												},
+											});
+										}}><i>{}</i><span>Enter</span></button>
                                     </div>
                                 </div>
                         </div>

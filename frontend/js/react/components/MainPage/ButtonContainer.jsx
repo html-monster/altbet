@@ -101,7 +101,7 @@ export default class ButtonContainer extends React.PureComponent
                                                         type: data.type === "sell" ? 1 : 2,
                                                         data: data,
                                                     })}
-                                                    data-verify="Quantity" /*disabled={isTraiderOn}*/ title={data.btnDisabled ? '' : 'Click to place entry'}>
+                                                    data-verify="Quantity" /*disabled={isTraiderOn}*/ title={'Click to place entry'}>
                                                 <span className="price">{price}</span>
                                                 <span className="volume">{item2.Quantity}</span>
                                                 {/*<div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>*/}
@@ -135,7 +135,7 @@ export default class ButtonContainer extends React.PureComponent
                                         type: data.type === "sell" ? 1 : 2,
                                         data: data,
                                     })}
-                                    title={data.btnDisabled ? '' : 'Click to place entry'} >
+                                    title={'Click to place entry'} >
                                 <span className="price empty">{emptyBtnName}</span>
                                 <div className="symbolName" style={{display: 'none'}}>{data.symbol}</div>
                             </button>
