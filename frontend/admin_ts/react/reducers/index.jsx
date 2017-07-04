@@ -4,7 +4,7 @@ import newFeedExchange from './newFeedExchangeReducer.ts';
 import FeedEventsReducer from './FeedEventsReducer.ts';
 
 
-let reducers = {};
+let reducers;
 
 const common = {
 };
@@ -31,4 +31,4 @@ switch (page)
 		break;
 }
 
-export default combineReducers(reducers);
+export default reducers ? combineReducers(reducers) : null;

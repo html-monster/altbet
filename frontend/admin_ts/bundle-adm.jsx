@@ -16,10 +16,8 @@ import FeedEvents from "./react/containers/FeedEvents";
 import NewFeedExchange from "./react/containers/NewFeedExchange";
 
 
-const store = configureStore();
-let mp;
+let store;
 let ADpp = new App();
-ADpp.Store = store;
 
 
 $(document).ready(function()
@@ -28,27 +26,30 @@ $(document).ready(function()
 });
 
 
-
 // BM: Mount points
 // Feed events table
-if( mp = document.getElementById('DiFeedEvents') )
-{
-    ReactDOM.render(
-        <Provider store={store}>
-            <FeedEvents />
-        </Provider>,
-      mp
-    );
-}
-
+mountById('DiFeedEvents', <FeedEvents />);
 
 // Apply feed event
-if( mp = document.getElementById('DiNewFeedExchange') )
+mountById('DiNewFeedExchange', <NewFeedExchange />);
+
+
+
+function mountById(inId, inComponent)
 {
-    ReactDOM.render(
-        <Provider store={store}>
-            <NewFeedExchange />
-        </Provider>,
-      mp
-    );
+    let mp;
+    if( mp = document.getElementById(inId) )
+    {
+        if (!store) {
+            store = configureStore();
+            ADpp.Store = store;
+        }
+
+        ReactDOM.render(
+            <Provider store={store}>
+                {inComponent}
+            </Provider>,
+          mp
+        );
+    }
 }
