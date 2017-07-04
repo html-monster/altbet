@@ -532,7 +532,7 @@ export default class OrderForm extends React.Component
 						}
 						{
 							stateData.startDate > +moment().format('x') &&
-							<span className="info_string">Minimum required purchase/sale is <span>1 Unit @${stateData.price}</span></span>
+							<span className="info_string">Minimum required purchase/sale <span>1 Unit @${stateData.price}</span></span>
 						}
 					</div>
 				}

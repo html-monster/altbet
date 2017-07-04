@@ -69,7 +69,7 @@ class ActiveTrader extends React.Component
 		if((new DateLocalization).fromSharp(activeExchange.startDate) > currentDate)
 		{
 			blocked = true;
-			blockMessage = 'This game hasn`t started yet, try again later';
+			blockMessage = 'This game has not started yet, please try again, once event is underway';
 		}
 		else if((activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate) < currentDate))
 		{

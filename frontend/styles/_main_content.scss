@@ -124,8 +124,13 @@
   .h-event { position: relative; margin: 1px 0; //display: flex;  flex-direction: column;  justify-content: space-between;
 		width: 100%; min-width: 410px; border-radius: 6px; z-index: 10; color: $color4TextWhite; background: linear-gradient(to bottom, #53515e, #292830);
     //&:nth-child(odd) { margin-right: 2px; }
-    &.finished:after{ content: ''; width: 20px; height: 20px; position: absolute; top: 10px; right: 10px;
-      background: url("#{$pathImage}/sprite.svg") no-repeat -28px -175px; background-size: 1500%; }
+    &.finished{
+      &:after{ content: ''; width: 20px; height: 20px; position: absolute; top: 10px; right: 10px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -28px -175px; background-size: 1500%; }
+      .inner .btn_locker{ width: 100%; min-width: 281px; height: 33px; position: absolute; top: 0; left: 0;
+        z-index: 5; border-radius: 4px; text-align: center; color: #fff; line-height: 33px; background: rgba(0, 0, 0, 0.66);
+      }
+    }
     // ovverride on activate exchange\
     &.active-exch { z-index: 11; color: $color4TextBlack; background: linear-gradient(to bottom, #EBEBEB, #B8B8B8);
       &.finished:after{ background: url("#{$pathImage}/sprite.svg") no-repeat -28px -193px; background-size: 1500%; }
@@ -140,7 +145,10 @@
       }
       .button-container {
         button.event.empty { background: #8D9095 linear-gradient(to bottom, lighten(#8D9095, 10%), lighten(#54525D, 20%)) } //#8D9095
-        &.opener { @include hiddAttr; visibility: hidden; opacity: 0; transition: .2s; }
+        &.opener { @include hiddAttr; visibility: hidden; opacity: 0; transition: .2s;
+          button{ background: #211e25; color: #ffffff; }
+          i{ background-position: -269px -326px; }
+        }
       }
       .button-container.buy .button:first-child button.empty span { color: $color4TextWhite }
       .button-container.sell .button:last-child button.empty span { color: $color4TextWhite }
@@ -167,6 +175,10 @@
       }
       //.l-title{ width: calc(100% - 300px); }
       .l-buttons .inner { @include visibleAttr; display: block; visibility: visible; opacity: 1; transition: .4s }
+    }
+    &.not_started{
+      .l-buttons .inner { @include hiddAttr; display: none; visibility: hidden; opacity: 0; transition: .4s }
+      .button-container.opener { visibility: visible; opacity: 1; }
     }
 
     //&.active_nearby .l-title{ width: calc(100% - 300px); }
@@ -257,13 +269,13 @@
         }
       }
 
-      &.opener { visibility: visible; position: absolute; right: 35px; top: calc(50% - 35px/2); width: auto; //@include visibleAttr;
+      &.opener { visibility: visible; position: absolute; right: 35px; top: calc(50% - 44px/2); width: auto; //@include visibleAttr;
           opacity: 1; transition: .4s;
-        button { padding: 0 10px; color: #333; font-size: 14px; background: linear-gradient(to top, #bdc0cd, #ffffff); font-weight: bold; text-transform: none }
-        i { display: inline-block; position: relative; margin-right: 10px; top: 3px; width: 18px; height: 18px;
+        button { display: flex; align-items: center; padding: 0 10px; color: #333; font-size: 14px; background: linear-gradient(to top, #bdc0cd, #ffffff); font-weight: bold; text-transform: none }
+        i { display: inline-block; position: relative; margin-right: 10px; width: 18px; height: 18px;
             background: url("#{$pathImage}/sprite.svg") no-repeat; background-position: -269px -305px; }
+        span{ transition: 0s; }
       }
-
 
       // left buttons
       &.sell, &.buy { button.empty { font-size: 12px; } }
