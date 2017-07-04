@@ -83,7 +83,7 @@ class ActiveTrader extends React.Component
 		}
 
 
-		return <div className={'active_trader' + (blocked ? ' blocked' : '')} id="active_trader" style={traderOn ? {} : {display: 'none'}}
+		return <div className={'active_trader'} id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
 			{/*{*/}
@@ -416,8 +416,9 @@ class ActiveTrader extends React.Component
 			</div>
 			{
 				blocked &&
-				<div className="blocked animated dur4 zoomIn">{blockMessage}</div>
+				<div className="blocked"><span className="animated dur4 zoomIn">{blockMessage}</span></div>
 			}
+			<div className="loading"/>
 		</div>
 	}
 }
