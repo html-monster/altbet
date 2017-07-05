@@ -706,6 +706,102 @@ input ~ .info {
 //  }
 //}
 
+// BM: input
+//.input_animate {
+//  position: relative;
+//  display: inline-block;
+//  padding-top: 0.5em;
+//  max-width: 400px;
+//  width: 100%;
+//  vertical-align: top;
+//}
+//
+//.input__field {
+//  position: relative;
+//  display: block;
+//  padding: 0.8em;
+//  width: 100%;
+//  border: none;
+//  border-radius: 0;
+//  background: #f0f0f0;
+//  color: #37343b;
+//  -webkit-appearance: none; /* for box shadows to show on iOS */
+//}
+//
+//.input__field:focus {
+//  outline: none;
+//}
+//
+//.input__label {
+//  display: inline-block;
+//  float: right;
+//  padding: 0 1em;
+//  width: 40%;
+//  color: rgba(255, 255, 255, 0.4);
+//  font-family: "open_sans_semibold", sans-serif;
+//}
+//
+//.input__label-content {
+//  position: relative;
+//  display: block;
+//  padding: 1.6em 0;
+//  width: 100%;
+//}
+
+.graphic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  fill: none;
+}
+
+.global_message_container {
+  width: 300px;
+  padding: 10px 15px;
+  margin-top: 15px;
+  position: fixed;
+  right: -100%;
+  bottom: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 6px;
+  box-shadow: 0 0 23px -5px rgba(0, 0, 0, 0.5);
+  z-index: 500;
+  transition: 0.4s ease-out;
+  &.active {
+    right: 10px;
+    animation-duration: 0.7s;
+    animation-fill-mode: both;
+  }
+  &.error p { color: #ef4d22; }
+  &.alert p { color: #ef8022; }
+  &.info p { color: #3498DA; }
+  p { font-size: 12px; }
+}
+
+.load_btn {
+  position: relative;
+  &:before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: calc(50% - 10px);
+    background-image: url("#{$pathImage}/sprite.svg");
+  }
+  &.left {
+    padding-left: 30px;
+    &:before { left: 5px; }
+  }
+  &.right {
+    padding-right: 30px;
+    &:before { right: 5px; }
+  }
+}
+
+.upload:before { background-position: -18px -229px; }
+
+.download:before { background-position: -18px -206px; }
 
 // BM: pagination
 .pagination { /*margin-left: 11%; */

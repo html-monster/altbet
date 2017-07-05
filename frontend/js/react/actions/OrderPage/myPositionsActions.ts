@@ -6,7 +6,7 @@
 /**
  * Created by Vlasakh on 25.01.2017.
  */
-
+declare let orderClass;
 
 // import {
 //     ON_BUY_CLICK,
@@ -64,6 +64,8 @@ class Actions extends BaseActions
             // 0||console.debug( 'getState()', getState() );
             // getState().App.controllers.TradeSlip.createNewOrder(outStruc);
             defaultOrderActions.actionOnOrderCreate(outStruc);
+            orderClass.tabReturn();
+
             // dispatch({
             //     type: ON_POS_PRICE_CLICK,
             //     payload: {}

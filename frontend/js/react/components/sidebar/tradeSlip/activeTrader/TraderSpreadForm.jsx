@@ -126,10 +126,11 @@ export default class TraderSpreadForm extends React.Component {
 	_onSubmit(data, event)
 	{
 		event.preventDefault();
+		const sum = ((1 - data.spreadPricePos) * data.quantity) + (data.spreadPriceNeg * data.quantity);
 
-		if(((1 - data.spreadPricePos) * data.quantity) + (data.spreadPriceNeg * data.quantity) > data.maxEntries - data.remainingBal)
+		if(sum > data.remainingBal)
 		{
-			defaultMethods.showWarning(`Your remaining entry balance of this game is $${data.remainingBal}, it's not enough to create the order`);
+			defaultMethods.showWarning(`Order total sum is $${Math.round10(sum, -2)}, your remaining entry balance of this game is $${data.remainingBal}, it's not enough to create the order`);
 			return false;
 		}
 

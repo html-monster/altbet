@@ -93,6 +93,8 @@ class Actions extends BaseActions
 				// globalData.tradeOn = true;
 				// === Vlasakh === 23-01-12 ===============================================
 				ABpp.config.tradeOn = true;
+				orderClass.tabReturn();
+
 				// /** @var ABpp ABpp */ ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, true);
 
 				// let id = $('.active_trader').attr('id').replace("trader_", "");

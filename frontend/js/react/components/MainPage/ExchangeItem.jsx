@@ -232,14 +232,15 @@ export default class ExchangeItem extends React.Component
                         {(date = date.unixToLocalDate({format: 'DD MMM Y h:mm A'})) ? date : ''}
                         {/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>
-                </div>
+					{ Symbol.StatusEvent === 'inprogress' && <i className="live">Live</i> }
+					{/*{ Symbol.StatusEvent === 'halftime' && <i className="halftime">Halftime</i> }*/}
+				</div>
 
-                <div className="event-symbols">
-                <div className="h-symbol">
-                        <h3 className="l-title">{ do {
-
-                            let html = [
-									<span key="0" data-js-title="" style={{paddingRight: 5}}><span className="score" style={{paddingRight: 5}} title="Score">
+				<div className="event-symbols">
+					<div className="h-symbol">
+						<h3 className="l-title">{ do {
+							let html = [
+								<span key="0" data-js-title="" style={{paddingRight: 5}}><span className="score" style={{paddingRight: 5}} title="Score">
 									<span className="title">Score</span>
 										<span className={spreadTitle === 'Spread' && +$homeTotal + spreadValue < $awayTotal ? 'low' : ''}>{$homeTotal}</span> : {$awayTotal} </span>
 									{
@@ -253,42 +254,42 @@ export default class ExchangeItem extends React.Component
 											</span>
 									}
 									</span>
-                                    , (Symbol.HomeHandicap !== null) ? <span key="1" className="handicap" style={{paddingRight: 5}} title={spreadTitle}>
+								, (Symbol.HomeHandicap !== null) ? <span key="1" className="handicap" style={{paddingRight: 5}} title={spreadTitle}>
 										<span className="title">{spreadTitle}</span> {spreadValue}</span> : ''
-                                    , data.Symbol.LastPrice && isEventStarted ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}
-																	title={'Last Price' + ($lastPriceClass[0] === 'up' ? ' increased' : 'decreased')}>
+								, data.Symbol.LastPrice && isEventStarted ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}
+																				  title={'Last Price' + ($lastPriceClass[0] === 'up' ? ' increased' : 'decreased')}>
 									<span className="title">Last Price </span><i>{}</i><span className="value">${data.Symbol.LastPrice.toFixed(2)}</span></span> : ''];
 
-                            	<span className="seemore-lnk">{html}</span>
-                            }}
-                        </h3>
+							<span className="seemore-lnk">{html}</span>
+						}}
+						</h3>
 
-                        <div className="l-buttons">
-                                <div className="inner animated dur4 mainButtonAnimate">
-									{
-										isEventClosed &&
-										<div className="btn_locker animated dur4 fadeIn">Game is over </div>
-									}
-                                    <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                                        type: 'sell',
-                                        side: 0,
-                                        ismirror: false,
-                                        Orders: data.Orders,
-                                        ...commProps
-                                    }}/>
-                                    <ButtonContainer actions={actions} mainContext={mainContext} data={{
-                                        type: 'buy',
-                                        side: 1,
-                                        ismirror: false,
-                                        symbolName: symbol,
-                                        Orders: data.Orders,
-                                        ...commProps
-                                    }}/>
-                                </div>
-                                <div className={`button-container opener`}>
-                                    <div className={classnames(`button`, {order_open: showOrder})}>
-                                        <button className={`event`} onClick={isEventStarted ? null : ()=>{
-											this.props.actions.actionOnPosPriceClick(mainContext,
+						<div className="l-buttons">
+							<div className="inner animated dur4 mainButtonAnimate">
+								{
+									isEventClosed &&
+									<div className="btn_locker animated dur4 fadeIn">Game is over </div>
+								}
+								<ButtonContainer actions={actions} mainContext={mainContext} data={{
+									type: 'sell',
+									side: 0,
+									ismirror: false,
+									Orders: data.Orders,
+									...commProps
+								}}/>
+								<ButtonContainer actions={actions} mainContext={mainContext} data={{
+									type: 'buy',
+									side: 1,
+									ismirror: false,
+									symbolName: symbol,
+									Orders: data.Orders,
+									...commProps
+								}}/>
+							</div>
+							<div className={`button-container opener`}>
+								<div className={classnames(`button`, {order_open: showOrder})}>
+									<button className={`event`} onClick={isEventStarted ? null : ()=>{
+										this.props.actions.actionOnPosPriceClick(mainContext,
 											{
 												PosPrice: [],
 												ismirror: false,
@@ -304,11 +305,11 @@ export default class ExchangeItem extends React.Component
 													...commProps
 												},
 											});
-										}}><i>{}</i><span>Enter</span></button>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
+									}}><i>{}</i><span>Enter</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
                     {/*<div className="h-symbol">*/}
                         {/*<h3 className="l-title">{ do {*/}
                                 {/*let html = [<span key="0" data-js-title><span className="score">{$awayTotal}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>*/}
@@ -416,6 +417,7 @@ export default class ExchangeItem extends React.Component
 									EndDate: Symbol.EndDate,
 									StartData: Symbol.StartData,
 									ResultExchange: Symbol.ResultExchange,
+									minPrice: spreadTitle === 'Moneyline' ? +(spreadValue.replace('$', '')) : 0.5,
 									Symbol    : {
 										Exchange: Symbol.Exchange,
 										Name    : Symbol.Name,
