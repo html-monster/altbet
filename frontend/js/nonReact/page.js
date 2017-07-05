@@ -253,6 +253,12 @@ $(document).ready(function () {
         // $(".validation-summary-errors").css('opacity', '0');
     });
 
+
+    //костыль
+	if(ABpp.User.userIdentity)
+	{
+		$('.tab.js-tab2').click();
+	}
 });
 
 
