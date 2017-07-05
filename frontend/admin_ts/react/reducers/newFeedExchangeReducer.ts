@@ -19,9 +19,7 @@ import {
     ON_GEN_URL,
     ON_SAVE_EVENT_OK,
 } from '../constants/ActionTypesNewFeedExchange';
-import {Common} from "common/Common.ts";
-
-
+import {Common} from "../common/Common";
 
 class Reducer
 {

@@ -252,6 +252,12 @@ $(document).ready(function () {
         $('#password').val('').blur().removeClass('valid').removeClass('input-validation-error');
         // $(".validation-summary-errors").css('opacity', '0');
     });
+//glossary ========================================================================================================
+
+    $('.titleMain').click(function () {
+       $(this).next().slideToggle(200)
+    });
+
 
 });
 
