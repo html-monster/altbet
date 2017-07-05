@@ -185,7 +185,7 @@ export const orderForm = function (context) {
 	let price = +(($(context).find('.price input').val()).replace('$', '')),
 		volume = +$(context).find('.volume input').val(),
 		// sum = $(context).find('.obligations input').val() ? +(($(context).find('.obligations input').val()).replace('$', '')) : null,
-		maxEntries = $(context).find('#maxEntries').val(),
+		// maxEntries = $(context).find('#maxEntries').val(),
 		remainingBal = (+$(context).find('#remainingBal').val()).toFixed(2),
 		checkboxProp = $(context).find('input[type="checkbox"]').length ? $(context).find('input[type="checkbox"]').prop('checked') : 1;
 
@@ -195,12 +195,12 @@ export const orderForm = function (context) {
 		return false;
 	}
 
-	if($(context).find('.side').val() === 'Sell' && maxEntries - remainingBal < Math.round10((1 - price) * volume, -2))
+	if($(context).find('.side').val() === 'Sell' && remainingBal < Math.round10((1 - price) * volume, -2))
 	{
 		defaultMethods.showWarning(`Your remaining entry balance of this game is $${remainingBal}, it's not enough to create the order`);
 		return false;
 	}
-	else if( $(context).find('.side').val() === 'Buy' && maxEntries - remainingBal < Math.round10(price * volume, -2))
+	else if( $(context).find('.side').val() === 'Buy' && remainingBal < Math.round10(price * volume, -2))
 	{
 		defaultMethods.showWarning(`Your remaining entry balance of this game is $${remainingBal}, it's not enough to create the order`);
 		return false;

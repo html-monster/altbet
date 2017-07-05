@@ -33,7 +33,7 @@ export default class TradeSlip extends React.Component
 	{
         // 0||console.log( 'this.props.data.isAllowAT', this.props.data.isAllowAT );
 		const { data, actions, tradeSlip } = this.props;
-        return <div className="tab_item" id="order">
+        return <div className={'tab_item' + (!ABpp.User.userIdentity ? ' active' : '')} id="order">
 
 			<DefaultOrders cmpData={data} />
 

@@ -559,7 +559,7 @@ class Actions extends BaseActions
 	{
 		return () =>
 		{
-			// event.preventDefault();
+			event.preventDefault();
 			const { cmpData: { activeExchange }, traderActions } = context.props;
 
             if(!orderForm(event.currentTarget)) return false;
