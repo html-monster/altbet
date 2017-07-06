@@ -5,6 +5,9 @@
       .about_info {
           h1 {
         color: #d9502a;
+        display: inline-block;
+        margin-left: 40px;
+            margin-bottom: 50px;
       }
     }
   }
@@ -12,7 +15,7 @@
 
 /*____general____*/
 .about_info {
-  width: 110%;
+  width: 130%;
   .general {
     display: flex;
     flex-direction: row;
@@ -21,8 +24,10 @@
       flex-direction: column;
       justify-content: space-between;
       width: 200%;
+      margin-left: 40px;
       .article {
-        width: 200%;
+        width: 180%;
+        margin-bottom: 0;
       }
 
     }
@@ -31,10 +36,32 @@
       justify-content: space-between;
       flex-direction: column;
       width: 200%;
+      margin-left: 100px;
+      margin-top: 0;
       .article {
         width: 200%;
       }
 
     }
   }
+}
+.box2{
+  margin-bottom: 0;
+}
+.box5{
+  margin-top: 0px;
+}
+.box6{
+  margin-top: 0;
+}
+.box7{
+  margin-top: 70px;
+}
+.box10{
+  margin-top: 0%;
+  margin-bottom: 100px;
+}
+/*link alt bet*/
+.link_altbet{
+  cursor: pointer;
 }
