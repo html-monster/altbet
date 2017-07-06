@@ -119,7 +119,8 @@ class FeedEvents extends BaseController
                                         <td>{item.Status} </td>
                                         <td>{$DateLocalization.fromSharp2(item.StartDate, 0).toLocalDate({format: 'MM/DD/Y h:mm A'})}</td>
                                         <td class="controls">
-                                            <a href={MainConfig.BASE_URL + "/Feed/NewFeedExchange?eventId=" + item.EventId} className="btn btn-sm btn-default">Apply</a>
+                                            {/*<a href={MainConfig.BASE_URL + "/Feed/NewFeedExchange?eventId=" + item.EventId} className="btn btn-sm btn-default">Apply</a>*/}
+                                            <a href="#" className="btn btn-sm btn-default">Apply</a>
                                         </td>
                                     </tr>
                                 )
