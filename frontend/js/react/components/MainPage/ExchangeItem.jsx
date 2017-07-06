@@ -3,9 +3,12 @@ import React from 'react';
 import ButtonContainer from './ButtonContainer';
 import {DateLocalization} from './../../models/DateLocalization';
 import {LineupPage} from './LineupPage';
-import Chart from './Chart';
+import ChartOld from './ChartOld';
+import Chart from '../MainPage/ChartEvent';
 import DefaultOrdersLocal from '../DefaultOrdersLocal';
 import classnames from 'classnames';
+import * as chartActions from '../../actions/MainPage/chartActions';
+
 
 // import {Common} from './../../common/Common';
 
@@ -61,7 +64,7 @@ export default class ExchangeItem extends React.Component
 		{
 			if(currentProps.chartData && !currentState.chart)
 			{
-				currentState.chart = new Chart(this.refs.chartContainer, currentProps.chartData);
+				currentState.chart = new ChartOld(this.refs.chartContainer, currentProps.chartData);
 				this.setState(currentState);
 				// console.log('this.state.chart:', currentProps.data.Symbol.Exchange, currentState.chart);
 			}
@@ -402,7 +405,9 @@ export default class ExchangeItem extends React.Component
                                 <div className={"h-lup__tab_item tab_item highcharts-tab" + (chart ? '' : ' loading') + activeTab[1]}
 									 id={"container_" + symbol} data-js-highchart="" ref={'chartContainer'}>{}</div>
                                 {/*<img src="~/Images/chart_white.svg" alt=""/>*/}
-                            </div>
+								<Chart id={`${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`} actions={this.props.chartActions} />
+
+							</div>
                         </div>
 
 						{/* // BM: --------------------------------------------------- Default Orders Local ---*/}

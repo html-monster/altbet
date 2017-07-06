@@ -574,9 +574,9 @@ export class Chart
             var identificators = $(this).attr('id').replace('eventContainer_', '').split('_');
 
             $(inData).each(function () {
-                if (this.Symbol.Exchange === identificators[0]
-                    && this.Symbol.Name === identificators[1]
-                    && this.Symbol.Currency === identificators[2]) {
+                if (this.Symbol.Exchange == identificators[0]
+                    && this.Symbol.Name == identificators[1]
+                    && this.Symbol.Currency == identificators[2]) {
                     $(this.Ticks).each(function () {
                         var volumeValue = this.Volume;
                         var timeValue = this.Time.replace('/Date(', '').replace(')/', '') * 1 - new Date().getTimezoneOffset() * 60 * 1000;

@@ -155,7 +155,7 @@ export class LineupPage extends React.Component
 
                                         <p>
                                             If you have any questions or concerns take a look at our
-                                            <a href="faq.html"> frequently asked questions </a>
+                                            <a href={`${ABpp.baseUrl}/eng/footer/Help`} target="_blank"> frequently asked questions </a>
                                             or get in touch with us.
                                         </p>
                                         <div id="introduction">
