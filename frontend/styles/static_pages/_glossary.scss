@@ -252,6 +252,7 @@
 .two_columns{
   display: flex;
   flex-direction: row;
+  margin-bottom: 70px;
 }
 #d{
   margin-top: 70px;
@@ -267,4 +268,56 @@
 }
 #u{
   margin-top: 45px;
+}
+
+/*ODDS DEFINITIONS*/
+#odds_definitions{
+  margin: 50px 0px;
+  h2{
+    display: inline-block;
+    font-size: 26px;
+  }
+  p{
+    i{
+      font: 100%/1.5 sans-serif;
+      color: #fff;
+      display: inline-block;
+      margin-bottom: 25px;
+    }
+  }
+}
+#odds_definitions{
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+.first_div{
+  display: flex;
+  flex-direction: column;
+  margin-right: 100px;
+}
+.second_div{
+  display: flex;
+  flex-direction: column;
+}
+.seventh_article{
+  margin-top: 20px;
+}
+.eighth_article{
+  margin-top: 12px;
+}
+.nineth_article{
+  margin-top: 5px;
+}
+.sixth_article{
+  margin-top: 20px;
+}
+.eleventh_article {
+  position: absolute;
+  bottom: 2800px;
+  left: 35%;
+  text-align: center;
+}
+.table_glossary{
+  margin: 200px 450px;
 }
