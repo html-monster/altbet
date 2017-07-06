@@ -24,7 +24,7 @@ import {Common} from "common/Common";
 
 
 
-class Reducer
+export default class Reducer
 {
     public static USING_TEAM = 1;
     public static USING_TEAM_UP = 2;
@@ -757,7 +757,3 @@ class Reducer
         return state;
     }
 }
-
-
-const $Reducer = new Reducer();
-export default $Reducer.actionsHandler.bind($Reducer);

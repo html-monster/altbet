@@ -10,7 +10,7 @@ import {Common} from "common/Common";
 
 
 
-class Reducer
+export default class Reducer
 {
     // public static USING_TEAM = 1;
 
@@ -56,6 +56,6 @@ class Reducer
     }
 }
 
-
-const $Reducer = new Reducer();
-export default $Reducer.actionsHandler.bind($Reducer);
+//
+// const $Reducer = new Reducer();
+// export default $Reducer.actionsHandler.bind($Reducer);

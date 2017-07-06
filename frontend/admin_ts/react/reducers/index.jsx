@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 
-import newFeedExchange from './newFeedExchangeReducer.ts';
+import NewFeedExchangeReducer from './newFeedExchangeReducer.ts';
 import FeedEventsReducer from './FeedEventsReducer.ts';
+import {Framework} from 'common/Framework.ts';
 
 
 let reducers;
@@ -23,14 +24,14 @@ if( globalData.ac )
 	{
 		case "applyfeedexchange":
 			reducers = {
-				newFeedExchange: newFeedExchange,
+				newFeedExchange: Framework.getHandler(NewFeedExchangeReducer),
 				...common,
 			};
 			break;
 
 		case "xmlfeedevents":
 			reducers = {
-				FeedEvents: FeedEventsReducer,
+				FeedEvents: Framework.getHandler(FeedEventsReducer),
 				...common,
 			};
 			break;
@@ -38,4 +39,4 @@ if( globalData.ac )
 } // endif
 
 
-export default reducers ? combineReducers(reducers) : null;
+export default reducers ? combineReducers.bind(null, reducers) : null;

@@ -25,7 +25,7 @@ var __DEBUG__ = !true;
 
 declare let orderClass;
 
-class Actions extends BaseActions
+export default class Actions extends BaseActions
 {
     private T1 = 0;
 
@@ -36,11 +36,8 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            let data = new FormData();
-            data.set('EventId', inProps);
-
             const ajaxPromise = (new AjaxSend()).send({
-                formData: data,
+                formData: {'EventId': inProps},
                 message: `Error while registering user, please, try again`,
                 // url: ABpp.baseUrl + $form.attr('action'),
                 url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GETPLAYERS,
@@ -92,8 +89,7 @@ class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            0||console.log( '{EventId, filterVal}', {EventId, filterVal} );
-            let data : any = new FormData();
+            let data;// : any = new FormData();
             // data.set('EventId', EventId);
             // data.set('Period', filterVal);
             data = {'EventId': EventId, 'Period': filterVal};
@@ -545,4 +541,4 @@ class Actions extends BaseActions
     }
 }
 
-export default (new Actions()).export();
+// export default (new Actions()).export();
