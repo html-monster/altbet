@@ -4,17 +4,17 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
 // import { ping } from './enhancers/ping'
-import rootReducer from '../reducers/index.jsx';
+import getRootReducer from '../reducers/index.jsx';
 
 
 export default function configureStore(initialState)
 {
-    // const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(thunk));
-    const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
+    // const store = createStore(getRootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(thunk));
+    const store = createStore(getRootReducer(), initialState, applyMiddleware(thunk));
 
-    // const store = createStore(rootReducer, initialState);
+    // const store = createStore(getRootReducer, initialState);
     // const logger = createLogger();
-    // const store = createStore(rootReducer, initialState, applyMiddleware(logger));
+    // const store = createStore(getRootReducer, initialState, applyMiddleware(logger));
     // if (module.hot)
     // {
     //     module.hot.accept('../reducers', () => {

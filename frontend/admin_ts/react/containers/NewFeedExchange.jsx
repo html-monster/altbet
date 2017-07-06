@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import {Common} from "common/Common.ts";
 import {InfoMessages} from "common/InfoMessages.ts";
 import {Loading} from "common/Loading.ts";
+import {Framework} from 'common/Framework.ts';
 
 
 class NewFeedExchange extends BaseController
@@ -362,6 +363,6 @@ export default connect(
     })
     },
     dispatch => ({
-        actions: bindActionCreators(Actions, dispatch),
+        actions: bindActionCreators(Framework.initAction(Actions), dispatch),
     })
 )(NewFeedExchange)

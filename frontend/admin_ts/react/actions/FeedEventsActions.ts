@@ -10,7 +10,7 @@ var __DEBUG__ = !true;
 
 declare let orderClass;
 
-class Actions extends BaseActions
+export default class Actions extends BaseActions
 {
     /**
      * Get new events data
@@ -77,5 +77,3 @@ class Actions extends BaseActions
         return {...state, ...Model};
     }
 }
-
-export default (new Actions()).export();
