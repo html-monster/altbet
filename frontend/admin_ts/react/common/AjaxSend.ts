@@ -30,6 +30,7 @@ export class AjaxSend
 {
     private options = {
             formData: null,
+            type: 'POST',
             headers: { 'X-Requested-With': 'XMLHttpRequest' },
             message: "",
             url: "",
@@ -47,14 +48,14 @@ export class AjaxSend
         };
         let message = props.message;
 
-        0||console.log( 'props', {props, inProps} );
+        // 0||console.log( 'props', {props, inProps} );
 
         let promise = new Promise((resolve, reject) =>
         {
             $.ajax({
                 url: props.url,
                 // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
-                type: 'POST',
+                type: props.type,
                 success: function(data)
                 {
                     var error = -1001;
