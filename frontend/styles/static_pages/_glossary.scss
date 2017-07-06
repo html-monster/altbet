@@ -14,19 +14,24 @@
     margin-bottom: 40px;
   }
 }
-#a_1 h2:active{
-    color: #fff;
-}
-#a_1 h2:focus h2{
-  color: #fff;
-}
-#glossary {
 
+#glossary {
+  .main_letters{
+    display: flex;
+    flex-direction: row;
+  }
   div {
-    .letter {
+    .letter1 {
       color: #3588b6;
     }
+    .letter {
+      color: #3588b6;
+      margin-top: 40px;
+    }
     div {
+      width: 700px;
+      margin-right: 100px;
+
       .titleMain {
         color: #b0afb0;
       }
@@ -37,9 +42,6 @@
         color: #fff;
         cursor: pointer;
       }
-      p{
-        display: none;
-      }
     }
   }
 }
@@ -47,6 +49,9 @@
 /*for user.js*/
 
 /*=====================*/
+.textInTitle1{
+  display: none;
+}
 .textInTitle2{
   display: none;
 }
@@ -191,4 +196,75 @@
 .textInTitleS_1{
   display: none;
 }
-
+.textInTitleS_2{
+  display: none;
+}
+.textInTitleS_3{
+  display: none;
+}
+.textInTitleS_4{
+  display: none;
+}
+.textInTitleS_5{
+  display: none;
+}
+.textInTitleS_6{
+  display: none;
+}
+.textInTitleS_7{
+  display: none;
+}
+.textInTitleS_8{
+  display: none;
+}
+.textInTitleT_1{
+  display: none;
+}
+.textInTitleT_2{
+  display: none;
+}
+.textInTitleT_3{
+  display: none;
+}
+.textInTitleT_4{
+  display: none;
+}
+.textInTitleT_5{
+  display: none;
+}
+.textInTitleU_1{
+  display: none;
+}.textInTitleU_2{
+  display: none;
+}
+.textInTitleV_1{
+  display: none;
+}
+/*контейнеры по две буквы. А напротив В*/
+.first_column{
+  display: flex;
+  flex-direction: column;
+}
+.second_column{
+  display: flex;
+  flex-direction: column;
+}
+.two_columns{
+  display: flex;
+  flex-direction: row;
+}
+#d{
+  margin-top: 70px;
+}
+#h{
+  margin-top: 70px;
+}
+#j{
+  margin-top: 30px;
+}
+#s{
+  margin-top: 80px;
+}
+#u{
+  margin-top: 45px;
+}

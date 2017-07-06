@@ -255,7 +255,7 @@ $(document).ready(function () {
 //glossary ========================================================================================================
 
     $('.titleMain').click(function () {
-       $(this).next().slideToggle(200)
+        $(this).next().slideToggle(200);
     });
 
 
