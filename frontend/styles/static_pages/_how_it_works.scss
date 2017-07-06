@@ -1,0 +1,40 @@
+/*change logo's oolor*/
+.content {
+    width: auto;
+    .wrapper_about {
+      .about_info {
+          h1 {
+        color: #d9502a;
+      }
+    }
+  }
+}
+
+/*____general____*/
+.about_info {
+  width: 110%;
+  .general {
+    display: flex;
+    flex-direction: row;
+    .column1 {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 200%;
+      .article {
+        width: 200%;
+      }
+
+    }
+    .column2 {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      width: 200%;
+      .article {
+        width: 200%;
+      }
+
+    }
+  }
+}
