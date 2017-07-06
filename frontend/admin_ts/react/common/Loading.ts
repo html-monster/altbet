@@ -38,7 +38,7 @@ export class Loading
 
     public showLoading(inProps?)
     {
-        this.loadingObj && this.loadingObj.remove();
+        // this.loadingObj && this.loadingObj.remove();
 
         inProps = {...this.props, ...inProps};
 

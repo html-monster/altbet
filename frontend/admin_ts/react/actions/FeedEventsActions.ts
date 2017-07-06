@@ -15,18 +15,13 @@ export default class Actions extends BaseActions
     /**
      * Get new events data
      */
-    public actionGetNewTableData(inProps, callback)
+    public actionGetNewTableData({props, callback})
     {
         return (dispatch, getState) =>
         {
-            // let data = new FormData();
-            // data.set('EventId', inProps);
-
-            0||console.log( 'inProps', inProps, callback );
-            // return;
-
             const ajaxPromise = (new AjaxSend()).send({
-                formData: inProps,
+                formData: props,
+                type: 'GET',
                 message: `Error while get new data from server`,
                 url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GET_EVENTS,
             });
@@ -37,7 +32,7 @@ export default class Actions extends BaseActions
                     0||console.log( 'result', result );
                     dispatch({
                         type: ON_GET_NEW_TABLE_DATA,
-                        payload: this.setNewTableData.bind(this, {Model: result.data.Model}),
+                        payload: this.setNewTableData.bind(this, {Model: result.data.Model, callback}),
                     });
                 },
                 result => {
@@ -72,8 +67,9 @@ export default class Actions extends BaseActions
     /**
      * Set new table data
      */
-    private setNewTableData({Model}, state)
+    private setNewTableData({Model, callback}, state)
     {
+        callback && callback({errorCode: 100, title: '', message: ''});
         return {...state, ...Model};
     }
 }
