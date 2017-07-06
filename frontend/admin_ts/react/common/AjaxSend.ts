@@ -30,6 +30,7 @@ export class AjaxSend
 {
     private options = {
             formData: null,
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
             message: "",
             url: "",
             respCodes: [],
@@ -39,9 +40,14 @@ export class AjaxSend
 
     public send(inProps)
     {
-        var self = this;
-        var props = {...this.options, ...inProps};
-        var message = props.message;
+        let self = this;
+        let props = {...this.options,
+            ...inProps,
+            headers: {...this.options.headers, ...inProps.headers},
+        };
+        let message = props.message;
+
+        0||console.log( 'props', {props, inProps} );
 
         let promise = new Promise((resolve, reject) =>
         {

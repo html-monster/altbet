@@ -11,6 +11,7 @@ import {Common} from "common/Common.ts";
 import {InfoMessages} from "common/InfoMessages.ts";
 import {Loading} from "common/Loading.ts";
 import {MainConfig} from '../../inc/MainConfig';
+import {Framework} from 'common/Framework.ts';
 
 
 class FeedEvents extends BaseController
@@ -93,8 +94,8 @@ class FeedEvents extends BaseController
                                 <th><span>Status</span></th>
                                 <th>
                                     <span className={classNames(`icon ${OrderBy}`, {'active': StartDateSort.indexOf('StartDate') > -1})}>
-                                        {/*<a href="#" onClick={this._onSortClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy})}>Start date</a>*/}
-                                        <a href={MainConfig.BASE_URL + `/Feed?` + getUrlParams()}>Start date</a>
+                                        <a href="#" onClick={this._onSortClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy})}>Start date</a>
+                                        {/*<a href={MainConfig.BASE_URL + `/Feed?` + getUrlParams()}>Start date</a>*/}
                                     </span>
 {/*
                     <span class="icon @Model.OrderBy @((Model.StartDateSort.Contains(" StartDate")) ? "
@@ -118,7 +119,8 @@ class FeedEvents extends BaseController
                                         <td>{item.Status} </td>
                                         <td>{$DateLocalization.fromSharp2(item.StartDate, 0).toLocalDate({format: 'MM/DD/Y h:mm A'})}</td>
                                         <td class="controls">
-                                            <a href={MainConfig.BASE_URL + "/Feed/NewFeedExchange?eventId=" + item.EventId} className="btn btn-sm btn-default">Apply</a>
+                                            {/*<a href={MainConfig.BASE_URL + "/Feed/NewFeedExchange?eventId=" + item.EventId} className="btn btn-sm btn-default">Apply</a>*/}
+                                            <a href="#" className="btn btn-sm btn-default">Apply</a>
                                         </td>
                                     </tr>
                                 )
@@ -198,6 +200,6 @@ export default connect(
     })
     },
     dispatch => ({
-        actions: bindActionCreators(Actions, dispatch),
+        actions: bindActionCreators(Framework.initAction(Actions), dispatch),
     })
 )(FeedEvents)

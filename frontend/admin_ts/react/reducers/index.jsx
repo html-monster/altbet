@@ -1,34 +1,42 @@
 import { combineReducers } from 'redux';
 
-import newFeedExchange from './newFeedExchangeReducer.ts';
+import NewFeedExchangeReducer from './newFeedExchangeReducer.ts';
 import FeedEventsReducer from './FeedEventsReducer.ts';
+import {Framework} from 'common/Framework.ts';
 
 
 let reducers;
+let page = "";
 
 const common = {
 };
 
-let page = "";
 
-if ( globalData.ac.controller === "feed" && globalData.ac.action === "newfeedexchange" ) page = "applyfeedexchange";
-if ( globalData.ac.controller === "feed" && globalData.ac.action === "index" ) page = "xmlfeedevents";
-
-switch (page)
+if( globalData.ac )
 {
-	case "applyfeedexchange":
-		reducers = {
-			newFeedExchange: newFeedExchange,
-			...common,
-		};
-		break;
+	const { controller, action } = globalData.ac;
 
-	case "xmlfeedevents":
-		reducers = {
-			FeedEvents: FeedEventsReducer,
-			...common,
-		};
-		break;
-}
+	if ( controller === "feed" && action === "newfeedexchange" ) page = "applyfeedexchange";
+	if ( controller === "feed" && action === "index" ) page = "xmlfeedevents";
 
-export default reducers ? combineReducers(reducers) : null;
+
+	switch (page)
+	{
+		case "applyfeedexchange":
+			reducers = {
+				newFeedExchange: Framework.getHandler(NewFeedExchangeReducer),
+				...common,
+			};
+			break;
+
+		case "xmlfeedevents":
+			reducers = {
+				FeedEvents: Framework.getHandler(FeedEventsReducer),
+				...common,
+			};
+			break;
+	}
+} // endif
+
+
+export default reducers ? combineReducers.bind(null, reducers) : null;
