@@ -16,7 +16,7 @@ export class PagerBox extends React.Component
         super(props);
 
 
-        const { total, current, visiblePage } = this.props;
+        // const { total, current, visiblePage } = this.props;
         // this.state = {
         //     total:       total,
         //     current:     current,

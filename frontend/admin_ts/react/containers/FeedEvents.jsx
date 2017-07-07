@@ -55,14 +55,6 @@ class FeedEvents extends BaseController
         AllLeague && AllLeague.unshift('All') || (AllLeague = ['All']);
         if (AllLeague) ligItems = ligItems.concat(AllLeague.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
 
-        // const getUrlParams = () => {
-        //     let params = {Sport: Sport};
-        //     params.League = League;
-        //     params.sort = StartDateSort;
-        //     params.OrderBy = OrderBy;
-        //     return Object.keys(params).map((key) => params[key] ? `${key}=${params[key]}` : `${key}=`).join('&');
-        // };
-
 
         return (
                 <div class="">
@@ -72,22 +64,35 @@ class FeedEvents extends BaseController
 
                     <div class="box-body pad table-responsive">
                         {/*<div class={classNames("box", {"box-widget": false})}></div>*/}
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <div className="form-group">
+                                    <label>Filter by sport</label>
+                                    <DropBox name="selected-state" items={sportsItems}
+                                        /*items={[
+                                            { value: '1', label: 'var 1'},
+                                            { value: '2', label: 'var 2'},
+                                        ]}*/
+                                        clearable={false} value={Sport} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc'}, 'Sport')}/>
+                                </div>
+                            </div>
 
-                        <DropBox name="selected-state" items={sportsItems}
-                            /*items={[
-                                { value: '1', label: 'var 1'},
-                                { value: '2', label: 'var 2'},
-                            ]}*/
-                            clearable={false} value={Sport} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy}, 'Sport')}/>
+                            { ligItems.length > 1 &&
+                                <div className="col-sm-3">
+                                    <div className="form-group">
+                                        <label>Filter by ligue</label>
+                                        <DropBox name="selected-state" items={ligItems}
+                                            /*items={[
+                                                { value: '1', label: 'var 1'},
+                                                { value: '2', label: 'var 2'},
+                                            ]}*/
+                                            clearable={false} value={League} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc'}, 'League')}/>
+                                    </div>
+                                </div>
+                            }
+                        </div>
 
-                        { ligItems.length > 1 &&
-                            <DropBox name="selected-state" items={ligItems}
-                                /*items={[
-                                    { value: '1', label: 'var 1'},
-                                    { value: '2', label: 'var 2'},
-                                ]}*/
-                                clearable={false} value={League} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy}, 'League')}/>
-                        }
+
 
                         <table class="table exchanges">
                             <thead>

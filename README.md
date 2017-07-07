@@ -32,6 +32,7 @@
   - React Dropdowns (https://react.rocks/tag/Dropdown)
     - React Select (http://jedwatson.github.io/react-select/)
     - React-Super-Select Live (http://alsoscotland.github.io/react-super-select/react-super-select-examples.html)
+    - Pager (https://github.com/AZaviruha/pager)
   - React Widgets (http://jquense.github.io/react-widgets/docs/#/dropdownlist?_k=6wmbsn)
 - Time Picker
   - Webix (https://webix.com/demo/calendar/timepicker/)
