@@ -64,6 +64,7 @@ export default class Reducer
             category: '',
             url: '',
         },
+        ParentCategory: 'Amer sport',
         ...globalData.AppData,
     };
 
@@ -752,7 +753,7 @@ export default class Reducer
      */
     private saveEventSuccess({fieldName, val}, state)
     {
-        state.FormData[fieldName] = val;
+        // state.FormData[fieldName] = val;
 
         return state;
     }
