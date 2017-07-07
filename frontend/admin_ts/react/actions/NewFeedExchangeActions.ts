@@ -81,6 +81,61 @@ export default class Actions extends BaseActions
     }
 
 
+    /**
+     * Create new category
+     */
+    public actionCreateCategory(inProps)
+    {
+        0||console.log( 'inProps', inProps );
+        return;
+
+        return (dispatch, getState) =>
+        {
+            const ajaxPromise = (new AjaxSend()).send({
+                formData: {'EventId': inProps},
+                message: `Error while registering user, please, try again`,
+                // url: ABpp.baseUrl + $form.attr('action'),
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GETPLAYERS,
+                respCodes: [
+                    {code: 100, message: ""},
+                    // {code: -101, message: "Some custom error"},
+                ],
+                // beforeChkResponse: (data) =>
+                // {
+                //     // DEBUG: emulate
+                //     data = {Error: 101};
+                //     // data.Param1 = "TOR-PHI-3152017"; // id
+                //     // data.Param1 = "?path=sport&status=approved";
+                //     // data.Param1 = "?status=New";
+                //     // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                //     // data.Param3 = "TOR-PHI-3152017"; // id
+                //
+                //     return data;
+                // },
+            });
+
+
+            ajaxPromise.then( result =>
+                {
+                    dispatch({
+                        type: ON_CHANGE_EVENT,
+                        payload: [result.data.Players, inProps],
+                    });
+                },
+                result => {
+                    // 0||console.log( 'result', result, result.code );
+                    if( result.code != 100 )
+                    {
+                        dispatch({
+                            type: ON_CHANGE_EVENT,
+                            payload: [[], inProps],
+                        });
+                    }
+                });
+        };
+    }
+
+
 
     /**
      * Change events period
@@ -181,7 +236,7 @@ export default class Actions extends BaseActions
             // post data to server
             // let data = new FormData();
             const ajaxPromise = (new AjaxSend()).send({
-                formData: {some: 'rrrr'},
+                formData: {team1: data.PlayersTeam1.players},
                 message: `Error ...`,
                 // url: ABpp.baseUrl + $form.attr('action'),
                 url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
