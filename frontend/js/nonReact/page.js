@@ -254,11 +254,7 @@ $(document).ready(function () {
     });
 
 
-    //костыль
-	if(ABpp.User.userIdentity)
-	{
-		$('.tab.js-tab2').click();
-	}
+
 });
 
 

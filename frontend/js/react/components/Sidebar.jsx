@@ -65,6 +65,11 @@ class Sidebar extends React.Component
 		// isChecked && ABpp.Websocket.sendSubscribe({tradeOn: isChecked}, SocketSubscribe.TRADER_ON);
 		// ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, isChecked);
         this.props.actions.actionOnTraderOnChange(ABpp.config.tradeOn);
+		if(ABpp.User.userIdentity)
+		{
+			ABpp.Websocket.sendSubscribe(1, window.SocketSubscribe.CURRENT_ORDERS);
+			globalData.myOrdersOn = true;
+		}
     }
 
 
