@@ -1,0 +1,34 @@
+.page_wrapper {
+  h1{
+    color: #d9502a;
+  }
+  .main_boxes_first {
+    display: flex;
+    flex-direction: row;
+    .first_list {
+      display: flex;
+      flex-direction: column;
+          li {
+            h2 {
+              padding: 10px 0 0;
+              font-size: 18px;
+            &:hover{
+              cursor: pointer;
+              color: #fff;
+            }
+              &:active{
+                cursor: pointer;
+                color: #fff;
+              }
+            }
+            p {
+              display: none;
+            }
+          }
+      }
+      .second_list{
+        @extend .first_list;
+        margin-left: 500px;
+      }
+  }
+}

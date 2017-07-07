@@ -258,7 +258,12 @@ $(document).ready(function () {
         $(this).next().slideToggle(200);
     });
 
-
+//terms and conditions______________________________________________________________________________________________
+    $('.title_for').click(function(){
+        // $(this).next.slideUp(200);
+       $(this).next().slideToggle(200);
+       $(this).previousElementSibling.hide(200);
+    });
 });
 
 
