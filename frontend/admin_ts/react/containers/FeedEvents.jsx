@@ -43,17 +43,19 @@ class FeedEvents extends BaseController
     {
         let { actions, data: {AllSport, AllLeague, Sport, League, FeedEvents, CurrentOrderBy, OrderBy, StartDateSort, PageInfo} } = this.props;
         // const { okBtnDisabled } = this.state;
-        let sportsItems = [], ligItems = [];
+        let sportsItems = [], ligItems = [], currSport, currLig;
         let $DateLocalization = new DateLocalization();
 
 
         // prepare sport filter
         AllSport && AllSport.unshift('All') || (AllSport = ['All']);
         if (sportsItems) sportsItems = sportsItems.concat(AllSport.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
+        currSport = sportsItems.slice().filter((val) => val.value == Sport || !Sport && !val.value )[0];
 
         // prepare lig filter
         AllLeague && AllLeague.unshift('All') || (AllLeague = ['All']);
         if (AllLeague) ligItems = ligItems.concat(AllLeague.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
+        currLig = ligItems.slice().filter((val) => val.value == League || !League && !val.value )[0];
 
 
         return (
@@ -73,7 +75,7 @@ class FeedEvents extends BaseController
                                             { value: '1', label: 'var 1'},
                                             { value: '2', label: 'var 2'},
                                         ]}*/
-                                        clearable={false} value={Sport} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc', page: 1}, 'Sport')}/>
+                                        clearable={false} value={currSport} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc', page: 1}, 'Sport')}/>
                                 </div>
                             </div>
 
@@ -86,7 +88,7 @@ class FeedEvents extends BaseController
                                                 { value: '1', label: 'var 1'},
                                                 { value: '2', label: 'var 2'},
                                             ]}*/
-                                            clearable={false} value={League} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc', page: 1}, 'League')}/>
+                                            clearable={false} value={currLig} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc', page: 1}, 'League')}/>
                                     </div>
                                 </div>
                             }

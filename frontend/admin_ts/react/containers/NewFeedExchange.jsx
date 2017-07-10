@@ -117,7 +117,7 @@ class NewFeedExchange extends BaseController
                                             <h4><i class="icon fa fa-warning"/> Alert!</h4>
                                             <span class="js-text"/>
                                         </div>
-                                        <NewCategory submitAction={actions.actionCreateCategory.bind({ParentId})} afterCreate={::this._createCatFinishCallback}/>
+                                        <NewCategory submitAction={actions.actionCreateCategory.bind(this, {ParentId})} afterCreate={::this._createCatFinishCallback}/>
                                 </div>
                             </div>
                         </div>
@@ -251,7 +251,7 @@ class NewFeedExchange extends BaseController
                             <div className="col-sm-6">
                                 <div className="box-body" >
                                     <div className="form-group">
-                                        <button type="button" class="btn-ok btn btn-info" disabled={okBtnDisabled} onClick={::this._onOKClick}>OK</button>&nbsp;
+                                        <button type="button" class="btn-ok btn btn-info" /*disabled={true}*/ disabled={okBtnDisabled} onClick={::this._onOKClick}>OK</button>&nbsp;
                                         <button class="btn btn-default" type="button" onClick={::this._onCancelClick}>Cancel</button>
                                     </div>
                                 </div>

@@ -197,4 +197,9 @@ export class Common
     {
         return inArr[inArr.length-1];
     }
+
+
+    public static isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+    }
 }
