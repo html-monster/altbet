@@ -4,52 +4,44 @@
 
 import React from 'react' ;
 
-export default class Chart extends React.Component
+export default class Chart extends React.PureComponent
 {
-    constructor()
-    {
-        super();
+    // componentDidMount()
+    // {
+    //     this.props.actions.actionChartMount();
+	// }
 
-        this.state = {checked: true};
-    }
-
-    componentDidMount()
-    {
-        this.props.actions.actionChartMount();
-	}
-
-    componentWillReceiveProps(nextProps)
-    {
-        let checked = this.props.data.Chart.ChartObj.getType() === this.props.data.Chart.types.TYPE_SPLINE;
-
-        this.refs.chartType.checked = !checked;
-    }
+    // componentWillReceiveProps(nextProps)
+    // {
+        // let checked = this.props.data.Chart.ChartObj.getType() === this.props.data.Chart.types.TYPE_SPLINE;
+		//
+		// this.refs.chartType.checked = !checked;
+    // }
 
     render()
     {
-        // const { openOrdersData, positionData, historyData } = this.state.data;
-        // let checked = this.state.checked;
+        const { chartTypeChange } = this.props;
 
         return <div>
                 {/*<h2>{this.props.data.pageEventData.IsMirrorName}</h2>*/}
                 <label className="chk-chart-type checkbox checkbox_horizontal green-brown label-left">
-                    <input ref="chartType" type="checkbox" defaultChecked={true} onChange={::this._onChkChange} />
+                    <input ref="chartType" type="checkbox" defaultChecked={false} onChange={chartTypeChange} />
                     <span className="label"><b>Line</b>/<i>Area</i></span>
                     <span />
                 </label>
                 {/*<input id="IsMirror" name="IsMirror" type="hidden" defaultChecked={this.props.data.IsMirror} value={`${this.props.data.IsMirror}`} />*/}
-                <input id="IsMirror" name="IsMirror" type="hidden" value={false} />
+                {/*<input id="IsMirror" name="IsMirror" type="hidden" value={false} />*/}
                 <div className="chart">
-                    <div id={"eventContainer_" + this.props.id}/>
+                    <div id={"eventContainer_" + this.props.id} ref={'ChartContainer'}/>
                 </div>
             </div>;
     }
 
 
-    _onChkChange()
-    {
-        this.props.actions.actionChartTypeChange(this.refs.chartType.checked);
-    }
+    // _onChkChange()
+    // {
+    //     this.props.actions.actionChartTypeChange(this.refs.chartType.checked);
+    // }
 }
 
 // if( __DEV__ )

@@ -1,7 +1,7 @@
 declare let Highcharts;
 declare let moment;
 
-let __HiDEV__ = !true;
+let __HiDEV__ = false;
 
 /**
  * Generator for chart's virtual point
@@ -19,9 +19,8 @@ export class Generator
     private flagForceStop = false;
 
     private flagActive = false;
-    private TiGenerator = [];
+    public TiGenerator = [];
     private chartObj = null; // chart object
-
 
     /**
      * Start generator
@@ -121,7 +120,7 @@ export class Generator
 
         // del virtual point from chart
         // 0||console.log( 'delPoints', delPoints );
-        delPoints.forEach((val) => Highcharts.charts[0].series[0].removePoint(val, true));
+        delPoints.forEach((val) => this.chartObj.chart.series[0].removePoint(val, true));
 
         if (!notLast)
             this.genLastPoint = 0;
@@ -161,7 +160,7 @@ export class Generator
         if (this.flagForceStop) return;
 
 
-        var data = Highcharts.charts[0].series[0].options.data;
+        let data = this.chartObj.chart.series[0].options.data;
 
         if( data.length )
         {
@@ -197,7 +196,7 @@ export class Generator
                 // {
                 // } // endif
                 this.lastVirtualX = virtPoint.x;
-                Highcharts.charts[0].series[0].addPoint(virtPoint, true);
+                this.chartObj.chart.series[0].addPoint(virtPoint, true);
 
 
                 // Highcharts.charts[0].redraw();
@@ -205,7 +204,7 @@ export class Generator
                 // delete virtual point
                 this.genLastPoint > 0 && this._deleteVirtPoint({notLast: true});
             } catch (e) {
-                // __HiDEV__&&console.debug( 'set v point', e.getMessage() );
+                __HiDEV__&&console.debug( 'set v point', e.getMessage() );
             }
 
 

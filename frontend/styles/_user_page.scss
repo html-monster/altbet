@@ -14,14 +14,8 @@
     background: $sign_in_bg;
     border-radius: 5px;
   }
-  ul.tabs {
-    width: 15%;
-    margin-right: 10px;
-    margin-left: 10px;
-    padding: 15px;
-    list-style-type: none;
-    font-size: 16px;
-    //color: rgba(255, 255, 255, 0.8);
+  ul.tabs { width: 15%; height: calc(100% - 90px); margin-right: 10px; margin-left: 10px; padding: 15px; position: fixed;
+    top: 80px; list-style-type: none; font-size: 16px; //color: rgba(255, 255, 255, 0.8);
     li {
       padding-right: 10px;
       transition: 0.1s ease-out;
@@ -71,6 +65,7 @@
   & > .tab_content {
     width: 63%;
     min-width: 960px;
+    margin-left: calc(15% + 32px);
     padding: 30px;
     position: relative;
     border-radius: 4px;

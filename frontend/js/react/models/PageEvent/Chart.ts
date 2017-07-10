@@ -182,7 +182,7 @@ export class Chart
         let xx = $(".chart_container .chart").width() - 217 - 30;
 
 
-        // часть настроек в createChart и PlotOptions
+        // часть настроек в _createChart и PlotOptions
         this.chartData = {
             chart: {
                 height: 450,
@@ -501,21 +501,20 @@ export class Chart
             let val = inData[ii];
             let dt = (new DateLocalization()).fromSharp(val.Time);
             // let dt = val.Time.replace('/Date(', '').replace(')/', '') * 1 - new Date().getTimezoneOffset() * 60 * 1000;
-            let end = moment.unix(dt/1000);
-
+            // let end = moment.unix(dt/1000);
             // add to raw data
             val.x = dt;
             val.y = val.Open;
             val.Vol = val.Volume;
             this.dataRaw.push(val);
 
-            if( this.dataGrouped.length )
-            {
-                var lastPoint = this.dataGrouped[this.dataGrouped.length-1];
-
-                var duration = moment.duration(end.diff(moment.unix(lastPoint.x/1000)));
-                var minDiff = duration.asMinutes();
-            } // endif
+            // if( this.dataGrouped.length )
+            // {
+            //     var lastPoint = this.dataGrouped[this.dataGrouped.length-1];
+            //
+            //     var duration = moment.duration(end.diff(moment.unix(lastPoint.x/1000)));
+            //     var minDiff = duration.asMinutes();
+            // } // endif
 
 
             this.dataGrouped.push({x: dt,
@@ -529,6 +528,9 @@ export class Chart
                 dt: moment.unix(dt/1000).format('Do h:mm:ss a'),
                 items: [val],
             });
+            // console.log('dt:', dt);
+            // console.log('momentUnix:', moment.unix(dt/1000).format('Do h:mm:ss a'));
+            // console.log('this.dataGrouped:', this.dataGrouped);
 
 /*            if( !this.dataGrouped.length || minDiff > this.groups[this.currGroup] )
             {
@@ -745,7 +747,7 @@ export class Chart
         for (var ii = 0, countii = $(".highcharts-button").length; ii < countii; ii++)
         {
             let val = $(".highcharts-button")[ii];
-            // $(val).addClass('gb' + ii).click(function () { self.onBtnGroupClick.bind(self) });
+            // $(val).addClass('gb' + ii).click(function () { self._onBtnGroupClick.bind(self) });
             $(val).addClass('gb' + ii).click(function () { self.onBtnGroupClick(this) });
         } // endfor
     }
@@ -810,12 +812,12 @@ export class Chart
                             // var timeValue = this.Time.replace('/Date(', '').replace(')/', '') * 1 - new Date().getTimezoneOffset() * 60 * 1000;
                             //
                             // var yy = isMirror ? 1 - this.Open : this.Open;
-                            // Highcharts.charts[0].series[0].addPoint({
+                            // Highcharts.charts[0].series[0]._addPoint({
                             //     x: timeValue,
                             //     y: yy
                             // });
                             //
-                            // // Highcharts.charts[0].series[1].addPoint({
+                            // // Highcharts.charts[0].series[1]._addPoint({
                             // //     x: timeValue,
                             // //     y: volumeValue,
                             // //     color: this.Open > this.Close ? '#9DB201' : '#FF3728'

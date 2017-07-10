@@ -123,11 +123,11 @@ export default class mainChartController
 		// add new Ticks in Chart
 		newTicks.forEach((item) =>
 		{
-			this.chart.series[0].addPoint({
+			this.chart.series[0]._addPoint({
 				x: item.Time,
 				y: Math.round10(+item.Close, -2)
 			});
-			// this.chart.series[1].addPoint({
+			// this.chart.series[1]._addPoint({
 			// 	x: item.Time,
 			// 	y: Math.round10(1 - item.Close, -2)
 			// });
