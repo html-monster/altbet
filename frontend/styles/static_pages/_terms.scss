@@ -1,34 +1,147 @@
-.page_wrapper {
-  h1{
-    color: #d9502a;
-  }
-  .main_boxes_first {
-    display: flex;
-    flex-direction: row;
-    .first_list {
+.wrapper {
+  .content {
+    width: 800px;
+    .page_wrapper {
+      h1 {
+        color: #d9502a;
+        display: inline-block;
+        margin-bottom: 20px;
+      }
+      p {
+        span {
+          color: #0d97ba;
+          cursor: pointer;
+        }
+      }
+    }
+    //_____main boxes first
+    .main_boxes_first {
+      padding-left: 30px;
       display: flex;
-      flex-direction: column;
-          li {
-            h2 {
-              padding: 10px 0 0;
-              font-size: 18px;
-            &:hover{
+      flex-direction: row;
+      justify-content: space-between;
+      width: 900px;
+      .first_list {
+        display: flex;
+        flex-direction: column;
+        li {
+          h2 {
+            padding: 10px 0 0;
+            font-size: 18px;
+            &:hover {
               cursor: pointer;
               color: #fff;
             }
-              &:active{
-                cursor: pointer;
-                color: #fff;
+            &:active {
+              cursor: pointer;
+              color: #fff;
+            }
+          }
+          p {
+            display: none;
+            width: 600px;
+          }
+        }
+      }
+      .second_list {
+        display: flex;
+        flex-direction: column;
+        margin-right: 0;
+      }
+    }
+  }
+}
+/*for js*/
+.title_for:active .first_list {
+  margin-right: 0;
+}
+  //_____main boxes second
+    .main_boxes_second{
+      padding-left: 30px;
+        width: 170%;
+        margin-top: 50px;
+          #betting{
+            display: flex;
+            flex-direction: column;
+            p{
+              display: inline-block;
+              width: 560px;
+            }
+            h2{
+              font-size: 26px;
+            }
+            .article_p{
+                display: flex;
+                flex-direction: row;
+              .individual_p1{
+                display: inline-block;
+              }
+              .individual_p2{
+                @extend .individual_p1;
+                margin-left: 100px;
               }
             }
-            p {
-              display: none;
+            .rules{
+              color: #0d97ba;
             }
           }
       }
-      .second_list{
-        @extend .first_list;
-        margin-left: 500px;
-      }
+
+/*separate white and white cursive letters*/
+.letter{
+  color: #fff;
+}
+.letter_other{
+  color: #fff;
+  font-style: italic;
+}
+
+
+// first and second lists_____________________________________________________
+.globalBoxLists{
+  display: flex;
+  flex-direction: row;
+  .first_one{
+    width: 700px;
+  }
+  .second_one{
+    width: 700px;
+    margin-left: 60px;
   }
 }
+
+.altbet_span{
+  color: #0d97ba;
+}
+
+// first and second sections____________________________________________________
+.global_section{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+    .first_section{
+      margin-top: 70px;
+      display: flex;
+      flex-direction: column;
+      width: 650px;
+        div{
+          h2{
+            font-size: 26px;
+          }
+        }
+    }
+    .second_section{
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 750px;
+      margin-left: 140px;
+        div{
+          h2{
+            font-size: 26px;
+          }
+        }
+    }
+}
+
