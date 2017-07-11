@@ -28,7 +28,7 @@ export default class NewOrder extends React.PureComponent
 					!localView &&
 					<h3>{data.EventTitle}</h3>
 				}
-				<button className="close close_blue" onClick={actions.actionOnDeleteOrder.bind(null, {data, mainPageActions})} title="Close window"/>
+				<button className="close close_blue" onClick={actions.actionOnDeleteOrder.bind(null, {data, mainPageActions})} title="Close window" ref={'closeButton'}/>
 				{/*<span className="close" onClick={actions.actionOnDeleteOrder.bind(null, {data, mainPageActions})}><span>{}</span></span>*/}
 				<strong className="current-order pos">Units: <span>{data.Positions}</span></strong>
 			</div>
