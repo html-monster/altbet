@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="UserService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpsBinding_IUserManager_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/AltBet/Services/WCF/UserService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/AltBet/Services/WCF/UserService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/AltBet/Services/WCF/UserService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/AltBet.Model" />
+      <xsd:import schemaLocation="http://localhost/AltBet/Services/WCF/UserService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/AltBet.Exchange.Managers" />
+      <xsd:import schemaLocation="http://localhost/AltBet/Services/WCF/UserService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/AltBet.Exchange" />
+      <xsd:import schemaLocation="http://localhost/AltBet/Services/WCF/UserService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/AltBet.Exchange.WebSocketSender" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IUserManager_Register_InputMessage">
+    <wsdl:part name="parameters" element="tns:Register" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_Register_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_Logout_InputMessage">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_Logout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GetUserInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GetUserInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_EditUserInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_EditUserInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_EditPreferences_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditPreferences" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_EditPreferences_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditPreferencesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_EditUserTheme_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditUserTheme" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_EditUserTheme_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditUserThemeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_ChangePassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePassword" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_ChangePassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_LoginAdmin_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoginAdmin" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_LoginAdmin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginAdminResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_LogoutAdmin_InputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutAdmin" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_LogoutAdmin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutAdminResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GetLocation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocation" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GetLocation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_UnsubscribeMail_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnsubscribeMail" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_UnsubscribeMail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnsubscribeMailResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IUserManager">
+    <wsdl:operation name="Register">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/Register" message="tns:IUserManager_Register_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/RegisterResponse" message="tns:IUserManager_Register_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/Login" message="tns:IUserManager_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/LoginResponse" message="tns:IUserManager_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/Logout" message="tns:IUserManager_Logout_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/LogoutResponse" message="tns:IUserManager_Logout_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GetUserInfo" message="tns:IUserManager_GetUserInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GetUserInfoResponse" message="tns:IUserManager_GetUserInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditUserInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/EditUserInfo" message="tns:IUserManager_EditUserInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/EditUserInfoResponse" message="tns:IUserManager_EditUserInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditPreferences">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/EditPreferences" message="tns:IUserManager_EditPreferences_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/EditPreferencesResponse" message="tns:IUserManager_EditPreferences_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditUserTheme">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/EditUserTheme" message="tns:IUserManager_EditUserTheme_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/EditUserThemeResponse" message="tns:IUserManager_EditUserTheme_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/ChangePassword" message="tns:IUserManager_ChangePassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/ChangePasswordResponse" message="tns:IUserManager_ChangePassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginAdmin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/LoginAdmin" message="tns:IUserManager_LoginAdmin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/LoginAdminResponse" message="tns:IUserManager_LoginAdmin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LogoutAdmin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/LogoutAdmin" message="tns:IUserManager_LogoutAdmin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/LogoutAdminResponse" message="tns:IUserManager_LogoutAdmin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLocation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GetLocation" message="tns:IUserManager_GetLocation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GetLocationResponse" message="tns:IUserManager_GetLocation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnsubscribeMail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/UnsubscribeMail" message="tns:IUserManager_UnsubscribeMail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/UnsubscribeMailResponse" message="tns:IUserManager_UnsubscribeMail_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IUserManager" type="tns:IUserManager">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Register">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/Register" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/Logout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GetUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditUserInfo">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/EditUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditPreferences">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/EditPreferences" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditUserTheme">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/EditUserTheme" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/ChangePassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginAdmin">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/LoginAdmin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogoutAdmin">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/LogoutAdmin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLocation">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GetLocation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnsubscribeMail">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/UnsubscribeMail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BasicHttpsBinding_IUserManager" type="tns:IUserManager">
+    <wsp:PolicyReference URI="#BasicHttpsBinding_IUserManager_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Register">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/Register" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/Logout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GetUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditUserInfo">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/EditUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditPreferences">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/EditPreferences" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditUserTheme">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/EditUserTheme" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/ChangePassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginAdmin">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/LoginAdmin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogoutAdmin">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/LogoutAdmin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLocation">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GetLocation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnsubscribeMail">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/UnsubscribeMail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="UserService">
+    <wsdl:port name="BasicHttpBinding_IUserManager" binding="tns:BasicHttpBinding_IUserManager">
+      <soap:address location="http://localhost/AltBet/Services/WCF/UserService.svc" />
+    </wsdl:port>
+    <wsdl:port name="BasicHttpsBinding_IUserManager" binding="tns:BasicHttpsBinding_IUserManager">
+      <soap:address location="https://win-3okndn5oehm/AltBet/Services/WCF/UserService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

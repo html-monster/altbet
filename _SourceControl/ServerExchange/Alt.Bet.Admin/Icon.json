@@ -1,0 +1,22 @@
+﻿{
+    "baseball": { "alias": "Baseball" },
+    "basketball": { "alias": "Basketball" },
+    "boxing": { "alias": "Boxing" },
+    "csgo": { "alias": "CS:GO" },    
+    "cybersport": { "alias": "E-Sport" },
+    "dota2": { "alias": "Dota2" },
+    "economy": { "alias": "Economy" },
+    "finance": { "alias": "Finance" },
+    "hockey": { "alias": "Hockey" },
+    "horse_racing": { "alias": "Horse Racing" },
+    "interest_rates": { "alias": "Interest Rates" },
+    "lol": { "alias": "LoL" },
+    "politics": { "alias": "Politics" },
+    "public_sentiment": { "alias": "Public Sentiment" },
+    "rugby": { "alias": "American Football"}, 
+    "society": { "alias": "Society"},
+    "soccer": { "alias": "Soccer"},
+    "sport": { "alias": "Sport"},
+    "tennis": { "alias": "Tennis"},  
+    "volleyball": { "alias": "Volleyball"}
+}

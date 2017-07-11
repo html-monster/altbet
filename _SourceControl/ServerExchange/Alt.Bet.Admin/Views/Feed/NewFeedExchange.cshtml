@@ -1,0 +1,46 @@
+﻿@using Newtonsoft.Json
+@model AltBet.Admin.Models.FantasyViewModel
+
+
+<div id="DiNewFeedExchange">
+    <div class="box box-default">
+        <div class="box-header">
+            <h3 class="box-title">Event approving “@Model.Event.FullNameEvent”</h3>
+        </div>
+        <div class="box-body pad table-responsive">
+            <div class="box box-widget">
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        globalData.AppData = JSON.parse('@Html.Raw(JsonConvert.SerializeObject(new System.Collections.Hashtable()
+            {
+                {"Category", Model.Event.League},
+                {"FullName", Model.Event.FullNameEvent},
+                {"StartDate", Model.Event.StartDate},
+                {"TimeEvent", Model.TimeEvent},
+                {"Positions", Model.Positions},
+                {"Period", Model.Period},
+                {"EventId", Model.EventId},
+                {"Categories", Model.Categories},
+//                {"ParentId", Model.},
+                {"Team1name", Model.Event.HomeTeam.Alias},
+                {"Team2name", Model.Event.AwayTeam.Alias},
+                {
+                    "Filters", new System.Collections.Hashtable()
+                    {
+                        {"All", @Url.Action("NewFeedExchange", "Feed", new {@eventId = Model.EventId})},
+                        {"Team1", @Url.Action("NewFeedExchange", "Feed", new {@eventId = Model.EventId, @teamId = Model.Event.HomeTeam.Id})},
+                        {"Team2", @Url.Action("NewFeedExchange", "Feed", new {@eventId = Model.EventId, @teamId = Model.Event.AwayTeam.Id})},
+                    }
+                }
+            }))'); 
+    </script>
+    
+    <script>
+        globalData.AppData.Players = JSON.parse('@Html.Raw(Json.Encode(Model.Players))');
+    </script>
+</div>
+

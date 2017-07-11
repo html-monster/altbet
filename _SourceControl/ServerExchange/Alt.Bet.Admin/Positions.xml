@@ -1,0 +1,50 @@
+﻿<positions>
+  <league name="NBA">
+    <position name="PG">
+      <index>1</index>
+      <quantity>2</quantity>
+    </position>
+    <position name="SG">
+      <index>2</index>
+      <quantity>2</quantity>
+    </position>
+    <position name="SF">
+      <index>3</index>
+      <quantity>2</quantity>
+    </position>
+    <position name="PF">
+      <index>4</index>
+      <quantity>2</quantity>
+    </position>
+    <position name="C">
+      <index>5</index>
+      <quantity>1</quantity>
+    </position>
+  </league>
+
+  <league name="NFL">
+    <position name="QB">
+      <index>1</index>
+      <quantity>1</quantity>
+    </position>
+    <position name="RB">
+      <index>2</index>
+      <quantity>2</quantity>
+    </position>
+    <position name="WR">
+      <index>3</index>
+      <quantity>3</quantity>
+    </position>
+    <position name="TE">
+      <index>4</index>
+      <quantity>1</quantity>
+    </position>
+    <position name="Util">
+      <index>5</index>
+      <quantity>1</quantity>
+      <locks>
+        <pos>QB</pos>
+      </locks>
+    </position>
+  </league>
+</positions>

@@ -1,0 +1,57 @@
+﻿@using AltBet.Exchange
+@model List<CategoryItem>
+
+
+<div id="DiCatTree">
+    @BuildMenuHelper(Model, Guid.Empty, false)
+</div>
+
+
+@helper BuildMenuHelper(List<CategoryItem> items, Guid parentId, bool isLast)
+{
+    var menu = items.Where(x => x.CatParentId == parentId).OrderBy(n => n.CatPosition).ThenBy(c => c.CatName).ToList();
+    if (menu.Any(n => n.CatParentId == parentId))
+    {
+        if (!isLast)
+        {
+            <ul class="no-menu">
+                @{ var ii = 0; }
+                @foreach (var item in menu.Where(n => n.CatParentId == parentId))
+                {
+                    bool isActive = false;
+                    if (Request.QueryString["path"] != null)
+                    {
+                        String[] catPath = Request.QueryString["path"].Split('/');
+                        isActive = item.CatUrl == catPath[catPath.Length - 1];
+                    }
+                    else if (Request.QueryString["category"] != null)
+                    {
+                        isActive = item.CatUrl == Request.QueryString["category"];
+                    }
+
+
+                    <li data-jstree='{"type":"fa-folder-o", "icon":"category-icon @(item.CatIcon ?? "noicon fa fa-folder-o")" @( isActive ? Html.Raw(", \"opened\" : true, \"selected\":true").ToString() : "") }'
+                        data-icon="@item.CatIcon" class="@BuildMenuHelper(items, item.CatId, true)" data-id="@item.CatId" data-pos="@ii" data-name="@item.CatName">
+                        <span>@item.CatName</span>
+                        <span class="js-controls controls">
+                            <span class="js-btn btn btn-success" data-type="new" data-url="@Url.Action("NewCategory", "Category", new {@category = item.CatUrl})" title="Add sub category"><i class="fa fa-plus"></i></span>
+                            <span class="js-btn btn btn-primary" data-type="edit" data-url="@Url.Action("EditCategory", "Category", new {@category = item.CatUrl})" title="Edit category"><i class="fa fa-pencil"></i></span>
+                            <span class="js-btn btn btn-danger" data-catname="@item.CatName" data-type="del" data-url="@Url.Action("RemoveCategory", "Category", new {@name = item.CatName, @categoryId = item.CatId, @parentId = item.CatParentId})" title="Delete category"><i class="fa fa-remove"></i></span>
+                            <span class="js-btn btn btn-default" data-type="go" data-url="@Url.Action("Index", "Home", new {@path = item.CatUrlChain, @lastnode = BuildMenuHelper(items, item.CatId, true)})" title="Show this categories exchanges"><i class="fa fa-arrow-right"></i></span>
+                        </span>
+                        @BuildMenuHelper(items, item.CatId, false)
+                    </li>
+
+                    ii++;
+                }
+            </ul>
+        }
+    }
+    else
+    {
+        if (isLast)
+        {
+            @("last-node")
+        }
+    }
+}

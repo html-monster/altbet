@@ -1,0 +1,131 @@
+﻿@using AltBet.Admin.Models
+@model ExchangeViewModel
+
+<div class="container_xml_table">
+@using (Html.BeginForm("CreateExchange", "Home", FormMethod.Post, new { @class = "F1addExch" }))
+{
+    @Html.HiddenFor(m => m.Category, new { @Value = (string)ViewBag.Url })
+    <div class="js-info-mess"></div>
+
+    <!-- input states -->
+    <div class="btn-group" data-js="radio-btn">
+        <button type="button" class="btn btn-default" data-rval="1">Short</button>
+        <input data-js="valueStor" type="hidden" value="1" name="TypeEvent" />
+        <button type="button" class="btn btn-default" data-rval="2">Full</button>
+    </div>
+    <br/>
+    <br/>
+
+    <div class="js-form-group form-group" data-js="EdFullname" @*has-error*@ style="display: none">
+        <label class="control-label" for="FullName"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Full name</label>
+        @Html.TextBoxFor(m => m.FullName, new { @class = "js-ed-fullname form-control", @id = "FullName", @data_js = "FullName", @maxlength = 100, @data_field_check = "name:Full name,max:100,ifthere:2,ifhere:{empty},elemthere:[data-js=valueStor]" })
+        <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="js-form-group form-group">
+                <label class="control-label" for="HomeName"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Side1 name</label>
+                @Html.TextBoxFor(m => m.HomeName, new { @class = "form-control", @id = "HomeName", @data_js = "EdHomeName", @maxlength = 50, @data_field_check = "name:Side 1 name,empty,max:50" })
+                <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="js-form-group form-group">
+                <label class="control-label" for="AwayName"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Side2 name</label>
+                @Html.TextBoxFor(m => m.AwayName, new { @class = "form-control", @id = "AwayName", @data_js = "AwayName", @maxlength = 50, @data_field_check = "name:Side 2 name,empty,max:50" })
+                <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="js-form-group form-group">
+                <label class="control-label" for="HomeAlias"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Side1 alias</label>
+                @Html.TextBoxFor(m => m.HomeAlias, new { @class = "form-control", @id = "HomeAlias", @data_js = "HomeAlias", @maxlength = 20, @data_field_check = "name:Side 1 alias,empty,max:50" })
+                <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="js-form-group form-group">
+                <label class="control-label" for="AwayAlias"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Side2 alias</label>
+                @Html.TextBoxFor(m => m.AwayAlias, new { @class = "form-control", @id = "AwayAlias", @data_js = "AwayAlias", @maxlength = 20, @data_field_check = "name:Side 2 alias,empty,max:50" })
+                <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="js-form-group form-group">
+                <label class="control-label" for="HomeHandicap"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Side1 handicap</label>
+                @Html.TextBoxFor(m => m.HomeHandicap, new { @class = "form-control", @id = "HomeHandicap", @type = "text", @data_js = "HomeHandicap", @maxlength = 6, @data_field_check = "name:Side 1 handicap,max:6,custom:handicap" })
+                <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="js-form-group form-group">
+                <label class="control-label" for="AwayHandicap"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Side2 handicap</label>
+               @Html.TextBoxFor(m => m.AwayHandicap, new { @class = "form-control", @id = "AwayHandicap", @type = "text", @data_js = "AwayHandicap", @maxlength = 6, @data_field_check = "name:Side 2 handicap,max:6,custom:handicap" })
+               <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="js-form-group form-group">
+                <label class="control-label" for="StartDate"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Start date</label>
+                <div class="input-group date">
+                    <div class="input-group-addon" data-js="ChkStartDate">
+                        <input type="checkbox" name="isStartDate"/>
+                    </div>
+                    @*            <input type="text" class="form-control pull-right" id="StartDate">*@
+                    @Html.TextBoxFor(m => m.StartDate, new {@class = "pull-right form-control js-dt-start-date", @id = "StartDate", @data_js = "StartDate", @disabled = "disabled", @data_field_check = "name:,custom:datechk"})
+                </div>
+                <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="js-form-group form-group">
+                <label class="control-label" for="EndDate"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Timezone</label>
+                <div class="input-group date" style="width: 100%">
+                    <select name="TimeZone" class="cb-timezones" data-js-cb-timezones="">
+                    </select>
+                </div>
+                <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="js-form-group form-group">
+                <label class="control-label" for="EndDate"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> End date</label>
+                <div class="input-group date">
+                    <div class="input-group-addon" data-js="ChkEndDate">
+                        <input type="checkbox" name="isEndDate" />
+                    </div> 
+                    @Html.TextBoxFor(m => m.EndDate, new { @class = "pull-right form-control js-dt-end-date", @id = "EndDate", @data_js = "EndDate", @disabled = "disabled" })
+                </div>
+                <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="js-form-group form-group">
+                <label class="control-label" for="UrlExchange"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Url</label>
+                @Html.TextBoxFor(m => m.UrlExchange, new { @class = "form-control", @id = "UrlExchange", @data_js = "Url", @maxlength = 100, @data_field_check = "name:Url,empty,max:100" })
+                <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" data-js="btn-create" class="btn btn-info">Create</button><div class="loading-inline" data-js="loading"></div>
+}
+</div>

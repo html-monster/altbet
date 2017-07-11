@@ -1,0 +1,140 @@
+﻿<div class="js-dialog">
+    <div class="modal {{type}}" data-js="wrapper">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-js="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" data-js="BtnClose">×</span>
+                        </button>
+                        <h4 class="modal-title">{{title}}</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="js-info-mess"></div>
+
+                        <!-- input states -->
+                        <div class="btn-group" data-js="radio-btn">
+                            <button type="button" class="btn btn-default" data-rval="1">Short</button>
+                            <input data-js="valueStor" type="hidden" name="TypeEvent" value="{{data.TypeEvent}}" />
+                            <button type="button" class="btn btn-default" data-rval="2">Full</button>
+                        </div>
+                        <br />
+                        <br />
+
+                        <div class="js-form-group form-group" data-js="EdFullname" @*has-error*@ style="{{data.FullNameShow}}">
+                            <label class="control-label" for="FullName"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Full name</label>
+                            @*@Html.TextBoxFor(m => m.FullName, new { @class = "js-ed-fullname form-control", @id = "FullName", @data_js = "FullName", @maxlength = 100 })*@
+                            <input class="form-control" id="FullName" name="FullName" type="text" value="{{data.FullName}}" maxlength="100" data-field-check = "name:Full name,max:100,ifthere:2,ifhere:{empty},elemthere:[data-js=valueStor]"/>
+                            <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="js-form-group form-group">
+                                    <label class="control-label" for="HomeName"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Side 1 name</label>
+                                    @*@Html.TextBoxFor(m => m.HomeName, new { @class = "form-control", @id = "HomeName", @data_js = "EdHomeName", @maxlength = 50, @data_field_check = "name:Side 1 name,empty,max:50", @Value = "111" })*@
+                                    <input class="form-control" id="HomeName" name="HomeName" type="text" value="{{data.HomeName}}" maxlength="50" data-field-check="name:Side 1 name,empty,max:50" />
+                                    <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="js-form-group form-group">
+                                    <label class="control-label" for="AwayName"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Side 2 name</label>
+                                    @*                                    @Html.TextBoxFor(m => m.AwayName, new {@class = "form-control", @id = "AwayName", @data_js = "AwayName", @maxlength = 50, @data_field_check = "name:Side 2 name,empty,max:50", @Value = "222"})*@
+                                    <input class="form-control" id="AwayName" name="AwayName" type="text" value="{{data.AwayName}}" maxlength="50" data-field-check="name:Side 2 name,empty,max:50" />
+                                    <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="js-form-group form-group">
+                                    <label class="control-label" for="HomeHandicap"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Side 1 handicap</label>
+                                    @*                                    @Html.TextBoxFor(m => m.HomeHandicap, new { @class = "form-control", @id = "HomeHandicap", @type = "tel", @data_js = "HomeHandicap", @maxlength = 6, @data_field_check = "name:Side 1 handicap,max:6,custom:handicap" })*@
+                                    <input class="form-control" id="HomeHandicap" name="HomeHandicap" type="text" value="{{data.HomeHandicap}}" maxlength="6" data-js="HomeHandicap" maxlength="6" data-field-check="name:Side 1 handicap,max:6,custom:handicap" />
+                                    <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="js-form-group form-group">
+                                    <label class="control-label" for="AwayHandicap"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Side 2 handicap</label>
+                                    @*                                    @Html.TextBoxFor(m => m.AwayHandicap, new { @class = "form-control", @id = "AwayHandicap", @type = "tel", @data_js = "AwayHandicap", @maxlength = 6, @data_field_check = "name:Side 2 handicap,max:6,custom:handicap" *@
+                                    <input class="form-control" id="AwayHandicap" name="AwayHandicap" type="text" value="{{data.AwayHandicap}}" maxlength="6" data-js="AwayHandicap" maxlength="6" data-field-check="name:Side 2 handicap,max:6,custom:handicap" />
+                                    <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="js-js-form-group form-group js-form-group form-group">
+                                    <label class="control-label" for="StartDate"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Start date</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon" data-js="ChkStartDate">
+                                            <input type="checkbox" name="isStartDate" {{iif data.ChkStartDate "checked" ""}}/>
+                                        </div>
+                                        <input class="form-control js-dt-start-date" data-js="StartDate" id="StartDate" name="StartDate" type="text" value="{{data.StartDate}}" data-js="StartDate" data-field-check="name:,custom:datechk" {{iif data.ChkStartDate "" "disabled"}}/>
+                                        @*                    @Html.TextBoxFor(m => m.StartDate, new { @class = "pull-right form-control js-dt-start-date", @id = "StartDate",  })*@
+                                    </div>
+                                    <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="js-form-group form-group">
+                                    <label class="control-label" for="EndDate"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Timezone</label>
+                                    <div class="input-group date" style="width: 100%">
+                                        <select name="TimeZone" class="cb-timezones" data-js-cb-timezones="">
+                                        </select>
+                                    </div>
+                                    <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="js-js-form-group form-group js-form-group form-group">
+                                    <label class="control-label" for="EndDate"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> End date</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon" data-js="ChkEndDate">
+                                            <input type="checkbox" name="isEndDate" {{iif data.ChkEndDate "checked" ""}}/>
+                                        </div>
+                                        <input class="form-control js-dt-end-date" data-js="EndDate" id="EndDate" name="EndDate" type="text" value="{{data.EndDate}}" data-js="EndDate" {{iif data.ChkEndDate "" "disabled"}}/>
+                                        @*                                        @Html.TextBoxFor(m => m.EndDate, new {@class = "pull-right form-control js-dt-end-date", @id = "EndDate", @data_js = "EndDate", @disabled = "disabled"})*@
+                                    </div>
+                                    <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{#if data.isUrlShow}}
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="js-form-group form-group">
+                                    <label class="control-label" for="UrlExchange"><i class="js-error-icon fa fa-times-circle-o" style="display: none"></i> Url</label>
+                                    @*                                    @Html.TextBoxFor(m => m.UrlExchange, new { @class = "form-control", @id = "UrlExchange", @data_js = "Url", @maxlength = 100, @data_field_check = "name:Url,empty,max:100", @Value = "" })*@
+                                    <input class="form-control" data-js="Url" id="UrlExchange" name="UrlExchange" type="text" value="{{data.UrlExchange}}" data-js="Url" maxlength="100" data-field-check="name:Url,empty,max:100"/>
+                                    <span class="js-message help-block" style="display: none"><!--Err mess--></span>
+                                </div>
+                            </div>
+                        </div>
+                        {{else}}
+                        <input data-js="Url" name="UrlExchange" type="hidden" value="{{data.UrlExchange}}"/>   
+                        {{/if}}
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-js="cancel" data-dismiss="modal">Cancel</button>
+                        <div class="loading-inline" data-js="loading"></div>
+                        <button type="button" class="btn btn-primary" data-js="ok">Save</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>

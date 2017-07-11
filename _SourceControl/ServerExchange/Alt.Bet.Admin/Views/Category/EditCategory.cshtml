@@ -1,0 +1,64 @@
+﻿@model AltBet.Admin.Models.CategoryViewModel
+
+<script type="text/javascript">
+    globalData.controller = { name: "Category", action: "Edit" };
+
+    globalData.currentIcon = "@Model.Icon";
+    globalData.iconClasses = JSON.parse(@Html.Raw(Json.Encode((string)ViewBag.AllIcons)));
+</script>
+
+@using (Html.BeginForm("ChangeCategory", "Category", FormMethod.Post, new { @id = "F1EditCat" }))
+{
+    <div class="col-sm-6">
+        <div class="js-alert alert-message alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+            <span class="js-text"></span>
+        </div>
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Edit category</h3>
+
+                <div class="box-tools pull-right">
+                    
+                </div>
+                <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body form-horizontal">
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="js-form-group form-group" @*has-error*@>
+                    <label class="col-sm-2 control-label" for="Name"><i class="js-error-icon error-icon fa fa-times-circle-o"></i> Name</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Name, new {@class = "js-ed-name form-control", @id = "Name"})
+                    </div>
+                    <span class="js-message help-block col-sm-10 col-sm-push-2" ><!--Err mess--></span>
+                </div>
+
+                <div class="js-form-group form-group">
+                    <label class="col-sm-2 control-label" for="Url"><i class="js-error-icon error-icon fa fa-times-circle-o"></i> Url</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Url, new {@class = "js-ed-url form-control", @id = "Url"})
+                    </div>
+                    <span class="js-message help-block col-sm-10 col-sm-push-2" ><!--Err mess--></span>
+                </div>
+
+                <div class="js-form-group form-group">
+                    <label class="col-sm-2 control-label" for="Icon"><i class="js-error-icon error-icon fa fa-times-circle-o"></i> Icon</label>
+                    <div class="col-sm-10">
+                        <select class="js-cb-icons cb-icons" name="Icon" style="width: 200px"></select>
+                    </div>
+                    <span class="js-message help-block col-sm-10 col-sm-push-2" ><!--Err mess--></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-10 col-sm-push-2">
+                        <input type="submit" class="js-btn-save btn btn-info" value="Edit"> <button class="js-btn-cancel btn btn-default" type="button">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+}
