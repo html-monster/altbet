@@ -670,7 +670,7 @@ export default class Actions extends BaseActions
         resObj.AwayName = teamName2;
         resObj.HomeAlias = Team1name;
         resObj.AwayAlias = Team2name;
-        resObj.StartDate = startDate;
+        resObj.StartDate = startDate.format();
         resObj.UrlExchange = url;
         resObj.EventId = EventId;
 // [07.07.17 17:04:53] Vitaliy Yakubovskiy: ты мне должен передать для exchange - FullName, HomeName, HomeAlias, AwayName, AwayAlias, StartDate, UrlExchange, CategoryId, OptionExchanges(0-HC, 1-ML, 2-TP), HomeTeam(список игроков team1), AwayTeam(список игроков team2), EventId
