@@ -46,6 +46,7 @@ ul{  list-style-type: none;  }
 *:focus{  outline: none;  }
 body{
   //overflow-x: auto;
+  &.blocked{ overflow: hidden; }
   &>.wrapper{
   //@include container(12);
   //min-height:100%;
