@@ -157,8 +157,8 @@ export default class ExchangeItem extends React.Component {
 			}
 		};
 
-		const isEventClosed = Symbol.EndDate && +moment().format('x') > (new DateLocalization).fromSharp(Symbol.EndDate),//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
-			isEventStarted = +moment().format('x') > (new DateLocalization).fromSharp(Symbol.StartDate);
+		const isEventClosed = Symbol.EndDate && +moment().format('x') > (new DateLocalization).fromSharp(Symbol.EndDate, 1, {TZOffset: false}),//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
+			isEventStarted = +moment().format('x') > (new DateLocalization).fromSharp(Symbol.StartDate, 1, {TZOffset: false});
 
 		//lineupContainer height
 		let height;
@@ -190,6 +190,7 @@ export default class ExchangeItem extends React.Component {
 
 		// exdata for lineup
 		let date = $DateLocalization.fromSharp(Symbol.StartDate, 0, {TZOffset: false});
+
 		const exdata = {
 			HomeAlias: Symbol.HomeAlias,
 			AwayAlias: Symbol.AwayAlias,
@@ -236,10 +237,11 @@ export default class ExchangeItem extends React.Component {
 
 				<div className={"event-date " + data.CategoryIcon}>
                     <span className="date" title={Symbol.Exchange}>
-                        {(date = date.unixToLocalDate({format: 'DD MMM Y h:mm A'})) ? date : ''}
+                        {date.unixToLocalDate({format: 'DD MMM Y h:mm A'}) ? date.unixToLocalDate({format: 'DD MMM Y h:mm A'}) : ''}
 						{/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>
-					{ Symbol.StatusEvent === 'inprogress' && <i className="live">Live</i> }
+					{ !Symbol.EndDate && date.unixToLocalDate({format: 'x'}) < moment().format('x') && <i className="live">Live</i> }
+					{/*{ Symbol.StatusEvent === 'inprogress' && <i className="live">Live</i> }*/}
 					{/*{ Symbol.StatusEvent === 'halftime' && <i className="halftime">Halftime</i> }*/}
 				</div>
 

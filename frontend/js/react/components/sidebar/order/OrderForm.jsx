@@ -366,7 +366,7 @@ export default class OrderForm extends React.Component
 
 		return (
 			<form action={formUrl} className={side + ' animated'} autoComplete="off" method="post" data-verify={['price', 'quantity']}
-					  onSubmit={endDate && +moment().format('x') > endDate  ? this._onSubmit : onSubmit}>
+					  onSubmit={endDate && moment().format('x') > endDate  ? this._onSubmit : onSubmit}>
 				<div className={'container' + (showDeleteButton && onDelete ? ' close_btn' : '')}>
 					<div className="price">
 						<label className="with_info" htmlFor={`${id}_price`}>
