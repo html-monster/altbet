@@ -20,7 +20,7 @@ import {
     ON_SAVE_EVENT_OK,
 } from '../constants/ActionTypesNewFeedExchange';
 /// TS_IGNORE
-import {Common} from "common/Common";
+import {Common} from "../common/Common";
 
 
 
