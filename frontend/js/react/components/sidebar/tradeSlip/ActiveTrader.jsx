@@ -299,37 +299,37 @@ class ActiveTrader extends React.Component
 					<tbody>
 						<tr>
 							<td className="reverse active">
-								<a href="#" className="ReverseAllJs wave">Reverse</a>
+								<button className="ReverseAllJs wave" onClick={this._footerBtnClick.bind(this)}>Reverse</button>
 								<div className="confirm_window animated">
 									<div className="container">
 										<span>Do you really want Reverse?</span>
 										<div className="button_container">
-											<button className="btn wave yes">Yes</button>
-											<button className="btn wave no">No</button>
+											<button className="btn wave yes" onClick={this._footerMethodSubmit.bind(this, 'ReverseAll')}>Yes</button>
+											<button className="btn wave no" onClick={this._hideConfirmWindow}>No</button>
 										</div>
 									</div>
 								</div>
 							</td>
 							<td className="cancel_all active">
-								<a href="#" className="CancelAllJs wave">Cancel All</a>
+								<button className="CancelAllJs wave" onClick={this._footerBtnClick.bind(this)}>Cancel All</button>
 								<div className="confirm_window animated">
 									<div className="container">
 										<span>Do you really want Cancel All?</span>
 										<div className="button_container">
-											<button className="btn wave yes">Yes</button>
-											<button className="btn wave no">No</button>
+											<button className="btn wave yes" onClick={this._footerMethodSubmit.bind(this, 'CancelAll')}>Yes</button>
+											<button className="btn wave no" onClick={this._hideConfirmWindow}>No</button>
 										</div>
 									</div>
 								</div>
 							</td>
 							<td className="close_out active">
-								<a href="#" className="CloseOutJs wave">Close Out</a>
+								<button className="CloseOutJs wave" onClick={this._footerBtnClick.bind(this)}>Close Out</button>
 								<div className="confirm_window animated">
 									<div className="container">
 										<span>Do you really want Close Out?</span>
 										<div className="button_container">
-											<button className="btn wave yes">Yes</button>
-											<button className="btn wave no">No</button>
+											<button className="btn wave yes" onClick={this._footerMethodSubmit.bind(this, 'CloseOut')}>Yes</button>
+											<button className="btn wave no" onClick={this._hideConfirmWindow}>No</button>
 										</div>
 									</div>
 								</div>
@@ -420,6 +420,32 @@ class ActiveTrader extends React.Component
 			}
 			<div className="loading"/>
 		</div>
+	}
+
+	_footerBtnClick(event)
+	{
+		$(event.currentTarget).next('.confirm_window').removeClass('fadeOutDown').addClass('active fadeInUp');
+	}
+
+	_footerMethodSubmit(method, event)
+	{
+		event.stopPropagation();
+
+		// ajaxControlTraderClass.ajaxDataSender(method);
+		this.props.traderActions.footerMethodSendAjax(method, this.props.cmpData.activeExchange.symbol);
+
+		this._hideConfirmWindow(event);
+	}
+
+	_hideConfirmWindow(event)
+	{
+		let target = event.currentTarget;
+
+		$(target).parents('.confirm_window').removeClass('fadeInUp').addClass('fadeOutDown');
+
+		setTimeout(() => {
+			$(target).parents('.confirm_window').removeClass('active');
+		}, 500);
 	}
 }
 

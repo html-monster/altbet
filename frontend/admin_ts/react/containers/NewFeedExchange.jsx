@@ -8,6 +8,7 @@ import {DropBox} from '../components/common/DropBox';
 import {PlayersTable} from 'components/NewFeedExchange/PlayersTable';
 import {Team1} from '../components/NewFeedExchange/Team1';
 import {TeamResVar} from 'components/NewFeedExchange/TeamResVar';
+import {NewCategory} from '../components/NewFeedExchange/NewCategory';
 import {DateLocalization} from '../common/DateLocalization';
 import classNames from 'classnames';
 import {Common} from "common/Common.ts";
@@ -19,6 +20,7 @@ import {Framework} from 'common/Framework.ts';
 class NewFeedExchange extends BaseController
 {
     LoadingObj;
+    CreateFormBlock;
 
     constructor(props)
     {
@@ -44,9 +46,11 @@ class NewFeedExchange extends BaseController
     {
         // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
-        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, Rules, CurrentTeam} = this.props.data;
+        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, Rules, CurrentTeam, Category, ParentId, ParentCategory, Categories} = this.props.data;
         const { currTeamKey, okBtnDisabled } = this.state;
-        var items = [];
+        var items = [], currentCat, catItems;
+
+        // prepare command creation interface data
         const playersComponents = [
             [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={PlayersTeam1.players} name={FormData['teamName1']} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
             [1, 2, 'Reserve players team 1', PlayersTeam1Reserve.players, <TeamResVar players={PlayersTeam1Reserve.players} teamVar="PlayersTeam1Reserve" actions={actions} teamNum="1" />,],
@@ -55,6 +59,14 @@ class NewFeedExchange extends BaseController
             [2, 2, 'Reserve players team 2', PlayersTeam2Reserve.players, <TeamResVar players={PlayersTeam2Reserve.players} teamVar="PlayersTeam2Reserve" actions={actions} teamNum="2" />,],
             [2, 3, 'Variable players team 2', PlayersTeam2Variable.players, <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
         ];
+
+
+        // prepare categories
+        if (Categories) catItems = Categories.map((val) => {
+            let itm = { value: val.CategoryId, label: val.Name};
+            //DEBUG: if (val.IsCurrent) currentCat = itm;
+            return itm;
+        });
 
 
         return (
@@ -73,16 +85,46 @@ class NewFeedExchange extends BaseController
                             {/*<!-- /.box-body -->*/}
                             <div className="row">
                                 <div className="col-sm-3">
-                                    <div className="box-body" >
-                                        <div className="form-group">
-                                            <label>Category</label>
-                                            <div className="">{AppData.Category}</div>
-                                        </div>
+                                    <div className="form-group">
+                                        <label>Category</label>
+                                        {/*<div className="">{AppData.Category}</div>*/}
+                                        <DropBox name="category" items={catItems}
+                                            clearable={false} value={currentCat} searchable={true} afterChange={() => {}}/>
                                     </div>
                                 </div>
+                                { !currentCat &&
+                                    <div className="col-sm-9">
+                                        <div className="form-group">
+                                            <label>Event category is “{Category}” but, there is no such category in “{ParentCategory}” please choose another or</label>
+                                            <div><button className="btn btn-xs btn-success" onClick={this._onCreateCatClick.bind(this, true)}>Create new</button></div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                     </div>
                 </div>
+
+                { !currentCat &&
+                    <div ref={(itm) => this.CreateFormBlock = itm} className="row" style={{display: 'none'}}>
+                        <div className="col-sm-6">
+                            <div className="box box-success">
+                                <div className="box-header">
+                                    {/*<i className="fa fa-navicon"/>*/}Create a sub category in “{ParentCategory}”
+                                </div>
+                                <div className="box-body pad table-responsive">
+                                        <div class="js-alert alert-message alert alert-warning alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                            <h4><i class="icon fa fa-warning"/> Alert!</h4>
+                                            <span class="js-text"/>
+                                        </div>
+                                        <NewCategory submitAction={actions.actionCreateCategory.bind(this, {ParentId})} afterCreate={::this._createCatFinishCallback}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
                 <div className="box box-default">
                     <div className="box-header with-border">
                         <h4>Manage team</h4>
@@ -209,7 +251,7 @@ class NewFeedExchange extends BaseController
                             <div className="col-sm-6">
                                 <div className="box-body" >
                                     <div className="form-group">
-                                        <button type="button" class="btn-ok btn btn-info" disabled={true} /*disabled={okBtnDisabled}*/ onClick={::this._onOKClick}>OK</button>&nbsp;
+                                        <button type="button" class="btn-ok btn btn-info" /*disabled={true}*/ disabled={okBtnDisabled} onClick={::this._onOKClick}>OK</button>&nbsp;
                                         <button class="btn btn-default" type="button" onClick={::this._onCancelClick}>Cancel</button>
                                     </div>
                                 </div>
@@ -350,6 +392,33 @@ class NewFeedExchange extends BaseController
     /**@private*/ _onCancelClick(ee)
     {
         window.history.back();
+    }
+
+
+    /**
+     * Open/close add category form
+     * @private
+     */
+    _onCreateCatClick(isOpen)
+    {
+        if( isOpen )
+        {
+            $(this.CreateFormBlock).slideDown(400);
+        }
+        else
+        {
+            $(this.CreateFormBlock).slideUp(200);
+        } // endif
+    }
+
+
+    /**
+     * Create category finish callback
+     * @private
+     */
+    _createCatFinishCallback()
+    {
+        this._onCreateCatClick(false);
     }
 }
 

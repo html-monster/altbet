@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import BaseController from './BaseController';
 import Actions from '../actions/FeedEventsActions';
 import {DropBox} from '../components/common/DropBox';
+import {PagerBox} from '../components/common/PagerBox';
 import {DateLocalization} from '../common/DateLocalization';
 import classNames from 'classnames';
 import {Common} from "common/Common.ts";
@@ -40,24 +41,21 @@ class FeedEvents extends BaseController
 
     render()
     {
-        // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
-        const { actions, data: {AllSport, AllLeague, Sport, League, FeedEvents, OrderBy, StartDateSort} } = this.props;
+        let { actions, data: {AllSport, AllLeague, Sport, League, FeedEvents, CurrentOrderBy, OrderBy, StartDateSort, PageInfo} } = this.props;
         // const { okBtnDisabled } = this.state;
-        let sportsItems, ligItems;
-
+        let sportsItems = [], ligItems = [], currSport, currLig;
         let $DateLocalization = new DateLocalization();
 
-        0||console.log( 'data', this.props.data );
-        0||console.log( 'data', AllSport.map((val) => { return { value: val, label: val} }) );
-        if (AllLeague) ligItems = AllLeague.map((val) => { return { value: val, label: val} });
 
-        const getUrlParams = () => {
-            let params = {Sport: Sport};
-            params.League = League;
-            params.sort = StartDateSort;
-            params.OrderBy = OrderBy;
-            return Object.keys(params).map((key) => params[key] ? `${key}=${params[key]}` : `${key}=`).join('&');
-        };
+        // prepare sport filter
+        AllSport && AllSport.unshift('All') || (AllSport = ['All']);
+        if (sportsItems) sportsItems = sportsItems.concat(AllSport.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
+        currSport = sportsItems.slice().filter((val) => val.value == Sport || !Sport && !val.value )[0];
+
+        // prepare lig filter
+        AllLeague && AllLeague.unshift('All') || (AllLeague = ['All']);
+        if (AllLeague) ligItems = ligItems.concat(AllLeague.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
+        currLig = ligItems.slice().filter((val) => val.value == League || !League && !val.value )[0];
 
 
         return (
@@ -68,22 +66,35 @@ class FeedEvents extends BaseController
 
                     <div class="box-body pad table-responsive">
                         {/*<div class={classNames("box", {"box-widget": false})}></div>*/}
-{/*
-                        <DropBox name="selected-state" items={sportsItems = AllSport.map((val) => { return { value: val, label: val} })}
-                            /*items={[
-                                { value: '1', label: 'var 1'},
-                                { value: '2', label: 'var 2'},
-                            ]}*
-                            clearable={false} value={Sport} searchable={true} afterChange={() => {}}/>
-*/}
-                        { ligItems &&
-                            <DropBox name="selected-state" items={ligItems}
-                                /*items={[
-                                    { value: '1', label: 'var 1'},
-                                    { value: '2', label: 'var 2'},
-                                ]}*/
-                                clearable={false} value={League} searchable={true} afterChange={() => {}}/>
-                        }
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <div className="form-group">
+                                    <label>Filter by sport</label>
+                                    <DropBox name="selected-state" items={sportsItems}
+                                        /*items={[
+                                            { value: '1', label: 'var 1'},
+                                            { value: '2', label: 'var 2'},
+                                        ]}*/
+                                        clearable={false} value={currSport} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc', page: 1}, 'Sport')}/>
+                                </div>
+                            </div>
+
+                            { ligItems.length > 1 &&
+                                <div className="col-sm-3">
+                                    <div className="form-group">
+                                        <label>Filter by ligue</label>
+                                        <DropBox name="selected-state" items={ligItems}
+                                            /*items={[
+                                                { value: '1', label: 'var 1'},
+                                                { value: '2', label: 'var 2'},
+                                            ]}*/
+                                            clearable={false} value={currLig} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc', page: 1}, 'League')}/>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+
 
                         <table class="table exchanges">
                             <thead>
@@ -93,8 +104,8 @@ class FeedEvents extends BaseController
                                 <th><span>League</span></th>
                                 <th><span>Status</span></th>
                                 <th>
-                                    <span className={classNames(`icon ${OrderBy}`, {'active': StartDateSort.indexOf('StartDate') > -1})}>
-                                        <a href="#" onClick={this._onSortClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy})}>Start date</a>
+                                    <span className={classNames(`${CurrentOrderBy}`, {'icon': CurrentOrderBy && StartDateSort.indexOf('StartDate') > -1, 'active': StartDateSort.indexOf('StartDate') > -1})}>
+                                        <a href="#" onClick={this._onSortClick.bind(this, {Sport, League, sort: 'StartDate' + OrderBy, OrderBy, page: 1})}>Start date</a>
                                         {/*<a href={MainConfig.BASE_URL + `/Feed?` + getUrlParams()}>Start date</a>*/}
                                     </span>
 {/*
@@ -119,8 +130,8 @@ class FeedEvents extends BaseController
                                         <td>{item.Status} </td>
                                         <td>{$DateLocalization.fromSharp2(item.StartDate, 0).toLocalDate({format: 'MM/DD/Y h:mm A'})}</td>
                                         <td class="controls">
-                                            {/*<a href={MainConfig.BASE_URL + "/Feed/NewFeedExchange?eventId=" + item.EventId} className="btn btn-sm btn-default">Apply</a>*/}
-                                            <a href="#" className="btn btn-sm btn-default">Apply</a>
+                                            <a href={MainConfig.BASE_URL + "/Feed/NewFeedExchange?eventId=" + item.EventId} className="btn btn-sm btn-default">Apply</a>
+                                            {/*<a href="#" className="btn btn-sm btn-default">Apply</a>*/}
                                         </td>
                                     </tr>
                                 )
@@ -128,6 +139,12 @@ class FeedEvents extends BaseController
 
                             </tbody>
                         </table>
+
+                        <div className="row">
+                            <div className="col-xs-12">
+                                <PagerBox total={PageInfo.TotalPages} current={PageInfo.CurrentPage - 1} visiblePage={5} onPageChange={this._onPagerClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: CurrentOrderBy})} />
+                                </div>
+                        </div>
 
                     </div>
                 </div>
@@ -157,6 +174,23 @@ class FeedEvents extends BaseController
 
 
     /**
+     * Click on sport filter
+     * @private
+     */
+    _onFiterClick(props, filter, newFilter)
+    {
+        // 0||console.log( '{props, filter, ee, p1}', {props, filter, ee, p1} );
+        // return;
+        const { actions, } = this.props;
+        props[filter] = newFilter;
+        props.page = 1;
+
+        this.sendingMode(true);
+        actions.actionGetNewTableData({props, callback: ::this._onSortCallback});
+    }
+
+
+    /**
      * Click on column header
      * @private
      */
@@ -165,9 +199,26 @@ class FeedEvents extends BaseController
         const { actions, data } = this.props;
 
         ee.preventDefault();
+        props.page = 1;
 
         this.sendingMode(true);
-        actions.actionGetNewTableData(props, {callback: ::this._onSortCallback});
+        actions.actionGetNewTableData({props, callback: ::this._onSortCallback});
+    }
+
+
+    /**
+     * Click on pager
+     * @private
+     */
+    _onPagerClick(props, newPage)
+    {
+        const { actions } = this.props;
+
+        this.sendingMode(true);
+
+        props.page = newPage + 1;
+
+        actions.actionGetNewTableData({props, callback: ::this._onSortCallback});
     }
 
 
@@ -175,11 +226,7 @@ class FeedEvents extends BaseController
     {
         this.sendingMode(false);
 
-        if( errorCode === 200)
-        {
-            // redirect
-        }
-        else
+        if( errorCode !== 100)
         {
             (new InfoMessages).show({
                 title: '',
