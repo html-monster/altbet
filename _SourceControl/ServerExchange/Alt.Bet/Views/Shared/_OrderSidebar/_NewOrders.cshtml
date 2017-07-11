@@ -1,0 +1,167 @@
+﻿@model AltBet.Bet.Models.MarketOrderViewModel
+@*@{
+    var options = new AjaxOptions
+    {
+        OnBegin = "ajaxControllerClass.OnBeginJs",
+        OnSuccess = "ajaxControllerClass.OnSuccessJs",
+        OnFailure = "ajaxControllerClass.OnFailureJs",
+        //OnComplete = "OnCompleteJs",
+    };
+}*@
+<div class="tab_item" id="order">
+    <div class="default_orders">
+        <p id="default_order_info">@*MAKE YOUR SELECTION(S) ON THE LEFT BY CLICKING ON THE PRICES. OR TURN ON ACTIVE BETTOR ABOVE.*@</p>
+    </div>
+    <div class="active_trader" style="display: none;">
+    <div class="event_title">
+        <div class="event_name"></div>
+        <div class="event_name reverse"></div>
+    </div>
+    <table class="info">
+        <tbody>
+            <tr>
+                <td class="open_pnl trader_info">
+                    <a href="#">
+                        P/L
+                        <span class="quantity"></span>
+                        <span class="help">
+                            <span class="help_message right"><strong>Profit in this event</strong></span>
+                        </span>
+                    </a>
+                </td>
+                <td class="open_contracts trader_info">
+                    <a href="#">
+                        Quantity 
+                        <span class="quantity up"></span>
+                        <span class="help">
+                            <span class="help_message"><strong>Open postions</strong></span>
+                        </span>
+                    </a>
+                </td>
+                <td class="amount trader_info">
+                    <a href="#">
+                        Avg. Price
+                        <span class="quantity up">26</span>
+                        <span class="help"><span class="help_message"><strong>Average price of postion</strong></span></span>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+        <table class="control">
+            <tbody>
+                <tr>
+                    <td class="buy_mkt confim buy market_button wave"><button>Buy MKT</button></td>
+                    <td class="sell_mkt confim sell market_button wave"><button>Sell MKT</button></td>
+                    <td class="spreader label"><span>Spreader</span></td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td class="label"><span>Quantity</span></td>
+                    <td class="volume quantity">
+                        <div class="input">
+                            <button class="clear"></button>
+                            <input type="text" class="number quantity" data-validation="1" maxlength="8">
+                            <div class="warning" style="display: none;"><p>Available integer value more than 0</p></div><div class="regulator min"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
+                        </div>
+                    </td>
+                    <td class="spread_container">
+                        <div class="input">
+                            <button class="clear"></button>
+                            <input type="text" class="number spreader" maxlength="4" disabled>
+                            <div class="warning" style="display: none;">
+                                <p>Available value from 0.01 to 0.99</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+   
+        <table class="control">
+            <tbody>
+                <tr>
+                    <td class="button quantity"><button class="btn wave">5</button><button class="btn wave">10</button></td>
+                    <td class="button quantity"><button class="btn wave">20</button><button class="btn wave">50</button></td>
+                    <td class="button spread"><button class="wave" disabled>0.01</button><button class="wave" disabled>0.05</button></td>
+                </tr>
+                <tr>
+                    <td class="button quantity"><button class="btn wave">100</button><button class="btn wave">200</button></td>
+                    <td class="button quantity"><button class="btn wave">500</button><button class="btn wave">1000</button></td>
+                    <td class="button spread"><button class="wave" disabled>0.10</button><button class="wave" disabled>0.15</button></td>
+                </tr>
+                <tr>
+                    <td class="join_bid buy market_button confim wave"><a href="#">Join BID <span class="price"></span></a></td>
+                    <td class="join_ask sell market_button confim wave"><a href="#"><span class="price"></span> Join ASK</a></td>
+                    <td class="button spread"><button class="wave" disabled>0.25</button><button class="wave" disabled>0.30</button></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <div class="active_trader_footer">
+            <table class="remote control">
+                <tbody>
+                    <tr>
+                        <td class="reverse active">
+                            <a href="#" class="ReverseAllJs">Reverse</a>
+                            <div class="confirm_window animated">
+                                <div class="container">
+                                    <span>Do you really want do it?</span>
+                                    <div class="button_container">
+                                        <button class="btn wave yes">Yes</button>
+                                        <button class="btn wave no">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="cancel_all active">
+                            <a href="#" class="CancelAllJs">Cancel All</a>
+                            <div class="confirm_window animated">
+                                <div class="container">
+                                    <span>Do you really want do it?</span>
+                                    <div class="button_container">
+                                        <button class="btn wave yes">Yes</button>
+                                        <button class="btn wave no">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="close_out active">
+                            <a href="#" class="CloseOutJs">Close Out</a>
+                            <div class="confirm_window animated">
+                                <div class="container">
+                                    <span>Do you really want do it?</span>
+                                    <div class="button_container">
+                                        <button class="btn wave yes">Yes</button>
+                                        <button class="btn wave no">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table_limit">
+            <table class="limit">
+                <thead>
+                    <tr>
+                        <th>My Bids</th>
+                        <th>Size</th>
+                        <th>Price</th>
+                        <th>Size</th>
+                        <th>My Offers</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            @*<div class="show_spread"><span class="visibility"></span> spread</div>*@
+        </div>
+        <div class="template">
+            @Html.Partial("_OrderSidebar/_NewOrders/_DefaultOrder")
+            @Html.Partial("_OrderSidebar/_NewOrders/_ActiveTrader")
+            @Html.Partial("_OrderSidebar/_NewOrders/_Spreader")
+            @Html.Partial("_OrderSidebar/_CurrentOrders/_CurrentOrdersEdit")
+        </div>
+    </div>
+</div>

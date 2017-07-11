@@ -1,0 +1,15 @@
+﻿﻿@{
+    ViewBag.Title = "UnSubscribe";
+}
+
+
+<div class="answer_wrapper">
+    <div class="answer_container container_bg">
+        <h1 class="animated fadeIn">You have been unsubscribed</h1>
+        <p class="animated fadeIn">If you want to subscribe or change some settings you can do it <a href="@Url.Action("Index", "Account")#/preferences" class="link">here</a>.</p>
+    </div>
+
+    <script>
+        globalData.answerPageOn = true;
+    </script>
+</div>

@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/AltBet.Exchange" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AltBet.Exchange" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/AltBet.Exchange.WebSocketSender" />
+  <xs:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="UserNewHashCodeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorCode" type="xs:int" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Result" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserNewHashCodeResponse" nillable="true" type="tns:UserNewHashCodeResponse" />
+  <xs:complexType name="UserConfirmationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorCode" type="xs:int" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Result" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserConfirmationResponse" nillable="true" type="tns:UserConfirmationResponse" />
+  <xs:complexType name="User">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Accounts" nillable="true" type="tns:ArrayOfAccount" />
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConfirmationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConfirmationExpired" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InsertedDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastEditedDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NickName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaymentsHistory" nillable="true" type="tns:ArrayOfPaymentsHistory" />
+      <xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Type" type="tns:UserType" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="ArrayOfAccount">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Account" nillable="true" type="tns:Account" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccount" nillable="true" type="tns:ArrayOfAccount" />
+  <xs:complexType name="Account">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/AltBet.Exchange.WebSocketSender" base="q1:WebSocketMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Balance" type="xs:decimal" />
+          <xs:element minOccurs="0" name="Bettor" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GIDX_CustomerId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GIDX_SessionId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MailActivity" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MailFrequency" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MailNews" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MailUpdates" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Mode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SmsActivity" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TariffPlan" nillable="true" type="tns:TariffPlan" />
+          <xs:element minOccurs="0" name="Theme" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Trade" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Account" nillable="true" type="tns:Account" />
+  <xs:complexType name="MessageResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/AltBet.Exchange.WebSocketSender" base="q2:WebSocketMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Result" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MessageResponse" nillable="true" type="tns:MessageResponse" />
+  <xs:complexType name="Execution">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/AltBet.Exchange.WebSocketSender" base="q3:WebSocketMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AverrageFillPrice" type="xs:decimal" />
+          <xs:element minOccurs="0" name="CancelledQuantity" type="xs:long" />
+          <xs:element minOccurs="0" name="ClosedQuantity" type="xs:long" />
+          <xs:element minOccurs="0" name="FilledQuantity" type="xs:long" />
+          <xs:element minOccurs="0" name="LastPrice" type="xs:decimal" />
+          <xs:element minOccurs="0" name="LastQuantity" type="xs:long" />
+          <xs:element minOccurs="0" name="LeaveQuantity" type="xs:long" />
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OrderID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PaidUpQuantity" type="xs:long" />
+          <xs:element minOccurs="0" name="Status" type="tns:Status" />
+          <xs:element minOccurs="0" name="Time" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Execution" nillable="true" type="tns:Execution" />
+  <xs:simpleType name="Status">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Opened" />
+      <xs:enumeration value="Activated" />
+      <xs:enumeration value="PartialFilled" />
+      <xs:enumeration value="Filled" />
+      <xs:enumeration value="Done" />
+      <xs:enumeration value="Rejected" />
+      <xs:enumeration value="Cancelled" />
+      <xs:enumeration value="Expiried" />
+      <xs:enumeration value="OpenedPosition" />
+      <xs:enumeration value="PartialFilledPosition" />
+      <xs:enumeration value="FilledPosition" />
+      <xs:enumeration value="VirtualPosition" />
+      <xs:enumeration value="VirtualOrder" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Status" nillable="true" type="tns:Status" />
+  <xs:complexType name="WebSoketOrdersResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/AltBet.Exchange.WebSocketSender" base="q4:WebSocketMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AccountData" nillable="true" type="tns:UserMoneyData" />
+          <xs:element minOccurs="0" name="ActiveOrders" nillable="true" type="tns:ArrayOfAllSymbolsAndOrders" />
+          <xs:element minOccurs="0" name="Bars" nillable="true" type="tns:ArrayOfGraphBars" />
+          <xs:element minOccurs="0" name="CurrentOrders" nillable="true" type="tns:ArrayOfCurrentOrders" />
+          <xs:element minOccurs="0" name="OrdersPositionsHistory" nillable="true" type="tns:OrdersPositionsHistory" />
+          <xs:element minOccurs="0" name="SymbolsAndOrders" nillable="true" type="tns:GetAllSymbolsAndOrdersResponse" />
+          <xs:element minOccurs="0" name="Ticks" nillable="true" type="tns:ArrayOfSortedTicks" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WebSoketOrdersResponse" nillable="true" type="tns:WebSoketOrdersResponse" />
+  <xs:complexType name="UserMoneyData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Available" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Exposure" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Profitlost" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserMoneyData" nillable="true" type="tns:UserMoneyData" />
+  <xs:complexType name="ArrayOfAllSymbolsAndOrders">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AllSymbolsAndOrders" nillable="true" type="tns:AllSymbolsAndOrders" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAllSymbolsAndOrders" nillable="true" type="tns:ArrayOfAllSymbolsAndOrders" />
+  <xs:complexType name="AllSymbolsAndOrders">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CategoryBreadcrumbs" nillable="true" type="tns:ArrayOfCategoryItem" />
+      <xs:element minOccurs="0" name="CategoryChain" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CategoryIcon" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CategoryUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GainLoss" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Invested" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Orders" nillable="true" type="tns:ArrayOfActiveOrder" />
+      <xs:element minOccurs="0" name="Positions" type="xs:long" />
+      <xs:element minOccurs="0" name="Symbol" nillable="true" type="tns:Symbol" />
+      <xs:element minOccurs="0" name="TimeRemains" type="ser:duration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AllSymbolsAndOrders" nillable="true" type="tns:AllSymbolsAndOrders" />
+  <xs:complexType name="ArrayOfCategoryItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CategoryItem" nillable="true" type="tns:CategoryItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCategoryItem" nillable="true" type="tns:ArrayOfCategoryItem" />
+  <xs:complexType name="CategoryItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CatIcon" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CatId" type="ser:guid" />
+      <xs:element minOccurs="0" name="CatName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CatParentId" type="ser:guid" />
+      <xs:element minOccurs="0" name="CatPosition" type="xs:int" />
+      <xs:element minOccurs="0" name="CatUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CatUrlChain" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CategoryItem" nillable="true" type="tns:CategoryItem" />
+  <xs:complexType name="ArrayOfActiveOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ActiveOrder" nillable="true" type="tns:ActiveOrder" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfActiveOrder" nillable="true" type="tns:ArrayOfActiveOrder" />
+  <xs:complexType name="ActiveOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Side" type="tns:Side" />
+      <xs:element minOccurs="0" name="SummaryPositionPrice" nillable="true" type="tns:ArrayOfSummaryPositionPrice" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ActiveOrder" nillable="true" type="tns:ActiveOrder" />
+  <xs:simpleType name="Side">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Buy" />
+      <xs:enumeration value="Sell" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Side" nillable="true" type="tns:Side" />
+  <xs:complexType name="ArrayOfSummaryPositionPrice">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SummaryPositionPrice" nillable="true" type="tns:SummaryPositionPrice" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSummaryPositionPrice" nillable="true" type="tns:ArrayOfSummaryPositionPrice" />
+  <xs:complexType name="SummaryPositionPrice">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ParticularUserQuantity" type="xs:long" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SummaryPositionPrice" nillable="true" type="tns:SummaryPositionPrice" />
+  <xs:complexType name="Symbol">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ApprovedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="AwayAlias" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AwayHandicap" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AwayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AwayPoints" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CategoryId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DelayTime" type="xs:int" />
+      <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EndDateStr" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Exchange" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HomeAlias" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HomeHandicap" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="HomeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HomePoints" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LastAsk" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LastBid" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LastPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LastSide" nillable="true" type="tns:Side" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PriceChangeDirection" type="xs:int" />
+      <xs:element minOccurs="0" name="ResultExchange" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SettlementDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SortingData" nillable="true" type="tns:ArrayOfExchangeSortData" />
+      <xs:element minOccurs="0" name="StartDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartDateStr" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" type="tns:StatusEvent" />
+      <xs:element minOccurs="0" name="StatusEvent" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TypeEvent" type="tns:TypeEvent" />
+      <xs:element minOccurs="0" name="UrlExchange" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Symbol" nillable="true" type="tns:Symbol" />
+  <xs:complexType name="ArrayOfExchangeSortData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ExchangeSortData" nillable="true" type="tns:ExchangeSortData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfExchangeSortData" nillable="true" type="tns:ArrayOfExchangeSortData" />
+  <xs:complexType name="ExchangeSortData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExchangeSortData" nillable="true" type="tns:ExchangeSortData" />
+  <xs:simpleType name="StatusEvent">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="New" />
+      <xs:enumeration value="Approved" />
+      <xs:enumeration value="Completed" />
+      <xs:enumeration value="Settlement" />
+      <xs:enumeration value="Suspended" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="StatusEvent" nillable="true" type="tns:StatusEvent" />
+  <xs:simpleType name="TypeEvent">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Short">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Full">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TypeEvent" nillable="true" type="tns:TypeEvent" />
+  <xs:complexType name="ArrayOfGraphBars">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GraphBars" nillable="true" type="tns:GraphBars" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGraphBars" nillable="true" type="tns:ArrayOfGraphBars" />
+  <xs:complexType name="GraphBars">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Symbol" nillable="true" type="tns:Symbol" />
+      <xs:element minOccurs="0" name="Ticks" nillable="true" type="tns:ArrayOfBar" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GraphBars" nillable="true" type="tns:GraphBars" />
+  <xs:complexType name="ArrayOfBar">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Bar" nillable="true" type="tns:Bar" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBar" nillable="true" type="tns:ArrayOfBar" />
+  <xs:complexType name="Bar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Close" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="High" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Low" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Open" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Side" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Time" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Volume" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Bar" nillable="true" type="tns:Bar" />
+  <xs:complexType name="ArrayOfCurrentOrders">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CurrentOrders" nillable="true" type="tns:CurrentOrders" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCurrentOrders" nillable="true" type="tns:ArrayOfCurrentOrders" />
+  <xs:complexType name="CurrentOrders">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LastSide" nillable="true" type="tns:Side" />
+      <xs:element minOccurs="0" name="Orders" nillable="true" type="tns:ArrayOfOrderOrPosition" />
+      <xs:element minOccurs="0" name="Positions" type="xs:long" />
+      <xs:element minOccurs="0" name="Symbol" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CurrentOrders" nillable="true" type="tns:CurrentOrders" />
+  <xs:complexType name="ArrayOfOrderOrPosition">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderOrPosition" nillable="true" type="tns:OrderOrPosition" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderOrPosition" nillable="true" type="tns:ArrayOfOrderOrPosition" />
+  <xs:complexType name="OrderOrPosition">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Category" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Side" type="tns:Side" />
+      <xs:element minOccurs="0" name="Symbol" nillable="true" type="tns:Symbol" />
+      <xs:element minOccurs="0" name="Time" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Volume" type="xs:long" />
+      <xs:element minOccurs="0" name="isMirror" type="xs:int" />
+      <xs:element minOccurs="0" name="isPosition" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderOrPosition" nillable="true" type="tns:OrderOrPosition" />
+  <xs:complexType name="OrdersPositionsHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HistoryTradeItems" nillable="true" type="tns:ArrayOfHistoryTradeItem" />
+      <xs:element minOccurs="0" name="OrdersOrPositions" nillable="true" type="tns:ArrayOfOrderOrPosition" />
+      <xs:element minOccurs="0" name="Positions" nillable="true" type="tns:ArrayOfGroupPosition" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrdersPositionsHistory" nillable="true" type="tns:OrdersPositionsHistory" />
+  <xs:complexType name="ArrayOfHistoryTradeItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HistoryTradeItem" nillable="true" type="tns:HistoryTradeItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHistoryTradeItem" nillable="true" type="tns:ArrayOfHistoryTradeItem" />
+  <xs:complexType name="HistoryTradeItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Fees" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IsMaker" type="xs:int" />
+      <xs:element minOccurs="0" name="IsMirror" type="xs:int" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:long" />
+      <xs:element minOccurs="0" name="Side" type="tns:Side" />
+      <xs:element minOccurs="0" name="Symbol" nillable="true" type="tns:Symbol" />
+      <xs:element minOccurs="0" name="Time" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HistoryTradeItem" nillable="true" type="tns:HistoryTradeItem" />
+  <xs:complexType name="ArrayOfGroupPosition">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GroupPosition" nillable="true" type="tns:GroupPosition" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGroupPosition" nillable="true" type="tns:ArrayOfGroupPosition" />
+  <xs:complexType name="GroupPosition">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Category" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CommonSymbolProfitLoss" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CommonSymbolVolume" type="xs:long" />
+      <xs:element minOccurs="0" name="SubPositions" nillable="true" type="tns:ArrayOfSubPosition" />
+      <xs:element minOccurs="0" name="Symbol" nillable="true" type="tns:Symbol" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GroupPosition" nillable="true" type="tns:GroupPosition" />
+  <xs:complexType name="ArrayOfSubPosition">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SubPosition" nillable="true" type="tns:SubPosition" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSubPosition" nillable="true" type="tns:ArrayOfSubPosition" />
+  <xs:complexType name="SubPosition">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AvgPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CommonProfitLoss" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CommonVolume" type="xs:long" />
+      <xs:element minOccurs="0" name="EventHandicap" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EventName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsMirror" type="xs:int" />
+      <xs:element minOccurs="0" name="Side" type="tns:Side" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SubPosition" nillable="true" type="tns:SubPosition" />
+  <xs:complexType name="GetAllSymbolsAndOrdersResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" nillable="true" type="tns:ArrayOfAllSymbolsAndOrders" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetAllSymbolsAndOrdersResponse" nillable="true" type="tns:GetAllSymbolsAndOrdersResponse" />
+  <xs:complexType name="ArrayOfSortedTicks">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SortedTicks" nillable="true" type="tns:SortedTicks" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSortedTicks" nillable="true" type="tns:ArrayOfSortedTicks" />
+  <xs:complexType name="SortedTicks">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Symbol" nillable="true" type="tns:Symbol" />
+      <xs:element minOccurs="0" name="Ticks" nillable="true" type="tns:ArrayOfTick" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SortedTicks" nillable="true" type="tns:SortedTicks" />
+  <xs:complexType name="ArrayOfTick">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Tick" nillable="true" type="tns:Tick" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTick" nillable="true" type="tns:ArrayOfTick" />
+  <xs:complexType name="Tick">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Ask" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AskSize" type="xs:long" />
+      <xs:element minOccurs="0" name="Bid" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BidSize" type="xs:long" />
+      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Side" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Symbol" nillable="true" type="tns:Symbol" />
+      <xs:element minOccurs="0" name="Time" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Volume" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Tick" nillable="true" type="tns:Tick" />
+  <xs:complexType name="TariffPlan">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BeginTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TariffPlan" nillable="true" type="tns:TariffPlan" />
+  <xs:complexType name="ArrayOfPaymentsHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PaymentsHistory" nillable="true" type="tns:PaymentsHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPaymentsHistory" nillable="true" type="tns:ArrayOfPaymentsHistory" />
+  <xs:complexType name="PaymentsHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="TransactionId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="direction" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="system" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PaymentsHistory" nillable="true" type="tns:PaymentsHistory" />
+  <xs:simpleType name="UserType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Registered" />
+      <xs:enumeration value="Confirmed" />
+      <xs:enumeration value="Verified" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="UserType" nillable="true" type="tns:UserType" />
+  <xs:complexType name="ResultObj">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Error" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Param1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Param2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Param3" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResultObj" nillable="true" type="tns:ResultObj" />
+  <xs:complexType name="PushSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubscribeOrUnsubscribe" type="xs:unsignedByte" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PushSettings" nillable="true" type="tns:PushSettings" />
+  <xs:complexType name="GidxNotification">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MerchantCustomerID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NotificationType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GidxNotification" nillable="true" type="tns:GidxNotification" />
+</xs:schema>

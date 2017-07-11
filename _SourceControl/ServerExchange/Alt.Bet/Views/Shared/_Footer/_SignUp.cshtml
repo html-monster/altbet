@@ -1,0 +1,233 @@
+﻿@model AltBet.Bet.Models.UserViewModel
+@{
+    var options = new AjaxOptions
+    {
+        Url = Url.Action("Register", "Account"),
+        OnBegin = "ajaxRegistrationControllerClass.OnBeginJs",
+        OnSuccess = "ajaxRegistrationControllerClass.OnSuccessJs",
+        OnFailure = "ajaxRegistrationControllerClass.OnFailureJs",
+        //OnComplete = "OnCompleteJs",
+    };
+}
+
+<div class="sign_up_form pop_up" id="DiregisterMP">
+    <div class="pop_up_container">
+        <div class="sign_up_content pop_up_content">
+            <div class="header">
+                <span class="close"><span></span></span>
+                <div class="logo_container">
+                    <a href="/" class="logo"><strong>alt.bet</strong></a>
+                </div>
+                <div class="warning_container">
+                    <span>Over 18 only</span>
+                </div>
+            </div>
+            <div class="top_reg">
+                <div class="wrapper_reg">
+                    <div class="tabs">
+                        @*<span class="tab">real</span>*@
+                        <!--<span class="tab">Demo</span>-->
+                        @*<span class="tab market-make">Market maker</span>*@
+                    </div>
+                    <div class="tab_content">
+                        <div class="tab_item real">
+                            @*@using (@Html.BeginForm("Register", "Account", FormMethod.Post, new { autocomplete = "off" }))*@
+                            @using (Ajax.BeginForm("Register", "Account", null, options, new { autocomplete = "off" }))
+                            {
+                                <div class="left_column column">
+                                    <!--<h2>Your details</h2>-->
+
+                                    @*<span class="input_animate input--yoshiko">
+                                        @Html.ValidationMessageFor(m => m.FirstName, null, new { @class = "validation-summary-errors" })
+                                        @Html.TextBoxFor(model => model.FirstName, new { @class = "input__field input__field--yoshiko", id = "f_name", autocomplete = "off", maxlength = "50" })
+                                        @*<input class="input__field input__field--yoshiko" type="text" id="f_name"disabled autocomplete="off"/>
+                                        <label class="input__label input__label--yoshiko" for="f_name">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="First Name">First Name</span>
+                                        </label>
+                                        <span class="validation-summary-errors"></span>
+                                        <span class="info top">
+                                            <i>Your first name as specified in your passport</i>
+                                        </span>
+                                    </span>*@
+
+                                    @*<span class="input_animate input--yoshiko">
+                                        @Html.ValidationMessageFor(m => m.LastName, null, new { @class = "validation-summary-errors" })
+                                        @Html.TextBoxFor(model => model.LastName, new { @class = "input__field input__field--yoshiko", id = "l_name", autocomplete = "off", maxlength = "50" })
+                                        @*<input class="input__field input__field--yoshiko" type="text" id="l_name"disabled autocomplete="off"/>
+                                        <label class="input__label input__label--yoshiko" for="l_name">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="Last Name">Last Name</span>
+                                        </label>
+                                        <span class="validation-summary-errors"></span>
+                                        <span class="info top">
+                                            <i>Your second name as specified in your passport</i>
+                                        </span>
+                                    </span>*@
+
+
+
+                                    <span class="input_animate input--kuro inpt_mail">
+                                        @Html.ValidationMessageFor(model => model.NickName, null, new { @class = "validation-summary-errors" })
+                                        @Html.TextBoxFor(model => model.NickName, new { id = "login-email", @class = "input__field input__field--kuro", maxlength = "128" })
+                                        <label class="input__label input__label--kuro" for="login-email">
+                                            <span class="input__label-content input__label-content--kuro">E-mail or User Name</span>
+                                        </label>
+                                    </span>
+
+
+
+                                    <span class="input_animate input--yoshiko">   
+                                        @Html.ValidationMessageFor(model => model.NickName, null, new { @class = "validation-summary-errors"})                                     
+                                        @Html.TextBoxFor(model => model.NickName, new { @class = "input__field input__field--yoshiko", id = "n_name", autocomplete = "off", maxlength = "15"})
+                                        <label class="input__label input__label--yoshiko" for="n_name">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="User Name">User Name</span>                                          
+                                        </label>
+                                    </span>
+
+                                    <span class="input_animate input--yoshiko">
+                                        @Html.ValidationMessageFor(m => m.DateOfBirth, null, new { @class = "validation-summary-errors" })
+                                        @Html.TextBoxFor(m => m.DateOfBirth, new {@class = "input__field input__field--yoshiko datePickerJs", id = "user_b_day"})
+                                        <label class="input__label input__label--yoshiko" for="user_b_day">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="Date of birth">Date of birth</span>
+                                        </label>
+                                        <span class="validation-summary-errors"></span>
+                                    </span>
+
+                                    <span class="input_animate input--yoshiko">
+                                        @Html.ValidationMessageFor(m => m.Country, null, new { @class = "validation-summary-errors" })
+                                        @Html.TextBoxFor(model => model.Country, new { @class = "input__field input__field--yoshiko", id = "c_name", autocomplete = "off", maxlength = "128" })
+                                        @*<input class="input__field input__field--yoshiko" type="text" id="c_name" disabled autocomplete="off"/>*@  
+                                        <label class="input__label input__label--yoshiko" for="c_name">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="Country">Country</span>
+                                        </label>
+                                        <span class="validation-summary-errors"></span>
+                                        <span class="info top">
+                                            <i>Indicate the country of your permanent residence</i>
+                                        </span>
+                                    </span>
+
+                                    @*<span class="input_animate input--yoshiko">
+                                        @Html.ValidationMessageFor(m => m.Address, null, new { @class = "validation-summary-errors" })
+                                        @Html.TextBoxFor(model => model.Address, new { @class = "input__field input__field--yoshiko", id = "s_name", autocomplete = "off", maxlength = "200" })
+                                        @*<input class="input__field input__field--yoshiko" type="text" id="s_name"disabled autocomplete="off"/>
+                                        <label class="input__label input__label--yoshiko" for="s_name">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="Address">Address</span>
+                                        </label>
+                                        <span class="validation-summary-errors"></span>
+                                        <span class="info top">
+                                            <i>Enter address manually</i>
+                                        </span>
+                                    </span>*@
+
+                                    @*<span class="input_animate input--yoshiko">
+                                        @Html.ValidationMessageFor(m => m.Phone, null, new { @class = "validation-summary-errors" })
+                                        @Html.TextBoxFor(model => model.Phone, new { @class = "input__field input__field--yoshiko", id = "t_number", autocomplete = "off", maxlength = "30" })
+                                        @*<input class="input__field input__field--yoshiko" type="tel" id="t_number"disabled autocomplete="off"/>
+                                        <label class="input__label input__label--yoshiko" for="t_number">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="Phone">Phone</span>
+                                        </label>
+                                        <span class="validation-summary-errors"></span>
+                                    </span>*@
+
+                                    <span class="input_animate input--yoshiko">
+                                        @Html.ValidationMessageFor(model => model.Email, null, new { @class = "validation-summary-errors" })
+                                        @Html.TextBoxFor(model => model.Email, new { @class = "input__field input__field--yoshiko", type = "email", id = "e_name", autocomplete = "off", maxlength = "128" })
+                                        <label class="input__label input__label--yoshiko" for="e_name">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="Email Address">Email Address</span>
+                                        </label>
+                                        <span class="validation-summary-errors"></span>
+                                        <span class="info bottom">
+                                            <i>
+                                                Specify your valid email. A message with registration
+                                                confirmation will be sent at that address.Also that address
+                                                will be used for communication with you
+                                            </i>
+                                        </span>
+                                    </span>
+
+                                    <span class="input_animate input--yoshiko pass_container inpt_password">
+                                        @Html.ValidationMessageFor(model => model.Password, null, new { @class = "validation-summary-errors" })
+                                        @Html.PasswordFor(model => model.Password, new { @class = "input__field input__field--yoshiko", type = "password", id = "r_pass", autocomplete = "off", maxlength = "20" })
+                                        <span class="show_password"></span>
+                                        <label class="input__label input__label--yoshiko" for="r_pass">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="Password">Password</span>
+                                        </label>
+                                        <span class="validation-summary-errors"></span>
+                                    </span>
+
+                                    <span class="input_animate input--yoshiko pass_container">
+                                        @Html.ValidationMessageFor(model => model.ComparePassword, null, new { @class = "validation-summary-errors" })
+                                        @Html.PasswordFor(model => model.ComparePassword, new { @class = "input__field input__field--yoshiko", type = "password", id = "r_confirm_pass", autocomplete = "off", maxlength = "20" })
+                                        <span class="show_password"></span>
+                                        <label class="input__label input__label--yoshiko" for="r_confirm_pass">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="Confirm Password">Confirm Password</span>
+                                        </label>
+                                        <span class="validation-summary-errors"></span>
+                                    </span>
+
+                                </div>
+
+                                <div class="right_column column">
+
+                                    <span class="input_animate input--yoshiko">
+                                        <input class="input__field input__field--yoshiko" type="text" id="question"disabled autocomplete="off"/>
+                                        <label class="input__label input__label--yoshiko" for="question">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="Security question">Security question</span>
+                                        </label>
+                                        <span class="validation-summary-errors"></span>
+                                        <span class="info top">
+                                            <i>
+                                                In case you will forget the password, you can restore it, havin
+                                                specified a correct answer on the security question.
+                                                Please select a guastion that you will know the answer.
+                                            </i>
+                                        </span>
+                                    </span>
+
+                                    <span class="input_animate input--yoshiko">
+                                        <input class="input__field input__field--yoshiko" type="text" id="answer"disabled autocomplete="off"/>
+                                        <label class="input__label input__label--yoshiko" for="answer">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="Security answer">Security answer</span>
+                                        </label>
+                                        <span class="validation-summary-errors"></span>
+                                        <span class="info top">
+                                            <i>It will be needed if you forget your password</i>
+                                        </span>
+                                    </span>
+
+                                    <span class="input_animate input--yoshiko">
+                                        <input class="input__field input__field--yoshiko" type="text" id="promo"disabled autocomplete="off"/>
+                                        <label class="input__label input__label--yoshiko" for="promo">
+                                            <span class="input__label-content input__label-content--yoshiko" data-content="Promo code(if applicable)">Promo code(if applicable)</span>
+                                        </label>
+                                        <span class="validation-summary-errors"></span>
+                                    </span>
+                                </div>
+                                <hr>
+                                <div class="agreement">
+                                    <div class="checkbox_container">
+                                        <input type="checkbox" id="agreement"><label for="agreement">Agree to the <a href="/conditions.html" class="text_decoration">Terms of Use</a> and <a href="#" class="text_decoration">Privacy Notice</a></label>
+                                    </div>
+                                    <div class="checkbox_container">
+                                        <input type="checkbox" id="agreement_age"><label for="agreement_age">I confirm that I am at least 18 years of age.</label>
+                                    </div>
+                                </div>
+                                <div class="submit">
+                                    <input type="submit" value="Register" id="submit_sign_up" class="btn">                                   
+                                    @*<input type="submit" class="btn submit wave" value="Submit">*@
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="confirm pop_up">
+                <div class="pop_up_container">
+                    <span class="pop_up_content">
+                        A letter of confirmation of registration has been sent to you by email. Follow the link in the email to activate your Account.
+                        <button class="btn">Ok</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models.WebCashier" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models.WebCashier" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models" />
+  <xs:simpleType name="PayActionCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Pay" />
+      <xs:enumeration value="Payout" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PayActionCode" nillable="true" type="tns:PayActionCode" />
+  <xs:complexType name="CreateSessionResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models" base="q1:CreateSessionResponseBase">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateSessionResponse" nillable="true" type="tns:CreateSessionResponse" />
+  <xs:complexType name="SessionStatusCallbackResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models" base="q2:SessionStatusCallbackResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MerchantTransactionID" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SessionStatusCallbackResponse" nillable="true" type="tns:SessionStatusCallbackResponse" />
+</xs:schema>

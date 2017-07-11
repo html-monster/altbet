@@ -1,0 +1,98 @@
+﻿@model AltBet.Bet.Models.EditOrderViewModel
+@{
+    var options = new AjaxOptions
+    {
+        Url = Url.Action("Edit", "Order"),
+        OnBegin = "ajaxControllerClass.OnBeginJs",
+        OnSuccess = "ajaxControllerClass.OnSuccessJs",
+        OnFailure = "ajaxControllerClass.OnFailureJs",
+        //OnComplete = "OnCompleteJs",
+    };
+}
+<div class="order_content tmp">
+    <div class="my_order">
+        <div class="order-title">
+            <div class="container">
+                <h3></h3>
+                <strong class="last-price"></strong>
+                <strong class="current-order up">pos: <span></span></strong>
+
+            </div>
+        </div>
+
+        <div class="order_container not-sort">
+            <div class="order_info">
+                <div class="container">
+                    <strong class="title">Price <span class="price"></span></strong>
+                    <strong class="title">Quantity <span class="volume"></span></strong>
+                    <strong class="timestamp"><span class="date"></span> | <span class="time"></span></strong>
+                </div>
+
+                <button class="delete"></button>
+                <button class="edit" title="edit or change the order"></button>
+                <div class="pop_up">
+                    <div class="confirmation">
+                        @using (Ajax.BeginForm("Cancel", "Order", new AjaxOptions { Url = Url.Action("Cancel", "Order") }))
+                        {
+                            <input class="curnt_ord_id" name="id" type="hidden">
+                            <button class="yes btn">Delete</button>
+                        }
+                        <button class="no btn">No</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-container">
+                @using (Ajax.BeginForm("Edit", "Order", new { }, options, new { autocomplete = "off" }))
+                {
+                    <div class="container">
+                        <div class="price ">
+                            <label>Your price</label>
+                            <div class="input">
+                                @Html.TextBoxFor(model => model.LimitPrice, new { @class = "number", data_validation = "0.33", maxlength = "4", autocomplete = "off" })
+                                @*<input type="text" class="number" data-validation="0.33" maxlength="4" value="0." autocomplete="off">*@
+                                <div class="warning" style="display: none;"><p>Допустимое значение от 0.01 до 0.99</p></div>
+                                <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
+                            </div>
+                        </div>
+                        <div class="volume ">
+                            <label>Quantity</label>
+                            <div class="input">
+                                @Html.TextBoxFor(model => model.Quantity, new { @class = "number", data_validation = "123", maxlength = "7", autocomplete = "off" })
+                                @*<input type="text" class="number" data-validation="123" maxlength="7" autocomplete="off">*@
+                                <div class="warning" style="display: none;"><p>Допустимое только целые значения больше 0</p></div>
+                                <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
+                            </div>
+                        </div>
+                        <div class="order_type ">
+                            <div class="obligations">
+                                <label>Sum</label>
+                                <div class="input">
+                                    <input type="text" class="number" data-validation="40.59" maxlength="10" autocomplete="off">
+                                    <div class="warning" style="display: none;"><p>Допустимое значение от 0.01</p></div>
+                                    <div class="regulator"><span class="plus" title="Press Arrow Up"></span><span class="minus" title="Press Arrow Down"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @Html.HiddenFor(model => model.ID)
+                    @Html.HiddenFor(model => model.Symbol)
+                    @Html.HiddenFor(model => model.isMirror)
+                    @Html.HiddenFor(model => model.Side)
+                    <div class="container">
+                        <label class="checkbox">
+                            @Html.CheckBoxFor(model => model.OrderType, new { type = "checkbox", @checked = "true" })<span>Limit</span>
+                        </label>
+                        <input type="submit" class="btn " value="" style="text-transform: uppercase;">
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="pop_up">
+        <div class="confirmation not-sort">
+            <button class="yes btn">Delete</button>
+            <button class="no btn">No</button>
+        </div>
+    </div>
+</div>

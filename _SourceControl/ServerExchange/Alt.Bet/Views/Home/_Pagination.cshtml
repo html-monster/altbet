@@ -1,0 +1,15 @@
+﻿@*@model AltBet.App_Start.Pagination*@
+@using AltBet.App_Start
+@model Pagination
+
+<ul class="pagination_list" style="display: none">
+    @for (var i = 0; i < Model.Pages.Count; i++)
+    {
+        <li class="@(Model.Pages[i].IsCurrenPage ? "active" : "") @(Model.Pages[i].Disabled ? "disabled" : "")">
+            <a href="@Url.RouteUrl(Model.Pages[i].RouteValues.ToRouteValueDictionary())">@Html.Raw(Model.Pages[i].Caption)</a>
+        </li>
+    }
+</ul>
+@*<div class="pull-right">*@
+@*    Всего @Model.ItemsAmount / На странице @Model.CurrentPageItemsAmount*@
+@*</div>*@

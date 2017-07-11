@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="AltBet.Services.WCF.CategoryService" CodeBehind="CategoryService.svc.cs" %>

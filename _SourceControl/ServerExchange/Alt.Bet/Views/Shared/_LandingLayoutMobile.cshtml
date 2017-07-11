@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/index_dark_mobile.css")
+</head>
+<body>
+    @RenderBody()
+    @Html.Partial("_FooterMobile")
+    @Scripts.Render("~/bundles/access")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/landingPageMobile")   
+</body>
+</html>

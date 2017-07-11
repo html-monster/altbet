@@ -1,0 +1,10 @@
+﻿@{
+    if (Request.Browser.IsMobileDevice)
+    {
+        Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }  
+}

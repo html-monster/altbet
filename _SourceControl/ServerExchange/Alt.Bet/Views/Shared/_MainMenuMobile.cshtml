@@ -1,0 +1,42 @@
+﻿<nav class="main_menu">
+    <div class="menu-btn"></div>
+    <div class="logo-container">
+        @Html.ActionLink(" ", "Index", "Home", null, new { @class = "logo" })
+    </div>
+    <div class="nav_search">
+        <form action="" method="post" class="search">
+            <!--<input type="search" name="search" placeholder="Search..." class="input"/>-->
+            <span class="input_animate input--nao">
+                <input class="input__field input__field--nao" type="search" id="search" />
+                <label class="input__label input__label--nao" for="search">
+                    <span class="input__label-content input__label-content--nao">Search...</span>
+                </label>
+                <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                    <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
+                </svg>
+                <input type="submit" value="" class="submit" />
+            </span>
+        </form>
+    </div>
+    <ul class="nav_bet">
+        <li class="live_event main" id="inplay">
+            <span>In-Play<a href="#" class="jump" title="View events in this level"></a></span>
+            <ul class="sub-menu_0">
+                @*@Html.Action("GetInPlay", "Menu")*@
+                <li class="favorite">
+                    <span>Favorites<a href="#" class="jump" title="View events in this level"></a></span>
+                    <ul class="sub-menu_1">
+                        <li><span>Empty</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        @Html.Action("GetMenu", "Menu")
+        <li class="favorite main">
+            <span>Favorites<a href="#" class="jump" title="View events in this level"></a></span>
+            <ul class="sub-menu_1">
+                <li><span>Empty</span></li>
+            </ul>
+        </li>
+    </ul>
+</nav>

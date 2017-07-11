@@ -1,0 +1,101 @@
+﻿@model AltBet.Bet.Models.OrderViewModel
+@{
+    var options = new AjaxOptions
+    {
+        Url = Url.Action("Create", "Order"),
+        OnBegin = "ajaxControllerClass.OnBeginJs",
+        OnSuccess = "ajaxControllerClass.OnSuccessJs",
+        OnFailure = "ajaxControllerClass.OnFailureJs",
+        //OnComplete = "OnCompleteJs",
+    };
+}
+<div class="order_content new" style="display: none;">
+    <div class="order-title">
+        <h3></h3>
+        <a href="#" class="close"><span></span></a>
+        <strong class="current-order up">pos: <span>TODO</span></strong>
+    </div>
+    <div class="buy-container form_container"></div>
+    <div class="sell-container form_container">
+        @using (Ajax.BeginForm("Index", "Home", options, new { autocomplete = "off" }))
+        {
+            <div class="container">
+                <div class="price">
+                    <label>Your price</label>
+                    <div class="input">
+                        @Html.TextBoxFor(model => model.LimitPrice, new { type = "text", @class = "number", data_validation = "0.33", maxlength = "4", autocomplete = "off" })
+                        <div class="warning" style="display: none;"><p>Available value from 0.01 to 0.99</p></div>
+                        <div class="regulator">
+                            <span class="plus" title="Press Arrow Up"></span>
+                            <span class="minus" title="Press Arrow Down"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="volume">
+                    <label>Quantity</label>
+                    <div class="input">
+                        @Html.TextBoxFor(model => model.Quantity, new { type = "text", @class = "number", data_validation = "123", maxlength = "7", autocomplete = "off" })
+                        <div class="warning" style="display: none;">
+                            <p>Available integer value more than 0</p>
+                        </div>
+                        <div class="regulator">
+                            <span class="plus" title="Press Arrow Up"></span>
+                            <span class="minus" title="Press Arrow Down"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="obligations">
+                    <label>Sum</label>
+                    <div class="input">
+                        <input type="text" class="number" data-validation="40.59" maxlength="7">
+                        <div class="warning" style="display: none;"><p>Minimal available value 0.01</p></div>
+                        <div class="regulator">
+                            <span class="plus" title="Press Arrow Up"></span>
+                            <span class="minus" title="Press Arrow Down"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="fees">
+                    <label>
+                        <span>Max </span>Fees
+                        <div class="help">
+                            <div class="help_message right">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                            </div>
+                        </div>
+                    </label>
+                    <div class="input">
+                        <input type="text" class="number" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="risk">
+                    <label>Max t.c.</label>
+                    <div class="input">
+                        <input type="text" class="number" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="profit">
+                    <label>Max Prof.</label>
+                    <div class="input">
+                        <input type="text" class="number" autocomplete="off" disabled />
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(model => model.Side, new { @class = "side" })
+            @Html.HiddenFor(model => model.Symbol, new { @class = "symbol" })
+            @Html.HiddenFor(model => model.isMirror, new { @class = "mirror" })
+            <div class="container">
+                <div class="switch"><label class="checkbox">@Html.CheckBoxFor(model => model.OrderType, new { type = "checkbox", @checked = "true" })<span>Limit</span></label></div>
+                <input type="submit" class="btn sell" value="Sell" style="text-transform: uppercase; ">
+                <span class="delete"></span>
+            </div>
+            <div class="error_pop_up">
+                <span>The connection to the server has been lost. Please check your internet connection or try again.</span>
+                <span class="close"><span></span></span>
+            </div>
+        }
+    </div>
+
+</div>

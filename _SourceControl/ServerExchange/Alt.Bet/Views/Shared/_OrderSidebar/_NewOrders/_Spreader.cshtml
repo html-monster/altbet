@@ -1,0 +1,66 @@
+﻿@model AltBet.Bet.Models.SpreaderViewModel
+@{
+    var options = new AjaxOptions
+    {
+        Url = Url.Action("Spreader", "Order"),
+        OnBegin = "ajaxControllerClass.OnBeginJs",
+        OnSuccess = "ajaxControllerClass.OnSuccessJs",
+        OnFailure = "ajaxControllerClass.OnFailureJs",
+        //OnComplete = "OnCompleteJs",
+    };
+}
+<div class="order_content spread" style="position: absolute; left: 0;z-index: 10;  opacity: 0; margin-top: 5px;">
+    <div class="sell-buy-container">
+        @using (Ajax.BeginForm(options))
+        {
+            <div class="container">
+                <div class="price sell">
+                    <label>Selling price</label>
+                    <div class="input">
+                        <input type="text" class="number" data-validation="0.33" maxlength="4" disabled>
+                        <div class="warning" style="display: none;"><p>Available value from 0.01 to 0.99</p></div>
+                    </div>
+                </div>
+                <div class="volume">
+                    <label>Quantity</label>
+                    <div class="input">
+                        @Html.TextBoxFor(model => model.SellOrderQuantity, new { @class = "number quantity", data_validation = "123", maxlength = "8" })
+                        @*<input type="text" class="number quantity" data-validation="123" maxlength="8">*@
+                        <div class="warning" style="display: none;"><p>Available integer value more than 0</p></div>
+                        <div class="regulator">
+                            <span class="plus" title="Press Arrow Up"></span>
+                            <span class="minus" title="Press Arrow Down"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="success"><input type="submit" class="success_btn" value=""></div>
+            </div>
+            @Html.HiddenFor(model => model.Symbol, new { @class = "symbol" })
+            @Html.HiddenFor(model => model.isMirror, new { @class = "mirror" })
+            @Html.HiddenFor(model => model.SellOrderLimitPrice, new { @class = "SellOrderLimitPrice" })
+            @Html.HiddenFor(model => model.BuyOrderLimitPrice, new { @class = "BuyOrderLimitPrice" })
+            <div class="container">
+                <div class="price buy">
+                    <label>Buying price</label>
+                    <div class="input">
+                        <input type="text" class="number" data-validation="0.33" maxlength="4" disabled>
+                        <div class="warning" style="display: none;"><p>Available value from 0.01 to 0.99</p></div>
+                    </div>
+                </div>
+                <div class="volume">
+                    <label>Quantity</label>
+                    <div class="input">
+                        @Html.TextBoxFor(model => model.BuyOrderQuantity, new { @class = "number quantity", data_validation = "123", maxlength = "8" })
+                        @*<input type="text" class="number quantity" data-validation="123" maxlength="8">*@
+                        <div class="warning" style="display: none;"><p>Available integer value more than 0</p></div>
+                        <div class="regulator">
+                            <span class="plus" title="Press Arrow Up"></span>
+                            <span class="minus" title="Press Arrow Down"></span>
+                        </div>
+                    </div>
+                </div>
+                <span class="delete"></span>
+            </div>
+        }
+    </div>
+</div>

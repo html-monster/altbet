@@ -1,0 +1,42 @@
+﻿@model List<AltBet.Exchange.CurrentOrders>
+
+<div class="tab_item" id="current-orders">
+    @foreach (var symbolOrders in Model)
+    {
+        <div class="order_content" id="@symbolOrders.ID">
+            <div class="my_order">
+                <div class="order-title">
+                    <div class="container">
+                        <h3>@symbolOrders.Symbol</h3>
+                        @if (symbolOrders.LastSide != null)
+                        {
+                            <strong class="last-price @(symbolOrders.LastSide == AltBet.Exchange.Side.Buy ? "up" : "down")">@Math.Round(symbolOrders.LastPrice, 2)</strong>
+                        }
+                        else
+                        {
+                            <strong class="last-price hidden @(symbolOrders.LastSide == AltBet.Exchange.Side.Buy ? "up" : "down")">@Math.Round(symbolOrders.LastPrice, 2)</strong>
+                        }             
+                        <strong class="current-order up">pos: <span>@symbolOrders.Positions</span></strong>
+                        @*<a href="#" class="close"><span></span></a>*@
+                    </div>
+                </div>
+                @foreach(var order in symbolOrders.Orders)
+                {
+                    @Html.Partial("_OrderSidebar/_CurrentOrders/_CurrentOrderItem", order)
+                }
+            </div>
+            <div class="pop_up">
+                <div class="confirmation not-sort">
+                    <button class="yes btn">Delete</button>
+                    <button class="no btn">No</button>
+                </div>
+            </div>
+        </div>
+    }
+    <script>
+        appData.yourOrders = JSON.parse('@Html.Raw(Json.Encode(Model))');
+    </script>
+</div>
+@*<script>
+    appData.yourOrders = JSON.parse('@Html.Raw(Json.Encode(Model))');
+</script>*@ 

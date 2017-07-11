@@ -1,0 +1,75 @@
+﻿@model AltBet.Bet.Models.SettingsViewModel
+
+<div class="tab_item" id="funds">
+    <div class="funds">
+        <h2>Funds</h2>
+        <div class="user_info">
+            <div class="personal_info">
+                <h3 class="mail">@Model.UserInfo.Email</h3>
+                <strong>@Model.UserInfo.FirstName @Model.UserInfo.LastName</strong>
+            </div>
+        </div>
+        <div class="funds_tab">
+            <div class="wrapper_user">
+                <div class="tabs">
+                    <span class="tab btn wave active" style="margin-right: 0">Account Balance</span>
+                    <span class="tab btn wave" style="margin-right: 0">Deposit Funds</span>
+                    <span class="tab btn wave" style="margin-right: 0">Withdraw Funds</span>
+                    <span class="tab btn wave" style="margin-right: 0">Transaction History</span>
+                </div>
+                <div class="tab_content">
+                    <div class="tab_item active">
+                        <div class="color_map">
+                            <ul>
+                                <li class="pl">P/L = <span>$0</span></li>
+                                <li class="inv">Invested = <span>$0</span></li>
+                                <li class="ava">Available = <span>$0</span></li>
+                            </ul>
+                        </div>
+                        <div class="user_content balance">
+                            <span class="pl"><strong data-content="@Model.UserAssets.GainLost.ToString("0.00")"></strong></span><!--data-content="P/L" -->
+                            <span class="inv"><strong data-content="@Model.UserAssets.Invested.ToString("0.00")"></strong></span><!--data-content="Invested" -->
+                            <span class="ava"><strong data-content="@Model.UserAssets.CurrentBalance.ToString("0.00")"></strong></span><!--data-content="Available" -->
+                            @*<span class="pl"><strong>70</strong></span><!--data-content="P/L" -->
+                <span class="inv"><strong>150</strong></span><!--data-content="Invested" -->
+                <span class="ava"><strong>100</strong></span><!--data-content="Available" -->*@
+                        </div>
+                    </div>
+                    <div class="tab_item funds"></div>
+                    <div class="tab_item funds"></div>
+                    <div class="tab_item history"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab_item preferences">
+    <h2>Preferences</h2>
+    <div class="user_info">
+        <div class="personal_info">
+            <h3 class="mail">@Model.UserInfo.Email</h3>
+            <strong>@Model.UserInfo.FirstName @Model.UserInfo.LastName</strong>
+        </div>
+    </div>
+    <div class="section">
+        <h3 class="section_user">General</h3>
+        <hr>
+        <ul class="preferences_list color_scheme_switch">
+            <li>
+                <label class="checkbox change-color">
+                    <strong>Theme color:</strong>
+                    <button class="dark color_pick" title="dark theme"></button>
+                    <button class="light color_pick" title="light theme"></button>
+                </label>
+            </li>
+        </ul>
+        @Html.Partial("_EditUserPreferences", Model.Account)
+    </div>
+</div>
+<div class="tab_item settings">
+    @Html.Partial("_EditUserInfo", Model.UserInfo)
+    @Html.Partial("_ChangePassword", Model.ChangePassword)
+    <script>
+        appData.pageAccountData = JSON.parse('@Html.Raw(Json.Encode(Model))');
+    </script>
+</div>

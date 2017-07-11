@@ -1,0 +1,67 @@
+﻿@using AltBet.Model.Finances.SkrillModels
+@using AltBet.Services.FinanceServices.Skrill.Models
+@model AltBet.Services.FinanceServices.Skrill.Models.SkrillInViewModel
+
+
+<div class="Form">
+    @using (Html.BeginForm("SkrillIn", "Payment", new {target = "_blank"}))
+    {
+
+        <h3>ввод денег</h3><br/>
+        <label>Input your sum</label>
+        <br/>
+        @Html.TextBoxFor(model => model.Sum)
+        @Html.ValidationMessageFor(model => model.Sum)
+        @*<input type="text" name="sum" />*@
+        <br/>
+        <label> Account Id (or email) </label>
+        <br/>
+        @Html.TextBoxFor(model => model.ClientId)
+        @Html.ValidationMessageFor(model => model.ClientId)
+        @*<input type="text" name="clientId" />*@
+        <br/>
+
+        <br/>
+        <input type="submit" value="payNeteller"/>
+    }
+</div>
+
+@using (Html.BeginForm("OtherPaymentsIn", "Payment",  new OtherPaymentsInViewModel{Sum=3,PaymentType = "VSA"}))
+{<br/>
+        <input type="submit" value="PayOtherSystem"/>
+}
+
+
+@*------------------------------------------TEST MAILING----------------------------*@
+@using (Html.BeginForm("Mailing", "Payment"))
+{<br />
+    <input type="submit" value="MailME!!" />
+}
+
+
+
+@* --------testing unsubscribe  *@
+
+@using (Html.BeginForm("MailUnsubscribe", "Account"))
+{<br/>
+    @*@Html.CheckBox("IsMode")
+    @Html.CheckBox("IsBettor")
+    @Html.CheckBox("IsTrade")
+    @Html.CheckBox("MailNews")
+    @Html.CheckBox("MailNotification")*@
+    <input type="submit" value="unsubscribe!!" />
+}
+
+
+<form action="https://pay.skrill.com" method="post" target="_blank">
+    <input type="hidden" name="pay_to_email" value="gs@alt.bet">
+    
+    <input type="hidden" name="payment_methods" value="MSC">
+    <input type="hidden" name="status_url" value="http://requestb.in/u9qxwku9">
+    <input type="hidden" name="language" value="EN">
+    <input type="hidden" name="amount" value="10">
+    <input type="hidden" name="currency" value="USD">
+    <input type="hidden" name="detail1_description" value="Description:">
+    <input type="hidden" name="detail1_text" value="Detailed description">
+    <input type="submit" value="Pay!">
+</form>

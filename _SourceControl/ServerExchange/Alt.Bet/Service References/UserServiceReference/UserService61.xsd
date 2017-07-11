@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models.WebReg" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models.WebReg" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models" />
+  <xs:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd8" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="CreateSessionResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models" base="q1:CreateSessionResponseBase">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateSessionResponse" nillable="true" type="tns:CreateSessionResponse" />
+  <xs:complexType name="SessionStatusCallbackResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models" base="q2:SessionStatusCallbackResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CustomerID" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SessionStatusCallbackResponse" nillable="true" type="tns:SessionStatusCallbackResponse" />
+  <xs:complexType name="RegistrationStatusResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models" base="q3:SessionStatusResponseBase">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RegistrationStatusResponse" nillable="true" type="tns:RegistrationStatusResponse" />
+  <xs:complexType name="CustomerRegistrationResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models" base="q4:ResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Address" nillable="true" type="q4:Address" />
+          <xs:element minOccurs="0" name="Citizenship" nillable="true" type="q4:Citizenship" />
+          <xs:element minOccurs="0" name="DateOfBirth" nillable="true" type="q4:Birth" />
+          <xs:element minOccurs="0" name="DateTimeCompletion" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Device" nillable="true" type="q4:Device" />
+          <xs:element minOccurs="0" name="Email" nillable="true" type="q4:Email" />
+          <xs:element minOccurs="0" name="FraudConfidenceScore" type="xs:decimal" />
+          <xs:element minOccurs="0" name="IdDocument" nillable="true" type="q4:IdDocument" />
+          <xs:element minOccurs="0" name="IdentityConfidenceScore" type="xs:decimal" />
+          <xs:element minOccurs="0" name="MerchantCustomerID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="q4:Name" />
+          <xs:element minOccurs="0" name="Phone" nillable="true" type="q4:Phone" />
+          <xs:element minOccurs="0" name="ProfileMatch" nillable="true" type="q4:ProfileMatch" />
+          <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ReasonCodes" nillable="true" type="q5:ArrayOfstring" />
+          <xs:element minOccurs="0" name="RegMerchantSessionID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RegistrationIPAddress" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RegistrationLocation" nillable="true" type="q4:LocationDetail" />
+          <xs:element minOccurs="0" name="RegistrationNotes" nillable="true" type="q4:ArrayOfNote" />
+          <xs:element minOccurs="0" name="WatchChecks" nillable="true" type="q4:ArrayOfWatchCheck" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CustomerRegistrationResponse" nillable="true" type="tns:CustomerRegistrationResponse" />
+</xs:schema>

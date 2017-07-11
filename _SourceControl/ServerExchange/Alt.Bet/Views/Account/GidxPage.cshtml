@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "VerificationUser";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+
+    <title>UserPage</title>
+</head>
+<body>
+    <h1>Page Title</h1>
+    <div id=”PageContainer”> </div>
+
+    <script>
+
+        window.gidxServiceSettings = function () {
+            window.gidxBuildTimer = true;
+            //true will display a ‘time remaining’ countdown to the customer.
+            window.gidxBuildSteps = false;
+            //true will display the ‘step count’ in the registration process. [Not Implemented]
+            window.gidxContainer = "SelectorName";
+            //false will display the embedded service at the placement in the html/document of the
+            //script tag. If the embedded service needs to be placed in a specific dom element on the
+            // html/document then place the selector name as this value.
+        };
+        window.gidxErrorReport = function (error, errorMsg) {
+            //Custom error alert functions should be placed here. By utilizing aJax this process could
+            //be integrated server side.
+            alert(error + "\n\n" + errorMsg);
+        };
+        window.gidxNextStep = function () {
+            //Once the registration process is complete this function will be called by the API/UX
+            //service.
+            //This 'Next Step' should be the My Account section where the newly created customer can
+            //select their primary address etc.
+            window.document.location.href = '/altbet/account/Gidx';
+        };
+    </script>
+
+    @Html.Raw(@ViewBag.code)
+
+    @*@Html.Raw(@Html.Encode(@Model.SessionURL))*@
+
+
+</body>
+</html>

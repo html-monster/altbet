@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="83acb9dd-2e33-4f84-8e82-3d00d9d64283" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/AltBet.ExchangeServices/Services/OrderService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="OrderService.xsd" MetadataType="Schema" ID="ec1e8f36-4ca4-4b1e-94d4-19974fd4b142" SourceId="1" SourceUrl="http://localhost/AltBet.ExchangeServices/Services/OrderService.svc?xsd=xsd2" />
+    <MetadataFile FileName="OrderService.disco" MetadataType="Disco" ID="42a3a30a-d9a4-4f07-8ec5-0d23be53dfb6" SourceId="1" SourceUrl="http://localhost/AltBet.ExchangeServices/Services/OrderService.svc?disco" />
+    <MetadataFile FileName="OrderService.wsdl" MetadataType="Wsdl" ID="5a231eaa-b2fe-4465-9771-c1e152ae9a95" SourceId="1" SourceUrl="http://localhost/AltBet.ExchangeServices/Services/OrderService.svc?wsdl" />
+    <MetadataFile FileName="OrderService1.xsd" MetadataType="Schema" ID="dd02648f-ccd7-4755-88f6-39fd470b2850" SourceId="1" SourceUrl="http://localhost/AltBet.ExchangeServices/Services/OrderService.svc?xsd=xsd3" />
+    <MetadataFile FileName="OrderService2.xsd" MetadataType="Schema" ID="60baeba8-1fd4-4e9f-a0a5-784c8af0abc7" SourceId="1" SourceUrl="http://localhost/AltBet.ExchangeServices/Services/OrderService.svc?xsd=xsd0" />
+    <MetadataFile FileName="OrderService3.xsd" MetadataType="Schema" ID="b740cf90-4491-4d87-ab45-5f378e0803e3" SourceId="1" SourceUrl="http://localhost/AltBet.ExchangeServices/Services/OrderService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

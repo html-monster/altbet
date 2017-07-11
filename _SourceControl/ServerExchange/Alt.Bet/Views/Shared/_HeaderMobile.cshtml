@@ -1,0 +1,54 @@
+﻿<header>
+    <div class="logo-container">
+        @Html.ActionLink(" ", "Index", "Home", null, new { @class = "logo" })
+    </div>
+    <div class="header_info">
+        <div class="video btn">
+            <span class="title">Watch video</span>
+            <button class="eng btn">Eng</button>
+            <button class="ru btn">Ru</button>
+        </div>
+        <div class="header_right">
+            <div class="user_info @(User.Identity.IsAuthenticated ? "active" : "")">@Html.Action("getBalance", "Account")</div>
+                @*@Html.ActionLink("My Positions | Orders", "MyAssets", "Home", new {}, new { @class = " my_order btn" })
+                <a href="#" class="btn deposit">Deposit</a>*@
+            @*<button class="price_plan btn">Pricing Plans</button>*@
+            @*<form class="header_form">
+                <div class="select">
+                    <select class="language img" name="odds" id="change_language" style="width: 80px;">
+                        <option value="en" data-title="English">English</option>
+                    </select>
+                </div>
+            </form>*@
+        </div>
+        <div class="user">
+            <div class="log_in @(User.Identity.IsAuthenticated ? "active" : "")">
+                    <ul class="user-menu">
+                        <li>
+                            <strong class="change-color">
+                                Theme
+                                <button class="dark color_pick" title="dark theme"></button>
+                                <button class="light color_pick" title="light theme"></button>
+                            </strong>
+                        </li>
+                        <li><a href="@Url.Action("Index", "Account")">Account</a></li>
+                        <li><a href=@Url.Action("Logout", "Account")>Log out</a></li>
+                    </ul>
+                    <span class="count_message">
+                        @*<span class="count">99</span>*@
+                    </span>
+                    <span class="user-name">@User.Identity.Name</span>
+                </div>
+            <div class="log_out @(!User.Identity.IsAuthenticated ? "active" : "")">
+                <a href=@Url.Action("Index", "Account") class="sign_in">Join/Login</a>
+                <div class="change-color">
+                    <strong>Theme color</strong>
+                    <button class="dark color_pick" title="dark theme"></button>
+                    <button class="light color_pick" title="light theme"></button>
+                </div>
+            </div>
+        </div>
+        <button class="chat"></button>
+        <button class="menu-btn"></button>
+    </div>
+</header>

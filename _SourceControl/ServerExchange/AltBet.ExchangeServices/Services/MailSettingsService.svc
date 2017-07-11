@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="AltBet.ExchangeServices.Services.MailSettingsService" CodeBehind="MailSettingsService.svc.cs" %>

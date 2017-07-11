@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Altbet";
+    Layout = "~/Views/Shared/_LandingLayout.cshtml";
+}
+<div id="p_prldr">
+    <div class="contpre">
+        <span class="svg_anm">
+        </span> <br> <br>
+        Loading ...
+    </div>
+</div>
+<div class="first_page_wrapper">
+    <div class="main_bg"></div>
+    <header class="first_page">
+        <div class="header_info">
+            <div class="logo-container">
+                @Html.ActionLink(" ", "Index", "Home", null, new { @class = "logo" })
+            </div>
+            <div class="header_right">
+                <div class="user">
+                    <div class="log_in @(User.Identity.IsAuthenticated ? "active" : "")">
+                        <ul class="user-menu">
+                            <li><a href="@Url.Action("Index", "Account")">Account</a></li>
+                            <li><a href=@Url.Action("Logout", "Account")>Log out</a></li>
+                        </ul>
+                        <span class="user-name">@User.Identity.Name</span>
+                    </div>
+                    <div class="log_out @(!User.Identity.IsAuthenticated ? "active" : "")">
+                        <a href=@Url.Action("Index", "Account") class="sign_in">Join/Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var globalData = {
+                userIdentity: '@User.Identity.IsAuthenticated',
+                rootUrl: '@Url.Content("~/")',
+                landingPage: true
+            }
+        </script>
+    </header>
+             <div class="wrapper">
+                    <div class="content">
+                          <h1>TRADE YOUR BETS NOW!</h1>
+                          <span class="info info_f">Select your location</span>
+                        </div>
+                      <div class="container_site">
+                          <a href="#" class="site_category" id="usa_link">
+
+                              <span>North America</span>
+                          </a>
+                          <a href="#" class="site_category" id="global_link">
+
+                              <span>Global</span>
+                          </a>
+                         </div> 
+                        <button class="join btn wave ">Join Now</button>
+                    </div>
+    <div class="footer">
+        <div class="warning_container"><span>Please play responsibly</span></div>
+        <div class="copyright"><span>Copyright © 2016 Alt.Bet Exchange B.V. All rights reserved.</span></div>
+    </div>
+</div>

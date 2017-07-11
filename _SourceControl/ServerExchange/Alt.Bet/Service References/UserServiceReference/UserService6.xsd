@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd8" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="CreateSessionResponseBase">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ResponseBase">
+        <xs:sequence>
+          <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ReasonCodes" nillable="true" type="q1:ArrayOfstring" />
+          <xs:element minOccurs="0" name="SessionExpirationTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SessionID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SessionURL" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateSessionResponseBase" nillable="true" type="tns:CreateSessionResponseBase" />
+  <xs:complexType name="ResponseBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ApiKey" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ApiVersion" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MerchantID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MerchantSessionID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ResponseCode" type="xs:int" />
+      <xs:element minOccurs="0" name="ResponseMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseBase" nillable="true" type="tns:ResponseBase" />
+  <xs:complexType name="SessionStatusCallbackResponseBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MerchantID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SessionStatus" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SessionStatusCallbackResponseBase" nillable="true" type="tns:SessionStatusCallbackResponseBase" />
+  <xs:complexType name="SessionStatusResponseBase">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ResponseBase">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ReasonCodes" nillable="true" type="q2:ArrayOfstring" />
+          <xs:element minOccurs="0" name="SessionScore" type="xs:decimal" />
+          <xs:element minOccurs="0" name="SessionStatusCode" type="tns:SessionStatusCode" />
+          <xs:element minOccurs="0" name="SessionStatusMessage" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SessionStatusResponseBase" nillable="true" type="tns:SessionStatusResponseBase" />
+  <xs:simpleType name="SessionStatusCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Complete" />
+      <xs:enumeration value="Ineligible" />
+      <xs:enumeration value="Incomplete" />
+      <xs:enumeration value="Timeout" />
+      <xs:enumeration value="InProgress" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SessionStatusCode" nillable="true" type="tns:SessionStatusCode" />
+  <xs:complexType name="Address">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ElementBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AddressLine1" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine2" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Neighborhood" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PostalCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="StateCode" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Address" nillable="true" type="tns:Address" />
+  <xs:complexType name="ElementBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IdentityConfidenceScore" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Primary" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ElementBase" nillable="true" type="tns:ElementBase" />
+  <xs:complexType name="Citizenship">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ElementBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DateAcquired" nillable="true" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Citizenship" nillable="true" type="tns:Citizenship" />
+  <xs:complexType name="Birth">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ElementBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="PlaceOfBirth" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Birth" nillable="true" type="tns:Birth" />
+  <xs:complexType name="Device">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ElementBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DeviceID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Platform" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Device" nillable="true" type="tns:Device" />
+  <xs:complexType name="Email">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ElementBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Email" nillable="true" type="tns:Email" />
+  <xs:complexType name="IdDocument">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ElementBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IDNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IDTypeCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IssuingDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="IssuingPlace" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NameOnID" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="IdDocument" nillable="true" type="tns:IdDocument" />
+  <xs:complexType name="Name">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ElementBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Salutation" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Suffix" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Name" nillable="true" type="tns:Name" />
+  <xs:complexType name="Phone">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ElementBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Carrier" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Extension" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LineType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Phone" nillable="true" type="tns:Phone" />
+  <xs:complexType name="ProfileMatch">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AddressMatch" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CitizenshipMatch" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DateOfBirthMatch" type="xs:boolean" />
+      <xs:element minOccurs="0" name="EmailMatch" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IdDocumentMatch" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MobilePhoneMatch" type="xs:boolean" />
+      <xs:element minOccurs="0" name="NameMatch" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PhoneMatch" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProfileMatch" nillable="true" type="tns:ProfileMatch" />
+  <xs:complexType name="LocationDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Altitude" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="ComplianceLocationServiceStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ComplianceLocationStatus" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IdentifierType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdentifierUsed" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Latitude" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="LocationDateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LocationServiceLevel" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationStatus" type="xs:int" />
+      <xs:element minOccurs="0" name="Longitude" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="Radius" nillable="true" type="xs:int" />
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ReasonCodes" nillable="true" type="q3:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Speed" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LocationDetail" nillable="true" type="tns:LocationDetail" />
+  <xs:complexType name="ArrayOfNote">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Note" nillable="true" type="tns:Note" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNote" nillable="true" type="tns:ArrayOfNote" />
+  <xs:complexType name="Note">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Note" nillable="true" type="tns:Note" />
+  <xs:complexType name="ArrayOfWatchCheck">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WatchCheck" nillable="true" type="tns:WatchCheck" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWatchCheck" nillable="true" type="tns:ArrayOfWatchCheck" />
+  <xs:complexType name="WatchCheck">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MatchResult" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MatchScore" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SourceCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourceScore" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WatchCheck" nillable="true" type="tns:WatchCheck" />
+</xs:schema>

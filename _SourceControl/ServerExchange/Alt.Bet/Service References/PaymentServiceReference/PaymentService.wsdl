@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PaymentService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/PaymentService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/PaymentService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/PaymentService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/AltBet.Model.Finances.NetellerModels" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/PaymentService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/AltBet.Model.Finances.SkrillModels" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IPaymentManager_NetellerOut_InputMessage">
+    <wsdl:part name="parameters" element="tns:NetellerOut" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_NetellerOut_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NetellerOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_NetellerIn_InputMessage">
+    <wsdl:part name="parameters" element="tns:NetellerIn" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_NetellerIn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NetellerInResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_SkrillStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:SkrillStatus" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_SkrillStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SkrillStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_SkrillOut_InputMessage">
+    <wsdl:part name="parameters" element="tns:SkrillOut" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_SkrillOut_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SkrillOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_SkrillIn_InputMessage">
+    <wsdl:part name="parameters" element="tns:SkrillIn" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_SkrillIn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SkrillInResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_SkrillOtherIn_InputMessage">
+    <wsdl:part name="parameters" element="tns:SkrillOtherIn" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_SkrillOtherIn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SkrillOtherInResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_SkrillCancel_InputMessage">
+    <wsdl:part name="parameters" element="tns:SkrillCancel" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_SkrillCancel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SkrillCancelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_ChangeBalance_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeBalance" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_ChangeBalance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeBalanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_InsertHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertHistory" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_InsertHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_UpdateHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateHistory" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_UpdateHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_GetUsernameFromTransactId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsernameFromTransactId" />
+  </wsdl:message>
+  <wsdl:message name="IPaymentManager_GetUsernameFromTransactId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsernameFromTransactIdResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IPaymentManager">
+    <wsdl:operation name="NetellerOut">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPaymentManager/NetellerOut" message="tns:IPaymentManager_NetellerOut_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPaymentManager/NetellerOutResponse" message="tns:IPaymentManager_NetellerOut_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NetellerIn">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPaymentManager/NetellerIn" message="tns:IPaymentManager_NetellerIn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPaymentManager/NetellerInResponse" message="tns:IPaymentManager_NetellerIn_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SkrillStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPaymentManager/SkrillStatus" message="tns:IPaymentManager_SkrillStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPaymentManager/SkrillStatusResponse" message="tns:IPaymentManager_SkrillStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SkrillOut">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPaymentManager/SkrillOut" message="tns:IPaymentManager_SkrillOut_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPaymentManager/SkrillOutResponse" message="tns:IPaymentManager_SkrillOut_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SkrillIn">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPaymentManager/SkrillIn" message="tns:IPaymentManager_SkrillIn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPaymentManager/SkrillInResponse" message="tns:IPaymentManager_SkrillIn_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SkrillOtherIn">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPaymentManager/SkrillOtherIn" message="tns:IPaymentManager_SkrillOtherIn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPaymentManager/SkrillOtherInResponse" message="tns:IPaymentManager_SkrillOtherIn_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SkrillCancel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPaymentManager/SkrillCancel" message="tns:IPaymentManager_SkrillCancel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPaymentManager/SkrillCancelResponse" message="tns:IPaymentManager_SkrillCancel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeBalance">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPaymentManager/ChangeBalance" message="tns:IPaymentManager_ChangeBalance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPaymentManager/ChangeBalanceResponse" message="tns:IPaymentManager_ChangeBalance_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertHistory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPaymentManager/InsertHistory" message="tns:IPaymentManager_InsertHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPaymentManager/InsertHistoryResponse" message="tns:IPaymentManager_InsertHistory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateHistory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPaymentManager/UpdateHistory" message="tns:IPaymentManager_UpdateHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPaymentManager/UpdateHistoryResponse" message="tns:IPaymentManager_UpdateHistory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsernameFromTransactId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPaymentManager/GetUsernameFromTransactId" message="tns:IPaymentManager_GetUsernameFromTransactId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPaymentManager/GetUsernameFromTransactIdResponse" message="tns:IPaymentManager_GetUsernameFromTransactId_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IPaymentManager" type="tns:IPaymentManager">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="NetellerOut">
+      <soap:operation soapAction="http://tempuri.org/IPaymentManager/NetellerOut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NetellerIn">
+      <soap:operation soapAction="http://tempuri.org/IPaymentManager/NetellerIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SkrillStatus">
+      <soap:operation soapAction="http://tempuri.org/IPaymentManager/SkrillStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SkrillOut">
+      <soap:operation soapAction="http://tempuri.org/IPaymentManager/SkrillOut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SkrillIn">
+      <soap:operation soapAction="http://tempuri.org/IPaymentManager/SkrillIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SkrillOtherIn">
+      <soap:operation soapAction="http://tempuri.org/IPaymentManager/SkrillOtherIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SkrillCancel">
+      <soap:operation soapAction="http://tempuri.org/IPaymentManager/SkrillCancel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeBalance">
+      <soap:operation soapAction="http://tempuri.org/IPaymentManager/ChangeBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertHistory">
+      <soap:operation soapAction="http://tempuri.org/IPaymentManager/InsertHistory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateHistory">
+      <soap:operation soapAction="http://tempuri.org/IPaymentManager/UpdateHistory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsernameFromTransactId">
+      <soap:operation soapAction="http://tempuri.org/IPaymentManager/GetUsernameFromTransactId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PaymentService">
+    <wsdl:port name="BasicHttpBinding_IPaymentManager" binding="tns:BasicHttpBinding_IPaymentManager">
+      <soap:address location="http://localhost/AltBet.ExchangeServices/Services/PaymentService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

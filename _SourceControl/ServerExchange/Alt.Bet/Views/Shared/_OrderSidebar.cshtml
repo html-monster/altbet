@@ -1,0 +1,47 @@
+﻿<div class="order order_slide" id="sidebar">
+    <div class="left_order"> 
+        @if (Request.Browser.IsMobileDevice)
+        {
+            <div class="show_hide_button"></div>
+        }      
+        @*<label class="trader ">
+            @if (User.Identity.IsAuthenticated)
+            {
+                @Html.CheckBox("Bettor", Convert.ToBoolean(Session["Bettor"]), new { @class = "limit" })
+            }
+            else
+            {
+                <input type="checkbox" name="limit" class="limit" disabled>
+            }
+            <span>
+                Active bettor
+                <span class="help">
+                    <span class="help_message"><strong>The Active Bettor interface offers some slick, highly sophisticated, super user friendly, never offered before in the betting world, functionalities, so fasten your seatbelts and off you go to the market - fast!</strong></span>
+                </span>
+            </span>
+        </label>*@
+
+        <div class="wrapper">
+            <div class="tabs">
+                <span class="tab active">
+                    Game Slip
+                </span>
+                <span class="tab" @{if (!User.Identity.IsAuthenticated)
+                                        {
+                                            @:data-disabled = "true"
+                                        }
+                                    }>
+                Your Games
+            </span>
+            </div>
+            <div class="tab_content order-content">                
+                @Html.Partial("_OrderSidebar/_NewOrders")
+                @Html.Action("GetOrdersPositions", "Home")
+                @*@if (User.Identity.IsAuthenticated)
+                {
+                    
+                }*@
+            </div>
+        </div>
+    </div>
+</div>

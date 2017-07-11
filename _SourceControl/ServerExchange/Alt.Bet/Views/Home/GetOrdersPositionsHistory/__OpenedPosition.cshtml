@@ -1,0 +1,37 @@
+﻿@model AltBet.Exchange.GroupPosition
+@*<table id="@Model.Symbol.Exchange">
+    <thead>
+        <tr>
+            <th class="title">@Model.Symbol.HomeName - @Model.Symbol.AwayName</th>
+            <th></th>
+            <th><span class="quantity">@Model.CommonSymbolVolume</span></th>
+            <th></th>
+            <th></th>
+            <th class="pl"><span class=@(Model.CommonSymbolProfitLoss >=0 ? "profit" : "loss")>@(Model.CommonSymbolProfitLoss >= 0 ? "" : "(")$@Math.Abs(Model.CommonSymbolProfitLoss)@(Model.CommonSymbolProfitLoss >= 0 ? "" : ")")</span></th>
+            <th><button class="btn close_out wave">Close Out</button></th>
+        </tr>
+    </thead>
+    <tbody class="showhide active">
+        @foreach (var subPos in Model.SubPositions)
+        {
+            <tr class="@(subPos.IsMirror == 0 ? (subPos.Side == AltBet.Exchange.Side.Buy ? "buy" : "sell") : (subPos.Side == AltBet.Exchange.Side.Buy ? "buy revers" : "sell revers")) event-content content_bet" data-symbol="@(Model.Symbol.ToString() + "" + (subPos.IsMirror == 1 ? "_mirror" : ""))">
+                <td>
+                    <span class="hidden symbol_name">@Model.Symbol.ToString()</span>
+                    <strong class="title">@subPos.EventName</strong>
+                </td>
+                <td class="side">@(subPos.Side == AltBet.Exchange.Side.Buy ? "Long" : "Short")</td>
+                <td class="quantity">@subPos.CommonVolume</td>
+                <td class="avg_price">@(subPos.IsMirror == 0 ? Math.Round(subPos.AvgPrice, 2) : Math.Round(1 - subPos.AvgPrice, 2))</td>
+                <td class="spread">
+                    <span class="sell">@(subPos.IsMirror == 0 ? Math.Round(Model.Symbol.LastBid, 2) : Math.Round(1 - Model.Symbol.LastAsk, 2))</span> |
+                    <span class="buy">@(subPos.IsMirror == 0 ? Math.Round(Model.Symbol.LastAsk, 2) : Math.Round(1 - Model.Symbol.LastBid, 2))</span>
+                </td>
+                <td class="@(subPos.CommonProfitLoss >= 0 ? "profit" : "loss") pl">@(subPos.CommonProfitLoss >= 0 ? "$" : "($")@Math.Abs(subPos.CommonProfitLoss)@(subPos.CommonProfitLoss >= 0 ? "" : ")")</td>
+                <td>
+                    <span class="buy"><button class="buy btn wave empty btnJs event">Buy</button></span>
+                    <span class="sell"><button class="sell btn wave empty btnJs event">Sell</button></span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>*@

@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Home/Index";
+}
+<div class="content main" id="DiMPMainpage">
+    <div class="nav_items">
+        <div class="wrapper" id="exchange">
+            <div class="tabs">
+                <span class="tab"><span data-content="Closing soon"></span></span>
+                <span class="tab"><span data-content="Popular"></span></span>
+                @*<span class="tab"><span data-content="Trending"></span></span>*@
+                <span class="tab"><span data-content="Movers"></span></span>
+                <span class="tab"><span data-content="New"></span></span>
+                @*<div class="mode_wrapper">
+                    <label class="mode_switch">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (Session["Mode"] != null)
+                            {
+                                if ((bool)Session["Mode"])
+                                {
+                                    @Html.CheckBox("Mode", false)<span>Basic Mode</span>
+                                }
+                                else
+                                {
+                                    @Html.CheckBox("Mode", true)<span>Expert Mode</span>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            @Html.CheckBox("Mode", false)<span>Basic Mode</span>
+                        }
+                    </label>
+                </div>*@
+            </div>
+            <div class="tab_content">
+                <div class="tab_item ui-sort">
+                    @Html.Action("GetExchanges")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("_OrderSidebar")
+
+<script>
+    globalData.mainPage = true;
+    appData.pageNum = "@Request.QueryString["Page"]";
+    appData.baseUrl = { MainPage: "@Url.Content("~/")eng/home" };
+</script>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ExchangeService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/ExchangeService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/ExchangeService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/ExchangeService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/AltBet.Exchange" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IExchangeManager_GetAllSymbolsAndOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllSymbolsAndOrders" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_GetAllSymbolsAndOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllSymbolsAndOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_GetExchanges_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetExchanges" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_GetExchanges_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetExchangesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_CreateExchange_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateExchange" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_CreateExchange_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateExchangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_EditExchange_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditExchange" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_EditExchange_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditExchangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_DeleteExchange_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteExchange" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_DeleteExchange_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteExchangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_ChangeStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeStatus" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_ChangeStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_CloseExchange_InputMessage">
+    <wsdl:part name="parameters" element="tns:CloseExchange" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_CloseExchange_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CloseExchangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_GetSymbolAndOrdersByUrl_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSymbolAndOrdersByUrl" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_GetSymbolAndOrdersByUrl_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSymbolAndOrdersByUrlResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_GetSortExchanges_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSortExchanges" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_GetSortExchanges_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSortExchangesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_GetItemsOnPage_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemsOnPage" />
+  </wsdl:message>
+  <wsdl:message name="IExchangeManager_GetItemsOnPage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemsOnPageResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IExchangeManager">
+    <wsdl:operation name="GetAllSymbolsAndOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExchangeManager/GetAllSymbolsAndOrders" message="tns:IExchangeManager_GetAllSymbolsAndOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IExchangeManager/GetAllSymbolsAndOrdersResponse" message="tns:IExchangeManager_GetAllSymbolsAndOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExchanges">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExchangeManager/GetExchanges" message="tns:IExchangeManager_GetExchanges_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IExchangeManager/GetExchangesResponse" message="tns:IExchangeManager_GetExchanges_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateExchange">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExchangeManager/CreateExchange" message="tns:IExchangeManager_CreateExchange_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IExchangeManager/CreateExchangeResponse" message="tns:IExchangeManager_CreateExchange_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditExchange">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExchangeManager/EditExchange" message="tns:IExchangeManager_EditExchange_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IExchangeManager/EditExchangeResponse" message="tns:IExchangeManager_EditExchange_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteExchange">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExchangeManager/DeleteExchange" message="tns:IExchangeManager_DeleteExchange_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IExchangeManager/DeleteExchangeResponse" message="tns:IExchangeManager_DeleteExchange_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExchangeManager/ChangeStatus" message="tns:IExchangeManager_ChangeStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IExchangeManager/ChangeStatusResponse" message="tns:IExchangeManager_ChangeStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CloseExchange">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExchangeManager/CloseExchange" message="tns:IExchangeManager_CloseExchange_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IExchangeManager/CloseExchangeResponse" message="tns:IExchangeManager_CloseExchange_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSymbolAndOrdersByUrl">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExchangeManager/GetSymbolAndOrdersByUrl" message="tns:IExchangeManager_GetSymbolAndOrdersByUrl_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IExchangeManager/GetSymbolAndOrdersByUrlResponse" message="tns:IExchangeManager_GetSymbolAndOrdersByUrl_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSortExchanges">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExchangeManager/GetSortExchanges" message="tns:IExchangeManager_GetSortExchanges_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IExchangeManager/GetSortExchangesResponse" message="tns:IExchangeManager_GetSortExchanges_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemsOnPage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExchangeManager/GetItemsOnPage" message="tns:IExchangeManager_GetItemsOnPage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IExchangeManager/GetItemsOnPageResponse" message="tns:IExchangeManager_GetItemsOnPage_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IExchangeManager" type="tns:IExchangeManager">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAllSymbolsAndOrders">
+      <soap:operation soapAction="http://tempuri.org/IExchangeManager/GetAllSymbolsAndOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExchanges">
+      <soap:operation soapAction="http://tempuri.org/IExchangeManager/GetExchanges" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateExchange">
+      <soap:operation soapAction="http://tempuri.org/IExchangeManager/CreateExchange" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditExchange">
+      <soap:operation soapAction="http://tempuri.org/IExchangeManager/EditExchange" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteExchange">
+      <soap:operation soapAction="http://tempuri.org/IExchangeManager/DeleteExchange" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeStatus">
+      <soap:operation soapAction="http://tempuri.org/IExchangeManager/ChangeStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseExchange">
+      <soap:operation soapAction="http://tempuri.org/IExchangeManager/CloseExchange" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSymbolAndOrdersByUrl">
+      <soap:operation soapAction="http://tempuri.org/IExchangeManager/GetSymbolAndOrdersByUrl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSortExchanges">
+      <soap:operation soapAction="http://tempuri.org/IExchangeManager/GetSortExchanges" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemsOnPage">
+      <soap:operation soapAction="http://tempuri.org/IExchangeManager/GetItemsOnPage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ExchangeService">
+    <wsdl:port name="BasicHttpBinding_IExchangeManager" binding="tns:BasicHttpBinding_IExchangeManager">
+      <soap:address location="http://localhost/AltBet.ExchangeServices/Services/ExchangeService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Home/Index";
+}
+<div class="content main" id="DiMPMainpage">
+    <div class="nav_items">
+        <div class="wrapper" id="exchange">
+            <div class="stattabs">
+                <a href="?sort=closingsoon" class="stab"><span data-content="Closing soon"></span></a>
+                <a href="?sort=popular" class="stab"><span data-content="Popular"></span></a>
+                <a href="?sort=new" class="stab"><span data-content="New"></span></a>
+                <a href="?sort=movers" class="stab"><span data-content="Movers"></span></a>
+
+                <div class="mode_wrapper">
+                    <label class="mode_switch">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (Session["Mode"] != null)
+                            {
+                                if ((bool) Session["Mode"])
+                                {
+                                    @Html.CheckBox("Mode", false)<span>Basic View</span>
+                                }
+                                else
+                                {
+                                    @Html.CheckBox("Mode", true)<span>Expert Mode</span>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            @Html.CheckBox("Mode", false)<span>Basic View</span>
+                        }
+                    </label>
+                </div>
+            </div>
+            <div class="tab_content">
+                <div class="tab_item ui-sort">
+                    @*
+                    <div class="preloader" style="margin-top: 100px; height: 100px; text-align: center">
+$1$                        <img src="@Url.Content("~/")/Images/first_page/preload.svg"/>#1#
+                        <img src="@Url.Content("~/")/Images/submit_loader.svg"/>
+                    </div>
+*@
+                    <div class="loading-box loader2 main_page"></div>
+
+                    @Html.Action("GetExchanges")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("_OrderSidebar")
+
+
+<script>
+    globalData.mainPage = true;
+    appData.urlQuery = {
+        pageNum: "@Request.QueryString["page"]",
+        filter: "@Request.QueryString["filter"]",
+        sortType: "@Request.QueryString["sort"]",
+    }
+    appData.baseUrl = { MainPage: "@Url.Content("~/")eng/home" };
+</script>

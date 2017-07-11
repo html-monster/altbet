@@ -1,0 +1,57 @@
+﻿@using Newtonsoft.Json
+@model AltBet.Exchange.UserConfirmationResponse
+
+@{
+    var options = new AjaxOptions
+    {
+        Url = Url.Action("EditUserInfo", "Account"),
+        //OnBegin = "ajaxLoginControllerClass.OnBeginJs",
+        OnSuccess = "ajaxUserDataUpdate.OnSuccessJs",
+        OnFailure = "ajaxUserDataUpdate.OnFailureJs",
+        //OnComplete = "OnCompleteJs",
+    };
+}
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content page" id="DiConfirmPage">
+    
+    <script>
+        appData.ConfirmPageData = JSON.parse('@Html.Raw(JsonConvert.SerializeObject(new System.Collections.Hashtable()
+            {
+                {"isRegisterActivated", Model.Result},
+                {"ErrorCode", Model.ErrorCode},
+                {"ErrorMessage", Model.ErrorMessage},
+                {"Generate", "GenerateNewConfirmationHash"},
+                {"UserName", Request.QueryString["userName"]},
+                {"confirmationCode", Request.QueryString["confirmationCode"]},
+            }))');
+    </script>
+
+
+@*
+    @if (Model.Result)
+    {
+        <label>Hashcode code accepted</label>
+    }
+    else
+    {
+        if (Model.ErrorCode == 104) // Confirmation code expired
+        {
+            using (Ajax.BeginForm("GenerateNewConfirmationHash", new {userName = this.Request.QueryString["userName"], confirmationCode = this.Request.QueryString["confirmationCode"]}, options, null))
+            {
+                <input type="submit" value="Submit">
+            }
+        }
+        else
+        {
+            @Html.TextBoxFor(m => m.ErrorCode)
+            ;
+            @Html.TextBoxFor(m => m.ErrorMessage)
+            ;
+        }
+    }
+*@
+</div>

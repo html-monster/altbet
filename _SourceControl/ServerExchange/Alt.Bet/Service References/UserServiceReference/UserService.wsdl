@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="UserService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/AltBet.Model" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/AltBet.ExchangeServices.Services" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/AltBet.Exchange" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/AltBet.Exchange.WebSocketSender" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models.WebReg" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd8" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/UserService.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/GIDX.SDK.Models.WebCashier" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IUserManager_Register_InputMessage">
+    <wsdl:part name="parameters" element="tns:Register" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_Register_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GenerateNewConfirmationHash_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateNewConfirmationHash" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GenerateNewConfirmationHash_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateNewConfirmationHashResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_Logout_InputMessage">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_Logout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_Confirm_InputMessage">
+    <wsdl:part name="parameters" element="tns:Confirm" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_Confirm_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GetUserInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GetUserInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GetUserInfoByEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserInfoByEmail" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GetUserInfoByEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserInfoByEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_EditUserInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_EditUserInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_EditPreferences_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditPreferences" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_EditPreferences_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditPreferencesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_EditUserTheme_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditUserTheme" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_EditUserTheme_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditUserThemeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_ChangePassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePassword" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_ChangePassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_LoginAdmin_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoginAdmin" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_LoginAdmin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginAdminResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_LogoutAdmin_InputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutAdmin" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_LogoutAdmin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutAdminResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GetLocation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocation" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GetLocation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_UnsubscribeMail_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnsubscribeMail" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_UnsubscribeMail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnsubscribeMailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_PushSubscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:PushSubscribe" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_PushSubscribe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PushSubscribeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxCreateSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:GidxCreateSession" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxCreateSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GidxCreateSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxCreateWebCashier_InputMessage">
+    <wsdl:part name="parameters" element="tns:GidxCreateWebCashier" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxCreateWebCashier_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GidxCreateWebCashierResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxCallbackResponse_InputMessage">
+    <wsdl:part name="parameters" element="tns:GidxCallbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxCallbackResponse_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GidxCallbackResponseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxCallbackWebCashier_InputMessage">
+    <wsdl:part name="parameters" element="tns:GidxCallbackWebCashier" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxCallbackWebCashier_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GidxCallbackWebCashierResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxGetSessionStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:GidxGetSessionStatus" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxGetSessionStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GidxGetSessionStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxNotification_InputMessage">
+    <wsdl:part name="parameters" element="tns:GidxNotification" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxNotification_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GidxNotificationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxCustomerRegistration_InputMessage">
+    <wsdl:part name="parameters" element="tns:GidxCustomerRegistration" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxCustomerRegistration_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GidxCustomerRegistrationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxUploadDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:GidxUploadDocument" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxUploadDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GidxUploadDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_IsUserVerified_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserVerified" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_IsUserVerified_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserVerifiedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxWebWallet_InputMessage">
+    <wsdl:part name="parameters" element="tns:GidxWebWallet" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_GidxWebWallet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GidxWebWalletResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IUserManager">
+    <wsdl:operation name="Register">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/Register" message="tns:IUserManager_Register_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/RegisterResponse" message="tns:IUserManager_Register_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateNewConfirmationHash">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GenerateNewConfirmationHash" message="tns:IUserManager_GenerateNewConfirmationHash_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GenerateNewConfirmationHashResponse" message="tns:IUserManager_GenerateNewConfirmationHash_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/Login" message="tns:IUserManager_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/LoginResponse" message="tns:IUserManager_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/Logout" message="tns:IUserManager_Logout_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/LogoutResponse" message="tns:IUserManager_Logout_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Confirm">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/Confirm" message="tns:IUserManager_Confirm_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/ConfirmResponse" message="tns:IUserManager_Confirm_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GetUserInfo" message="tns:IUserManager_GetUserInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GetUserInfoResponse" message="tns:IUserManager_GetUserInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfoByEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GetUserInfoByEmail" message="tns:IUserManager_GetUserInfoByEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GetUserInfoByEmailResponse" message="tns:IUserManager_GetUserInfoByEmail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditUserInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/EditUserInfo" message="tns:IUserManager_EditUserInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/EditUserInfoResponse" message="tns:IUserManager_EditUserInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditPreferences">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/EditPreferences" message="tns:IUserManager_EditPreferences_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/EditPreferencesResponse" message="tns:IUserManager_EditPreferences_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditUserTheme">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/EditUserTheme" message="tns:IUserManager_EditUserTheme_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/EditUserThemeResponse" message="tns:IUserManager_EditUserTheme_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/ChangePassword" message="tns:IUserManager_ChangePassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/ChangePasswordResponse" message="tns:IUserManager_ChangePassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginAdmin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/LoginAdmin" message="tns:IUserManager_LoginAdmin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/LoginAdminResponse" message="tns:IUserManager_LoginAdmin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LogoutAdmin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/LogoutAdmin" message="tns:IUserManager_LogoutAdmin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/LogoutAdminResponse" message="tns:IUserManager_LogoutAdmin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLocation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GetLocation" message="tns:IUserManager_GetLocation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GetLocationResponse" message="tns:IUserManager_GetLocation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnsubscribeMail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/UnsubscribeMail" message="tns:IUserManager_UnsubscribeMail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/UnsubscribeMailResponse" message="tns:IUserManager_UnsubscribeMail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PushSubscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/PushSubscribe" message="tns:IUserManager_PushSubscribe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/PushSubscribeResponse" message="tns:IUserManager_PushSubscribe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GidxCreateSession">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GidxCreateSession" message="tns:IUserManager_GidxCreateSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GidxCreateSessionResponse" message="tns:IUserManager_GidxCreateSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GidxCreateWebCashier">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GidxCreateWebCashier" message="tns:IUserManager_GidxCreateWebCashier_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GidxCreateWebCashierResponse" message="tns:IUserManager_GidxCreateWebCashier_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GidxCallbackResponse">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GidxCallbackResponse" message="tns:IUserManager_GidxCallbackResponse_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GidxCallbackResponseResponse" message="tns:IUserManager_GidxCallbackResponse_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GidxCallbackWebCashier">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GidxCallbackWebCashier" message="tns:IUserManager_GidxCallbackWebCashier_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GidxCallbackWebCashierResponse" message="tns:IUserManager_GidxCallbackWebCashier_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GidxGetSessionStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GidxGetSessionStatus" message="tns:IUserManager_GidxGetSessionStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GidxGetSessionStatusResponse" message="tns:IUserManager_GidxGetSessionStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GidxNotification">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GidxNotification" message="tns:IUserManager_GidxNotification_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GidxNotificationResponse" message="tns:IUserManager_GidxNotification_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GidxCustomerRegistration">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GidxCustomerRegistration" message="tns:IUserManager_GidxCustomerRegistration_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GidxCustomerRegistrationResponse" message="tns:IUserManager_GidxCustomerRegistration_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GidxUploadDocument">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GidxUploadDocument" message="tns:IUserManager_GidxUploadDocument_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GidxUploadDocumentResponse" message="tns:IUserManager_GidxUploadDocument_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsUserVerified">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/IsUserVerified" message="tns:IUserManager_IsUserVerified_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/IsUserVerifiedResponse" message="tns:IUserManager_IsUserVerified_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GidxWebWallet">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GidxWebWallet" message="tns:IUserManager_GidxWebWallet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GidxWebWalletResponse" message="tns:IUserManager_GidxWebWallet_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IUserManager" type="tns:IUserManager">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Register">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/Register" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateNewConfirmationHash">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GenerateNewConfirmationHash" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/Logout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Confirm">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/Confirm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GetUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfoByEmail">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GetUserInfoByEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditUserInfo">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/EditUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditPreferences">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/EditPreferences" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditUserTheme">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/EditUserTheme" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/ChangePassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginAdmin">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/LoginAdmin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogoutAdmin">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/LogoutAdmin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLocation">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GetLocation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnsubscribeMail">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/UnsubscribeMail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PushSubscribe">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/PushSubscribe" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GidxCreateSession">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GidxCreateSession" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GidxCreateWebCashier">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GidxCreateWebCashier" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GidxCallbackResponse">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GidxCallbackResponse" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GidxCallbackWebCashier">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GidxCallbackWebCashier" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GidxGetSessionStatus">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GidxGetSessionStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GidxNotification">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GidxNotification" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GidxCustomerRegistration">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GidxCustomerRegistration" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GidxUploadDocument">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GidxUploadDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserVerified">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/IsUserVerified" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GidxWebWallet">
+      <soap:operation soapAction="http://tempuri.org/IUserManager/GidxWebWallet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="UserService">
+    <wsdl:port name="BasicHttpBinding_IUserManager" binding="tns:BasicHttpBinding_IUserManager">
+      <soap:address location="http://localhost/AltBet.ExchangeServices/Services/UserService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

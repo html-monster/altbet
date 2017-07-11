@@ -1,0 +1,19 @@
+﻿@model AltBet.Models.MainPageModel
+
+<script>
+    appData.pageHomeData = JSON.parse('@Html.Raw(Json.Encode(Model))');
+</script>
+
+<div class="mp-exchanges">
+    @foreach (var exchangeItem in Model.Data)
+    {
+        @Html.Partial("_ExchangeItemMobile", exchangeItem)
+    }
+</div>
+
+@if (Model.Pagination.LastPage > 1)
+{
+    <div class="pagination">
+        @{ Html.RenderPartial("_Pagination", Model.Pagination); }
+    </div>
+}

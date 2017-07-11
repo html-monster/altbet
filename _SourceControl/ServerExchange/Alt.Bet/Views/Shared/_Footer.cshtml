@@ -1,0 +1,197 @@
+﻿<footer class="footer">
+    <div class="hide_show"></div>
+    <div class="footer_container">
+        @*<div class="logo-container footer_item">
+            @Html.ActionLink(" ", "Index", "Home", new { }, new { @class = "logo" })
+        </div>*@
+        <ul class="footer_menu footer_item">
+            <li>@Html.ActionLink("About", "GetStaticPage", "Home", new { name = "About" }, new { })</li>
+            @*<li>@Html.ActionLink("Idea", "GetStaticPage", "Home", new { name = "Idea" }, new { })</li>*@
+            <li>@Html.ActionLink("How It Works", "GetStaticPage", "Home", new { name = "HowItWorks" }, new { })</li>
+            <li>@Html.ActionLink("Help", "GetStaticPage", "Home", new { name = "Help" }, new { })</li>
+            <li>@Html.ActionLink("Trading Rules", "GetStaticPage", "Home", new { name = "TradingRules" }, new { })</li>
+        </ul>
+        <ul class="footer_menu footer_item">
+            <li>@Html.ActionLink("Terms and Conditions", "GetStaticPage", "Home", new { name = "TermsAndConditions" }, new { })</li>
+            <li>@Html.ActionLink("Privacy & Cookie Policy", "GetStaticPage", "Home", new { name = "CookiePolicy" }, new { })</li>
+            <li>@Html.ActionLink("Responsible Gaming", "GetStaticPage", "Home", new { name = "ResponsibleGaming" }, new { })</li>
+            <li>@Html.ActionLink("Payment Methods", "GetStaticPage", "Home", new { name = "PaymentMethods" }, new { })</li>
+        </ul>
+        <ul class="footer_menu footer_item">
+            @*<li>@Html.ActionLink("Cuntact Us", "GetStaticPage", new { name = "ContactUs" })</li>*@
+            <li>@Html.ActionLink("Glossary", "GetStaticPage", "Home", new { name = "Glossary" }, null)</li>
+            <li><a href="mailTo:support@alt.bet">Contact Us</a></li>
+            @*<li>@Html.ActionLink("Affiliates", "GetStaticPage", new { name = "Affiliates" })</li>*@
+            <li> <a href="http://54.171.212.235/affiliates/">Affiliates</a>   </li>
+            <li>@Html.ActionLink("Security", "GetStaticPage", new { name = "Security" })</li>
+        </ul>
+        @*<div class="contacts footer_item">*@
+            @*<span class="title">Contact us:</span>
+            <a href="mailTo:support@alt.bet" class="support">support@alt.bet</a>*@
+            @*<span class="title">Chat:</span>
+            <a href="#" class="chat">Start chat now</a>*@
+        @*</div>*@
+        <div class="social footer_item">
+            <button class="zendesk_btn btn wave waves-effect waves-button btn_green" onclick="zE.activate({ hideOnClose: true });">Support Live chat</button>
+                <ul class="soc">
+                    <li class="fb"><a href="#"></a></li>
+                    <li class="tw"><a href="#"></a></li>
+                </ul>
+                <span class="copyright">powered by <strong>Sportradar</strong></span>
+</div>
+        <!--<div class="footer_right">-->
+        <!--<div class="logo-container">-->
+        <!---->
+        <!--</div>-->
+        <!--<ul class="footer_soc">-->
+        <!--<li class="fb"><a href="https://facebook.com/"></a></li>-->
+        <!--<li class="tw"><a href="https://twitter.com/"></a></li>-->
+        <!--<li class="ml"><a href="https://mail.ru/"></a></li>-->
+        <!--</ul>-->
+        <!--<p class="powered">powered by "Enetpulse"</p>-->
+        <!--</div>-->
+        <div class="footer_item">
+            <p class="copy-right">Copyright © 2016 <br />
+                <a href="http://www.gaminglicences.com/pages/validate.php?lid=8048-A0707110" target="_blank"><img src="~/Images/curacao_logo.png" class="curacao" alt="Curacao" /></a>
+                By accessing, using or navigating throughout this site you accept that we will use certain cookies to improve your customer experience. alt.bet uses cookies to improve your user experience only and will not interfere with your privacy. Please be aware that the website cannot function if cookies are disabled. To change your cookies setting please refer to our privacy policy.
+                <br />Alt.Bet Exchange B.V.. All rights reserved. Site is operated by Alt.Bet Exchange B.V., a company registered and established under the laws of Curaçao. Alt.Bet Exchange B.V.. is licensed and regulated by Antillephone N.V ( License No: <a href="http://www.gaminglicences.com/pages/validate.php?lid=8048-A0707110" target="_blank">8048/JAZ2016-034</a>). Alt.Bet Exchange B.V.’s registration number is 140039 and its registered address is Xecutive Corporate Management B.V., Orionweg 10C, Willemstad, Curacao. Please gamble responsibly.
+            </p>
+        </div>
+    </div>
+</footer>
+<div class="video_form pop_up">
+    <div class="pop_up_container">
+        <div class="pop_up_content">
+            <iframe width="960" height="540" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+@Html.Partial("_Footer/_SignIn", new AltBet.Bet.Models.LoginUserViewModel())
+@Html.Partial("_Footer/_SignUp", new AltBet.Bet.Models.UserViewModel())
+<div class="global_message_container message_pop_up" id="global_message" style="display: none">
+    <p>something wrong</p>
+</div>
+<div class="price_plan_form price_plan_js pop_up">
+    <div class="pop_up_container">
+        <div class="pop_up_content">
+            <div class="price_wrapper">
+                <div class="container">
+                    <div class="item_fees">
+                        <h3>Removing Liquidity (Taker's Fees)</h3>
+                        <span>$0.0086/contract</span>
+                    </div>
+                    <div class="item_fees">
+                        <h3>Adding Liquidity ( Maker's Fees)</h3>
+                        <span>($0.0026)/contract</span>
+                        <span class="description">* subject to periodic revisons by AltBet Exchange. B.V. </span>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="item">
+                        <h2>Free</h2>
+                        <strong class="price"><span class="value">$</span>0</strong>
+                        <span class="time">PER MONTH</span>
+                        <ul class="info">
+                            <li>Low Fees</li>
+                            <li>Rebates for Liquidity Adding</li>
+                            <li>Low Settlement Fees</li>
+                            <li>No Deposit Fees</li>
+                            <li>$10 Deposit Minimum</li>
+                            <li>Pass Through Withdrawal Fees</li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <h2>Bronze</h2>
+                        <strong class="price"><span class="value">$</span>10</strong>
+                        <span class="time">PER MONTH <span class="same">(or $<span class="price">99</span>/year)</span></span>
+                        <ul class="info">
+                            <li>1500 contracts included</li>
+                            <li>(18000/year contracts included)</li>
+                            <li>Low Fees</li>
+                            <li>Rebates for Liquidity Adding</li>
+                            <li>Waived Settlement Fees</li>
+                            <li>No Deposit Fees</li>
+                            <li>No Deposit Minimum</li>
+                            <li>Waived Withdrawal Fees</li>
+                            <li>save up to <strong>36%</strong></li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <h2>Silver</h2>
+                        <strong class="price"><span class="value">$</span>30</strong>
+                        <span class="time">PER MONTH <span class="same">(or $<span class="price">299</span>/year)</span></span>
+                        <ul class="info">
+                            <li>5000 contracts included</li>
+                            <li>(60000/year contracts included)</li>
+                            <li>Low Fees</li>
+                            <li>Rebates for Liquidity Adding</li>
+                            <li>Waived Settlement Fees</li>
+                            <li>No Deposit Fees</li>
+                            <li>No Deposit Minimum</li>
+                            <li>Waived Withdrawal Fees</li>
+                            <li>save up to <strong>42%</strong></li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <h2>Gold</h2>
+                        <strong class="price"><span class="value">$</span>100</strong>
+                        <span class="time">PER MONTH <span class="same">(or $<span class="price">999</span>/year)</span></span>
+                        <ul class="info">
+                            <li>20000 contracts included</li>
+                            <li>(240000/year contracts included)</li>
+                            <li>Low Fees</li>
+                            <li>Rebates for Liquidity Adding</li>
+                            <li>Waived Settlement Fees</li>
+                            <li>No Deposit Fees</li>
+                            <li>No Deposit Minimum</li>
+                            <li>Waived Withdrawal Fees</li>
+                            <li>save up to <strong>52%</strong></li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <h2>Enterprise</h2>
+                        <ul class="info enterprise">
+                            <li>If You are Licensed Gaming Operator, please <a href="mailTo:enterprise@alt.bet" class="text_decoration">Contact Us</a> for details.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="template">
+    <table class="pos tmp">
+        <thead>
+            <tr>
+                <th class="title">
+                    <span class="symbol_name hidden"></span>
+                </th>
+                <th></th>
+                <th><span class="quantity"></span></th>
+                <th></th>
+                <th></th>
+                <th><span class="pl"></span></th>
+                <th><button class="btn close_out wave">Close Out</button></th>
+            </tr>
+        </thead>
+        <tbody class="showhide active">
+            <tr class="event-content content_bet" data-symbol="">
+                <td>
+                    <strong class="title"></strong>
+                </td>
+                <td class="side"></td>
+                <td class="quantity"></td>
+                <td class="avg_price"></td>
+                <td class="spread">
+                    <span class="sell"></span> |
+                    <span class="buy"></span>
+                </td>
+                <td class="pl"></td>
+                <td>
+                    <span class="buy"><button class="buy btn wave empty btnJs">Buy</button></span>
+                    <span class="sell"><button class="sell btn wave empty btnJs">Sell</button></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

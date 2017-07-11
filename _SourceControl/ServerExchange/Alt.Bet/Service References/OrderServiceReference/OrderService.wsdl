@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OrderService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/OrderService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/OrderService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/OrderService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/AltBet.Model" />
+      <xsd:import schemaLocation="http://localhost/AltBet.ExchangeServices/Services/OrderService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/AltBet.Exchange" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IOrderManager_Add_InputMessage">
+    <wsdl:part name="parameters" element="tns:Add" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_Add_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_Cancel_InputMessage">
+    <wsdl:part name="parameters" element="tns:Cancel" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_Cancel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_GetOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrders" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_GetOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_GetOrdersOrPositions_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrdersOrPositions" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_GetOrdersOrPositions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrdersOrPositionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_GetCurrentOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentOrders" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_GetCurrentOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_CancelAll_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelAll" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_CancelAll_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_CloseOut_InputMessage">
+    <wsdl:part name="parameters" element="tns:CloseOut" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_CloseOut_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CloseOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_Reverse_InputMessage">
+    <wsdl:part name="parameters" element="tns:Reverse" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_Reverse_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReverseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_GetOrderAndCancel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderAndCancel" />
+  </wsdl:message>
+  <wsdl:message name="IOrderManager_GetOrderAndCancel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderAndCancelResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IOrderManager">
+    <wsdl:operation name="Add">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrderManager/Add" message="tns:IOrderManager_Add_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrderManager/AddResponse" message="tns:IOrderManager_Add_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Cancel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrderManager/Cancel" message="tns:IOrderManager_Cancel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrderManager/CancelResponse" message="tns:IOrderManager_Cancel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrderManager/GetOrders" message="tns:IOrderManager_GetOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrderManager/GetOrdersResponse" message="tns:IOrderManager_GetOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrdersOrPositions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrderManager/GetOrdersOrPositions" message="tns:IOrderManager_GetOrdersOrPositions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrderManager/GetOrdersOrPositionsResponse" message="tns:IOrderManager_GetOrdersOrPositions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrderManager/GetCurrentOrders" message="tns:IOrderManager_GetCurrentOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrderManager/GetCurrentOrdersResponse" message="tns:IOrderManager_GetCurrentOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelAll">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrderManager/CancelAll" message="tns:IOrderManager_CancelAll_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrderManager/CancelAllResponse" message="tns:IOrderManager_CancelAll_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CloseOut">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrderManager/CloseOut" message="tns:IOrderManager_CloseOut_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrderManager/CloseOutResponse" message="tns:IOrderManager_CloseOut_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Reverse">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrderManager/Reverse" message="tns:IOrderManager_Reverse_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrderManager/ReverseResponse" message="tns:IOrderManager_Reverse_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderAndCancel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrderManager/GetOrderAndCancel" message="tns:IOrderManager_GetOrderAndCancel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrderManager/GetOrderAndCancelResponse" message="tns:IOrderManager_GetOrderAndCancel_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IOrderManager" type="tns:IOrderManager">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Add">
+      <soap:operation soapAction="http://tempuri.org/IOrderManager/Add" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Cancel">
+      <soap:operation soapAction="http://tempuri.org/IOrderManager/Cancel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <soap:operation soapAction="http://tempuri.org/IOrderManager/GetOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrdersOrPositions">
+      <soap:operation soapAction="http://tempuri.org/IOrderManager/GetOrdersOrPositions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentOrders">
+      <soap:operation soapAction="http://tempuri.org/IOrderManager/GetCurrentOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelAll">
+      <soap:operation soapAction="http://tempuri.org/IOrderManager/CancelAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseOut">
+      <soap:operation soapAction="http://tempuri.org/IOrderManager/CloseOut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Reverse">
+      <soap:operation soapAction="http://tempuri.org/IOrderManager/Reverse" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderAndCancel">
+      <soap:operation soapAction="http://tempuri.org/IOrderManager/GetOrderAndCancel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OrderService">
+    <wsdl:port name="BasicHttpBinding_IOrderManager" binding="tns:BasicHttpBinding_IOrderManager">
+      <soap:address location="http://localhost/AltBet.ExchangeServices/Services/OrderService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

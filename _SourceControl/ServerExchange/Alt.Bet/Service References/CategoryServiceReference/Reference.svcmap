@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="11fcec76-9894-42c6-80c0-e42f49a3fc17" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/AltBet.ExchangeServices/Services/CategoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CategoryService.disco" MetadataType="Disco" ID="6b92ad7e-f939-4d8e-858e-d6d08e03a867" SourceId="1" SourceUrl="http://localhost/AltBet.ExchangeServices/Services/CategoryService.svc?disco" />
+    <MetadataFile FileName="CategoryService.wsdl" MetadataType="Wsdl" ID="46a6312c-35a5-4753-9318-c754e0976abf" SourceId="1" SourceUrl="http://localhost/AltBet.ExchangeServices/Services/CategoryService.svc?wsdl" />
+    <MetadataFile FileName="CategoryService.xsd" MetadataType="Schema" ID="f0ba9de3-763a-4d61-965d-b0d04c1493d4" SourceId="1" SourceUrl="http://localhost/AltBet.ExchangeServices/Services/CategoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CategoryService1.xsd" MetadataType="Schema" ID="cfe1976f-3113-40f6-8a12-a0ed60434487" SourceId="1" SourceUrl="http://localhost/AltBet.ExchangeServices/Services/CategoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="CategoryService2.xsd" MetadataType="Schema" ID="32bec684-7117-4f25-b50d-a511059f1d93" SourceId="1" SourceUrl="http://localhost/AltBet.ExchangeServices/Services/CategoryService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

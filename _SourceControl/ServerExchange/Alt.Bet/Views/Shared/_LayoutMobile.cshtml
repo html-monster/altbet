@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+  
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>@ViewBag.Title</title>
+    @*@Styles.Render("~/Content/css")*@
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (!string.IsNullOrEmpty((string) Session["Theme"]))
+        {
+            @((string) Session["Theme"] == "light" ? Styles.Render("~/Content/index_light_mobile.css") : Styles.Render("~/Content/index_dark_mobile.css"))
+        }
+        else
+        {
+            @Styles.Render("~/Content/index_dark_mobile.css")
+        }
+    }
+    else
+    {
+       @Styles.Render("~/Content/index_dark_mobile.css")
+    }
+    @Scripts.Render("~/bundles/access")
+</head>
+<body>
+    <div id="DiRoot"></div>
+    <div class="wrapper" id="mountPoint">
+        @Html.Partial("_HeaderMobile")
+        @Html.Partial("_MainMenuMobile")
+        @RenderBody()
+        <div id="DiContent"></div>
+    </div>
+    @Html.Partial("_FooterMobile")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/vendors")
+    @Scripts.Render("~/bundles/mobile")
+    @Scripts.Render("~/bundles/chart")
+</body>
+</html>

@@ -1,0 +1,34 @@
+﻿@model AltBet.Exchange.UserAssets
+
+@if (User.Identity.IsAuthenticated)
+{
+    <span class="win-lost">Win/Loss: <strong class=@(Model.GainLost >= 0 ? "win" : "lost")>@(Model.GainLost >= 0 ? "" : "(")$@Math.Abs(Model.GainLost).ToString("0.00")@(Model.GainLost >= 0 ? "" : ")")</strong></span>
+    <span class="invested">At Stake: <strong>$@Model.Invested.ToString("0.00")</strong></span>
+    <span class="available">Balance: <strong>$@Model.CurrentBalance.ToString("0.00")</strong></span>
+}
+
+<script>
+    var appData = {};
+    appData.headerData = JSON.parse('@Html.Raw(Json.Encode(Model))');
+</script>
+
+@Html.Partial("_RegistrationCountries", null)
+
+<script>
+    var globalData = {
+        rootUrl: '@Url.Content("~/")',
+        basicMode: @Json.Encode(User.Identity.IsAuthenticated ? Convert.ToBoolean(Model.Account.Mode) : true),
+        tradeOn: @Json.Encode(User.Identity.IsAuthenticated ? Convert.ToBoolean(Model.Account.Bettor) : false),
+        autoTradeOn: @Json.Encode(User.Identity.IsAuthenticated ? Convert.ToBoolean(Model.Account.Trade) : false),
+        theme: '@(User.Identity.IsAuthenticated ? Model.Account.Theme : "dark")',
+        userIdentity: '@User.Identity.IsAuthenticated',
+        userLogin: '@User.Identity.Name',
+        webSocketUrl: '@System.Configuration.ConfigurationManager.AppSettings["WebSocketUrl"]',
+        Urls: {
+            Home: "@Url.Action("Index", "Home", null)",
+            TradingRules: "@Url.Action("GetStaticPage", "Home", new { name = "TradingRules" })",
+        },
+        action: "@System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("action").ToLower()",
+        controller: "@System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("controller").ToLower()",
+    };
+</script>

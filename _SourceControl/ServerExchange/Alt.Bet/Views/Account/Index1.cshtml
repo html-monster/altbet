@@ -1,0 +1,66 @@
+﻿@model AltBet.Model.User
+@{
+       Layout = "~/Views/Shared/_Layout.cshtml";
+}
+        <section class="content">
+            <div class="registration">
+                <div class="registr">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-5 col-md-offset-1">
+                                <div class="company">
+                                    <h1>your company</h1>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                @using (@Html.BeginForm("Register", "Account", FormMethod.Post))
+                                {
+                                    <row>
+                                        <h2>Register</h2>
+                                        <div class="col-md-6">
+                                            <input type="submit" id="face" value="Sign in with Facebook">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="submit" id="twitter" value="Sign in with Twitter">
+                                        </div>
+                                            <fieldset>
+                                                <div class="col-md-6">
+                                                    @Html.ValidationMessageFor(model => model.Name)
+                                                    @Html.TextBoxFor(model => model.Name, new { placeholder = "Name", type = "text", id = "name"})
+                                                </div>
+                                               
+                                                <div class="col-md-6">
+                                                    <input type="text" id="Lastname" placeholder="Lastname" disabled="disabled">
+                                                </div>
+                                                <div class="col-md-12">
+                                                    @Html.ValidationMessageFor(model => model.Email)
+                                                    @Html.TextBoxFor(model => model.Email, new { placeholder = "example@mail.ru", type = "email", id = "mail" })
+                                                </div>
+                                                
+                                                <div class="col-md-12">
+                                                    @Html.ValidationMessageFor(model => model.Password)
+                                                    @Html.TextBoxFor(model => model.Password, new { placeholder = "Password", type = "password", id = "password" })
+                                                </div>
+                                                
+                                                <div>
+                                                    <h3>captcha</h3>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="captca"><img src="~/../Images/CAPTCHAimg.png"></div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <input type="text" id="captcha">
+                                                </div>
+                                                <div class="col-md-2"><img src="~/../Images/Recaptcha.png"></div>
+                                                <div class="col-md-12">
+                                                    <input type="submit" id="regis" value="Register">
+                                                </div>                                            
+                                            </fieldset>
+                                    </row>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>  
