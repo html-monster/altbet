@@ -1,4 +1,4 @@
-.sign_up_form, .sign_in_form {
+.sign_up_form, .sign_in_form, #form2, .setting_form, .self_exclusion {
 
   input[type=email] {
     &:-webkit-autofill {
@@ -117,6 +117,9 @@
     &:focus {
       outline: none;
     }
+    &#r_confirm_pass {
+      padding-left: 20px;
+    }
 
     &.input-validation-error {
       color: #ff4810;
@@ -186,6 +189,7 @@
       }
     }
     a.forgot_password {
+      display: none;
       float: right;
       padding-top: 4px;
       font-size: 12px;
@@ -292,6 +296,97 @@
           left: 0 !important;
         }
       }
+    }
+  }
+}
+
+#form2 {
+  display: flex;
+  flex-direction: column;
+  .input_animate {
+    .validation-summary-errors {
+      bottom: -17px;
+    }
+    &.pass_container:before {
+      content: '';
+      position: absolute;
+      top: 11px;
+      left: 8px;
+      width: 15px;
+      height: 21px;
+      font-size: 17px;
+      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+      z-index: 99;
+      opacity: 0.7;
+    }
+  }
+
+}
+
+.setting_form {
+  .input_animate {
+    height: 55px;
+    margin: 0 0 1em;
+    &:nth-child(5):before { display: none; }
+    .input__field {
+      padding-left: 5px;
+    }
+    .input__label {
+      left: -15px;
+    }
+  }
+}
+
+.self_exclusion {
+  section {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    &:last-child {
+      border: none;
+    }
+    form {
+      margin: 40px 0;
+      &.first_form {
+        margin-top: 0;
+      }
+      h4 {
+        font-size: 18px;
+        font-weight: bold !important;
+      }
+      .alert_block {
+        display: flex;
+        align-items: center;
+        height: 20px;
+        border-left: 2px solid;
+        border-color: #f8b747;
+        padding-left: 15px;
+        margin: 15px 0 10px 0;
+        &.for_cont_pass {
+          margin-bottom: 30px;
+        }
+      }
+      .pass_container {
+        margin-top: 15px;
+        max-width: 448px;
+        margin-right: 50px;
+      }
+      .time_container {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+        border: none;
+        .h-dropdown2 {
+          width: 450px;
+          margin-right: 50px;
+        }
+        .save_button {
+          height: 36px;
+          width: 100px;
+        }
+      }
+
     }
   }
 }

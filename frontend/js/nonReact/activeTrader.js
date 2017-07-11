@@ -408,25 +408,25 @@ class activeTraderClass{
 
 		}();
 
-		this.controlMethods = function () {
-			let trader = $('.active_trader');
-
-			trader.on('click', '.active_trader_footer td', function () {
-				$(this).find('.confirm_window').removeClass('fadeOutDown').addClass('fadeInUp');
-				$(this).find('.confirm_window').addClass('active');
-			});
-			$('.active_trader_footer button').click(function (e) {
-				e.stopPropagation();
-				if($(this).hasClass('yes')){
-					let method = ($(this).parents('td').find('a').attr('class')).slice(0, -2);
-					ajaxControlTraderClass.ajaxDataSender(method);
-				}
-				$(this).parents('.confirm_window').removeClass('fadeInUp').addClass('fadeOutDown');
-				setTimeout(() => {
-					$(this).parents('.confirm_window').removeClass('active');
-				}, 500);
-			});
-		}();
+		// this.controlMethods = function () {
+		// 	let trader = $('.active_trader');
+		//
+		// 	trader.on('click', '.active_trader_footer td', function () {
+		// 		$(this).find('.confirm_window').removeClass('fadeOutDown').addClass('fadeInUp');
+		// 		$(this).find('.confirm_window').addClass('active');
+		// 	});
+		// 	$('.active_trader_footer .confirm_window button').click(function (e) {
+		// 		e.stopPropagation();
+		// 		if($(this).hasClass('yes')){
+		// 			let method = ($(this).parents('td').children('button').attr('class')).split(' ')[0];
+		// 			ajaxControlTraderClass.ajaxDataSender(method);
+		// 		}
+		// 		$(this).parents('.confirm_window').removeClass('fadeInUp').addClass('fadeOutDown');
+		// 		setTimeout(() => {
+		// 			$(this).parents('.confirm_window').removeClass('active');
+		// 		}, 500);
+		// 	});
+		// }();
 		// this.marcketOrder = function () {
 		// 	var container = $('.active_trader .control').eq(0);
 		//

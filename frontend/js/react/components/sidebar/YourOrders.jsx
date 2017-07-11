@@ -216,9 +216,9 @@ class OrderItem extends React.Component
 					bid={data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid}
 					price={(data.Price).toFixed(2)}
 					priceDisabled={+moment().format('x') < +(data.Symbol.StartDate).slice(6, -2)}
-					maxEntries={10}
+					maxEntries={100}
 					minPrice={0.5}
-					remainingBal={5}
+					remainingBal={95}
 					quantity={data.Volume}
 					isMirror={data.isMirror}
 					symbol={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}

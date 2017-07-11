@@ -251,7 +251,7 @@ class Actions extends BaseActions
                 ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
 
                 if($('#ChkLimit').prop('checked')) globalData.tradeOn = true;
-                orderClass.tabReturn();
+                // orderClass.tabReturn();
                 // console.log(inProps.symbol);
                 $('#active_trader').addClass('loading');
                 // === Htmlbook === 17-02-09 ===============================================

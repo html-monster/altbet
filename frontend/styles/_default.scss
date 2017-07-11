@@ -43,12 +43,10 @@ select {
   cursor: pointer;
 }
 ul{  list-style-type: none;  }
-
 *:focus{  outline: none;  }
-
 body{
   //overflow-x: auto;
-
+  &.blocked{ overflow: hidden; }
   &>.wrapper{
   //@include container(12);
   //min-height:100%;
@@ -384,7 +382,7 @@ input ~ .info {
   height: 12px;
   background: $help_block;
   position: absolute;
-  top: 41px;
+  top: 14px;
   right: 5px;
   z-index: 70;
   opacity: 0.5;
@@ -461,7 +459,7 @@ input ~ .info {
   cursor: pointer;
   &.close_blue{
     &:before, &:after{ display: none; }
-    background: url("#{$pathImage}/sprite.svg") no-repeat -44px -114px;
+    background: url("#{$pathImage}/sprite.svg") no-repeat -43px -115px;
   }
   &:hover {
     &:before, span:before { transform: rotate(90deg); }

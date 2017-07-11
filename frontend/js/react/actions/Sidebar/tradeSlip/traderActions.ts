@@ -18,9 +18,9 @@ import {RebuildServerData} from './activeTrader/rebuildServerData';
 import { orderForm } from '../../../components/formValidation/validation';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 /// <reference path="../../../../.d/common.d.ts" />
-// declare let __DEV__;
+declare let __DEV__;
 // declare function $(object: any);
-// declare let defaultMethods;
+declare let defaultMethods;
 
 
 declare let orderClass;
@@ -559,7 +559,7 @@ class Actions extends BaseActions
 	{
 		return () =>
 		{
-			event.preventDefault();
+			// event.preventDefault();
 			const { cmpData: { activeExchange }, traderActions } = context.props;
 
             if(!orderForm(event.currentTarget)) return false;
@@ -811,6 +811,45 @@ class Actions extends BaseActions
 			{
 				$(context.refs.quantityError).fadeIn(200);
 				$(context.refs.inputQuantity).focus();
+			}
+		}
+	}
+
+	public footerMethodSendAjax(method, symbol)
+	{
+		return () =>
+		{
+			let url = `${globalData.rootUrl}Order/${method}`,
+				data = {
+					symbol
+				};
+
+			defaultMethods.sendAjaxRequest({
+				httpMethod: 'POST',
+				callback: onSuccessAjax,
+				onError: onErrorAjax,
+				url: url,
+				data: data});
+
+			function onSuccessAjax(data)
+			{
+				// if(__DEV__ && data) console.log('Relax... ajax was sent');
+				if(__DEV__)
+				{
+					if(data === 'success') console.info(`${method} has done`);
+					else
+					{
+						console.error(`Server ${method} method has finished with error`);
+						defaultMethods.showError(`Server error, try again later`);
+					}
+				}
+			}
+
+			function onErrorAjax(x, y)
+			{
+				__DEV__ && console.log('XMLHTTPRequest object: ', x);
+				__DEV__ && console.log('textStatus: ',  y);
+				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
 			}
 		}
 	}

@@ -50,8 +50,8 @@ export default class TraderDefaultForm extends React.Component {
 					ask={bestPrice.ask}
 					bid={bestPrice.bid}
 					price={price}
-					maxEntries={10}
-					remainingBal={5}
+					maxEntries={100}
+					remainingBal={95}
 					quantity={quantity}
 					isMirror={isMirror}
 					symbol={activeExchange.symbol}

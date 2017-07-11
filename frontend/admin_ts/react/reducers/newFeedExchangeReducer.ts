@@ -19,9 +19,12 @@ import {
     ON_GEN_URL,
     ON_SAVE_EVENT_OK,
 } from '../constants/ActionTypesNewFeedExchange';
-import {Common} from "../common/Common";
+/// TS_IGNORE
+import {Common} from "common/Common";
 
-class Reducer
+
+
+export default class Reducer
 {
     public static USING_TEAM = 1;
     public static USING_TEAM_UP = 2;
@@ -61,6 +64,7 @@ class Reducer
             category: '',
             url: '',
         },
+        ParentCategory: 'Amer sport',
         ...globalData.AppData,
     };
 
@@ -749,12 +753,8 @@ class Reducer
      */
     private saveEventSuccess({fieldName, val}, state)
     {
-        state.FormData[fieldName] = val;
+        // state.FormData[fieldName] = val;
 
         return state;
     }
 }
-
-
-const $Reducer = new Reducer();
-export default $Reducer.actionsHandler.bind($Reducer);

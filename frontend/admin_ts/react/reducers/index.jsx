@@ -1,39 +1,42 @@
 import { combineReducers } from 'redux';
 
-import newFeedExchange from './newFeedExchangeReducer.ts';
+import NewFeedExchangeReducer from './newFeedExchangeReducer.ts';
+import FeedEventsReducer from './FeedEventsReducer.ts';
+import {Framework} from 'common/Framework.ts';
 
 
-let reducers = {};
-// export default combineReducers({
-// 	App': appState,
-// 	mainPage,
-//     eventPage,
-// 	myPosReduce,
-// 	sidebar,
-// 	tradeSlip,
-// 	yourOrders,
-// 	deposit,
-// 	transHistory
-// });
-// let constants = ABpp.ABpp;
-// ABpp = ABpp.ABpp.getInstance();
-// ABpp.CONSTS = constants;
+let reducers;
+let page = "";
 
 const common = {
 };
 
-let page = "";
 
-if ( globalData.ac.controller === "feed" && globalData.ac.action === "newfeedexchange" ) page = "applyfeedexchange";
-
-switch (page)
+if( globalData.ac )
 {
-	case "applyfeedexchange":
-		reducers = {
-			newFeedExchange: newFeedExchange,
-			...common,
-		};
-		break;
-}
+	const { controller, action } = globalData.ac;
 
-export default combineReducers(reducers);
+	if ( controller === "feed" && action === "newfeedexchange" ) page = "applyfeedexchange";
+	if ( controller === "feed" && action === "index" ) page = "xmlfeedevents";
+
+
+	switch (page)
+	{
+		case "applyfeedexchange":
+			reducers = {
+				newFeedExchange: Framework.getHandler(NewFeedExchangeReducer),
+				...common,
+			};
+			break;
+
+		case "xmlfeedevents":
+			reducers = {
+				FeedEvents: Framework.getHandler(FeedEventsReducer),
+				...common,
+			};
+			break;
+	}
+} // endif
+
+
+export default reducers ? combineReducers.bind(null, reducers) : null;

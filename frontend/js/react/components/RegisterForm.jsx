@@ -102,7 +102,7 @@ export class RegisterForm extends React.PureComponent
 
     inputRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty }, ...input })
     {
-        return <span className={classnames(`input_animate input--yoshiko`, {NickName: input.name === 'NickName'},{Email: input.name === 'Email'}, {Password: input.name === 'Password'},{ComparePassword: input.name === 'ComparePassword'}) }>
+        return <span className={classnames(`input_animate input--yoshiko`, {NickName: input.name === 'NickName'},{Email: input.name === 'Email'}, {Password: input.name === 'Password'},{ComparePassword: input.name === 'ComparePassword'}) + (type === 'password' ? ' pass_container' : '')}>
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 <input className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id} type={type} {...input}/>
 				{ type === 'password' ? <span className="show_password">{}</span> : '' }
@@ -382,7 +382,7 @@ export class RegisterForm extends React.PureComponent
 
                     <div className="agreement">
                         <InputValidation renderContent={this.chkBoxRender} id='agreement' input={input}>
-                            <span>Agree to the <a href="/AltBet/eng/footer/TermsAndConditions" className="text_decoration">Terms of Use</a> and <a href="/AltBet/eng/footer/CookiePolicy" className="text_decoration">Privacy Notice</a></span>
+                            <span>Agree to the <a href={ABpp.baseUrl + '/eng/footer/TermsAndConditions'} className="text_decoration">Terms of Use</a> and <a href={ABpp.baseUrl + "/eng/footer/CookiePolicy"} className="text_decoration">Privacy Notice</a></span>
                         </InputValidation>
 
                         <InputValidation renderContent={this.chkBoxRender} id='agreement_age' input={input}>

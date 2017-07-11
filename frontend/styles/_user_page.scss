@@ -33,7 +33,7 @@
     }
   }
   .inactive{  opacity: 0.3;  }
-  .submit_container{  margin-bottom: 35px;  }
+  .submit_container{  margin: 35px 0; width: 400px;   }
   input[type=submit]{
     width: 100%;
     padding: 7px 6px;
@@ -125,7 +125,7 @@
       h4{  margin: 15px 0 5px; font-weight: normal;  }
     }
 
-		.input_animate{  display: block;  height: 75.97px;  }
+		.input_animate{display: block;}
 
     hr {
       clear: both;

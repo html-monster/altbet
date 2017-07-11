@@ -30,7 +30,7 @@ export class LoginController extends BaseController
     {
         var self = this;
         var form = $(".F1Loginform");
-
+// 0||console.log( 'form', form );
         form.submit(function (e) { self.onLoginFormSubm(e, this); });
 
 
@@ -44,6 +44,9 @@ export class LoginController extends BaseController
         var $that = $(that);
 
         e.preventDefault();
+
+        // 0||console.log( 'here', 0 );
+        // return;
 
         let $LoginView = new LoginView();
 

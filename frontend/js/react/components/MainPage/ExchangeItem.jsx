@@ -6,6 +6,7 @@ import {LineupPage} from './LineupPage';
 import Chart from './Chart';
 import DefaultOrdersLocal from '../DefaultOrdersLocal';
 import classnames from 'classnames';
+
 // import {Common} from './../../common/Common';
 
 
@@ -149,7 +150,8 @@ export default class ExchangeItem extends React.Component
             }
         };
 
-        let disabled = Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
+        const isEventClosed = Symbol.EndDate && +moment().format('x') > (new DateLocalization).fromSharp(Symbol.EndDate),//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
+			  isEventStarted = +moment().format('x') > (new DateLocalization).fromSharp(Symbol.StartDate);
 
         //lineupContainer height
 		let height;
@@ -201,8 +203,9 @@ export default class ExchangeItem extends React.Component
         // 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
 
         return (
-            <div className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`, {clickable: !!isTraiderOn},
-				{active_nearby: currentExchange && !expModeClass}, {with_order: showOrder})} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
+            <div className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`,
+				{not_started: !isEventStarted}, {finished: isEventClosed}, {clickable: !!isTraiderOn}, {active_nearby: currentExchange && !expModeClass},
+				{with_order: showOrder})} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
                 onClick={() =>
                 {
                 	// if(this.props.data.currentExchange !== this.props.data.Symbol.Exchange)
@@ -252,7 +255,7 @@ export default class ExchangeItem extends React.Component
 									</span>
                                     , (Symbol.HomeHandicap !== null) ? <span key="1" className="handicap" style={{paddingRight: 5}} title={spreadTitle}>
 										<span className="title">{spreadTitle}</span> {spreadValue}</span> : ''
-                                    , data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}
+                                    , data.Symbol.LastPrice && isEventStarted ? <span key="2" className={`last-price ${$lastPriceClass[0]}`}
 																	title={'Last Price' + ($lastPriceClass[0] === 'up' ? ' increased' : 'decreased')}>
 									<span className="title">Last Price </span><i>{}</i><span className="value">${data.Symbol.LastPrice.toFixed(2)}</span></span> : ''];
 
@@ -262,12 +265,15 @@ export default class ExchangeItem extends React.Component
 
                         <div className="l-buttons">
                                 <div className="inner animated dur4 mainButtonAnimate">
+									{
+										isEventClosed &&
+										<div className="btn_locker animated dur4 fadeIn">Game is over </div>
+									}
                                     <ButtonContainer actions={actions} mainContext={mainContext} data={{
                                         type: 'sell',
                                         side: 0,
                                         ismirror: false,
                                         Orders: data.Orders,
-										btnDisabled: disabled,
                                         ...commProps
                                     }}/>
                                     <ButtonContainer actions={actions} mainContext={mainContext} data={{
@@ -276,13 +282,29 @@ export default class ExchangeItem extends React.Component
                                         ismirror: false,
                                         symbolName: symbol,
                                         Orders: data.Orders,
-										btnDisabled: disabled,
                                         ...commProps
                                     }}/>
                                 </div>
                                 <div className={`button-container opener`}>
-                                    <div className="button">
-                                        <button className={`event`}><i>{}</i>Enter</button>
+                                    <div className={classnames(`button`, {order_open: showOrder})}>
+                                        <button className={`event`} onClick={isEventStarted ? null : ()=>{
+											this.props.actions.actionOnPosPriceClick(mainContext,
+											{
+												PosPrice: [],
+												ismirror: false,
+												price   : 0.5,
+												quantity: 0,
+												type    : 1,
+												data    : {
+													type      : 'buy',
+													side      : 1,
+													ismirror  : false,
+													symbolName: symbol,
+													Orders    : data.Orders,
+													...commProps
+												},
+											});
+										}}><i>{}</i><span>Enter</span></button>
                                     </div>
                                 </div>
                         </div>
