@@ -1,5 +1,0 @@
-﻿@model AltBet.Exchange.OrdersPositionsHistory
-
-@Html.Partial("GetOrdersPositionsHistory/_OpenOrders", Json.Encode(Model.OrdersOrPositions))
-@Html.Partial("GetOrdersPositionsHistory/_MyOrders", Json.Encode(Model.Positions))
-@Html.Partial("GetOrdersPositionsHistory/_TradingHistory", Json.Encode(Model.HistoryTradeItems))

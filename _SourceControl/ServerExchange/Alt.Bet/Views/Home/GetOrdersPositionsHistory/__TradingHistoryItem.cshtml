@@ -1,9 +1,0 @@
-﻿@model AltBet.Exchange.HistoryTradeItem
-    <tr class="@(Model.IsMirror == 0 ? (Model.Side == AltBet.Exchange.Side.Buy ? "buy" : "sell") : (Model.Side == AltBet.Exchange.Side.Buy ? "sell" : "buy"))">
-        <td>@(Model.IsMirror == 0 ? Model.Symbol.HomeName : Model.Symbol.AwayName)</td>
-        <td><span class="date">@Model.Time.ToShortDateString()</span> | <span class="time">@Model.Time.ToShortTimeString()</span></td>
-        <td>@(Model.IsMirror == 0 ? (Model.Side == AltBet.Exchange.Side.Buy ? "Long" : "Short") : (Model.Side == AltBet.Exchange.Side.Buy ? "Short" : "Long"))</td>
-        <td class="quantity">@Model.Quantity</td>
-        <td>@(Model.IsMirror == 0 ? Math.Round(Model.Price, 2) : Math.Round(1 - Model.Price, 2))</td>
-        <td><span class="@(Model.IsMaker == 1 ? "up" : "down")">@(Model.IsMaker == 1 ? "" : "(")$@Math.Round(Model.Fees, 4)@(Model.IsMaker == 1 ? "" : ")") </span></td>
-    </tr>
