@@ -41,19 +41,21 @@ class FeedEvents extends BaseController
 
     render()
     {
-        let { actions, data: {AllSport, AllLeague, Sport, League, FeedEvents, OrderBy, StartDateSort, PageInfo} } = this.props;
+        let { actions, data: {AllSport, AllLeague, Sport, League, FeedEvents, CurrentOrderBy, OrderBy, StartDateSort, PageInfo} } = this.props;
         // const { okBtnDisabled } = this.state;
-        let sportsItems = [], ligItems = [];
+        let sportsItems = [], ligItems = [], currSport, currLig;
         let $DateLocalization = new DateLocalization();
 
 
         // prepare sport filter
         AllSport && AllSport.unshift('All') || (AllSport = ['All']);
         if (sportsItems) sportsItems = sportsItems.concat(AllSport.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
+        currSport = sportsItems.slice().filter((val) => val.value == Sport || !Sport && !val.value )[0];
 
         // prepare lig filter
         AllLeague && AllLeague.unshift('All') || (AllLeague = ['All']);
         if (AllLeague) ligItems = ligItems.concat(AllLeague.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
+        currLig = ligItems.slice().filter((val) => val.value == League || !League && !val.value )[0];
 
 
         return (
@@ -73,7 +75,7 @@ class FeedEvents extends BaseController
                                             { value: '1', label: 'var 1'},
                                             { value: '2', label: 'var 2'},
                                         ]}*/
-                                        clearable={false} value={Sport} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc'}, 'Sport')}/>
+                                        clearable={false} value={currSport} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc', page: 1}, 'Sport')}/>
                                 </div>
                             </div>
 
@@ -86,7 +88,7 @@ class FeedEvents extends BaseController
                                                 { value: '1', label: 'var 1'},
                                                 { value: '2', label: 'var 2'},
                                             ]}*/
-                                            clearable={false} value={League} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc'}, 'League')}/>
+                                            clearable={false} value={currLig} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc', page: 1}, 'League')}/>
                                     </div>
                                 </div>
                             }
@@ -102,8 +104,8 @@ class FeedEvents extends BaseController
                                 <th><span>League</span></th>
                                 <th><span>Status</span></th>
                                 <th>
-                                    <span className={classNames(`icon ${OrderBy}`, {'active': StartDateSort.indexOf('StartDate') > -1})}>
-                                        <a href="#" onClick={this._onSortClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy})}>Start date</a>
+                                    <span className={classNames(`${CurrentOrderBy}`, {'icon': CurrentOrderBy && StartDateSort.indexOf('StartDate') > -1, 'active': StartDateSort.indexOf('StartDate') > -1})}>
+                                        <a href="#" onClick={this._onSortClick.bind(this, {Sport, League, sort: 'StartDate' + OrderBy, OrderBy, page: 1})}>Start date</a>
                                         {/*<a href={MainConfig.BASE_URL + `/Feed?` + getUrlParams()}>Start date</a>*/}
                                     </span>
 {/*
@@ -140,7 +142,7 @@ class FeedEvents extends BaseController
 
                         <div className="row">
                             <div className="col-xs-12">
-                                <PagerBox total={PageInfo.TotalPages} current={PageInfo.CurrentPage - 1} visiblePage={5} onPageChange={this._onPagerClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy})} />
+                                <PagerBox total={PageInfo.TotalPages} current={PageInfo.CurrentPage - 1} visiblePage={5} onPageChange={this._onPagerClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: CurrentOrderBy})} />
                                 </div>
                         </div>
 

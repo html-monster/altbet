@@ -19,6 +19,7 @@ import {
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
 import {MainConfig} from '../../inc/MainConfig';
+import {Common} from '../common/Common';
 
 
 var __DEBUG__ = !true;
@@ -86,11 +87,11 @@ export default class Actions extends BaseActions
      */
     public actionCreateCategory(inProps)
     {
-        0||console.log( 'inProps', inProps );
-        return;
-
         return (dispatch, getState) =>
         {
+            0||console.log( 'inProps', inProps );
+            return;
+
             const ajaxPromise = (new AjaxSend()).send({
                 formData: {'EventId': inProps},
                 message: `Error while registering user, please, try again`,
@@ -194,7 +195,6 @@ export default class Actions extends BaseActions
     /**
      * Save feed event
      */
-    // todo: Сделать сохранение данных, проверки, callbak и прочее
     public actionSaveEvent(inProps)
     {
         return (dispatch, getState) =>
@@ -223,6 +223,8 @@ export default class Actions extends BaseActions
             {
             } // endif
 
+            // DEBUG:
+            ret = false;
 
             // some errors
             if (ret)
@@ -232,14 +234,17 @@ export default class Actions extends BaseActions
             }
 
 
+            // prepare data
+            data = this.prepareData(data);
+
 
             // post data to server
             // let data = new FormData();
             const ajaxPromise = (new AjaxSend()).send({
-                formData: {team1: data.PlayersTeam1.players},
+                formData: data,
                 message: `Error ...`,
-                // url: ABpp.baseUrl + $form.attr('action'),
-                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
+                // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
                 // respCodes: [
                 //     {code: 100, message: ""},
                 //     // {code: -101, message: "Some custom error"},
@@ -521,36 +526,55 @@ export default class Actions extends BaseActions
         let message, error, teams = {};
 
 
-        // check positions
-        for( let val of inPositions  )
-        {
-            if (!val) continue;
-            if (positions[val.Index] != val.Quantity)
+        try {
+            // check positions
+            for( let val of inPositions  )
             {
-                if (val.Index == Rules.uniPositionIndex) val.Name = 'Universal Player';
-                message = `Position "${val.Name}" in team ${inTeam} is not full`;
-                error = -306;
-                if (message) return {message, error};
-                else false;
-            }
-        } // endfor
+                if (!val) continue;
+                if (positions[val.Index] != val.Quantity)
+                {
+                    if (val.Index == Rules.uniPositionIndex) val.Name = 'Universal Player';
+                    message = `Position "${val.Name}" in team ${inTeam} is not full`;
+                    error = -306;
+                    throw new Error(message);
+                }
+            } // endfor
 
 
-        // check for team count
-        for( let val of players  )
-        {
-            teams[val.TeamId] = true;
-        } // endfor
+            // check fppg and eppg fillness
+            for( let val of players  )
+            {
+                teams[val.TeamId] = true;
 
-        if( Object.keys(teams).length < 2 )
-        {
-            message = `Team ${inTeam} players have to consists from minimun 2 events`;
-            error = -307;
-        } // endif
+                if( !Common.isNumeric(val.Fppg) )
+                {
+                    message = `Please fill the FPPG for player "${val.Name}" in team ${inTeam}`;
+                    error = -308;
+                    throw new Error(message);
+                }
+                else if( !Common.isNumeric(val.Eppg) )
+                {
+                    message = `Please fill the EPPG for player "${val.Name}" in team ${inTeam}`;
+                    error = -308;
+                    throw new Error(message);
+                } // endif
+            } // endfor
 
 
-        if (message) return {message, error};
-        else false;
+            // check for team count
+            if( Object.keys(teams).length < 2 )
+            {
+                message = `Team ${inTeam} players have to consists from minimum 2 events`;
+                error = -307;
+                throw new Error(message);
+            } // endif
+
+        } catch (e) {
+            return {message, error};
+        }
+
+
+        return false;
     }
 
 
@@ -562,16 +586,34 @@ export default class Actions extends BaseActions
         const { players } = data;
         let message, error;
 
+        try {
+            if( !data.players.length )
+            {
+                error = -308;
+                throw new Error(message = `Please, fill team ${inTeam} reserve players`);
+            } // endif
 
-        if( !data.players.length )
-        {
-            message = `Please, fill team ${inTeam} reserve players`;
-            error = -308;
-        } // endif
 
+            // check fppg and eppg fillness
+            for( let val of players  )
+            {
+                if( !Common.isNumeric(val.Fppg) )
+                {
+                    error = -308;
+                    throw new Error(message = `Please fill the FPPG for player "${val.Name}" in team ${inTeam}`);
+                }
+                else if( !Common.isNumeric(val.Eppg) )
+                {
+                    error = -308;
+                    throw new Error(message = `Please fill the EPPG for player "${val.Name}" in team ${inTeam}`);
+                } // endif
+            } // endfor
 
-        if (message) return {message, error};
-        else false;
+        } catch (e) {
+            return {message, error};
+        }
+
+        return false;
     }
 
 
@@ -583,16 +625,70 @@ export default class Actions extends BaseActions
         const { players } = data;
         let message, error;
 
+        try {
+            if( !data.players.length )
+            {
+                error = -309;
+                throw new Error(message = `Please, fill team ${inTeam} variable players`);
+            } // endif
 
-        if( !data.players.length )
-        {
-            message = `Please, fill team ${inTeam} variable players`;
-            error = -309;
-        } // endif
+
+            // check fppg and eppg fillness
+            for( let val of players  )
+            {
+                if( !Common.isNumeric(val.Fppg) )
+                {
+                    error = -308;
+                    throw new Error(message = `Please fill the FPPG for player "${val.Name}" in team ${inTeam}`);
+                }
+                else if( !Common.isNumeric(val.Eppg) )
+                {
+                    error = -308;
+                    throw new Error(message = `Please fill the EPPG for player "${val.Name}" in team ${inTeam}`);
+                } // endif
+            } // endfor
+        } catch (e) {
+            return {message, error};
+        }
+
+        return false;
+    }
 
 
-        if (message) return {message, error};
-        else false;
+    /**
+     * Prepare data for sending
+     */
+    private prepareData(inProps)
+    {
+        let resObj: any = {};
+        const {category, fullName, startDate, teamName1, teamName2, url,} = inProps.FormData;
+        let {Team1name, Team2name, EventId, PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable} = inProps;
+
+        resObj.FullName = fullName;
+        resObj.CategoryId = category;
+        resObj.HomeName = teamName1;
+        resObj.AwayName = teamName2;
+        resObj.HomeAlias = Team1name;
+        resObj.AwayAlias = Team2name;
+        resObj.StartDate = startDate;
+        resObj.UrlExchange = url;
+        resObj.EventId = EventId;
+// [07.07.17 17:04:53] Vitaliy Yakubovskiy: ты мне должен передать для exchange - FullName, HomeName, HomeAlias, AwayName, AwayAlias, StartDate, UrlExchange, CategoryId, OptionExchanges(0-HC, 1-ML, 2-TP), HomeTeam(список игроков team1), AwayTeam(список игроков team2), EventId
+// [07.07.17 17:07:38] Vitaliy Yakubovskiy: и для игроков PlayerId, Fppg, Eppg, TeamType (0-Basic, 1-Reserve, 2-Variable)
+
+        // prepare teams
+        PlayersTeam1 = PlayersTeam1.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 0}});
+        PlayersTeam2 = PlayersTeam2.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 0}});
+        PlayersTeam1Reserve = PlayersTeam1Reserve.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 1}});
+        PlayersTeam2Reserve = PlayersTeam2Reserve.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 1}});
+        PlayersTeam1Variable = PlayersTeam1Variable.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 2}});
+        PlayersTeam2Variable = PlayersTeam2Variable.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 2}});
+
+        resObj.HomeTeam = {...PlayersTeam1, ...PlayersTeam1Reserve, ...PlayersTeam1Variable};
+        resObj.AwayTeam = {...PlayersTeam2, ...PlayersTeam2Reserve, ...PlayersTeam2Variable};
+
+
+        return resObj;
     }
 }
 

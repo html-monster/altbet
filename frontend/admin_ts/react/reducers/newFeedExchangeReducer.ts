@@ -640,6 +640,7 @@ export default class Reducer
      */
     private afterAddPlayer({player, addedPlayer}, state)
     {
+        addedPlayer.EventId = state['LastEventId'];
         // add StartDate to every player
 /*        let item;
         if (item = state.TimeEvent.find((val) => addedPlayer.TeamId == val.AwayId || addedPlayer.TeamId == val.HomeId))

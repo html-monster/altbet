@@ -155,7 +155,7 @@ export class LineupPage extends React.Component
 
                                         <p>
                                             If you have any questions or concerns take a look at our
-                                            <a href="faq.html"> frequently asked questions </a>
+                                            <a href={`${ABpp.baseUrl}/eng/footer/Help`} target="_blank"> frequently asked questions </a>
                                             or get in touch with us.
                                         </p>
                                         <div id="introduction">
@@ -383,8 +383,11 @@ export class LineupPage extends React.Component
     _onRaSClick(ee)
     {
         ee.preventDefault();
+        const body = $('body');
 
-        this.setState({...this.state, isPopupVisible: true})
+        this.setState({...this.state, currentScrollPos: body.scrollTop(), isPopupVisible: true});
+
+        body.addClass('blocked'); //убираем скрол
 /*
         var contentHtml = $("[data-js-rules]").html();
 
@@ -404,6 +407,8 @@ export class LineupPage extends React.Component
 
     _onClose()
     {
-        this.setState({...this.state, isPopupVisible: false})
+		$('body').removeClass('blocked').scrollTop(this.state.currentScrollPos); //возвращаем скрол и ставим на предыдущую позицию
+
+		this.setState({...this.state, isPopupVisible: false})
     }
 }

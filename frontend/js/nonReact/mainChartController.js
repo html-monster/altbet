@@ -115,11 +115,11 @@
 					// console.log('Ticks = ' + this.Ticks.length + " Series = " + currentChart.series[0].points.length + " Add = " + additionalValues.length);
 
 					$(additionalValues).each(function () {
-						currentChart.series[0].addPoint({
+						currentChart.series[0]._addPoint({
 							x: this.Time.replace('/Date(', '').replace(')/', '') * 1,
 							y: this.Close.toFixed(2) * 1
 						});
-						currentChart.series[1].addPoint({
+						currentChart.series[1]._addPoint({
 							x: this.Time.replace('/Date(', '').replace(')/', '') * 1,
 							y: (1 - this.Close).toFixed(2) * 1
 						});

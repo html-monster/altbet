@@ -20,27 +20,27 @@ export default class Chart extends React.Component
 
     componentWillReceiveProps(nextProps)
     {
-        let checked = this.props.data.Chart.ChartObj.getType() == this.props.data.Chart.types.TYPE_SPLINE;
+        let checked = this.props.data.Chart.ChartObj.getType() === this.props.data.Chart.types.TYPE_SPLINE;
 
         this.refs.chartType.checked = !checked;
     }
 
     render()
     {
-        // const { openOrdersData, positionData, historyData } = this.state.data;
+        const { pageEventData } = this.props.data;
         let checked = this.state.checked;
 
         return <div>
-                <h2>{this.props.data.pageEventData.IsMirrorName}</h2>
+                <h2>{pageEventData.IsMirrorName}</h2>
                 <label className="chk-chart-type checkbox checkbox_horizontal green-brown label-left">
                     <input ref="chartType" type="checkbox" defaultChecked={true} onChange={::this._onChkChange} />
                     <span className="label"><b>Line</b>/<i>Area</i></span>
                     <span />
                 </label>
                 {/*<input id="IsMirror" name="IsMirror" type="hidden" defaultChecked={this.props.data.IsMirror} value={`${this.props.data.IsMirror}`} />*/}
-                <input id="IsMirror" name="IsMirror" type="hidden" value={`${this.props.data.pageEventData.IsMirror}`} />
+                <input id="IsMirror" name="IsMirror" type="hidden" value={`${pageEventData.IsMirror}`} />
                 <div className="chart">
-                    <div id={"eventContainer_" + this.props.data.pageEventData.chartId}></div>
+                    <div id={`eventContainer_${pageEventData.chartId}`}/>
                 </div>
             </div>;
     }

@@ -4,7 +4,7 @@
  * Created by Vlasakh on 19.12.2016.
  */
 
-/// <reference path="./../../.d/common.d.ts" />
+/// <reference path="../../.d/common.d.ts" />
 
 import { SocketSubscribe } from "./SocketSubscribe";
 // import {globalData} from "../../ts/index";
