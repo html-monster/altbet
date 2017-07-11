@@ -5,285 +5,103 @@
     }
   }
 }
-#glossary{
-  h1{
-    color: #d9502a;
-  }
-  p{
-    width: 740px;
-    margin-bottom: 40px;
-  }
-}
-
-#glossary {
-  .main_letters{
-    display: flex;
-    flex-direction: row;
-  }
-  div {
-    .letter1 {
-      color: #3588b6;
-    }
-    .letter {
-      color: #3588b6;
-      margin-top: 40px;
-    }
-    div {
-      width: 700px;
-      margin-right: 100px;
-
-      .titleMain {
-        color: #b0afb0;
+    #glossary{
+      a{
+        display: inline-block;
       }
-      .titleMain:active {
-        color: #fff;
+      h1{
+        color: #d9502a;
       }
-      .titleMain:hover{
-        color: #fff;
-        cursor: pointer;
+      p{
+        width: 740px;
+        margin-bottom: 40px;
       }
-    }
-  }
-}
+      .main_letters{
+        display: flex;
+        flex-direction: row;
+      }
+      .two_columns{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 70px;
+        .global_column{
+          display: flex;
+          flex-direction: row;
+        }
+        .child_column{
+          ul{
+            .letter1 {
+              color: #3588b6;
+            }
+            .letter {
+              color: #3588b6;
+              margin-top: 40px;
+            }
+            li{
+              .titleMain{
+                color: #b0afb0;
+              }
+              .titleMain {
+                color: #b0afb0;
+              }
+              .titleMain:active {
+                color: #fff;
+              }
+              .titleMain:hover{
+                color: #fff;
+                cursor: pointer;
+              }
+              p{
+                display: none;
+              }
+              }
+            }
+          }
+        }
+      }
 
-/*for user.js*/
+//    div {
+//      width: 700px;
+//      margin-right: 100px;
+//
+//      .titleMain {
+//        color: #b0afb0;
+//      }
+//      .titleMain:active {
+//        color: #fff;
+//      }
+//      .titleMain:hover{
+//        color: #fff;
+//        cursor: pointer;
+//      }
+//      p{
+//        display: none;
+//      }
+//    }
+//  }
+//
+//}
 
-/*=====================*/
-.textInTitle1{
-  display: none;
-}
-.textInTitle2{
-  display: none;
-}
-.textInTitle3{
-  display: none;
-}
-.textInTitle4{
-  display: none;
-}
-.textInTitle5{
-  display: none;
-}
-.textInTitle6{
-  display: none;
-}
-.textInTitle7{
-  display: none;
-}
-.textInTitle01{
-  display: none;
-}
-.textInTitle02{
-  display: none;
-}
-.textInTitle03{
-  display: none;
-}
-.textInTitle04{
-  display: none;
-}
-.textInTitle05{
-  display: none;
-}
-.textInTitle06{
-  display: none;
-}
-.textInTitle07{
-  display: none;
-}
-.textInTitle11{
-  display: none;
-}
-.textInTitle12{
-  display: none;
-}
-.textInTitle13{
-  display: none;
-}
-.textInTitle14{
-  display: none;
-}
-.textInTitle15{
-  display: none;
-}
-.textInTitle16{
-  display: none;
-}
-.textInTitle17{
-  display: none;
-}
-.textInTitle18{
-  display: none;
-}
-.textInTitle19{
-  display: none;
-}
-.textInTitle001{
-  display: none;
-}
-.textInTitle0001{
-  display: none;
-}
-.textInTitle0002{
-  display: none;
-}
-.textInTitle0003{
-  display: none;
-}
-.textInTitle0004{
-  display: none;
-}
-.textInTitleF_1{
-  display: none;
-}
-.textInTitleF_2{
-  display: none;
-}
-.textInTitleF_3{
-  display: none;
-}
-.textInTitleF_4{
-  display: none;
-}
-.textInTitleF_5{
-  display: none;
-}
-.textInTitleF_6{
-  display: none;
-}
-.textInTitleH_1{
-  display: none;
-}
-.textInTitleH_2{
-  display: none;
-}
-.textInTitleH_3{
-  display: none;
-}
-.textInTitleH_4{
-  display: none;
-}
-.textInTitleH_5{
-  display: none;
-}
-.textInTitleI_1{
-  display: none;
-}
-.textInTitleI_2{
-  display: none;
-}
-.textInTitleI_3{
-  display: none;
-}
-.textInTitleJ_1{
-  display: none;
-}
-.textInTitleM_1{
-  display: none;
-}
-.textInTitleO_1{
-  display: none;
-}
-.textInTitleO_2{
-  display: none;
-}
-.textInTitleO_3{
-  display: none;
-}
-.textInTitleP_1{
-  display: none;
-}
-.textInTitleS_1{
-  display: none;
-}
-.textInTitleS_2{
-  display: none;
-}
-.textInTitleS_3{
-  display: none;
-}
-.textInTitleS_4{
-  display: none;
-}
-.textInTitleS_5{
-  display: none;
-}
-.textInTitleS_6{
-  display: none;
-}
-.textInTitleS_7{
-  display: none;
-}
-.textInTitleS_8{
-  display: none;
-}
-.textInTitleT_1{
-  display: none;
-}
-.textInTitleT_2{
-  display: none;
-}
-.textInTitleT_3{
-  display: none;
-}
-.textInTitleT_4{
-  display: none;
-}
-.textInTitleT_5{
-  display: none;
-}
-.textInTitleU_1{
-  display: none;
-}.textInTitleU_2{
-  display: none;
-}
-.textInTitleV_1{
-  display: none;
-}
-/*контейнеры по две буквы. А напротив В*/
-.first_column{
-  display: flex;
-  flex-direction: column;
-}
-.second_column{
-  display: flex;
-  flex-direction: column;
-}
-.two_columns{
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 70px;
-}
-#d{
-  margin-top: 70px;
-}
-#h{
-  margin-top: 70px;
-}
-#j{
-  margin-top: 30px;
-}
-#s{
-  margin-top: 80px;
-}
-#u{
-  margin-top: 45px;
-}
 
 /*ODDS DEFINITIONS*/
-#odds_definitions{
-  margin: 50px 0px;
-  h2{
-    display: inline-block;
-    font-size: 26px;
-  }
-  p{
-    i{
-      font: 100%/1.5 sans-serif;
-      color: #fff;
+.main_odds {
+  #odds_definitions {
+    margin: 50px 0px;
+    h2 {
       display: inline-block;
-      margin-bottom: 25px;
+      font-size: 26px;
     }
+    p {
+      i {
+        font: 100%/1.5 sans-serif;
+        color: #fff;
+        display: inline-block;
+        margin-bottom: 25px;
+      }
+    }
+  }
+  .table_glossary{
+    margin: 200px 250px;
   }
 }
 #odds_definitions{
@@ -318,6 +136,5 @@
   left: 35%;
   text-align: center;
 }
-.table_glossary{
-  margin: 200px 450px;
-}
+
+

@@ -30,7 +30,7 @@
 	a{
 		color: $link-color;
 		@include text-decoration;
-		&:visited{  color: #7a55e6;  }
+		//&:visited{  color: #7a55e6;  }
 	}
 	p{  margin: 10px 0;  }
 	&.faq {

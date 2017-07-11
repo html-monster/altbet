@@ -252,6 +252,10 @@ $(document).ready(function () {
         $('#password').val('').blur().removeClass('valid').removeClass('input-validation-error');
         // $(".validation-summary-errors").css('opacity', '0');
     });
+
+
+// STATIC PAGES
+// todo: move in the separate file
 //glossary ========================================================================================================
 
     $('.titleMain').click(function () {

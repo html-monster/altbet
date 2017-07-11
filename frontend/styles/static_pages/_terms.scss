@@ -1,13 +1,25 @@
+.term{
+
+}
 .wrapper {
   .content {
     width: 800px;
     .page_wrapper {
-      h1 {
+      .content.page a:visited{
+        color: #3498da;
+      }
+      a{
+        display: inline-block;
+      }
+      .main_title1 {
         color: #d9502a;
         display: inline-block;
         margin-bottom: 20px;
+        margin-left: 30px;
       }
-      p {
+      .under_title {
+        display: inline-block;
+        margin-left: 30px;
         span {
           color: #0d97ba;
           cursor: pointer;
@@ -51,6 +63,7 @@
     }
   }
 }
+
 /*for js*/
 .title_for:active .first_list {
   margin-right: 0;
@@ -63,6 +76,11 @@
           #betting{
             display: flex;
             flex-direction: column;
+            .main_title2{
+              color: #d9502a;
+              display: inline-block;
+              margin-bottom: 20px;
+            }
             p{
               display: inline-block;
               width: 560px;
@@ -117,31 +135,62 @@
 // first and second sections____________________________________________________
 .global_section{
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-    .first_section{
+  flex-direction: column;
+    .first_sect{
       margin-top: 70px;
       display: flex;
-      flex-direction: column;
-      width: 650px;
+      flex-direction: row;
         div{
+          width: 800px;
+          margin-bottom: 40px;
           h2{
             font-size: 26px;
           }
         }
+        #usage{
+          margin-left: 70px;
+        }
     }
-    .second_section{
+    .second_sect {
       margin-top: 60px;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 750px;
-      margin-left: 140px;
-        div{
-          h2{
-            font-size: 26px;
-          }
+      flex-direction: row;
+      div {
+        width: 800px;
+        margin-bottom: 40px;
+        h2 {
+          font-size: 26px;
         }
+      }
+      #copyrights{
+        margin-left: 70px;
+      }
     }
+      .third_sect {
+        margin-top: 60px;
+        display: flex;
+        flex-direction: row;
+          div{
+            width: 800px;
+            margin-bottom: 40px;
+            h2{
+              font-size: 26px;
+            }
+          }
+        #privacy{
+          margin-left: 70px;
+        }
+      }
+
+    }
+/*for footer > help*/
+.answer{
+  p{
+    i{
+      a{
+        display: inline-block;
+      }
+    }
+  }
 }
 
