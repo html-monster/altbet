@@ -24,6 +24,10 @@
             });
  */
 
+/// <reference path="../../.d/common.d.ts" />
+
+
+
 var __LDEV__ = !true;
 
 export class AjaxSend

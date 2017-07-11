@@ -2,6 +2,11 @@
  * Created by Vlasakh on 08.03.2017.
  */
 
+
+/// <reference path="../../.d/common.d.ts" />
+
+
+
 var __LDEV__ = true;
 
 export class AjaxSend

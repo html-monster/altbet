@@ -223,6 +223,8 @@ export default class Actions extends BaseActions
             {
             } // endif
 
+            // DEBUG:
+            ret = false;
 
             // some errors
             if (ret)
@@ -681,13 +683,7 @@ export default class Actions extends BaseActions
         PlayersTeam2Reserve = PlayersTeam2Reserve.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 1}});
         PlayersTeam1Variable = PlayersTeam1Variable.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 2}});
         PlayersTeam2Variable = PlayersTeam2Variable.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 2}});
-        0||console.log( 'inProps.PlayersTeam1, ', inProps.PlayersTeam1, PlayersTeam1 );
-// - Variable reserve players
-// - Позиция D
-// - 2-9 игроков остальные делать блокированными
-// - Status Out Красным
-// - Добавить All в выбор events
-// - Добавить Возможность описания evemt в Lineup с WISIWYG
+
         resObj.HomeTeam = {...PlayersTeam1, ...PlayersTeam1Reserve, ...PlayersTeam1Variable};
         resObj.AwayTeam = {...PlayersTeam2, ...PlayersTeam2Reserve, ...PlayersTeam2Variable};
 
