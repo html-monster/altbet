@@ -50,7 +50,8 @@
       &.active{  line-height: 18px;  }
     }
   }
-  .highcharts-tab { text-align: center; }
+  .highcharts-tab { text-align: right; }
+  .chk-chart-type { margin-right: 7px; }
   .highcharts-container { display: inline-block; }
   svg { width: 100% !important;  }
   img{  width: 100%;  }
@@ -72,7 +73,7 @@
   &__title { margin: 5px 0 0 0; padding-bottom: 5px; border-bottom: 1px solid darken(#bdc0cd, 20%); text-align: left; font-size: 14px; font-weight: bold }
   &__team { width: 100%; border-collapse: separate; border-spacing: 3px;
     td, th { font-size: 12px; text-align: center; vertical-align: top; }
-    tr:hover td { text-shadow: 0 0 10px #bdc0cd; cursor: pointer }
+    tr:hover td { text-shadow: 0 0 10px #bdc0cd; }//cursor: pointer
     tr.totals {
       td:first-child { text-align: left }
       td { color: #fff; font-weight: bold }
@@ -188,12 +189,20 @@
     //  //&.active {  }
     //}
     //.order_container{ display: none; }
-    .event-date { position: absolute; left: 10px; top: 15px;
+    .event-date { display: flex; align-items: center; position: absolute; left: 10px; top: 15px;
       &:before { content: ''; display: inline-block; margin-right: 5px; width: 24px; height: 22px; background: url("#{$pathImage}/sprite.svg") no-repeat; }
       @include main_page_event_icon;
       span { /*display: inline-block; margin-right: 5px;*/ font-size: 12px; vertical-align: top;
         &.date { transition: none }
         //&.time{  color: $main-color-darker;  }
+      }
+      i{
+        margin-left: 10px;
+        padding: 0 7px 0 5px;
+        border-radius: 4px;
+        font-size: 13px;
+        &.live{ background-image: linear-gradient(to bottom, #84d65b, #4dac2e) }
+        //&.halftime{ background-image: linear-gradient(to bottom, #cccb35, #b8b730); }
       }
     }
 
@@ -221,6 +230,7 @@
       .title{ display: block; color: $color4TextWhite; font-size: 11px }
     }
     .l-buttons {
+      position: relative;
       .inner { display: none; position: relative; min-width: 281px; text-align: right; visibility: hidden; opacity: 0; //@include hiddAttr;
             transition: .2s;
         //@include mdmax(1600) { min-width: 191px; }
@@ -269,7 +279,7 @@
         }
       }
 
-      &.opener { visibility: visible; position: absolute; right: 35px; top: calc(50% - 44px/2); width: auto; //@include visibleAttr;
+      &.opener { visibility: visible; position: absolute; right: 35px; top: calc(50% - 35px/2); width: auto; //@include visibleAttr;
           opacity: 1; transition: .4s;
         button { display: flex; align-items: center; padding: 0 10px; color: #333; font-size: 14px; background: linear-gradient(to top, #bdc0cd, #ffffff); font-weight: bold; text-transform: none }
         i { display: inline-block; position: relative; margin-right: 10px; width: 18px; height: 18px;

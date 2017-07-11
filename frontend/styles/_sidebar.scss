@@ -92,14 +92,12 @@
 		}
 	}
 	.tab_item {
-		display: none;
+		//display: none;
 		padding-bottom: 80px;
 		overflow-x: hidden;
 		@include scroll;
 		transition: 0.4s ease-out;
-		&:first-child {
-			display: block;
-		}
+		//&:first-child { display: block; }
 	}
 }
 .default_orders, &#current-orders{  border-top: 1px solid $order_sidebar_head_separator;  }

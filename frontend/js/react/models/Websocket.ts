@@ -4,7 +4,7 @@
  * Created by Vlasakh on 19.12.2016.
  */
 
-/// <reference path="./../../.d/common.d.ts" />
+/// <reference path="../../.d/common.d.ts" />
 
 import { SocketSubscribe } from "./SocketSubscribe";
 // import {globalData} from "../../ts/index";
@@ -182,7 +182,8 @@ export class WebsocketModel
             __DEV__&&console.log( data );
         }
 
-        if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn)) window.ee.emit('yourOrders.update', data.CurrentOrders);//myOrdersControllerClass.updateData(data.CurrentOrders);
+        if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn))
+            window.ee.emit('yourOrders.update', data.CurrentOrders);//myOrdersControllerClass.updateData(data.CurrentOrders);
 
         if(data.OrdersPositionsHistory && globalData.myPosOn){
             window.ee.emit('myPosOrder.update', data.OrdersPositionsHistory.Positions);

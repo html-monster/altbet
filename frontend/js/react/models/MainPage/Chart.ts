@@ -1,8 +1,9 @@
-import {DateLocalization} from "../DateLocalization";
 /**
  * Created by Vlasakh on 01.12.16.
  * @link http://api.highcharts.com/highstock/Axis.setExtremes
  */
+import { DateLocalization } from "../DateLocalization";
+import { Generator } from './Generator' ;
 
 /// <reference path="./../../../.d/common.d.ts" />
 
@@ -17,15 +18,14 @@ declare var window;
 
 
 
-import { Generator } from './Generator' ;
 
 var __LDEV__ = true;
 
 
 /**
- * Event page chart
+ * Main page chart
  */
-export class Chart
+export default class Chart
 {
     public static TYPE_AREASPLINE = 'areaspline';
     // public static TYPE_AREASPLINE = 'candlestick';
@@ -48,14 +48,15 @@ export class Chart
     private currGroup = 0;
 
     private chartData : any = [];
-    private charts = [];
+    // private charts = [];
     //var boxplotMultiplier = 500;
     //var volumeMultiplier = 150;
     //var maxVolumeValue = 0;
-    private volumeScale = 1;
-    private label = null;
-    private chartContainer = null;
+    // private volumeScale = 1;
+    // private label = null;
+    // private chartContainer = null;
     private Generator : Generator = null;
+    private chart = null;
     private chartType = null;
     private chartTheme = null;
 
@@ -89,16 +90,18 @@ export class Chart
         }
     };
 
-    constructor()
+    constructor(container, chartData)
     {
-        var self = this;
+        let self = this;
 
         this.chartType = Chart.TYPE_SPLINE;
         this.chartTheme = Chart.THEME_LIGHT == ABpp.config.currentTheme ? Chart.THEME_LIGHT : Chart.THEME_DARK;
 
         this.Generator = new Generator();
 
-        this.initChartOpts();
+        this._initChartOpts(container);
+
+        this._createChart(chartData);
 
         this.groups = [Chart.GROUP_MIN,
             Chart.GROUP_5MIN,
@@ -114,7 +117,10 @@ export class Chart
 		})
     }
 
-
+    public stopGenerator()
+    {
+        this.Generator.cancel()
+    }
 
     public getType()
     {
@@ -130,9 +136,9 @@ export class Chart
     {
         this.chartType = type;
 
-        Highcharts.charts[0].series[0].update({
-                type: this.chartType
-            });
+        this.chart.series[0].update({
+            type: this.chartType
+        });
     }
 
 
@@ -154,13 +160,13 @@ export class Chart
      * Used in Chart.jsx
      * @param data
      */
-    public drawEventChart(data)
-    {
-        if (this.charts.length == 0)
-            this.createChart(data);
-        else
-           this.updateChart(this.charts, data);
-    }
+    // public drawEventChart(data)
+    // {
+    //     if (this.charts.length == 0)
+    //         this._createChart(data);
+    //     else
+    //        this.updateChart(this.charts, data);
+    // }
 
 
 
@@ -171,21 +177,22 @@ export class Chart
     public setChartData(inData, isCurrent?)
     {
         if (isCurrent) inData = this.dataGrouped;
-        Highcharts.charts[0].series[0].setData(inData, true);
+        this.chart.series[0].setData(inData, true);
     }
 
 
 
-    private initChartOpts()
+    private _initChartOpts(container)
     {
         var self = this;
-        let xx = $(".chart_container .chart").width() - 217 - 30;
+        // let xx = $(".chart_container .chart").width() - 217 - 30;
 
 
         // часть настроек в _createChart и PlotOptions
         this.chartData = {
             chart: {
                 height: 450,
+                renderTo: container,
                 type: self.chartType,
                 animation: {
                         duration: 700,
@@ -296,6 +303,7 @@ export class Chart
                     display: 'none'
                 },
                 align: 'center',
+                inputEnabled: false,
             },
             navigator: {
                 enabled: true,
@@ -382,17 +390,17 @@ export class Chart
 
 
     /** @deprecated */
-    private setGrouping() {
-        if (Highcharts.charts[0].series[0].options.dataGrouping.units != null)
-            Highcharts.charts[0].series[1].options.dataGrouping.units[0] = Highcharts.charts[0].series[0].options.dataGrouping.units[0];
-    };
+    // private setGrouping() {
+    //     if (Highcharts.charts[0].series[0].options.dataGrouping.units != null)
+    //         Highcharts.charts[0].series[1].options.dataGrouping.units[0] = Highcharts.charts[0].series[0].options.dataGrouping.units[0];
+    // };
 
 
 
-    private groupData(inGr)
+    private _groupData(inGr)
     {
         // correct group for All
-        if (inGr == Chart.GROUP_ALL) inGr = this.getGroupCorrect();
+        if (inGr == Chart.GROUP_ALL) inGr = this._getGroupCorrect();
 
 
         let rdata = this.dataRaw;
@@ -405,9 +413,9 @@ export class Chart
             let cou = 0;
 
 
-            for( var ii in rdata )
+            for( let ii in rdata )
             {
-                var val = rdata[ii];
+                let val = rdata[ii];
 
                 // checks for group bound
                 let end = moment.unix(val.x/1000);
@@ -473,7 +481,7 @@ export class Chart
      * Get appropriate group for All
      * @return number
      */
-    private getGroupCorrect() : number
+    private _getGroupCorrect() : number
     {
         let end = moment.unix(this.dataRaw[this.dataRaw.length - 1].x/1000);
         let duration = moment.duration(end.diff(moment.unix(this.dataRaw[0].x/1000)));
@@ -493,17 +501,16 @@ export class Chart
 
 
 
-    private addPoint(inData)
+    private _addPoint(inData)
     {
         // return;
         for( let ii in inData )
         {
             let val = inData[ii];
-            let dt = (new DateLocalization()).fromSharp(val.Time);
-            // let dt = val.Time.replace('/Date(', '').replace(')/', '') * 1 - new Date().getTimezoneOffset() * 60 * 1000;
-            // let end = moment.unix(dt/1000);
+            // let dt = val.Time;
+            // let end = moment.unix(val.Time/1000);
             // add to raw data
-            val.x = dt;
+            val.x = val.Time;
             val.y = val.Open;
             val.Vol = val.Volume;
             this.dataRaw.push(val);
@@ -517,7 +524,7 @@ export class Chart
             // } // endif
 
 
-            this.dataGrouped.push({x: dt,
+            this.dataGrouped.push({x: val.Time,
                 y: val.Open,
                 open: val.Open,
                 min: val.Open,
@@ -525,36 +532,13 @@ export class Chart
                 close: val.Open,
                 vol: val.Volume,
                 virtual: false,
-                dt: moment.unix(dt/1000).format('Do h:mm:ss a'),
+                dt: moment.unix(val.Time/1000).format('Do h:mm:ss a'),
                 items: [val],
             });
-            // console.log('dt:', dt);
-            // console.log('momentUnix:', moment.unix(dt/1000).format('Do h:mm:ss a'));
+            // console.log('val.Time:', val.Time);
+            // console.log('momentUnix:', moment.unix(val.Time/1000).format('Do h:mm:ss a'));
             // console.log('this.dataGrouped:', this.dataGrouped);
 
-/*            if( !this.dataGrouped.length || minDiff > this.groups[this.currGroup] )
-            {
-                this.dataGrouped.push({x: dt,
-                    y: val.Open,
-                    open: val.Open,
-                    min: val.Open,
-                    max: val.Open,
-                    close: val.Open,
-                    vol: val.Volume,
-                    virtual: false,
-                    dt: moment.unix(dt/1000).format('Do h:mm:ss a'),
-                    items: [val],
-                });
-            }
-            else
-            {
-                lastPoint.y = (lastPoint.y + val.Open) / 2;
-                lastPoint.close = val.Open;
-                lastPoint.vol += val.Volume;
-                if (lastPoint.min > val.Open) lastPoint.min = val.Open;
-                if (lastPoint.max < val.Open) lastPoint.max = val.Open;
-                lastPoint.items && lastPoint.items.push(val);
-            }*/ // endif
         } // endfor
 
         // __LDEV__&&console.debug( 'this.dataGrouped  this.groups[this.currGroup]', this.dataGrouped, this.dataRaw, this.groups[this.currGroup] );
@@ -562,178 +546,48 @@ export class Chart
 
 
 
-    private createChart (inData)
+    private _createChart (chartData)
     {
         var self = this;
         // 0||console.debug( 'inData', inData );
 
-        self.currData = inData;
+        self.currData = chartData;
 
 
-        var isMirror = $('input[type=hidden]#IsMirror').val().toUpperCase() == "TRUE";
-        $('div[id^="eventContainer_"]').each(function () {
+        $(chartData.Ticks).each(function () {
+            let timeValue = this.Time;// * 1 - new Date().getTimezoneOffset() * 60 * 1000;
 
-            var identificators = $(this).attr('id').replace('eventContainer_', '').split('_');
-
-            $(inData).each(function () {
-                if (this.Symbol.Exchange === identificators[0]
-                    && this.Symbol.Name === identificators[1]
-                    && this.Symbol.Currency === identificators[2]) {
-                    $(this.Ticks).each(function () {
-                        var volumeValue = this.Volume;
-                        var timeValue = this.Time.replace('/Date(', '').replace(')/', '') * 1 - new Date().getTimezoneOffset() * 60 * 1000;
-                        // var timeValue = this.Time.replace('/Date(', '').replace(')/', '') * 1;
-
-                        self.chartData.series[0].data.push({
-                            x: timeValue,
-                            y: isMirror ? 1 - this.Open : this.Open,
-                            Close: isMirror ? 1 - this.Close : this.Close,
-                            High: isMirror ? 1 - this.High : this.High,
-                            Low: isMirror ? 1 - this.Low : this.Low,
-                            Vol: this.Volume,
-                            dt: moment.unix(timeValue/1000).format('Do h:mm:ss a')
-                        });
-                        // self.chartData[1].inData.push({
-                        //     x: timeValue,
-                        //     y: volumeValue,
-                        //     color: this.Open > this.Close ? '#9DB201' : '#FF3728'
-                        //     // color: this.Open > this.Close ? 'green' : 'red'
-                        // });
-                    });
-                }
+            self.chartData.series[0].data.push({
+                x: timeValue,
+                y: this.Open,
+                Close: this.Close,
+                High: this.High,
+                Low: this.Low,
+                Vol: this.Volume,
+                dt: moment.unix(timeValue / 1000).format('Do h:mm:ss a')
             });
-
-            self.charts.push(1);
-
-
-            // make group inData from raw
-            self.dataRaw = self.chartData.series[0].data;
-            self.groupData(Chart.GROUP_DEF);
-            self.chartData.series[0].data = self.dataGrouped;
-            // 0||console.debug( 'self.chartData[0].inData', self.chartData[0].data );
-
-
-            var container = $(this).attr('id');
-
-
-            // __LDEV__ && (self.chartData.tooltip.enabled = true);
-
-
-
-/*
-            var  tempOoptions = {
-                chart: {
-                    type: 'spline',
-                    height: 450,
-                },
-                title: {
-                    text: 'Monthly Average Temperature'
-                },
-                subtitle: {
-                    text: 'Source: WorldClimate.com'
-                },
-                xAxis: {
-                        type: 'datetime',
-                    title: {
-                        text: 'Time'
-                    },
-                },
-                yAxis: {
-                    title: {
-                        text: 'Temperature'
-                    },
-                    labels: {
-                        formatter: function () {
-                            return this.value + '°';
-                        }
-                    }
-                },
-                tooltip: {
-                    // crosshairs: true,
-                    // shared: true,
-                },
-                rangeSelector: {
-                    allButtonsEnabled: true,
-                    buttons: [
-                        {
-                            type: 'minute',
-                            count: 1, // диапазон отображения
-                            text: '1m',
-                        },
-                                            {
-                            type: 'minute',
-                            count: 5,
-                            text: '5m',
-                        },
-                        {
-                            type: 'all',
-                            text: 'All',
-                            // dataGrouping: {
-                            //     units: [
-                            //         // ['minute', [1, 3, 10, 30]],
-                            //         ['hour', [2]]
-                            //     ]
-                            // }
-                        },
-                      ],
-                                    enabled: true,
-                    selected: 1,
-                  },
-                plotOptions: {
-                    spline: {
-                        marker: {
-                            radius: 4,
-                            lineColor: '#666666',
-                            lineWidth: 1
-                        }
-                    },
-                },
-                        navigator: {
-                            enabled: true,
-                            series: {
-                                type: 'spline',
-                                lineWidth: 2,
-                            }
-                        },
-                series: [{
-                    name: 'Tokyo',
-                    marker: {
-                        symbol: 'square'
-                    },
-                    data: [ { "x": 1495456349000, "y": 0.57, "Close": 0.57, "High": 0.57, "Low": 0.57, "Vol": 5, "dt": "22nd 3:32:29 pm"}, { "x": 1495456350000, "y": 0.57, "Close": 0.57, "High": 0.57, "Low": 0.57, "Vol": 5, "dt": "22nd 3:32:30 pm"}, { "x": 1495456354000, "y": 0.52, "Close": 0.52, "High": 0.52, "Low": 0.52, "Vol": 5, "dt": "22nd 3:32:34 pm"}, { "x": 1495456355000, "y": 0.52, "Close": 0.52, "High": 0.52, "Low": 0.52, "Vol": 5, "dt": "22nd 3:32:35 pm"}, { "x": 1495457103000, "y": 0.52, "Close": 0.52, "High": 0.52, "Low": 0.52, "Vol": 5, "dt": "22nd 3:45:03 pm"}, { "x": 1495457104000, "y": 0.52, "Close": 0.52, "High": 0.52, "Low": 0.52, "Vol": 5, "dt": "22nd 3:45:04 pm"}, { "x": 1495457105000, "y": 0.52, "Close": 0.52, "High": 0.52, "Low": 0.52, "Vol": 5, "dt": "22nd 3:45:05 pm"}, { "x": 1495457106000, "y": 0.46, "Close": 0.46, "High": 0.46, "Low": 0.46, "Vol": 5, "dt": "22nd 3:45:06 pm"}, { "x": 1495457909000, "y": 0.57, "Close": 0.57, "High": 0.57, "Low": 0.57, "Vol": 5, "dt": "22nd 3:58:29 pm"}, { "x": 1495457910000, "y": 0.57, "Close": 0.57, "High": 0.57, "Low": 0.57, "Vol": 5, "dt": "22nd 3:58:30 pm"}, { "x": 1495457911000, "y": 0.63, "Close": 0.63, "High": 0.63, "Low": 0.63, "Vol": 5, "dt": "22nd 3:58:31 pm"}, { "x": 1495457913000, "y": 0.65, "Close": 0.65, "High": 0.65, "Low": 0.65, "Vol": 5, "dt": "22nd 3:58:33 pm"}, { "x": 1495458329000, "y": 0.71, "Close": 0.71, "High": 0.71, "Low": 0.71, "Vol": 5, "dt": "22nd 4:05:29 pm"}, { "x": 1495459025000, "y": 0.42, "Close": 0.42, "High": 0.42, "Low": 0.42, "Vol": 5, "dt": "22nd 4:17:05 pm"}, { "x": 1495459052000, "y": 0.42, "Close": 0.42, "High": 0.42, "Low": 0.42, "Vol": 5, "dt": "22nd 4:17:32 pm"} ]
-
-                }]
-            };
-*/
-
-            // render chart
-            if( __DEV__ )
-            {
-                console.groupCollapsed("Charts");
-                console.info( 'chartsOptions', self.chartData );
-                console.info( 'chartsOptions', JSON.stringify(self.chartData) );
-                console.info( 'self.dataRaw  self.dataGrouped', self.dataRaw, self.dataGrouped );
-                console.groupEnd();
-            } // endif
-
-            this.chartContainer = $('<div class="chart" id="DiChartObj"></div>');
-            this.chartContainer.appendTo('#' + container);
-            this.chartContainer = this.chartContainer.highcharts(self.chartData);
-
-            // start gen virtual point
-            self.Generator.start(self);
         });
 
 
+        // make group inData from raw
+        self.dataRaw = self.chartData.series[0].data;
+        self._groupData(Chart.GROUP_DEF);
+        self.chartData.series[0].data = self.dataGrouped;
+        // 0||console.debug( 'self.chartData[0].inData', self.chartData[0].data );
 
-        // setGrouping();
-        // redraw();
 
+        // render chart
+        if (__DEV__) {
+            console.groupCollapsed("Charts");
+            console.info('chartsOptions', self.chartData);
+            // console.info( 'chartsOptions', JSON.stringify(self.chartData) );
+            console.info('self.dataRaw  self.dataGrouped', self.dataRaw, self.dataGrouped);
+            console.groupEnd();
+        } // endif
 
-        // $('.highcharts-input-group').remove();
-        // self.activateGroupBtns();
+        this.chart = new Highcharts.Chart(self.chartData);
 
-        // $(".highcharts-button.gb2").click();
+        self.Generator.start(self);
     }
 
 
@@ -741,70 +595,68 @@ export class Chart
     /**
      * Bind click to group chart btns
      */
-    private activateGroupBtns()
-    {
-        var self = this;
-        for (var ii = 0, countii = $(".highcharts-button").length; ii < countii; ii++)
-        {
-            let val = $(".highcharts-button")[ii];
-            // $(val).addClass('gb' + ii).click(function () { self._onBtnGroupClick.bind(self) });
-            $(val).addClass('gb' + ii).click(function () { self.onBtnGroupClick(this) });
-        } // endfor
-    }
+    // private activateGroupBtns()
+    // {
+    //     var self = this;
+    //     for (var ii = 0, countii = $(".highcharts-button").length; ii < countii; ii++)
+    //     {
+    //         let val = $(".highcharts-button")[ii];
+    //         // $(val).addClass('gb' + ii).click(function () { self._onBtnGroupClick.bind(self) });
+    //         $(val).addClass('gb' + ii).click(function () { self._onBtnGroupClick(this) });
+    //     } // endfor
+    // }
 
 
 
-    private onBtnGroupClick(that)
-    {
-        // 0||console.debug( 'clicked', that.classList[1][2] );
-        this.groupData(this.groups[that.classList[1][2]]);
-
-        // this.setChartData(this.dataGrouped); // in restart !
-        this.Generator.restart();
-        // setTimeout(() =>
-        //     Highcharts.charts[0].series[0].xAxis.setExtremes(Highcharts.charts[0].series[0].xAxis.max - 60 * 60 * 6, Highcharts.charts[0].series[0].xAxis)
-        // , 1000);
-    }
+    // private _onBtnGroupClick(that)
+    // {
+    //     // 0||console.debug( 'clicked', that.classList[1][2] );
+    //     this._groupData(this.groups[that.classList[1][2]]);
+    //
+    //     // this.setChartData(this.dataGrouped); // in restart !
+    //     this.Generator.restart();
+    //     // setTimeout(() =>
+    //     //     Highcharts.charts[0].series[0].xAxis.setExtremes(Highcharts.charts[0].series[0].xAxis.max - 60 * 60 * 6, Highcharts.charts[0].series[0].xAxis)
+    //     // , 1000);
+    // }
 
 
 
     /**
-     * @param charts
-     * @param inData
+     * @param newData - new chart data
      */
-    private updateChart(charts, inData)
+    public updateChart(newData)
     {
         var self = this;
         // __LDEV__&&console.debug( 'Update chart' );
-        // return;
 
-        var isMirror = $('input[type=hidden]#IsMirror').val().toUpperCase() == "TRUE";
+        // $(charts).each(function ()
+        // {
+        //     var identificators = $($(Highcharts.charts[0].container).parent().parent()).attr('id').replace('eventContainer_', '').split('_');
+        //
+        //     $(Highcharts.charts).each(function ()
+        //     {
+        //         $(inData).each(function (key)
+        //         {
+        //             if (this.Symbol.Exchange == identificators[0]
+        //                 && this.Symbol.Name == identificators[1]
+        //                 && this.Symbol.Currency == identificators[2]) {
+        //
+        //                 // TODO: check for data difference
+        //                 let additionalValues = self._checkForNewData(this.Ticks, key);
 
-        $(charts).each(function ()
-        {
-            var identificators = $($(Highcharts.charts[0].container).parent().parent()).attr('id').replace('eventContainer_', '').split('_');
-
-            $(Highcharts.charts).each(function ()
-            {
-                $(inData).each(function (key)
-                {
-                    if (this.Symbol.Exchange == identificators[0]
-                        && this.Symbol.Name == identificators[1]
-                        && this.Symbol.Currency == identificators[2]) {
-
-                        // TODO: check for data difference
-                        let additionalValues = self.checkForNewData(this.Ticks, key);
+                        let newTicks = newData.Ticks.slice(newData.Ticks.length - (newData.Ticks.length - this.chart.series[0].points.length));
 
                         // var additionalValues = this.Ticks.slice(self.chartData[0].data.length);
 
                         // stop generator
-                        if (additionalValues.length) { self.Generator.cancel(); }
+                        if (newTicks.length) { self.Generator.cancel(); }
 
 
-                        $(additionalValues).each(function ()
+                        $(newTicks).each(function ()
                         {
-                            __LDEV__&&console.warn( 'Update chart (add points)', additionalValues );
-                            self.addPoint(additionalValues);
+                            __LDEV__&&console.warn( 'Update chart (add points)', newTicks );
+                            self._addPoint(newTicks);
                             self.setChartData(self.dataGrouped);
 
 
@@ -826,9 +678,9 @@ export class Chart
 
 
                         // resume generation
-                        if (additionalValues.length) self.Generator.start();
-                    }
-                });
+                        self.Generator.start();
+                    // }
+                // });
 
                 // if( Highcharts.charts[0].rangeSelector )
                 // {
@@ -843,9 +695,9 @@ export class Chart
                 // setGrouping();
 
                 // redraw();
-                self.currData = inData;
-            });
-        });
+                self.currData = newData;
+            // });
+        // });
     }
 
 
@@ -853,121 +705,121 @@ export class Chart
      * Old and new data difference
      * @returns {Array}
      */
-    private checkForNewData(inData, key)
-    {
-        // 0||console.debug( 'inData', inData );
-        let diff = [];
-
-        let ticks = this.currData[key].Ticks.reverse();
-        // for( var ii = this.currData[key].Ticks.length-1, jj = inData.length-1; ii >= 0; ii--, jj-- )
-        for( var ii = 0, countii = ticks.length; ii < countii; ii++ )
-        {
-            let val = ticks[ii];
-            if( inData[ii].Open != val.Open ) diff.push(val);
-        } // endfor
-
-        // diff.push('-----------')
-        for( countii = inData.length; ii < countii; ii++ )
-        {
-            diff.push(inData[ii]);
-        } // endfor
-        diff = inData.slice(ticks.length);
-
-
-        // 0||console.debug( 'diff', diff,  ticks , inData, ticks.length, inData.length);
-        return diff;
-    }
-
-
-
-    private createLabel(sender, message)
-    {
-        //label.remove();
-        if (this.label != null) this.label.destroy();
-
-        this.label = sender.renderer.label(message)
-            .css({
-                // width: '450px',
-                color: '#93928B',
-                fontSize: '14px',
-            })
-            .attr({
-                // 'stroke': 'silver',
-                // 'stroke-width': 1,
-                'r': 1,
-                // 'fill': 'rgb(80,78,91)',
-                // 'fill': 'rgb(83,81,94)',
-                // 'y': 2,
-                // 'padding': [30, 70],
-                'padding': 5,
-                'borderRadius': 6,
-                // 'paddingLeft': 50,
-                // 'paddingRight': 70,
-                // 'paddingBottom': 20,
-            })
-            .add();
-
-        this.label.align(Highcharts.extend(this.label.getBBox(), {
-            align: 'left',
-            x: 5,
-            verticalAlign: 'top',
-            y: -20
-        }), null, 'spacingBox');
-    }
+    // private _checkForNewData(inData, key)
+    // {
+    //     // 0||console.debug( 'inData', inData );
+    //     let diff = [];
+    //
+    //     let ticks = this.currData[key].Ticks.reverse();
+    //     // for( var ii = this.currData[key].Ticks.length-1, jj = inData.length-1; ii >= 0; ii--, jj-- )
+    //     for( var ii = 0, countii = ticks.length; ii < countii; ii++ )
+    //     {
+    //         let val = ticks[ii];
+    //         if( inData[ii].Open != val.Open ) diff.push(val);
+    //     } // endfor
+    //
+    //     // diff.push('-----------')
+    //     for( countii = inData.length; ii < countii; ii++ )
+    //     {
+    //         diff.push(inData[ii]);
+    //     } // endfor
+    //     diff = inData.slice(ticks.length);
+    //
+    //
+    //     // 0||console.debug( 'diff', diff,  ticks , inData, ticks.length, inData.length);
+    //     return diff;
+    // }
 
 
 
-    private showHighlights(ee, isClose = 0)
-    {
-        // TODO: через индекс
-        $(Highcharts.charts).each(function ()
-        {
-            try {
-                var event = this.pointer.normalize(ee.originalEvent); // Find coordinates within the chart
-                var point = this.series[0].searchPoint(event, true); // Get the hovered point
-
-                // if (point && point.dataGroup)
-                if (point)
-                {
-                    var x1 = point.x;
-
-                    let optionalParams = point.series.options.data;
-                    let min = Infinity, xx;
-
-                    // search nearest
-                    for( var ii in optionalParams )
-                    {
-                        var val = optionalParams[ii];
-                        if( Math.abs(val.x - x1) < min ) { min = Math.abs(val.x - x1); xx = ii; }
-
-                    } // endfor
-
-                    // if virtual
-                    if( point.series.options.data[xx].virtual ) xx--;
-
-                    var data = {
-                        date: point.series.options.data[xx].x,
-                        open: point.series.options.data[xx].open,// Highcharts.charts[0].series[0].data[currentIndex - 1],
-                        high: point.series.options.data[xx].max,
-                        low: point.series.options.data[xx].min,
-                        close: point.series.options.data[xx].close, //Highcharts.charts[0].series[0].data[currentIndex + 1],
-                        volume: point.series.options.data[xx].vol
-                    };
-
-                    point.highlight(ee, data, isClose);
-                }
-            } catch (e) {
-                __LDEV__&&console.warn( 'e', e );
-            }
-        });
-    }
+    // private createLabel(sender, message)
+    // {
+    //     //label.remove();
+    //     if (this.label != null) this.label.destroy();
+    //
+    //     this.label = sender.renderer.label(message)
+    //         .css({
+    //             // width: '450px',
+    //             color: '#93928B',
+    //             fontSize: '14px',
+    //         })
+    //         .attr({
+    //             // 'stroke': 'silver',
+    //             // 'stroke-width': 1,
+    //             'r': 1,
+    //             // 'fill': 'rgb(80,78,91)',
+    //             // 'fill': 'rgb(83,81,94)',
+    //             // 'y': 2,
+    //             // 'padding': [30, 70],
+    //             'padding': 5,
+    //             'borderRadius': 6,
+    //             // 'paddingLeft': 50,
+    //             // 'paddingRight': 70,
+    //             // 'paddingBottom': 20,
+    //         })
+    //         .add();
+    //
+    //     this.label.align(Highcharts.extend(this.label.getBBox(), {
+    //         align: 'left',
+    //         x: 5,
+    //         verticalAlign: 'top',
+    //         y: -20
+    //     }), null, 'spacingBox');
+    // }
 
 
 
-    private redraw()
-    {
-        return ;
+    // private showHighlights(ee, isClose = 0)
+    // {
+    //     // TODO: через индекс
+    //     $(Highcharts.charts).each(function ()
+    //     {
+    //         try {
+    //             var event = this.pointer.normalize(ee.originalEvent); // Find coordinates within the chart
+    //             var point = this.series[0].searchPoint(event, true); // Get the hovered point
+    //
+    //             // if (point && point.dataGroup)
+    //             if (point)
+    //             {
+    //                 var x1 = point.x;
+    //
+    //                 let optionalParams = point.series.options.data;
+    //                 let min = Infinity, xx;
+    //
+    //                 // search nearest
+    //                 for( var ii in optionalParams )
+    //                 {
+    //                     var val = optionalParams[ii];
+    //                     if( Math.abs(val.x - x1) < min ) { min = Math.abs(val.x - x1); xx = ii; }
+    //
+    //                 } // endfor
+    //
+    //                 // if virtual
+    //                 if( point.series.options.data[xx].virtual ) xx--;
+    //
+    //                 var data = {
+    //                     date: point.series.options.data[xx].x,
+    //                     open: point.series.options.data[xx].open,// Highcharts.charts[0].series[0].data[currentIndex - 1],
+    //                     high: point.series.options.data[xx].max,
+    //                     low: point.series.options.data[xx].min,
+    //                     close: point.series.options.data[xx].close, //Highcharts.charts[0].series[0].data[currentIndex + 1],
+    //                     volume: point.series.options.data[xx].vol
+    //                 };
+    //
+    //                 point.highlight(ee, data, isClose);
+    //             }
+    //         } catch (e) {
+    //             __LDEV__&&console.warn( 'e', e );
+    //         }
+    //     });
+    // }
 
+
+
+    // private redraw()
+    // {
+    //     return ;
+//
 //         // if (Highcharts.charts[1] == null) return;
 //         if (Highcharts.charts[0].series[1] == null) return;
 // // 0||console.debug( 'redraw' );
@@ -999,6 +851,6 @@ export class Chart
 //                 });
 //             }
 //         });
-
-    }
+//
+    // }
 }
