@@ -128,6 +128,7 @@ class Settings extends React.Component
                     handleSubmit={actions.actionAjaxUserDataUpdate}
                     serverValidation={true}
                 />
+
                 <form action={`${ABpp.baseUrl}/Account/UploadImage`} encType="multipart/form-data" className="document_upload"
                 ref="uploadForm" style={{marginTop: 25}}>
                     <h3 className="section_user">Your files</h3>

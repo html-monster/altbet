@@ -8,6 +8,9 @@ import ChartObj from '../../models/MainPage/Chart';
 import Chart from '../MainPage/ChartEvent';
 import DefaultOrdersLocal from '../DefaultOrdersLocal';
 import classnames from 'classnames';
+// import AnimateOnUpdate from '../Animation';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
+
 
 
 // import {Common} from './../../common/Common';
@@ -74,7 +77,7 @@ export default class ExchangeItem extends React.Component {
 				currentState.chart.updateChart(currentProps.chartData);
 			}
 		}
-		else if(currentState.chart) currentState.chart.stopGenerator();
+		else if(currentState.chart) currentState.chart.stopGenerator()
 
 	}
 
@@ -199,6 +202,12 @@ export default class ExchangeItem extends React.Component {
 
 		let $lastPriceClass = data.Symbol.PriceChangeDirection === -1 ? ["down", "up"] : data.Symbol.PriceChangeDirection === 1 ? ["up", "down"] : ["", ""];
 
+		//time and sales get data
+		let ticks = [];
+		if (chartData && chartData.Ticks.length)
+		{
+			ticks = chartData.Ticks.slice().reverse();
+		}
 
 		/*
 		 var exchangeSideClickFn = actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
@@ -207,7 +216,7 @@ export default class ExchangeItem extends React.Component {
 		 symbol: symbol,
 		 });
 		 */
-		// 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
+		// 0||console.log( 'exdata', this.data, Symbol.HomeName, thi7s.data[Symbol.HomeName] );
 
 		return (
 			<div
@@ -428,14 +437,51 @@ export default class ExchangeItem extends React.Component {
 						{/*<div className={"h-lup__tab_item tab_item highcharts-tab" + (chart ? '' : ' loading') + activeTab[1]}*/}
 						{/*id={"container_" + symbol} data-js-highchart="" ref={'chartContainer'}>{}</div>*/}
 						{/*<img src="~/Images/chart_white.svg" alt=""/>*/}
-						<div
-							className={"h-lup__tab_item tab_item highcharts-tab" + (chart ? '' : ' loading') + activeTab[1]}>
-							<Chart
-								id={`${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`}
-								chartData={this.state.chart}
-								ref={'chartComponent'}
-								chartTypeChange={::this.chartTypeChange}
-							/>
+						<div className={"h-lup__tab_item tab_item" + (chart ? '' : ' loading') + activeTab[1]}>
+							<div className="highcharts-tab">
+								<Chart
+									id={`${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`}
+									chartData={this.state.chart}
+									ref={'chartComponent'}
+									chartTypeChange={::this.chartTypeChange}
+								/>
+								<div className="executed_orders">
+									<h4>Time & Sales</h4>
+									<table>
+										<tbody>
+										{
+											chartData &&
+											ticks.length ?
+												ticks.map((item) =>
+												{
+													let side = item.Side ? 'sell' : 'buy';
+
+													return <CSSTransitionGroup
+														component="tr"
+														key={item.Time + item.Open + item.Volume}
+														transitionName={{
+															enter : 'fadeColorOut',
+															leave : 'fadeColorOut',
+															appear: 'fadeColorOut'
+														}}
+														transitionAppear={true}
+														transitionLeave={false}
+														transitionAppearTimeout={600}
+														transitionEnterTimeout={600}
+														transitionLeaveTimeout={500}
+														>
+															<td><span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'DD MMM Y h:mm A'})}</span></td>
+															<td className={`price ${side} animated`}><span>${item.Open.toFixed(2)}</span></td>
+															<td className={`volume ${side} animated`}><span>{item.Volume}</span></td>
+														</CSSTransitionGroup>
+												})
+											:
+												<tr><td className="center"><span>You have no positions</span></td></tr>
+										}
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 
 					</div>

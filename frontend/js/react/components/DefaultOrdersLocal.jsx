@@ -17,7 +17,7 @@ class DefaultOrdersLocal extends React.PureComponent
 		(new GlobalCloseClass({element: this.refs.orderContainer,
 			customCloseFunction: this.props.actions.actionOnDeleteOrder.bind(null, {mainPageActions: this.props.mainPageActions}),
 			excludeElements: ['#DiMPMainpage button.event'],
-			closeButton: this.refs.orderWrapper.refs.closeButton,
+			closeButton: this.refs.orderWrapper ? this.refs.orderWrapper.refs.closeButton : '',
 			actionDelay: 0})).bindGlobalClick();
 	}
 
@@ -28,7 +28,7 @@ class DefaultOrdersLocal extends React.PureComponent
 			(new GlobalCloseClass({element: this.refs.orderContainer,
 				customCloseFunction: this.props.actions.actionOnDeleteOrder.bind(null, {mainPageActions: this.props.mainPageActions}),
 				excludeElements: ['#DiMPMainpage button.event'],
-				closeButton: this.refs.orderWrapper.refs.closeButton,
+				closeButton: this.refs.orderWrapper ? this.refs.orderWrapper.refs.closeButton : '',
 				actionDelay: 0})).bindGlobalClick();
 		}
 	}

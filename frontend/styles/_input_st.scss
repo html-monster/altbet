@@ -1,4 +1,4 @@
-.sign_up_form, .sign_in_form, #form2, .setting_form, .self_exclusion {
+.sign_up_form, .sign_in_form, .change_password, .setting_form, .self_exclusion {
 
   input[type=email] {
     &:-webkit-autofill {
@@ -300,7 +300,7 @@
   }
 }
 
-#form2 {
+.change_password {
   display: flex;
   flex-direction: column;
   .input_animate {

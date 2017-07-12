@@ -130,7 +130,7 @@ class MainPage extends BaseController
                         </div>
                     </div>
                     <div className="tab_content">
-                        <div className="tab_item">
+                        <div className="tab_item active">
                             <div className="mp-exchanges">
                                 {data.marketsData.map((item, key) =>
                                     <ExchangeItem key={key}
