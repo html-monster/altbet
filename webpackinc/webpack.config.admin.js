@@ -28,7 +28,7 @@ const sourceMap = process.env.TEST || process.env.NODE_ENV !== 'production'
 module.exports = {
     // entry: ['./frontend/js/react/indexmp.tsx'],
     entry: {
-        "bundle-adm": './frontend/admin_ts/bundle-adm.js',
+        "bundle-adm": './frontend/admin_ts/bundle-adm.jsx',
         // "index-admin": './frontend/ts_admin/index-admin.scss',
     },
         // styles: './frontend/styles/index-admin.scss'

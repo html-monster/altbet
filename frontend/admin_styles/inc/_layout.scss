@@ -1,3 +1,9 @@
+#DiLoading2 { display: none; position: absolute; color: #d85909; font-size: 1.1em; font-weight: bold; text-align: center; opacity: 0.80; z-index: 9999;
+  .loader { position: fixed; margin-left: -105px; left: 50%; top: 45%; padding: 15px 30px; width: 170px; z-index: 1000;
+      background: #fff4e9; border: 2px solid #f1af73; color: #d85909; font-weight: bold; text-align: center; }
+}
+
+
 .wrapper-logo {
 	a { @include box(b,r); margin-bottom: -20px; padding: 20px 40px; background-color: #3a3943; }
 	img { width: 100%; }

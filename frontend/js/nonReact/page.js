@@ -253,6 +253,8 @@ $(document).ready(function () {
         // $(".validation-summary-errors").css('opacity', '0');
     });
 
+
+
 });
 
 

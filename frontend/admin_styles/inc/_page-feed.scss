@@ -15,7 +15,7 @@
 //	100% {  background-color: transparent; color: #000; }
 //}
 
-.page-Feed {
+.ac-index.co-feed {
   .content-wrapper {
     .box-body { overflow: visible }
 
@@ -25,32 +25,6 @@
         .controls { opacity: 1; }
       }
       .controls { width: 80px; opacity: .3; }
-      //.icon {
-      //  a { border-bottom: 1px dotted lighten($colorFont, 20%); color: $colorFont;
-      //    &:hover { border-bottom-style: solid }
-      //  }
-      //}
-      //& > tbody + tbody {
-      //    border-top: 0;
-      //}
-      //tbody {
-      //  &.js-opened {
-      //    tr.exch-row td
-      //    { background: rgba(60, 141, 188, 0.26) }
-      //    tr.details td
-      //    { background: rgba(60, 141, 188, 0.15) }
-      //  }
-      //}
-      //tr.details td { padding: 0; line-height: 1px; border-top: 0; background: #F2F2F2;
-      //  div.details { display: none; line-height: 18px; padding: 8px; }
-      //}
-      //tr.added td, tr.edited td { position: relative; animation: fadeInGreen 1s; background-color: $color1Green; color: #fff; }
-      //tr.edited td { animation: fadeInBlue 1s; background-color: $color2Blue;
-      //  //&:first-child::after { content: 'added'; position: absolute; left: 1px; bottom: 1px; font-size: 10px; color: #fff; }
-      //}
-      //tr.added.animated td, tr.edited.animated td { animation: fadeOutGreen 1s; background-color: transparent; color: #000; }
-      //tr.edited.animated td { animation: fadeOutBlue 1s; }
-      //.dropdown-menu { left: auto; right: 0; }
     }
 
     .icon { @include box(i,r); padding-right: 17px;
@@ -60,5 +34,7 @@
       //a { color: #000; }
     }
   }
+
+  .pagination li { cursor: pointer }
 }
 

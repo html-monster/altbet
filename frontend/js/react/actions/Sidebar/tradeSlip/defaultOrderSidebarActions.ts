@@ -48,6 +48,7 @@ class Actions extends OrderActions
 	{
 		return (dispatch, getState) =>
 		{
+			order = order.data;
 			// console.log('orderContainer:', orderContainer);
 			// console.log('order:', order);
 

@@ -11,7 +11,7 @@ export default class TraderSpreadForm extends React.Component {
 
 	render()
 	{
-		const { traderActions, activeString, mainData: { Symbol }, cmpData: { activeExchange }, direction, price, index, inputQuantityContext,
+		const { traderActions, activeString, mainData: { Symbol }, cmpData: { activeExchange }, direction, price, index, traderContext,//inputQuantityContext,
 			isMirror, quantity, spread } = this.props;
 		let spreadPricePos = Math.round10(price + +spread, -2);
 		spreadPricePos = spreadPricePos > 0.98 ? 0.99 : spreadPricePos.toFixed(2);
@@ -37,6 +37,8 @@ export default class TraderSpreadForm extends React.Component {
 			if (Symbol.LastAsk && spreadPriceNeg < Math.round10(Symbol.LastAsk - 0.15, -2)) bidsProb = ' low';
 		}
 
+		const maxEntries = 100, remainingBal = 95;
+
 		return <div className={'order_content spread animated' + (index === activeString || !index ? ' fadeInUp' : '')}
 					id="order_content"
 					key={direction}
@@ -44,15 +46,15 @@ export default class TraderSpreadForm extends React.Component {
 			<div className="sell-buy-container">
 				<form action={ABpp.baseUrl + '/Order/Spreader'}
 					  autoComplete="off"
-					  onSubmit={traderActions.actionOnAjaxSend.bind(null, this)}
+					  onSubmit={this._onSubmit.bind(this, {maxEntries, remainingBal, spreadPricePos, spreadPriceNeg, quantity, traderActions})}
 				>
 					<div className="container">
 						<div className="price sell">
 							<label>Selling price</label>
 							<div className="input">
 								<input type="tel" className={'number' + offersProb} data-validation="0.33" maxLength="4"
-									   value={spreadPricePos}
-									   onChange={traderActions.actionOnQuantityChange.bind(null, inputQuantityContext)}
+									   value={'$' + spreadPricePos}
+									   onChange={traderActions.actionOnQuantityChange.bind(null, traderContext)}
 									   disabled="disabled"/>
 								<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
 							</div>
@@ -61,15 +63,15 @@ export default class TraderSpreadForm extends React.Component {
 							<label>Quantity</label>
 							<div className="input">
 								<input className="number quantity" data-validation="123" maxLength="8" name="SellOrderQuantity" type="text"
-									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, inputQuantityContext)}
-									   onChange={traderActions.actionOnQuantityChange.bind(null, inputQuantityContext)}
+									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, traderContext)}
+									   onChange={traderActions.actionOnQuantityChange.bind(null, traderContext)}
 									   value={quantity}/>
 								<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>
 								<div className="regulator">
 									<span className="plus" title="Press Arrow Up"
-										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, 1)}>{}</span>
+										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, traderContext, 1)}>{}</span>
 									<span className="minus" title="Press Arrow Down"
-										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, -1)}>{}</span>
+										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, traderContext, -1)}>{}</span>
 								</div>
 							</div>
 						</div>
@@ -91,8 +93,8 @@ export default class TraderSpreadForm extends React.Component {
 							<label>Buying price</label>
 							<div className="input">
 								<input type="tel" className={'number' + bidsProb} data-validation="0.33" maxLength="4"
-									   value={spreadPriceNeg}
-									   onChange={traderActions.actionOnQuantityChange.bind(null, inputQuantityContext)}
+									   value={'$' + spreadPriceNeg}
+									   onChange={traderActions.actionOnQuantityChange.bind(null, traderContext)}
 									   disabled="disabled"/>
 								<div className="warning" style={{display: 'none'}}><p>Available value from 0.01 to 0.99</p></div>
 							</div>
@@ -101,23 +103,37 @@ export default class TraderSpreadForm extends React.Component {
 							<label>Quantity</label>
 							<div className="input">
 								<input className="number quantity" data-validation="123" maxLength="8" name="BuyOrderQuantity" type="text"
-									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, inputQuantityContext)}
-									   onChange={traderActions.actionOnQuantityChange.bind(null, inputQuantityContext)}
+									   onKeyDown={traderActions.actionOnButtonQuantityRegulator.bind(null, traderContext)}
+									   onChange={traderActions.actionOnQuantityChange.bind(null, traderContext)}
 									   value={quantity}/>
 								<div className="warning" style={{display: 'none'}}><p>Available integer value more than 0</p></div>
 								<div className="regulator">
 									<span className="plus" title="Press Arrow Up"
-										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, 1)}>{}</span>
+										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, traderContext, 1)}>{}</span>
 									<span className="minus" title="Press Arrow Down"
-										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, inputQuantityContext, -1)}>{}</span>
+										  onClick={traderActions.actionOnButtonQuantityChange.bind(null, traderContext, -1)}>{}</span>
 								</div>
 							</div>
 						</div>
-						<span className="delete wave waves-input-wrapper waves-effect waves-button"
-							  onClick={traderActions.actionRemoveOrderForm}>{}</span>
+							<span className="delete wave waves-input-wrapper waves-effect waves-button"
+								  onClick={traderActions.actionRemoveOrderForm}>{}</span>
 					</div>
 				</form>
 			</div>
 		</div>
+	}
+
+	_onSubmit(data, event)
+	{
+		event.preventDefault();
+		const sum = ((1 - data.spreadPricePos) * data.quantity) + (data.spreadPriceNeg * data.quantity);
+
+		if(sum > data.remainingBal)
+		{
+			defaultMethods.showWarning(`Order total sum is $${Math.round10(sum, -2)}, your remaining entry balance of this game is $${data.remainingBal}, it's not enough to create the order`);
+			return false;
+		}
+
+		data.traderActions.actionOnAjaxSend(this, event);
 	}
 }

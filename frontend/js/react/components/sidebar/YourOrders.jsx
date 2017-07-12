@@ -4,6 +4,7 @@ import React from 'react';
 
 import OrderForm from './order/OrderForm.jsx';
 import yourOrdersActions from '../../actions/Sidebar/yourOrderActions.ts';
+import { DateLocalization	 } from '../../models/DateLocalization';
 
 class YourOrders extends React.Component
 {
@@ -41,7 +42,7 @@ class YourOrders extends React.Component
 	{
 		// let yourOrdersData = this.state.data;
 		let yourOrdersData = this.props.yourOrders;
-		return <div className="tab_item" id="current-orders">
+		return <div className={'tab_item' + (ABpp.User.userIdentity ? ' active' : '')} id="current-orders">
 			{
 				ABpp.User.login ?
 					yourOrdersData.yourOrders.length ?
@@ -84,7 +85,7 @@ class GroupingOrder extends React.Component
 							:
 								''
 						}
-						<strong className="current-order up"> Total: <span>{data.Positions}</span></strong>
+						<strong className="current-order pos"> Total: <span>{data.Positions}</span></strong>
 					</div>
 				</div>
 				<div className="order_info">
@@ -128,7 +129,12 @@ class OrderItem extends React.Component
 	}
 
 	showPopUp(){
-		$(this.refs.deletePopUp).fadeIn();
+		const isEventStarted = +moment().format('x') > (this.props.data.Symbol.StartDate).split('+')[0].slice(6);
+
+		if(isEventStarted)
+			$(this.refs.deletePopUp).fadeIn();
+		else
+			defaultMethods.showWarning('You can`t delete the order before the game starts');
 	}
 
 	showForm(){
@@ -156,8 +162,7 @@ class OrderItem extends React.Component
 
 	render()
 	{
-		const { actions } = this.props;
-		let data = this.props.data;
+		const { actions, data } = this.props;
 		//const allData = this.props.allData;
 		const date = new Date(+data.Time.slice(6).slice(0, -2));
 		const formData = {
@@ -170,19 +175,21 @@ class OrderItem extends React.Component
 										:
 											data.Side ? 'sell' : 'buy';
 
+
 		return <div className="order_container not-sort" id={data.ID + '__order'}>
 			<div className={'order_info ' + className}>
 				<div className="container">
 					<strong className="amount"> <span className="price">{(data.Price).toFixed(2)}</span></strong>
 					<strong className="qty"> <span className="volume">{data.Volume}</span></strong>
 					<strong className="dt timestamp help balloon_only">
-		 				<span className="date">{`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}</span>&nbsp;
+		 				<span className="date">{`${(date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)}/${date.getDate() < 10 ? '0' +
+							date.getDate() : date.getDate()}/${date.getFullYear()}`}</span>&nbsp;
                         <span className="time">{`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
 						<span className="help_message"><strong>MM/DD/YYYY HH:MM</strong></span>
 					</strong>
 					<div className="button_container">
-						<button className="edit" title="edit or change the order" onClick={::this.showForm}>{}</button>
-						<button className="delete" onClick={::this.showPopUp}>{}</button>
+						<button className="edit" title="edit or change the order" onClick={::this.showForm}/>
+						<button className="delete" title="delete the order" onClick={::this.showPopUp}/>
 					</div>
 				</div>
 
@@ -208,10 +215,17 @@ class OrderItem extends React.Component
 						data.Side ? 'sell' : 'buy'}
 					ask={data.Symbol.LastAsk === 1 ? null : data.Symbol.LastAsk}
 					bid={data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid}
-					price={data.Price}
+					price={(data.Price).toFixed(2)}
+					priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.Symbol.StartDate)}
+					maxEntries={100}
+					minPrice={data.Price}
+					remainingBal={95}
 					quantity={data.Volume}
 					isMirror={data.isMirror}
 					symbol={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}
+					startDate={(new DateLocalization).fromSharp(data.Symbol.StartDate)}
+					endDate={data.Symbol.EndDate ? (new DateLocalization).fromSharp(data.Symbol.EndDate) : data.Symbol.EndDate}
+					ResultExchange={data.Symbol.ResultExchange}
 					newOrder={false}
 					showDeleteButton={false}
 					onSubmit={actions.actionOnAjaxSend.bind(null, formData.url)}

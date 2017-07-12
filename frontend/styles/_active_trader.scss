@@ -1,16 +1,23 @@
 .active_trader{
 	overflow: hidden;
-	&.loading:after{
-		content: '';
-		display: block;
+	&.loading .loading{
 		width: 100%;
 		height: 100%;
-		background: url("#{$pathImage}/ajax-loader.gif") rgba(0, 0, 0, 0.7) no-repeat;
-		background-position: center center;
 		position: absolute;
 		top: 0;
 		left: 0;
 		z-index: 100;
+		background: url("#{$pathImage}/ajax-loader.gif") rgba(0, 0, 0, 0.7) no-repeat center center;
+	  &:after{  }
+	}
+	div.blocked{ width: 100%; height: 100%; position: absolute; top: 0; z-index: 101; font-size: 14px; color: rgba(255, 255, 255, 0.8);
+		background: rgba(0, 0, 0, 0.8);
+		span{ position: absolute; top: 50%; left: 0; right: 0; padding: 0 10px; text-align: center;
+			&:before{ content: ''; display: block; width: 100px; height: 100px; position: absolute; top: -120px;
+				left: calc(50% - 50px); background: url("#{$pathImage}/sprite.svg") no-repeat -138px -861px; background-size: 1500%;
+			}
+		}
+		& + .loading{ display: none; }
 	}
 	.event_title{
 		display: flex;
@@ -37,6 +44,7 @@
 		box-shadow: 0 -6px 15px -3px rgba(0, 0, 0, 0.3);
 		transition: 0.4s ease-out;
 		@include mdmax(1350){ position: absolute; width: 100%; }
+		td button{ width: 100%; }
 	}
 	//span.close{  height: 31px; background: url("#{$pathImage}/ico-delete-w.png") no-repeat center #969696;  border-radius: 5px; cursor: pointer; }
 	.price_value .help{
@@ -70,7 +78,7 @@
 		text-align: center;
 		font-size: 12px;
 		animation-duration: 0.4s;
-		&.middle{  top: calc(50% - 58px);  }
+		&.middle{ display: block; top: calc(50% - 58px); }
 		//&.active{  visibility: visible;  }
 		@include order_sidebar_confirm_window;
 		span{
@@ -237,7 +245,7 @@
 			border-left: none;
 			border-bottom: none;
 			//position: relative;
-			&:hover .close_red{  opacity: 1;  }
+			&:hover .delete_ord{  opacity: 1;  }
 			&.label{
 				height: 24px;
 				@include trader_label;
@@ -282,6 +290,7 @@
 			&.spreader{  background-image: linear-gradient(to bottom, #f8b747, #ef8022);  color: #ffffff; }
 			&.button{
 				&.spread button {
+
 					@include trader_spread_button;
 				}
 			}
@@ -300,8 +309,8 @@
 				}
 				&:active:after{  opacity: 1;  }
 			}
-			&.my_bids .close_red{  right: 0;  }
-			&.my_offers .close_red{  left: 0;  }
+			&.my_bids .delete_ord{  right: 0;  }
+			&.my_offers .delete_ord{  left: 0;  }
 			//&[rowspan]{  width: 34%;  }
 			a { display: block; position: relative; padding: 2px 5px; color: $main-color; cursor: default; }
 
@@ -321,15 +330,17 @@
 				color: $trader_button_color;
 				&:last-of-type{  border-left: 1px solid $trader_button_separator;  }
 			}
-			.close_red{
+			.delete_ord{
 				width: 15px;
 				height: 15px;
 				position: absolute;
 				top: calc(50% - 8px);
 				min-height: 10px;
 				border: none !important;
+				background: url("#{$pathImage}/sprite.svg") no-repeat -162px -178px;
 				opacity: 0;
 				transition: 0.2s ease-out;
+				transform: scale(0.8);
 			}
 			&.cancel_all{  background-image: linear-gradient(to bottom, #646470, #34343d); a{  color: #ffffff;} } //#a3a3a3
 			&.close_out{  background-image: linear-gradient(to bottom, #f88447, #ef4d22); a{color: #fff;}  }
@@ -664,6 +675,7 @@
 				position: relative;
 				border-left: none;
 				border-bottom: none;
+				background-image: none;
 			}
 			i.submit{
 				width: 100%;

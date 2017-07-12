@@ -11,8 +11,8 @@ import BaseController from './BaseController';
 import Funds from '../components/userPage/Funds';
 import Preferences from '../components/userPage/Preferences';
 import Settings from '../components/userPage/Settings';
-import ChangePassword from '../components/userPage/settings/ChangePassword';
-import SelfExclusion from '../components/userPage/SelfExclusion';
+import ChangePassword from '../components/userPage/settings/ChangePassword.jsx';
+import SelfExclusion from '../components/userPage/SelfExclusion.jsx';
 
 // import ChangePassword from '../components/userPage/settings/ChangePassword';
 
@@ -41,8 +41,8 @@ class UserPage extends BaseController
                 <li className={"tab " + (this.props.route.tab === "funds" ? "active" : "")}><Link to={`/funds`}>Funds</Link></li>
                 <li className={"tab " + (this.props.route.tab === "pref" ? "active" : "")}><Link to={`/preferences`}>My Preferences</Link></li>
                 <li className={"tab " + (this.props.route.tab === "sett" ? "active" : "")}><Link to={`/settings`}>Settings</Link></li>
-                <li className={"tab " + (this.props.route.tab === "pass" ? "active" : "")}><Link to={`/change_password`}>ChangePassword</Link></li>
-                <li className={"tab " + (this.props.route.tab === "self_sett" ? "active" : "")}><Link to={`/self_exclusion`}>SelfExclusion</Link></li>
+                <li className={"tab " + (this.props.route.tab === "pass" ? "active" : "")}><Link to={`/change_password`}>Change Password</Link></li>
+                <li className={"tab " + (this.props.route.tab === "self_sett" ? "active" : "")}><Link to={`/self_exclusion`}>Self Exclusion</Link></li>
             </ul>
             <div className="tab_content">
                 <Funds data={{header: $tabHeaderHtml, active: this.props.route.tab === "funds", tab: this.props.params.tabname}}/>

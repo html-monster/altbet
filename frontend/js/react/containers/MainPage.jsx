@@ -9,6 +9,9 @@ import mainPageActions from '../actions/MainPageActions.ts';
 import defaultOrderLocalActions from '../actions/OrderActions/defaultOrdersLocalActions';
 import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 import sidebarActions from '../actions/sidebarActions.ts';
+// import chartActions from '../actions/MainPage/chartActions';
+// import {Framework} from '../common/Framework';
+
 // class MainPage extends React.Component
 class MainPage extends BaseController
 {
@@ -87,7 +90,7 @@ class MainPage extends BaseController
     {
         // let isBasicMode = ABpp.config.basicMode;
         const data = this.props.data;
-        const { actions, data:{ activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn } } = this.props;
+        const { actions, data:{ activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn, orderDetails: { orderPrice, showOrder } } } = this.props;
         const { currentExchange } = this.state;
         let $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
@@ -110,7 +113,8 @@ class MainPage extends BaseController
                 <div className="wrapper" id="exchange">
                     <div className="stattabs">
                         {
-                            Object.keys($tabs).map((val, key) => <a href={"?sort=" + val} key={val} className={"stab" + (val == currSort || !currSort && !key ? " active" : '')}><span data-content={$tabs[val]}>{}</span></a>)
+                            Object.keys($tabs).map((val, key) =>
+                                <a href={"?sort=" + val} key={val} className={"stab" + (val == currSort || !currSort && !key ? " active" : '')}><span data-content={$tabs[val]}>{}</span></a>)
                         }
                         {/*<span className="stab"><a href="?sort=closingsoon"><span data-content="Closing soon">{}</span></a></span>
                         <span className="stab"><a href="?sort=popular"><span data-content="Popular">{}</span></a></span>
@@ -130,11 +134,13 @@ class MainPage extends BaseController
                             <div className="mp-exchanges">
                                 {data.marketsData.map((item, key) =>
                                     <ExchangeItem key={key}
-                                        data={{...item, activeExchange, chartSubscribing, isBasicMode, isTraiderOn, currentExchange}}
+                                        data={{...item, activeExchange, chartSubscribing, isBasicMode, isTraiderOn,
+                                            currentExchange, orderPrice, showOrder}}
                                         chartData={charts && charts[item.Symbol.Exchange]}
                                         mainContext={this}
                                         setCurrentExchangeFn={::this._setCurrentExchange}
-                                        actions={actions} />
+                                        actions={actions}
+                                    />
                                 )}
                             </div>
                             {
@@ -152,6 +158,10 @@ class MainPage extends BaseController
                                         })}
                                     </ul>
                                 </div>
+                            }
+                            {
+								showOrder &&
+                                <div id="mainBlind" className="blind animated dur4 fadeIn"/>
                             }
                         </div>
                     </div>
@@ -229,16 +239,17 @@ class MainPage extends BaseController
 
 export default connect(
     state => {
-        return ({
-        data: state.mainPage,
-        // test: state.Ttest,
-    })
+		return ({
+			data: state.mainPage,
+			// test: state.Ttest,
+		})
     },
     dispatch => ({
 		sidebarActions: bindActionCreators(sidebarActions, dispatch),
 		traderActions: bindActionCreators(traderActions, dispatch),
 		// defaultOrderActions: bindActionCreators(defaultOrderSidebarActions, dispatch),
 		defaultOrderActions: bindActionCreators(defaultOrderLocalActions, dispatch),
+		// chartActions: bindActionCreators(Framework.initAction(chartActions), dispatch),
         actions: bindActionCreators(mainPageActions, dispatch),
     })
 )(MainPage)
