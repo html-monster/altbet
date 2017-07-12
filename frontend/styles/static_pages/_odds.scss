@@ -1,5 +1,18 @@
 /*__ODDS___*/
-.static-page {
+.odds_page {
+  margin-bottom: 30px;
+  table {
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid #6d6d6d;
+    tr {
+      border-bottom: 1px solid #6d6d6d;
+      th, td {
+        border-right: 1px solid #6d6d6d;
+      }
+    }
+  }
   .first_div, .second_div,
   .third_div, .fourth_div, .fifth_div {
     display: flex;

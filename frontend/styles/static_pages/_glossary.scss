@@ -19,38 +19,18 @@
             }
           .secondLi{
             display: none;
-            p{
-              width: 400px;
-            }
+            p{ width: 400px; }
           }
         }
       }
     }
   }
-}
-
-.letterForUl {
-  color: #3588b6;
-  margin-top: 40px;
-}
-
-/*ODDS DEFINITIONS*/
-.main_odds {
-  .odds_definitions {
-    margin: 50px 0px;
-    p {
-      .example {
-        font: 100%/1.5 sans-serif;
-        color: #fff;
-        display: inline-block;
-        margin-bottom: 25px;
-      }
-    }
-  }
-  .table_glossary{
-    margin: 200px 250px;
+  .letterForUl {
+    color: #3588b6;
+    margin-top: 40px;
   }
 }
+
 
 
 

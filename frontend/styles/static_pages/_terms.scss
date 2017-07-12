@@ -1,129 +1,79 @@
-.wrapper {
-  .content {
-    .page_wrapper {
-      .titlesBox {
-        display: flex;
-        flex-direction: column;
-      }
-      .under_title {
-        display: inline-block;
-      }
-    }
-    //_____main boxes first
-    .main_boxes_first {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      width: 900px;
-      .first_list {
-        display: flex;
-        flex-direction: column;
-        .intro{
-          .js-titleMain:active{
-              cursor: pointer;
-              color: #fff;
-            }
-            .js-titleMain:hover{
-              cursor: pointer;
-              color: #fff;
-          }
-          }
-          p {
-            display: none;
-            width: 600px;
-          }
-        }
-      }
-      .second_list {
-        @extend .first_list;
-      }
-    }
+.term {
+  .page_wrapper {
+    .titlesBox { display: flex; flex-direction: column; }
+    .under_title { display: inline-block; }
   }
-
-  //_____main boxes second
-    .main_boxes_second{
-        width: 170%;
-        margin-top: 50px;
-          .betting {
-            display: flex;
-            flex-direction: column;
-            width: 1200px;
-
-          .bettingForP{
-              display: inline-block;
-              width: 560px;
-            }
-            .article_p{
-                display: flex;
-                flex-direction: row;
-              .individual_p1{
-                display: inline-block;
-              }
-              .individual_p2{
-                @extend .individual_p1;
-                margin-left: 50px;
-              }
-            }
-            .rules{
-              color: #0d97ba;
-            }
-          }
-        .global_section{
-          width: 1200px;
-        }
-      }
-
-/*separate white and white cursive letters*/
-.letter{
-  color: #fff;
-}
-.letter_other{
-  color: #fff;
-  font-style: italic;
-}
-
-
-// first and second lists_____________________________________________________
-.globalBoxLists{
-  display: flex;
-  flex-direction: row;
-  .first_one{
-    width: 700px;
-  }
-  .second_one{
-    @extend .first_one;
-    margin-left: 100px;
-  }
-}
-
-.altbet_span{
-  color: #0d97ba;
-}
-
-// first and second sections____________________________________________________
-.global_section {
-  display: flex;
-  flex-direction: column;
-  .common_section {
-    margin-top: 70px;
+  //_____main boxes first
+  .main_boxes_first {
     display: flex;
     flex-direction: row;
-    .currency {
-      width: 800px;
-      margin-bottom: 40px;
-    }
-    .usage {
-      margin-left: 70px;
+    justify-content: space-between;
+    width: 800px;
+    .first_list, .second_list { display: flex; flex-direction: column;
+      .intro {
+        .js-titleMain:active { cursor: pointer; color: #fff; }
+        .js-titleMain:hover { cursor: pointer; color: #fff; }
+      }
+      p { display: none; width: 600px; }
     }
   }
-.common_section{
-  display: flex;
-  flex-direction: row;
-  .commDiv{
-    width: 700px;
+  /*separate white and white cursive letters*/
+  .letter { color: #fff; }
+  .letter_other { color: #fff; font-style: italic; }
+  //_____main boxes second
+  .main_boxes_second {
+    min-width: 900px;
+    margin-top: 50px;
+    .betting {
+      display: flex;
+      flex-direction: column;
+      width: 1200px;
+      .bettingForP { display: inline-block; width: 560px; }
+      .article_p {
+        display: flex;
+        flex-direction: row;
+        .individual_p1 { display: inline-block; }
+        .individual_p2 {
+          @extend .individual_p1;
+          margin-left: 50px;
+        }
+      }
+      .rules { color: #0d97ba; }
+    }
+    .global_section { width: 1200px; }
   }
-  .commDiv:nth-of-type(2n){
-    margin-left: 100px;
+
+
+  // first and second lists_____________________________________________________
+  .globalBoxLists{
+    display: flex;
+    flex-direction: row;
+    .first_one{ width: 700px; }
+    .second_one{
+      @extend .first_one;
+      margin-left: 100px;
+    }
+  }
+
+  .altbet_span{ color: #0d97ba; }
+
+  // first and second sections____________________________________________________
+  .global_section {
+    display: flex;
+    flex-direction: column;
+    .common_section {
+      margin-top: 70px;
+      display: flex;
+      flex-direction: row;
+      .currency { width: 800px; margin-bottom: 40px; }
+      .usage { margin-left: 70px; }
+    }
+    .common_section {
+      display: flex;
+      flex-direction: row;
+      .commDiv { width: 700px; }
+      .commDiv:nth-of-type(2n) { margin-left: 100px; }
+    }
   }
 }
-}
+
