@@ -253,8 +253,22 @@ $(document).ready(function () {
         // $(".validation-summary-errors").css('opacity', '0');
     });
 
+        // $('#submit').click(function () {
+        //
+        //     $("#form2").trigger('reset')
 
 
+    // });
+    // setTimeout(function () {
+    //
+    //     $('#submit').on('click', function () {
+    //
+    //         $("#form2").trigger('reset');
+    //         $('.input__field').blur().focusout().removeClass('validJs')
+    //
+    //     }, 1000);
+    //
+    // });
 });
 
 

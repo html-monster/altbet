@@ -62,20 +62,24 @@
       z-index: 9999;
     }
     &.NickName:before {
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+          background: url(../../Images/sprite.svg) no-repeat -525px -53px;
     }
     &.Email:before {
       content: '@';
       color: #afabc8;
     }
-    &.Password:before {
+    &.Password:before, &.ComparePassword:before {
       background: url(../../Images/sprite.svg) no-repeat -533px -26px;
-    }
-    &.ComparePassword {
-      padding-left: 15px;
     }
     &:nth-child(5) {
       .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; }
+      .Select-placeholder { padding-left: 35px; }
+      &:before {
+        background: url(../../Images/sprite.svg) no-repeat -549px -53px;
+      }
+    }
+    &.country-states {
+     .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; }
       .Select-placeholder { padding-left: 35px; }
       &:before {
         background: url(../../Images/sprite.svg) no-repeat -549px -53px;
@@ -117,10 +121,6 @@
     &:focus {
       outline: none;
     }
-    &#r_confirm_pass {
-      padding-left: 20px;
-    }
-
     &.input-validation-error {
       color: #ff4810;
       border-color: #ff4810;
@@ -162,7 +162,7 @@
 
   //.input__field--kuro + .input__label--kuro .input__label-content--kuro,
   //.input--filled .input__label-content--kuro {
-  //  opacity: 1;
+  //  opacity: 0;
   //}
 
   .remember_forgot {
@@ -262,9 +262,10 @@
     color: #ff4810;
     font-size: 12px;
   }
-  .register_form_message{
-          right: 60px;
-    }
+  .register_form_message {
+    bottom: 56px;
+    right: 60px;
+  }
 
   .register {
     &:before {
@@ -302,12 +303,35 @@
   }
 }
 
+.sign_up_form {
+  .input_animate {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.5em;
+    max-width: 400px;
+    width: 100%;
+    vertical-align: top;
+    /* margin: 0 0 1em; */
+    height: 40px;
+    text-align: center;
+  }
+}
+
+#form0 {
+  .show_password {
+    position: absolute;
+    right: 5px;
+    top: 13px;
+    z-index: 99999;
+  }
+}
+
 #form2 {
   display: flex;
   flex-direction: column;
   .input_animate {
     .validation-summary-errors {
-      bottom: -17px;
+      bottom: -30px;
     }
     &.pass_container:before {
       content: '';
@@ -324,6 +348,7 @@
   }
 
 }
+
 
 .setting_form {
   .input_animate {

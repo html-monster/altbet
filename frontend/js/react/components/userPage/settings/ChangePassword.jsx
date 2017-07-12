@@ -10,9 +10,10 @@ export default class ChangePassword extends React.PureComponent
 	{
 			        const { header, active } = this.props.data;
 
-		return <div className={"tab_item " + (this.props.data.active ? "active" : "")}>
+        return <div className={"tab_item " + (this.props.data.active ? "active" : "")}>
 			<h2>Change Password</h2>
 			{header}
+
 			<form action={appData.pageAccountChangePassUrl}
 				  className="change_password" data-ajax="true" data-ajax-failure="ajaxChangePassClass.onErrorAjax"
 				  data-ajax-success="ajaxChangePassClass.onSuccessAjax" data-ajax-url={appData.pageAccountChangePassUrl}
