@@ -258,14 +258,14 @@ $(document).ready(function () {
 // todo: move in the separate file
 //glossary ========================================================================================================
 
-    $('.titleMain').click(function () {
-        $('.titleMain').not(this).next().slideUp(200);
+    $('.js-titleMain h4').click(function () {
+        $('.js-titleMain h4').not(this).next().slideUp(200);
         $(this).next().slideToggle(200);
     });
 
 //terms and conditions______________________________________________________________________________________________
-    $('.title_for').click(function(){
-        $('.title_for').not(this).next().slideUp(200);
+    $('.js-titleMain').click(function(){
+        $('.js-titleMain').not(this).next().slideUp(200);
        $(this).next().slideToggle(200);
     });
 });

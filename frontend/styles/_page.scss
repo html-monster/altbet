@@ -22,10 +22,10 @@
 	h1{
 		margin-top: 0;
 	}
-	h2{
-		padding: 10px 0 0;
-		font-size: 18px;
-	}
+	//h2{
+	//	padding: 10px 0 0;
+	//	font-size: 18px;
+	//}
 	h3{  padding: 5px 0;  }
 	a{
 		color: $link-color;
@@ -106,3 +106,5 @@
 @import "./static_pages/glossary";
 @import "./static_pages/_how_it_works";
 @import "./static_pages/_terms";
+@import "./static_pages/_common";
+@import "./static_pages/_odds";

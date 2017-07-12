@@ -1,98 +1,45 @@
-.content{
-  .page_wrapper{
-    a{
-        display: none;
-    }
-  }
-}
-    #glossary{
-      a{
-        display: inline-block;
-      }
-      h1{
-        color: #d9502a;
-      }
-      p{
-        width: 740px;
-        margin-bottom: 40px;
-      }
-      .main_letters{
-        display: flex;
-        flex-direction: row;
-      }
-      .two_columns{
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 70px;
-        .global_column{
-          display: flex;
-          flex-direction: row;
-        }
-        .child_column{
-          ul{
-            .letter1 {
-              color: #3588b6;
+.glossary {
+  .two_columns {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 70px;
+    .global_column {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .child_column {
+        width: 500px;
+        ul {
+            .js-titleMain:active h4{
+              color: #fff;
             }
-            .letter {
-              color: #3588b6;
-              margin-top: 40px;
+            .js-titleMain:hover h4{
+              color: #fff;
+              cursor: pointer;
             }
-            li{
-              .titleMain{
-                color: #b0afb0;
-              }
-              .titleMain {
-                color: #b0afb0;
-              }
-              .titleMain:active {
-                color: #fff;
-              }
-              .titleMain:hover{
-                color: #fff;
-                cursor: pointer;
-              }
-              p{
-                display: none;
-              }
-              }
+          .secondLi{
+            display: none;
+            p{
+              width: 400px;
             }
           }
         }
       }
+    }
+  }
+}
 
-//    div {
-//      width: 700px;
-//      margin-right: 100px;
-//
-//      .titleMain {
-//        color: #b0afb0;
-//      }
-//      .titleMain:active {
-//        color: #fff;
-//      }
-//      .titleMain:hover{
-//        color: #fff;
-//        cursor: pointer;
-//      }
-//      p{
-//        display: none;
-//      }
-//    }
-//  }
-//
-//}
-
+.letterForUl {
+  color: #3588b6;
+  margin-top: 40px;
+}
 
 /*ODDS DEFINITIONS*/
 .main_odds {
-  #odds_definitions {
+  .odds_definitions {
     margin: 50px 0px;
-    h2 {
-      display: inline-block;
-      font-size: 26px;
-    }
     p {
-      i {
+      .example {
         font: 100%/1.5 sans-serif;
         color: #fff;
         display: inline-block;
@@ -104,37 +51,9 @@
     margin: 200px 250px;
   }
 }
-#odds_definitions{
-  display: flex;
-  flex-direction: row;
-  margin-top: 20px;
-}
-.first_div{
-  display: flex;
-  flex-direction: column;
-  margin-right: 100px;
-}
-.second_div{
-  display: flex;
-  flex-direction: column;
-}
-.seventh_article{
-  margin-top: 20px;
-}
-.eighth_article{
-  margin-top: 12px;
-}
-.nineth_article{
-  margin-top: 5px;
-}
-.sixth_article{
-  margin-top: 20px;
-}
-.eleventh_article {
-  position: absolute;
-  bottom: 2800px;
-  left: 35%;
-  text-align: center;
-}
+
+
+
+
 
 

@@ -1,34 +1,16 @@
-.term{
-
-}
 .wrapper {
   .content {
-    width: 800px;
     .page_wrapper {
-      .content.page a:visited{
-        color: #3498da;
-      }
-      a{
-        display: inline-block;
-      }
-      .main_title1 {
-        color: #d9502a;
-        display: inline-block;
-        margin-bottom: 20px;
-        margin-left: 30px;
+      .titlesBox {
+        display: flex;
+        flex-direction: column;
       }
       .under_title {
         display: inline-block;
-        margin-left: 30px;
-        span {
-          color: #0d97ba;
-          cursor: pointer;
-        }
       }
     }
     //_____main boxes first
     .main_boxes_first {
-      padding-left: 30px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -36,18 +18,15 @@
       .first_list {
         display: flex;
         flex-direction: column;
-        li {
-          h2 {
-            padding: 10px 0 0;
-            font-size: 18px;
-            &:hover {
+        .intro{
+          .js-titleMain:active{
               cursor: pointer;
               color: #fff;
             }
-            &:active {
+            .js-titleMain:hover{
               cursor: pointer;
               color: #fff;
-            }
+          }
           }
           p {
             display: none;
@@ -56,37 +35,23 @@
         }
       }
       .second_list {
-        display: flex;
-        flex-direction: column;
-        margin-right: 0;
+        @extend .first_list;
       }
     }
   }
-}
 
-/*for js*/
-.title_for:active .first_list {
-  margin-right: 0;
-}
   //_____main boxes second
     .main_boxes_second{
-      padding-left: 30px;
         width: 170%;
         margin-top: 50px;
-          #betting{
+          .betting {
             display: flex;
             flex-direction: column;
-            .main_title2{
-              color: #d9502a;
-              display: inline-block;
-              margin-bottom: 20px;
-            }
-            p{
+            width: 1200px;
+
+          .bettingForP{
               display: inline-block;
               width: 560px;
-            }
-            h2{
-              font-size: 26px;
             }
             .article_p{
                 display: flex;
@@ -96,13 +61,16 @@
               }
               .individual_p2{
                 @extend .individual_p1;
-                margin-left: 100px;
+                margin-left: 50px;
               }
             }
             .rules{
               color: #0d97ba;
             }
           }
+        .global_section{
+          width: 1200px;
+        }
       }
 
 /*separate white and white cursive letters*/
@@ -123,8 +91,8 @@
     width: 700px;
   }
   .second_one{
-    width: 700px;
-    margin-left: 60px;
+    @extend .first_one;
+    margin-left: 100px;
   }
 }
 
@@ -133,64 +101,29 @@
 }
 
 // first and second sections____________________________________________________
-.global_section{
+.global_section {
   display: flex;
   flex-direction: column;
-    .first_sect{
-      margin-top: 70px;
-      display: flex;
-      flex-direction: row;
-        div{
-          width: 800px;
-          margin-bottom: 40px;
-          h2{
-            font-size: 26px;
-          }
-        }
-        #usage{
-          margin-left: 70px;
-        }
+  .common_section {
+    margin-top: 70px;
+    display: flex;
+    flex-direction: row;
+    .currency {
+      width: 800px;
+      margin-bottom: 40px;
     }
-    .second_sect {
-      margin-top: 60px;
-      display: flex;
-      flex-direction: row;
-      div {
-        width: 800px;
-        margin-bottom: 40px;
-        h2 {
-          font-size: 26px;
-        }
-      }
-      #copyrights{
-        margin-left: 70px;
-      }
-    }
-      .third_sect {
-        margin-top: 60px;
-        display: flex;
-        flex-direction: row;
-          div{
-            width: 800px;
-            margin-bottom: 40px;
-            h2{
-              font-size: 26px;
-            }
-          }
-        #privacy{
-          margin-left: 70px;
-        }
-      }
-
-    }
-/*for footer > help*/
-.answer{
-  p{
-    i{
-      a{
-        display: inline-block;
-      }
+    .usage {
+      margin-left: 70px;
     }
   }
+.common_section{
+  display: flex;
+  flex-direction: row;
+  .commDiv{
+    width: 700px;
+  }
+  .commDiv:nth-of-type(2n){
+    margin-left: 100px;
+  }
 }
-
+}
