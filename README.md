@@ -24,6 +24,7 @@
   - (https://facebook.github.io/react/docs/optimizing-performance.html)
   - Оптимизация производительности в React (http://habrahabr.net/thread/7947)
 - Momentjs Format (https://momentjs.com/docs/#/displaying/format/)
+- Bootstrap dark theme (https://bootswatch.com/cyborg/)
 
 
 ## Plugins
