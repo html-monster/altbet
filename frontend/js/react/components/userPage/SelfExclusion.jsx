@@ -137,8 +137,8 @@ export default class SelfExclusion extends React.Component
 
 
         return <div className={"tab_item self_exclusion " + (active ? "active" : "")}>
-                {header}
-
+        <h2>Self Exclusion</h2>
+			{header}
 
 				{/*<form action={appData.pageAccountPreferencesUrl} className={loading ? 'loading' : ''} onSubmit={::this.sendData}>*/}
 					{/*{<section className="section">}*/}

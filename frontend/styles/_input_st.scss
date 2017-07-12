@@ -212,7 +212,6 @@
       }
     }
   }
-
   .valid input { border: 1px solid #afabc8 !important; color: #afabc8 !important; }
 
   .invalid input {
@@ -263,6 +262,9 @@
     color: #ff4810;
     font-size: 12px;
   }
+  .register_form_message{
+          right: 60px;
+    }
 
   .register {
     &:before {
@@ -386,7 +388,7 @@
           width: 100px;
         }
       }
-
     }
   }
 }
+
