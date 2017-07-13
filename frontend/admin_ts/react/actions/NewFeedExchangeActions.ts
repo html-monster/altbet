@@ -236,15 +236,22 @@ export default class Actions extends BaseActions
 
             // prepare data
             data = this.prepareData(data);
-
+            data = data.HomeTeam;
+0||console.log( 'data', data );
 
             // post data to server
             // let data = new FormData();
             const ajaxPromise = (new AjaxSend()).send({
-                formData: data,
+                formData: JSON.stringify(data),
                 message: `Error ...`,
                 // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
-                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
+                // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
+                url: MainConfig.BASE_URL + "/" + 'Feed/Test',
+                exData: {
+                    // contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    traditional: true,
+                },
                 // respCodes: [
                 //     {code: 100, message: ""},
                 //     // {code: -101, message: "Some custom error"},
@@ -684,8 +691,8 @@ export default class Actions extends BaseActions
         PlayersTeam1Variable = PlayersTeam1Variable.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 2}});
         PlayersTeam2Variable = PlayersTeam2Variable.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 2}});
 
-        resObj.HomeTeam = {...PlayersTeam1, ...PlayersTeam1Reserve, ...PlayersTeam1Variable};
-        resObj.AwayTeam = {...PlayersTeam2, ...PlayersTeam2Reserve, ...PlayersTeam2Variable};
+        resObj.HomeTeam = PlayersTeam1.concat(PlayersTeam1Reserve).concat(PlayersTeam1Variable);
+        resObj.AwayTeam = PlayersTeam2.concat(PlayersTeam2Reserve).concat(PlayersTeam2Variable);
 
 
         return resObj;

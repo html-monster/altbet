@@ -38,6 +38,7 @@ export class AjaxSend
             headers: { 'X-Requested-With': 'XMLHttpRequest' },
             message: "",
             url: "",
+            exData: {}, // additional jquery ajax params
             respCodes: [],
             beforeChkResponse: null,
         };
@@ -121,6 +122,7 @@ export class AjaxSend
                 },
                 // Form data
                 data: props.formData || new FormData(),
+                ...props.exData,
                 // Options to tell jQuery not to process data or worry about the content-type
                 cache: false,
                 // contentType: false,
