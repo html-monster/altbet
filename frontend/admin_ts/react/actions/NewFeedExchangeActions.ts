@@ -236,7 +236,7 @@ export default class Actions extends BaseActions
 
             // prepare data
             data = this.prepareData(data);
-            data = data.HomeTeam;
+            // data = data.HomeTeam;
 0||console.log( 'data', data );
 
             // post data to server
