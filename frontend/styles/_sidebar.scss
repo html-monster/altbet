@@ -95,7 +95,7 @@
 		//display: none;
 		padding-bottom: 80px;
 		overflow-x: hidden;
-		@include scroll;
+		@include scrollWhite;
 		transition: 0.4s ease-out;
 		//&:first-child { display: block; }
 	}

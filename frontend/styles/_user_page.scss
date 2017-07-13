@@ -513,7 +513,7 @@
         display: block;
         max-height: 450px;
         border-bottom: 1px solid $user_page_tr_separate;
-        @include scroll;
+        @include scrollWhite;
       }
       tr{
         display: table;
