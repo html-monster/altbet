@@ -245,12 +245,12 @@ export default class Actions extends BaseActions
                 formData: JSON.stringify(data),
                 message: `Error ...`,
                 // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
-                // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
-                url: MainConfig.BASE_URL + "/" + 'Feed/Test',
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
+                // url: MainConfig.BASE_URL + "/" + 'Feed/Test2',
                 exData: {
-                    // contentType: "application/json; charset=utf-8",
+                    contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    traditional: true,
+                    // traditional: true,
                 },
                 // respCodes: [
                 //     {code: 100, message: ""},
@@ -306,7 +306,7 @@ export default class Actions extends BaseActions
                     payload: inProps, //this.setPPGValues.bind(this, inProps),
                     // payload: this.setPPGValues.bind(this, inProps),
                 })},
-                500
+                300
             );
         };
     }

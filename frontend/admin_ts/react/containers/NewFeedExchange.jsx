@@ -54,10 +54,10 @@ class NewFeedExchange extends BaseController
         const playersComponents = [
             [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={PlayersTeam1.players} name={FormData['teamName1']} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
             [1, 2, 'Reserve players team 1', PlayersTeam1Reserve.players, <TeamResVar players={PlayersTeam1Reserve.players} teamVar="PlayersTeam1Reserve" actions={actions} teamNum="1" />,],
-            [1, 3, 'Variable players team 1', PlayersTeam1Variable.players, <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
+            [1, 3, 'Variable reserve team 1', PlayersTeam1Variable.players, <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
             [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={PlayersTeam2.players} name={FormData['teamName2']} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />,],
             [2, 2, 'Reserve players team 2', PlayersTeam2Reserve.players, <TeamResVar players={PlayersTeam2Reserve.players} teamVar="PlayersTeam2Reserve" actions={actions} teamNum="2" />,],
-            [2, 3, 'Variable players team 2', PlayersTeam2Variable.players, <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
+            [2, 3, 'Variable reserve team 2', PlayersTeam2Variable.players, <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
         ];
 
 
