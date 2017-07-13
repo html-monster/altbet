@@ -161,7 +161,7 @@
 			max-height: 210px;
 			margin: 10px 15px 0;
 			border-radius: 4px;
-			@include scrollWhite;
+			@include scroll;
 		}
 	}
   .executed {
@@ -307,10 +307,6 @@
 		h2{  border: none;  font-size: 18px;  }
 		p{  color: $event_page_color; font-size: 12px;  line-height: 1.75;  }
 	}
-
-
-  #disqus_thread { margin-top: 80px;
-    a { color: #f8b747; }
-  }
+	#disqus_thread { margin-top: 80px; }
 }
 

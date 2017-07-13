@@ -84,7 +84,7 @@ export default class ExchangeItem extends React.Component {
 
 	render() {
 		const {
-			actions, chartData, data, data: {activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder, orderPrice},
+			actions, disqusActions, chartData, data, data: {activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder, orderPrice},
 			mainContext, setCurrentExchangeFn
 		} = this.props;
 		let {activeTab, chart, isLPOpen,} = this.state;
@@ -228,6 +228,7 @@ export default class ExchangeItem extends React.Component {
 					// {
 					setCurrentExchangeFn(Symbol.Exchange);
 
+					disqusActions.getEventData({ url: data.CategoryUrl, identifier: data.Symbol.Exchange });
 					//ABpp.config.tradeOn &&
 					actions.exchangeSideClick({
 						name     : Symbol.Exchange,

@@ -9,8 +9,9 @@ import mainPageActions from '../actions/MainPageActions.ts';
 import defaultOrderLocalActions from '../actions/OrderActions/defaultOrdersLocalActions';
 import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 import sidebarActions from '../actions/sidebarActions.ts';
+import disqusActions from '../actions/disqusActions';
+import { Framework } from '../common/Framework';
 // import chartActions from '../actions/MainPage/chartActions';
-// import {Framework} from '../common/Framework';
 
 // class MainPage extends React.Component
 class MainPage extends BaseController
@@ -140,6 +141,7 @@ class MainPage extends BaseController
                                         mainContext={this}
                                         setCurrentExchangeFn={::this._setCurrentExchange}
                                         actions={actions}
+                                        disqusActions={this.props.disqusActions}
                                     />
                                 )}
                             </div>
@@ -250,6 +252,7 @@ export default connect(
 		// defaultOrderActions: bindActionCreators(defaultOrderSidebarActions, dispatch),
 		defaultOrderActions: bindActionCreators(defaultOrderLocalActions, dispatch),
 		// chartActions: bindActionCreators(Framework.initAction(chartActions), dispatch),
+		disqusActions: bindActionCreators(Framework.initAction(disqusActions), dispatch),
         actions: bindActionCreators(mainPageActions, dispatch),
     })
 )(MainPage)
