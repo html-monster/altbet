@@ -192,6 +192,7 @@ export default class Actions extends BaseActions
     /**
      * Get new events data
      */
+/*
     public actionGetNewTableData({props, callback})
     {
         return (dispatch, getState) =>
@@ -218,6 +219,7 @@ export default class Actions extends BaseActions
                 });
         };
     }
+*/
 
 
     /**

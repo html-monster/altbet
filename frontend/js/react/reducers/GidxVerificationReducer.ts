@@ -3,7 +3,9 @@
 declare let globalData;
 
 import {
-    ON_BALVAN,
+    SETTING_ON_FILE_LOAD,
+    SETTING_LOAD_FILE_ERROR,
+    SETTING_CHANGE_PROGRESS_BAR,
 } from '../constants/ActionTypesGidxVerification.js';
 /// TS_IGNORE
 import {Common} from "../common/Common";

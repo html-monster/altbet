@@ -756,5 +756,10 @@
       background-image: linear-gradient(to bottom, #84d65b, #4dac2e);
     }
   }
+
+
+  .gidx-btn {
+    &::before { background: url(../../Images/sprite.svg) no-repeat -458px -22px; }
+  }
 }
 
