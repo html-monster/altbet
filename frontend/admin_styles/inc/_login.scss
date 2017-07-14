@@ -4,8 +4,3 @@
   }
 }
 
-.btn_lg_icon { display: block; position: relative; padding: 9px 5px 9px 45px; width: 150px; border-radius: 4px;
-  overflow: hidden; text-align: center; cursor: pointer; box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
-  transition: 0.2s ease;
-  &:before { content: ''; position: absolute; left: 15px; top: calc(50% - 15px); width: 30px; height: 30px; }
-}

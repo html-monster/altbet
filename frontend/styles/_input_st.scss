@@ -264,11 +264,7 @@
     font-size: 12px;
   }
 
-  .register {
-    &:before {
-      background: url("#{$pathImage}/sprite.svg") no-repeat -458px -22px;
-    }
-  }
+
 
   .time_container {
     display: block;
