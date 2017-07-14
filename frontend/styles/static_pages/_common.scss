@@ -1,3 +1,4 @@
+
 .static-page{ padding-right: 20px; padding-left: 30px;
   h2 { display: inline-block; margin-bottom: 20px; font-size: 36px; text-transform: uppercase; color: #d9502a; }
   h3{ margin-top: 0; font-size: 26px; color: #b0afb0; }
@@ -17,7 +18,7 @@
 //цвет на белый
 .js-titleMain:active h4{ color: #fff; }
 .js-titleMain:hover h4{ color: #fff;  cursor: pointer; }
-.secondLi{ display: none; }
+.secondLi{ display: none; color: #939293; }
 
 .example{
   color: #fff;
