@@ -759,7 +759,8 @@
 
 
   .gidx-btn {
-    &::before { background: url(../../Images/sprite.svg) no-repeat -458px -22px; }
+    &::before { background: url("#{$pathImage}/sprite.svg") no-repeat -102px -394px; }
+    &.withdraw::before { background-position: -134px -394px; }
+    &.history::before { background-position: -170px -394px; }
   }
 }
-
