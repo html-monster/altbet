@@ -40,7 +40,7 @@ export default class Funds extends React.PureComponent{
 						&nbsp;
 						<a class="gidx-btn withdraw btn-lg-icon btn-h btn_blue2 wave waves-effect waves-button" href={ABpp.baseUrl + "/eng/Account/GidxWebCashierRegister?direction=withdraw"}>Withdraw</a>
 						&nbsp;
-						<a class="gidx-btn history btn-lg-icon btn-h btn_blue2 wave waves-effect waves-button" href="#">Transaction History</a>
+						<a class="gidx-btn history btn-lg-icon btn-h btn_blue2 wave waves-effect waves-button" href={ABpp.baseUrl + "/eng/Account/GidxWebWallet"}>Transaction History</a>
 					</div>
 					<AccountBalance staticData={staticData} active={tabA["balance"]} />
 					{/*<div className="tabs tabs_left">

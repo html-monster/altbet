@@ -51,10 +51,13 @@ class Header extends React.Component
 
 	render()
 	{
-		const { actions, serverData } = this.props;
+		let { actions, serverData } = this.props;
         let $filter = appData.urlQuery ? appData.urlQuery.filter : '';
 
-		if(serverData.GainLost !== undefined){
+		// serverData = !serverData ? {} : serverData;
+
+        // todo: при отсутствии данных с сокета, не фурычит, еще и меню ломается
+		if(serverData && serverData.GainLost !== undefined){
 			serverData.Profitlost = serverData.GainLost;
 			serverData.Exposure = serverData.Invested;
 			serverData.Available= serverData.CurrentBalance;
