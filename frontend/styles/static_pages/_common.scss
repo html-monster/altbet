@@ -1,5 +1,59 @@
 .static-page{ padding-right: 20px; padding-left: 30px;
-  h1 { display: inline-block; margin-bottom: 20px; font-size: 36px; text-transform: uppercase; color: #d9502a; }
+  h2 { display: inline-block; margin-bottom: 20px; font-size: 36px; text-transform: uppercase; color: #d9502a; }
   h3{ margin-top: 0; font-size: 26px; color: #b0afb0; }
   h4{ margin-top: 0; font-size: 18px; color: #b0afb0; }
 }
+
+.global_column {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .child_column {
+    width: 50%;
+    padding-right: 40px;
+  }
+}
+
+//при наведении и нажатиии на маленькие заголовки, меняют
+//цвет на белый
+.js-titleMain:active h4{
+  color: #fff;
+}
+.js-titleMain:hover h4{
+  color: #fff;
+  cursor: pointer;
+}
+.secondLi{
+  display: none;
+}
+
+//перенесено с _page.scss
+.page_wrapper{  padding: 0 5px;  }
+a { color: $link-color;  @include text-decoration; }
+p{  margin: 10px 0;  }
+
+// таблица на StaticP
+.boxForTable {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 100px auto 30px;
+    .center_title {
+      display: inline-block;
+      text-align: center;
+      margin-bottom: 50px;
+      }
+    table {
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid #6d6d6d;
+        tr { border-bottom: 1px solid #6d6d6d;
+        th, td { border-right: 1px solid #6d6d6d; }
+    }
+  }
+}
+
+/*separate white a), b) and white cursive letters*/
+.letter { color: #fff; }
+.letter_other { color: #fff; font-style: italic; }

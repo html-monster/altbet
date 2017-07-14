@@ -1,39 +1,18 @@
-/*__ODDS___*/
-.odds_page {
-  margin-bottom: 30px;
-  table {
-    max-width: 800px;
-    width: 100%;
-    text-align: center;
-    border: 1px solid #6d6d6d;
-    tr {
-      border-bottom: 1px solid #6d6d6d;
-      th, td {
-        border-right: 1px solid #6d6d6d;
+@media (min-width: 1300px) {
+  /*__ODDS___*/
+  .odds_page {
+    margin-bottom: 30px;
+    .first_div, .second_div,
+    .third_div, .fourth_div, .fifth_div {
+      display: flex;
+      flex-direction: row;
+      .infoOdds {
+        width: 800px;
+        display: flex;
+        flex-direction: column;
+        /*justify-content: space-between;*/
+        margin-right: 200px;
       }
     }
-  }
-  .first_div, .second_div,
-  .third_div, .fourth_div, .fifth_div {
-    display: flex;
-    flex-direction: row;
-    .infoOdds {
-      width: 800px;
-      display: flex;
-      flex-direction: column;
-      /*justify-content: space-between;*/
-      margin-right: 200px;
-    }
-  }
-
-  /*box for table______________*/
-  .boxForTable{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .center_title {
-    display: inline-block;
-    text-align: center;
   }
 }

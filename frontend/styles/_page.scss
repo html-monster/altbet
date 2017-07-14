@@ -1,39 +1,38 @@
-//$colorAbout: $colorAbout;
+// *****
+// styles form static pages
+// *****
+
 .container_bg{
 	padding: 20px;
 	background: $sign_in_bg;
 	border-radius: 6px;
 }
 
-.content.page{
-	//padding: 15px;
-	color: $color2About;
-	.page_wrapper{  padding: 0 5px;  }
-	.page_content_plan{
-		margin-bottom: 10px;
-		li{  display: block;  }
-		a{
-			color: $color2About;
-			&:visited{  color: transparentize($color2About, 0.4);  }
-			&:hover{  color: $color2About * 1.8;  }
-			&:before{  display: none;  }
-		}
-	}
-	h1{
+//.content.page{
+//	//padding: 15px;
+//	color: $color2About;
+//
+//	// убрать после полной переделки
+//	.page_content_plan{
+//		margin-bottom: 10px;
+//		li{  display: block;  }
+//		a{
+//			color: $color2About;
+//			&:visited{  color: transparentize($color2About, 0.4);  }
+//			&:hover{  color: $color2About * 1.8;  }
+//			&:before{  display: none;  }
+//		}
+//	}
+	h1{ // убрать после полной переделки
 		margin-top: 0;
 	}
 	//h2{
 	//	padding: 10px 0 0;
 	//	font-size: 18px;
 	//}
-	h3{  padding: 5px 0;  }
-	a{
-		color: $link-color;
-		@include text-decoration;
-		//&:visited{  color: #7a55e6;  }
-	}
-	p{  margin: 10px 0;  }
-	&.faq {
+	h3{  padding: 5px 0;  } // убрать после полной переделки
+
+	&.faq {// убрать после полной переделки
 		h2{
 			font-size: 22px;
 		}
@@ -50,7 +49,7 @@
 			}
 		}
 	}
-	.payment_method{
+	.payment_method{// убрать после полной переделки
 		 table{
 			 tr{
 				 &:nth-of-type(1) td{
@@ -101,7 +100,6 @@
 			 }
 		 }
 	}
-}
 
 @import "./static_pages/glossary";
 @import "./static_pages/_how_it_works";
@@ -109,4 +107,5 @@
 @import "./static_pages/_common";
 @import "./static_pages/_odds";
 @import "./static_pages/_about_page";
+@import "./static_pages/_tradingRules";
 

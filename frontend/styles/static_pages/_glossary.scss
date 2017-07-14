@@ -4,11 +4,7 @@
     flex-direction: column;
     margin-bottom: 70px;
     .global_column {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
       .child_column {
-        width: 500px;
         ul {
             .js-titleMain:active h4{
               color: #fff;
@@ -19,17 +15,14 @@
             }
           .secondLi{
             display: none;
-            p{ width: 400px; }
           }
         }
       }
     }
   }
-  .letterForUl {
-    color: #3588b6;
-    margin-top: 40px;
-  }
+  .letterForUl { color: #3588b6; margin-top: 40px;}
 }
+
 
 
 

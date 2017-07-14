@@ -1,20 +1,17 @@
+
 .term {
   .page_wrapper {
     .titlesBox { display: flex; flex-direction: column; }
     .under_title { display: inline-block; }
   }
   //_____main boxes first
-  .main_boxes_first {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 800px;
-    .first_list, .second_list { display: flex; flex-direction: column;
+  .global_column {
+    .child-column{
       .intro {
-        .js-titleMain:active { cursor: pointer; color: #fff; }
-        .js-titleMain:hover { cursor: pointer; color: #fff; }
+        .js-titleMain:active{ cursor: pointer; color: #fff; }
+        .js-titleMain:hover{ cursor: pointer; color: #fff; }
       }
-      p { display: none; width: 600px; }
+      p { display: none;}
     }
   }
   /*separate white and white cursive letters*/
