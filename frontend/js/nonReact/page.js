@@ -268,6 +268,12 @@ $(document).ready(function () {
         $('.js-titleMain').not(this).next().slideUp(200);
        $(this).next().slideToggle(200);
     });
+
+
+//help______________________________________________________________________________________________
+    $('.question').click(function () {
+    $(this).next().slideToggle(200);
 });
 
+});
 
