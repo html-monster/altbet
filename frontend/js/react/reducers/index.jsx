@@ -20,6 +20,10 @@ import accountSetting from './userPage/settingReducer';
 import registerBox from './registerReducer';
 import confirmRegisterPage from './confirmRegisterPageReducer';
 
+import GidxVerificationReducer from './GidxVerificationReducer.ts';
+import {Framework} from '../common/Framework.ts';
+
+
 
 let reducers = {};
 // export default combineReducers({
@@ -40,6 +44,13 @@ ABpp.CONSTS = constants;
 const common = {
 	registerBox,
 };
+
+const pressetStatic = () => {return{
+    App: appState,
+    header,
+    mainMenu,
+	registerBox,
+}};
 
 
 switch (ABpp.config.currentPage)
@@ -120,6 +131,15 @@ switch (ABpp.config.currentPage)
 		};
 		break;
 	}
+
+	case ABpp.CONSTS.PAGE_GIDX_VERIFICATION: {
+		reducers = {
+			...pressetStatic(),
+            gidxVerification: Framework.getHandler(GidxVerificationReducer),
+		};
+		break;
+	}
+
 	case ABpp.CONSTS.PAGE_ANSWER:{
 		reducers = {
 			App: appState,
