@@ -2,7 +2,7 @@
  * Created by Vlasakh on 22.12.2016.
  */
 
-
+/// <reference path="../../.d/common.d.ts" />
 
 export class DateLocalization
 {
@@ -15,10 +15,12 @@ export class DateLocalization
      */
     public fromSharp(inDate, inReturn = 1, props = {TZOffset: true})
     {
-        let retval ;
+        let retval, isNumber = defaultMethods.getType(inDate) === 'Number';
         try {
             // "/Date(1489287600000+0000)/"
-            retval = this.currentTimestamp = inDate.match(/(\d+)/i)[1] * 1;
+            if(isNumber) console.warn('date type is Number');
+
+            retval = this.currentTimestamp = isNumber ?  inDate : inDate.match(/(\d+)/i)[1] * 1;
 
             // time zone offset
             if (props.TZOffset) retval -= (new Date()).getTimezoneOffset() * 60 * 1000;

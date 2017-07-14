@@ -216,15 +216,15 @@ class OrderItem extends React.Component
 					ask={data.Symbol.LastAsk === 1 ? null : data.Symbol.LastAsk}
 					bid={data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid}
 					price={(data.Price).toFixed(2)}
-					priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.Symbol.StartDate)}
+					priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false})}
 					maxEntries={100}
 					minPrice={data.Price}
 					remainingBal={95}
 					quantity={data.Volume}
 					isMirror={data.isMirror}
 					symbol={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}
-					startDate={(new DateLocalization).fromSharp(data.Symbol.StartDate)}
-					endDate={data.Symbol.EndDate ? (new DateLocalization).fromSharp(data.Symbol.EndDate) : data.Symbol.EndDate}
+					startDate={(new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false})}
+					endDate={data.Symbol.EndDate ? (new DateLocalization).fromSharp(data.Symbol.EndDate, 1, {TZOffset: false}) : data.Symbol.EndDate}
 					ResultExchange={data.Symbol.ResultExchange}
 					newOrder={false}
 					showDeleteButton={false}

@@ -1,4 +1,4 @@
-.sign_up_form, .sign_in_form, #form2, .setting_form, .self_exclusion {
+.sign_up_form, .sign_in_form, .change_password, .setting_form, .self_exclusion {
 
   input[type=email] {
     &:-webkit-autofill {
@@ -114,12 +114,9 @@
     text-align: left;
     transition: opacity 0.3s;
     padding-left: 35px;
-    &:focus {
-      outline: none;
-    }
-    &#r_confirm_pass {
-      padding-left: 20px;
-    }
+    &:focus { outline: none; }
+    &[disabled]{ opacity: 0.4; }
+    &#r_confirm_pass { padding-left: 20px; }
 
     &.input-validation-error {
       color: #ff4810;
@@ -296,7 +293,7 @@
   }
 }
 
-#form2 {
+.change_password {
   display: flex;
   flex-direction: column;
   .input_animate {
