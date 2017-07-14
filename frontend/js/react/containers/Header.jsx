@@ -117,7 +117,7 @@ class Header extends React.Component
 
 
 				{ ABpp.User.isAuthorized() ? <a className="my_order btn wave waves-effect waves-button" href={globalData.Urls.MyActivity}>My Activity</a> : ''}
-				{ ABpp.User.isAuthorized() ? <a href={ABpp.baseUrl + '/eng/Account#/funds/deposit'} className="btn deposit wave waves-effect waves-button">Deposit</a> : ''}
+				{ ABpp.User.isAuthorized() ? <a href={ABpp.baseUrl + "/eng/Account/GidxWebCashierRegister?direction=Pay"} className="btn deposit wave waves-effect waves-button">Deposit</a> : ''}
 				{/*<button className="price_plan btn">Pricing Plans</button>*/}
 				{/*<DropBox className="odds_converter" name={name} items={this._setCurrOddItem([{key: 'Implied', val: 'Implied'}, {key: 'Decimal', val: 'Decimal'}, {key: 'American', val: 'American'}, {key: 'Fractional', val: 'Fractional'}])} hint="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Bettor" afterChoose={(props) => actions.changeOddSystem(props.val)} />*/}
 				<DropBox className="odds_converter" name={name} items={this._setCurrOddItem([{val: 'Implied'}, {val: 'Decimal'}, {val: 'American'}, {val: 'Fractional'}])} hint="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Player" afterChoose={(props) => actions.changeOddSystem(props.val)} />
