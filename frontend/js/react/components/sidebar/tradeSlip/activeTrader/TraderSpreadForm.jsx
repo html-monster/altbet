@@ -127,6 +127,13 @@ export default class TraderSpreadForm extends React.Component {
 	{
 		event.preventDefault();
 		const sum = ((1 - data.spreadPricePos) * data.quantity) + (data.spreadPriceNeg * data.quantity);
+		const endDate = this.props.cmpData.activeExchange.endDate;
+
+		if(endDate && moment().format('x') > endDate)
+		{
+			defaultMethods.showError('This game is closed, please try another');
+			return false;
+		}
 
 		if(sum > data.remainingBal)
 		{

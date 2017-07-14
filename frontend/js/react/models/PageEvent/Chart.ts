@@ -205,7 +205,7 @@ export class Chart
                 enabled: false
             },
             tooltip: {
-                enabled: false,
+                enabled: true,
                 valueDecimals: 2,
                 formatter: function ()
                 {

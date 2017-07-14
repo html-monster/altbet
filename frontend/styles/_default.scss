@@ -556,7 +556,7 @@ input ~ .info {
   }
   ul { display: none; position: absolute; width: 100%; max-height: 250px; border: 1px solid $user_page_tr_separate; border-top: none;
     border-radius: 4px; background: $active_selection_bg; box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.5); z-index: 2; overflow-y: auto;
-    @include scroll;
+    @include scrollWhite;
   }
   li { padding: 2px 35px 2px 10px; transition: 0.2s ease-out; cursor: pointer; @include user_page_li; }
   li:last-of-type{  border-bottom: none;  }
@@ -827,3 +827,6 @@ input ~ .info {
   &.animate2 { transform: translate(0, 2px); opacity: 1; }
 }
 
+#disqus_thread {
+  a { color: #f8b747; }
+}

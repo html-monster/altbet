@@ -35,6 +35,7 @@ class Settings extends React.Component
         const { Country, Address, Phone } = appData.pageAccountData.UserInfo;
 
 		const inputRender = ({ id, className, info, label, filled, inputLabel, meta: { error, dirty }, ...input }) => {
+
 			return  <span className={'input_animate input--yoshiko input--filled' + (filled ? ' input--filled' : '')}>
                         <input className={`input__field input__field--yoshiko ${className ? className : ''}
                          ${dirty && (error ? ' invalidJs' : ' validJs')}`} {...input}/>
@@ -70,7 +71,7 @@ class Settings extends React.Component
                                      initialValue={UserName}
                                      label={'User Name'} type={'text'} filled={UserName}
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20})]} input={input}
-                                     maxLength="20"/>
+                                     maxLength="20" disabled={true}/>
 
                     <InputValidation renderContent={inputRender} id={'user_b_day'} name="DateOfBirth"
                                      className={'datePickerJs'}
@@ -88,12 +89,12 @@ class Settings extends React.Component
                                      confirmation will be sent at that address. Also that address
                                      will be used for communication with you`}
                                      label={'Email Address'} type={'email'} filled={Email}
-                                     validate={[emptyValidation, mailValidation]} input={input}/>
+                                     validate={[emptyValidation, mailValidation]} input={input} disabled={true}/>
 
                     <InputValidation renderContent={inputRender} id={'c_name'} name="Country"
                                      initialValue={Country} info="Indicate the country of your permanent residence"
                                      label={'Country'} type={'text'} filled={Country}
-                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 128})]}
+                                     validate={[emptyValidation, lettersOnlyValidation, lengthValidation.bind(null, {min: 2, max: 128})]}
                                      input={input} maxLength="20"/>
 
                     <InputValidation renderContent={inputRender} id={'s_name'} name="Address"
@@ -128,6 +129,7 @@ class Settings extends React.Component
                     handleSubmit={actions.actionAjaxUserDataUpdate}
                     serverValidation={true}
                 />
+
                 <form action={`${ABpp.baseUrl}/Account/UploadImage`} encType="multipart/form-data" className="document_upload"
                 ref="uploadForm" style={{marginTop: 25}}>
                     <h3 className="section_user">Your files</h3>

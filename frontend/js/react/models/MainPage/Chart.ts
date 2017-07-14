@@ -119,7 +119,7 @@ export default class Chart
 
     public stopGenerator()
     {
-        this.Generator.cancel()
+        this.Generator.stopTimer()
     }
 
     public getType()
@@ -212,7 +212,7 @@ export default class Chart
                 enabled: false
             },
             tooltip: {
-                enabled: false,
+                enabled: true,
                 valueDecimals: 2,
                 formatter: function ()
                 {

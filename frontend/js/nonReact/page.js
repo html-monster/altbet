@@ -13,6 +13,7 @@ function _t(inStr) {
 // BM: for Discuss
 if (!globalData.landingPage && appData && appData.pageEventData) {
     try {
+        //is used by Discuss by default
         var disqus_config = function () {
             this.page.url = "http://" + location.host + appData.pageEventData.exchangeLink;  // Replace PAGE_URL with your page's canonical URL variable
             this.page.identifier = appData.pageEventData.SymbolsAndOrders.Symbol.Exchange; // Replace PAGE_IDENTIFIER with your page's unique identifier variable

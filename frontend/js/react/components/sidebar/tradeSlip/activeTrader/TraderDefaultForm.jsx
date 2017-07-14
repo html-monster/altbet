@@ -55,8 +55,8 @@ export default class TraderDefaultForm extends React.Component {
 					quantity={quantity}
 					isMirror={isMirror}
 					symbol={activeExchange.symbol}
-					//startDate={(new DateLocalization).fromSharp(activeExchange.StartDate)}
-					endDate={activeExchange.endDate ? (new DateLocalization).fromSharp(activeExchange.endDate) : activeExchange.endDate}
+					//startDate={(new DateLocalization).fromSharp(activeExchange.StartDate, 1, {TZOffset: false})}
+					endDate={activeExchange.endDate ? (new DateLocalization).fromSharp(activeExchange.endDate, 1, {TZOffset: false}) : activeExchange.endDate}
 					// ResultExchange={data.ResultExchange}
 					newOrder={true}
 					orderView={'simple'}
