@@ -1,5 +1,5 @@
 {
   "ignore": ["node_modules/**", "public/**", "vendor/**"],
   "presets": ["es2015", "stage-0", "react"],
-  "plugins": [["transform-class-properties", { "spec": "true" }], ["remove-comments"]]
+  "plugins": [["transform-class-properties", { "spec": "true" }], ["remove-comments"], ["react-html-attrs"]]
 }

@@ -14,7 +14,7 @@ export default class CategoryEdit extends BaseView
     public initCBIcon(inClasses)
     {
         var data = [];
-                //[{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
+
         for( let ii in inClasses )
         {
             let val = inClasses[ii];
@@ -22,7 +22,6 @@ export default class CategoryEdit extends BaseView
         } // endfor
         data.unshift({id: '-100', text: '- noicon -'});
 
-        // var tmpl = function
 
         $(".js-cb-icons").select2({
             data: data,

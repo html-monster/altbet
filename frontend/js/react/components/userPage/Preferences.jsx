@@ -56,7 +56,7 @@ export default class Preferences extends React.Component
 		{
 			if(error)
 			{
-				if(defaultMethods.getClass(error) === 'String')
+				if(defaultMethods.getType(error) === 'String')
 				{
 					this.setState({
 						...this.state,

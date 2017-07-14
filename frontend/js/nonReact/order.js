@@ -41,7 +41,7 @@ class orderClass{
 				}
 				tab.removeClass("active").eq($(this).index()).addClass("active");
 				$(".left_order .tab_item").hide().eq($(this).index()).show();
-			}).eq(0).addClass("active");
+			});//.eq(0).addClass("active");
 
 			$(window).resize(function () {
 				windowWidth = window.innerWidth;
@@ -58,7 +58,7 @@ class orderClass{
 
 		// order validation ============================================================================================
 		self.formValidation = function() {
-			let order = $('.order');
+			let order = $('#sidebar, #DiMPMainpage');
 
 			// order.on('submit','form', function () {
 			//
@@ -433,117 +433,117 @@ class orderClass{
 	}
 
 	// new order =========================================================================================================
-		static addOrder(container, button) {
-	$(container).on('click', button, function () {
-		// let html,
-		// 	data = {
-		// 		price: 0,
-		// 		volume: 0,
-		// 		buySum: 0,
-		// 		sellSum: 0,
-		// 		priceMarket: 0
-		// 	},
-		// 	currentID, inputFocus, order = [], self = $(this);
-		//
-		// data.price = $(this).find('.price').text().replace(/[^0-9.]+/g, "") || '0.';
-		// data.title = $(this).parents('.event-content').find('.title').text();
-		// let idDefine = () => $(this).parents('.event-content').attr('id') ? $(this).parents('.event-content').attr('id')
-		// 		: $(this).parents('.event-content').attr('data-symbol');
-		//
-		// currentID = idDefine();
-		// order.push(currentID, data.title);
-		//
-		// if((globalData.basicMode || $(this).hasClass('empty'))){
-		// 	data.volume = $(this).find('.volume').text();
-		// 	data.buySum = (data.price && data.volume) ? (data.price * data.volume).toFixed(2) : "";
-		// 	data.sellSum = (data.price && data.volume) ? ((1 - data.price) * data.volume).toFixed(2) : "";
-		// }
-		// else{
-		// 	let ii = $(this).index(),
-		// 			items = $(this).parent().children();
-		// 	if($(this).parent('.sell').length){
-		// 		data.sellSum = 0;
-		// 		for(ii; ii < items.length; ii++){
-		// 			data.volume += +$(this).parent().find('.event').eq(ii).find('.volume').text();
-		// 			data.sellSum +=  (1 - +$(this).parent().find('.event').eq(ii).find('.price').text().replace(/[^0-9.]+/g, "")) * +$(this).parent().find('.event').eq(ii).find('.volume').text();
-		// 		}
-		// 		data.sellSum = data.sellSum.toFixed(2);
-		// 		data.priceMarket = items.eq(items.length - 1).find('.price').text().replace(/[^0-9.]+/g, "");
-		// 	}
-		// 	else{
-		// 		data.buySum = 0;
-		// 		for(ii; ii > -1; ii--){
-		// 			data.volume += +$(this).parent().find('.event').eq(ii).find('.volume').text();
-		// 			data.buySum +=  +$(this).parent().find('.event').eq(ii).find('.price').text().replace(/[^0-9.]+/g, "") * +$(this).parent().find('.event').eq(ii).find('.volume').text();
-		// 		}
-		// 		data.buySum = data.buySum.toFixed(2);
-		// 		data.priceMarket = items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
-		// 	}
-		// }
-		//
-		// if (defaultMethods.searchValue(id, currentID) == -1) {
-		// 	id.push(order);
-		// 	if ($(this).parent('.sell').length) {
-		//
-		// 		if((globalData.basicMode || $(this).hasClass('empty')))
-		// 			html = orderClass.createOrderForm('sell', 'full', true, self, data);
-		// 		else
-		// 			html = orderClass.createOrderForm('sell', 'full', false, self, data);
-		// 	}
-		// 	else{
-		// 		if((globalData.basicMode|| $(this).hasClass('empty')))
-		// 			html = orderClass.createOrderForm('buy', 'full', true, self, data);
-		// 		else
-		// 			html = orderClass.createOrderForm('buy', 'full', false, self, data);
-		// 	}
-		// 	$('#order .default_orders').append(html);
-		// 	$('.order_content').fadeIn(400);
-		// 	if((globalData.basicMode|| $(this).hasClass('empty'))) {
-		// 		currentID = idDefine();
-		// 		inputFocus = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .price input');
-		// 	}
-		// 	else
-		// 	{
-		// 		currentID = idDefine();
-		// 		inputFocus = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .volume input');
-		// 	}
-		// 	inputFocus.focus();
-		// 	inputFocus[0].selectionStart = inputFocus.val().length;
-		// }
-		// else {
-		// 	let container;
-		// 	if ($(this).parent('.sell').length) {
-		// 		currentID = idDefine();
-		// 		container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .sell-container');
-		// 		if((globalData.basicMode|| $(this).hasClass('empty')))
-		// 			html = orderClass.createOrderForm('sell', null, true, self, data);
-		// 		else
-		// 			html = orderClass.createOrderForm('sell', null, false, self, data);
-		// 	}
-		// 	else {
-		// 		currentID = idDefine();
-		// 		container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .buy-container');
-		// 		if((globalData.basicMode|| $(this).hasClass('empty')))
-		// 			html = orderClass.createOrderForm('buy', null, true, self, data);
-		// 		else
-		// 			html = orderClass.createOrderForm('buy', null, false, self, data);
-		// 	}
-		// 	container.html(html);
-		// 	$('.order_content form').fadeIn(400);
-		// 	if((globalData.basicMode || $(this).hasClass('empty'))){
-		// 		inputFocus = container.find('.price input');
-		// 	}
-		// 	else{
-		// 		inputFocus = container.find('.volume input');
-		// 	}
-		// 	inputFocus.focus();
-		// 	inputFocus[0].selectionStart = inputFocus.val().length;
-		// }
+	static addOrder(container, button) {
+		// $(container).on('click', button, function () {
+			// let html,
+			// 	data = {
+			// 		price: 0,
+			// 		volume: 0,
+			// 		buySum: 0,
+			// 		sellSum: 0,
+			// 		priceMarket: 0
+			// 	},
+			// 	currentID, inputFocus, order = [], self = $(this);
+			//
+			// data.price = $(this).find('.price').text().replace(/[^0-9.]+/g, "") || '0.';
+			// data.title = $(this).parents('.event-content').find('.title').text();
+			// let idDefine = () => $(this).parents('.event-content').attr('id') ? $(this).parents('.event-content').attr('id')
+			// 		: $(this).parents('.event-content').attr('data-symbol');
+			//
+			// currentID = idDefine();
+			// order.push(currentID, data.title);
+			//
+			// if((globalData.basicMode || $(this).hasClass('empty'))){
+			// 	data.volume = $(this).find('.volume').text();
+			// 	data.buySum = (data.price && data.volume) ? (data.price * data.volume).toFixed(2) : "";
+			// 	data.sellSum = (data.price && data.volume) ? ((1 - data.price) * data.volume).toFixed(2) : "";
+			// }
+			// else{
+			// 	let ii = $(this).index(),
+			// 			items = $(this).parent().children();
+			// 	if($(this).parent('.sell').length){
+			// 		data.sellSum = 0;
+			// 		for(ii; ii < items.length; ii++){
+			// 			data.volume += +$(this).parent().find('.event').eq(ii).find('.volume').text();
+			// 			data.sellSum +=  (1 - +$(this).parent().find('.event').eq(ii).find('.price').text().replace(/[^0-9.]+/g, "")) * +$(this).parent().find('.event').eq(ii).find('.volume').text();
+			// 		}
+			// 		data.sellSum = data.sellSum.toFixed(2);
+			// 		data.priceMarket = items.eq(items.length - 1).find('.price').text().replace(/[^0-9.]+/g, "");
+			// 	}
+			// 	else{
+			// 		data.buySum = 0;
+			// 		for(ii; ii > -1; ii--){
+			// 			data.volume += +$(this).parent().find('.event').eq(ii).find('.volume').text();
+			// 			data.buySum +=  +$(this).parent().find('.event').eq(ii).find('.price').text().replace(/[^0-9.]+/g, "") * +$(this).parent().find('.event').eq(ii).find('.volume').text();
+			// 		}
+			// 		data.buySum = data.buySum.toFixed(2);
+			// 		data.priceMarket = items.eq(0).find('.price').text().replace(/[^0-9.]+/g, "");
+			// 	}
+			// }
+			//
+			// if (defaultMethods.searchValue(id, currentID) == -1) {
+			// 	id.push(order);
+			// 	if ($(this).parent('.sell').length) {
+			//
+			// 		if((globalData.basicMode || $(this).hasClass('empty')))
+			// 			html = orderClass.createOrderForm('sell', 'full', true, self, data);
+			// 		else
+			// 			html = orderClass.createOrderForm('sell', 'full', false, self, data);
+			// 	}
+			// 	else{
+			// 		if((globalData.basicMode|| $(this).hasClass('empty')))
+			// 			html = orderClass.createOrderForm('buy', 'full', true, self, data);
+			// 		else
+			// 			html = orderClass.createOrderForm('buy', 'full', false, self, data);
+			// 	}
+			// 	$('#order .default_orders').append(html);
+			// 	$('.order_content').fadeIn(400);
+			// 	if((globalData.basicMode|| $(this).hasClass('empty'))) {
+			// 		currentID = idDefine();
+			// 		inputFocus = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .price input');
+			// 	}
+			// 	else
+			// 	{
+			// 		currentID = idDefine();
+			// 		inputFocus = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .volume input');
+			// 	}
+			// 	inputFocus.focus();
+			// 	inputFocus[0].selectionStart = inputFocus.val().length;
+			// }
+			// else {
+			// 	let container;
+			// 	if ($(this).parent('.sell').length) {
+			// 		currentID = idDefine();
+			// 		container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .sell-container');
+			// 		if((globalData.basicMode|| $(this).hasClass('empty')))
+			// 			html = orderClass.createOrderForm('sell', null, true, self, data);
+			// 		else
+			// 			html = orderClass.createOrderForm('sell', null, false, self, data);
+			// 	}
+			// 	else {
+			// 		currentID = idDefine();
+			// 		container = $('#' + id[defaultMethods.searchValue(id, currentID)][0] + '__order .buy-container');
+			// 		if((globalData.basicMode|| $(this).hasClass('empty')))
+			// 			html = orderClass.createOrderForm('buy', null, true, self, data);
+			// 		else
+			// 			html = orderClass.createOrderForm('buy', null, false, self, data);
+			// 	}
+			// 	container.html(html);
+			// 	$('.order_content form').fadeIn(400);
+			// 	if((globalData.basicMode || $(this).hasClass('empty'))){
+			// 		inputFocus = container.find('.price input');
+			// 	}
+			// 	else{
+			// 		inputFocus = container.find('.volume input');
+			// 	}
+			// 	inputFocus.focus();
+			// 	inputFocus[0].selectionStart = inputFocus.val().length;
+			// }
 
-		orderClass.tabReturn();
-		// orderClass.showInfo();
-	});
-};
+			// orderClass.tabReturn();
+			// orderClass.showInfo();
+		// });
+	};
 
 	/**
 	 * формирует html ордера создоваемого

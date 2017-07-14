@@ -4,7 +4,7 @@
   &.balloon_only { position: relative;
     &:after{  display: none;  }
   }
-  @include md(1450){  right: 3px;  }
+  @include mdmax(1450){  right: 3px;  }
   &:after { content: ''; display: inline-block; position: absolute; left: 0; top: 0; width: 12px; height: 12px;
       background: $help_block; }
   //&:before { content: ''; display: block; position: absolute; right: 1px; bottom: -13px; width: 10px; height: 10px;

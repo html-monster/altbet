@@ -17,8 +17,13 @@ import BaseActions from '../../BaseActions';
 import {RebuildServerData} from './activeTrader/rebuildServerData';
 import { orderForm } from '../../../components/formValidation/validation';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
+/// <reference path="../../../../.d/common.d.ts" />
+declare let __DEV__;
+// declare function $(object: any);
+declare let defaultMethods;
 
-declare var orderClass;
+
+declare let orderClass;
 let initialStart = true;
 
 class Actions extends BaseActions
@@ -810,6 +815,45 @@ class Actions extends BaseActions
 		}
 	}
 
+	public footerMethodSendAjax(method, symbol)
+	{
+		return () =>
+		{
+			let url = `${globalData.rootUrl}Order/${method}`,
+				data = {
+					symbol
+				};
+
+			defaultMethods.sendAjaxRequest({
+				httpMethod: 'POST',
+				callback: onSuccessAjax,
+				onError: onErrorAjax,
+				url: url,
+				data: data});
+
+			function onSuccessAjax(data)
+			{
+				// if(__DEV__ && data) console.log('Relax... ajax was sent');
+				if(__DEV__)
+				{
+					if(data === 'success') console.info(`${method} has done`);
+					else
+					{
+						console.error(`Server ${method} method has finished with error`);
+						defaultMethods.showError(`Server error, try again later`);
+					}
+				}
+			}
+
+			function onErrorAjax(x, y)
+			{
+				__DEV__ && console.log('XMLHTTPRequest object: ', x);
+				__DEV__ && console.log('textStatus: ',  y);
+				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+			}
+		}
+	}
+
 	/**
 	 * на основе объекта с бэкенда формирует новый объект в формате ключ == price и добавляет side
 	 * @param inData
@@ -868,4 +912,5 @@ class Actions extends BaseActions
 		// console.log(980 - tbody.height() / 2);
 	}
 }
+
 export default (new Actions()).export();

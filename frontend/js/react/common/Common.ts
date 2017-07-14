@@ -148,4 +148,18 @@ export class Common
     {
         return haystack.some(vv => vv == needle);
     }
+
+
+    /**
+     * date difference
+     * @param inStart
+     * @param inEnd
+     * @return {Duration}
+     */
+    public static dateDiff(inStart, inEnd)
+    {
+        let dt2 = moment(inEnd);
+        return moment.duration(dt2.diff(moment(inStart)));
+        //duration.asYears()
+    }
 }

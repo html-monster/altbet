@@ -6,16 +6,13 @@ import AnimateOnUpdate from '../../Animation.jsx';
 import TraderDefaultForm from './activeTrader/TraderDefaultForm';
 import TraderSpreadForm from './activeTrader/TraderSpreadForm';
 import traderActions from '../../../actions/Sidebar/tradeSlip/traderActions';
-import * as defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderActions';
+import defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
 import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
+import { DateLocalization	 } from '../../../models/DateLocalization';
 // import RebuildServerData from '../../../actions/Sidebar/activeTrader/rebuildServerData';
 
-class ActiveTrader extends React.Component {
-	constructor()
-	{
-		super();
-	}
-
+class ActiveTrader extends React.Component
+{
 	componentDidMount()
 	{
 		this.props.traderActions.actionOnSocketMessage(this);
@@ -36,7 +33,7 @@ class ActiveTrader extends React.Component {
 		// 0||console.log( 'activeExchange', activeExchange );
 		// const { activeString, showDefaultOrder } = this.state;
 		const { data, ...info } = this.props;
-		const { activeExchangeSymbol, dragData: { popUpShow }, cmpData:{ activeExchange, traderOn, autoTradeOn }, isMirror, orderInfo:{...orderInfo},
+		const { activeExchangeSymbol, dragData: { popUpShow }, cmpData:{ activeExchange, traderOn, autoTradeOn, startDate }, isMirror, orderInfo:{...orderInfo},
 			rebuiltServerData, spread, showQuantityError, quantity, traderActions } = this.props;
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
@@ -63,35 +60,57 @@ class ActiveTrader extends React.Component {
 			:
 			(data.Symbol && data.Symbol.LastAsk) ? data.Symbol.LastAsk : '';
 
+        const currentDate = +moment().format('x');
+		// console.log('startDate:',(new DateLocalization).fromSharp(activeExchange.startDate) > currentDate);
+		// console.log('endDate:',activeExchange.endDate);
+		// console.log('endDate:',activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate) < currentDate);
+		// console.log('currentDate:',currentDate);
+        let blocked = false, blockMessage, userHasOrder = true;
+		if((new DateLocalization).fromSharp(activeExchange.startDate) > currentDate)
+		{
+			blocked = true;
+			blockMessage = 'This game has not started yet, please try again, once event is underway';
+		}
+		else if((activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate) < currentDate))
+		{
+			blocked = true;
+			blockMessage = 'This game is closed, try another';
+		}
+		else if(!userHasOrder)
+		{
+			blocked = true;
+			blockMessage = 'This game is closed, try another';
+		}
 
-		return <div className="active_trader" id="active_trader" style={traderOn ? {} : {display: 'none'}}
+
+		return <div className={'active_trader'} id="active_trader" style={traderOn ? {} : {display: 'none'}}
 					ref={'activeTrader'}
 					onClick={traderActions.actionHideDirectionConfirm}>
-			{
-				ABpp.config.currentPage === ABpp.CONSTS.PAGE_MAIN ?
-					<div className="event_title">
-						<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}
-							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>
-							{
-								activeExchange.homeName//JSON.stringify(data) !== '{}' && ${data.Symbol.HomeHandicap}
-							}
-						</div>
-						<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}
-							 onClick={traderActions.actionOnTabMirrorClick.bind(null, this, true)}>
-							{
-								activeExchange.awayName// JSON.stringify(data) !== '{}' && ${data.Symbol.AwayHandicap}
-							}
-						</div>
-					</div>
-					:
-					''
-			}
+			{/*{*/}
+				{/*ABpp.config.currentPage === ABpp.CONSTS.PAGE_MAIN ?*/}
+					{/*<div className="event_title">*/}
+						{/*<div className={'event_name' + (!activeExchange.isMirror ? ' active' : '')}*/}
+							 {/*onClick={traderActions.actionOnTabMirrorClick.bind(null, this, false)}>*/}
+							{/*{*/}
+								{/*activeExchange.homeName//JSON.stringify(data) !== '{}' && ${data.Symbol.HomeHandicap}*/}
+							{/*}*/}
+						{/*</div>*/}
+						{/*<div className={'event_name' + (activeExchange.isMirror ? ' active' : '')}*/}
+							 {/*onClick={traderActions.actionOnTabMirrorClick.bind(null, this, true)}>*/}
+							{/*{*/}
+								{/*activeExchange.awayName// JSON.stringify(data) !== '{}' && ${data.Symbol.AwayHandicap}*/}
+							{/*}*/}
+						{/*</div>*/}
+					{/*</div>*/}
+					{/*:*/}
+					{/*''*/}
+			{/*}*/}
 			<table className="info">
 				<tbody>
 					<tr>
 						<td className="open_pnl trader_info">
 							<a href="#">
-								P/L
+								W/L
 								<span className={'quantity ' + className}>{gainLoss}</span>
 								<span className="help"><span className="help_message right"><strong>Profit in this event</strong></span></span>
 							</a>
@@ -280,37 +299,37 @@ class ActiveTrader extends React.Component {
 					<tbody>
 						<tr>
 							<td className="reverse active">
-								<a href="#" className="ReverseAllJs wave">Reverse</a>
+								<button className="ReverseAllJs wave" onClick={this._footerBtnClick.bind(this)}>Reverse</button>
 								<div className="confirm_window animated">
 									<div className="container">
-										<span>Do you really want do it?</span>
+										<span>Do you really want Reverse?</span>
 										<div className="button_container">
-											<button className="btn wave yes">Yes</button>
-											<button className="btn wave no">No</button>
+											<button className="btn wave yes" onClick={this._footerMethodSubmit.bind(this, 'ReverseAll')}>Yes</button>
+											<button className="btn wave no" onClick={this._hideConfirmWindow}>No</button>
 										</div>
 									</div>
 								</div>
 							</td>
 							<td className="cancel_all active">
-								<a href="#" className="CancelAllJs wave">Cancel All</a>
+								<button className="CancelAllJs wave" onClick={this._footerBtnClick.bind(this)}>Cancel All</button>
 								<div className="confirm_window animated">
 									<div className="container">
-										<span>Do you really want do it?</span>
+										<span>Do you really want Cancel All?</span>
 										<div className="button_container">
-											<button className="btn wave yes">Yes</button>
-											<button className="btn wave no">No</button>
+											<button className="btn wave yes" onClick={this._footerMethodSubmit.bind(this, 'CancelAll')}>Yes</button>
+											<button className="btn wave no" onClick={this._hideConfirmWindow}>No</button>
 										</div>
 									</div>
 								</div>
 							</td>
 							<td className="close_out active">
-								<a href="#" className="CloseOutJs wave">Close Out</a>
+								<button className="CloseOutJs wave" onClick={this._footerBtnClick.bind(this)}>Close Out</button>
 								<div className="confirm_window animated">
 									<div className="container">
-										<span>Do you really want do it?</span>
+										<span>Do you really want Close Out?</span>
 										<div className="button_container">
-											<button className="btn wave yes">Yes</button>
-											<button className="btn wave no">No</button>
+											<button className="btn wave yes" onClick={this._footerMethodSubmit.bind(this, 'CloseOut')}>Yes</button>
+											<button className="btn wave no" onClick={this._hideConfirmWindow}>No</button>
 										</div>
 									</div>
 								</div>
@@ -395,7 +414,38 @@ class ActiveTrader extends React.Component {
 					</tbody>
 				</table>
 			</div>
+			{
+				blocked &&
+				<div className="blocked"><span className="animated dur4 zoomIn">{blockMessage}</span></div>
+			}
+			<div className="loading"/>
 		</div>
+	}
+
+	_footerBtnClick(event)
+	{
+		$(event.currentTarget).next('.confirm_window').removeClass('fadeOutDown').addClass('active fadeInUp');
+	}
+
+	_footerMethodSubmit(method, event)
+	{
+		event.stopPropagation();
+
+		// ajaxControlTraderClass.ajaxDataSender(method);
+		this.props.traderActions.footerMethodSendAjax(method, this.props.cmpData.activeExchange.symbol);
+
+		this._hideConfirmWindow(event);
+	}
+
+	_hideConfirmWindow(event)
+	{
+		let target = event.currentTarget;
+
+		$(target).parents('.confirm_window').removeClass('fadeInUp').addClass('fadeOutDown');
+
+		setTimeout(() => {
+			$(target).parents('.confirm_window').removeClass('active');
+		}, 500);
 	}
 }
 
@@ -546,7 +596,7 @@ class TraderString extends React.Component {
 						}
 					</span>
 				{
-					!!data.ParticularUserQuantityBuy ? <button className="close_red">{}</button> : ''
+					!!data.ParticularUserQuantityBuy ? <button className="delete_ord">{}</button> : ''
 				}
 			</td>
 
@@ -654,7 +704,7 @@ class TraderString extends React.Component {
 					}
 				</span>
 				{
-					!!data.ParticularUserQuantitySell ? <button className="close_red">{}</button> : ''
+					!!data.ParticularUserQuantitySell ? <button className="delete_ord">{}</button> : ''
 				}
 			</td>
 			<td>
@@ -687,6 +737,7 @@ class TraderString extends React.Component {
 								spread={spread}
 								isMirror={isMirror}
 								traderContext={traderContext}
+								// inputQuantityContext={inputQuantityContext}
 								{...other}
 								{...info}
 							/>

@@ -4,11 +4,11 @@ header {
   top: 0;
   z-index: 101;
   width: 100%;
-  min-width: 1250px;
+  min-width: 1350px;
   height: 70px;
   background: #292830;
   box-shadow: 0 6px 24px -5px rgba(0, 0, 0, 0.5);
-  @include md(1400) {
+  @include mdmax(1400) {
     button, a, .user-name {
       font-size: 14px;
     }
@@ -16,10 +16,15 @@ header {
       top: 6px;
     }
   }
+  @include mdmax(1350){
+    position: absolute;
 
-  // reconntct button
-  .reconnect .help_message {
-    top: 40px
+  }
+
+  // reconnect button
+  .reconnect{
+    margin-right: 10px;
+    .help_message { top: 40px }
   }
   .connect {
     display: none;
@@ -348,7 +353,7 @@ header {
         position: absolute;
         top: 55px;
         right: -19px;
-				z-index: -1;
+        z-index: 999;
         li {
           background: #292830;
           a, strong {

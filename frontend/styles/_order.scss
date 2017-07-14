@@ -1,674 +1,446 @@
-.order { @include span(last 2.6 of 12); position: fixed; right: 0; top: 70px; z-index: 99; min-width: 295px; height: 100%;
-      background: $order_sidebar_bg; transition: 0.4s ease-out;
-  @include wave;
-  label{
-    color: #000000;
-    font-size: 12px;
-    font-weight: 600;
+.order_content {
+  padding-bottom: 10px;
+  &:last-child {  border-bottom: none;  }
+  &.sell .my_order{
+    .order-title, .current-order-title{ background-color: #fff1f1; }
   }
-  .help_message{
-    width: 95px;
-    &.right:after{  right: 2px;  }
+  &.buy .my_order{
+    .order-title, .current-order-title{ background-color: #ebf7f9; }
   }
-  //.profit, .risk{
-  //  .help_message{  width: 166px;  left: -147px;  }
-  //}
-  .wrapper {  text-align: center;  margin-top: 10px;  }
-  .left_order > label {
-    padding-right: 20px;
-    @include checkbox_vertical;
-    position: absolute;
-    top: 53px;
-    left: 13px;
-    line-height: 1.6em;
-    span {
-      text-transform: capitalize;
-      font-size: 13px;
+  .order_container{ position: relative; border-bottom: 1px solid $order_sidebar_head_separator;
+    &:last-child{  border-bottom: none;  }
+    &:before{ content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 1px;
+      background: rgba(255, 255, 255, 0.1); }
+  }
+  .order_info { position: relative; padding: 0 5px 0 5px;
+    @include mdmax(1400){
+      padding: 0;
+      padding-left: 5px;
     }
-    &.trader .help_message{  width: 250px;  }
-    &.auto_trade{  left: auto; right: 15px;  }
+    &.buy{
+      background: linear-gradient(to bottom, transparentize(#64C9EF, 0.7), transparentize(#3498DA, 0.7));
+      @include order_sidebar_current_order_title_buy;
+    }
+    &.sell{
+      background: linear-gradient(to bottom, transparentize(#F88447, 0.9), transparentize(#EF4D22, 0.9));
+      @include order_sidebar_current_order_title_sell;
+    }
   }
-  .tabs {
+  .order-title{
+    padding: 5px 25px 5px 15px;
+    //@include scroll;
+    position: relative;
+    overflow: hidden;
+  }
+  .container{
     display: flex;
-    justify-content: center;
-    margin: 0 15px 35px;
-    border-radius: 4px;
-    //border: 1px solid #3498da;
-    .tab {
-      width: 50%;
-      height: 35px;
-      color: $order_sidebar_tab_color;
-      font-size: 14px;
-      line-height: 33px;
-      position: relative;
-      border: 1px solid $order_sidebar_tab_color;
-      border-radius: 4px 0 0 4px;
-      &.active {
-        background-image: $active_bg;
-        border: none;
-        color: $main_page_tab_color_active;
+    justify-content: space-between;
+    align-items: center;
+    &.close_btn div:last-of-type label{ width: calc(100% - 18px); }
+  }
+  h3{
+    //max-width: calc(100% - 115px);
+    font-size: 13px;
+    vertical-align: middle;
+    color: transparentize(#ffffff, 0.2);
+  }
+  .timestamp{
+    font-size: 10px;
+    &:before{  right: 9px;  }
+    .time{  color: $order_sidebar_current_order_title_color;  }
+    .help_message{ width: 160px; right: 4px; top: 25px; }
+  }
+  .info_string{
+    color: #ffffff;
+    span{  color: $color-green  }
+  }
+  //.close{
+  //  float: right;
+  //  margin-top: 4px;
+  //  margin-right: 2px;
+  //  height: 16px;
+  //  width: 16px;
+  //  position: relative;
+  //  //border-radius: 50%;
+  //  //border: 1px solid #fff;
+  //  &:hover{
+  //    &:before, span:before{  transform: rotate(90deg);  }
+  //    &:after, span:after{  transform: rotate(-90deg);  }
+  //    //&:before{  transform: rotate(135deg);  }
+  //    //&:after{  transform: rotate(45deg);  }
+  //    //span{
+  //    //  &:before{  transform: rotate(135deg);  }
+  //    //  &:after{  transform: rotate(45deg);  }
+  //    //}
+  //  }
+  //  &:before, &:after, span:before, span:after{
+  //    content: '';
+  //    display: block;
+  //    width: 4px;
+  //    height: 12px;
+  //    position: absolute;
+  //    top: calc(50% - 6px);
+  //    left: calc(50% - 2px);
+  //    background: #fff;
+  //    border-radius: 2px;
+  //    transition: 0.4s ease-out;
+  //  }
+  //  &:before{  transform: rotate(45deg);  }
+  //  &:after{  transform: rotate(-45deg);  }
+  //  span{
+  //    display: block;
+  //    height: 100%;
+  //    &:before, &:after{
+  //      width: 2px;
+  //      height: 10px;
+  //      top: calc(50% - 5px);
+  //      left: calc(50% - 1px);
+  //      background: #292830;
+  //      z-index: 2;
+  //    }
+  //    &:before{  transform: rotate(45deg);  }
+  //    &:after{  transform: rotate(-45deg);  }
+  //  }
+  //}
+  strong { display: inline-block; font-size: 12px; line-height: 23px; letter-spacing: 0.2px;
+    color: transparentize($order_sidebar_current_order_title_color, 0.5);
+    &.amount { width: 60px; text-align: center }
+    &.qty { width: calc(100% - 204px); text-align: center }
+    &.dt { width: 80px }
+    &.current-order { padding: 0; color: transparentize(#ffffff, 0.2);
+      //&.up span{  color: #3498da;  }
+      //&.down span{  color: #ef4d22;  }
+      &.pos span{ color: #bab500; }
+    }
+    &.last-price { position: absolute; right: 70px; top: calc(50% - 11px);
+      &:before{ content: ''; display: inline-block; width: 9px; height: 9px; vertical-align: middle;
+        background: url("#{$pathImage}/sprite.svg") no-repeat; }
+      &.up { color: #1196d4;
+        &:before{ margin-top: -2px; background-position: -234px -155px; }
       }
-      &.divide{ @include order_sidebar_tab_separator; }
-      &:last-child {
-        //&.active{  border-left: 1px solid #445b69;  }
-        border-radius: 0 4px 4px 0;
-        border-left: none;
+      &.down { color: #ef4d22;
+        &:before { background-position: -234px -135px; }
       }
     }
+    .price, .volume { color: $order_sidebar_current_order_title_color; font-family: 'open_sans_bold', sans-serif; }
   }
-  .tab_content {
-    margin-top: 5px;
-    text-align: left;
-    //max-height: 700px;
-    //box-shadow: inset 0 -8px 20px -8px rgba(0, 0, 0, 0.3);
-    //border-top: 1px solid #f1f1f1;
-    //border-bottom: 1px solid #f1f1f1;
+  .button_container{
+    display: flex;
+    justify-content: flex-end;
+    width: 44px;
+  }
+  .edit, .delete{
+    //display: flex;
+    //align-items: center;
+    //justify-content: center;
+    width: 22px;
+    height: 30px;
+    padding: 0;
+    border-radius: 0;
+    //position: absolute;
+    //top: 0;
+    cursor: pointer;
     transition: 0.4s ease-out;
     position: relative;
-    &.footer_active:before{  bottom: -9px;  }
+    background: none;
+    &:hover{  background-color: rgba(0, 0, 0, 0.1);  }
+    &:active{  background-color: rgba(255, 255, 255, 0.5);  }
+    &:after{ content: ''; display: block; width: 13px; height: 14px; position: absolute; top: calc(50% - 6px); left: calc(50% - 7px); }
   }
-  .tab_item {
-    display: none;
-    padding-bottom: 80px;
-    overflow-x: hidden;
-    @include scroll;
-    transition: 0.4s ease-out;
-    &:first-child {
-      display: block;
-    }
-    .default_orders, &#current-orders{  border-top: 1px solid $order_sidebar_head_separator;  }
-    .default_order_info{
-      padding: 10px 15px;
-      font-size: 14px;
-      color: #b1b1b1;
-      text-transform: lowercase;
-      &::first-letter{  text-transform: uppercase;  }
-    }
-    &#current-orders{
-      overflow-y: auto;
-      .order_content{
-        &:last-child{  padding: 0;  }
-        &.ui-sortable-handle .order-title{  cursor: move;  }
-        .order-title{
-          padding: 5px 10px 5px 15px;
-          background: linear-gradient(to bottom, #53515e, #292830);
-          @include md(1400){  padding: 5px;  }
-        }
-        form input[type="submit"]{  border-left: none;  }
-        //.container .obligations label{  width: 100%;  }
-        .close{
-          margin: 0;
-          position: absolute;
-          top: calc(50% - 8px);
-          right: 1px;
-        }
-      }
-
+  .price, .volume{ //.risk, .profit{
+    flex-grow: 1;
+    input.number[disabled]{  border-right: 1px solid $order_sidebar_order_border_color;  }
+  }
+  .fees{
+    margin-top: -10px; //position: absolute; right: 4px; top: 57px;
+    .info_string{ font-size: 9px; line-height: 26px; color: gray;
+      span{ color: gray; }
     }
   }
-  .default_orders{
-    .order_content .order-title{
-      display: flex;
-      justify-content: space-between;
-      background: linear-gradient(to bottom, #53515e, #292830);
-      position: relative;
-      h3, .current-order{ color: #ffffff; }
-      h3{  line-height: 20px;  }
-      //strong.last-price{  margin-top: 0;  }
-      .current-order{ min-width: 75px; text-align: right; }
-      .close{
-        height: 24px;
-        margin-right: 0;
-        position: absolute;
-        top: 4px;
-        right: 1px;
-        cursor: pointer;
-      }
+  .conditions{ flex-direction: column; align-items: flex-start; padding: 5px 10px;
+    .info_string{ font-size: 10px;
+      span{ color: $color-orange; }
     }
   }
-  .ui-state-highlight{
-    height: 100px;
-    margin-bottom: 15px;
-    border: 1px dashed #fcefa1;
-    //animation-name: pulse;
-    //animation-duration: 0.5s;
-    //animation-fill-mode: both;
+  .edit{
+    //right: 22px;
+    &:after{  background: $order_sidebar_order_edit;  }
   }
-  .spread_confirm{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5;
-    transition: 0.4s ease-out;
-    .sell, .buy{
-      display: block;
-      width: 1%;
-      height: 100%;
-      color: #ffffff;
-      text-align: center;
-      @include btn-hover;
-      position: absolute;
-      top: 0;
-      padding: 0;
-      transition: 0.4s ease-out;
-      overflow: hidden;
-      opacity: 0;
-    }
-    .sell{
-      left: calc(100% + 1px);
-      background: linear-gradient(to bottom, #f88447, #ef4d22);
-    }
-    .buy{
-      right: calc(100% + 1px);
-      background: linear-gradient(to bottom, #64c9ef, #3498da);
-    }
-    &.active{
-      //span.confirm_button{
-      //  border: 1px solid $order_sidebar_order_border_color;
-      //}
-      .sell, .buy{
-        width: 100%;
-        //height: calc(100% + 2px);
-        //transform: scaleX(100);
-        padding: 0 5px;
-        //top: -1px;
-        top: 0;
-        opacity: 1;
-      }
-      //.sell{  width: calc(100% + 3px);  }
-    }
-  }
-  .order_content {
-    padding-bottom: 10px;
-    &:last-child {  border-bottom: none;  }
-    &.sell .my_order{
-      .order-title, .current-order-title{ background-color: #fff1f1; }
-    }
-    &.buy .my_order{
-      .order-title, .current-order-title{ background-color: #ebf7f9; }
-    }
-    .order_container{ position: relative; border-bottom: 1px solid $order_sidebar_head_separator;
-      &:last-child{  border-bottom: none;  }
-      &:before{ content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 1px;
-          background: rgba(255, 255, 255, 0.1); }
-    }
-    .order_info { position: relative; padding: 0 5px 0 5px;
-      @include md(1400){
-        padding: 0;
-        padding-left: 5px;
-      }
-      &.buy{
-        background: linear-gradient(to bottom, transparentize(#64C9EF, 0.7), transparentize(#3498DA, 0.7));
-        @include order_sidebar_current_order_title_buy;
-      }
-      &.sell{
-        background: linear-gradient(to bottom, transparentize(#F88447, 0.9), transparentize(#EF4D22, 0.9));
-        @include order_sidebar_current_order_title_sell;
-      }
-    }
-    .order-title{
-      padding: 5px 20px 5px 15px;
-      //@include scroll;
-      position: relative;
-      overflow: hidden;
-    }
-    .container{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      &.close_btn div:last-of-type label{ width: calc(100% - 18px); }
-    }
-    h3{
-      //max-width: calc(100% - 115px);
-      font-size: 13px;
-      vertical-align: middle;
-      color: transparentize(#ffffff, 0.2);
-    }
-    .timestamp{
-      font-size: 10px;
-      &:before{  right: 9px;  }
-      .time{  color: $order_sidebar_current_order_title_color;  }
-      .help_message{ width: 160px; right: 4px; top: 25px; }
-    }
-    .info_string{
-      color: #ffffff;
-      span{  color: $color-green  }
-    }
-    //.close{
-    //  float: right;
-    //  margin-top: 4px;
-    //  margin-right: 2px;
-    //  height: 16px;
-    //  width: 16px;
-    //  position: relative;
-    //  //border-radius: 50%;
-    //  //border: 1px solid #fff;
-    //  &:hover{
-    //    &:before, span:before{  transform: rotate(90deg);  }
-    //    &:after, span:after{  transform: rotate(-90deg);  }
-    //    //&:before{  transform: rotate(135deg);  }
-    //    //&:after{  transform: rotate(45deg);  }
-    //    //span{
-    //    //  &:before{  transform: rotate(135deg);  }
-    //    //  &:after{  transform: rotate(45deg);  }
-    //    //}
-    //  }
-    //  &:before, &:after, span:before, span:after{
-    //    content: '';
-    //    display: block;
-    //    width: 4px;
-    //    height: 12px;
-    //    position: absolute;
-    //    top: calc(50% - 6px);
-    //    left: calc(50% - 2px);
-    //    background: #fff;
-    //    border-radius: 2px;
-    //    transition: 0.4s ease-out;
-    //  }
-    //  &:before{  transform: rotate(45deg);  }
-    //  &:after{  transform: rotate(-45deg);  }
-    //  span{
-    //    display: block;
-    //    height: 100%;
-    //    &:before, &:after{
-    //      width: 2px;
-    //      height: 10px;
-    //      top: calc(50% - 5px);
-    //      left: calc(50% - 1px);
-    //      background: #292830;
-    //      z-index: 2;
-    //    }
-    //    &:before{  transform: rotate(45deg);  }
-    //    &:after{  transform: rotate(-45deg);  }
-    //  }
-    //}
-    strong { display: inline-block; font-size: 12px; line-height: 23px; letter-spacing: 0.2px;
-          color: transparentize($order_sidebar_current_order_title_color, 0.5);
-      &.amount { width: 60px; text-align: center }
-      &.qty { width: calc(100% - 204px); text-align: center }
-      &.dt { width: 80px }
-      &.current-order { padding: 0; color: transparentize(#ffffff, 0.2);
-        &.up span{  color: #3498da;  }
-        &.down span{  color: #ef4d22;  }
-      }
-      &.last-price { position: absolute; right: 70px; top: calc(50% - 11px);
-        &:before{ content: ''; display: inline-block; width: 9px; height: 9px; vertical-align: middle;
-            background: url("#{$pathImage}/sprite.svg") no-repeat; }
-        &.up { color: #1196d4;
-          &:before{ margin-top: -2px; background-position: -234px -155px; }
-        }
-        &.down { color: #ef4d22;
-          &:before { background-position: -234px -135px; }
-        }
-      }
-      .price, .volume { color: $order_sidebar_current_order_title_color; font-family: 'open_sans_bold', sans-serif; }
-    }
-    .button_container{
-      display: flex;
-      width: 44px;
-    }
-    .edit, .delete{
-      //display: flex;
-      //align-items: center;
-      //justify-content: center;
-      width: 22px;
-      height: 30px;
-      padding: 0;
-      border-radius: 0;
-      //position: absolute;
-      //top: 0;
-      cursor: pointer;
-      transition: 0.4s ease-out;
-      position: relative;
-      background: none;
-      &:hover{  background-color: rgba(0, 0, 0, 0.1);  }
-      &:active{  background-color: rgba(255, 255, 255, 0.5);  }
-      &:after{
-        content: '';
-        display: block;
-        width: 13px;
-        height: 14px;
-        position: absolute;
-        top: calc(50% - 6px);
-        left: calc(50% - 7px);
-      }
-    }
-    .price, .volume, .risk, .profit{
-      flex-grow: 1;
-      input.number[disabled]{  border-right: 1px solid $order_sidebar_order_border_color;  }
-    }
-    .fees{
-      position: absolute; right: 4px; bottom: 32px;
-      .info_string{
-        font-size: 9px;
-        line-height: 26px;
-        color: gray;
-        span{ color: gray; }
-      }
-    }
-    .edit{
-      //right: 22px;
-      &:after{  background: $order_sidebar_order_edit;  }
-    }
+  .button_container, .sell-buy-container{
     .delete{
       //right: 0;
       &:after{  background: $order_sidebar_order_delete;  }
     }
-    .pop_up{  position: absolute;  background: rgba(0, 0, 0, 0.5); }
-    .confirmation{
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  }
+  .pop_up{  position: absolute;  background: rgba(0, 0, 0, 0.5); }
+  .confirmation{ display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; position: absolute;
+    top: 0; left:0; background: rgba(0, 0, 0, 0.65); border: 1px dashed #9b9b9b; cursor: default; transition: 0.4s ease-out;
+
+    button{ width: 68px; height: 25px; margin: 0 5px; border-radius: 6px; line-height: 18px; font-size: 12px; font-weight: 600;
+      &.no{ color: #211e25; background-image: linear-gradient(to top, #bdc0cd, #ffffff); }
+      &.yes{ background-image: linear-gradient(to bottom, #f8b747, #ef8022); } }
+  }
+  //.error_pop_up {
+  //  display: none;
+  //  height: 100%;
+  //  padding: 10px;
+  //  position: absolute;
+  //  top: 0;
+  //  left: 100%;
+  //  z-index: 6;
+  //  color: #ef4d22;
+  //  background: rgba(0, 0, 0, 0.8);
+  //  &.active{
+  //    display: block;
+  //    left: 0;
+  //    animation-duration: 0.7s;
+  //    animation-fill-mode: both;
+  //  }
+  //  .container{
+  //    display: flex;
+  //    align-items: center;
+  //    justify-content: center;
+  //    height: 100%;
+  //  }
+  //  .close{
+  //    width: 16px;
+  //    height: 16px;
+  //    position: absolute;
+  //    top: 1px;
+  //    right: 1px;
+  //  }
+  //}
+  .sell-container form{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));  }
+  .buy-container form{  background: linear-gradient(to bottom, transparentize(#64c9ef, 0.9), transparentize(#3498da, 0.9));  }
+  .sell-buy-container form{
+    background: linear-gradient(to left, transparentize(#ef4d22, 0.9), transparentize(#3498da, 0.9));
+    .price, .volume{  width: 40%;  }
+    .success, .delete{
+      width: 20% !important;
+      height: 58px !important;
+    }
+    .delete{
+      &:hover{  background: $trader_order_button_hover;  }
+      &:active{  background: $trader_order_button_active;  }
+      box-shadow: none;
+      border-bottom: none;
+    }
+    .success{
+      position: relative;
+      &:after{
+        content: '';
+        display: block;
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        top: calc(50% - 12px);
+        left: calc(50% - 12px);
+        background: url("#{$pathImage}/sprite.svg") $trader_button_success no-repeat;
+      }
+    }
+    .success_btn{
       width: 100%;
       height: 100%;
-      position: absolute;
-      top: 0;
-      left:0;
-      background: rgba(0, 0, 0, 0.65);
-      border: 1px dashed #9b9b9b;
-      cursor: default;
-      transition: 0.4s ease-out;
-      button{
-        width: 68px;
-        height: 25px;
-        margin: 0 5px;
-        border-radius: 6px;
-        line-height: 18px;
-        font-size: 12px;
-        font-weight: 600;
-        &.no{
-          color: #211e25;
-          background-image: linear-gradient(to top, #bdc0cd, #ffffff);
-        }
-        &.yes{
-          background-image: linear-gradient(to bottom, #f8b747, #ef8022);
-        }
+      box-shadow: none;
+      //border-top: 1px solid $order_sidebar_order_border_color;
+      background: transparent;
+      &:hover{  background: $trader_order_button_hover;  }
+      &:active{
+        box-shadow: none !important;
+        background: $trader_order_button_active;
       }
-    }
-    //.error_pop_up {
-    //  display: none;
-    //  height: 100%;
-    //  padding: 10px;
-    //  position: absolute;
-    //  top: 0;
-    //  left: 100%;
-    //  z-index: 6;
-    //  color: #ef4d22;
-    //  background: rgba(0, 0, 0, 0.8);
-    //  &.active{
-    //    display: block;
-    //    left: 0;
-    //    animation-duration: 0.7s;
-    //    animation-fill-mode: both;
-    //  }
-    //  .container{
-    //    display: flex;
-    //    align-items: center;
-    //    justify-content: center;
-    //    height: 100%;
-    //  }
-    //  .close{
-    //    width: 16px;
-    //    height: 16px;
-    //    position: absolute;
-    //    top: 1px;
-    //    right: 1px;
-    //  }
-    //}
-    .sell-container form{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#ef4d22, 0.9));  }
-    .buy-container form{  background: linear-gradient(to bottom, transparentize(#64c9ef, 0.9), transparentize(#3498da, 0.9));  }
-    .sell-buy-container form{
-      background: linear-gradient(to left, transparentize(#ef4d22, 0.9), transparentize(#3498da, 0.9));
-      .price, .volume{  width: 40%;  }
-      .success, .delete{
-        width: 20% !important;
-        height: 58px !important;
-      }
-      .delete{
-        &:hover{  background: $trader_order_button_hover;  }
-        &:active{  background: $trader_order_button_active;  }
-        box-shadow: none;
-        border-bottom: none;
-      }
-      .success{
-        position: relative;
-        &:after{
-          content: '';
-          display: block;
-          width: 24px;
-          height: 24px;
-          position: absolute;
-          top: calc(50% - 12px);
-          left: calc(50% - 12px);
-          background: url("#{$pathImage}/sprite.svg") $trader_button_success no-repeat;
-        }
-      }
-      .success_btn{
-        width: 100%;
-        height: 100%;
-        box-shadow: none;
-        //border-top: 1px solid $order_sidebar_order_border_color;
-        background: transparent;
-        &:hover{  background: $trader_order_button_hover;  }
-        &:active{
-          box-shadow: none !important;
-          background: $trader_order_button_active;
-        }
-      }
-    }
-    //
-    //input[id='usd_uah'] {
-    //  width: 90%;
-    //  height: 31px;
-    //  border: 2px solid #d7d7d8;
-    //  border-radius: 5px;
-    //  padding-left: 10px;
-    //  color: #707070;
-    //  font-weight: bold;
-    //  margin-bottom: 10px;
-    //}
-    form {
-      text-align: center;
-      position: relative;
-      .container{
-        &:first-of-type{  border-top: 1px solid $order_sidebar_order_border_color;  }
-        //&:last-of-type{  position: relative;  }
-        border-bottom: 1px solid $order_sidebar_order_border_color;
-        &.info{  justify-content: center;  }
-        //div:nth-of-type(1) label, div:nth-of-type(2) label{  border-left: none;  }
-        //div:nth-of-type(3) label{  border-left: none;  border-right: none;  }
-      }
-      .input{
-        width: 100%;
-        text-align: left;
-        //background: $color-max;
-        input{
-          width: calc(100% - 18px);
-          //padding-right: 10px;
-          font-size: 14px;
-          &[disabled]{  width: 100%;  }
-        }
-      }
-      .col-3 .btn{  display: inline-block;  width: 46%;  background-size: 18px;  vertical-align: bottom;  }
-      .cancel{  background: url("#{$pathImage}/ico-delete.png") no-repeat center;  }
-
-      label:not(.checkbox){
-        display: block;
-        width: 100%;
-        padding: 4px 0;
-        color: $order_sidebar_order_label_color;
-        font-weight: 600;
-        text-align: center;
-        border-bottom: 1px solid $order_sidebar_order_border_color;
-        border-right: 1px solid $order_sidebar_order_border_color;
-        position: relative;
-        &.with_info{  padding-right: 15px;  }
-      }
-      //.obligations label{  width: calc(100% - 18px);  }
-
-      input {
-        height: 31px;
-        //padding-left: 10px;
-        text-align: center;
-        @include order_sidebar_order_input;
-      }
-      //label.checkbox{
-      //  display: block;
-      //  width: 33.33%;
-      //  height: 31px;
-      //  color: #707070;
-      //  line-height: 31px;
-      //  text-align: left;
-      //  border-top: 1px solid $order_sidebar_order_border_color;
-      //  border-right: 1px solid $order_sidebar_order_border_color;
-      //  @include checkbox_vertical;
-      //  padding-left: calc(6% + 25px);
-      //  &>span{
-      //    color: $checkbox_label_color;
-      //    &:before{  left: calc(6% + 16px); background: #4dac2e; transition: 0.4s ease-out;  }
-      //    &:after{  left: calc(6% + 17px);  }
-      //  }
-      //  input:checked ~ span{
-      //    &:before{  background: #ef8022;  }
-      //  }
-      //}
-      //.switch{
-      //  width: 33.33%;
-      //  height: 31px;
-      //  border-top: 1px solid $order_sidebar_order_border_color;
-      //  border-right: 1px solid $order_sidebar_order_border_color;
-      //  label.checkbox{
-      //    width: 100%;
-      //    //padding-left: calc(6% + 25px);
-      //    padding: 0;
-      //    border: none;
-      //    text-align: center;
-      //    span{
-      //      display: inline-block;
-      //      width: 45px;
-      //      position: relative;
-      //      &:before{
-      //        left: -20px;
-      //      }
-      //      &:after{
-      //        left: -19px;
-      //      }
-      //    }
-      //  }
-      //}
-      //span.close{
-      //  width: 18px;
-      //  height: 27px;
-      //  position: absolute;
-      //  top: 0;
-      //  right: 0;
-      //  background: none;
-      //}
-      .delete{
-        display: flex;
-        width: 18px;
-        height: 28px;
-        position: absolute;
-        top: 0;
-        right: 0;
-        cursor: pointer;
-        border-bottom: 1px solid $order_sidebar_order_border_color;
-      }
-      button {
-        height: 31px;
-        font-size: 14px;
-        &.sell{  background-color: #ff4444;  }
-        &.buy{  background-color: #2dc7ca;  }
-        //&.success{  background: url("#{$pathImage}/ico-success-w.png") no-repeat center #969696;  }
-      }
-      i.submit{
-        display: block;  flex-grow: 1;  border-radius: 0;
-        &:hover{  overflow: inherit !important;  }
-        &:active{
-          overflow: hidden !important;
-          .help_message{  visibility: hidden; }
-        }
-        &:first-of-type{
-          border-right: 1px solid $order_sidebar_order_border_color;
-          //.amount{
-          //  float: right;
-          //  border-left: 1px solid #fff;
-          //}
-        }
-        //.help_message{
-        //  t
-        //}
-        //.amount{  border-left: 1px solid #fff;  }
-        //&:last-of-type .amount{
-        //  float: left;
-        //  border-right: 1px solid #fff;
-        //}
-      }
-      input[type=submit], button.submit{
-        width: 100%;
-        height: 31px;
-        padding: 0;
-        font-size: 12px;
-        color: #ffffff;
-        //border: 1px solid $order_sidebar_order_border_color;
-        border-bottom: none;
-        border-left: none;
-        border-radius: 0;
-        cursor: pointer;
-        transition: 0.4s ease-out;
-        &.sell{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
-        &.buy{  background: linear-gradient(to bottom, #64c9ef, #3498da);  }
-      }
-      .amount{
-        float: right;
-        padding: 0 10px;
-        border-left: 1px solid #fff;
-        .help_message{
-          width: 150px;
-          top: 24px;
-          &.right{  left: auto; right: -20px;  }
-        }
-      }
-      //.help.amount{
-      //  position: absolute;
-      //  top: calc(50% - 9px);
-      //  z-index: 1;
-      //  font-size: 12px;
-      //  color: transparent;
-      //  cursor: pointer;
-      //  user-select: none;
-      //  &.right{  right: 10px;  }
-      //  &.left{  right: calc(50% + 11px);  }
-      //}
     }
   }
-  .my_order{
-    .form-container{
-      display: none;
-      margin-bottom: 10px;
-      form{
-        margin: 0;
-        text-align: center;
-        &.sell{  background: linear-gradient(to bottom, transparentize(#f88447, 0.9), transparentize(#EF4D22, 0.9));  }
-        &.buy{  background: linear-gradient(to bottom, transparentize(#64C9EF, 0.9), transparentize(#3498DA, 0.9));  }
+  //
+  //input[id='usd_uah'] {
+  //  width: 90%;
+  //  height: 31px;
+  //  border: 2px solid #d7d7d8;
+  //  border-radius: 5px;
+  //  padding-left: 10px;
+  //  color: #707070;
+  //  font-weight: bold;
+  //  margin-bottom: 10px;
+  //}
+  form {
+    text-align: center;
+    position: relative;
+    .container{
+      &:first-of-type{  border-top: 1px solid $order_sidebar_order_border_color;  }
+      //&:last-of-type{  position: relative;  }
+      &:not(.info) { border-bottom: 1px solid $order_sidebar_order_border_color; }
+      &.info{ flex-direction: column; justify-content: center;  }
+      //div:nth-of-type(1) label, div:nth-of-type(2) label{  border-left: none;  }
+      //div:nth-of-type(3) label{  border-left: none;  border-right: none;  }
+    }
+    .input{
+      width: 100%;
+      text-align: left;
+      //background: $color-max;
+      input{
+        width: calc(100% - 18px);
+        //padding-right: 10px;
+        font-size: 14px;
+        &[disabled]{  width: 100%;  }
       }
-      //p.label{
-      //  padding-left: 5px;
-      //  font-size: 14px;
-      //  color: #666666;
-      //  text-align: left;
+    }
+    .col-3 .btn{  display: inline-block;  width: 46%;  background-size: 18px;  vertical-align: bottom;  }
+    .cancel{  background: url("#{$pathImage}/ico-delete.png") no-repeat center;  }
+
+    label:not(.checkbox){
+      display: block;
+      width: 100%;
+      padding: 4px 0;
+      color: $order_sidebar_order_label_color;
+      font-weight: 600;
+      font-size: 12px;
+      text-align: center;
+      border-bottom: 1px solid $order_sidebar_order_border_color;
+      border-right: 1px solid $order_sidebar_order_border_color;
+      position: relative;
+      &.with_info{  padding-right: 15px;  }
+    }
+    //.obligations label{  width: calc(100% - 18px);  }
+
+    input {
+      height: 31px;
+      //padding-left: 10px;
+      text-align: center;
+      @include order_sidebar_order_input;
+    }
+    //label.checkbox{
+    //  display: block;
+    //  width: 33.33%;
+    //  height: 31px;
+    //  color: #707070;
+    //  line-height: 31px;
+    //  text-align: left;
+    //  border-top: 1px solid $order_sidebar_order_border_color;
+    //  border-right: 1px solid $order_sidebar_order_border_color;
+    //  @include checkbox_vertical;
+    //  padding-left: calc(6% + 25px);
+    //  &>span{
+    //    color: $checkbox_label_color;
+    //    &:before{  left: calc(6% + 16px); background: #4dac2e; transition: 0.4s ease-out;  }
+    //    &:after{  left: calc(6% + 17px);  }
+    //  }
+    //  input:checked ~ span{
+    //    &:before{  background: #ef8022;  }
+    //  }
+    //}
+    //.switch{
+    //  width: 33.33%;
+    //  height: 31px;
+    //  border-top: 1px solid $order_sidebar_order_border_color;
+    //  border-right: 1px solid $order_sidebar_order_border_color;
+    //  label.checkbox{
+    //    width: 100%;
+    //    //padding-left: calc(6% + 25px);
+    //    padding: 0;
+    //    border: none;
+    //    text-align: center;
+    //    span{
+    //      display: inline-block;
+    //      width: 45px;
+    //      position: relative;
+    //      &:before{
+    //        left: -20px;
+    //      }
+    //      &:after{
+    //        left: -19px;
+    //      }
+    //    }
+    //  }
+    //}
+    //span.close{
+    //  width: 18px;
+    //  height: 27px;
+    //  position: absolute;
+    //  top: 0;
+    //  right: 0;
+    //  background: none;
+    //}
+    .delete{
+      display: flex;
+      width: 18px;
+      height: 28px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+      border-bottom: 1px solid $order_sidebar_order_border_color;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -46px -131px;
+    }
+    button {
+      height: 31px;
+      font-size: 14px;
+      &.sell{  background-color: #ff4444;  }
+      &.buy{  background-color: #2dc7ca;  }
+      //&.success{  background: url("#{$pathImage}/ico-success-w.png") no-repeat center #969696;  }
+    }
+    i.submit{
+      display: block;  flex-grow: 1;  border-radius: 0;
+      &:hover{  overflow: inherit !important;  }
+      &:active{
+        overflow: hidden !important;
+        .help_message{  visibility: hidden; }
+      }
+      &:first-of-type{
+        border-right: 1px solid $order_sidebar_order_border_color;
+        //.amount{
+        //  float: right;
+        //  border-left: 1px solid #fff;
+        //}
+      }
+      //.help_message{
+      //  t
+      //}
+      //.amount{  border-left: 1px solid #fff;  }
+      //&:last-of-type .amount{
+      //  float: left;
+      //  border-right: 1px solid #fff;
       //}
     }
-    .order-title{  padding-left: 5px; }
-    .current-order-content{
-      padding: 5px 5px 10px;
-      text-align: center;
-      .btn{  width: 100%!important;  }
+    input[type=submit], button.submit{
+      width: 100%;
+      height: 31px;
+      padding: 0;
+      font-size: 12px;
+      color: #ffffff;
+      //border: 1px solid $order_sidebar_order_border_color;
+      border-bottom: none;
+      border-left: none;
+      border-radius: 0;
+      cursor: pointer;
+      transition: 0.4s ease-out;
+      &.sell{  background: linear-gradient(to bottom, #f88447, #ef4d22);  }
+      &.buy{  background: linear-gradient(to bottom, #64c9ef, #3498da);  }
     }
+    .amount{
+      float: right;
+      padding: 0 10px;
+      border-left: 1px solid #fff;
+      .help_message{
+        width: 150px;
+        top: 24px;
+        &.right{  left: auto; right: -20px;  }
+      }
+    }
+    //.help.amount{
+    //  position: absolute;
+    //  top: calc(50% - 9px);
+    //  z-index: 1;
+    //  font-size: 12px;
+    //  color: transparent;
+    //  cursor: pointer;
+    //  user-select: none;
+    //  &.right{  right: 10px;  }
+    //  &.left{  right: calc(50% + 11px);  }
+    //}
   }
 }
 
-
+@import "sidebar/default_orders";
+@import "sidebar/_your_orders";
+@import "mainPage/_orders_mp";
 

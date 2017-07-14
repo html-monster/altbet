@@ -1,6 +1,32 @@
 /**
  * Created by Vlasakh on 08.03.2017.
+ *
+            const ajaxPromise = (new AjaxSend()).send({
+                formData: inProps,
+                message: `Error ...`,
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GET_EVENTS,
+                respCodes: [
+                    {code: 100, message: ""},
+                    {code: -101, message: "Some custom error"},
+                ],
+                // beforeChkResponse: (data) =>
+                // {
+                //     // DEBUG: emulate
+                //     data = {Error: 101};
+                //     // data.Param1 = "TOR-PHI-3152017"; // id
+                //     // data.Param1 = "?path=sport&status=approved";
+                //     // data.Param1 = "?status=New";
+                //     // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                //     // data.Param3 = "TOR-PHI-3152017"; // id
+                //
+                //     return data;
+                // },
+            });
  */
+
+/// <reference path="../../.d/common.d.ts" />
+
+
 
 var __LDEV__ = !true;
 
@@ -8,8 +34,11 @@ export class AjaxSend
 {
     private options = {
             formData: null,
+            type: 'POST',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
             message: "",
             url: "",
+            exData: {}, // additional jquery ajax params
             respCodes: [],
             beforeChkResponse: null,
         };
@@ -17,16 +46,21 @@ export class AjaxSend
 
     public send(inProps)
     {
-        var self = this;
-        var props = {...this.options, ...inProps};
-        var message = props.message;
+        let self = this;
+        let props = {...this.options,
+            ...inProps,
+            headers: {...this.options.headers, ...inProps.headers},
+        };
+        let message = props.message;
+
+        // 0||console.log( 'props', {props, inProps} );
 
         let promise = new Promise((resolve, reject) =>
         {
             $.ajax({
                 url: props.url,
                 // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
-                type: 'POST',
+                type: props.type,
                 success: function(data)
                 {
                     var error = -1001;
@@ -88,10 +122,11 @@ export class AjaxSend
                 },
                 // Form data
                 data: props.formData || new FormData(),
+                ...props.exData,
                 // Options to tell jQuery not to process data or worry about the content-type
                 cache: false,
-                contentType: false,
-                processData: false
+                // contentType: false,
+                // processData: false
             }, 'json');
             // .always(function () {
             //     // form.find('.loading-ico').fadeOut(200);

@@ -1,7 +1,10 @@
 .content_my_position {
-  @include span(7.6 of 12);
-  @include push (1.8 of 12);
-  margin-top: 70px;
+  //@include span(7.6 of 12);
+  //@include push (1.8 of 12);
+  //margin-top: 70px;
+	margin-left: 70px;
+	padding-top: 70px;
+	width: calc(78% - 70px);
 
   .time { opacity: 0.5 }
   .fullname { font-size: 10px; opacity: 0.6; }
@@ -113,7 +116,7 @@
 							}
 							&.selection:after{  margin-left: -16px;  }
 						}
-						@include md(1600){  font-size: 12px;  }
+						@include mdmax(1600){  font-size: 12px;  }
 					}
 				}
 				tbody {

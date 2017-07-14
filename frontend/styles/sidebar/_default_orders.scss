@@ -1,0 +1,26 @@
+.default_order_info{
+	padding: 10px 15px;
+	font-size: 14px;
+	color: #b1b1b1;
+	text-transform: lowercase;
+	&:first-letter{  text-transform: uppercase;  }
+}
+.default_orders{
+	.order_content .order-title{
+		display: flex;
+		justify-content: space-between;
+		background: linear-gradient(to bottom, #53515e, #292830);
+		position: relative;
+		h3, .current-order{ color: #ffffff; }
+		h3{  line-height: 22px;  }
+		.current-order{ min-width: 75px; text-align: right; }
+		.close{
+			height: 25px;
+			margin-right: 0;
+			position: absolute;
+			top: 4px;
+			right: 1px;
+			cursor: pointer;
+		}
+	}
+}

@@ -1,15 +1,40 @@
 .ac-newfeedexchange {
+  $color1: #f2fbe9;
+  $color1: #d9f1c2;
   .content-wrapper {
+    .input-button { padding: 5px 12px; }
+
+    .team-filters, .pos-filters { display: inline-block; margin-right: 30px;
+      a { padding: 0 2px; }
+    }
+    .events-filters { display: inline-block; margin-left: 20px; }
+    .pos-filters { margin-right: 0 }
     .h-players {
-      .filters { display: inline-block; margin-left: 20px }
       .f-btn.active { font-weight: bold }
       .fa-plus { color: #00a65a; }
-      tr.used td { background: #f2fbe9 }
-      tr.used.team2 td { background: darken(#f2fbe9, 10%) }
+      tr.used td { background: $color1 }
+      tr.used.team2 td { background: darken($color1, 10%) }
     }
     .h-team {
-      //.fa-remove { color: #dd4b39; }
     }
   }
+  .teams-table {
+    tr.empty td { color: gray; }
+    tr.empty td+td+td { font-size: 12px }
+    .empty {}
+    .eppg, .fppg { width: 50px; text-align: center }
+  }
+
+  .box {
+    &-header a.unactive { color: darken($colorB, 20%); }
+    .box-team1 {
+      border-top-color: $color1;
+    }
+    .box-team2 {
+      border-top-color: darken($color1, 15%);
+    }
+  }
+
+  .btn-ok { width: 100px }
 }
 

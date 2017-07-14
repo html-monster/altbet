@@ -5,11 +5,6 @@ import React from 'react';
 
 export default class MenuItemsList extends React.Component
 {
-	constructor()
-	{
-		super();
-	}
-
 	render()
 	{
 		const { actions, categoryMenu, exchanges, currentData, } = this.props;
@@ -22,14 +17,14 @@ export default class MenuItemsList extends React.Component
 		if(parentCategory.length) parentCategory = parentCategory[0];
 		const isRootCategory = currentData.CatParentId === '00000000-0000-0000-0000-000000000000';
 
-		if(windowWidth > 1900) maxLetters = isRootCategory ? 37 : 35;
-		else if(windowWidth > 1590) maxLetters = isRootCategory ? 29 : 27;
-		else maxLetters = isRootCategory ? 25 : 23;
+		if(windowWidth > 1900) maxLetters = isRootCategory ? 35 : 32;
+		else if(windowWidth > 1590) maxLetters = isRootCategory ? 26 : 24;
+		else maxLetters = isRootCategory ? 22 : 20;
 
 		return <ul className="active animated dur3 child_list lv0">
 			<li>
 				{	!isRootCategory &&
-					<button className="return" title={`return to ${parentCategory.CatName}`}
+					<button className="return" title={`Return to ${parentCategory.CatName}`}
 							onClick={actions.getMenuCategory.bind(null, actions, parentCategory)}>{}</button>
 				}
 				<a href={`${ABpp.baseUrl}/eng/home/${currentData.CatUrlChain}`} className="showAll" title={'Show all ' + linkAnchor}

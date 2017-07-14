@@ -22,7 +22,7 @@ export default class InputNumber extends React.Component{
 	onKeyPress(event){
 		const props = this.props;
 		const code = event.which || event.charCode || event.keyCode;
-
+		if(!this.props.cancelSubmiting && code === 13) return false;
 		// if(props.hard){
 		// 	if(props.inputValidate === 'integer'){
 		// 		if(code !== 13){
@@ -105,7 +105,7 @@ export default class InputNumber extends React.Component{
 
 	render()
 	{
-		const { onContextMenu, value, onChange, inputValidate, hard, label, ...rest } = this.props;
+		const { onContextMenu, value, onChange, inputValidate, hard, cancelSubmiting, label, ...rest } = this.props;
 		return <input type="tel" ref={'input'} onChange={::this.onInputChange} onPaste={(event) => {event.preventDefault()}}
 					  onContextMenu={::this.onContextMenu}
 					  value={label && this.state.value ? '$' + this.state.value: this.state.value} {...rest} />

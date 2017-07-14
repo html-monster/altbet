@@ -13,7 +13,7 @@ import BaseController from '../containers/BaseController';
 import actions from '../actions/ordersPageActions';
 import myPositionsActions from '../actions/OrderPage/myPositionsActions.ts';
 import yourOrdersActions from '../actions/Sidebar/yourOrderActions.ts';
-import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
+import defaultOrderSidebarActions from '../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
 // import {Common} from '../common/Common';
 
 
@@ -99,7 +99,7 @@ export default connect(
         // test: state.Ttest,
     }),
     dispatch => ({
-		defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
+		defaultOrderActions: bindActionCreators(defaultOrderSidebarActions, dispatch),
 		yourOrdersActions: bindActionCreators(yourOrdersActions, dispatch),
         actions: bindActionCreators(actions, dispatch),
         myPositionsActions: bindActionCreators(myPositionsActions, dispatch),

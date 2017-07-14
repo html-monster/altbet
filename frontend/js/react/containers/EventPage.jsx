@@ -6,9 +6,10 @@ import BaseController from './BaseController';
 import Chart from '../components/EventPage/Chart';
 import {BetsTable} from '../components/EventPage/BetsTable';
 import * as chartActions from '../actions/EventPage/chartActions.ts';
-import * as defaultOrderActions from '../actions/Sidebar/tradeSlip/defaultOrderActions';
+import defaultOrderSidebarActions from '../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
 import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 import eventPageActions from '../actions/eventPageActions.ts';
+import {DateLocalization} from '../models/DateLocalization';
 
 
 class EventPage extends BaseController
@@ -174,6 +175,7 @@ class EventPage extends BaseController
             $fsclass = "active";
         } // endif
 
+
         return <div className="wrapper_event_page" data-id={symbol} id={symbol}>
             <h1>
                 <a href={appData.pageEventData.fsideLink} className={$fsclass} title={$titleFside}>{data.SymbolsAndOrders.Symbol.HomeName}</a>
@@ -188,6 +190,7 @@ class EventPage extends BaseController
                     <div className="current_price">
                         <div className="wrapper">
                             <h2>{data.IsMirrorName}</h2>
+                            <div className="startdate">{(new DateLocalization()).fromSharp(data.SymbolsAndOrders.Symbol.StartDate, 0, {TZOffset: false}).unixToLocalDate({format: 'DD MMM Y h:mm A'})}</div>
                             <div className="current_price">
                                 <span className="title">Last Price:</span>
                                 <span className="value">{lastPrice}</span>
@@ -336,7 +339,7 @@ export default connect(state => ({
     // test: state.Ttest,
 }),
 dispatch => ({
-	defaultOrderActions: bindActionCreators(defaultOrderActions, dispatch),
+	defaultOrderActions: bindActionCreators(defaultOrderSidebarActions, dispatch),
     eventPageActions: bindActionCreators(eventPageActions, dispatch),
     chartActions: bindActionCreators(chartActions, dispatch),
 	traderActions: bindActionCreators(traderActions, dispatch),

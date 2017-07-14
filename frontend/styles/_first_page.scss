@@ -1,5 +1,6 @@
 header.first_page {
   background: none;
+  @include mdmax(1350) { min-width: inherit; }
   .header_info {
     justify-content: space-between;
     float: none;
@@ -7,6 +8,7 @@ header.first_page {
     margin: 0 auto;
     background: transparent;
     //border-bottom: 1px solid transparentize(#ffffff, 0.9);
+    @include mdmax(1300) { width: auto; }
   }
   .header_right {
     border: none;
@@ -154,11 +156,13 @@ header.first_page {
     }
   }
 }
-.section{
+
+.section {
   position: fixed;
   top: 100%;
 }
-.first_slide{
+
+.first_slide {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -222,7 +226,7 @@ header.first_page {
     overflow: hidden;
     border-radius: 9px;
     opacity: 0;
-    &.active {  opacity: 1;  }
+    &.active { opacity: 1; }
     video {
       display: block;
       height: 217px;
@@ -241,7 +245,6 @@ header.first_page {
     &.esport_video {
       width: 383px;
       left: calc(50% + 11px);
-
       top: calc(50% - 106px);
     }
     //&.society_video {
@@ -290,7 +293,7 @@ header.first_page {
             font-weight: bold;
             color: #fff;
             z-index: 20;
-            &.soon{
+            &.soon {
               top: 47px;
               font-size: 16px;
             }
@@ -298,7 +301,6 @@ header.first_page {
         }
       }
       .container_down {
-
         margin-top: 2px;
         .item_category {
           &:nth-child(1) {
@@ -334,7 +336,6 @@ header.first_page {
       text-align: center;
       padding: 0;
       z-index: 25;
-
     }
   }
 
@@ -364,48 +365,45 @@ header.first_page {
       width: 212px;
       height: 100px;
       padding: 10px 0;
-      &:nth-child(1) {
+      &:nth-child(1), &:nth-child(2) {
         position: relative;
-        strong {
+        a {
+          display: block;
+          width: 100%;
+          height: 100px;
+          color: #ef4d22;
           font-size: 18px;
           font-weight: bold;
-          color: #fff;
-          a {
-            color: #ef4d22;
-            text-decoration: underline;
-            margin-left: 5px;
-          }
-        }
-        &:before {
-          content: "";
-          position: absolute;
-          top: 10px;
-          display: block;
-          width: 42px;
-          height: 32px;
-          background: url("#{$pathImage}/Sprite_lend.svg") no-repeat -93px -187px;
-        }
-      }
-      &:nth-child(2) {
-        position: relative;
-        border-left: 1px solid transparentize(#ffffff, 0.8);
-        strong {
-          a {
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-          }
+          padding-top: 74px;
           &:before {
             content: "";
             position: absolute;
             top: 10px;
+            left: calc(50% - 21px);
+            display: block;
+            width: 42px;
+            height: 32px;
+            background: url("#{$pathImage}/Sprite_lend.svg") no-repeat -93px -187px;
+          }
+          strong {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 10px;
+          }
+        }
+      }
+      &:nth-child(2) {
+        border-left: 1px solid transparentize(#ffffff, 0.8);
+        a {
+          color: #fff;
+          &:before {
+            content: "";
             left: 88px;
             display: block;
             width: 33px;
             height: 32px;
             background: url("#{$pathImage}/Sprite_lend.svg") no-repeat -167px -187px;
           }
-
         }
       }
     }
@@ -617,7 +615,6 @@ header.first_page {
       border-left: none;
       h2 {
         color: rgba(255, 255, 255, 0.8);
-
       }
       strong.price {
         color: rgba(255, 255, 255, 0.8);
@@ -1084,9 +1081,11 @@ html.fp-enabled,
   background: url('#{$pathImage}/first_page/fp_bg33.jpg') no-repeat -2px -2px;
   z-index: 30;
 }
+
 .contpre small {
   font-size: 25px;
 }
+
 .contpre {
   width: 250px;
   height: 100px;
@@ -1102,6 +1101,7 @@ html.fp-enabled,
   line-height: 35px;
   transition: 0s;
 }
+
 #p_prldr .svg_anm {
   position: absolute;
   width: 41px;

@@ -12,6 +12,8 @@
 //@import "../../vendor/daterangepicker/bootstrap";
 @import "media";
 @import "mixin";
+@import "buttons";
+@import "input_st";
 @import "default";
 @import "layouts";
 @import "animate";
@@ -22,6 +24,7 @@
 @import "menu";
 @import "header";
 @import "main_content";
+@import "sidebar";
 @import "order";
 @import "active_trader";
 @import "my_position";
@@ -34,7 +37,7 @@
 @import "sign_in";
 //@import "admin_panel";
 @import "access";
-@import "teaser";
+//@import "teaser";
 @import "baloons";
 @import "dev";
 @import "404";
