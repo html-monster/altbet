@@ -13,12 +13,13 @@ var __DEBUG__ = !true;
 
 export default class Actions extends BaseActions
 {
-    public actionOnFileChosen(context, event)
+    public actionOnFileChosen({uploadForm, uploadButton}, event)
     {
         var self = this;
 
         return (dispatch, getState) =>
         {
+            const { gidxVerification: {files, config} } = getState();
             let loadFileData = event.target.files;
             let extension, fileSize = 0, valid = true;
             const sizeLimit = 2000000;
@@ -29,7 +30,7 @@ export default class Actions extends BaseActions
                 payload: '',
             });
 
-            if(loadFileData.length + getState().accountSetting.files.length > 6){
+            if(loadFileData.length + files.length > config.maxFiles){
                 dispatch({
                     type: SETTING_LOAD_FILE_ERROR,
                     payload: `The maximum number of files stored on the server is 6`,
@@ -65,7 +66,7 @@ export default class Actions extends BaseActions
             if (fileSize)
                 defaultMethods.sendAjaxRequest({
                     url: `${ABpp.baseUrl}/Account/UploadImage`,
-                    data: new FormData(context.refs.uploadForm),
+                    data: new FormData(uploadForm),
                     cache: false,
                     contentType: false,
                     processData: false,
@@ -105,12 +106,12 @@ export default class Actions extends BaseActions
                     payload: 'Loading file failed. Please check your internet connection or reload the page or try again later',
                 });
                 self.removeFile(loadId);
-                $(context.refs.uploadButton).removeAttr('disabled');
+                $(uploadButton).removeAttr('disabled');
             }
 
             function beforeSend()
             {
-                $(context.refs.uploadButton).attr('disabled', 'true');
+                $(uploadButton).attr('disabled', 'true');
             }
 
             function success(answer)
@@ -158,7 +159,7 @@ export default class Actions extends BaseActions
                     type: SETTING_CHANGE_PROGRESS_BAR,
                     payload: 0,
                 });
-                $(context.refs.uploadButton).removeAttr('disabled');
+                $(uploadButton).removeAttr('disabled');
             }
 
             //for testing====================
