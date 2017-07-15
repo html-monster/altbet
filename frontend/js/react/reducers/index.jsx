@@ -21,6 +21,7 @@ import registerBox from './registerReducer';
 import confirmRegisterPage from './confirmRegisterPageReducer';
 
 import GidxVerificationReducer from './GidxVerificationReducer.ts';
+import GidxCashierReducer from './GidxCashierReducer.ts';
 import {Framework} from '../common/Framework.ts';
 
 
@@ -136,6 +137,14 @@ switch (ABpp.config.currentPage)
 		reducers = {
 			...pressetStatic(),
             gidxVerification: Framework.getHandler(GidxVerificationReducer),
+		};
+		break;
+	}
+
+	case ABpp.CONSTS.PAGE_GIDX_WITHDRAW: {
+		reducers = {
+			...pressetStatic(),
+            gidxCashier: Framework.getHandler(GidxCashierReducer),
 		};
 		break;
 	}

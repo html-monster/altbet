@@ -3,10 +3,9 @@
 declare let globalData;
 
 import {
-    SETTING_ON_FILE_LOAD,
-    SETTING_LOAD_FILE_ERROR,
-    SETTING_CHANGE_PROGRESS_BAR,
-} from '../constants/ActionTypesGidxVerification.js';
+    WITHDRAW_QUANTITY_CHANGE,
+    WITHDRAW_QUANTITY_VALIDATE,
+} from '../constants/ActionTypesGidxCashier.js';
 /// TS_IGNORE
 import {Common} from "../common/Common";
 
@@ -14,18 +13,17 @@ import {Common} from "../common/Common";
 
 export default class Reducer
 {
-    // public static USING_TEAM = 1;
-
-
     private initialState = {
-        loadProgress: 0,
-        loadError: '',
-        files: {}, //globalData.userPageOn ? appData.pageAccountData.jsonImageInfo : null
+        approved: false,
+        // data: appData.pageAccountData,
+        depositQuantity: '',
+        form: null,
+        validationMessage: appData.Gidx ? appData.Gidx.response : '',
     };
 
 
 
-    init()
+    private init()
     {
         /*let loadedData = {};
         this.initialState = {...this.initialState, ...loadedData};*/
@@ -38,14 +36,11 @@ export default class Reducer
 
         switch (action.type)
         {
-		case SETTING_ON_FILE_LOAD:
-			return {...state, files: action.payload};
+            case WITHDRAW_QUANTITY_CHANGE:
+                return {...state, depositQuantity : action.payload, validationMessage: ''};
 
-		case SETTING_CHANGE_PROGRESS_BAR:
-			return {...state, loadProgress: action.payload};
-
-		case SETTING_LOAD_FILE_ERROR:
-			return {...state, loadError: action.payload};
+            case WITHDRAW_QUANTITY_VALIDATE:
+                return {...state, sumValidation : action.payload};
 
             default:
                 this.init();

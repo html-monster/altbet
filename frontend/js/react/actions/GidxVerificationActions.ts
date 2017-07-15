@@ -1,6 +1,7 @@
 import {
     SETTING_LOAD_FILE_ERROR,
     SETTING_CHANGE_PROGRESS_BAR,
+    SETTING_ON_FILE_LOAD,
 } from '../constants/ActionTypesGidxVerification.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../models/AjaxSend';
@@ -14,6 +15,8 @@ export default class Actions extends BaseActions
 {
     public actionOnFileChosen(context, event)
     {
+        var self = this;
+
         return (dispatch, getState) =>
         {
             let loadFileData = event.target.files;
@@ -70,7 +73,7 @@ export default class Actions extends BaseActions
                     {
                         let myXhr = $.ajaxSettings.xhr();
                         if (myXhr.upload) {
-                            context.props.actions.addFile({
+                            self.addFile({
                                 Name: loadId,
                                 ContentType: 'load'
                             });
@@ -97,12 +100,11 @@ export default class Actions extends BaseActions
 
             function error()
             {
-                // context.props.actions();
                 dispatch({
                     type: SETTING_LOAD_FILE_ERROR,
                     payload: 'Loading file failed. Please check your internet connection or reload the page or try again later',
                 });
-                context.props.actions.removeFile(loadId);
+                self.removeFile(loadId);
                 $(context.refs.uploadButton).removeAttr('disabled');
             }
 
@@ -117,16 +119,16 @@ export default class Actions extends BaseActions
 
                 switch (answer.ErrorCode){
                     case 200:{
-                        context.props.actions.addFile(answer);
+                        self.addFile(answer);
                         break;
                     }
                     case 100:{
-                        context.props.actions.removeFile(loadId);
+                        self.removeFile(loadId);
                         __DEV__ && console.error('You tried to load empty files object');
                         break;
                     }
                     case 101:{
-                        context.props.actions.removeFile(loadId);
+                        self.removeFile(loadId);
                         dispatch({
                             type: SETTING_LOAD_FILE_ERROR,
                             payload: `${this.name} is unsupported file type`,
@@ -134,7 +136,7 @@ export default class Actions extends BaseActions
                         break;
                     }
                     case 102:{
-                        context.props.actions.removeFile(loadId);
+                        self.removeFile(loadId);
                         dispatch({
                             type: SETTING_LOAD_FILE_ERROR,
                             payload: `You have ${loadFileData.length} file(s) with total size ${Math.round10(fileSize / 1000000,
@@ -143,7 +145,7 @@ export default class Actions extends BaseActions
                         break;
                     }
                     case 103:{
-                        context.props.actions.removeFile(loadId);
+                        self.removeFile(loadId);
                         dispatch({
                             type: SETTING_LOAD_FILE_ERROR,
                             payload: `File ${this.name} has not been saved. Try again or reload the page, or try again later`,
@@ -245,7 +247,34 @@ export default class Actions extends BaseActions
 */
 
 
-    private some()
+    public addFile(items)
     {
+        return (dispatch, getState) =>
+        {
+            let newArr = items.ContentType == 'load' ?
+                getState().accountSetting.files.slice()
+                :
+                getState().accountSetting.files.slice(0, -1);
+
+            newArr = newArr.concat(items);
+            dispatch({
+                type: SETTING_ON_FILE_LOAD,
+                payload: newArr,
+            });
+        }
+    }
+
+
+    public removeFile(id)
+    {
+        return (dispatch, getState) =>
+        {
+            let newArr = getState().accountSetting.files.slice().filter((item) => id != item.Name);
+
+            dispatch({
+                type: SETTING_ON_FILE_LOAD,
+                payload: newArr,
+            });
+        }
     }
 }

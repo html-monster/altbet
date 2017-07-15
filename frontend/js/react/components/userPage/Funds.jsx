@@ -36,9 +36,9 @@ export default class Funds extends React.PureComponent{
 			<div className="funds_tab">
 				<div className="wrapper_user">
 					<div>
-						<a class="gidx-btn deposit btn-lg-icon btn-h btn_blue2 wave waves-effect waves-button" href={ABpp.baseUrl + "/eng/Account/GidxWebCashierRegister?direction=deposit"}>Deposit</a>
+						<a class="gidx-btn deposit btn-lg-icon btn-h btn_blue2 wave waves-effect waves-button" href={ABpp.baseUrl + "/eng/Account/GidxWebCashierRegister?direction=Pay"}>Deposit</a>
 						&nbsp;
-						<a class="gidx-btn withdraw btn-lg-icon btn-h btn_blue2 wave waves-effect waves-button" href={ABpp.baseUrl + "/eng/Account/GidxWebCashierRegister?direction=withdraw"}>Withdraw</a>
+						<a class="gidx-btn withdraw btn-lg-icon btn-h btn_blue2 wave waves-effect waves-button" href={ABpp.baseUrl + "/eng/Account/GidxWebCashierRegister?direction=Payout"}>Withdraw</a>
 						&nbsp;
 						<a class="gidx-btn history btn-lg-icon btn-h btn_blue2 wave waves-effect waves-button" href={ABpp.baseUrl + "/eng/Account/GidxWebWallet"}>Transaction History</a>
 					</div>
