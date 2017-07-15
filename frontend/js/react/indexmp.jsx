@@ -41,7 +41,7 @@ switch( ABpp.config.currentPage )
 	// Gidx withdraw
     case ABpp.CONSTS.PAGE_GIDX_WITHDRAW:
         Component = GidxCashier();
-        mountById('DiGidxVerificationMP', <Component />);
+        mountById('DiGidxCashierMP', <Component />);
         break;
 }
 

@@ -130,7 +130,7 @@
     }
   }
   .tab_content { position: relative; padding: 30px; width: 450px; border-radius: 4px; background-image: $sign_in_bg;
-    @include scroll;
+    @include scrollWhite;
     .tab_item {
       display: block;
     }
