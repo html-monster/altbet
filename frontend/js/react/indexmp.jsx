@@ -17,9 +17,10 @@ import PageMyPos from './components/PageMyPos.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import RegisterBox from './containers/RegisterBox.jsx';
 import GidxVerification from './containers/GidxVerification.jsx';
+import GidxCashier from './containers/GidxCashier.jsx';
 
 var $node ;
-
+let Component;
 // Altbet App object
 // let constants = ABpp.ABpp;
 // ABpp = ABpp.ABpp.getInstance();
@@ -31,9 +32,15 @@ ABpp.Store = store;
 
 switch( ABpp.config.currentPage )
 {
-	// Apply feed event
-    case ABpp.CONSTS.PAGE_GIDX_VERIFICATION :
-        let Component = GidxVerification();
+	// Gidx user verification
+    case ABpp.CONSTS.PAGE_GIDX_VERIFICATION:
+        Component = GidxVerification();
+        mountById('DiGidxVerificationMP', <Component />);
+        break;
+
+	// Gidx withdraw
+    case ABpp.CONSTS.PAGE_GIDX_WITHDRAW:
+        Component = GidxCashier();
         mountById('DiGidxVerificationMP', <Component />);
         break;
 }
