@@ -12,6 +12,7 @@ class GidxVerification extends BaseController
     constructor(props)
     {
         super(props);
+        0||console.log( 'GidxVerification', this.props );
 
         // ABpp.controllers.EventPage
 
@@ -24,8 +25,7 @@ class GidxVerification extends BaseController
 
     render()
     {
-        const { data, files } = this.props;
-        0||console.log( 'this.props', this.props );
+        const { actions, data: {files, loadError, loadProgress} } = this.props;
 
         return <div className="wrapper_event_page">
             <form action={`${ABpp.baseUrl}/Account/UploadImage`} encType="multipart/form-data" className="document_upload" ref="uploadForm">
@@ -106,7 +106,7 @@ class GidxVerification extends BaseController
                 <button className="btn btn_green wave upload load_btn left" ref={'uploadButton'} onClick={this._loadFile}>Load file</button>
                 <input type="file" name="file" accept=".png,.jpeg,.jpg"
                        //.doc,.docx,.xls,.xlsx,.txt,
-                       onChange={actions.actionOnFileChosen.bind(null, this)}
+                       onChange={actions.actionOnFileChosen.bind(null, {uploadForm: this.refs.uploadForm, uploadButton: this.refs.uploadButton})}
                        style={{visibility: 'hidden'}}
                        ref="uploadData"/>
                 <span className={'answer_message' + (loadError && ' validation-summary-errors')} style={{height: 22}}>
