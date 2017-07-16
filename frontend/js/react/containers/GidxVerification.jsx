@@ -9,6 +9,10 @@ import {Framework} from '../common/Framework.ts';
 
 class GidxVerification extends BaseController
 {
+    /**@private*/ uploadForm;
+    /**@private*/ uploadButton;
+
+
     constructor(props)
     {
         super(props);
@@ -26,9 +30,10 @@ class GidxVerification extends BaseController
     render()
     {
         const { actions, data: {files, loadError, loadProgress} } = this.props;
+        var self = this;
 
-        return <div className="wrapper_event_page">
-            <form action={`${ABpp.baseUrl}/Account/UploadImage`} encType="multipart/form-data" className="document_upload" ref="uploadForm">
+        return <div className="wrapper">
+            <form ref={(itm) => {this.uploadForm = itm; 0||console.log( 'this.uploadForm', this.uploadForm ); return this.uploadForm = itm}} action={`${ABpp.baseUrl}/Account/UploadImage`} encType="multipart/form-data" className="document_upload" >
                 <h3 className="section_user">Your files</h3>
                 <hr/>
                 <div className="miniatures">
@@ -103,12 +108,11 @@ class GidxVerification extends BaseController
                             <p>Add your documents files</p>
                     }
                 </div>
-                <button className="btn btn_green wave upload load_btn left" ref={'uploadButton'} onClick={this._loadFile}>Load file</button>
+                <button ref={(itm) => this.uploadButton = itm} className="btn btn_green wave upload load_btn left" onClick={this._loadFile}>Load file</button>
                 <input type="file" name="file" accept=".png,.jpeg,.jpg"
                        //.doc,.docx,.xls,.xlsx,.txt,
-                       onChange={actions.actionOnFileChosen.bind(null, {uploadForm: this.refs.uploadForm, uploadButton: this.refs.uploadButton})}
-                       style={{visibility: 'hidden'}}
-                       ref="uploadData"/>
+                       onChange={actions.actionOnFileChosen.bind(null, this)}
+                       style={{visibility: 'hidden'}} />
                 <span className={'answer_message' + (loadError && ' validation-summary-errors')} style={{height: 22}}>
                     {loadError}
                 </span>
