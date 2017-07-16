@@ -13,17 +13,19 @@ var __DEBUG__ = !true;
 
 export default class Actions extends BaseActions
 {
-    public actionOnFileChosen({uploadForm, uploadButton}, event)
+    public actionOnFileChosen(context, event)
     {
         var self = this;
 
         return (dispatch, getState) =>
         {
+            const {uploadForm, uploadButton} = context;
             const { gidxVerification: {files, config} } = getState();
             let loadFileData = event.target.files;
             let extension, fileSize = 0, valid = true;
             const sizeLimit = 2000000;
             const loadId = (new Date).getTime();
+            0||console.log( 'here', 0 );
 
             dispatch({
                 type: SETTING_LOAD_FILE_ERROR,
@@ -64,40 +66,41 @@ export default class Actions extends BaseActions
             }
 
             if (fileSize)
-                defaultMethods.sendAjaxRequest({
-                    url: `${ABpp.baseUrl}/Account/UploadImage`,
-                    data: new FormData(uploadForm),
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    xhr: function()
-                    {
-                        let myXhr = $.ajaxSettings.xhr();
-                        if (myXhr.upload) {
-                            self.addFile({
-                                Name: loadId,
-                                ContentType: 'load'
-                            });
-                            myXhr.upload.addEventListener('progress', function(event) {
-                                let percent = 0;
-                                let position = event.loaded || event.position;
-                                let total = event.total;
-                                if (event.lengthComputable) {
-                                    percent = Math.ceil(position / total * 100);
-                                }
-                                dispatch({
-                                    type: SETTING_CHANGE_PROGRESS_BAR,
-                                    payload: percent,
-                                });
-                            } , false);
-                        }
-                        return myXhr;
-                    },
-                    mimeType: "multipart/form-data",
-                    callback: success,
-                    onError: error,
-                    beforeSend
-                });
+                {
+                    let formData = new FormData(uploadForm);
+                    defaultMethods.sendAjaxRequest({
+                                        url: `${ABpp.baseUrl}/Account/UploadImage`,
+                                        data: formData,
+                                        cache: false,
+                                        contentType: false,
+                                        processData: false,
+                                        xhr: function()
+                                        {
+                                            let myXhr = $.ajaxSettings.xhr();
+                                            if (myXhr.upload) {
+                                                self.addFile({ Name: loadId, ContentType: 'load',}, files);
+
+                                                myXhr.upload.addEventListener('progress', function(event) {
+                                                    let percent = 0;
+                                                    let position = event.loaded || event.position;
+                                                    let total = event.total;
+                                                    if (event.lengthComputable) {
+                                                        percent = Math.ceil(position / total * 100);
+                                                    }
+                                                    dispatch({
+                                                        type: SETTING_CHANGE_PROGRESS_BAR,
+                                                        payload: percent,
+                                                    });
+                                                } , false);
+                                            }
+                                            return myXhr;
+                                        },
+                                        mimeType: "multipart/form-data",
+                                        callback: success,
+                                        onError: error,
+                                        beforeSend
+                                    });
+                }
 
             function error()
             {
@@ -248,16 +251,16 @@ export default class Actions extends BaseActions
 */
 
 
-    public addFile(items)
+    public addFile(item, files)
     {
         return (dispatch, getState) =>
         {
-            let newArr = items.ContentType == 'load' ?
-                getState().accountSetting.files.slice()
+            let newArr = item.ContentType == 'load' ?
+                files.slice()
                 :
-                getState().accountSetting.files.slice(0, -1);
+                files.slice(0, -1);
 
-            newArr = newArr.concat(items);
+            newArr = newArr.concat(item);
             dispatch({
                 type: SETTING_ON_FILE_LOAD,
                 payload: newArr,
