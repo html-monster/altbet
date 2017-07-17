@@ -366,7 +366,7 @@ export default class OrderForm extends React.Component
 
 		return (
 			<form action={formUrl} className={side + ' animated'} autoComplete="off" method="post" data-verify={['price', 'quantity']}
-					  onSubmit={endDate && +moment().format('x') > endDate  ? this._onSubmit : onSubmit}>
+					  onSubmit={endDate && moment().format('x') > endDate  ? this._onSubmit : onSubmit}>
 				<div className={'container' + (showDeleteButton && onDelete ? ' close_btn' : '')}>
 					<div className="price">
 						<label className="with_info" htmlFor={`${id}_price`}>
@@ -563,7 +563,7 @@ export default class OrderForm extends React.Component
 					{
 						 (orderView === 'simple' && side === 'buy') || orderView !== 'simple'  ?
 							<i className="submit wave waves-input-wrapper waves-effect waves-button">
-								<button className={`btn buy submit`}
+								<button type="submit" className={`btn buy submit`}
 										//style={{textTransform: 'uppercase'}}
 										onClick={this.onClickSide.bind(this, 'buy')}
 										onMouseUp={this.rippleHide}>
@@ -587,7 +587,7 @@ export default class OrderForm extends React.Component
 					{
 						(orderView === 'simple' && side === 'sell') || orderView !== 'simple'  ?
 							<i className="submit wave waves-input-wrapper waves-effect waves-button">
-								<button className={`btn sell submit`}
+								<button type="submit" className={`btn sell submit`}
 										//style={{textTransform: 'uppercase'}}
 										onClick={this.onClickSide.bind(this, 'sell')}
 										onMouseUp={this.rippleHide}>
@@ -626,7 +626,7 @@ export default class OrderForm extends React.Component
 				<input name="isMirror" type="hidden" className="mirror" value={isMirror}/>
 				<input name="Side" type="hidden" className="side" value={(stateData.side)[0].toUpperCase() + (stateData.side).slice(1)}/>
 				<input name="OrderType" type="hidden" value={checkboxProp}/>
-				<input type="hidden" id="maxEntries" value={stateData.maxEntries}/>
+				{/*<input type="hidden" id="maxEntries" value={stateData.maxEntries}/>*/}
 				<input type="hidden" id="remainingBal" value={stateData.remainingBal}/>
 			</form>//проверить лимиты
 		)

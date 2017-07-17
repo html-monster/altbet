@@ -81,7 +81,7 @@ class Actions extends BaseActions
 					console.log($(id).parents('.order_content').find('h3').text() + ' order isn\'t deleted');
 					form.find('[type=submit]').removeAttr('disabled');
 					form.removeClass('loading');
-					defaultMethods.showError('Internal server error, try again later');
+					defaultMethods.showError('Server error, try again later');
 				}
 			}
 

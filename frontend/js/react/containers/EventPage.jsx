@@ -125,6 +125,7 @@ class EventPage extends BaseController
             ticks = socket.bars.Ticks.slice().reverse();
             lastPrice = " " + ticks[0].Open;
         }
+
         let ticksHmtl = ticks.map((item, key) => {
                 let date = new Date(item.Time.replace('/Date(', '').replace(')/', '') * 1);
                 date = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() +

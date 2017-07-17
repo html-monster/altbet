@@ -223,6 +223,8 @@ export default class Actions extends BaseActions
             {
             } // endif
 
+            // DEBUG:
+            ret = false;
 
             // some errors
             if (ret)
@@ -234,15 +236,22 @@ export default class Actions extends BaseActions
 
             // prepare data
             data = this.prepareData(data);
-
+            // data = data.HomeTeam;
+0||console.log( 'data', data );
 
             // post data to server
             // let data = new FormData();
             const ajaxPromise = (new AjaxSend()).send({
-                formData: data,
+                formData: JSON.stringify(data),
                 message: `Error ...`,
                 // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
                 url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
+                // url: MainConfig.BASE_URL + "/" + 'Feed/Test2',
+                exData: {
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    // traditional: true,
+                },
                 // respCodes: [
                 //     {code: 100, message: ""},
                 //     // {code: -101, message: "Some custom error"},
@@ -297,7 +306,7 @@ export default class Actions extends BaseActions
                     payload: inProps, //this.setPPGValues.bind(this, inProps),
                     // payload: this.setPPGValues.bind(this, inProps),
                 })},
-                500
+                300
             );
         };
     }
@@ -668,7 +677,7 @@ export default class Actions extends BaseActions
         resObj.AwayName = teamName2;
         resObj.HomeAlias = Team1name;
         resObj.AwayAlias = Team2name;
-        resObj.StartDate = startDate;
+        resObj.StartDate = startDate.format();
         resObj.UrlExchange = url;
         resObj.EventId = EventId;
 // [07.07.17 17:04:53] Vitaliy Yakubovskiy: ты мне должен передать для exchange - FullName, HomeName, HomeAlias, AwayName, AwayAlias, StartDate, UrlExchange, CategoryId, OptionExchanges(0-HC, 1-ML, 2-TP), HomeTeam(список игроков team1), AwayTeam(список игроков team2), EventId
@@ -681,15 +690,9 @@ export default class Actions extends BaseActions
         PlayersTeam2Reserve = PlayersTeam2Reserve.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 1}});
         PlayersTeam1Variable = PlayersTeam1Variable.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 2}});
         PlayersTeam2Variable = PlayersTeam2Variable.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 2}});
-        0||console.log( 'inProps.PlayersTeam1, ', inProps.PlayersTeam1, PlayersTeam1 );
-// - Variable reserve players
-// - Позиция D
-// - 2-9 игроков остальные делать блокированными
-// - Status Out Красным
-// - Добавить All в выбор events
-// - Добавить Возможность описания evemt в Lineup с WISIWYG
-        resObj.HomeTeam = {...PlayersTeam1, ...PlayersTeam1Reserve, ...PlayersTeam1Variable};
-        resObj.AwayTeam = {...PlayersTeam2, ...PlayersTeam2Reserve, ...PlayersTeam2Variable};
+
+        resObj.HomeTeam = PlayersTeam1.concat(PlayersTeam1Reserve).concat(PlayersTeam1Variable);
+        resObj.AwayTeam = PlayersTeam2.concat(PlayersTeam2Reserve).concat(PlayersTeam2Variable);
 
 
         return resObj;

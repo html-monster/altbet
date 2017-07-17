@@ -6,7 +6,7 @@ import {
     ON_GET_NEW_TABLE_DATA,
 } from '../constants/ActionTypesFeedEvents.js';
 /// TS_IGNORE
-import {Common} from "common/Common";
+import {Common} from "../common/Common";
 
 
 

@@ -240,7 +240,7 @@ gulp.task('clean', function() {
 
 
 // BM: ============================================================================================== ONE TIME BUILD ===
-gulp.task('build', gulp.series(gulp.parallel('styles', 'js', 'vendor')/*, 'assets', 'fonts'*/));
+gulp.task('build', gulp.series(gulp.parallel('styles', 'js', 'vendor', 'styles-admin')/*, 'assets', 'fonts'*/));
 
 
 

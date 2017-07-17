@@ -7,6 +7,7 @@ import React from 'react';
 
 import DefaultOrders from './tradeSlip/DefaultOrdersSidebar';
 import ActiveTrader from './tradeSlip/ActiveTrader';
+import Disqus from '../Disqus';
 // import tradeSlipActions from '../../actions/Sidebar/tradeSlipActions';
 // import * as defaultOrderLocalActions from '../../actions/Sidebar/defaultOrderLocalActions';
 
@@ -33,9 +34,14 @@ export default class TradeSlip extends React.Component
 	{
         // 0||console.log( 'this.props.data.isAllowAT', this.props.data.isAllowAT );
 		const { data, actions, tradeSlip } = this.props;
-        return <div className="tab_item" id="order">
+        return <div className={'tab_item' + (!ABpp.User.userIdentity ? ' active' : '')} id="order">
 
-			<DefaultOrders cmpData={data} />
+			{
+				ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MAIN ?
+					<DefaultOrders cmpData={data} />
+					:
+					<Disqus appearance={!ABpp.config.tradeOn}/>
+			}
 
 			{/* // BM: --------------------------------------------------- ACTIVE TRADER ---*/}
 			{

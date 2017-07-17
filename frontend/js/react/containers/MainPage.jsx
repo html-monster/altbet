@@ -9,6 +9,10 @@ import mainPageActions from '../actions/MainPageActions.ts';
 import defaultOrderLocalActions from '../actions/OrderActions/defaultOrdersLocalActions';
 import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 import sidebarActions from '../actions/sidebarActions.ts';
+import disqusActions from '../actions/disqusActions';
+import { Framework } from '../common/Framework';
+// import chartActions from '../actions/MainPage/chartActions';
+
 // class MainPage extends React.Component
 class MainPage extends BaseController
 {
@@ -110,7 +114,8 @@ class MainPage extends BaseController
                 <div className="wrapper" id="exchange">
                     <div className="stattabs">
                         {
-                            Object.keys($tabs).map((val, key) => <a href={"?sort=" + val} key={val} className={"stab" + (val == currSort || !currSort && !key ? " active" : '')}><span data-content={$tabs[val]}>{}</span></a>)
+                            Object.keys($tabs).map((val, key) =>
+                                <a href={"?sort=" + val} key={val} className={"stab" + (val == currSort || !currSort && !key ? " active" : '')}><span data-content={$tabs[val]}>{}</span></a>)
                         }
                         {/*<span className="stab"><a href="?sort=closingsoon"><span data-content="Closing soon">{}</span></a></span>
                         <span className="stab"><a href="?sort=popular"><span data-content="Popular">{}</span></a></span>
@@ -126,7 +131,7 @@ class MainPage extends BaseController
                         </div>
                     </div>
                     <div className="tab_content">
-                        <div className="tab_item">
+                        <div className="tab_item active">
                             <div className="mp-exchanges">
                                 {data.marketsData.map((item, key) =>
                                     <ExchangeItem key={key}
@@ -135,7 +140,9 @@ class MainPage extends BaseController
                                         chartData={charts && charts[item.Symbol.Exchange]}
                                         mainContext={this}
                                         setCurrentExchangeFn={::this._setCurrentExchange}
-                                        actions={actions} />
+                                        actions={actions}
+                                        disqusActions={this.props.disqusActions}
+                                    />
                                 )}
                             </div>
                             {
@@ -234,16 +241,18 @@ class MainPage extends BaseController
 
 export default connect(
     state => {
-        return ({
-        data: state.mainPage,
-        // test: state.Ttest,
-    })
+		return ({
+			data: state.mainPage,
+			// test: state.Ttest,
+		})
     },
     dispatch => ({
 		sidebarActions: bindActionCreators(sidebarActions, dispatch),
 		traderActions: bindActionCreators(traderActions, dispatch),
 		// defaultOrderActions: bindActionCreators(defaultOrderSidebarActions, dispatch),
 		defaultOrderActions: bindActionCreators(defaultOrderLocalActions, dispatch),
+		// chartActions: bindActionCreators(Framework.initAction(chartActions), dispatch),
+		disqusActions: bindActionCreators(Framework.initAction(disqusActions), dispatch),
         actions: bindActionCreators(mainPageActions, dispatch),
     })
 )(MainPage)

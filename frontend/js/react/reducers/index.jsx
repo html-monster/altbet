@@ -16,9 +16,15 @@ import withdraw from './userPage/withdraw';
 import transHistory from './userPage/transHistory';
 import myPosReduce from './MyPosReducer';
 import accountSetting from './userPage/settingReducer';
+import disqus from './disqusReducer';
 // import tradeSlip from './sidebar/tradeSlipReducer';
 import registerBox from './registerReducer';
 import confirmRegisterPage from './confirmRegisterPageReducer';
+
+import GidxVerificationReducer from './GidxVerificationReducer.ts';
+import GidxCashierReducer from './GidxCashierReducer.ts';
+import {Framework} from '../common/Framework.ts';
+
 
 
 let reducers = {};
@@ -38,8 +44,18 @@ ABpp = ABpp.ABpp.getInstance();
 ABpp.CONSTS = constants;
 
 const common = {
+	App: appState,
+	header,
+	mainMenu,
 	registerBox,
 };
+
+const pressetStatic = () => {return{
+    App: appState,
+    header,
+    mainMenu,
+	registerBox,
+}};
 
 
 switch (ABpp.config.currentPage)
@@ -52,9 +68,6 @@ switch (ABpp.config.currentPage)
 	}
 	case  ABpp.CONSTS.PAGE_MAIN: {
 		reducers = {
-			App: appState,
-			header,
-			mainMenu,
 			mainPage,
 			myPosReduce,
 			sidebar,
@@ -63,15 +76,13 @@ switch (ABpp.config.currentPage)
 			defaultOrdersLocal,
 			activeTrader,
 			yourOrders,
+			disqus,
 			...common,
 		};
 		break;
 	}
 	case ABpp.CONSTS.PAGE_EVENT:{
 		reducers = {
-			App: appState,
-			header,
-			mainMenu,
 			eventPage,
 			sidebar,
 			// tradeSlip,
@@ -84,9 +95,6 @@ switch (ABpp.config.currentPage)
 	}
 	case ABpp.CONSTS.PAGE_ACCOUNT:{
 		reducers = {
-			App: appState,
-			header,
-			mainMenu,
 			accountPage,
 			deposit,
 			withdraw,
@@ -113,27 +121,35 @@ switch (ABpp.config.currentPage)
 	}
 	case ABpp.CONSTS.PAGE_STATIC:{
 		reducers = {
-			App: appState,
-			header,
-			mainMenu,
 			...common,
 		};
 		break;
 	}
+
+	case ABpp.CONSTS.PAGE_GIDX_VERIFICATION: {
+		reducers = {
+			...pressetStatic(),
+            gidxVerification: Framework.getHandler(GidxVerificationReducer),
+		};
+		break;
+	}
+
+	case ABpp.CONSTS.PAGE_GIDX_WITHDRAW: {
+		reducers = {
+			...pressetStatic(),
+            gidxCashier: Framework.getHandler(GidxCashierReducer),
+		};
+		break;
+	}
+
 	case ABpp.CONSTS.PAGE_ANSWER:{
 		reducers = {
-			App: appState,
-			header,
-			mainMenu,
 			...common,
 		};
 		break;
 	}
 	case ABpp.CONSTS.PAGE_ACCOUNT_CONFIRM:{
 		reducers = {
-			App: appState,
-			header,
-			mainMenu,
 			confirmRegisterPage,
 			...common,
 		};

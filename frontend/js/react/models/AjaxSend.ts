@@ -2,6 +2,11 @@
  * Created by Vlasakh on 08.03.2017.
  */
 
+
+/// <reference path="../../.d/common.d.ts" />
+
+
+
 var __LDEV__ = true;
 interface JQueryStatic {
     ajax(p1?, p2?, p3?): any;

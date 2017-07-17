@@ -15,7 +15,7 @@ class accountClass
 	{
 		// let hello = 1;
 		// BM: passwordCompare
-		this.passwordCompare = function () {
+		/*this.passwordCompare = function () {
 			let currentPass = '.wrapper_user_page #user_curr_pass',
 					newPass = '.wrapper_user_page #user_pass',
 					confirmPass = '.wrapper_user_page #user_confirm_pass';
@@ -135,7 +135,7 @@ class accountClass
 					$(this).parent().find('.validation-summary-errors').text(errorText);
 				});
 			}
-		}();
+		}();*/
 
         // BM: balanceAnimation
 		accountClass.balanceAnimation();

@@ -37,9 +37,9 @@ $main_page_event_chart_button: url("#{$pathImage}/sprite.svg") no-repeat -224px 
 @mixin main_page_event_bg{  background: linear-gradient(to bottom, #53515e, #292830);  }
 
 // при изменении поменять и в /frontend/admin_styles/inc/_vars.scss  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-$line1ico: -276px;
-$line2ico: -429px;
-$line3ico: -465px;
+$line1ico: -275px;
+$line2ico: -428px;
+$line3ico: -464px;
 @mixin main_page_event_icon{
 	&.sport:before {  background-position: -68px $line1ico;  }
 	&.cybersport:before, &.e_sport:before{  background-position: -186px $line1ico;  }

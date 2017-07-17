@@ -702,6 +702,8 @@ interface JQueryStatic {
      */
     ajax(url: any, settings?: JQueryAjaxSettings): JQueryXHR;
 
+    ajax(url: any, settings?: any): JQueryXHR;
+
     /**
      * Handle custom Ajax options or modify existing options before each request is sent and before they are processed by $.ajax().
      *

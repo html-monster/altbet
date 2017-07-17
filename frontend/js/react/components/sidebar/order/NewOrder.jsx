@@ -21,14 +21,14 @@ export default class NewOrder extends React.PureComponent
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
 		};
-
+		
 		return <div className={classnames(`order_content new animated`, { local_view: localView })}>
 			<div className="order-title">
 				{
 					!localView &&
 					<h3>{data.EventTitle}</h3>
 				}
-				<button className="close close_blue" onClick={actions.actionOnDeleteOrder.bind(null, {data, mainPageActions})} title="Close window"/>
+				<button className="close close_blue" onClick={actions.actionOnDeleteOrder.bind(null, {data, mainPageActions})} title="Close window" ref={'closeButton'}/>
 				{/*<span className="close" onClick={actions.actionOnDeleteOrder.bind(null, {data, mainPageActions})}><span>{}</span></span>*/}
 				<strong className="current-order pos">Units: <span>{data.Positions}</span></strong>
 			</div>
@@ -59,15 +59,15 @@ export default class NewOrder extends React.PureComponent
 							ask={data.Ask === 1 ? null : data.Ask}
 							bid={data.Bid === 0 ? null : data.Bid}
 							price={item.Price}
-							priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.StartDate)}
+							priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.StartDate, 1, {TZOffset: false})}
 							maxEntries={100}
-							minPrice={0.5}
+							minPrice={data.minPrice ? data.minPrice : 0.5}
 							remainingBal={95}
 							quantity={item.Volume}
 							isMirror={item.isMirror}
 							symbol={symbol}
-							startDate={(new DateLocalization).fromSharp(data.StartDate)}
-							endDate={data.EndDate ? (new DateLocalization).fromSharp(data.EndDate) : data.EndDate}
+							startDate={(new DateLocalization).fromSharp(data.StartDate, 1, {TZOffset: false})}
+							endDate={data.EndDate ? (new DateLocalization).fromSharp(data.EndDate, 1, {TZOffset: false}) : data.EndDate}
 							ResultExchange={data.ResultExchange}
 							newOrder={true}
 							showDeleteButton={true}

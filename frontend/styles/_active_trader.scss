@@ -10,7 +10,7 @@
 		background: url("#{$pathImage}/ajax-loader.gif") rgba(0, 0, 0, 0.7) no-repeat center center;
 	  &:after{  }
 	}
-	.blocked{ width: 100%; height: 100%; position: absolute; top: 0; z-index: 101; font-size: 14px; color: rgba(255, 255, 255, 0.8);
+	div.blocked{ width: 100%; height: 100%; position: absolute; top: 0; z-index: 101; font-size: 14px; color: rgba(255, 255, 255, 0.8);
 		background: rgba(0, 0, 0, 0.8);
 		span{ position: absolute; top: 50%; left: 0; right: 0; padding: 0 10px; text-align: center;
 			&:before{ content: ''; display: block; width: 100px; height: 100px; position: absolute; top: -120px;
@@ -452,7 +452,7 @@
 			overflow-y: auto;
 			transition: 0.4s ease-out;
 			position: relative;
-			@include scroll;
+			@include scrollWhite;
 			text-align: center;
 			tr{
 				display: block;

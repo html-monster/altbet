@@ -4,6 +4,7 @@ import React from 'react';
 
 import OrderForm from './order/OrderForm.jsx';
 import yourOrdersActions from '../../actions/Sidebar/yourOrderActions.ts';
+import { DateLocalization	 } from '../../models/DateLocalization';
 
 class YourOrders extends React.Component
 {
@@ -41,7 +42,7 @@ class YourOrders extends React.Component
 	{
 		// let yourOrdersData = this.state.data;
 		let yourOrdersData = this.props.yourOrders;
-		return <div className="tab_item" id="current-orders">
+		return <div className={'tab_item' + (ABpp.User.userIdentity ? ' active' : '')} id="current-orders">
 			{
 				ABpp.User.login ?
 					yourOrdersData.yourOrders.length ?
@@ -215,15 +216,15 @@ class OrderItem extends React.Component
 					ask={data.Symbol.LastAsk === 1 ? null : data.Symbol.LastAsk}
 					bid={data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid}
 					price={(data.Price).toFixed(2)}
-					priceDisabled={+moment().format('x') < +(data.Symbol.StartDate).slice(6, -2)}
+					priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false})}
 					maxEntries={100}
-					minPrice={0.5}
+					minPrice={data.Price}
 					remainingBal={95}
 					quantity={data.Volume}
 					isMirror={data.isMirror}
 					symbol={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}
-					startDate={+(data.Symbol.StartDate).slice(6, -2)}
-					endDate={data.Symbol.EndDate ? +(data.Symbol.EndDate).slice(6, -2) : data.Symbol.EndDate}
+					startDate={(new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false})}
+					endDate={data.Symbol.EndDate ? (new DateLocalization).fromSharp(data.Symbol.EndDate, 1, {TZOffset: false}) : data.Symbol.EndDate}
 					ResultExchange={data.Symbol.ResultExchange}
 					newOrder={false}
 					showDeleteButton={false}
