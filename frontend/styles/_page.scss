@@ -1,29 +1,6 @@
 // *****
 // styles form static pages
 // *****
-
-.container_bg{
-	padding: 20px;
-	background: $sign_in_bg;
-	border-radius: 6px;
-}
-	&.faq {// убрать после полной переделки
-		h2{
-			font-size: 22px;
-		}
-		.question{
-			font-weight: bold;
-			cursor: pointer;
-			&:hover + .answer p{  color: $trader_button_color;  }
-		}
-		.answer{
-			display: none;
-			p{
-				margin: 0;
-				transition: 0.4s ease-out;
-			}
-		}
-	}
 	.payment_method{// убрать после полной переделки
 		 table{
 			 tr{
@@ -84,5 +61,6 @@
 @import "./static_pages/_about_page";
 @import "./static_pages/_tradingRules";
 @import "./static_pages/_help.scss";
+@import "./static_pages/_cookiePolicy.scss";
 
 

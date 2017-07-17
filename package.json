@@ -73,6 +73,7 @@
         "classnames": "^2.2.5",
         "css-loader": "^0.22.0",
         "file-loader": "^0.8.5",
+        "gulp": "github:gulpjs/gulp#4.0",
         "gulp-autoprefixer": "^3.1.0",
         "gulp-babel": "^6.1.1",
         "gulp-rev-all": "^0.9.7",
@@ -102,7 +103,7 @@
         "webpack-uglify-js-plugin": "^1.1.9"
     },
     "name": "Altbet",
-    "version": "3.3.4",
+    "version": "3.3.6",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/html-monster/altbet.git"
