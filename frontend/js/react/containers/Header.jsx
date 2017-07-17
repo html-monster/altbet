@@ -136,6 +136,7 @@ class Header extends React.Component
 						ABpp.User.userIdentity ?
 							<div className="log_in active">
 								<ul className="user-menu">
+{/*
 									<li>
 										<strong className="change-color">
 											Theme color
@@ -143,6 +144,7 @@ class Header extends React.Component
 											<button className={'light color_pick' + (globalData.theme === 'light' ? ' active' : '')} title="light theme">{}</button>
 										</strong>
 									</li>
+*/}
 									<li><a href={ABpp.baseUrl + '/Account'}>Account</a></li>
 									<li><a href={ABpp.baseUrl + '/Account/Logout'}>Log out</a></li>
 								</ul>
