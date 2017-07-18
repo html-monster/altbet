@@ -1,56 +1,22 @@
 .page_wrapper {
-  .white_title {
-    color: #fff;
-  }
-
   .payment_method {
     table { margin: 10px auto 50px;
-      .border_tr { border-bottom-style: none;
-        .without_bord { padding: 5px 0px 20px;
-        }
-      }
-      td {
-        &:nth-of-type(1) {width: 20%;  padding: 0px 10px; }
-        &:nth-of-type(2) { width: 10%; padding: 0px 10px }
-        &:nth-of-type(3), &:nth-of-type(6) { width: 10%; padding: 10px }
-        &:nth-of-type(4) { width: 15%; }
-        &:nth-of-type(5) { width: 25%; padding: 0px 10px; }
-        &:nth-of-type(7) { width: 25%; padding: 0px 25px; }
-        &:nth-of-type(8) { width: 25%; padding: 10px 30px; }
-
-        img {
-          background: url("#{$pathImage}/payment_sprite.png") no-repeat;
-          background-size: 250px 187px;
-          background-position: -2px -3px;
-          display: inline-block;
-          margin: 0px 0px 15px;
-          &.visa_debit {
-            background-position: -68px -2px;
-          }
-          &.maestro {
-            background-position: -67px -53px;
-          }
-          &.master_card {
-            background-position: -2px -52px;
-          }
-          &.neteller {
-            background-position: -1px -95px;
-          }
-          &.skrill {
-            background-position: -61px -95px;
-          }
-          &.bank_transfer {
-            background-position: -1px -128px;
+      tr {
+        td { padding: 10px 15px; border: 1px solid #6d6d6d;
+          img { display: inline-block; margin: 0px 0px 15px; background: url("#{$pathImage}/payment_sprite.png") no-repeat; background-size: 250px 187px; background-position: -2px -3px;
+            &.visa_debit { background-position: -68px -2px; }
+            &.maestro { background-position: -67px -53px; }
+            &.master_card { background-position: -2px -52px; }
+            &.neteller { background-position: -1px -95px; }
+            &.skrill { background-position: -61px -95px; }
+            &.bank_transfer { background-position: -1px -128px; }
           }
         }
       }
     }
 
-    .noBorder1 {
-      border-right-style: none;
-    }
-    .noBorder2 {
-      border-left-style: none;
-    }
   }
+  .white_title{ color: #fff; }
+  .final{ display: flex; flex-direction: column; width: 60%; }
 }
+
