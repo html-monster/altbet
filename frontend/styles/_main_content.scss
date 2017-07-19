@@ -515,7 +515,8 @@
 
 
     .breadcrumbs { float: left; margin: 10px 0 0 0; font-size: 12px;
-      a { color: $link-color }
+      a:not(.link) { color: $color-link1 }
+      span { display: inline-block; padding: 0 0 0 7px }
     }
   }
 }

@@ -12,6 +12,7 @@ import sidebarActions from '../actions/sidebarActions.ts';
 import disqusActions from '../actions/disqusActions';
 import { Framework } from '../common/Framework';
 // import chartActions from '../actions/MainPage/chartActions';
+import classNames from 'classnames';
 
 // class MainPage extends React.Component
 class MainPage extends BaseController
@@ -114,16 +115,7 @@ class MainPage extends BaseController
                 <div className="wrapper" id="exchange">
                     <div className="sort-btns">
                         <div className="breadcrumbs">
-                            {0||console.log( 'br', Breadcrumbs.reduce((prev, val) => prev ? prev + ` > ` + <a href="#">{val.CatName}</a> : <a href="#">{val.CatName}</a>, '') )}
-                            {Breadcrumbs.reduce((prev, val) => {
-                                if( prev.length )
-                                {
-                                    prev.push(` > `);
-                                    prev.push(<a href="#">{val.CatName}</a>);
-                                }
-                                else prev.push(<a href="#">{val.CatName}</a>);
-                                return prev;
-                            }, [])}
+                            {this._prepareBreadcrumbs(Breadcrumbs.slice())}
                         </div>
                         {
                             Object.keys($tabs).map((val, key) =>
@@ -221,6 +213,25 @@ class MainPage extends BaseController
     _setCurrentExchange(item)
     {
         this.setState({...this.state, currentExchange: item});
+    }
+
+
+    _prepareBreadcrumbs(Breadcrumbs)
+    {
+        if( Breadcrumbs.length )
+        {
+            Breadcrumbs.unshift({CatName: 'All'});
+            return Breadcrumbs.reduce((prev, val, key, arr) => {
+                if( prev.length )
+                {
+                    prev.push(<span key={key + 'a'}>&#12297;</span>);
+                    prev.push(<a href={ABpp.baseUrl + val.CatUrlChain} key={key} class={classNames({"link": key === arr.length-1})}>{val.CatName}</a>);
+                }
+                else prev.push(<a href={globalData.Urls.Home} key={key} class={classNames({"link": key === arr.length-1})}>{val.CatName}</a>);
+                return prev;
+            }, [])
+        }
+        else return [];
     }
 
 /*
