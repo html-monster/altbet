@@ -248,6 +248,7 @@ gulp.task('watch-admin', function () {
     gulp.watch('frontend/admin_styles/**/*.*', gulp.series('styles-admin'));
     gulp.watch(OPTIONS.path.dest_server_admin + '/Content/dist/*.*', {delay: 700}, gulp.series('admin-css-rev'));
     gulp.watch(OPTIONS.path.dest_server_admin + '/Scripts/dist/*.*', {delay: 700}, gulp.series('admin-js-rev'));
+    return false;
 });
 
 // BM: ========================================================================================== FRONT DEV BUILDING ===

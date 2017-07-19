@@ -73,7 +73,7 @@ module.exports = {
     },
 
     plugins: [
-        new WebpackNotifierPlugin({title: 'bundle ADM.js', alwaysNotify: true}),
+        // new WebpackNotifierPlugin({title: 'bundle ADM.js', alwaysNotify: true}),
         // new ExtractTextPlugin('[name].css', {
         //     allChunks: true
         // })

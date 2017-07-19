@@ -6,22 +6,32 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import headerActions from '../actions/headerActions.ts';
+import sidebarActions from '../actions/sidebarActions.ts';
 import AnimateOnUpdate from '../components/Animation';
+import {CheckBox} from '../components/common/CheckBox';
 import OddsConverter from '../models/oddsConverter/oddsConverter.js';
 import {DropBox} from '../components/common/DropBox';
 
 
 class Header extends React.Component
 {
-	constructor()
+    /**@private*/ userMenu;
+    /**@private*/ OddsConverterObj;
+
+
+	constructor(props)
 	{
-		super();
+		super(props);
 		this.OddsConverterObj = new OddsConverter();
 	}
 
 	componentDidMount()
 	{
-		this.props.actions.onSocketMessage();
+		this.props.actions.actionSocketSubscribe();
+
+		0||console.log( 'this.props', this.props );
+
+		/** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, () => this.props.actions.actionSwitchBasicMode(ABpp.config.basicMode));
 	}
 
 	listSlide(toggle, event)
@@ -135,7 +145,7 @@ class Header extends React.Component
 					{
 						ABpp.User.userIdentity ?
 							<div className="log_in active">
-								<ul className="user-menu">
+								<ul ref={(val) => this.userMenu = val} className="user-menu">
 {/*
 									<li>
 										<strong className="change-color">
@@ -145,6 +155,15 @@ class Header extends React.Component
 										</strong>
 									</li>
 */}
+									<li>
+										{/*<div className="item checkbox-v2-right">
+											<label>
+												<span>Detailed View</span>
+												<input type="checkbox" defaultChecked={false} onClick={::this._onDetailedViewClick} defaultValue={"aa"}/>
+											</label>
+										</div>*/}
+                                        <CheckBox data={{className: "item checkbox-v2-right", label: "Detailed View"}} onChange={::this._modeSwitch} />
+									</li>
 									<li><a href={ABpp.baseUrl + '/Account'}>Account</a></li>
 									<li><a href={ABpp.baseUrl + '/Account/Logout'}>Log out</a></li>
 								</ul>
@@ -153,7 +172,7 @@ class Header extends React.Component
 								 /!*<span className="count">99</span>*!/
 								 </span>
 								 */}
-								<span className="user-name">{ABpp.User.login}</span>
+								<span className="user-name" onClick={::this._onLoginClick}>{ABpp.User.login}</span>
 							</div>
 							:
 							<div className="log_out active">
@@ -188,6 +207,47 @@ class Header extends React.Component
 
 		return inItems;
 	}
+
+
+    /**
+     * on login name click
+     * @private
+     */
+    _onLoginClick()
+    {
+        $(this.userMenu).slideToggle().toggleClass('active');
+    }
+
+
+    _modeSwitch(ee, p1, isChecked, p3)
+    {
+        // 0||console.log( '{ee, p1, p2, p3}', {ee, p1, p2, p3} );
+        // return;
+
+        const checked = isChecked;
+        const { sidebarActions } = this.props;
+
+        if(checked)
+        {
+            globalData.basicMode = false;
+
+			ABpp.config.basicMode = false;
+			// ABpp.config.tradeOn = false;
+			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
+
+			if(globalData.tradeOn) sidebarActions.actionOnTraderOnChange(checked);
+		}
+		else
+		{
+			globalData.basicMode = true;
+
+			ABpp.config.basicMode = true;
+			// ABpp.config.tradeOn = true;
+			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
+
+			sidebarActions.actionOnTraderOnChange(checked);
+		}
+    }
 }
 
 export default connect(state => ({
@@ -195,5 +255,6 @@ export default connect(state => ({
 	}),
 	dispatch => ({
 		actions: bindActionCreators(headerActions, dispatch),
+		sidebarActions: bindActionCreators(sidebarActions, dispatch),
 	})
 )(Header)

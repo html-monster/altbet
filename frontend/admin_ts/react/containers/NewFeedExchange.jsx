@@ -6,6 +6,7 @@ import BaseController from './BaseController';
 import Actions from '../actions/NewFeedExchangeActions.ts';
 import {DropBox} from '../components/common/DropBox';
 import {PlayersTable} from 'components/NewFeedExchange/PlayersTable';
+import {DefenceChoose} from 'components/NewFeedExchange/DefenceChoose';
 import {Team1} from '../components/NewFeedExchange/Team1';
 import {TeamResVar} from 'components/NewFeedExchange/TeamResVar';
 import {NewCategory} from '../components/NewFeedExchange/NewCategory';
@@ -44,18 +45,19 @@ class NewFeedExchange extends BaseController
 
     render()
     {
-        // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
-        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, Rules, CurrentTeam, Category, ParentId, ParentCategory, Categories} = this.props.data;
+        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, CurrentEventObj, Rules, CurrentTeam, Category, ParentId, ParentCategory, Categories, TimeEvent } = this.props.data;
         const { currTeamKey, okBtnDisabled } = this.state;
         var items = [], currentCat, catItems;
 
+        // console.log( '{CurrentEventObj, FormData}', {CurrentEventObj, FormData} );
+
         // prepare command creation interface data
         const playersComponents = [
-            [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={PlayersTeam1.players} name={FormData['teamName1']} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
+            [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={{players: PlayersTeam1.players, TeamDefence: FormData['Team1Defense'], name: FormData['teamName1'], positions: Positions, uplayerdata: UPlayerData, actions, teamNum: "1", TimeEvent}} />,],
             [1, 2, 'Reserve players team 1', PlayersTeam1Reserve.players, <TeamResVar players={PlayersTeam1Reserve.players} teamVar="PlayersTeam1Reserve" actions={actions} teamNum="1" />,],
             [1, 3, 'Variable reserve team 1', PlayersTeam1Variable.players, <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
-            [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={PlayersTeam2.players} name={FormData['teamName2']} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />,],
+            [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={{players: PlayersTeam2.players, TeamDefence: FormData['Team2Defense'], name: FormData['teamName2'], positions: Positions, uplayerdata: UPlayerData, actions, teamNum: "2", TimeEvent}} />,],
             [2, 2, 'Reserve players team 2', PlayersTeam2Reserve.players, <TeamResVar players={PlayersTeam2Reserve.players} teamVar="PlayersTeam2Reserve" actions={actions} teamNum="2" />,],
             [2, 3, 'Variable reserve team 2', PlayersTeam2Variable.players, <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
         ];
@@ -150,6 +152,23 @@ class NewFeedExchange extends BaseController
                                                 { value: '2', label: 'var 2'},
                                             ]}*/
                                             clearable={false} value={items[0]} searchable={true} afterChange={actions.actionChangeEvent}/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <div class="panel box box-default">
+                                    <div class="box-header">
+                                        <h4 class="box-title">
+                                            Chose command for defence
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse">
+                                        <div class="box-body">
+                                            <DefenceChoose data={{CurrentEventObj, FormData, actions}}/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

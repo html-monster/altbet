@@ -10,13 +10,11 @@
     .events-filters { display: inline-block; margin-left: 20px; }
     .pos-filters { margin-right: 0 }
     .h-players {
-      .f-btn.active { font-weight: bold }
-      .fa-plus { color: #00a65a; }
       tr.used td { background: $color1 }
       tr.used.team2 td { background: darken($color1, 10%) }
     }
-    .h-team {
-    }
+    .f-btn.active { font-weight: bold }
+    .fa-plus { color: #00a65a; }
   }
   .teams-table {
     tr.empty td { color: gray; }
@@ -36,5 +34,7 @@
   }
 
   .btn-ok { width: 100px }
+
+  .defence span { border-bottom: 1px dotted $colorBody; }
 }
 

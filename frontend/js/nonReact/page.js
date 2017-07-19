@@ -208,9 +208,6 @@ $(document).ready(function () {
     // });
 
 
-    $('.log_in').click(function () { //header account dropdown list
-        $('.user-menu').slideToggle().toggleClass('active');
-    });
 
     $('.show_password').mousedown(function () { // show password
         $(this).parents('.pass_container').find('input[type=password]').attr('type', 'text');

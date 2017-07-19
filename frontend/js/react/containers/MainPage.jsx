@@ -112,7 +112,7 @@ class MainPage extends BaseController
                     {/*<li>Manchester United vs. Chelsea</li>*/}
                 {/*</ul>*/}
                 <div className="wrapper" id="exchange">
-                    <div className="stattabs">
+                    <div className="sort-btns">
                         {
                             Object.keys($tabs).map((val, key) =>
                                 <a href={"?sort=" + val} key={val} className={"stab" + (val == currSort || !currSort && !key ? " active" : '')}><span data-content={$tabs[val]}>{}</span></a>)
@@ -122,6 +122,7 @@ class MainPage extends BaseController
                         <span className="stab"><span data-content="Trending"></span></span>
                         <span className="stab"><a href="?sort=new"><span data-content="New">{}</span></a></span>
                         <span className="stab"><a href="?sort=movers"><span data-content="Movers">{}</span></a></span>*/}
+{/*
                         <div className="mode_wrapper">
                             <label className="mode_switch">
                                 <input defaultChecked={!isBasicMode} id="Mode" name="Mode" type="checkbox"
@@ -129,6 +130,7 @@ class MainPage extends BaseController
                                 { isBasicMode ? <span>Basic View</span> : <span>Detailed View</span> }
                             </label>
                         </div>
+*/}
                     </div>
                     <div className="tab_content">
                         <div className="tab_item active">
@@ -209,6 +211,7 @@ class MainPage extends BaseController
         this.setState({...this.state, currentExchange: item});
     }
 
+/*
 	_modeSwitch(event)
     {
         const checked = event.target.checked;
@@ -235,6 +238,7 @@ class MainPage extends BaseController
 			sidebarActions.actionOnTraderOnChange(checked);
 		}
     }
+*/
 }
 
 // __DEV__&&console.debug( 'connect', connect );

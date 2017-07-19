@@ -123,7 +123,7 @@ export default class Actions extends BaseActions
 
                 switch (answer.ErrorCode){
                     case 200:{
-                        self.addFile(answer);
+                        self.addFile(answer, files);
                         break;
                     }
                     case 100:{

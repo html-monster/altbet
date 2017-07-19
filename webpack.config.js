@@ -19,7 +19,7 @@ module.exports = [
     configBundle,
     configBundleR,
     configBundleM,
-    configAdmin,
+    // configAdmin,
     ];
 
 

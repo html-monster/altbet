@@ -16,6 +16,7 @@ class RApp extends React.Component
         props.actions.setInstance(this);
 
         ABpp.ver = '[AIV]{version}[/AIV]';
+        __DEV__&&console.info( '--------------------------------------------------' );
         __DEV__&&console.info( `version: ${ABpp.ver} (<<REPLACE VERSION>>)` );
         // 0||console.log( 'here', 4 );
 
