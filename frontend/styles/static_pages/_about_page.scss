@@ -6,8 +6,8 @@ $colorAbout: #b0afb0;
   //width: 85%;
   //margin-left: 15%;
   //margin-top: 70px;
-  padding: 15px;
-  padding-top: 0;
+  //padding: 15px;
+  //padding-top: 0;
   //padding-left: 50px;
   //overflow: hidden;
   //background-color: rgba(243, 253, 255, 0.92);
@@ -28,26 +28,6 @@ $colorAbout: #b0afb0;
       }
     }
   }
-  .about_info{
-    margin-right: 10%;
-    h1, h2{  margin-top: 0; font-size: 30px;  color: $colorAbout; }
-    p{  padding: 10px 25px 10px 0;  color: $colorAbout;  }
-  }
 }
 
-// таблица на StaticP
-#glossary {
-  margin-bottom: 30px;
-  table {
-    max-width: 800px;
-    width: 100%;
-    text-align: center;
-    border: 1px solid #6d6d6d;
-    tr {
-      border-bottom: 1px solid #6d6d6d;
-      th, td {
-        border-right: 1px solid #6d6d6d;
-      }
-    }
-  }
-}
+

@@ -13,7 +13,6 @@ function _t(inStr) {
 // BM: for Discuss
 if (!globalData.landingPage && appData && appData.pageEventData) {
     try {
-        //is used by Discuss by default
         var disqus_config = function () {
             this.page.url = "http://" + location.host + appData.pageEventData.exchangeLink;  // Replace PAGE_URL with your page's canonical URL variable
             this.page.identifier = appData.pageEventData.SymbolsAndOrders.Symbol.Exchange; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
@@ -208,9 +207,6 @@ $(document).ready(function () {
     // });
 
 
-    $('.log_in').click(function () { //header account dropdown list
-        $('.user-menu').slideToggle().toggleClass('active');
-    });
 
     $('.show_password').mousedown(function () { // show password
         $(this).parents('.pass_container').find('input[type=password]').attr('type', 'text');
@@ -255,7 +251,23 @@ $(document).ready(function () {
     });
 
 
+// STATIC PAGES
+// todo: move in the separate file
+//glossary ========================================================================================================
+
+    $('.js-titleMain h4').click(function () {
+        $('.js-titleMain h4').not(this).next().slideUp(200);
+        $(this).next().slideToggle(200);
+    });
+
+//terms and conditions______________________________________________________________________________________________
+    $('.js-titleMain').click(function(){
+        $('.js-titleMain').not(this).next().slideUp(200);
+       $(this).next().slideToggle(200);
+    });
+
+
+//help______________________________________________________________________________________________
 
 });
-
 

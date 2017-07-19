@@ -18,9 +18,14 @@ export class Team1 extends React.Component
 
     render()
     {
-        const { data, name, positions, teamNum, actions, uplayerdata: {uniPositionIndex, uniPositionName} } = this.props;
+        const { players, name, positions, teamNum, TeamDefence, TimeEvent, actions, uplayerdata: {uniPositionIndex, uniPositionName} } = this.props.data;
         let jj = 0, kk = 1;
         // 0||console.log( 'da', data );
+        let Defence = {};
+        TimeEvent.forEach((val) => {
+            if (val.HomeId === TeamDefence.TeamId) Defence = {name: val.HomeTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
+            if (val.AwayId === TeamDefence.TeamId) Defence = {name: val.AwayTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
+        });
 
         return (
             <div className="h-team">
@@ -53,17 +58,17 @@ export class Team1 extends React.Component
                             let ret = [];
                             for( let ii = 0; ii < itm.Quantity; ii++ )
                             {
-                                if( data[jj] && data[jj].Index == itm.Index )
+                                if( players[jj] && players[jj].Index == itm.Index )
                                 {
                                     ret.push(<tr key={itm.Name + ii}>
                                         <td> {kk++} </td>
-                                        <td> {itm.Name === uniPositionName ? <span title="Universal player">UP ({data[jj].meta.PositionOrig})</span> : data[jj].Position} </td>
-                                        <td> {data[jj].Team} </td>
-                                        <td> {data[jj].Name} </td>
-                                        <td><NumericInput className="eppg" value={data[jj].Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: data[jj], team: "PlayersTeam"+teamNum, type: 'Eppg'})} style={ false } /></td>
-                                        <td><NumericInput className="fppg" value={data[jj].Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: data[jj], team: "PlayersTeam"+teamNum, type: 'Fppg'})} style={ false } /></td>
-                                        <td> {data[jj].Status} </td>
-                                        <td><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: data[jj], team: teamNum, used: data[jj].used})} title="Remove player"><i className="fa fa-remove -red">{}</i></button></td>
+                                        <td> {itm.Name === uniPositionName ? <span title="Universal player">UP ({players[jj].meta.PositionOrig})</span> : players[jj].Position} </td>
+                                        <td> {players[jj].Team} </td>
+                                        <td> {players[jj].Name} </td>
+                                        <td><NumericInput className="eppg" value={players[jj].Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: players[jj], team: "PlayersTeam"+teamNum, type: 'Eppg'})} style={ false } /></td>
+                                        <td><NumericInput className="fppg" value={players[jj].Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: players[jj], team: "PlayersTeam"+teamNum, type: 'Fppg'})} style={ false } /></td>
+                                        <td> {players[jj].Status} </td>
+                                        <td><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: players[jj], team: teamNum, used: players[jj].used})} title="Remove player"><i className="fa fa-remove -red">{}</i></button></td>
                                     </tr>);
                                     jj++;
                                 }
@@ -82,6 +87,14 @@ export class Team1 extends React.Component
                     }
                     </tbody>
                 </table>
+
+                {Defence.name ?
+                    <div className="defence">
+                        <b>Defence</b>: <span title={`From event “${Defence.event}”`}>{Defence.name}</span>
+                    </div>
+                    :
+                    <div className="defence"><b>Defence</b>: <i>Not set, please, choose a command for defence</i></div>
+                }
             </div>
         );
     }

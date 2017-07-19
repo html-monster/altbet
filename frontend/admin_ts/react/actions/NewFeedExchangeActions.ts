@@ -15,6 +15,8 @@ import {
     ON_GEN_URL,
     ON_SAVE_EVENT_OK,
     ON_SAVE_EVENT_FAIL,
+    ON_ADD_TEAM_DEFENCE,
+    ON_REM_TEAM_DEFENCE,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -176,6 +178,7 @@ export default class Actions extends BaseActions
 
             ajaxPromise.then( result =>
                 {
+                    // 0||console.log( 'result.data.TimeEvent', result.data.TimeEvent );
                     dispatch({
                         type: ON_CHANGE_EVENTS_PERIOD,
                         payload: [result.data.TimeEvent, filterVal],
@@ -372,6 +375,37 @@ export default class Actions extends BaseActions
                 type: ON_GEN_URL,
                 payload: inProps,
                 // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Add team defence
+     */
+    public actionAddTeamDefence(inProps?)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_ADD_TEAM_DEFENCE,
+                payload: inProps,
+                // payload: this.addTeamDefence.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Remove team defence
+     */
+    public actionDelTeamDefence(inProps?)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_REM_TEAM_DEFENCE,
+                payload: inProps,
             });
         };
     }
@@ -696,6 +730,14 @@ export default class Actions extends BaseActions
 
 
         return resObj;
+    }
+
+
+    /**
+     * Add real team to defence
+     */
+    private TODEL_addTeamDefence({TeamId, team})
+    {
     }
 }
 

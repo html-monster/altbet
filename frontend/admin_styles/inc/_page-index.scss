@@ -28,7 +28,7 @@
 
     .exchanges { margin-top: 20px;
       .icon {
-        a { border-bottom: 1px dotted lighten($colorFont, 20%); color: $colorFont;
+        a { border-bottom: 1px dotted lighten($colorBody, 20%); color: $colorBody;
           &:hover { border-bottom-style: solid }
         }
       }

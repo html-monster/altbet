@@ -1,0 +1,22 @@
+.page_wrapper {
+  .payment_method {
+    table { margin: 10px auto 50px;
+      tr {
+        td { padding: 10px 15px; border: 1px solid #6d6d6d;
+          img { display: inline-block; margin: 0px 0px 15px; background: url("#{$pathImage}/payment_sprite.png") no-repeat; background-size: 250px 187px; background-position: -2px -3px;
+            &.visa_debit { background-position: -68px -2px; }
+            &.maestro { background-position: -67px -53px; }
+            &.master_card { background-position: -2px -52px; }
+            &.neteller { background-position: -1px -95px; }
+            &.skrill { background-position: -61px -95px; }
+            &.bank_transfer { background-position: -1px -128px; }
+          }
+        }
+      }
+    }
+
+  }
+  .white_title{ color: #fff; }
+  .final{ display: flex; flex-direction: column; width: 60%; }
+}
+

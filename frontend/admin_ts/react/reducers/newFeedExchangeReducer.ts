@@ -18,10 +18,14 @@ import {
     ON_GEN_FULL_NAME,
     ON_GEN_URL,
     ON_SAVE_EVENT_OK,
+    ON_ADD_TEAM_DEFENCE,
+    ON_REM_TEAM_DEFENCE,
 } from '../constants/ActionTypesNewFeedExchange';
 /// TS_IGNORE
 import {Common} from "../common/Common";
 
+
+var __EMULATE__ = true;
 
 
 export default class Reducer
@@ -33,6 +37,7 @@ export default class Reducer
 
 
     private initialState = {
+        initialised: false,
         Players: [],
         PlayersTeam1: {positions: {}, players: []},
         PlayersTeam1Reserve: {players: []},
@@ -43,11 +48,12 @@ export default class Reducer
         Positions: null,
         EventId: null,
         LastEventId: null,
+        CurrentEventObj: globalData.AppData.TimeEvent[0],
         UPlayerData: {
             uniPositionName: 'Util',
             uniPositionIndex: 5,
         },
-        EventFilter: {'0': '1min', '2': '2h', '4': '4h', '8': '8h'},
+        EventFilter: {'0': '1min', '2': '2h', '4': '4h', '8': '8h', '12': '12h', '24': '24h','48': '48h'},
         Rules: {
             reserveLen: 5, // reserve players count
             variableLen: 5, // reserve players count
@@ -63,8 +69,12 @@ export default class Reducer
             fullName: '',
             category: '',
             url: '',
+            Team1Defense: {TeamId: null, EventId: null}, // HomeDefense
+            Team2Defense: {TeamId: null, EventId: null}, // AwayDefense
         },
         ParentCategory: 'Amer sport',
+        Team1name: '', // team1 alias from server
+        Team2name: '', // team2 alias from server
         ...globalData.AppData,
     };
 
@@ -72,10 +82,19 @@ export default class Reducer
 
     init()
     {
+        if (this.initialState.initialised) return;
+
         this.initialState.Positions = this.preparePositions(globalData.AppData.Positions);
         // load saved teams
         let loadedData = this.loadData();
         this.initialState = {...this.initialState, ...loadedData};
+        //DEBUG: emulate
+        if (__EMULATE__) this.initialState.TimeEvent = this.initialState.TimeEvent.map((val) => {val.HomeId += 'H'; val.AwayId += 'A'; return val});
+
+        // init current event obj
+        this.initialState.CurrentEventObj = this.initialState.TimeEvent.filter((val) => val.EventId == this.initialState.LastEventId)[0];
+        this.initialState.initialised = true;
+        // 0||console.log( 'this.initialState.CurrentEventObj', this.initialState.CurrentEventObj, this.initialState.LastEventId, this.initialState.TimeEvent );
     }
 
 
@@ -146,6 +165,14 @@ export default class Reducer
                 state = this.saveEventSuccess(action.payload, state);
                 return {...state};
 
+            case ON_ADD_TEAM_DEFENCE:
+                state = this.addTeamDefence(action.payload, state);
+                return {...state};
+
+            case ON_REM_TEAM_DEFENCE:
+                state = this.removeTeamDefence(action.payload, state);
+                return {...state};
+
             default:
                 this.init();
                 return state
@@ -165,6 +192,20 @@ export default class Reducer
         if( data )
         {
             data = JSON.parse(data);
+            //DEBUG: remove
+            data.FormData = {
+                    teamName1: '',
+                    teamName2: '',
+                    startDate: '',
+                    fullName: '',
+                    category: '',
+                    url: '',
+                    Team1Defense: {TeamId: null, EventId: null}, // HomeDefense
+                    Team2Defense: {TeamId: null, EventId: null}, // AwayDefense
+                };
+
+            // set LastEventId as current event Id
+            data.LastEventId = $LastEventId;
 
             // 0||console.log( 'data.CurrentEventId.EventId , $LastEventId.EventId', data.EventId , $LastEventId.EventId );
             if( $LastEventId && data.EventId && data.EventId == $LastEventId )
@@ -620,6 +661,8 @@ export default class Reducer
         const [ Players, LastEventId ]  = inProps;
         state.Players = Players;
         state.LastEventId = LastEventId;
+        state.CurrentEventObj = state.TimeEvent.filter((val) => val.EventId == LastEventId)[0];
+
         if (Players.length) this.markPlayers(state);
         return {...state};
     }
@@ -630,7 +673,9 @@ export default class Reducer
      */
     private setEventsPeriod(inProps, state)
     {
-        const [TimeEvent, Period]  = inProps;
+        let [TimeEvent, Period]  = inProps;
+        //DEBUG: emulate
+        if (__EMULATE__) TimeEvent = TimeEvent.map((val) => {val.HomeId += 'H'; val.AwayId += 'A'; return val});
         return {...state, TimeEvent, Period};
     }
 
@@ -755,6 +800,39 @@ export default class Reducer
     private saveEventSuccess({fieldName, val}, state)
     {
         // state.FormData[fieldName] = val;
+
+        return state;
+    }
+
+
+    /**
+     * Add real team to defence
+     */
+    private addTeamDefence({TeamId, team, EventId}, state)
+    {
+        let Defence = {};
+        state.TimeEvent.forEach((val) => {
+            if (val.HomeId === TeamId) Defence = {name: val.HomeTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
+            if (val.AwayId === TeamId) Defence = {name: val.AwayTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
+        });
+        state.FormData[`Team${team}Defense`] = {TeamId, EventId, ...Defence};
+
+        // save teams data
+        // this.saveData(state);
+
+        return state;
+    }
+
+
+    /**
+     * Remove team from defence
+     */
+    private removeTeamDefence({team}, state)
+    {
+        state.FormData[`Team${team}Defense`] = {TeamId: '', EventId: ''};
+
+        // save teams data
+        // this.saveData(state);
 
         return state;
     }

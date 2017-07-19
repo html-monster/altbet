@@ -4,6 +4,7 @@
 import {
 	HEADER_ON_SOCKET_MESSAGE,
 	HEADER_CHANGE_ODD_SYSTEM,
+	ON_BASIC_MODE_SWITCH,
 } from '../constants/ActionTypesHeader.js';
 import BaseActions from './BaseActions';
 import { SocketSubscribe } from "../models/SocketSubscribe";
@@ -13,7 +14,10 @@ class Actions extends BaseActions
 {
     OddsConverterObj = new OddsConverter();
 
-	public onSocketMessage()
+	/**
+	 * subscribe for socket
+	 */
+	public actionSocketSubscribe()
 	{
 		return (dispatch, getState) =>
 		{
@@ -34,6 +38,18 @@ class Actions extends BaseActions
 			});
 		}
 	}
+
+
+    public actionSwitchBasicMode(inMode)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_BASIC_MODE_SWITCH,
+                payload: inMode
+            });
+        };
+    }
 
 
 	public changeOddSystem(oddSystem)

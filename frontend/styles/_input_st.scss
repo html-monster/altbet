@@ -165,7 +165,7 @@
   .remember_forgot {
     margin: 30px 0 0 0;
     //label:first-of-type { display: block; }
-    input { display: none; }
+/*    input { display: none; }
     input:checked + span { color: #d4d0ed; }
     input:checked + span:before { background: url(../../Images/sprite.svg) no-repeat -310px -28px; }
 
@@ -184,7 +184,7 @@
         //background: url("#{$pathImage}/sprite.svg") no-repeat -20px -160px;
         vertical-align: middle;
       }
-    }
+    }*/
     a.forgot_password {
       display: none;
       float: right;

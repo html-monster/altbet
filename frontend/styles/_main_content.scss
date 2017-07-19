@@ -289,7 +289,6 @@
       }
     }
 
-
     .button-container { display: inline-flex; position: relative; width: 50%; height: 35px; vertical-align: middle; //transition: .3s;
       &:first-of-type { padding-right: 3px; text-align: left }
       &:last-of-type { padding-left: 2px; text-align: right }
@@ -490,8 +489,38 @@
   .nav_items {
     &.loaded .pagination { display: block; }
     .wrapper>.tab_content{  padding-top: 30px;  }
+
+  }
+
+  .sort-btns { position: fixed; left: 70px; top: 70px; padding: 15px; width: calc(78% - 70px); background: $main-bg; z-index: 93;
+        text-align: right;
+    @include mdmax(1350) { position: absolute; left: 0; width: 100%; }
+    a.stab { display: inline-block; margin-right: 10px; padding: 0 15px; border-radius: 6px; font-size: 12px; cursor: pointer;
+        font-family: "open_sans_regular", sans-serif; background: $main_page_tab_bg; color: $main_page_tab_color;
+      &.active { @include main_page_tab_icon_active;
+        span { position: relative; margin-top: 2px;
+          &:after { margin-top: 9px; margin-bottom: 0; }
+          &:before {  margin-top: -28px;  }
+        }
+      }
+      span { display: inline-block; vertical-align: middle; overflow: hidden;
+        &:before, &:after { content: attr(data-content); display: block; transition: 0.4s ease-out; }
+        &:after{  margin-bottom: -26px;  margin-top: 6px;  color: $main_page_tab_color_active * 0.95; }
+        &:before{  margin-top: -2px; color: $main_page_tab_color; }
+      }
+      @include main_page_tab_icon;
+      &:before { content: ''; display: inline-block; margin-right: 5px; margin-top: -2px; width: 18px; height: 34px;
+		  vertical-align: middle; transition: 0.4s ease-out; }
+    }
+
+
+    .breadcrumbs { float: left; margin: 10px 0 0 0; font-size: 12px;
+      a:not(.link) { color: $color-link1 }
+      span { display: inline-block; padding: 0 0 0 7px }
+    }
   }
 }
+
 
 // ------------- ВСЁ ЧТО НИЖЕ БУДЕТ УДАЛЕНО !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ----------------------------------
 .content {
@@ -530,7 +559,7 @@
         }
       }
     }
-    .stattabs {
+    /*.stattabs {
       width: calc(78% - 70px);
       padding: 15px;
       background: $main-bg;
@@ -562,7 +591,7 @@
         }
         span{
           display: inline-block;
-          padding: 10px 0;
+          //padding: 10px 0;
           vertical-align: middle;
           overflow: hidden;
           &:before, &:after{
@@ -575,7 +604,7 @@
         }
         @include main_page_tab_icon;
       }
-    }
+    }*/
     //.tab_content{  padding-top: 50px;  }
     .ui-state-highlight{
       height: 102px;

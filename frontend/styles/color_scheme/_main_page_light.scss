@@ -5,17 +5,7 @@ $main_page_tab_bg: #ffffff;
 $main_page_gif: url("#{$pathImage}/ajax-loader-w.gif");
 $main_page_pos_color: #de640a;
 @mixin main_page_tab_icon{
-	&:before {
-		content: '';
-		display: inline-block;
-		width: 18px;
-		height: 38px;
-		margin-top: -2px;
-		margin-right: 5px;
-		background: url("#{$pathImage}/sprite.svg") no-repeat -326px -147px;
-		vertical-align: middle;
-		transition: 0.4s ease-out;
-	}
+	&:before { background: url("#{$pathImage}/sprite.svg") no-repeat -326px -147px; }
 	&:nth-of-type(2):before{  background-position: -367px -147px;  }
 	&:nth-of-type(3):before{  background-position: -407px -147px;  }
 	&:nth-of-type(4):before{  background-position: -446px -147px;  }

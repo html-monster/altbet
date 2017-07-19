@@ -28,12 +28,12 @@ export class CheckBox extends React.Component
 
     render()
     {
-        const {className, name} = this.props.data;
+        const {className, name, label} = this.props.data;
 
         return <label className={className}>
                 <input type="checkbox" checked={this.state.ischecked} onChange={::this._onChkChange}/>
                 <input name={name} type="hidden" value={this.state.ischecked}/>
-                <span>{}</span>
+                <span>{label}</span>
                 {this.props.children}
             </label>;
     }
@@ -43,8 +43,8 @@ export class CheckBox extends React.Component
 	 */
 	_onChkChange(event)
     {
-        if(this.props.onChange) this.props.onChange(event, this);
         this.state.ischecked = !this.state.ischecked;
+        if(this.props.onChange) this.props.onChange(event, this, this.state.ischecked);
         this.setState({...this.state});
     }
 }
