@@ -87,14 +87,33 @@ export default class Reducer
         this.initialState.Positions = this.preparePositions(globalData.AppData.Positions);
         // load saved teams
         let loadedData = this.loadData();
+        // 0||console.log( 'this.initialState, loadedData', this.initialState, loadedData );
         this.initialState = {...this.initialState, ...loadedData};
         //DEBUG: emulate
-        if (__EMULATE__) this.initialState.TimeEvent = this.initialState.TimeEvent.map((val) => {val.HomeId += 'H'; val.AwayId += 'A'; return val});
+        // if (__EMULATE__) this.initialState.TimeEvent = this.initialState.TimeEvent.map((val) => {val.HomeId += 'H'; val.AwayId += 'A'; return val});
+        //DEBUG: remove
+        this.initialState.FormData = {
+                ...this.initialState.FormData,
+                Team1Defense: {TeamId: null, EventId: null}, // HomeDefense
+                Team2Defense: {TeamId: null, EventId: null}, // AwayDefense
+            };
 
         // init current event obj
         this.initialState.CurrentEventObj = this.initialState.TimeEvent.filter((val) => val.EventId == this.initialState.LastEventId)[0];
         this.initialState.initialised = true;
-        // 0||console.log( 'this.initialState.CurrentEventObj', this.initialState.CurrentEventObj, this.initialState.LastEventId, this.initialState.TimeEvent );
+
+        // init start date
+        this.recountStartDate(this.initialState);
+        0||console.log( 'this.initialState', this.initialState );
+
+        // init current categofy
+        for( let val of this.initialState.Categories )
+        {
+            if (val.IsCurrent) {
+                this.initialState.FormData.category = val.CategoryId;
+                break;
+            }
+        } // endfor
     }
 
 
@@ -192,17 +211,6 @@ export default class Reducer
         if( data )
         {
             data = JSON.parse(data);
-            //DEBUG: remove
-            data.FormData = {
-                    teamName1: '',
-                    teamName2: '',
-                    startDate: '',
-                    fullName: '',
-                    category: '',
-                    url: '',
-                    Team1Defense: {TeamId: null, EventId: null}, // HomeDefense
-                    Team2Defense: {TeamId: null, EventId: null}, // AwayDefense
-                };
 
             // set LastEventId as current event Id
             data.LastEventId = $LastEventId;
@@ -220,9 +228,6 @@ export default class Reducer
                     }
                     return val
                 });
-
-                // common add part
-                this.recountStartDate(this.initialState);
 
                 return data;
             }
@@ -706,7 +711,17 @@ export default class Reducer
         let teams: any = [];
         let startDate = '';
 
-        state.Players.forEach((val) =>
+/*        state.Players.forEach((val) =>
+        {
+            if (!teams.find((val2) => val2 == val.TeamId)) teams.push(val.TeamId);
+        })*/
+
+        state.PlayersTeam1.players.forEach((val) =>
+        {
+            if (!teams.find((val2) => val2 == val.TeamId)) teams.push(val.TeamId);
+        });
+
+        state.PlayersTeam2.players.forEach((val) =>
         {
             if (!teams.find((val2) => val2 == val.TeamId)) teams.push(val.TeamId);
         });
@@ -722,6 +737,7 @@ export default class Reducer
         });
 
         state.FormData.startDate = startDate;
+        0||console.log( 'state.FormData.startDate', {'11': state.FormData.startDate, startDate, '22': state.Players} );
     }
 
 
@@ -753,7 +769,7 @@ export default class Reducer
      */
     private generateFullName(inProps, state)
     {
-        state.FormData.fullName = `${state.FormData['teamName1']} vs ${state.FormData['teamName2']}`;
+        state.FormData.fullName = `${state.FormData['teamName1']}, ${state.Team1name} (vs. ${state.FormData['teamName2']}, ${state.Team2name})`;
 
         // save teams data
         this.saveData(state);
@@ -830,6 +846,20 @@ export default class Reducer
     private removeTeamDefence({team}, state)
     {
         state.FormData[`Team${team}Defense`] = {TeamId: '', EventId: ''};
+
+        // save teams data
+        // this.saveData(state);
+
+        return state;
+    }
+
+
+    /**
+     * Remove team from defence
+     */
+    private setCatId({team}, state)
+    {
+        state.FormData.category = {TeamId: '', EventId: ''};
 
         // save teams data
         // this.saveData(state);

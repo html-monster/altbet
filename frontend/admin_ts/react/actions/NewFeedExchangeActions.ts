@@ -702,7 +702,7 @@ export default class Actions extends BaseActions
     private prepareData(inProps)
     {
         let resObj: any = {};
-        const {category, fullName, startDate, teamName1, teamName2, url,} = inProps.FormData;
+        const {category, fullName, startDate, teamName1, teamName2, url, Team1Defense, Team2Defense} = inProps.FormData;
         let {Team1name, Team2name, EventId, PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable} = inProps;
 
         resObj.FullName = fullName;
@@ -711,6 +711,9 @@ export default class Actions extends BaseActions
         resObj.AwayName = teamName2;
         resObj.HomeAlias = Team1name;
         resObj.AwayAlias = Team2name;
+
+        resObj.HomeDefense = Team1Defense;
+        resObj.AwayDefense = Team2Defense;
         resObj.StartDate = startDate.format();
         resObj.UrlExchange = url;
         resObj.EventId = EventId;

@@ -66,7 +66,8 @@ class NewFeedExchange extends BaseController
         // prepare categories
         if (Categories) catItems = Categories.map((val) => {
             let itm = { value: val.CategoryId, label: val.Name};
-            //DEBUG: if (val.IsCurrent) currentCat = itm;
+            //DEBUG:
+            if (val.IsCurrent) currentCat = itm;
             return itm;
         });
 
