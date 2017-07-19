@@ -14,8 +14,6 @@
 //     customCloseFunction();
 // }
 
-
-
 export default class GlobalCloseClass
 {
     public SLIDEUP = 'slideUp';

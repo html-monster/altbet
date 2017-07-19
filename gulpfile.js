@@ -1,7 +1,9 @@
 'use strict';
 
 const OPTIONS = require('./gulpinc/pathes');
-const $pathDestServer = OPTIONS.path.dest_server;
+const $pathDestServer = OPTIONS.path.destServer;
+// console.log($pathDestServer);
+// console.log(OPTIONS.path);
 
 const path = require('path');
 const del = require('del');
@@ -76,7 +78,7 @@ lazyRequire('front-js-rev', 'def', './gulpinc/js-rev', {
     src: $pathDestServer + '/Scripts/dist',
     dst: $pathDestServer + '/Scripts/js-assets',
     manifestPath: $pathDestServer + '/Scripts',
-});
+})
 
 // BM: ========================================================================================== MORDA CSS REVISION ===
 lazyRequire('front-css-rev', 'def', './gulpinc/css-rev', {
@@ -116,7 +118,7 @@ gulp.task('styles', function() {
       .pipe(gulpIf(isDevelopment, sourcemaps.write()))
       // .pipe(gulpIf(!isDevelopment, combine(cssnano(), rev())))
       // .pipe(gulp.dest('public/styles'))
-      .pipe(gulp.dest(OPTIONS.path.dest_server + '/Content/dist'))
+      .pipe(gulp.dest($pathDestServer + '/Content/dist'))
       // .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))))
       ;
 
@@ -228,7 +230,7 @@ gulp.task('vendor',function(){
 // я опасаюсь это использовать, наверное, лучше это более не юзать
 gulp.task('styles:assets', function() {
   return gulp.src('frontend/Images/**/*.{svg,png,jpg,gif,ico}', {since: gulp.lastRun('styles:assets')})
-      .pipe(gulp.dest(OPTIONS.path.dest_server + '/Images'))
+      .pipe(gulp.dest($pathDestServer + '/Images'))
       .pipe(gulp.dest('public/Images'));
 });
 
