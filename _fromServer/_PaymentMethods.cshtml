@@ -1,0 +1,173 @@
+﻿@{
+    ViewBag.Title = "PaymentMethods";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="static-page">
+<div class="content page">
+    <!--<ul class="breadcrumbs">-->
+    <!--<li><a href="#">Home</a></li>-->
+    <!--<li>Payment Methods</li>-->
+    <!--</ul>-->
+
+    <div class="page_wrapper">
+        <h2>Payment Methods</h2>
+        <div class="global_column">
+            <div class="child_column">
+                <p>
+                    <a href="http://alt.bet/" class="link_altbet">alt.bet</a> offers a variety of payment methods with which you can deposit
+                    to and withdraw from the site. Some payment methods are more expensive than others to offer. We
+                    charge no fees for Visa debit cards, Euro bank transfers within Europe,
+                    and UK Maestro cards, but we may charge fees to cover the costs of
+                    offering other methods.
+                </p>
+                <div class="white_title">
+                    <p>
+                        For instant and free deposits and unlimited withdrawals we
+                        strongly recommend using a Visa debit card if possible.
+                    </p>
+                </div>
+            </div>
+
+            <div class="child_column">
+                <p>
+                    We will endeavor to process your withdrawal as quickly as possible
+                    during business hours Monday to Friday, after which there may be a
+                    delay while it is processed by the banks or payment providers. The
+                    times in the table below are an estimate of how long funds will take to
+                    be returned to you by each method.
+                </p>
+            </div>
+        </div>
+
+        
+
+        <div class="payment_method boxForTable">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="without_bord" colspan="2" rowspan="2">CARD TYPE</td>
+                        <td colspan="3">DEPOSIT</td>
+                        <td colspan="3">WITHDRAW</td>
+                    </tr>
+                    <tr>
+                        <td>Fee</td>
+                        <td>Time</td>
+                        <td>Limits</td>
+                        <td>Fee</td>
+                        <td>Time</td>
+                        <td>Limits</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Visa Debit Card</p>
+                        </td>
+                        <td><img src="../../Images/blank.gif" class="visa_debit" alt="Visa Debit"></td>
+                        <td>Free</td>
+                        <td>Instant</td>
+                        <td>$10 minimum</td>
+                        <td>Free</td>
+                        <td>1-6 business days</td>
+                        <td>$10 minimum, no maximum</td>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            <p>Solo / MaestroCard</p>
+                        </td>
+                        <td><img src="../../Images/blank.gif" class="maestro" alt="Maestro Card"></td>
+                        <td>Free</td>
+                        <td>Instant</td>
+                        <td>$10 minimum</td>
+                        <td>Free</td>
+                        <td>1-6 business days</td>
+                        <td>$10 minimum, limited to amount of deposit</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Visa Credit Card</p>
+                        </td>
+                        <td><img src="../../Images/blank.gif" class="visa" alt="Visa"></td>
+                        <td>2.5%</td>
+                        <td>Instant</td>
+                        <td>$10 minimum</td>
+                        <td>Free</td>
+                        <td>1-6 business days</td>
+                        <td>$10 minimum, no maximum</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>MasterCard / Eurocard</p>
+                        </td>
+                        <td><img src="../../Images/blank.gif" class="master_card" alt="Master Card"></td>
+                        <td>2.5%</td>
+                        <td>Instant</td>
+                        <td>$10 minimum</td>
+                        <td>Free</td>
+                        <td>1-6 business days</td>
+                        <td>$10 minimum, limited to amount of deposit</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Neteller</p>
+                        </td>
+                        <td><img src="../../Images/blank.gif" class="neteller" alt="Neteller"></td>
+                        <td>Free</td>
+                        <td>Instant</td>
+                        <td>£/€20 or $40 minimum $5000 daily max</td>
+                        <td>Free</td>
+                        <td>1-2 business days</td>
+                        <td>£/€20 minimum or $40 minimum, no maximum</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Skrill</p>
+                        </td>
+                        <td><img src="../../Images/blank.gif" class="skrill" alt="Skrill"></td>
+                        <td>Free</td>
+                        <td>Instant</td>
+                        <td>$10 minimum $5000 daily max</td>
+                        <td>Free</td>
+                        <td>1-2 business days</td>
+                        <td>$10 minimum, no maximum</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Bank Transfer</p>
+                        </td>
+                        <td><img src="../../Images/blank.gif" class="bank_transfer" alt="Bank Transfer"></td>
+                        <td>Free</td>
+                        <td>3-5 business days</td>
+                        <td>$20 minimum</td>
+                        <td>£10/€12 or currency equivalent. Free for Euro transfers within Europe only.</td>
+                        <td>5-10 business days</td>
+                        <td>$20 minimum, no maximum</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Placing An Order</h3>
+
+        <div class="final">
+        <div>
+            <p>
+            All transactions with alt.bet use Transport Layer Security (TLS) and
+            Secure Socket Layer (SSL). Please see Terms and Conditions for more
+            details about your security.
+            </p>
+        </div>
+            <div>
+                <p>
+                    <a href="http://alt.bet/" class="link_altbet">alt.bet</a> holds your funds separately from business accounts in dedicated
+                    ring-fenced accounts for players. We are required by our license to
+                    inform you that such funds are not insured or protected by guarantee,
+                    and in the event of the company's insolvency your funds would not be
+                    protected. According to the Curacao Gambling Commission's customer
+                    funds rating categories, this provides a Basic level of protection.
+                </p>
+            </div>
+            </div>
+    </div>
+</div>
+    </div>
+
