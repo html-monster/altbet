@@ -9,3 +9,25 @@
   .plan .btn { padding: 5px 30px; text-transform: uppercase; font-weight: 500; }
 }
 
+
+.withdraw-page { display: flex; }
+
+// withdraw sum input control
+.quantity_control { position: relative;
+  .controls { border-radius: 4px; background-image: linear-gradient(to bottom, #3b3a44, #292830); }
+  strong { display: block; margin-bottom: 10px; }
+  .btn { width: 50px; border-radius: 0; border: 1px solid $main-bg; border-right: none; background: $main-bg * 1.4; color: #3498da;
+        box-shadow: none;
+    &:first-of-type{  border-radius: 4px 0 0 0;  }
+    &:last-of-type{  border-radius: 0 4px 0 0; border-right: 1px solid $main-bg;  }
+  }
+  input { display: inline-block; width: 300px; padding: 5px 10px; padding-left: 60px; border: 1px solid $main-bg; border-top: none;
+      border-radius: 0 0 4px 4px; }
+
+  .validation-errors { position: absolute; margin: 7px 0 0 5px; color: $color-red; font-size: 12px; white-space: nowrap; }
+
+  span.label { display: block; position: absolute; left: 1px; top: 64px; width: 50px; height: 35px; line-height: 36px; text-align: center;
+      border-radius: 0 0 0 4px; border-right: 1px solid $main-bg; box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3); }
+}
+
+

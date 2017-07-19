@@ -1,6 +1,7 @@
 import {
     SETTING_LOAD_FILE_ERROR,
     SETTING_CHANGE_PROGRESS_BAR,
+    SETTING_ON_FILE_LOAD,
 } from '../constants/ActionTypesGidxVerification.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../models/AjaxSend';
@@ -14,19 +15,24 @@ export default class Actions extends BaseActions
 {
     public actionOnFileChosen(context, event)
     {
+        var self = this;
+
         return (dispatch, getState) =>
         {
+            const {uploadForm, uploadButton} = context;
+            const { gidxVerification: {files, config} } = getState();
             let loadFileData = event.target.files;
             let extension, fileSize = 0, valid = true;
             const sizeLimit = 2000000;
             const loadId = (new Date).getTime();
+            0||console.log( 'here', 0 );
 
             dispatch({
                 type: SETTING_LOAD_FILE_ERROR,
                 payload: '',
             });
 
-            if(loadFileData.length + getState().accountSetting.files.length > 6){
+            if(loadFileData.length + files.length > config.maxFiles){
                 dispatch({
                     type: SETTING_LOAD_FILE_ERROR,
                     payload: `The maximum number of files stored on the server is 6`,
@@ -60,55 +66,55 @@ export default class Actions extends BaseActions
             }
 
             if (fileSize)
-                defaultMethods.sendAjaxRequest({
-                    url: `${ABpp.baseUrl}/Account/UploadImage`,
-                    data: new FormData(context.refs.uploadForm),
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    xhr: function()
-                    {
-                        let myXhr = $.ajaxSettings.xhr();
-                        if (myXhr.upload) {
-                            context.props.actions.addFile({
-                                Name: loadId,
-                                ContentType: 'load'
-                            });
-                            myXhr.upload.addEventListener('progress', function(event) {
-                                let percent = 0;
-                                let position = event.loaded || event.position;
-                                let total = event.total;
-                                if (event.lengthComputable) {
-                                    percent = Math.ceil(position / total * 100);
-                                }
-                                dispatch({
-                                    type: SETTING_CHANGE_PROGRESS_BAR,
-                                    payload: percent,
-                                });
-                            } , false);
-                        }
-                        return myXhr;
-                    },
-                    mimeType: "multipart/form-data",
-                    callback: success,
-                    onError: error,
-                    beforeSend
-                });
+                {
+                    let formData = new FormData(uploadForm);
+                    defaultMethods.sendAjaxRequest({
+                                        url: `${ABpp.baseUrl}/Account/UploadImage`,
+                                        data: formData,
+                                        cache: false,
+                                        contentType: false,
+                                        processData: false,
+                                        xhr: function()
+                                        {
+                                            let myXhr = $.ajaxSettings.xhr();
+                                            if (myXhr.upload) {
+                                                self.addFile({ Name: loadId, ContentType: 'load',}, files);
+
+                                                myXhr.upload.addEventListener('progress', function(event) {
+                                                    let percent = 0;
+                                                    let position = event.loaded || event.position;
+                                                    let total = event.total;
+                                                    if (event.lengthComputable) {
+                                                        percent = Math.ceil(position / total * 100);
+                                                    }
+                                                    dispatch({
+                                                        type: SETTING_CHANGE_PROGRESS_BAR,
+                                                        payload: percent,
+                                                    });
+                                                } , false);
+                                            }
+                                            return myXhr;
+                                        },
+                                        mimeType: "multipart/form-data",
+                                        callback: success,
+                                        onError: error,
+                                        beforeSend
+                                    });
+                }
 
             function error()
             {
-                // context.props.actions();
                 dispatch({
                     type: SETTING_LOAD_FILE_ERROR,
                     payload: 'Loading file failed. Please check your internet connection or reload the page or try again later',
                 });
-                context.props.actions.removeFile(loadId);
-                $(context.refs.uploadButton).removeAttr('disabled');
+                self.removeFile(loadId);
+                $(uploadButton).removeAttr('disabled');
             }
 
             function beforeSend()
             {
-                $(context.refs.uploadButton).attr('disabled', 'true');
+                $(uploadButton).attr('disabled', 'true');
             }
 
             function success(answer)
@@ -117,16 +123,16 @@ export default class Actions extends BaseActions
 
                 switch (answer.ErrorCode){
                     case 200:{
-                        context.props.actions.addFile(answer);
+                        self.addFile(answer);
                         break;
                     }
                     case 100:{
-                        context.props.actions.removeFile(loadId);
+                        self.removeFile(loadId);
                         __DEV__ && console.error('You tried to load empty files object');
                         break;
                     }
                     case 101:{
-                        context.props.actions.removeFile(loadId);
+                        self.removeFile(loadId);
                         dispatch({
                             type: SETTING_LOAD_FILE_ERROR,
                             payload: `${this.name} is unsupported file type`,
@@ -134,7 +140,7 @@ export default class Actions extends BaseActions
                         break;
                     }
                     case 102:{
-                        context.props.actions.removeFile(loadId);
+                        self.removeFile(loadId);
                         dispatch({
                             type: SETTING_LOAD_FILE_ERROR,
                             payload: `You have ${loadFileData.length} file(s) with total size ${Math.round10(fileSize / 1000000,
@@ -143,7 +149,7 @@ export default class Actions extends BaseActions
                         break;
                     }
                     case 103:{
-                        context.props.actions.removeFile(loadId);
+                        self.removeFile(loadId);
                         dispatch({
                             type: SETTING_LOAD_FILE_ERROR,
                             payload: `File ${this.name} has not been saved. Try again or reload the page, or try again later`,
@@ -156,7 +162,7 @@ export default class Actions extends BaseActions
                     type: SETTING_CHANGE_PROGRESS_BAR,
                     payload: 0,
                 });
-                $(context.refs.uploadButton).removeAttr('disabled');
+                $(uploadButton).removeAttr('disabled');
             }
 
             //for testing====================
@@ -245,7 +251,34 @@ export default class Actions extends BaseActions
 */
 
 
-    private some()
+    public addFile(item, files)
     {
+        return (dispatch, getState) =>
+        {
+            let newArr = item.ContentType == 'load' ?
+                files.slice()
+                :
+                files.slice(0, -1);
+
+            newArr = newArr.concat(item);
+            dispatch({
+                type: SETTING_ON_FILE_LOAD,
+                payload: newArr,
+            });
+        }
+    }
+
+
+    public removeFile(id)
+    {
+        return (dispatch, getState) =>
+        {
+            let newArr = getState().accountSetting.files.slice().filter((item) => id != item.Name);
+
+            dispatch({
+                type: SETTING_ON_FILE_LOAD,
+                payload: newArr,
+            });
+        }
     }
 }
