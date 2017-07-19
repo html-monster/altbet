@@ -91,7 +91,7 @@ class MainPage extends BaseController
     {
         // let isBasicMode = ABpp.config.basicMode;
         const data = this.props.data;
-        const { actions, data:{ activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn, orderDetails: { orderPrice, showOrder } } } = this.props;
+        const { actions, data:{ Breadcrumbs, activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn, orderDetails: { orderPrice, showOrder } } } = this.props;
         const { currentExchange } = this.state;
         let $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
@@ -113,6 +113,18 @@ class MainPage extends BaseController
                 {/*</ul>*/}
                 <div className="wrapper" id="exchange">
                     <div className="sort-btns">
+                        <div className="breadcrumbs">
+                            {0||console.log( 'br', Breadcrumbs.reduce((prev, val) => prev ? prev + ` > ` + <a href="#">{val.CatName}</a> : <a href="#">{val.CatName}</a>, '') )}
+                            {Breadcrumbs.reduce((prev, val) => {
+                                if( prev.length )
+                                {
+                                    prev.push(` > `);
+                                    prev.push(<a href="#">{val.CatName}</a>);
+                                }
+                                else prev.push(<a href="#">{val.CatName}</a>);
+                                return prev;
+                            }, [])}
+                        </div>
                         {
                             Object.keys($tabs).map((val, key) =>
                                 <a href={"?sort=" + val} key={val} className={"stab" + (val == currSort || !currSort && !key ? " active" : '')}><span data-content={$tabs[val]}>{}</span></a>)

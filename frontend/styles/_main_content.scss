@@ -500,19 +500,22 @@
         font-family: "open_sans_regular", sans-serif; background: $main_page_tab_bg; color: $main_page_tab_color;
       &.active { @include main_page_tab_icon_active;
         span { position: relative; margin-top: 2px;
-          &:after{  margin-bottom: 0;  }
-          &:before{  margin-top: -30px;  }
+          &:after { margin-top: 9px; margin-bottom: 0; }
+          &:before {  margin-top: -28px;  }
         }
       }
       span { display: inline-block; vertical-align: middle; overflow: hidden;
         &:before, &:after { content: attr(data-content); display: block; transition: 0.4s ease-out; }
         &:after{  margin-bottom: -26px;  margin-top: 6px;  color: $main_page_tab_color_active * 0.95; }
-        &:before{  margin-top: -3px; color: $main_page_tab_color; }
+        &:before{  margin-top: -2px; color: $main_page_tab_color; }
       }
       @include main_page_tab_icon;
       &:before { content: ''; display: inline-block; margin-right: 5px; margin-top: -2px; width: 18px; height: 34px;
 		  vertical-align: middle; transition: 0.4s ease-out; }
     }
+
+
+    .breadcrumbs { float: left; margin: 10px 0 0 0; font-size: 12px }
   }
 }
 
