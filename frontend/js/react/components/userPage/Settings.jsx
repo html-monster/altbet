@@ -33,7 +33,6 @@ class Settings extends React.Component
     {
         const { actions, data: { header, active }, files, loadError, loadProgress } = this.props;
         const { Country, Address, Phone } = appData.pageAccountData.UserInfo;
-
 		const inputRender = ({ id, className, info, label, filled, inputLabel, meta: { error, dirty }, ...input }) => {
 
 			return  <span className={'input_animate input--yoshiko input--filled' + (filled ? ' input--filled' : '')}>
@@ -55,23 +54,23 @@ class Settings extends React.Component
                     <hr/>
 
                     <InputValidation renderContent={inputRender} id={'f_name'} name="FirstName"
-                                     initialValue={FirstName} info="Your first name as specified in your passport"
+                                     initialValue={"First name"} info="Your first name as specified in your passport"
                                      label={'First Name'} type={'text'} filled={FirstName}
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]}
                                      input={input} maxLength="20"/>
 
                     <InputValidation renderContent={inputRender} id={'l_name'} name="LastName"
-                                     initialValue={LastName} info="Your second name as specified in your passport"
+                                     initialValue={"Last name"} info="Your second name as specified in your passport"
                                      label={'Last Name'} type={'text'} filled={LastName}
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]} input={input}
                                      maxLength="20"/>
 
 
                     <InputValidation renderContent={inputRender} id={'n_name'} name="UserName"
-                                     initialValue={UserName}
+                                     initialValue={"User name"}
                                      label={'User Name'} type={'text'} filled={UserName}
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20})]} input={input}
-                                     maxLength="20" disabled={true}/>
+                                     maxLength="20" disabled={false}/>
 
                     <InputValidation renderContent={inputRender} id={'user_b_day'} name="DateOfBirth"
                                      className={'datePickerJs'}
