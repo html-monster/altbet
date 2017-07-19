@@ -514,7 +514,9 @@
     }
 
 
-    .breadcrumbs { float: left; margin: 10px 0 0 0; font-size: 12px }
+    .breadcrumbs { float: left; margin: 10px 0 0 0; font-size: 12px;
+      a { color: $link-color }
+    }
   }
 }
 

@@ -26,8 +26,11 @@
 
 //перенесено с _page.scss
 .page_wrapper{  padding: 0 5px;  }
-a { color: $link-color;  @include text-decoration; }
-p{  margin: 10px 0;  }
+
+.ac-getstaticpage {
+  p { margin: 10px 0; }
+  a { color: $link-color;  @include text-decoration; }
+}
 
 
 
