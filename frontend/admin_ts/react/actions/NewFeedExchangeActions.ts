@@ -87,21 +87,23 @@ export default class Actions extends BaseActions
     /**
      * Create new category
      */
-    public actionCreateCategory(inProps)
+    public actionCreateCategory(inProps, p1, p2, p3)
     {
         return (dispatch, getState) =>
         {
-            0||console.log( 'inProps', inProps );
+            0||console.log( 'inProps', {inProps, p1, p2, p3} );
             return;
 
             const ajaxPromise = (new AjaxSend()).send({
                 formData: {'EventId': inProps},
-                message: `Error while registering user, please, try again`,
-                // url: ABpp.baseUrl + $form.attr('action'),
-                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GETPLAYERS,
+                message: `Error while adding category, please, try again`,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_ADD,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 respCodes: [
-                    {code: 100, message: ""},
-                    // {code: -101, message: "Some custom error"},
+                    {code: 100, message: `Category “${inProps.name}” created successfully`},
+                    {code: -101, message: "Category name is not unique"},
+                    {code: -102, message: "Category url is not unique"},
+                    {code: -103, message: "You cannot add subcategory because parent is not empty"},
                 ],
                 // beforeChkResponse: (data) =>
                 // {
@@ -702,7 +704,7 @@ export default class Actions extends BaseActions
     private prepareData(inProps)
     {
         let resObj: any = {};
-        const {category, fullName, startDate, teamName1, teamName2, url,} = inProps.FormData;
+        const {category, fullName, startDate, teamName1, teamName2, url, Team1Defense, Team2Defense} = inProps.FormData;
         let {Team1name, Team2name, EventId, PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable} = inProps;
 
         resObj.FullName = fullName;
@@ -711,6 +713,9 @@ export default class Actions extends BaseActions
         resObj.AwayName = teamName2;
         resObj.HomeAlias = Team1name;
         resObj.AwayAlias = Team2name;
+
+        resObj.HomeDefense = Team1Defense;
+        resObj.AwayDefense = Team2Defense;
         resObj.StartDate = startDate.format();
         resObj.UrlExchange = url;
         resObj.EventId = EventId;

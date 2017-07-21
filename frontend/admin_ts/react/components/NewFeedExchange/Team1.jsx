@@ -105,20 +105,20 @@ export class Team1 extends React.Component
     /**@private*/ _onPPGChange(props, num, p1)
     {
         // if (num) this.props.actions.actionPPGValues({player, team, type, num});
-        if (num) this.props.actions.actionPPGValues({...props, num});
+        if (num) this.props.data.actions.actionPPGValues({...props, num});
     }
 
 
     /**@private*/ _onChangeTeamName(ee)
     {
-        const { actions, teamNum } = this.props;
+        const { actions, teamNum } = this.props.data;
         actions.actionChangeTeamName({name: ee.target.value, teamNum});
     }
 
 
     /**@private*/ _onGenerateTeamName(ee)
     {
-        const { actions, teamNum } = this.props;
+        const { actions, teamNum } = this.props.data;
         actions.actionGenerateTeamName({teamNum});
     }
 }

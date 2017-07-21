@@ -10,6 +10,7 @@ import {InfoMessages} from "common/InfoMessages.ts";
 
 export class NewCategory extends React.Component
 {
+    /**@private*/ formNode;
     /**@private*/ inputUrl;
     /**@private*/ inputName;
 /*
@@ -19,6 +20,18 @@ export class NewCategory extends React.Component
     }
 */
 
+    /**
+     * Focus on input
+     * @public
+     */
+    focus(index)
+    {
+        switch( index )
+        {
+            case 1 : $(this.inputName).focus();
+        }
+    }
+
 
     render()
     {
@@ -27,10 +40,11 @@ export class NewCategory extends React.Component
 
         return (
             <div class="form-horizontal">
+                <form ref={(val) => this.formNode = val}>
                     <div class="js-form-group form-group" /*has-error*/>
                         <label class="col-sm-2 control-label" for="Name"><i class="js-error-icon error-icon fa fa-times-circle-o"/> Name</label>
                         <div class="col-sm-10">
-                            <input ref={(itm) => this.inputName = itm} type="text" className="js-ed-name form-control" onBlur={::this._onNameBlur}/>
+                            <input ref={(itm) => this.inputName = itm} type="text" className="js-ed-name form-control" name="Name" onBlur={::this._onNameBlur}/>
                         </div>
                         <span class="js-message help-block col-sm-10 col-sm-push-2">{/*<!--Err mess-->*/}</span>
                     </div>
@@ -38,10 +52,11 @@ export class NewCategory extends React.Component
                     <div class="js-form-group form-group">
                         <label class="col-sm-2 control-label" for="Url"><i class="js-error-icon error-icon fa fa-times-circle-o"/> Url</label>
                         <div class="col-sm-10">
-                            <input ref={(itm) => this.inputUrl = itm} type="text" className="js-ed-url form-control"/>
+                            <input ref={(itm) => this.inputUrl = itm} type="text" className="js-ed-url form-control" name="Url"/>
                         </div>
                         <span class="js-message help-block col-sm-10 col-sm-push-2">{/*<!--Err mess-->*/}</span>
                     </div>
+                </form>
 
 {/*
                     <div class="js-form-group form-group">
@@ -65,14 +80,14 @@ export class NewCategory extends React.Component
 
     /**@private*/ _onOkClick()
     {
-        const { submitAction, afterCreate } = this.props;
+        const { submitAction, afterCreate, data: {ParentId} } = this.props;
         let messageError, elm;
 
         if( $(elm = this.inputName).val() === '' )
         {
             messageError = "Please fill the category name";
         }
-        else if( $(elm = this.inputName).val() === '' )
+        else if( $(elm = this.inputUrl).val() === '' )
         {
             messageError = "Please fill the category url";
         } // endif
@@ -85,12 +100,12 @@ export class NewCategory extends React.Component
                 message: messageError,
                 color: InfoMessages.WARN,
             });
-            
+
             $(elm).focus();
         }
         else
         {
-            submitAction && submitAction({callback: afterCreate});
+            submitAction && submitAction({callback: afterCreate, ParentId, formData: $(this.formNode).serializeArray()});
         } // endif
 
     }

@@ -61,7 +61,7 @@ class Header extends React.Component
 
 	render()
 	{
-		let { actions, serverData } = this.props;
+		let { actions, serverData, isBasicMode } = this.props;
         let $filter = appData.urlQuery ? appData.urlQuery.filter : '';
 
 		// serverData = !serverData ? {} : serverData;
@@ -155,15 +155,7 @@ class Header extends React.Component
 										</strong>
 									</li>
 */}
-									<li>
-										{/*<div className="item checkbox-v2-right">
-											<label>
-												<span>Detailed View</span>
-												<input type="checkbox" defaultChecked={false} onClick={::this._onDetailedViewClick} defaultValue={"aa"}/>
-											</label>
-										</div>*/}
-                                        <CheckBox data={{className: "item checkbox-v2-right", label: "Detailed View"}} onChange={::this._modeSwitch} />
-									</li>
+									<li><CheckBox data={{className: "item checkbox-v2-right", label: "Detailed View", checked: !isBasicMode}} onChange={::this._modeSwitch} /></li>
 									<li><a href={ABpp.baseUrl + '/Account'}>Account</a></li>
 									<li><a href={ABpp.baseUrl + '/Account/Logout'}>Log out</a></li>
 								</ul>

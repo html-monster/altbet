@@ -168,7 +168,7 @@
   i.btn{  width: 100%;  }
   .settings .column {  width: 100%;  }
   .document_upload{  margin: 25px 0;  }
-  .miniatures{
+  .miniatures {
     display: flex;
     align-items: flex-start;
     padding: 10px 0;
@@ -179,7 +179,7 @@
       right: -8px;
       transform: scale(1.2);
     }
-    a{
+    a {
       color: $color_blue;
       .link_text{
         display: inline-block;
@@ -191,7 +191,7 @@
         &:after {  width: 100%;  left: 0;  }
       }
     }
-    .thumbnail{
+    .thumbnail {
       width: 18%;
       margin: 0 5px ;
       position: relative;

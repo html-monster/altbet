@@ -20,8 +20,9 @@ import {Framework} from 'common/Framework.ts';
 
 class NewFeedExchange extends BaseController
 {
-    LoadingObj;
-    CreateFormBlock;
+    /**@private*/ LoadingObj;
+    /**@private*/ BlockCreateCat;
+    /**@private*/ newCatForm;
 
     constructor(props)
     {
@@ -107,7 +108,7 @@ class NewFeedExchange extends BaseController
                 </div>
 
                 { !currentCat &&
-                    <div ref={(itm) => this.CreateFormBlock = itm} className="row" style={{display: 'none'}}>
+                    <div ref={(itm) => this.BlockCreateCat = itm} className="row" style={{display: 'none'}}>
                         <div className="col-sm-6">
                             <div className="box box-success">
                                 <div className="box-header">
@@ -119,7 +120,7 @@ class NewFeedExchange extends BaseController
                                             <h4><i class="icon fa fa-warning"/> Alert!</h4>
                                             <span class="js-text"/>
                                         </div>
-                                        <NewCategory submitAction={actions.actionCreateCategory.bind(this, {ParentId})} afterCreate={::this._createCatFinishCallback}/>
+                                        <NewCategory ref={(val) => this.newCatForm = val} data={{ParentId}} submitAction={actions.actionCreateCategory} afterCreate={::this._createCatFinishCallback}/>
                                 </div>
                             </div>
                         </div>
@@ -422,11 +423,11 @@ class NewFeedExchange extends BaseController
     {
         if( isOpen )
         {
-            $(this.CreateFormBlock).slideDown(400);
+            $(this.BlockCreateCat).slideDown(400, () => this.newCatForm.focus(1));
         }
         else
         {
-            $(this.CreateFormBlock).slideUp(200);
+            $(this.BlockCreateCat).slideUp(200);
         } // endif
     }
 

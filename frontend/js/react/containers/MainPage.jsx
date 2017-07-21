@@ -92,11 +92,12 @@ class MainPage extends BaseController
     {
         // let isBasicMode = ABpp.config.basicMode;
         const data = this.props.data;
-        const { actions, data:{ Breadcrumbs, activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn, orderDetails: { orderPrice, showOrder } } } = this.props;
+        const { actions, data:{ activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn, orderDetails: { orderPrice, showOrder } } } = this.props;
         const { currentExchange } = this.state;
         let $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
         let urlBase = appData.baseUrl.MainPage;
+        let Breadcrumbs = this.props.Breadcrumbs ? this.props.Breadcrumbs : [];
         // let nb = "&nbsp;";
 
         // sort tabs data

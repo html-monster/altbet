@@ -2,6 +2,7 @@ const path = require('path');
 const options = require('./pathes');
 const webpack = require('webpack');
 const WebpackNotifierPlugin = require('webpack-notifier');
+var HappyPack = require('happypack');
 
 // const ManifestPlugin = require('webpack-manifest-plugin');
 // const AssetsPlugin = require('assets-webpack-plugin');
@@ -82,17 +83,17 @@ module.exports = {
             __TEST__: JSON.stringify(process.env.TEST || false),
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         }),
-        // new AssetsPlugin({
-        //    filename: "js-assets.json",
-        //    path: __dirname + options.path.destServerAdmin + '/Scripts',
-        //    update: true,
-        // }),
-        // new ManifestPlugin({
-        //     fileName: '../js-man-assets.json',
-        //     // basePath: __dirname + options.path.destServerAdmin + '/Scripts',
-        //     // basePath: __dirname + options.path.destServerAdmin + '/Scripts/js-assets/',
-        //     publicPath: "",
-        // })
+
+        new HappyPack({
+            id: 'jsx',
+            threads: 4,
+            loaders: ['babel-loader'],
+        }),
+        new HappyPack({
+            id: 'js',
+            threads: 4,
+            loaders: ['babel-loader']
+        }),
     ],
     // ].concat(sourceMap),
 
@@ -106,7 +107,8 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                loader: "babel-loader",
+                loaders: [ 'happypack/loader?id=js' ],
+                // loader: "babel-loader",
                 // exclude: [/node_modules/, /public/],
                 // query: {
                 //     presets: ['es2015', 'stage-0', 'react'],
@@ -115,7 +117,8 @@ module.exports = {
             },
             {
                 test: /\.jsx$/,
-                loader: "babel-loader",
+                loaders: [ 'happypack/loader?id=jsx' ],
+                // loader: "babel-loader",
                 // exclude: [/node_modules/, /public/],
                 // query: {
                 //     presets: ['es2015', 'stage-0', 'react'],
