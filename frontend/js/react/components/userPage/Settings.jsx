@@ -50,7 +50,7 @@ class Settings extends React.Component
             Country, Address, Phone }, handleSubmit }) => {
 			return <form action={appData.pageAccountUserInfoUrl} className="setting_form" method="post"
                          noValidate="novalidate" onSubmit={handleSubmit}>
-                    <h3 className="section_user">Personal info</h3>
+                    <h3 className="section_user pers_inf">Personal info</h3>
                     <hr/>
 
                     <InputValidation renderContent={inputRender} id={'f_name'} name="FirstName"
@@ -79,7 +79,7 @@ class Settings extends React.Component
                                      validate={emptyValidation} input={input}/>
 
 
-                    <h3 className="section_user">Contact Info</h3>
+                    <h3 className="section_user cont_inf">Contact Info</h3>
                     <hr/>
 
                     <InputValidation renderContent={inputRender} id={'e_name'} name="Email"
