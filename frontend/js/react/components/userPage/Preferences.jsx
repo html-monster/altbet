@@ -134,6 +134,8 @@ export default class Preferences extends React.Component
         const { header, active } = this.props.data;
         const { answerMessage, answerClass, loading, radioButtonsDisabled } = this.state;
 
+
+
         return <div className={"tab_item preferences " + (active ? "active" : "")}>
                 <h2>Preferences</h2>
                 {header}
@@ -250,7 +252,7 @@ export default class Preferences extends React.Component
 				</form>
             </div>;
     }
-	
+
 	/**
 	 * save checkbox state if it changed, need to unchecked checkbox
 	 * @param context - checkbox context

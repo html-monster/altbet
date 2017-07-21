@@ -403,7 +403,7 @@ export class RegisterForm extends React.PureComponent
                 </div>
 
                 <hr/>
-                <div className={'answer-message' + (error && ' validation-summary-errors')}>{error}</div>
+                <div className={'register_form_message answer-message' + (error && ' validation-summary-errors')}>{error}</div>
                 <div className="submit">
                     {/*<input type="submit" value="Register" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue"/>*/}
                     <button type="submit" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue">Join to ALT.BET!</button>

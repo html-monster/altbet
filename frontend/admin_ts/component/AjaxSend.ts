@@ -2,6 +2,11 @@
  * Created by Vlasakh on 27.01.2017.
  */
 
+interface JQueryStatic {
+    ajax(p1?, p2?, p3?): any;
+}
+declare var $: JQueryStatic;
+
 var __LDEV__ = true;
 interface JQueryStatic {
     ajax(p1?, p2?, p3?): any;

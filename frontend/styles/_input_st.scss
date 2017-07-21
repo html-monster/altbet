@@ -1,4 +1,4 @@
-.sign_up_form, .sign_in_form, .change_password, .setting_form, .self_exclusion {
+.sign_up_form, .sign_in_form, .change_password, #form2, .setting_form, .self_exclusion {
 
   input[type=email] {
     &:-webkit-autofill {
@@ -62,20 +62,24 @@
       z-index: 9999;
     }
     &.NickName:before {
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+          background: url(../../Images/sprite.svg) no-repeat -525px -53px;
     }
     &.Email:before {
       content: '@';
       color: #afabc8;
     }
-    &.Password:before {
+    &.Password:before, &.ComparePassword:before {
       background: url(../../Images/sprite.svg) no-repeat -533px -26px;
-    }
-    &.ComparePassword {
-      padding-left: 15px;
     }
     &:nth-child(5) {
       .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; }
+      .Select-placeholder { padding-left: 35px; }
+      &:before {
+        background: url(../../Images/sprite.svg) no-repeat -549px -53px;
+      }
+    }
+    &.country-states {
+     .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; }
       .Select-placeholder { padding-left: 35px; }
       &:before {
         background: url(../../Images/sprite.svg) no-repeat -549px -53px;
@@ -114,10 +118,9 @@
     text-align: left;
     transition: opacity 0.3s;
     padding-left: 35px;
-    &:focus { outline: none; }
-    &[disabled]{ opacity: 0.4; }
-    &#r_confirm_pass { padding-left: 20px; }
-
+    &:focus {
+      outline: none;
+    }
     &.input-validation-error {
       color: #ff4810;
       border-color: #ff4810;
@@ -159,7 +162,7 @@
 
   //.input__field--kuro + .input__label--kuro .input__label-content--kuro,
   //.input--filled .input__label-content--kuro {
-  //  opacity: 1;
+  //  opacity: 0;
   //}
 
   .remember_forgot {
@@ -209,7 +212,6 @@
       }
     }
   }
-
   .valid input { border: 1px solid #afabc8 !important; color: #afabc8 !important; }
 
   .invalid input {
@@ -260,6 +262,10 @@
     color: #ff4810;
     font-size: 12px;
   }
+  .register_form_message {
+    bottom: 56px;
+    right: 60px;
+  }
 
 
 
@@ -293,12 +299,35 @@
   }
 }
 
-.change_password {
+.sign_up_form {
+  .input_animate {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.5em;
+    max-width: 400px;
+    width: 100%;
+    vertical-align: top;
+    /* margin: 0 0 1em; */
+    height: 40px;
+    text-align: center;
+  }
+}
+
+#form0 {
+  .show_password {
+    position: absolute;
+    right: 5px;
+    top: 13px;
+    z-index: 99999;
+  }
+}
+
+#form2 {
   display: flex;
   flex-direction: column;
   .input_animate {
     .validation-summary-errors {
-      bottom: -17px;
+      bottom: -18px;
     }
     &.pass_container:before {
       content: '';
@@ -315,6 +344,7 @@
   }
 
 }
+
 
 .setting_form {
   .input_animate {
@@ -379,7 +409,7 @@
           width: 100px;
         }
       }
-
     }
   }
 }
+
