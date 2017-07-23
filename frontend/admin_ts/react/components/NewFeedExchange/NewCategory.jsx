@@ -81,6 +81,7 @@ export class NewCategory extends React.Component
     /**@private*/ _onOkClick()
     {
         const { submitAction, afterCreate, data: {ParentId} } = this.props;
+        0||console.log( 'ParentId', ParentId );
         let messageError, elm;
 
         if( $(elm = this.inputName).val() === '' )

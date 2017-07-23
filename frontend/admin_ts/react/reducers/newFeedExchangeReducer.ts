@@ -72,7 +72,6 @@ export default class Reducer
             Team1Defense: {TeamId: null, EventId: null}, // HomeDefense
             Team2Defense: {TeamId: null, EventId: null}, // AwayDefense
         },
-        ParentCategory: 'Amer sport',
         Team1name: '', // team1 alias from server
         Team2name: '', // team2 alias from server
         ...globalData.AppData,
@@ -679,7 +678,7 @@ export default class Reducer
     {
         let [TimeEvent, Period]  = inProps;
         //DEBUG: emulate
-        if (__EMULATE__) TimeEvent = TimeEvent.map((val) => {val.HomeId += 'H'; val.AwayId += 'A'; return val});
+        // if (__EMULATE__) TimeEvent = TimeEvent.map((val) => {val.HomeId += 'H'; val.AwayId += 'A'; return val});
         return {...state, TimeEvent, Period};
     }
 

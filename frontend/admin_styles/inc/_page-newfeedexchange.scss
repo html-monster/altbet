@@ -16,6 +16,17 @@
     .f-btn.active { font-weight: bold }
     .fa-plus { color: #00a65a; }
   }
+
+  .adapt { position: absolute; right: 0 }
+
+  .players-block { overflow: auto; }
+  /*
+  .tabl-players {
+    tr td, tr th { border: 1px solid red;}
+    //thead { display: block; }
+    //tbody { display: block; overflow: auto; }
+  }
+  */
   .teams-table {
     tr.empty td { color: gray; }
     tr.empty td+td+td { font-size: 12px }

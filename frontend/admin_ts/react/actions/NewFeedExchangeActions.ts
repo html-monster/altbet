@@ -20,7 +20,7 @@ import {
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
-import {MainConfig} from '../../inc/MainConfig';
+import {MainConfig, DS} from '../../inc/MainConfig';
 import {Common} from '../common/Common';
 
 
@@ -87,48 +87,56 @@ export default class Actions extends BaseActions
     /**
      * Create new category
      */
-    public actionCreateCategory(inProps, p1, p2, p3)
+    public actionCreateCategory(inProps)
     {
         return (dispatch, getState) =>
         {
-            0||console.log( 'inProps', {inProps, p1, p2, p3} );
-            return;
+            0||console.log( 'inProps', {inProps} );
+            // prepare data
+            let data : any = {};
+            inProps.formData.forEach((val) => data[val.name] = val.value);
+            data.ParentId = inProps.ParentId;
 
             const ajaxPromise = (new AjaxSend()).send({
-                formData: {'EventId': inProps},
+                formData: data,
                 message: `Error while adding category, please, try again`,
                 // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_ADD,
                 url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 respCodes: [
-                    {code: 100, message: `Category “${inProps.name}” created successfully`},
+                    {code: 100, message: `Category “${data.Name}” created successfully`},
                     {code: -101, message: "Category name is not unique"},
                     {code: -102, message: "Category url is not unique"},
-                    {code: -103, message: "You cannot add subcategory because parent is not empty"},
+                    {code: -103, message: "You cannot add subcategory because parent category is not empty"},
                 ],
-                // beforeChkResponse: (data) =>
-                // {
-                //     // DEBUG: emulate
-                //     data = {Error: 101};
-                //     // data.Param1 = "TOR-PHI-3152017"; // id
-                //     // data.Param1 = "?path=sport&status=approved";
-                //     // data.Param1 = "?status=New";
-                //     // data.Param2 = "Buffalo Bills_vs_New England Patriots";
-                //     // data.Param3 = "TOR-PHI-3152017"; // id
-                //
-                //     return data;
-                // },
+                beforeChkResponse: (data) =>
+                {
+                    // DEBUG: emulate
+                    data = {Error: 103};
+                    // data.Param1 = "TOR-PHI-3152017"; // id
+                    // data.Param1 = "?path=sport&status=approved";
+                    // data.Param1 = "?status=New";
+                    // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                    // data.Param3 = "TOR-PHI-3152017"; // id
+
+                    return data;
+                },
             });
 
 
             ajaxPromise.then( result =>
                 {
+                    0||console.log( 'result', result, result.code );
+                    inProps.callback && inProps.callback(result);
+                    return;
                     dispatch({
                         type: ON_CHANGE_EVENT,
                         payload: [result.data.Players, inProps],
                     });
                 },
                 result => {
-                    // 0||console.log( 'result', result, result.code );
+                    0||console.log( 'result', result, result.code );
+                    inProps.callback && inProps.callback(result);
+                    return;
                     if( result.code != 100 )
                     {
                         dispatch({
@@ -242,7 +250,7 @@ export default class Actions extends BaseActions
             // prepare data
             data = this.prepareData(data);
             // data = data.HomeTeam;
-0||console.log( 'data', data );
+__DEV__ && console.log( 'data', data );
 
             // post data to server
             // let data = new FormData();

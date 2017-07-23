@@ -23,6 +23,8 @@ class NewFeedExchange extends BaseController
     /**@private*/ LoadingObj;
     /**@private*/ BlockCreateCat;
     /**@private*/ newCatForm;
+    // /**@private*/ tablePlayers;
+    /**@private*/ blockTablePlayers;
 
     constructor(props)
     {
@@ -47,9 +49,9 @@ class NewFeedExchange extends BaseController
     render()
     {
         const { actions, data: AppData } = this.props;
-        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, CurrentEventObj, Rules, CurrentTeam, Category, ParentId, ParentCategory, Categories, TimeEvent } = this.props.data;
+        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, CurrentEventObj, Rules, CurrentTeam, Category, Categories, TimeEvent } = this.props.data;
         const { currTeamKey, okBtnDisabled } = this.state;
-        var items = [], currentCat, catItems;
+        var items = [], currentCat, catItems, ParentId, ParentName;
 
         // console.log( '{CurrentEventObj, FormData}', {CurrentEventObj, FormData} );
 
@@ -67,8 +69,9 @@ class NewFeedExchange extends BaseController
         // prepare categories
         if (Categories) catItems = Categories.map((val) => {
             let itm = { value: val.CategoryId, label: val.Name};
-            //DEBUG:
-            if (val.IsCurrent) currentCat = itm;
+            //DEBUG:            if (val.IsCurrent) currentCat = itm;
+            if (!ParentId) ParentId = val.ParentId;
+            if (!ParentName) ParentName = val.ParentName;
             return itm;
         });
 
@@ -99,7 +102,7 @@ class NewFeedExchange extends BaseController
                                 { !currentCat &&
                                     <div className="col-sm-9">
                                         <div className="form-group">
-                                            <label>Event category is “{Category}” but, there is no such category in “{ParentCategory}” please choose another or</label>
+                                            <label>Event category is “{Category}” but, there is no such category in “{ParentName}” please choose another or</label>
                                             <div><button className="btn btn-xs btn-success" onClick={this._onCreateCatClick.bind(this, true)}>Create new</button></div>
                                         </div>
                                     </div>
@@ -113,7 +116,7 @@ class NewFeedExchange extends BaseController
                         <div className="col-sm-6">
                             <div className="box box-success">
                                 <div className="box-header">
-                                    {/*<i className="fa fa-navicon"/>*/}Create a sub category in “{ParentCategory}”
+                                    {/*<i className="fa fa-navicon"/>*/}Create a sub category in “{ParentName}”
                                 </div>
                                 <div className="box-body pad table-responsive">
                                         <div class="js-alert alert-message alert alert-warning alert-dismissible">
@@ -176,13 +179,14 @@ class NewFeedExchange extends BaseController
                             </div>
                         </div>
 
-                        <div className="row">
+                        <div className="row" ref={(val) => this.blockTablePlayers = val}>
                             <div className="col-sm-6">
                                 <div class="panel box box-default">
-                                    <div class="box-header with-border">
+                                    <div class="box-header with-border" onClick={::this._onAdaptClick}>
                                         <h4 class="box-title">
                                             Players <span className="-nobold">(avaliable)</span>
                                         </h4>
+                                        <button className="adapt btn btn-default -btn-default btn-xs">Adapt</button>
                                     </div>
                                     <div class="panel-collapse">
                                         <div class="box-body">
@@ -437,9 +441,40 @@ class NewFeedExchange extends BaseController
      * Create category finish callback
      * @private
      */
-    _createCatFinishCallback()
+    _createCatFinishCallback(props)
     {
-        this._onCreateCatClick(false);
+        0||console.log( 'p1', {props} );
+
+        if( props.code == 100 )
+        {
+            (new InfoMessages).show({
+                title: 'SUCCESS',
+                message: props.message,
+                color: InfoMessages.SUCCESS,
+            });
+
+            this._onCreateCatClick(false);
+        }
+        else
+        {
+            (new InfoMessages).show({
+                title: 'ERROR',
+                message: props.message,
+                color: InfoMessages.WARN,
+            });
+        } // endif
+    }
+
+
+    /**
+     * Move players table to top
+     * @private
+     */
+    _onAdaptClick()
+    {
+        $('html, body').animate({
+            scrollTop: $(this.blockTablePlayers).offset().top - 20
+        }, 300);
     }
 }
 

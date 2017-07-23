@@ -18,7 +18,7 @@
 .-iblock { display: inline-block !important; }
 .-nblock { display: none; }
 .-left { text-align: left !important; }
-.-center { text-align: center }
+.-center { text-align: center !important; }
 .-justify { @include jalign; }
 .-green { color: $color1Green !important; }
 .-red { color: $color9Red !important; }
