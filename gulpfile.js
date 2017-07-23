@@ -257,7 +257,9 @@ gulp.task('watch-admin', function () {
 });
 
 // BM: ========================================================================================== FRONT DEV BUILDING ===
+
 gulp.task('watch-front-js-styles', function () {
+    0||console.log( '',$pathDestServer + '/Scripts/dist/**/*.*'  );
     gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
     gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));
     gulp.watch('frontend/js/react/localization/*.js', gulp.series('localization'));
