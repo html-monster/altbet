@@ -192,7 +192,7 @@
       .l-title {
         .score { color: #3f9622; }
         .seemore-lnk { color: $color4TextBlack;
-          a{ color: $color4TextBlack }
+          //a{ color: $color4TextBlack }
         }
         .title{ color: $color4TextBlack }
       }
@@ -268,8 +268,8 @@
       .event_title{ display: inline-block; max-width: 450px; transition: 0s; }
       .handicap{ display: inline-block; width: 80px; position: absolute; right: 70px; } // для показа
       .seemore-lnk { color: $color4TextWhite; transition: color 0s;
-        a{ color: $color4TextWhite }
-        a:hover { color: $color-blue; }
+        //a{ color: $color4TextWhite }
+        //a:hover { color: $color-blue; }
       }
       .last-price { position: absolute; top: 0; right: 0; white-space: nowrap; // для показа
         &.down i { display: inline-block; top: 2px; background-position: -309px -308px; }

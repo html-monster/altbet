@@ -265,19 +265,19 @@ export default class ExchangeItem extends React.Component {
 									<span className="title">Score</span>
 										<span
 											className={spreadTitle === 'Spread' && +$homeTotal + spreadValue < $awayTotal ? 'low' : ''}>{$homeTotal}</span> : {$awayTotal} </span>
-									{
-										$classActiveExch ?
-											<a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="event_title"
-											   title="See more">
-												<span
-													className="title">Market </span>{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}
-											</a>
-											:
+									{/*{*/}
+										{/*$classActiveExch ?*/}
+											{/*<a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="event_title"*/}
+											   {/*title="See more">*/}
+												{/*<span*/}
+													{/*className="title">Market </span>{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}*/}
+											{/*</a>*/}
+											{/*:*/}
 											<span className="event_title" title="Event title">
 												<span
 													className="title">Market </span>{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}
 											</span>
-									}
+									{/*}*/}
 									</span>
 								, (Symbol.HomeHandicap !== null) ?
 									<span key="1" className="handicap" style={{paddingRight: 5}} title={spreadTitle}>
