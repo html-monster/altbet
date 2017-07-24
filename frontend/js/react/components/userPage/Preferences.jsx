@@ -161,7 +161,7 @@ export default class Preferences extends React.Component
 								{/*<input id="IsMode" type="checkbox" checked={this.state.IsMode} onChange={this._onChkChange.bind(this, "IsMode")}/>*/}
 								{/*@Html.CheckBoxFor(m=>m.IsMode, new { @checked = Model.IsMode })*/}
 								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "IsMode", checked: IsMode}}>
-									<strong className="label">Expert Mode:</strong>
+									<strong className="label">Detailed View:</strong>
 								</CheckBox>
 							</li>
 							<li>

@@ -8,6 +8,7 @@ button, a.button {
   color: #fff;
   outline: none;
   cursor: pointer;
+  &[disabled]{ cursor: default; opacity: 0.6; }
   &.close_red {
     display: block;
     width: 15px;
