@@ -57,10 +57,10 @@ class NewFeedExchange extends BaseController
 
         // prepare command creation interface data
         const playersComponents = [
-            [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={{players: PlayersTeam1.players, TeamDefence: FormData['Team1Defense'], name: FormData['teamName1'], positions: Positions, uplayerdata: UPlayerData, actions, teamNum: "1", TimeEvent}} />,],
+            [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={{players: PlayersTeam1.players, TeamDefence: FormData['Team1Defense'], name: FormData['teamName1'], positions: Positions, uplayerdata: UPlayerData, actions, teamNum: "1", }} />,],
             [1, 2, 'Reserve players team 1', PlayersTeam1Reserve.players, <TeamResVar players={PlayersTeam1Reserve.players} teamVar="PlayersTeam1Reserve" actions={actions} teamNum="1" />,],
             [1, 3, 'Variable reserve team 1', PlayersTeam1Variable.players, <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
-            [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={{players: PlayersTeam2.players, TeamDefence: FormData['Team2Defense'], name: FormData['teamName2'], positions: Positions, uplayerdata: UPlayerData, actions, teamNum: "2", TimeEvent}} />,],
+            [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={{players: PlayersTeam2.players, TeamDefence: FormData['Team2Defense'], name: FormData['teamName2'], positions: Positions, uplayerdata: UPlayerData, actions, teamNum: "2", }} />,],
             [2, 2, 'Reserve players team 2', PlayersTeam2Reserve.players, <TeamResVar players={PlayersTeam2Reserve.players} teamVar="PlayersTeam2Reserve" actions={actions} teamNum="2" />,],
             [2, 3, 'Variable reserve team 2', PlayersTeam2Variable.players, <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
         ];
@@ -69,7 +69,7 @@ class NewFeedExchange extends BaseController
         // prepare categories
         if (Categories) catItems = Categories.map((val) => {
             let itm = { value: val.CategoryId, label: val.Name};
-            //DEBUG:            if (val.IsCurrent) currentCat = itm;
+            if (val.IsCurrent) currentCat = itm;
             if (!ParentId) ParentId = val.ParentId;
             if (!ParentName) ParentName = val.ParentName;
             return itm;
@@ -186,7 +186,7 @@ class NewFeedExchange extends BaseController
                                         <h4 class="box-title">
                                             Players <span className="-nobold">(avaliable)</span>
                                         </h4>
-                                        <button className="adapt btn btn-default -btn-default btn-xs">Adapt</button>
+                                        <button className="adapt btn btn-default -btn-default btn-xs" title="Move panel to top on screen"><i className="glyphicon glyphicon-open"/></button>
                                     </div>
                                     <div class="panel-collapse">
                                         <div class="box-body">

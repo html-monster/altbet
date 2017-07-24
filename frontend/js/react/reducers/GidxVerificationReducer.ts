@@ -20,7 +20,7 @@ export default class Reducer
     private initialState = {
         loadProgress: 0,
         loadError: '',
-        files: [], //globalData.userPageOn ? appData.pageAccountData.jsonImageInfo : null
+        files: appData.Gidx ? appData.Gidx.ImageInfo : [],
         config: {
             maxFiles: 6,
         }

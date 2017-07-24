@@ -207,6 +207,11 @@ $(document).ready(function () {
     // });
 
 
+    // BM: header account dropdown list
+    $('[data-js-login]').click(function () {
+        $('.user-menu').slideToggle().toggleClass('active');
+    });
+
 
     $('.show_password').mousedown(function () { // show password
         $(this).parents('.pass_container').find('input[type=password]').attr('type', 'text');

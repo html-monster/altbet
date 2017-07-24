@@ -17,6 +17,7 @@ import {
     ON_SAVE_EVENT_FAIL,
     ON_ADD_TEAM_DEFENCE,
     ON_REM_TEAM_DEFENCE,
+    AFTER_CATEGORY_ADDED,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -100,15 +101,15 @@ export default class Actions extends BaseActions
             const ajaxPromise = (new AjaxSend()).send({
                 formData: data,
                 message: `Error while adding category, please, try again`,
-                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_ADD,
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_ADD,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 respCodes: [
                     {code: 100, message: `Category “${data.Name}” created successfully`},
                     {code: -101, message: "Category name is not unique"},
                     {code: -102, message: "Category url is not unique"},
                     {code: -103, message: "You cannot add subcategory because parent category is not empty"},
                 ],
-                beforeChkResponse: (data) =>
+/*                beforeChkResponse: (data) =>
                 {
                     // DEBUG: emulate
                     data = {Error: 103};
@@ -119,7 +120,7 @@ export default class Actions extends BaseActions
                     // data.Param3 = "TOR-PHI-3152017"; // id
 
                     return data;
-                },
+                },*/
             });
 
 
@@ -127,23 +128,14 @@ export default class Actions extends BaseActions
                 {
                     0||console.log( 'result', result, result.code );
                     inProps.callback && inProps.callback(result);
-                    return;
                     dispatch({
-                        type: ON_CHANGE_EVENT,
-                        payload: [result.data.Players, inProps],
+                        type: AFTER_CATEGORY_ADDED,
+                        payload: {Categories: result.data.Categories, Emulate: data.Name},
                     });
                 },
                 result => {
                     0||console.log( 'result', result, result.code );
                     inProps.callback && inProps.callback(result);
-                    return;
-                    if( result.code != 100 )
-                    {
-                        dispatch({
-                            type: ON_CHANGE_EVENT,
-                            payload: [[], inProps],
-                        });
-                    }
                 });
         };
     }

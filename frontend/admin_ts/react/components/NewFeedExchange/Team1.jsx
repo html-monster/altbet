@@ -18,21 +18,35 @@ export class Team1 extends React.Component
 
     render()
     {
-        const { players, name, positions, teamNum, TeamDefence, TimeEvent, actions, uplayerdata: {uniPositionIndex, uniPositionName} } = this.props.data;
+        const { players, name, positions, teamNum, TeamDefence, actions, uplayerdata: {uniPositionIndex, uniPositionName} } = this.props.data;
         let jj = 0, kk = 1;
-        // 0||console.log( 'da', data );
-        let Defence = {};
-        TimeEvent.forEach((val) => {
-            if (val.HomeId === TeamDefence.TeamId) Defence = {name: val.HomeTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
-            if (val.AwayId === TeamDefence.TeamId) Defence = {name: val.AwayTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
-        });
+        // let Defence = {};
+        // TimeEvent.forEach((val) => {
+        //     if (TeamDefence.TeamId) Defence = {name: val.HomeTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
+        //     if (TeamDefence.TeamId) Defence = {name: val.AwayTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
+        // });
+        // 0||console.log( 'TeamDefence', TeamDefence );
 
         return (
             <div className="h-team">
-                <label>Team {teamNum} name</label>
-                <div class="input-group">
-                    <input className="form-control" type="text" name={`team${teamNum}name`} value={name} onChange={::this._onChangeTeamName} />
-                    <span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateTeamName} title="Generate team name"><i class="fa fa-repeat"/></button></span>
+                <div className="form-horizontal">
+                    <div className="form-group">
+                        <label className="col-sm-3 control-label">Team {teamNum} name</label>
+                        <div class="col-sm-9 input-group">
+                            <input className="form-control" type="text" name={`team${teamNum}name`} value={name} onChange={::this._onChangeTeamName} />
+                            <span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateTeamName} title="Generate team name"><i class="fa fa-repeat"/></button></span>
+                        </div>
+                    </div>
+{/*
+                    <div className="form-group">
+                        <label className="col-sm-3 control-label">Team size</label>
+                        <div class="col-sm-9 input-group">
+                            <select class="cb-size form-control">
+                                {this._checkTeamSize(positions)}
+                            </select>
+                        </div>
+                    </div>
+*/}
                 </div>
 {/*
                 <div className="form-group">
@@ -88,9 +102,9 @@ export class Team1 extends React.Component
                     </tbody>
                 </table>
 
-                {Defence.name ?
+                {TeamDefence.name ?
                     <div className="defence">
-                        <b>Defence</b>: <span title={`From event “${Defence.event}”`}>{Defence.name}</span>
+                        <b>Defence</b>: <span title={`From event “${TeamDefence.event}”`}>{TeamDefence.name}</span>
                     </div>
                     :
                     <div className="defence"><b>Defence</b>: <i>Not set, please, choose a command for defence</i></div>
@@ -120,5 +134,20 @@ export class Team1 extends React.Component
     {
         const { actions, teamNum } = this.props.data;
         actions.actionGenerateTeamName({teamNum});
+    }
+
+
+    /**@private*/ _checkTeamSize(Positions)
+    {
+        let len = 0, ret = [];
+        Positions.forEach((val) => len += val.Quantity);
+
+        0||console.log( 'len', len );
+
+        for( var ii = 0, countii = len-1; ii < countii; ii++ )
+        {
+            ret.push(<option>{ii+1}</option>);
+        } // endfor
+        ret.push(<option selected>{ii+1}</option>);
     }
 }

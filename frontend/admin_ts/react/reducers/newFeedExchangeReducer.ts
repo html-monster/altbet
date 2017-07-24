@@ -20,6 +20,7 @@ import {
     ON_SAVE_EVENT_OK,
     ON_ADD_TEAM_DEFENCE,
     ON_REM_TEAM_DEFENCE,
+    AFTER_CATEGORY_ADDED,
 } from '../constants/ActionTypesNewFeedExchange';
 /// TS_IGNORE
 import {Common} from "../common/Common";
@@ -74,6 +75,8 @@ export default class Reducer
         },
         Team1name: '', // team1 alias from server
         Team2name: '', // team2 alias from server
+        TeamSize1: '', // team1 custom size
+        TeamSize2: '', // team2 custom size
         ...globalData.AppData,
     };
 
@@ -90,6 +93,7 @@ export default class Reducer
         this.initialState = {...this.initialState, ...loadedData};
         //DEBUG: emulate
         // if (__EMULATE__) this.initialState.TimeEvent = this.initialState.TimeEvent.map((val) => {val.HomeId += 'H'; val.AwayId += 'A'; return val});
+        // this.initialState.Categories.forEach((val) => val.IsCurrent = false);
         //DEBUG: remove
         // this.initialState.FormData = {
         //         ...this.initialState.FormData,
@@ -112,6 +116,11 @@ export default class Reducer
                 break;
             }
         } // endfor
+
+        // init teams size
+        let len;
+        this.initialState.Positions.forEach((val) => len += val.Quantity);
+        this.initialState.TeamSize1 = this.initialState.TeamSize2 = len;
     }
 
 
@@ -188,6 +197,10 @@ export default class Reducer
 
             case ON_REM_TEAM_DEFENCE:
                 state = this.removeTeamDefence(action.payload, state);
+                return {...state};
+
+            case AFTER_CATEGORY_ADDED:
+                state = this.refreshCategories(action.payload, state);
                 return {...state};
 
             default:
@@ -735,7 +748,7 @@ export default class Reducer
         });
 
         state.FormData.startDate = startDate;
-        0||console.log( 'state.FormData.startDate', {'11': state.FormData.startDate, startDate, '22': state.Players} );
+        // 0||console.log( 'state.FormData.startDate', {'11': state.FormData.startDate, startDate, '22': state.Players} );
     }
 
 
@@ -753,7 +766,7 @@ export default class Reducer
 
         if (!leadPlayer.Name && state['PlayersTeam' + teamNum].players.length) leadPlayer = state['PlayersTeam' + teamNum].players[0];
 
-        if (leadPlayer.Name) state.FormData[`teamName` + teamNum] = "Team " + leadPlayer.Name.split(' ')[1].trim();
+        if (leadPlayer.Name) state.FormData[`teamName` + teamNum] = `Team ${leadPlayer.Name.split(' ')[1].trim()}, ${state[`Team${teamNum}name`]}`;
 
         // save teams data
         this.saveData(state);
@@ -767,7 +780,7 @@ export default class Reducer
      */
     private generateFullName(inProps, state)
     {
-        state.FormData.fullName = `${state.FormData['teamName1']}, ${state.Team1name} (vs. ${state.FormData['teamName2']}, ${state.Team2name})`;
+        state.FormData.fullName = `${state.FormData['teamName1']} (vs. ${state.FormData['teamName2']})`;
 
         // save teams data
         this.saveData(state);
@@ -784,9 +797,8 @@ export default class Reducer
         let $name = state.FormData.fullName;
         if( $name != '' )
         {
-            // 0||console.log( 'Common.createUrlAlias($name)', Common.createUrlAlias($name), state.FormData.startDate.format('MMDDY') );
             state.FormData.url = Common.createUrlAlias($name);
-            if (state.FormData.startDate) state.FormData.url += '-' + state.FormData.startDate.format('MDY');
+            // if (state.FormData.startDate) state.FormData.url += '-' + state.FormData.startDate.format('MDY');
         } // endif
 
         // save teams data
@@ -861,6 +873,29 @@ export default class Reducer
 
         // save teams data
         // this.saveData(state);
+
+        return state;
+    }
+
+
+    /**
+     * Refresh categories after adding new one
+     */
+    private refreshCategories({Categories, Emulate}, state)
+    {
+        // DEBUG: emulation
+        state.Categories.forEach((val) => val.IsCurrent = false);
+        let $cat = {...state.Categories[0]};
+        $cat.Name = Emulate;
+        $cat.IsCurrent = true;
+        $cat.CategoryId  += 'new';
+        state.Categories.push($cat);
+        Categories = state.Categories;
+        // ==============================
+
+
+        // set new cattegories
+        state.Categories = Categories;
 
         return state;
     }
