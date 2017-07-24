@@ -97,7 +97,7 @@ class MainPage extends BaseController
         let $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
         let urlBase = appData.baseUrl.MainPage;
-        let Breadcrumbs = this.props.Breadcrumbs ? this.props.Breadcrumbs : [];
+        let Breadcrumbs = this.props.data.Breadcrumbs ? this.props.data.Breadcrumbs : [];
         // let nb = "&nbsp;";
 
         // sort tabs data

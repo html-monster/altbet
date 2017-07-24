@@ -49,7 +49,7 @@ class NewFeedExchange extends BaseController
     render()
     {
         const { actions, data: AppData } = this.props;
-        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, CurrentEventObj, Rules, CurrentTeam, Category, Categories, TimeEvent } = this.props.data;
+        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, CurrentEventObj, Rules, CurrentTeam, Category, Categories, IsFeedExchange } = this.props.data;
         const { currTeamKey, okBtnDisabled } = this.state;
         var items = [], currentCat, catItems, ParentId, ParentName;
 
@@ -78,7 +78,13 @@ class NewFeedExchange extends BaseController
 
         return (
             <div>
-                <h3 className="">Event approving “{AppData.FullName}”</h3>
+                <h3>
+                    {IsFeedExchange ?
+                        `Event approving “${AppData.FullName}”`
+                        :
+                        `Event approving “${AppData.FullName}”`
+                    }
+                </h3>
                 <div className="box box-default">
 {/*
                     <div className="box-header">

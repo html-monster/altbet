@@ -84,11 +84,27 @@ export default class Reducer
 
     init()
     {
+        let loadedData;
+
+
+        // do not initialise more
         if (this.initialState.initialised) return;
 
+
         this.initialState.Positions = this.preparePositions(globalData.AppData.Positions);
+
         // load saved teams
-        let loadedData = this.loadData();
+        if( globalData.IsFeedExchange )
+        {
+            loadedData = this.loadServerData();
+        }
+        else
+        {
+            loadedData = this.loadStorageData();
+        } // endif
+        0||console.log( 'this.initialState', this.initialState );
+
+
         // 0||console.log( 'this.initialState, loadedData', this.initialState, loadedData );
         this.initialState = {...this.initialState, ...loadedData};
         //DEBUG: emulate
@@ -108,7 +124,7 @@ export default class Reducer
         // init start date
         this.recountStartDate(this.initialState);
 
-        // init current categofy
+        // init current category
         for( let val of this.initialState.Categories )
         {
             if (val.IsCurrent) {
@@ -212,9 +228,8 @@ export default class Reducer
 
     /**
      * Load user teams data
-     * @return {PlayersTeam1, PlayersTeam2, LastEventId}
      */
-    private loadData() : {PlayersTeam1, PlayersTeam2, LastEventId}
+    private loadStorageData() : {PlayersTeam1, PlayersTeam2, LastEventId}
     {
         let $LastEventId = globalData.AppData.EventId;
         let data : any = localStorage.getItem('newFeedExchange');
@@ -249,6 +264,18 @@ export default class Reducer
             PlayersTeam2: {positions: {}, players: []},
             LastEventId: $LastEventId,
         };
+    }
+
+
+    /**
+     * Load user teams data from server (Edit mode)
+     */
+    private loadServerData()
+    {
+        const { FullName, EventId, } = this.initialState.Exchanges[0].Symbol;
+
+        this.initialState = {...this.initialState, LastEventId: EventId, FullName, EventId};
+        this.initialState.IsFeedExchange = true;
     }
 
 
