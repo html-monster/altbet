@@ -10,7 +10,10 @@ import {
 // import OddsConverter from '../models/oddsConverter/oddsConverter';
 
 const initialState = {
-    tab: 'tradeSlip',
+    activeTab: globalData.userIdentity === 'True' ?
+		globalData.tradeOn && !globalData.basicMode && !globalData.myPosOn ? 'ActiveTrader' : 'YourOrders'
+	:
+		'Disqus',
 	traderOn: globalData.tradeOn,
 	autoTradeOn: globalData.autoTradeOn,
 	currentOddSystem: null,
@@ -25,6 +28,9 @@ export default function sidebar(state = initialState, action)
     {
 		case ON_SIDEBAR_LOAD:
 			return {...state, currentOddSystem: action.payload};
+
+		case ON_TAB_SWITCH:
+			return {...state, activeTab: action.payload};
 
 		case ALLOW_AT_CH:
 			return {...state, isAllowAT: action.payload};

@@ -4,7 +4,8 @@ import React from 'react';
 
 import OrderForm from './order/OrderForm.jsx';
 import yourOrdersActions from '../../actions/Sidebar/yourOrderActions.ts';
-import { DateLocalization	 } from '../../models/DateLocalization';
+import classnames from 'classnames';
+import { DateLocalization } from '../../models/DateLocalization';
 
 class YourOrders extends React.Component
 {
@@ -42,7 +43,7 @@ class YourOrders extends React.Component
 	{
 		// let yourOrdersData = this.state.data;
 		let yourOrdersData = this.props.yourOrders;
-		return <div className={'tab_item' + (ABpp.User.userIdentity ? ' active' : '')} id="current-orders">
+		return <div className={classnames('tab_item animated dur3', {active: this.props.activeTab === 'YourOrders'}, {fadeIn: this.props.activeTab === 'YourOrders'})} id="current-orders">
 			{
 				ABpp.User.login ?
 					yourOrdersData.yourOrders.length ?

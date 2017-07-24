@@ -633,7 +633,7 @@ input ~ .info {
   transition: 0.4s ease-out;
   cursor: pointer;
   user-select: none;
-  &[data-disabled] { cursor: default; opacity: 0.6; }
+  &[data-disabled], &[disabled] { cursor: default; opacity: 0.6; }
 }
 
 .tab_item {

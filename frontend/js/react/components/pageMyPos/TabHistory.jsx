@@ -77,7 +77,7 @@ export class TabMyOrderHistory extends React.Component
 										</tbody>
 									</table>
 									:
-									<p>order history is empty</p>
+									<p>Order history is empty</p>
 								}
 							</div>
 						</div>

@@ -249,7 +249,8 @@ class MainPage extends BaseController
 			// ABpp.config.tradeOn = false;
 			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
 
-			if(globalData.tradeOn) sidebarActions.actionOnTraderOnChange(checked);
+			if(globalData.tradeOn) sidebarActions.tabSwitch(sidebarActions, 'ActiveTrader');
+			else sidebarActions.tabSwitch(sidebarActions, 'YourOrders');
 		}
 		else
 		{
@@ -259,7 +260,7 @@ class MainPage extends BaseController
 			// ABpp.config.tradeOn = true;
 			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
 
-			sidebarActions.actionOnTraderOnChange(checked);
+            sidebarActions.tabSwitch(sidebarActions, 'YourOrders');
 		}
     }
 */

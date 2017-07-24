@@ -2,6 +2,7 @@ import {
 	ON_SIDEBAR_LOAD,
     ON_TRADER_ON,
 	ON_AUTO_TRADE,
+	ON_TAB_SWITCH,
 	ALLOW_AT_CH,
 	ON_ACTIVE_SYMBOL_CHANGED,
 	ON_SIDEBAR_ODD_SYS_CHANGE,
@@ -28,6 +29,29 @@ class Actions extends BaseActions
 			dispatch({
 				type: ON_SIDEBAR_LOAD,
 				payload: (new OddsConverter()).getSystemName(),
+			});
+		}
+	}
+
+	/**
+	 * @param tabName: string - can be: "ActiveTrader", "YourOrders", "Disqus"
+	 * @returns {(dispatch:any, getState:any)=>undefined}
+	 */
+	public tabSwitch(actions, tabName)
+	{
+		ABpp.Websocket.sendSubscribe(tabName === 'YourOrders', window.SocketSubscribe.CURRENT_ORDERS);
+
+		if(tabName === 'ActiveTrader')
+			ABpp.config.tradeOn = true;
+		else
+			ABpp.config.tradeOn = false;
+
+		actions.actionOnTraderOnChange(tabName === 'ActiveTrader');
+		return (dispatch) =>
+		{
+			dispatch({
+				type: ON_TAB_SWITCH,
+				payload: tabName,
 			});
 		}
 	}
@@ -93,7 +117,7 @@ class Actions extends BaseActions
 				// globalData.tradeOn = true;
 				// === Vlasakh === 23-01-12 ===============================================
 				ABpp.config.tradeOn = true;
-				orderClass.tabReturn();
+				// orderClass.tabReturn();
 
 				// /** @var ABpp ABpp */ ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_TRADER_ON, true);
 
