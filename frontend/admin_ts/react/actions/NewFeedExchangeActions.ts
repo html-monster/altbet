@@ -718,12 +718,12 @@ __DEV__ && console.log( 'data', data );
 // [07.07.17 17:07:38] Vitaliy Yakubovskiy: и для игроков PlayerId, Fppg, Eppg, TeamType (0-Basic, 1-Reserve, 2-Variable)
 
         // prepare teams
-        PlayersTeam1 = PlayersTeam1.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 0}});
-        PlayersTeam2 = PlayersTeam2.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 0}});
-        PlayersTeam1Reserve = PlayersTeam1Reserve.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 1}});
-        PlayersTeam2Reserve = PlayersTeam2Reserve.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 1}});
-        PlayersTeam1Variable = PlayersTeam1Variable.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 2}});
-        PlayersTeam2Variable = PlayersTeam2Variable.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 2}});
+        PlayersTeam1 = PlayersTeam1.players.map((val) => {return{...val, PlayerId: val.PlayerId, TeamType: 0}});
+        PlayersTeam2 = PlayersTeam2.players.map((val) => {return{...val, PlayerId: val.PlayerId, TeamType: 0}});
+        PlayersTeam1Reserve = PlayersTeam1Reserve.players.map((val) => {return{...val, PlayerId: val.PlayerId, TeamType: 1}});
+        PlayersTeam2Reserve = PlayersTeam2Reserve.players.map((val) => {return{...val, PlayerId: val.PlayerId, TeamType: 1}});
+        PlayersTeam1Variable = PlayersTeam1Variable.players.map((val) => {return{...val, PlayerId: val.PlayerId, TeamType: 2}});
+        PlayersTeam2Variable = PlayersTeam2Variable.players.map((val) => {return{...val, PlayerId: val.PlayerId, TeamType: 2}});
 
         resObj.HomeTeam = PlayersTeam1.concat(PlayersTeam1Reserve).concat(PlayersTeam1Variable);
         resObj.AwayTeam = PlayersTeam2.concat(PlayersTeam2Reserve).concat(PlayersTeam2Variable);

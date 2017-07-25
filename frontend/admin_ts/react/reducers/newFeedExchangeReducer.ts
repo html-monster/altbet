@@ -274,8 +274,24 @@ export default class Reducer
     {
         const { FullName, EventId, } = this.initialState.Exchanges[0].Symbol;
 
+        // init params
         this.initialState = {...this.initialState, LastEventId: EventId, FullName, EventId};
+        // is edit mode
         this.initialState.IsEditFeedExchange = true;
+
+        0||console.log( 'this.initialState.Players', this.initialState.Players );
+        // init players
+/*
+        this.initialState.Players.map((val, key) => {
+            if (val && data.Players[key] && val.ID == data.Players[key].Id && data.Players[key].used)
+            {
+                val.StartDate = data.Players[key].StartDate;
+                val.usedTeam = data.Players[key].usedTeam;
+                val.used = data.Players[key].used;
+            }
+            return val
+        });
+*/
     }
 
 
@@ -311,7 +327,7 @@ export default class Reducer
 
         for( let val of state.Players  )
         {
-            if( player.Id == val.Id && !val.used )
+            if( player.PlayerId == val.PlayerId && !val.used )
             {
                 val.used = Reducer.USING_TEAM;
                 val.usedTeam = team;
@@ -349,7 +365,7 @@ export default class Reducer
 
         for( let val of state.Players  )
         {
-            if( player.Id == val.Id && !val.used )
+            if( player.PlayerId == val.PlayerId && !val.used )
             {
                 val.used = Reducer.USING_TEAM_UP;
                 val.usedTeam = team;
@@ -392,7 +408,7 @@ export default class Reducer
 
         for( let val of state.Players  )
         {
-            if( player.Id == val.Id && !val.used )
+            if( player.PlayerId == val.PlayerId && !val.used )
             {
                 val.used = Reducer.USING_RESERVE;
                 val.usedTeam = team;
@@ -427,7 +443,7 @@ export default class Reducer
 
         for( let val of state.Players  )
         {
-            if( player.Id == val.Id && !val.used )
+            if( player.PlayerId == val.PlayerId && !val.used )
             {
                 val.used = Reducer.USING_VARIABLE;
                 val.usedTeam = team;
@@ -512,7 +528,7 @@ export default class Reducer
             for( let ii in state.Players )
             {
                 let val2 = state.Players[ii];
-                if( val.Id == val2.Id )
+                if( val.PlayerId == val2.PlayerId )
                 {
                     if( state.UPlayerData.uniPositionIndex == val.Index )
                     {
@@ -541,7 +557,7 @@ export default class Reducer
             for( let ii in state.Players )
             {
                 let val2 = state.Players[ii];
-                if( val.Id == val2.Id )
+                if( val.PlayerId == val2.PlayerId )
                 {
                     if( state.UPlayerData.uniPositionIndex == val.Index )
                     {
@@ -569,7 +585,7 @@ export default class Reducer
             for( let ii in state.Players )
             {
                 let val2 = state.Players[ii];
-                if( val.Id == val2.Id )
+                if( val.PlayerId == val2.PlayerId )
                 {
                     val2.used = Reducer.USING_RESERVE;
                     val2.usedTeam = 1;
@@ -584,7 +600,7 @@ export default class Reducer
             for( let ii in state.Players )
             {
                 let val2 = state.Players[ii];
-                if( val.Id == val2.Id )
+                if( val.PlayerId == val2.PlayerId )
                 {
                     val2.used = Reducer.USING_RESERVE;
                     val2.usedTeam = 2;
@@ -599,7 +615,7 @@ export default class Reducer
             for( let ii in state.Players )
             {
                 let val2 = state.Players[ii];
-                if( val.Id == val2.Id )
+                if( val.PlayerId == val2.PlayerId )
                 {
                     val2.used = Reducer.USING_VARIABLE;
                     val2.usedTeam = 1;
@@ -614,7 +630,7 @@ export default class Reducer
             for( let ii in state.Players )
             {
                 let val2 = state.Players[ii];
-                if( val.Id == val2.Id )
+                if( val.PlayerId == val2.PlayerId )
                 {
                     val2.used = Reducer.USING_VARIABLE;
                     val2.usedTeam = 2;
@@ -634,7 +650,7 @@ export default class Reducer
         let $Team = state[team];
         for( let val of $Team.players )
         {
-            if( player.Id == val.Id )
+            if( player.PlayerId == val.PlayerId )
             {
                 val[type] = num;
                 break;
@@ -667,7 +683,7 @@ export default class Reducer
         for( let ii in $Team.players  )
         {
             let val = $Team.players[ii];
-            if( player.Id == val.Id )
+            if( player.PlayerId == val.PlayerId )
             {
                 if( val.used === 2 )
                 {
