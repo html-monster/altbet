@@ -23,6 +23,7 @@ import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
 import {MainConfig, DS} from '../../inc/MainConfig';
 import {Common} from '../common/Common';
+import {InfoMessage} from "../../component/InfoMessage";
 
 
 var __DEBUG__ = !true;
@@ -249,8 +250,8 @@ __DEV__ && console.log( 'data', data );
             const ajaxPromise = (new AjaxSend()).send({
                 formData: JSON.stringify(data),
                 message: `Error while saving new event, please try again`, // error 100 and other
-                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
-                // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
+                // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
                 exData: {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -264,7 +265,7 @@ __DEV__ && console.log( 'data', data );
                 {
                     // DEBUG: emulate
                     // data = {Error: 100};
-                    data = {"Error":"200","UrlExchange":"?path=fantasy-sport/american-football/nfl\u0026status=New\u0026lastnode=last-node","Exchanges":["GB-SEA-HC-9212015","GB-SEA-ML-9212015","GB-SEA-TP-9212015"]};
+                    // data = {"Error":200,"UrlExchange":"?path=fantasy-sport/american-football/nfl\u0026status=New\u0026lastnode=last-node","Exchanges":["GB-SEA-HC-9212015","GB-SEA-ML-9212015","GB-SEA-TP-9212015"]};
                     // data.Param1 = "TOR-PHI-3152017"; // id
                     // data.Param1 = "?path=sport&status=approved";
                     // data.Param1 = "?status=New";
@@ -280,20 +281,10 @@ __DEV__ && console.log( 'data', data );
                 {
                     0||console.log( 'result', result, result.code );
 
-
-                    // dispatch({
-                    //     type: ON_SAVE_EVENT_OK,
-                    //     payload: inProps,
-                    // });
+                    Common.redirectWMessage({url: result.data.UrlExchange, message: `Event “${data.FullName}” was saved successfully`, type: InfoMessage.TYPE_SUCCESS, title: 'SUCCESS', exInfo: {id: result.data.Exchanges}});
                 },
                 result => {
                     0||console.log( 'result', result, result.code );
-                    // let message = 'Save error';
-                    // switch( result.code )
-                    // {
-                    //     case 100 :
-                    //     default: ;
-                    // }
 
                     inProps.callback({errorCode: result.code, title: 'ERROR', message: result.message});
                 });

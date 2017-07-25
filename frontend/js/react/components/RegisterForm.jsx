@@ -95,7 +95,6 @@ export class RegisterForm extends React.PureComponent
     hiddenInputRender({ id, className, label, hint, inputLabel, currVal, type, meta: { error, dirty }, ...input })
     {
         delete input.value;
-        0||console.log( 'input', input );
         return <input type="hidden" value={currVal} {...input}/>;
     }
 

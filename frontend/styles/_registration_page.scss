@@ -171,7 +171,7 @@
   }
 
   .close { position: absolute; right: 0; top: 0; width: 16px; height: 16px; z-index: 53; cursor: pointer; cursor: pointer }
-  .answer-message { position: relative; text-align: center; }
+  .answer-message, .register_form_message { position: relative !important; text-align: center; }
   .country-states { transition: padding .4s, height .4s, opacity .4s;
     &.states-hidden { padding: 0; height: 1px; opacity: 0; visibility: hidden }
   }

@@ -4,6 +4,11 @@
  * Created by Vlasakh on 22.12.2016.
  */
 
+import {MainConfig, DS} from "../../inc/MainConfig"
+declare var window;
+
+
+
 export class Common
 {
     public static showMessage(message, messageName)
@@ -46,6 +51,32 @@ export class Common
     public static createUrlAlias(inStr)
     {
         return inStr.replace(/[^a-zA-Z0-9 ]/g, '').trim().replace(/[ ]/g, "-").toLowerCase();
+    }
+
+
+    /**
+     * Redirect browser
+     * @param inStr
+     */
+    public static redirect(inStr)
+    {
+        location.href = inStr;
+    }
+
+
+    /**
+     * Redirect browser with message
+     * @param inStr
+     */
+    public static redirectWMessage({url, message, type, title, exInfo})
+    {
+        //InfoMessage.TYPE_SUCCESS
+        // emulate
+        url = url.replace("\u0026", "&");
+        // url = MainConfig.BASE_URL + DS + url;
+
+        window.ADpp.User.setFlash({message: message, type: type, header: title, ...exInfo}, 'AddExchSucc');
+        location.href = MainConfig.BASE_URL + url;
     }
 
 
