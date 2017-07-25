@@ -29,30 +29,30 @@
     margin: 0 0 2em;
     height: 57px;
     text-align: center;
-    &.inpt_password:before {
-      content: '';
-      position: absolute;
-      top: 11px;
-      left: 8px;
-      width: 15px;
-      height: 21px;
-      font-size: 17px;
-      background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
-      z-index: 99;
-      opacity: 0.7;
-    }
-    &:before {
-      content: '';
-      position: absolute;
-      top: 11px;
-      left: 8px;
-      width: 15px;
-      height: 21px;
-      font-size: 17px;
-      z-index: 9;
-      opacity: 0.7;
-    }
-    &.inpt_mail:before {
+    //&.input_password:before {
+    //  content: '';
+    //  position: absolute;
+    //  top: 11px;
+    //  left: 8px;
+    //  width: 15px;
+    //  height: 21px;
+    //  font-size: 17px;
+    //  background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
+    //  z-index: 99;
+    //  opacity: 0.7;
+    //}
+    //&:before {
+    //  content: '';
+    //  position: absolute;
+    //  top: 11px;
+    //  left: 8px;
+    //  width: 15px;
+    //  height: 21px;
+    //  font-size: 17px;
+    //  z-index: 9;
+    //  opacity: 0.7;
+    //}
+    &.input_mail:before {
       content: '@';
       position: absolute;
       top: 11px;
@@ -136,14 +136,14 @@
 
   .input__label {
     float: right;
-    padding: 0 1em;
+    padding: 0;
     color: #afabc8;
     font-family: "open_sans_semibold", sans-serif;
     width: 100%;
     font-weight: bold;
     font-size: 13px;
     position: absolute;
-    left: 15px;
+    left: 0px;
     text-align: left;
   }
 
@@ -350,6 +350,7 @@
     &:nth-child(5):before { display: none; }
     .input__field {
       padding-left: 5px;
+      color: #afabc8;
     }
     .input__label {
       left: -15px;

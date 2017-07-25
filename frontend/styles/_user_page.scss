@@ -139,7 +139,7 @@
 
         &.pers_inf:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -110px -7px; }
         &.cont_inf:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -25px -40px; }
-        //&.section_user:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -135px -6px; }
+        //&.passw_change:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -135px -6px; }
         }
       h4{  margin: 15px 0 5px; font-weight: normal;  }
     }
@@ -190,7 +190,7 @@
     i{  width: 275px;  }
   }
   i.btn{  width: 100%;  }
-  .settings .column {  width: 100%; }
+  .settings .column {  width: 100%; margin-left: 20px; }
   .document_upload{  margin: 25px 0;  }
   .miniatures {
     display: flex;
