@@ -7,6 +7,8 @@ import {
     ON_MP_ORDER_DELETE
 } from "../../constants/ActionTypesDefaultOrdersLocal";
 import OrderActions from '../OrderActions';
+import GlobalCloseClass from '../../common/GlobalClose';
+
 /// <reference path="../../../.d/common.d.ts" />
 declare function $(object: any);
 
@@ -40,6 +42,7 @@ class Actions extends OrderActions
             $('#mainBlind').removeClass('fadeIn').addClass('fadeOut');
             $('.button.order_open').removeClass('order_open');
             $('#mp-orderContainer').fadeOut();
+            GlobalCloseClass.unbindCloseEvent();
 
             setTimeout(() => {
                 // $('body').removeAttr('style');

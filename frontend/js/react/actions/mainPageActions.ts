@@ -42,11 +42,7 @@ class Actions extends BaseActions
 
             ABpp.Websocket.subscribe(({SymbolsAndOrders, lineupsData}) =>
             {
-                // console.log('SymbolsAndOrders:', SymbolsAndOrders);
-                // console.log('lineupData:', lineupsData);
                 let state = getState().mainPage;
-                // console.log('state:', state.marketsData);
-                // console.log('appData.pageHomeData.Data:', appData.pageHomeData.Data);
 
                 let compare = SymbolsAndOrders.some((item, index)=>{
                     delete item.TimeRemains;// костыль убирает TimeRemains (надо этот момент подправить)

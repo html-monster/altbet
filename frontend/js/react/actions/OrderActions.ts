@@ -3,6 +3,7 @@
  */
 import BaseActions from './BaseActions';
 import { orderForm } from '../components/formValidation/validation';
+
 /// <reference path="../../.d/common.d.ts" />
 declare let __DEV__;
 declare function $(object: any);
