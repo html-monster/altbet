@@ -109,25 +109,25 @@ class ActiveTrader extends React.Component
 				<tbody>
 					<tr>
 						<td className="open_pnl trader_info">
-							<a href="#">
-								W/L
+							<span>
+								W/L:
 								<span className={'quantity ' + className}>{gainLoss}</span>
 								<span className="help"><span className="help_message right"><strong>Profit in this event</strong></span></span>
-							</a>
+							</span>
 						</td>
 						<td className="open_contracts trader_info">
-							<a href="#">
-								Units
+							<span>
+								Units:
 								<span className="pos">{data.Positions || 0}</span>
 								<span className="help"><span className="help_message"><strong>Open positions</strong></span></span>
-							</a>
+							</span>
 						</td>
 						<td className="amount trader_info">
-							<a href="#">
-								Avg. Price
+							<span>
+								Avg. Price:
 								<span className="quantity up">{}</span>
 								<span className="help"><span className="help_message"><strong>Average price of position</strong></span></span>
-							</a>
+							</span>
 						</td>
 					</tr>
 				</tbody>

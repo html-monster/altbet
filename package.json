@@ -6,6 +6,7 @@
         "devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 9090 --host localhost",
         "webpack": "webpack",
         "webpackDEV": "webpack --watch --watch-aggregate-timeout 300 --env.patch --COMMENT=\"DEBUG=true(set in environment)\"",
+        "webpackDEVAdm": "webpack --config webpackinc/webpack.config.admin.js --watch --watch-aggregate-timeout 300 --env.patch --COMMENT=\"DEBUG=true(set in environment)\"",
         "webpackBuild": "webpack --config webpackinc/webpack.config.build.js --COMMENT=\"NODE_ENV=production(set in environment)\""
     },
     "author": "Aleksey",
@@ -103,7 +104,7 @@
         "webpack-uglify-js-plugin": "^1.1.9"
     },
     "name": "Altbet",
-    "version": "3.3.10",
+    "version": "3.3.24",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/html-monster/altbet.git"

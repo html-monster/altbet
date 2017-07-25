@@ -387,7 +387,8 @@ input ~ .info {
   position: absolute;
   top: 14px;
   right: 5px;
-  z-index: 70;
+  z-index: 170;
+  opacity: 0.5;
   cursor: help;
   transition: 0.4s ease-out;
   @include reg_help_message;
@@ -637,7 +638,7 @@ input ~ .info {
   transition: 0.4s ease-out;
   cursor: pointer;
   user-select: none;
-  &[data-disabled] { cursor: default; opacity: 0.6; }
+  &[data-disabled], &[disabled] { cursor: default; opacity: 0.6; }
 }
 
 .tab_item {

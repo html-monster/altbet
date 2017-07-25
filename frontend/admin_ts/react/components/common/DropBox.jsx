@@ -11,6 +11,7 @@ import Select from 'react-select';
  */
 export class DropBox extends React.Component
 {
+/*
     constructor(props)
     {
         super(props);
@@ -25,14 +26,15 @@ export class DropBox extends React.Component
 		};
 
     }
+*/
 
 
     render()
     {
-        const { name, items, afterChange } = this.props;
-        const { disabled, searchable, selectValue, clearable } = this.state;
+        const { name, items, afterChange, clearable, searchable, disabled, value } = this.props;
+        // const { disabled, searchable, selectValue, clearable } = this.state;
 
 
-        return <Select name={name} options={items} /*autofocus*/ simpleValue clearable={clearable} disabled={disabled} value={selectValue} searchable={searchable} onChange={(newValue) => { afterChange( newValue ); this.setState({ selectValue: newValue }); }}/>;
+        return <Select name={name} options={items} /*autofocus*/ simpleValue clearable={clearable} disabled={disabled} value={value} searchable={searchable} onChange={(newValue) => { afterChange( newValue ); this.setState({ selectValue: newValue }); }}/>;
     }
 }

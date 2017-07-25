@@ -33,7 +33,7 @@ class GidxVerification extends BaseController
         var self = this;
 
         return <div className="wrapper">
-            <form ref={(itm) => {this.uploadForm = itm; 0||console.log( 'this.uploadForm', this.uploadForm ); return this.uploadForm = itm}} action={`${ABpp.baseUrl}/Account/UploadImage`} encType="multipart/form-data" className="document_upload" >
+            <form ref={(itm) => this.uploadForm = itm} action={`${ABpp.baseUrl}/Account/UploadImage`} encType="multipart/form-data" className="document_upload" >
                 <h3 className="section_user">Your files</h3>
                 <hr/>
                 <div className="miniatures">
@@ -84,7 +84,7 @@ class GidxVerification extends BaseController
                                 return item.ContentType !== 'load' ?
                                     <div className={`thumbnail file ${extension[0] === 'image' ? '' : 'doc'}`} key={index} title={name}>
                                         <button className="close" title="Remove this file"
-                                              onClick={actions.ajaxDeleteFile.bind(null, this, item.Name)}><span>{}</span></button>
+                                              onClick={actions.ajaxDeleteFile.bind(null, item.Name)}><span>{}</span></button>
                                         <a href={item.Url} target="_blank">
                                             {
                                                 extension[0] === 'image' ?

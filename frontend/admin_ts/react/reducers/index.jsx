@@ -16,7 +16,7 @@ if( globalData.ac )
 {
 	const { controller, action } = globalData.ac;
 
-	if ( controller === "feed" && action === "newfeedexchange" ) page = "applyfeedexchange";
+	if ( controller === "feed" && (action === "newfeedexchange" || action === "editfeedexchange") ) page = "applyfeedexchange";
 	if ( controller === "feed" && action === "index" ) page = "xmlfeedevents";
 
 

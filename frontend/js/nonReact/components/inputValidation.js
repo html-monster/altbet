@@ -1,4 +1,4 @@
-/*
+
 class inputValidationClass{
 	constructor(){
 		let inputs = $('input[data-valid-js]');
@@ -19,4 +19,4 @@ class inputValidationClass{
 		}
 	}
 }
-*/
+

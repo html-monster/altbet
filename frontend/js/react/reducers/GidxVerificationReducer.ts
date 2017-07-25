@@ -20,7 +20,7 @@ export default class Reducer
     private initialState = {
         loadProgress: 0,
         loadError: '',
-        files: [], //globalData.userPageOn ? appData.pageAccountData.jsonImageInfo : null
+        files: appData.Gidx ? appData.Gidx.ImageInfo : [],
         config: {
             maxFiles: 6,
         }
@@ -42,6 +42,7 @@ export default class Reducer
         switch (action.type)
         {
 		case SETTING_ON_FILE_LOAD:
+            0||console.info( 'SETTING_ON_FILE_LOAD action.payload', action.payload );
 			return {...state, files: action.payload};
 
 		case SETTING_CHANGE_PROGRESS_BAR:

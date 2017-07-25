@@ -20,12 +20,12 @@ export default class Actions extends BaseActions
         return (dispatch, getState) =>
         {
             const {uploadForm, uploadButton} = context;
-            const { gidxVerification: {files, config} } = getState();
+            let { gidxVerification: {files, config} } = getState();
             let loadFileData = event.target.files;
+            0||console.log( 'loadFileData', loadFileData );
             let extension, fileSize = 0, valid = true;
             const sizeLimit = 2000000;
             const loadId = (new Date).getTime();
-            0||console.log( 'here', 0 );
 
             dispatch({
                 type: SETTING_LOAD_FILE_ERROR,
@@ -78,7 +78,11 @@ export default class Actions extends BaseActions
                                         {
                                             let myXhr = $.ajaxSettings.xhr();
                                             if (myXhr.upload) {
-                                                self.addFile({ Name: loadId, ContentType: 'load',}, files);
+                                                dispatch({
+                                                    type: SETTING_ON_FILE_LOAD,
+                                                    payload: files = self.addFile({ Name: loadId, ContentType: 'load',}, files),
+                                                });
+
 
                                                 myXhr.upload.addEventListener('progress', function(event) {
                                                     let percent = 0;
@@ -108,7 +112,9 @@ export default class Actions extends BaseActions
                     type: SETTING_LOAD_FILE_ERROR,
                     payload: 'Loading file failed. Please check your internet connection or reload the page or try again later',
                 });
-                self.removeFile(loadId);
+
+                self.removeFile(loadId, files, dispatch);
+
                 $(uploadButton).removeAttr('disabled');
             }
 
@@ -119,43 +125,50 @@ export default class Actions extends BaseActions
 
             function success(answer)
             {
-                __DEV__ && console.log('answer:', answer);
+                let $message;
 
-                switch (answer.ErrorCode){
-                    case 200:{
-                        self.addFile(answer);
-                        break;
+                try {
+                    switch (answer.ErrorCode){
+                        case 200:{
+                            dispatch({
+                                type: SETTING_ON_FILE_LOAD,
+                                payload: self.addFile(answer, files),
+                            });
+                            break;
+                        }
+                        case 101:{
+                            self.removeFile(loadId, files, dispatch);
+                            $message = `${this.name} is unsupported file type`;
+                            dispatch({
+                                type: SETTING_LOAD_FILE_ERROR,
+                                payload: $message,
+                            });
+                            throw new Error($message);
+                        }
+                        case 102:{
+                            self.removeFile(loadId, files, dispatch);
+                            $message = `You have ${loadFileData.length} file(s) with total size ${Math.round10(fileSize / 1000000,
+                                -2)} MB , Allowed size is ${Math.round10(sizeLimit / 1000000, -2)} MB, Try smaller file`;
+                            dispatch({
+                                type: SETTING_LOAD_FILE_ERROR,
+                                payload: $message,
+                            });
+                            throw new Error($message);
+                        }
+                        case 100:
+                        case 103:{
+                            self.removeFile(loadId, files, dispatch);
+                            let fn = loadFileData.length ? loadFileData[0].name : '';
+                            $message = `File ${fn} has not been saved. Try again or reload the page, or try again later`;
+                            dispatch({
+                                type: SETTING_LOAD_FILE_ERROR,
+                                payload: $message,
+                            });
+                            throw new Error($message);
+                        }
                     }
-                    case 100:{
-                        self.removeFile(loadId);
-                        __DEV__ && console.error('You tried to load empty files object');
-                        break;
-                    }
-                    case 101:{
-                        self.removeFile(loadId);
-                        dispatch({
-                            type: SETTING_LOAD_FILE_ERROR,
-                            payload: `${this.name} is unsupported file type`,
-                        });
-                        break;
-                    }
-                    case 102:{
-                        self.removeFile(loadId);
-                        dispatch({
-                            type: SETTING_LOAD_FILE_ERROR,
-                            payload: `You have ${loadFileData.length} file(s) with total size ${Math.round10(fileSize / 1000000,
-                                -2)} MB , Allowed size is ${Math.round10(sizeLimit / 1000000, -2)} MB, Try smaller file`,
-                        });
-                        break;
-                    }
-                    case 103:{
-                        self.removeFile(loadId);
-                        dispatch({
-                            type: SETTING_LOAD_FILE_ERROR,
-                            payload: `File ${this.name} has not been saved. Try again or reload the page, or try again later`,
-                        });
-                        break;
-                    }
+                } catch (e) {
+                    __DEV__ && console.warn( `E${answer.ErrorCode}: ${answer.ErrorMessage}` )
                 }
 
                 dispatch({
@@ -253,6 +266,16 @@ export default class Actions extends BaseActions
 
     public addFile(item, files)
     {
+        let newArr = item.ContentType == 'load' ?
+            files.slice()
+            :
+            files.slice(0, -1);
+
+        return newArr.concat(item);
+    }
+
+    public addFileOld(item, files)
+    {
         return (dispatch, getState) =>
         {
             let newArr = item.ContentType == 'load' ?
@@ -269,16 +292,75 @@ export default class Actions extends BaseActions
     }
 
 
-    public removeFile(id)
+    public removeFile(id, files, dispatch)
     {
+        let newArr = files.slice().filter((item) => id != item.Name);
+
+        dispatch({
+            type: SETTING_ON_FILE_LOAD,
+            payload: newArr,
+        });
+
+        return newArr;
+    }
+
+
+    public ajaxDeleteFile(id, event)
+    {
+        var self = this;
+
         return (dispatch, getState) =>
         {
-            let newArr = getState().accountSetting.files.slice().filter((item) => id != item.Name);
+            let { gidxVerification: {files} } = getState();
 
+            __DEV__ && console.log('id', id);
+
+            const button = event.target;
+            event.preventDefault();
             dispatch({
-                type: SETTING_ON_FILE_LOAD,
-                payload: newArr,
+                type: SETTING_LOAD_FILE_ERROR,
+                payload: '',
             });
+
+            defaultMethods.sendAjaxRequest({
+                httpMethod: 'POST',
+                url       : `${ABpp.baseUrl}/Account/DeleteImage`,
+                data      : {Name: id},
+                callback  : onSuccessAjax,
+                onError   : onErrorAjax,
+                beforeSend: OnBeginAjax,
+            });
+
+            function onSuccessAjax(answer)
+            {
+                __DEV__ && console.log(answer);
+                switch (answer){
+                    case 100:
+                        dispatch({
+                            type: SETTING_LOAD_FILE_ERROR,
+                            payload: `Deleting file failed. Try again or reload the page or try again later`,
+                        });
+                        break;
+                    case 200:
+                        files = self.removeFile(id, files, dispatch);
+
+                }
+                $(button).removeAttr('disabled');
+            }
+
+            function OnBeginAjax()
+            {
+                $(button).attr('disabled', 'true');
+            }
+
+            function onErrorAjax()
+            {
+                dispatch({
+                    type: SETTING_LOAD_FILE_ERROR,
+                    payload: 'Deleting file failed. Please check your internet connection or reload the page or try again later',
+                });
+                $(button).removeAttr('disabled');
+            }
         }
     }
 }

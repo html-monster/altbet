@@ -240,7 +240,10 @@ gulp.task('clean', function() {
 
 
 // BM: ============================================================================================== ONE TIME BUILD ===
-gulp.task('build', gulp.series(gulp.parallel('styles', 'js', 'vendor', 'styles-admin')/*, 'assets', 'fonts'*/));
+gulp.task('build', gulp.series(gulp.parallel('styles', 'js', 'vendor', 'styles-admin', 'localization')/*, 'assets', 'fonts'*/));
+
+// BM: ========================================================================================== ONE TIME BUILD ADM ===
+gulp.task('build-adm', gulp.series(gulp.parallel('styles-admin')/*, 'assets', 'fonts'*/));
 
 
 
@@ -250,9 +253,11 @@ gulp.task('watch-admin', function () {
     gulp.watch('frontend/admin_styles/**/*.*', gulp.series('styles-admin'));
     gulp.watch(OPTIONS.path.dest_server_admin + '/Content/dist/*.*', {delay: 700}, gulp.series('admin-css-rev'));
     gulp.watch(OPTIONS.path.dest_server_admin + '/Scripts/dist/*.*', {delay: 700}, gulp.series('admin-js-rev'));
+    return false;
 });
 
 // BM: ========================================================================================== FRONT DEV BUILDING ===
+
 gulp.task('watch-front-js-styles', function () {
     gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
     gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));
