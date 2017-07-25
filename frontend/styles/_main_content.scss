@@ -141,7 +141,7 @@
 .l-team__team tr:hover .b-pl-info { visibility: visible; opacity: 1 }
 //.l-team__team tr:active .b-pl-info { visibility: visible; opacity: 1 }
 .b-pl-info { position: absolute; left: 20px; top: 100%; padding: 10px;
-      text-align: right;  text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
+      text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
       @include main_page_lineup_hind;
   &__main-inf {  }
   &__statistic { font-size: 12px; }

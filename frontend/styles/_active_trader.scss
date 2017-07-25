@@ -120,7 +120,7 @@
 			tr{
 				&:first-of-type td{  border-top: none;  }
 				td{
-					width: 33.33%;  padding: 5px;
+					width: 33.33%;  padding: 5px; position: relative;
 					a{  padding: 0;  }
 				}
 			}

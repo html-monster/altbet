@@ -204,14 +204,13 @@ export class WebsocketModel
         }
 
         // BM: main page events data
-// 0||console.debug( 'data.SymbolsAndOrders', data.SymbolsAndOrders );
         if (data.SymbolsAndOrders && data.SymbolsAndOrders.Result.length) {
             if(self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]) {
                 // 0||console.debug( 'data.SymbolsAndOrders2', data.SymbolsAndOrders );
             // if(globalData.mainPage) {
                 // 0||console.debug( 'data.SymbolsAndOrders.Result', data.SymbolsAndOrders.Result );
                 // dataController.updateOrderData(data.SymbolsAndOrders.Result);
-                self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES](data.SymbolsAndOrders.Result);
+                self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]({SymbolsAndOrders: data.SymbolsAndOrders.Result, lineupsData: data.LineupData});
             }
         }
 
