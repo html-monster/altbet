@@ -27,11 +27,11 @@
       font-size: 14px;
       &.active, &:hover {
         a { color: #3498da; }
-        &.fund_b::before{ background: url(../../Images/sprite_account.svg) no-repeat ; background-position: -60px -38px; }
-        &.pref_b::before{  background: #ccc; background: url(../../Images/sprite_account.svg) no-repeat ; background-position: -57px -5px; }
-        &.sett_b::before{ background: #1b95e0; background: url(../../Images/sprite_account.svg) no-repeat ;  background-position: -3px -4px; }
-        &.pass_b::before{ background: #00a65a; background: url(../../Images/sprite_account.svg) no-repeat ;  background-position: -120px -37px;}
-        &.self_sett_b::before{ background: #1b1b1b; background: url(../../Images/sprite_account.svg) no-repeat ; background-position: -60px -39px; }
+        &.fund_b::before{ background: url("#{$pathImage}/sprite_account.svg") no-repeat ; background-position: -60px -38px; }
+        &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite_account.svg") no-repeat ; background-position: -57px -5px; }
+        &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -3px -4px; }
+        &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -120px -37px;}
+        &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite_account.svg") no-repeat ; background-position: -60px -39px; }
       }
 
       &::before{
@@ -42,11 +42,11 @@
         left: 0;
         top: -5px;
       }
-      &.fund_b::before{ background: url(../../Images/sprite_account.svg) no-repeat ;  background-position: -89px -39px; }
-      &.pref_b::before{  background: #ccc; background: url(../../Images/sprite_account.svg) no-repeat ; background-position: -85px -5px; }
-      &.sett_b::before{ background: #1b95e0; background: url(../../Images/sprite_account.svg) no-repeat ;  background-position: -30px -3px; }
-      &.pass_b::before{ background: #00a65a; background: url(../../Images/sprite_account.svg) no-repeat ;  background-position: -152px -37px;}
-      &.self_sett_b::before{ background: #1b1b1b; background: url(../../Images/sprite_account.svg) no-repeat ; background-position: -89px -40px; }
+      &.fund_b::before{ background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -89px -39px; }
+      &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite_account.svg") no-repeat ; background-position: -85px -5px; }
+      &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -30px -3px; }
+      &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -152px -37px;}
+      &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite_account.svg") no-repeat ; background-position: -89px -40px; }
     }
     a {
       display: inline-block;
@@ -112,7 +112,8 @@
         top: 11px;
         right: 0;
         text-align: right;
-        strong{  display: block; color: #1b95e0; font-weight: bold; }
+        strong{  display: block; color: #1b95e0; font-weight: bold;
+        &:nth-of-type(2){ padding: 10px 0px }}
       }
       h2 {
         color: #1b95e0;
@@ -136,9 +137,9 @@
         top: 6px;
       }
 
-        &.pers_inf:before{  background: url(../../Images/sprite_account.svg) no-repeat ;  background-position: -110px -7px; }
-        &.cont_inf:before{  background: url(../../Images/sprite_account.svg) no-repeat ;  background-position: -25px -40px; }
-        //&.section_user:before{  background: url(../../Images/sprite_account.svg) no-repeat ;  background-position: -135px -6px; }
+        &.pers_inf:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -110px -7px; }
+        &.cont_inf:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -25px -40px; }
+        //&.section_user:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -135px -6px; }
         }
       h4{  margin: 15px 0 5px; font-weight: normal;  }
     }

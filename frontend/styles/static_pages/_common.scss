@@ -3,7 +3,12 @@
   h1, h2 { display: inline-block; margin-bottom: 20px; font-size: 36px; text-transform: uppercase; color: #d9502a; }
   h3{ margin-top: 0; font-size: 26px; color: #b0afb0; }
   h4{ margin-top: 0; font-size: 18px; color: #b0afb0; }
+
+  p { margin: 10px 0; }
+
+  a { color: $link-color;  @include text-decoration; }
 }
+
 
 .global_column {
   display: flex;
@@ -26,12 +31,6 @@
 
 //перенесено с _page.scss
 .page_wrapper { padding: 0 5px; }
-
-.ac-getstaticpage {
-  p { margin: 10px 0; }
-  a { color: $link-color;  @include text-decoration; }
-}
-
 
 
 // таблица на StaticP

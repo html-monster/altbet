@@ -37,7 +37,7 @@
       width: 15px;
       height: 21px;
       font-size: 17px;
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
       z-index: 99;
       opacity: 0.7;
     }
@@ -62,32 +62,32 @@
       z-index: 9999;
     }
     &.NickName:before {
-          background: url(../../Images/sprite.svg) no-repeat -525px -53px;
+          background: url("#{$pathImage}/sprite.svg") no-repeat -525px -53px;
     }
     &.Email:before {
       content: '@';
       color: #afabc8;
     }
     &.Password:before, &.ComparePassword:before {
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
     }
     &:nth-child(5) {
       .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; font-size: 13px }
       .Select-placeholder { padding-left: 35px; font-size: 13px }
       &:before {
-        background: url(../../Images/sprite.svg) no-repeat -549px -53px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -549px -53px;
       }
     }
     &.country-states {
      .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; font-size: 13px }
       .Select-placeholder { padding-left: 35px; font-size: 13px }
       &:before {
-        background: url(../../Images/sprite.svg) no-repeat -549px -53px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -549px -53px;
       }
     }
     &.datePickerRender:before {
       width: 20px;
-      background: url(../../Images/sprite.svg) no-repeat -573px -51px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -573px -51px;
     }
 
     &.invalid {
@@ -98,7 +98,7 @@
         color: #ff4810;
       }
       &.inpt_password:before {
-        background: url(../../Images/sprite.svg) no-repeat -574px -26px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -574px -26px;
       }
     }
   }
@@ -170,7 +170,7 @@
     //label:first-of-type { display: block; }
 /*    input { display: none; }
     input:checked + span { color: #d4d0ed; }
-    input:checked + span:before { background: url(../../Images/sprite.svg) no-repeat -310px -28px; }
+    input:checked + span:before { background: url("#{$pathImage}/sprite.svg") no-repeat -310px -28px; }
 
     span {
       font-size: 12px;
@@ -334,7 +334,7 @@
       width: 15px;
       height: 21px;
       font-size: 17px;
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
       z-index: 99;
       opacity: 0.7;
     }

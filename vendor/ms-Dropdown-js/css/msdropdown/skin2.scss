@@ -1,8 +1,8 @@
 .blue{border:1px solid #ddd;}
 .blue .divider{display:none}
-.blue .ddArrow{width:27px;height:27px; margin-top:-14px; background:url(../Images/dropdown//dd_arrow.gif) no-repeat;}
+.blue .ddArrow{width:27px;height:27px; margin-top:-14px; background:url("#{$pathImage}/dropdown//dd_arrow.gif") no-repeat;}
 .blue .ddArrow:hover{background-position:0 100%;}
-.blue .ddTitle{color:#fff;background:#10bbe6 url(../Images/dropdown//title-bg.gif) repeat-x left top;}
+.blue .ddTitle{color:#fff;background:#10bbe6 url("#{$pathImage}/dropdown//title-bg.gif") repeat-x left top;}
 .blue .ddTitle .ddTitleText{padding:10px 20px 10px 5px; font-weight:bold; font-size:16px;}
 .blue .ddTitle .ddTitleText .ddTitleText{padding:0;}
 .blue .ddTitle .description{font-size:12px; color:#666}
