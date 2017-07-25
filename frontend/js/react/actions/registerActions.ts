@@ -26,7 +26,6 @@ class Actions extends BaseActions
             __DEV__ && console.log('registrationAjax:', values);
             let flag = true;
 
-            0||console.log( 'here 11', values/*, serverValidation, event.target, p1,  p2*/);
             const $form = $(event.currentTarget);
             if( (this.checkAreement('agreement', $form) && this.checkAreement('agreement_age', $form)) )
             {

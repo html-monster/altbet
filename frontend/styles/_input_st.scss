@@ -72,15 +72,15 @@
       background: url(../../Images/sprite.svg) no-repeat -533px -26px;
     }
     &:nth-child(5) {
-      .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; }
-      .Select-placeholder { padding-left: 35px; }
+      .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; font-size: 13px }
+      .Select-placeholder { padding-left: 35px; font-size: 13px }
       &:before {
         background: url(../../Images/sprite.svg) no-repeat -549px -53px;
       }
     }
     &.country-states {
-     .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; }
-      .Select-placeholder { padding-left: 35px; }
+     .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; font-size: 13px }
+      .Select-placeholder { padding-left: 35px; font-size: 13px }
       &:before {
         background: url(../../Images/sprite.svg) no-repeat -549px -53px;
       }
@@ -262,10 +262,7 @@
     color: #ff4810;
     font-size: 12px;
   }
-  .register_form_message {
-    bottom: 56px;
-    right: 60px;
-  }
+  .register_form_message { bottom: 25px; }
 
 
 

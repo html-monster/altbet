@@ -94,7 +94,7 @@ export default class Reducer
         this.initialState.Positions = this.preparePositions(globalData.AppData.Positions);
 
         // load saved teams
-        if( globalData.IsFeedExchange )
+        if( globalData.IsEditFeedExchange )
         {
             loadedData = this.loadServerData();
         }
@@ -275,7 +275,7 @@ export default class Reducer
         const { FullName, EventId, } = this.initialState.Exchanges[0].Symbol;
 
         this.initialState = {...this.initialState, LastEventId: EventId, FullName, EventId};
-        this.initialState.IsFeedExchange = true;
+        this.initialState.IsEditFeedExchange = true;
     }
 
 

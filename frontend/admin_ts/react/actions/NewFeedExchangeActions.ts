@@ -248,10 +248,9 @@ __DEV__ && console.log( 'data', data );
             // let data = new FormData();
             const ajaxPromise = (new AjaxSend()).send({
                 formData: JSON.stringify(data),
-                message: `Error ...`,
-                // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
-                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
-                // url: MainConfig.BASE_URL + "/" + 'Feed/Test2',
+                message: `Error while saving new event, please try again`, // error 100 and other
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
+                // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
                 exData: {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -259,12 +258,13 @@ __DEV__ && console.log( 'data', data );
                 },
                 // respCodes: [
                 //     {code: 100, message: ""},
-                //     // {code: -101, message: "Some custom error"},
+                //     // {code: -100, message: ""},
                 // ],
                 beforeChkResponse: (data) =>
                 {
                     // DEBUG: emulate
-                    data = {Error: 101};
+                    // data = {Error: 100};
+                    data = {"Error":"200","UrlExchange":"?path=fantasy-sport/american-football/nfl\u0026status=New\u0026lastnode=last-node","Exchanges":["GB-SEA-HC-9212015","GB-SEA-ML-9212015","GB-SEA-TP-9212015"]};
                     // data.Param1 = "TOR-PHI-3152017"; // id
                     // data.Param1 = "?path=sport&status=approved";
                     // data.Param1 = "?status=New";
@@ -278,20 +278,24 @@ __DEV__ && console.log( 'data', data );
 
             ajaxPromise.then( result =>
                 {
-                    dispatch({
-                        type: ON_SAVE_EVENT_OK,
-                        payload: inProps,
-                    });
+                    0||console.log( 'result', result, result.code );
+
+
+                    // dispatch({
+                    //     type: ON_SAVE_EVENT_OK,
+                    //     payload: inProps,
+                    // });
                 },
                 result => {
-                    let message = 'Save error';
-                    switch( result.code )
-                    {
-                        case 100 :
-                        default: ;
-                    }
+                    0||console.log( 'result', result, result.code );
+                    // let message = 'Save error';
+                    // switch( result.code )
+                    // {
+                    //     case 100 :
+                    //     default: ;
+                    // }
 
-                    inProps.callback({errorCode: result.code, title: '', message});
+                    inProps.callback({errorCode: result.code, title: 'ERROR', message: result.message});
                 });
         };
     }
