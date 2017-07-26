@@ -221,7 +221,7 @@ export default class Chart
                         return "<span>Mediana</span>";
                         // to disable the tooltip at a point return false
                     } else {
-                        let date = (new DateLocalization()).unixToLocalDate({timestamp: this.x, format: 'DD MMM Y h:mm A', TZOffset: true});
+                        let date = (new DateLocalization()).unixToLocalDate({timestamp: this.x, format: 'MM/DD/YYYY h:mm A', TZOffset: 1});
                         return '<b>' + date + '</b><br/>' +
                             'Price: $' + this.y;
                     }
@@ -294,7 +294,7 @@ export default class Chart
                     },
                 ],
                 enabled: true,
-                selected: 1,
+                selected: 7,
                 /*                buttonPosition: {
                  x: xx, //310,
                  y: 10
@@ -645,7 +645,12 @@ export default class Chart
         //                 // TODO: check for data difference
         //                 let additionalValues = self._checkForNewData(this.Ticks, key);
 
-                        let newTicks = newData.Ticks.slice(newData.Ticks.length - (newData.Ticks.length - this.chart.series[0].points.length));
+                        let newTicks;
+
+                        if(this.chart.series[0].points[this.chart.series[0].points.length - 1].virtual)
+                            newTicks = newData.Ticks.slice(newData.Ticks.length - (newData.Ticks.length - (this.chart.series[0].points.length - 1)));
+                        else
+                            newTicks = newData.Ticks.slice(newData.Ticks.length - (newData.Ticks.length - this.chart.series[0].points.length));
 
                         // var additionalValues = this.Ticks.slice(self.chartData[0].data.length);
 
@@ -705,30 +710,32 @@ export default class Chart
      * Old and new data difference
      * @returns {Array}
      */
-    // private _checkForNewData(inData, key)
-    // {
-    //     // 0||console.debug( 'inData', inData );
-    //     let diff = [];
-    //
-    //     let ticks = this.currData[key].Ticks.reverse();
-    //     // for( var ii = this.currData[key].Ticks.length-1, jj = inData.length-1; ii >= 0; ii--, jj-- )
-    //     for( var ii = 0, countii = ticks.length; ii < countii; ii++ )
-    //     {
-    //         let val = ticks[ii];
-    //         if( inData[ii].Open != val.Open ) diff.push(val);
-    //     } // endfor
-    //
-    //     // diff.push('-----------')
-    //     for( countii = inData.length; ii < countii; ii++ )
-    //     {
-    //         diff.push(inData[ii]);
-    //     } // endfor
-    //     diff = inData.slice(ticks.length);
-    //
-    //
-    //     // 0||console.debug( 'diff', diff,  ticks , inData, ticks.length, inData.length);
-    //     return diff;
-    // }
+    private _checkForNewData(newData)
+    {
+        // 0||console.debug( 'inData', inData );
+        let diff = [];
+
+        // newData.Ticks.length - this.chart.series[0].points.length - 1
+
+        // let ticks = this.currData[key].Ticks.reverse();
+        // // for( var ii = this.currData[key].Ticks.length-1, jj = inData.length-1; ii >= 0; ii--, jj-- )
+        // for( var ii = 0, countii = ticks.length; ii < countii; ii++ )
+        // {
+        //     let val = ticks[ii];
+        //     if( inData[ii].Open != val.Open ) diff.push(val);
+        // } // endfor
+        //
+        // // diff.push('-----------')
+        // for( countii = inData.length; ii < countii; ii++ )
+        // {
+        //     diff.push(inData[ii]);
+        // } // endfor
+        // diff = inData.slice(ticks.length);
+
+
+        // 0||console.debug( 'diff', diff,  ticks , inData, ticks.length, inData.length);
+        return diff;
+    }
 
 
 

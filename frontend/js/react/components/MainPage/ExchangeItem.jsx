@@ -252,7 +252,7 @@ export default class ExchangeItem extends React.Component
 
 				<div className={"event-date " + data.CategoryIcon}>
                     <span className="date" title={Symbol.Exchange}>
-                        {date.unixToLocalDate({format: 'DD MMM Y h:mm A'}) ? date.unixToLocalDate({format: 'DD MMM Y h:mm A'}) : ''}
+                        {date.unixToLocalDate({format: 'MM/DD/YYYY h:mm A'}) ? date.unixToLocalDate({format: 'MM/DD/YYYY h:mm A'}) : ''}
 						{/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>
 					{ !Symbol.EndDate && date.unixToLocalDate({format: 'x'}) < moment().format('x') && <i className="live">Live</i> }
@@ -452,8 +452,17 @@ export default class ExchangeItem extends React.Component
 									chartTypeChange={::this.chartTypeChange}
 								/>
 								<div className="executed_orders">
-									<h4>Time & Sales</h4>
 									<table>
+										<thead>
+											<tr>
+												<th>Time</th>
+												<th>Price</th>
+												<th>Size</th>
+											</tr>
+										</thead>
+									</table>
+									{/*<h4>Time & Sales</h4>*/}
+									<table className="body">
 										<tbody>
 										{
 											chartData &&
@@ -476,7 +485,7 @@ export default class ExchangeItem extends React.Component
 														transitionEnterTimeout={600}
 														transitionLeaveTimeout={500}
 														>
-															<td><span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'DD MMM Y h:mm A'})}</span></td>
+															<td><span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MM/DD/YYYY h:mm A', TZOffset: 1})}</span></td>
 															<td className={`price ${side} animated`}><span>${item.Open.toFixed(2)}</span></td>
 															<td className={`volume ${side} animated`}><span>{item.Volume}</span></td>
 														</CSSTransitionGroup>

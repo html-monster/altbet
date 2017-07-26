@@ -71,15 +71,15 @@ export class TabOpenOrders extends React.Component
 
                                                     if( this.state.filters[item.Category.toLowerCase()] ) return <tr key={key} className={(item.isMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))} id={item.ID}>
                                                         <td className="title">
-                                                            {(item.isMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}
-                                                            <span className="muted">{$handicap && ` (${$handicap})`}</span>
-                                                            <br />
-                                                            <span className="fullname muted">{item.Symbol.HomeName} - {item.Symbol.AwayName}</span>
+															{item.Symbol.HomeName} - {item.Symbol.AwayName}
+                                                            {/*<span className="muted">{$handicap && ` (${$handicap})`}</span>*/}
+                                                            {/*<br />*/}
+                                                            {/*<span className="fullname muted">{item.Symbol.HomeName} - {item.Symbol.AwayName}</span>*/}
                                                         </td>
                                                         <td>
                                                             <span className="timestamp">
-                                                                <span className="date">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'DD MMM Y'})}</span>
-                                                                <span className="time">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: ' hh:mm'})}</span>
+                                                                <span className="date">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'MM/DD/YYYY'})}</span>
+                                                                <span className="time"> {(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'h:mm A'})}</span>
                                                             </span>
                                                         </td>
                                                         <td>{(item.isMirror ? (item.Side ? 'Buy' : 'Sell') : (item.Side ? 'Sell' : 'Buy'))}</td>

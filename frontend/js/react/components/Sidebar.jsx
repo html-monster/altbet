@@ -143,7 +143,7 @@ class Sidebar extends React.Component
 					{
 						(ABpp.User.userIdentity && !ABpp.config.basicMode) && ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS &&
 						<button className={classnames('custom tab', {active: activeTab === 'ActiveTrader'})} onClick={actions.tabSwitch.bind(null, actions, 'ActiveTrader')}>
-							{ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS ? 'Active player' : 'Trade Slip'}
+							{ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS ? 'Active Player' : 'Trade Slip'}
 						</button>
 					}
 					<button className={classnames('custom tab js-tab2 ', {active: activeTab === 'YourOrders'},
