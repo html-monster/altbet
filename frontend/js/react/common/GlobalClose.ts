@@ -126,7 +126,7 @@ export default class GlobalCloseClass
     }
 
     /**
-     * unbind event if it uses custom close function
+     * unbind event if window is closed without click
      */
     public static unbindCloseEvent()
     {
