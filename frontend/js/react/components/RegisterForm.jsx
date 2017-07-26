@@ -320,7 +320,8 @@ export class RegisterForm extends React.PureComponent
                                      className={'input__field input__field--yoshiko'}
                                      initialValue={__DEBUG__ ? "FedoryakaBest" : ""}
                                      label="User Name" type='text'
-                                     validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
+                                     validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, dot, underscore, dash"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
+                                     //validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
                                      hint="User's login allow to use symbols such as: symbols, digits, dot, underscore, dash"
                                      zIndex="100"/>
 

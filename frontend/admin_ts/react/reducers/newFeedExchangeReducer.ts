@@ -272,17 +272,82 @@ export default class Reducer
      */
     private loadServerData()
     {
-        const { FullName, EventId, } = this.initialState.Exchanges[0].Symbol;
+        const { HomeName, AwayName, HomeAlias, AwayAlias, StartDateStr, FullName, EventId, UrlExchange, } = this.initialState.Exchanges[0].Symbol;
+        const { HomePlayers, AwayPlayers } = this.initialState.Exchanges[0];
+        let { Categories, Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam1Variable } = this.initialState;
+        let catId;
+        0||console.log( 'Players', this.initialState );
+        0||console.log( 'this.initialState.Exchanges[0].Symbol', this.initialState.Exchanges[0].Symbol );
 
         // init params
         this.initialState = {...this.initialState, LastEventId: EventId, FullName, EventId};
         // is edit mode
         this.initialState.IsEditFeedExchange = true;
 
+
+
+        // init catogory
+        Categories.forEach((val) => { if (val.IsCurrent) catId = val.CategoryId});
+
+
+        // fill exchange data
+        this.initialState.FormData = {
+            teamName1: HomeName,
+            teamName2: AwayName,
+            startDate: StartDateStr,
+            fullName: FullName,
+            category: catId,
+            url: UrlExchange,
+            Team1Defense: {TeamId: null, EventId: null}, // HomeDefense
+            Team2Defense: {TeamId: null, EventId: null}, // AwayDefense
+        };
+
+        // Aliases
+        this.initialState.Team1name = HomeAlias;
+        this.initialState.Team1name = AwayAlias;
+
+        // resObj.FullName = fullName;
+        // resObj.CategoryId = category;
+        // resObj.HomeName = teamName1;
+        // resObj.AwayName = teamName2;
+        // resObj.HomeAlias = Team1name;
+        // resObj.AwayAlias = Team2name;
+        //
+        // resObj.HomeDefense = Team1Defense;
+        // resObj.AwayDefense = Team2Defense;
+        // resObj.StartDate = startDate.format();
+        // resObj.UrlExchange = url;
+        // resObj.EventId = EventId;
+
+
         0||console.log( 'this.initialState.Players', this.initialState.Players );
         // init players
 /*
-        this.initialState.Players.map((val, key) => {
+        HomePlayers.forEach((val) => {
+            if( val.TeamType == 0 )
+            {
+                val.used = Reducer.USING_TEAM;
+                val.usedTeam = 1;
+                // PlayersTeam1.players.push(val);
+
+                this.initialState.Players = Players.map((vv) => vv.PlayerId == val.PlayerId ? vv : {...val});
+            }
+            else if( val.TeamType == 1 )
+            {
+                val.used = Reducer.USING_RESERVE;
+                val.usedTeam = 1;
+                PlayersTeam1Reserve.players.push(val);
+            }
+            else if( val.TeamType == 2 )
+            {
+                val.used = Reducer.USING_VARIABLE;
+                val.usedTeam = 1;
+                PlayersTeam1Variable.players.push(val);
+            } // endif
+        });
+*/
+
+/*        this.initialState.Players.map((val, key) => {
             if (val && data.Players[key] && val.ID == data.Players[key].Id && data.Players[key].used)
             {
                 val.StartDate = data.Players[key].StartDate;
@@ -290,8 +355,7 @@ export default class Reducer
                 val.used = data.Players[key].used;
             }
             return val
-        });
-*/
+        })*/;
     }
 
 
@@ -744,7 +808,7 @@ export default class Reducer
      */
     private afterAddPlayer({player, addedPlayer}, state)
     {
-        addedPlayer.EventId = state['LastEventId'];
+        addedPlayer.EventId = state.LastEventId; // need for backend
         // add StartDate to every player
 /*        let item;
         if (item = state.TimeEvent.find((val) => addedPlayer.TeamId == val.AwayId || addedPlayer.TeamId == val.HomeId))
