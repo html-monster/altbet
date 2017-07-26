@@ -27,30 +27,30 @@ var $node ;
 const store = configureStore();
 ABpp.Store = store;
 
+ReactDOM.render(
+	<Provider store={store}>
+		<RApp />
+	</Provider>,
+	document.getElementById('DiRoot')
+);
+
+ReactDOM.render(
+	<Provider store={store}>
+		<Header />
+	</Provider>,
+	document.getElementById('DiMPHeader')
+);
+
+
+ReactDOM.render(
+	<Provider store={store}>
+		<MainMenu />
+	</Provider>,
+	document.getElementById('DiMainMenu')
+);
 
 if( !globalData.landingPage  )
 {
-	ReactDOM.render(
-		<Provider store={store}>
-			<RApp />
-		</Provider>,
-	  document.getElementById('DiRoot')
-	);
-
-	ReactDOM.render(
-		<Provider store={store}>
-			<Header />
-		</Provider>,
-		document.getElementById('DiMPHeader')
-	);
-
-
-	ReactDOM.render(
-		<Provider store={store}>
-			<MainMenu />
-		</Provider>,
-		document.getElementById('DiMainMenu')
-	);
 
 
 	if( ABpp.config.currentPage === ABpp.CONSTS.PAGE_MAIN ) {

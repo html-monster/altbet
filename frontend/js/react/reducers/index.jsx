@@ -94,9 +94,6 @@ switch (ABpp.config.currentPage)
 	}
 	case ABpp.CONSTS.PAGE_MYPOS:{
 		reducers = {
-			App: appState,
-			header,
-			mainMenu,
 			myPosReduce,
 			sidebar,
 			// tradeSlip,

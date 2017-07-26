@@ -53,14 +53,14 @@ class Header extends React.Component
 	{
 		const { actions, serverData } = this.props;
         let $filter = appData.urlQuery ? appData.urlQuery.filter : '';
-
-		if(serverData.GainLost !== undefined){
+// console.log('appData.headerData:', appData.headerData);
+// console.log('serverData:', serverData);
+		if(serverData && serverData.GainLost !== undefined){
 			serverData.Profitlost = serverData.GainLost;
 			serverData.Exposure = serverData.Invested;
 			serverData.Available= serverData.CurrentBalance;
 		}
         const profitlost = serverData.Profitlost;
-
         return <div className="header_info">
 			{/*<div className="video btn">*/}
 				{/*<span className="title">Watch video</span>*/}
@@ -185,9 +185,12 @@ class Header extends React.Component
 	}
 }
 
-export default connect(state => ({
-		...state.header,
-	}),
+export default connect(state => {
+	console.log('state:', state);
+		return({
+			...state.header,
+		})
+	},
 	dispatch => ({
 		actions: bindActionCreators(headerActions, dispatch),
 	})
