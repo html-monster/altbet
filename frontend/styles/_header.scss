@@ -16,10 +16,7 @@ header {
       top: 6px;
     }
   }
-  @include mdmax(1350){
-    position: absolute;
-
-  }
+  @include mdmax(1350){  position: absolute;  left: 0;  }
 
   // reconnect button
   .reconnect{
