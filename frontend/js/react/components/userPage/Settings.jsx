@@ -127,7 +127,7 @@ class Settings extends React.Component
                                      initialValue={UserName}
                                      label={'User Name'} type={'text'} filled={UserName}
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20})]} input={input}
-                                     maxLength="20" disabled={false}/>
+                                     maxLength="20" disabled={true}/>
 
                     <InputValidation renderContent={this.datePickerRender} id={'user_b_day'} name="DateOfBirth"
                                      className={'input__field input__field--yoshiko datePickerJs'}

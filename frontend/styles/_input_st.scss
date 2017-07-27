@@ -117,7 +117,7 @@
     background: transparent;
     text-align: left;
     transition: opacity 0.3s;
-    padding-left: 35px;
+    padding-left: 0px;
     &:focus {
       outline: none;
     }
@@ -353,7 +353,7 @@
       color: #afabc8;
     }
     .input__label {
-      left: -15px;
+      left: 0px;
     }
   }
 }

@@ -27,14 +27,15 @@
       font-size: 14px;
       &.active, &:hover {
         a { color: #3498da; }
-        &.fund_b::before{ background: url("#{$pathImage}/sprite_account.svg") no-repeat ; background-position: -60px -38px; }
-        &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite_account.svg") no-repeat ; background-position: -57px -5px; }
-        &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -3px -4px; }
-        &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -120px -37px;}
-        &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite_account.svg") no-repeat ; background-position: -60px -39px; }
+        &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -60px -38px; }
+        &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -57px -5px; }
+        &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -3px -4px; }
+        &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -120px -37px;}
+        //&.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite_account.svg") no-repeat ; background-position: -60px -39px; }
+        &.self_sett_b::after{ background: blue; opacity: .4; z-index: 10 }
       }
 
-      &::before{
+      &::before, &::after{
         content: '';
         position: absolute;
         width: 25px;
@@ -42,11 +43,11 @@
         left: 0;
         top: -5px;
       }
-      &.fund_b::before{ background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -89px -39px; }
-      &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite_account.svg") no-repeat ; background-position: -85px -5px; }
-      &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -30px -3px; }
-      &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -152px -37px;}
-      &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite_account.svg") no-repeat ; background-position: -89px -40px; }
+      &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -451px -352px; }
+      &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -347px -352px;}
+      &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -414px -352px; }
+      &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -548px -351px;}
+      &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -379px -352px; }
     }
     a {
       display: inline-block;
