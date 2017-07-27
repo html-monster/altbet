@@ -59,7 +59,7 @@ export class PlayersTable extends React.Component
         const { data: Players, filters, posFilters } = this.state;
         let num = 1;
 
-        // 0||console.log( 'Rules, this.props.data', Rules, this.props.data );
+        0||console.log( 'Rules, this.props.data', Rules, this.props.data );
 
         // filter btn
         var filterBtn = (filter, filters, onClick) => <span key={filter + '11'}><a href="#" className={"f-btn" + (this.state[filters][filter] ? " active" : "")} data-filter={filter} onClick={onClick}>{filter}</a>&nbsp;</span>;

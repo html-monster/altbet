@@ -169,12 +169,14 @@ class Header extends React.Component
 							:
 							<div className="log_out active">
 								<a href="#login" className="sign_in">Join/Login</a>
+{/*
 								<div className="change-color">
 									<strong>Theme color</strong>
 									<button className={'dark color_pick' + (globalData.theme === 'dark' ? ' active' : '')} title="dark theme">{}</button>
 									{' '}
 									<button className={'light color_pick' + (globalData.theme === 'light' ? ' active' : '')} title="light theme">{}</button>
 								</div>
+*/}
 							</div>
 					}
 				</div>

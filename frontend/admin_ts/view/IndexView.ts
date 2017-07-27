@@ -426,6 +426,9 @@ export class IndexView extends BaseView
 
     public highlightAddedExch(data)
     {
+        let firstTr;
+        let ids = data.id;
+
         this.InfoMessage = new InfoMessage({
             TPLName: '#TPLinfoMessageAbs',
             target: "[data-js=DiInfoMP]",
@@ -437,11 +440,22 @@ export class IndexView extends BaseView
             }
         });
 
-        let $tr = $("[data-js=tabl-exch] " + `[data-id=${data.id}]`);
-        $tr.addClass('added').attr('title', 'added');
-        setTimeout(() => $tr.addClass('animated').attr('title', ''), 5000);
 
-        if( $tr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: $tr.offset().top - 50 }, 500);
+        if( !Array.isArray(ids) ) ids = [ids];
+
+
+        ids.forEach((val) =>
+        {
+            let $tr = $("[data-js=tabl-exch] " + `[data-id=${val}]`);
+
+            if (!firstTr) firstTr = $tr;
+
+            $tr.addClass('added').attr('title', 'added');
+            setTimeout(() => $tr.addClass('animated').attr('title', ''), 5000);
+        });
+
+
+        if( firstTr && firstTr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: firstTr.offset().top - 50 }, 500);
     }
 
 

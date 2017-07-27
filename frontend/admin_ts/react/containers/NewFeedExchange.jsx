@@ -53,7 +53,7 @@ class NewFeedExchange extends BaseController
         const { currTeamKey, okBtnDisabled } = this.state;
         var items = [], currentCat, catItems, ParentId, ParentName;
 
-        // console.log( '{CurrentEventObj, FormData}', {CurrentEventObj, FormData} );
+        console.log( 'AppData', {AppData} );
 
         // prepare command creation interface data
         const playersComponents = [
@@ -246,7 +246,7 @@ class NewFeedExchange extends BaseController
                                 <div className="box-body" >
                                     <label>Full name</label>
                                     <div class="input-group">
-                                        <input className="form-control" type="text" name="fullname" value={AppData.FormData.fullName} onChange={this._onChangeFormData.bind(this, 'fullName')} />
+                                        <input className="form-control" type="text" name="fullname" value={FormData.fullName} onChange={this._onChangeFormData.bind(this, 'fullName')} />
                                         <span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateFullName} title="Generate full name"><i class="fa fa-repeat"/></button></span>
                                     </div>
                                 </div>
@@ -255,7 +255,7 @@ class NewFeedExchange extends BaseController
                                 <div className="box-body" >
                                     <div className="form-group">
                                         <label>Event start date</label>
-                                        <div className="">{AppData.FormData.startDate ? moment(AppData.FormData.startDate).format('DD MMM Y H:mm A') : <i>It is not possible to calculate due to the lack of players in teams</i>}</div>
+                                        <div className="">{FormData.startDate ? moment(FormData.startDate).format('DD MMM Y H:mm A') : <i>It is not possible to calculate due to the lack of players in teams</i>}</div>
                                     </div>
                                 </div>
                             </div>

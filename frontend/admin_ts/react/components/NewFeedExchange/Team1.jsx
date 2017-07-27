@@ -8,12 +8,18 @@ import NumericInput from 'react-numeric-input';
 
 export class Team1 extends React.Component
 {
+    /**@private*/ tablTeam;
 /*
     constructor(props)
     {
         super(props);
     }
 */
+
+    componentDidMount()
+    {
+        $(this.tablTeam).on('focus', '.js-eppg, .js-fppg', function() { $(this).select(); } );
+    }
 
 
     render()
@@ -53,7 +59,7 @@ export class Team1 extends React.Component
                 </div>
 */}
 
-                <table class="table teams-table">
+                <table ref={(val) => this.tablTeam = val} class="table teams-table">
                     <thead>
                     <tr>
                         <th>{}</th>
@@ -79,8 +85,8 @@ export class Team1 extends React.Component
                                         <td> {itm.Name === uniPositionName ? <span title="Universal player">UP ({players[jj].meta.PositionOrig})</span> : players[jj].Position} </td>
                                         <td> {players[jj].Team} </td>
                                         <td> {players[jj].Name} </td>
-                                        <td><NumericInput className="eppg" value={players[jj].Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: players[jj], team: "PlayersTeam"+teamNum, type: 'Eppg'})} style={ false } /></td>
-                                        <td><NumericInput className="fppg" value={players[jj].Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: players[jj], team: "PlayersTeam"+teamNum, type: 'Fppg'})} style={ false } /></td>
+                                        <td><NumericInput className="eppg js-eppg" value={players[jj].Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: players[jj], team: "PlayersTeam"+teamNum, type: 'Eppg'})} style={ false } /></td>
+                                        <td><NumericInput className="fppg js-fppg" value={players[jj].Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: players[jj], team: "PlayersTeam"+teamNum, type: 'Fppg'})} style={ false } /></td>
                                         <td> {players[jj].Status} </td>
                                         <td><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: players[jj], team: teamNum, used: players[jj].used})} title="Remove player"><i className="fa fa-remove -red">{}</i></button></td>
                                     </tr>);
