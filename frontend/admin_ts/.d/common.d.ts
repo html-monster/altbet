@@ -31,8 +31,9 @@ interface Object
 }
 
 interface Window {
-    ee: any
+    ee: any;
 }
+
 
 interface FormData {
     set(p1, p2)

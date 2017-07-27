@@ -11,6 +11,7 @@ import BaseActions from '../BaseActions';
 
 class Actions extends BaseActions
 {
+
     public actionAjaxUserDataUpdate(values, serverValidation, event)
     {
         return () =>
