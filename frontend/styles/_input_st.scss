@@ -145,6 +145,10 @@
     position: absolute;
     left: 0px;
     text-align: left;
+
+  }
+  .opacity_field{
+    opacity: .6;
   }
 
   .input__label-content {
@@ -159,6 +163,7 @@
   .input--filled .input__label-content--kuro {
     opacity: 0;
   }
+
 
   //.input__field--kuro + .input__label--kuro .input__label-content--kuro,
   //.input--filled .input__label-content--kuro {
