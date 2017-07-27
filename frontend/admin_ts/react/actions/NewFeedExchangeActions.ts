@@ -699,21 +699,31 @@ __DEV__ && console.log( 'data', data );
     private prepareData(inProps)
     {
         let resObj: any = {};
-        const {category, fullName, startDate, teamName1, teamName2, url, Team1Defense, Team2Defense} = inProps.FormData;
-        let {Team1name, Team2name, EventId, PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable} = inProps;
+        const {category, fullName, startDate, teamName1, teamName2, url, Team1Defense, Team2Defense, PlayerTopTeam1, PlayerTopTeam2, HomeTeamId, AwayTeamId, Exchange,} = inProps.FormData;
+        let {Team1name, Team2name, EventId, PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, IsEditFeedExchange} = inProps;
 
         resObj.FullName = fullName;
         resObj.CategoryId = category;
         resObj.HomeName = teamName1;
         resObj.AwayName = teamName2;
-        resObj.HomeAlias = Team1name;
-        resObj.AwayAlias = Team2name;
 
         resObj.HomeDefense = Team1Defense;
         resObj.AwayDefense = Team2Defense;
         resObj.StartDate = startDate.format();
         resObj.UrlExchange = url;
         resObj.EventId = EventId;
+
+        // in new mode
+        resObj.HomeAlias = Team1name;
+        resObj.AwayAlias = Team2name;
+        resObj.PlayerHome = PlayerTopTeam1;
+        resObj.PlayerAway = PlayerTopTeam2;
+
+        // in edit mode
+        resObj.HomeTeamId = HomeTeamId;
+        resObj.AwayTeamId = AwayTeamId;
+        resObj.Exchange = Exchange;
+
 // [07.07.17 17:04:53] Vitaliy Yakubovskiy: ты мне должен передать для exchange - FullName, HomeName, HomeAlias, AwayName, AwayAlias, StartDate, UrlExchange, CategoryId, OptionExchanges(0-HC, 1-ML, 2-TP), HomeTeam(список игроков team1), AwayTeam(список игроков team2), EventId
 // [07.07.17 17:07:38] Vitaliy Yakubovskiy: и для игроков PlayerId, Fppg, Eppg, TeamType (0-Basic, 1-Reserve, 2-Variable)
 

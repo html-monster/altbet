@@ -70,8 +70,13 @@ export default class Reducer
             fullName: '',
             category: '',
             url: '',
+            PlayerTopTeam1: '', // PlayerHome
+            PlayerTopTeam2: '', // PlayerAway
             Team1Defense: {TeamId: null, EventId: null}, // HomeDefense
             Team2Defense: {TeamId: null, EventId: null}, // AwayDefense
+            HomeTeamId: '', // in edit mode
+            AwayTeamId: '', // in edit mode
+            Exchange: '',   // in edit mode
         },
         Team1name: '', // team1 alias from server
         Team2name: '', // team2 alias from server
@@ -273,7 +278,7 @@ export default class Reducer
      */
     private loadServerData()
     {
-        const { HomeName, AwayName, HomeAlias, AwayAlias, StartDateStr, FullName, EventId, UrlExchange, } = this.initialState.Exchanges[0].Symbol;
+        const { HomeName, AwayName, HomeAlias, AwayAlias, StartDateStr, FullName, EventId, UrlExchange, HomeTeamId, AwayTeamId, Exchange, } = this.initialState.Exchanges[0].Symbol;
         const { HomePlayers, AwayPlayers } = this.initialState.Exchanges[0];
         let { Categories, Players, FormData } = this.initialState;
         let catId;
@@ -290,7 +295,7 @@ export default class Reducer
 
 
         // fill exchange data
-        this.initialState.FormData = {
+        this.initialState.FormData = {...this.initialState.FormData, ...{
             teamName1: HomeName,
             teamName2: AwayName,
             startDate: StartDateStr,
@@ -299,7 +304,10 @@ export default class Reducer
             url: UrlExchange,
             Team1Defense: {TeamId: null, EventId: null}, // HomeDefense
             Team2Defense: {TeamId: null, EventId: null}, // AwayDefense
-        };
+            HomeTeamId,
+            AwayTeamId,
+            Exchange,
+        }};
 
         // Aliases
         this.initialState.Team1name = HomeAlias;
@@ -401,7 +409,7 @@ export default class Reducer
         if (!nosave) this.saveData(state);
 
         // common add part
-        this.afterAddPlayer({player, addedPlayer}, state);
+        this.afterAddPlayer({player, addedPlayer, team}, state);
 
         return state;
     }
@@ -456,7 +464,7 @@ export default class Reducer
         if (!nosave) this.saveData(state);
 
         // common add part
-        this.afterAddPlayer({player, addedPlayer}, state);
+        this.afterAddPlayer({player, addedPlayer, team}, state);
 
         return state;
     }
@@ -499,7 +507,7 @@ export default class Reducer
         if (!nosave) this.saveData(state);
 
         // common add part
-        this.afterAddPlayer({player, addedPlayer}, state);
+        this.afterAddPlayer({player, addedPlayer, team}, state);
 
         return state;
     }
@@ -542,7 +550,7 @@ export default class Reducer
         if (!nosave) this.saveData(state);
 
         // common add part
-        this.afterAddPlayer({player, addedPlayer}, state);
+        this.afterAddPlayer({player, addedPlayer, team}, state);
 
         return state;
     }
@@ -822,9 +830,12 @@ export default class Reducer
     /**
      * Common add part
      */
-    private afterAddPlayer({player, addedPlayer}, state)
+    private afterAddPlayer({player, addedPlayer, team}, state)
     {
         addedPlayer.EventId = state.LastEventId; // need for backend
+
+        this.setTopPlayer({teamNum: 1}, state);
+        this.setTopPlayer({teamNum: 2}, state);
         // add StartDate to every player
 /*        let item;
         if (item = state.TimeEvent.find((val) => addedPlayer.TeamId == val.AwayId || addedPlayer.TeamId == val.HomeId))
@@ -842,7 +853,7 @@ export default class Reducer
      */
     private recountStartDate(state)
     {
-        let teams: any = [];
+        let $events: any = [];
         let startDate = '';
 
 /*        state.Players.forEach((val) =>
@@ -852,17 +863,17 @@ export default class Reducer
 
         state.PlayersTeam1.players.forEach((val) =>
         {
-            if (!teams.find((val2) => val2 == val.TeamId)) teams.push(val.TeamId);
+            if (!$events.find((val2) => val2 == val.EventId)) $events.push(val.EventId);
         });
 
         state.PlayersTeam2.players.forEach((val) =>
         {
-            if (!teams.find((val2) => val2 == val.TeamId)) teams.push(val.TeamId);
+            if (!$events.find((val2) => val2 == val.EventId)) $events.push(val.EventId);
         });
 
         state.TimeEvent.forEach((val) =>
         {
-            if (teams.find((val2) => val2 == val.AwayId || val2 == val.HomeId))
+            if ($events.find((val2) => val2 == val.EventId))
             {
                 let dt1 = moment(val.StartDate);
                 if (!startDate) startDate = dt1;
@@ -881,6 +892,20 @@ export default class Reducer
      */
     private generateTeamName({teamNum}, state)
     {
+        if (state.FormData[`PlayerTopTeam` + teamNum]) state.FormData[`teamName` + teamNum] = `Team ${state.FormData[`PlayerTopTeam` + teamNum].split(' ')[1].trim()}, ${state[`Team${teamNum}name`]}`;
+
+        // save teams data
+        this.saveData(state);
+
+        return state;
+    }
+
+
+    /**
+     * Set top team player
+     */
+    private setTopPlayer({teamNum}, state)
+    {
         let leadPlayer: any = {Eppg: 0};
         for( let val of state['PlayersTeam' + teamNum].players )
         {
@@ -889,7 +914,7 @@ export default class Reducer
 
         if (!leadPlayer.Name && state['PlayersTeam' + teamNum].players.length) leadPlayer = state['PlayersTeam' + teamNum].players[0];
 
-        if (leadPlayer.Name) state.FormData[`teamName` + teamNum] = `Team ${leadPlayer.Name.split(' ')[1].trim()}, ${state[`Team${teamNum}name`]}`;
+        if (leadPlayer.Name) state.FormData[`PlayerTopTeam` + teamNum] = leadPlayer.Name;
 
         // save teams data
         this.saveData(state);
@@ -966,7 +991,6 @@ export default class Reducer
         });
 
         if (!name) Defence.name = `Team ${team} defence`;
-        __DEV__&&console.log( 'Defence', Defence, {TeamId, team, EventId, name} );
 
         state.FormData[`Team${team}Defense`] = {TeamId, EventId, name, ...Defence};
 
