@@ -53,7 +53,7 @@ class NewFeedExchange extends BaseController
         const { currTeamKey, okBtnDisabled } = this.state;
         var items = [], currentCat, catItems, ParentId, ParentName;
 
-        console.log( 'AppData', {AppData} );
+        //console.log( 'AppData', {AppData}, PlayersTeam1.players );
 
         // prepare command creation interface data
         const playersComponents = [

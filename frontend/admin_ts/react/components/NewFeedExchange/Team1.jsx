@@ -31,7 +31,7 @@ export class Team1 extends React.Component
         //     if (TeamDefence.TeamId) Defence = {name: val.HomeTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
         //     if (TeamDefence.TeamId) Defence = {name: val.AwayTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
         // });
-        // 0||console.log( 'TeamDefence', TeamDefence );
+        //0||console.log( 'players', players, teamNum );
 
         return (
             <div className="h-team">
@@ -78,6 +78,7 @@ export class Team1 extends React.Component
                             let ret = [];
                             for( let ii = 0; ii < itm.Quantity; ii++ )
                             {
+                                // players[jj]&&__DEV__&&console.log( 'players[jj], itm.Index', players[jj].Index, itm.Index );
                                 if( players[jj] && players[jj].Index == itm.Index )
                                 {
                                     ret.push(<tr key={itm.Name + ii}>
@@ -110,7 +111,7 @@ export class Team1 extends React.Component
 
                 {TeamDefence.name ?
                     <div className="defence">
-                        <b>Defence</b>: <span title={`From event “${TeamDefence.event}”`}>{TeamDefence.name}</span>
+                        <b>Defence</b>: <span title={TeamDefence.event ? `From event “${TeamDefence.event}”` : ''}>{TeamDefence.name}</span>
                     </div>
                     :
                     <div className="defence"><b>Defence</b>: <i>Not set, please, choose a command for defence</i></div>

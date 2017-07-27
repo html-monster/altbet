@@ -92,6 +92,7 @@ export default class Reducer
 
 
         this.initialState.Positions = this.preparePositions(globalData.AppData.Positions);
+        // __DEV__&&console.log( '00000000000 this.initialState', this.initialState );
 
         // load saved teams
         if( globalData.IsEditFeedExchange )
@@ -274,10 +275,8 @@ export default class Reducer
     {
         const { HomeName, AwayName, HomeAlias, AwayAlias, StartDateStr, FullName, EventId, UrlExchange, } = this.initialState.Exchanges[0].Symbol;
         const { HomePlayers, AwayPlayers } = this.initialState.Exchanges[0];
-        let { Categories, Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam1Variable } = this.initialState;
+        let { Categories, Players, FormData } = this.initialState;
         let catId;
-        0||console.log( 'Players', this.initialState );
-        0||console.log( 'this.initialState.Exchanges[0].Symbol', this.initialState.Exchanges[0].Symbol );
 
         // init params
         this.initialState = {...this.initialState, LastEventId: EventId, FullName, EventId};
@@ -306,56 +305,37 @@ export default class Reducer
         this.initialState.Team1name = HomeAlias;
         this.initialState.Team1name = AwayAlias;
 
-        // resObj.FullName = fullName;
-        // resObj.CategoryId = category;
-        // resObj.HomeName = teamName1;
-        // resObj.AwayName = teamName2;
-        // resObj.HomeAlias = Team1name;
-        // resObj.AwayAlias = Team2name;
-        //
-        // resObj.HomeDefense = Team1Defense;
-        // resObj.AwayDefense = Team2Defense;
-        // resObj.StartDate = startDate.format();
-        // resObj.UrlExchange = url;
-        // resObj.EventId = EventId;
 
-
-        0||console.log( 'this.initialState.Players', this.initialState.Players );
         // init players
-/*
-        HomePlayers.forEach((val) => {
+        let preparePlayers = (val, team) => {
             if( val.TeamType == 0 )
             {
-                val.used = Reducer.USING_TEAM;
-                val.usedTeam = 1;
-                // PlayersTeam1.players.push(val);
+                if( val.CustomPosition === "Util" ) this.addTeamUPPlayer({player: val, team: team, nosave: true}, this.initialState);
+                else this.addTeamPlayer({player: val, team: team, nosave: true}, this.initialState);
 
-                this.initialState.Players = Players.map((vv) => vv.PlayerId == val.PlayerId ? vv : {...val});
+                // this.initialState.Players = Players.map((vv) => vv.PlayerId == val.PlayerId&&__DEV__&&console.log( 'vv.Name', vv.Name, val.Name ) ? {...val} : vv);
             }
             else if( val.TeamType == 1 )
             {
-                val.used = Reducer.USING_RESERVE;
-                val.usedTeam = 1;
-                PlayersTeam1Reserve.players.push(val);
+                this.addTeamPlayerReserve({player: val, team: team, nosave: true}, this.initialState);
             }
             else if( val.TeamType == 2 )
             {
-                val.used = Reducer.USING_VARIABLE;
-                val.usedTeam = 1;
-                PlayersTeam1Variable.players.push(val);
-            } // endif
-        });
-*/
-
-/*        this.initialState.Players.map((val, key) => {
-            if (val && data.Players[key] && val.ID == data.Players[key].Id && data.Players[key].used)
-            {
-                val.StartDate = data.Players[key].StartDate;
-                val.usedTeam = data.Players[key].usedTeam;
-                val.used = data.Players[key].used;
+                this.addTeamPlayerVariable({player: val, team: team, nosave: true}, this.initialState);
             }
-            return val
-        })*/;
+            else if( val.TeamType == 3 )
+            {
+                __DEV__&&console.log( 'Defence val', val );
+                this.addTeamDefence({TeamId: val.TeamId, team, EventId: val.EventId, name: val.TeamName}, this.initialState)
+            } // endif
+        };
+        HomePlayers.forEach((vv) => preparePlayers(vv, 1));
+        AwayPlayers.forEach((vv) => preparePlayers(vv, 2));
+
+        // state["PlayersTeam"+team].players = this.sortTeam($Team.players);
+        // this.initialState.PlayersTeam1 = this.recountPositions(this.initialState.PlayersTeam1);
+
+        // __DEV__&&console.log( 'this.initialState.PlayersTeam1', JSON.stringify(this.initialState.PlayersTeam1) );
     }
 
 
@@ -384,22 +364,30 @@ export default class Reducer
     /**
      * Add player to said team
      */
-    private addTeamPlayer({player, team}, state)
+    private addTeamPlayer({player, team, nosave}, state)
     {
         let $Team = state["PlayersTeam"+team];
         let addedPlayer;
 
+        // mark player on players table
         for( let val of state.Players  )
         {
             if( player.PlayerId == val.PlayerId && !val.used )
             {
                 val.used = Reducer.USING_TEAM;
                 val.usedTeam = team;
-                $Team.players.push(val);
-                addedPlayer = val;
+                val.CustomPosition = val.Position;
                 break;
             } // endif;
         } // endfor
+
+
+        // add player to team
+        player.used = Reducer.USING_TEAM;
+        player.usedTeam = team;
+        player.CustomPosition = player.Position;
+        $Team.players.push(player);
+        addedPlayer = player;
 
         state["PlayersTeam"+team].players = this.sortTeam($Team.players);
 
@@ -410,7 +398,7 @@ export default class Reducer
         // this.markPlayers(state);
 
         // save teams data
-        this.saveData(state);
+        if (!nosave) this.saveData(state);
 
         // common add part
         this.afterAddPlayer({player, addedPlayer}, state);
@@ -422,11 +410,12 @@ export default class Reducer
     /**
      * Add universal player to said team
      */
-    private addTeamUPPlayer({player, team}, state)
+    private addTeamUPPlayer({player, team, nosave}, state)
     {
         let $Team = state["PlayersTeam"+team];
         let addedPlayer;
 
+        // mark player on players table
         for( let val of state.Players  )
         {
             if( player.PlayerId == val.PlayerId && !val.used )
@@ -438,11 +427,22 @@ export default class Reducer
                 };
                 val.Index = state.UPlayerData.uniPositionIndex;
                 val.Position = state.UPlayerData.uniPositionName;
-                $Team.players.push(val);
-                addedPlayer = val;
+                val.CustomPosition = state.UPlayerData.uniPositionName;
                 break;
             } // endif;
         } // endfor
+
+        // add player to team
+        player.used = Reducer.USING_TEAM_UP;
+        player.usedTeam = team;
+        player.meta = { PositionOrig: player.Position,
+            IndexOrig: player.Index,
+        };
+        player.Index = state.UPlayerData.uniPositionIndex;
+        player.Position = state.UPlayerData.uniPositionName;
+        player.CustomPosition = state.UPlayerData.uniPositionName;
+        $Team.players.push(player);
+        addedPlayer = player;
 
         state["PlayersTeam"+team].players = this.sortTeam($Team.players);
 
@@ -453,7 +453,7 @@ export default class Reducer
         // this.markPlayers(state);
 
         // save teams data
-        this.saveData(state);
+        if (!nosave) this.saveData(state);
 
         // common add part
         this.afterAddPlayer({player, addedPlayer}, state);
@@ -465,22 +465,30 @@ export default class Reducer
     /**
      * Add reserve player to said team
      */
-    private addTeamPlayerReserve({player, team}, state)
+    private addTeamPlayerReserve({player, team, nosave}, state)
     {
         let $Team = state[`PlayersTeam${team}Reserve`];
         let addedPlayer;
 
+        // mark player on players table
         for( let val of state.Players  )
         {
             if( player.PlayerId == val.PlayerId && !val.used )
             {
                 val.used = Reducer.USING_RESERVE;
                 val.usedTeam = team;
-                $Team.players.push(val);
-                addedPlayer = val;
+                val.CustomPosition = val.Position;
                 break;
             } // endif;
         } // endfor
+
+        // add player to team
+        player.used = Reducer.USING_RESERVE;
+        player.usedTeam = team;
+        player.CustomPosition = player.Position;
+        $Team.players.push(player);
+        addedPlayer = player;
+
 
         state[`PlayersTeam${team}Reserve`].players = this.sortTeam($Team.players);
 
@@ -488,7 +496,7 @@ export default class Reducer
         // this.markPlayers(state);
 
         // save teams data
-        this.saveData(state);
+        if (!nosave) this.saveData(state);
 
         // common add part
         this.afterAddPlayer({player, addedPlayer}, state);
@@ -500,22 +508,30 @@ export default class Reducer
     /**
      * Add variable player to said team
      */
-    private addTeamPlayerVariable({player, team}, state)
+    private addTeamPlayerVariable({player, team, nosave}, state)
     {
         let $Team = state[`PlayersTeam${team}Variable`];
         let addedPlayer;
 
+        // mark player on players table
         for( let val of state.Players  )
         {
             if( player.PlayerId == val.PlayerId && !val.used )
             {
                 val.used = Reducer.USING_VARIABLE;
                 val.usedTeam = team;
-                $Team.players.push(val);
-                addedPlayer = val;
+                val.CustomPosition = val.Position;
                 break;
             } // endif;
         } // endfor
+
+        // add player to team
+        player.used = Reducer.USING_VARIABLE;
+        player.usedTeam = team;
+        player.CustomPosition = player.Position;
+        $Team.players.push(player);
+        addedPlayer = player;
+
 
         state[`PlayersTeam${team}Variable`].players = this.sortTeam($Team.players);
 
@@ -523,7 +539,7 @@ export default class Reducer
         // this.markPlayers(state);
 
         // save teams data
-        this.saveData(state);
+        if (!nosave) this.saveData(state);
 
         // common add part
         this.afterAddPlayer({player, addedPlayer}, state);
@@ -855,7 +871,7 @@ export default class Reducer
         });
 
         state.FormData.startDate = startDate;
-        // 0||console.log( 'state.FormData.startDate', {'11': state.FormData.startDate, startDate, '22': state.Players} );
+        0||console.log( 'state.FormData.startDate', {'11': state.FormData.startDate, startDate, '22': state.Players} );
     }
 
 
@@ -941,14 +957,18 @@ export default class Reducer
     /**
      * Add real team to defence
      */
-    private addTeamDefence({TeamId, team, EventId}, state)
+    private addTeamDefence({TeamId, team, EventId, name = ''}, state)
     {
-        let Defence = {};
+        let Defence : any = {};
         state.TimeEvent.forEach((val) => {
-            if (val.HomeId === TeamId) Defence = {name: val.HomeTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
-            if (val.AwayId === TeamId) Defence = {name: val.AwayTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
+            if (val.HomeId === TeamId) Defence = {name: val.HomeTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`};
+            if (val.AwayId === TeamId) Defence = {name: val.AwayTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`};
         });
-        state.FormData[`Team${team}Defense`] = {TeamId, EventId, ...Defence};
+
+        if (!name) Defence.name = `Team ${team} defence`;
+        __DEV__&&console.log( 'Defence', Defence, {TeamId, team, EventId, name} );
+
+        state.FormData[`Team${team}Defense`] = {TeamId, EventId, name, ...Defence};
 
         // save teams data
         this.saveData(state);

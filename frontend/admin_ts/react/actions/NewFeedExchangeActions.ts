@@ -102,8 +102,8 @@ export default class Actions extends BaseActions
             const ajaxPromise = (new AjaxSend()).send({
                 formData: data,
                 message: `Error while adding category, please, try again`,
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_ADD,
-                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_ADD,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 respCodes: [
                     {code: 100, message: `Category “${data.Name}” created successfully`},
                     {code: -101, message: "Category name is not unique"},
@@ -281,7 +281,7 @@ __DEV__ && console.log( 'data', data );
                 {
                     0||console.log( 'result', result, result.code );
 
-                    Common.redirectWMessage({url: result.data.UrlExchange, message: `Event “${data.FullName}” was saved successfully`, type: InfoMessage.TYPE_SUCCESS, title: 'SUCCESS', exInfo: {id: result.data.Exchanges}});
+                    // Common.redirectWMessage({url: result.data.UrlExchange, message: `Event “${data.FullName}” was saved successfully`, type: InfoMessage.TYPE_SUCCESS, title: 'SUCCESS', exInfo: {id: result.data.Exchanges}});
                 },
                 result => {
                     0||console.log( 'result', result, result.code );
