@@ -52,7 +52,8 @@ export class ABpp
         makerFees: null,      // maker fees
         basicMode: true,      // play mode
         tradeOn: false,       // active trader state
-    };
+        // disqusOn: globalData.userIdentity === 'False' // disqus state
+};
     public baseUrl: "";                 // add before urls
 
 

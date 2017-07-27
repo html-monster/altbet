@@ -39,12 +39,11 @@ class Actions extends BaseActions
 	 */
 	public tabSwitch(actions, tabName)
 	{
-		ABpp.Websocket.sendSubscribe(tabName === 'YourOrders', window.SocketSubscribe.CURRENT_ORDERS);
+		ABpp.Websocket.sendSubscribe(tabName === 'YourOrders' ? 1 : 0, window.SocketSubscribe.CURRENT_ORDERS);
 
-		if(tabName === 'ActiveTrader')
-			ABpp.config.tradeOn = true;
-		else
-			ABpp.config.tradeOn = false;
+		ABpp.config.tradeOn = tabName === 'ActiveTrader';
+
+        // ABpp.config.disqusOn = tabName === 'Disqus';
 
 		actions.actionOnTraderOnChange(tabName === 'ActiveTrader');
 		return (dispatch) =>

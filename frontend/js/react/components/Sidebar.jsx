@@ -93,7 +93,6 @@ class Sidebar extends React.Component
 		// });
     }
 
-
 	render()
 	{
 		const { isAllowAT } = this.state;
