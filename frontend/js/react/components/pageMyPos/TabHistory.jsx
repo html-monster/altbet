@@ -32,7 +32,7 @@ export class TabMyOrderHistory extends React.Component
 					<div className="my_position_tab">
 						<div className="wrapper">
 							<div className="my_order_history table_content" id="my_order_history">
-								{ data.length ?
+								{ data && data.length ?
 									<table>
 										<thead>
 											<tr>
@@ -61,7 +61,7 @@ export class TabMyOrderHistory extends React.Component
 															<td>
 																<span className="timestamp help balloon_only">
 																	<span className="date">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'MM/DD/YYYY'})}</span>
-																	<span className="time"> {(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'h:mm A'})}</span>
+																	<span className="time"> {(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'hh:mm A'})}</span>
 																	<span className="help_message ce-bo"><strong>MM/DD/YYYY&nbsp;&nbsp;H:MM</strong></span>
 																</span>
 															</td>

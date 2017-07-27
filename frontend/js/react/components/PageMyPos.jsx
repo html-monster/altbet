@@ -75,8 +75,6 @@ class PageMyPos extends BaseController //React.Component
                     </div>
 
                     <div className="tab_content">
-
-
                         {/* // BM: --------------------------------------------------- OPENED ORDERS ---*/}
                         <TabOpenOrders data={openOrdersData} yourOrdersActions={yourOrdersActions}/>
 

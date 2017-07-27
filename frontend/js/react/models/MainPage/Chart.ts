@@ -221,7 +221,7 @@ export default class Chart
                         return "<span>Mediana</span>";
                         // to disable the tooltip at a point return false
                     } else {
-                        let date = (new DateLocalization()).unixToLocalDate({timestamp: this.x, format: 'MM/DD/YYYY h:mm A', TZOffset: 1});
+                        let date = (new DateLocalization()).unixToLocalDate({timestamp: this.x, format: 'MM/DD/YYYY hh:mm A', TZOffset: 1});
                         return '<b>' + date + '</b><br/>' +
                             'Price: $' + this.y;
                     }
