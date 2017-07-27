@@ -125,7 +125,7 @@ export class RegisterForm extends React.PureComponent
         return <span className="input_animate input--yoshiko datePickerRender">
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
                 <DatePicker className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id}
-                    exdata={{afterChange: afterChange.bind(null, onCustomChange), dateFormat: "d M yy"}}
+                    exdata={{afterChange: afterChange.bind(null, onCustomChange)}}
                     value={currVal}
                     {...input}
                 />

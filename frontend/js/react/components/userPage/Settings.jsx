@@ -15,7 +15,7 @@ import {DateLocalization} from '../../models/DateLocalization';
 import settingsActions from '../../actions/userPage/settingsActions';
 
 
-class Settings extends React.Component
+class Settings extends React.PureComponent
 {
     _loadFile(event)
     {
@@ -38,7 +38,7 @@ class Settings extends React.Component
 
 			return  <span className={'input_animate input--yoshiko input--filled' + (filled ? ' input--filled' : '')}>
                         <input className={`input__field input__field--yoshiko ${className ? className : ''}
-                         ${dirty && (error ? ' invalidJs' : ' validJs')}`} {...input}/>
+                         ${!input.disabled && dirty && (error ? ' invalidJs' : ' validJs')}`} {...input}/>
                         <label className="input__label input__label--yoshiko" htmlFor={id}>
                             <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                         </label>
@@ -110,7 +110,7 @@ class Settings extends React.Component
                                      maxLength="20"/>
 
                     <span className="input_animate input--yoshiko submit_container">
-                        <input type="submit" value="Submit" className="btn wave submit"/>
+                        <input type="submit" value="Save Changes" className="btn wave submit"/>
                         {/*<span className="answer_message"></span>*/}
                         <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
 						<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>

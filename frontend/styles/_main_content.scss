@@ -339,7 +339,7 @@
         }
       }
 
-      &.opener { visibility: visible; position: absolute; right: 35px; top: calc(50% - 35px/2); width: auto; //@include visibleAttr;
+      &.opener { visibility: visible; position: absolute; right: 3px; top: calc(50% - 35px/2); width: auto; //@include visibleAttr;
           opacity: 1; transition: .4s;
         button { display: flex; align-items: center; padding: 0 10px; color: #333; font-size: 14px; background: linear-gradient(to top, #bdc0cd, #ffffff); font-weight: bold; text-transform: none }
         i { display: inline-block; position: relative; margin-right: 10px; width: 18px; height: 18px;
