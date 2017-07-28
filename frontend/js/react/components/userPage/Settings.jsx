@@ -86,7 +86,7 @@ class Settings extends React.Component
                         <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                     </label>
                     { dirty && error && <span className="validation-summary-errors">{error}</span> }
-                    { info && <span className="info top"><i>{ info }</i></span> }
+                    { info && <span className="info bottom"><i>{ info }</i></span> }
                 </span>
     };
 
