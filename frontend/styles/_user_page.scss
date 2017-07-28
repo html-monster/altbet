@@ -14,7 +14,7 @@
     background: $sign_in_bg;
     border-radius: 5px;
   }
-  ul.tabs { width: 15%; height: calc(100% - 90px); margin-right: 10px; margin-left: 10px; padding: 15px; position: fixed;
+  ul.tabs  { width: 15%; height: calc(100% - 90px); margin-right: 10px; margin-left: 10px; padding: 15px; position: fixed;
     top: 80px; list-style-type: none; font-size: 16px; //color: rgba(255, 255, 255, 0.8);
     li {
       position: relative;
@@ -45,7 +45,7 @@
       }
       &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -451px -352px; }
       &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -346px -353px;}
-      &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -414px -352px; }
+      &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -415px -352px; }
       &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -548px -351px;}
       &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -379px -352px; }
     }
@@ -138,8 +138,8 @@
         top: 6px;
       }
 
-        &.pers_inf:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -110px -7px; }
-        &.cont_inf:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -25px -40px; }
+        &.pers_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -420px -421px; }
+        &.cont_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -455px -421px; }
         //&.passw_change:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -135px -6px; }
         }
       h4{  margin: 15px 0 5px; font-weight: normal;  }
