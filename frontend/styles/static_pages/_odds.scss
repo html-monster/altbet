@@ -1,0 +1,18 @@
+@media (min-width: 1300px) {
+  /*__ODDS___*/
+  .odds_page {
+    margin-bottom: 30px;
+    .first_div, .second_div,
+    .third_div, .fourth_div, .fifth_div {
+      display: flex;
+      flex-direction: row;
+      .infoOdds {
+        width: 800px;
+        display: flex;
+        flex-direction: column;
+        /*justify-content: space-between;*/
+        margin-right: 200px;
+      }
+    }
+  }
+}

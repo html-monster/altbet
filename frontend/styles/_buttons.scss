@@ -1,71 +1,33 @@
-// BM: buttons
-button, input[type=submit] { user-select: none; }
-
-button, a.button {
-  height: 30px;
-  padding: 4px 12px;
-  border-radius: 4px;
-  color: #fff;
-  outline: none;
-  cursor: pointer;
-  &[disabled]{ cursor: default; opacity: 0.6; }
-  &.close_red {
-    display: block;
-    width: 15px;
-    height: 15px;
-    min-height: 10px;
-    padding: 0;
-    background: url("#{$pathImage}/sprite.svg") no-repeat -47px -137px;
-  }
+// darken on hover
+.btn-h {
+  &:not([disabled]):after { content: ''; position: absolute; display: block; left: 0; top: 0; width: 100%; height: 100%;
+      background: #000000; border-radius: 3px; opacity: 0; z-index: 1; transition: opacity .5s }
+  &:hover:after {  opacity: 0.15;  }
+  &:active:after {  opacity: 0;  }
+  &:before { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 4px; }
 }
 
-.btn:not([type=submit], .submit):not(i) {
-  box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
-  transition: 0.2s ease;
-  @include btn-hover;
-  &[disabled] { cursor: default !important; opacity: 0.6;
-    &:after { display: none; }
-  }
-  &:not([disabled]):active {
-    box-shadow: inset 0 2px 25px -8px rgb(0, 0, 0);
-  }
-  &.color { color: $main-color; }
+
+.btn-lg-icon { display: inline-block; position: relative; padding: 9px 15px 9px 45px; border-radius: 3px;
+  text-align: center; cursor: pointer; box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
+  &:before { content: ''; position: absolute; left: 15px; top: calc(50% - 15px); width: 30px; height: 30px; }
 }
 
-.btn_lg_icon {
-  display: block;
-  width: 150px;
-  padding: 9px 5px 9px 45px;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
-  transition: 0.2s ease;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-  &:before{
-    content: '';
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    left: 15px;
-    top: calc(50% - 15px);
-  }
-}
 
 .btn-md { height: 32px;
   &:disabled { background: #dedede; color: #716767; box-shadow: none !important; }
 }
 
-.btn_green { background: linear-gradient(to bottom, #84d65b, #4dac2e); }
+//.btni { display: inline-block !important; }
 
-.btn_orange { background: linear-gradient(to bottom, #f88447, #ef4d22); }
 
-.btn_blue { background: linear-gradient(to bottom, #64c9ef, #3498da); color: #fff;
+%btn-color-white { color: #fff;
   &:visited{ color: #fff;  }
   &:focus{ color: #fff;  }
   &:active{ color: #fff;  }
 }
-
+.btn_green { background: linear-gradient(to bottom, #84d65b, #4dac2e); }
+.btn_orange { background: linear-gradient(to bottom, #f88447, #ef4d22); }
+.btn_blue { background: linear-gradient(to bottom, #64c9ef, #3498da); @extend %btn-color-white }
+.btn_blue2 { background: linear-gradient(to bottom, #92d7fd, #4a74a3); @extend %btn-color-white; }
 .btn_yellow { background: linear-gradient(to bottom, #f8b747, #ef8022); }
-

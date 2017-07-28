@@ -6,6 +6,7 @@ import BaseController from './BaseController';
 import Actions from '../actions/NewFeedExchangeActions.ts';
 import {DropBox} from '../components/common/DropBox';
 import {PlayersTable} from 'components/NewFeedExchange/PlayersTable';
+import {DefenceChoose} from 'components/NewFeedExchange/DefenceChoose';
 import {Team1} from '../components/NewFeedExchange/Team1';
 import {TeamResVar} from 'components/NewFeedExchange/TeamResVar';
 import {NewCategory} from '../components/NewFeedExchange/NewCategory';
@@ -19,8 +20,11 @@ import {Framework} from 'common/Framework.ts';
 
 class NewFeedExchange extends BaseController
 {
-    LoadingObj;
-    CreateFormBlock;
+    /**@private*/ LoadingObj;
+    /**@private*/ BlockCreateCat;
+    /**@private*/ newCatForm;
+    // /**@private*/ tablePlayers;
+    /**@private*/ blockTablePlayers;
 
     constructor(props)
     {
@@ -44,34 +48,43 @@ class NewFeedExchange extends BaseController
 
     render()
     {
-        // const { actions, data: {AppData:{ FullName, Category, Filters, Players, Team1name, Team2name }} } = this.props;
         const { actions, data: AppData } = this.props;
-        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, Rules, CurrentTeam, Category, ParentId, ParentCategory, Categories} = this.props.data;
+        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, CurrentEventObj, Rules, CurrentTeam, Category, Categories, IsEditFeedExchange } = this.props.data;
         const { currTeamKey, okBtnDisabled } = this.state;
-        var items = [], currentCat, catItems;
+        var items = [], currentCat, catItems, ParentId, ParentName;
+
+        //console.log( 'AppData', {AppData}, PlayersTeam1.players );
 
         // prepare command creation interface data
         const playersComponents = [
-            [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={PlayersTeam1.players} name={FormData['teamName1']} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="1" />,],
+            [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={{players: PlayersTeam1.players, TeamDefence: FormData['Team1Defense'], name: FormData['teamName1'], positions: Positions, uplayerdata: UPlayerData, actions, teamNum: "1", }} />,],
             [1, 2, 'Reserve players team 1', PlayersTeam1Reserve.players, <TeamResVar players={PlayersTeam1Reserve.players} teamVar="PlayersTeam1Reserve" actions={actions} teamNum="1" />,],
-            [1, 3, 'Variable players team 1', PlayersTeam1Variable.players, <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
-            [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={PlayersTeam2.players} name={FormData['teamName2']} positions={Positions} uplayerdata={UPlayerData} actions={actions} teamNum="2" />,],
+            [1, 3, 'Variable reserve team 1', PlayersTeam1Variable.players, <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
+            [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={{players: PlayersTeam2.players, TeamDefence: FormData['Team2Defense'], name: FormData['teamName2'], positions: Positions, uplayerdata: UPlayerData, actions, teamNum: "2", }} />,],
             [2, 2, 'Reserve players team 2', PlayersTeam2Reserve.players, <TeamResVar players={PlayersTeam2Reserve.players} teamVar="PlayersTeam2Reserve" actions={actions} teamNum="2" />,],
-            [2, 3, 'Variable players team 2', PlayersTeam2Variable.players, <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
+            [2, 3, 'Variable reserve team 2', PlayersTeam2Variable.players, <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
         ];
 
 
         // prepare categories
         if (Categories) catItems = Categories.map((val) => {
             let itm = { value: val.CategoryId, label: val.Name};
-            //DEBUG: if (val.IsCurrent) currentCat = itm;
+            if (val.IsCurrent) currentCat = itm;
+            if (!ParentId) ParentId = val.ParentId;
+            if (!ParentName) ParentName = val.ParentName;
             return itm;
         });
 
 
         return (
             <div>
-                <h3 className="">Event approving “{AppData.FullName}”</h3>
+                <h3>
+                    {IsEditFeedExchange ?
+                        `Edit event “${AppData.FullName}”`
+                        :
+                        `Event approving “${AppData.FullName}”`
+                    }
+                </h3>
                 <div className="box box-default">
 {/*
                     <div className="box-header">
@@ -95,7 +108,7 @@ class NewFeedExchange extends BaseController
                                 { !currentCat &&
                                     <div className="col-sm-9">
                                         <div className="form-group">
-                                            <label>Event category is “{Category}” but, there is no such category in “{ParentCategory}” please choose another or</label>
+                                            <label>Event category is “{Category}” but, there is no such category in “{ParentName}” please choose another or</label>
                                             <div><button className="btn btn-xs btn-success" onClick={this._onCreateCatClick.bind(this, true)}>Create new</button></div>
                                         </div>
                                     </div>
@@ -105,11 +118,11 @@ class NewFeedExchange extends BaseController
                 </div>
 
                 { !currentCat &&
-                    <div ref={(itm) => this.CreateFormBlock = itm} className="row" style={{display: 'none'}}>
+                    <div ref={(itm) => this.BlockCreateCat = itm} className="row" style={{display: 'none'}}>
                         <div className="col-sm-6">
                             <div className="box box-success">
                                 <div className="box-header">
-                                    {/*<i className="fa fa-navicon"/>*/}Create a sub category in “{ParentCategory}”
+                                    {/*<i className="fa fa-navicon"/>*/}Create a sub category in “{ParentName}”
                                 </div>
                                 <div className="box-body pad table-responsive">
                                         <div class="js-alert alert-message alert alert-warning alert-dismissible">
@@ -117,7 +130,7 @@ class NewFeedExchange extends BaseController
                                             <h4><i class="icon fa fa-warning"/> Alert!</h4>
                                             <span class="js-text"/>
                                         </div>
-                                        <NewCategory submitAction={actions.actionCreateCategory.bind(this, {ParentId})} afterCreate={::this._createCatFinishCallback}/>
+                                        <NewCategory ref={(val) => this.newCatForm = val} data={{ParentId}} submitAction={actions.actionCreateCategory} afterCreate={::this._createCatFinishCallback}/>
                                 </div>
                             </div>
                         </div>
@@ -158,10 +171,28 @@ class NewFeedExchange extends BaseController
                         <div className="row">
                             <div className="col-sm-6">
                                 <div class="panel box box-default">
-                                    <div class="box-header with-border">
+                                    <div class="box-header">
+                                        <h4 class="box-title">
+                                            Chose command for defence
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse">
+                                        <div class="box-body">
+                                            <DefenceChoose data={{CurrentEventObj, FormData, actions}}/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row" ref={(val) => this.blockTablePlayers = val}>
+                            <div className="col-sm-6">
+                                <div class="panel box box-default">
+                                    <div class="box-header with-border" onClick={::this._onAdaptClick}>
                                         <h4 class="box-title">
                                             Players <span className="-nobold">(avaliable)</span>
                                         </h4>
+                                        <button className="adapt btn btn-default -btn-default btn-xs" title="Move panel to top on screen"><i className="glyphicon glyphicon-open"/></button>
                                     </div>
                                     <div class="panel-collapse">
                                         <div class="box-body">
@@ -215,7 +246,7 @@ class NewFeedExchange extends BaseController
                                 <div className="box-body" >
                                     <label>Full name</label>
                                     <div class="input-group">
-                                        <input className="form-control" type="text" name="fullname" value={AppData.FormData.fullName} onChange={this._onChangeFormData.bind(this, 'fullName')} />
+                                        <input className="form-control" type="text" name="fullname" value={FormData.fullName} onChange={this._onChangeFormData.bind(this, 'fullName')} />
                                         <span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateFullName} title="Generate full name"><i class="fa fa-repeat"/></button></span>
                                     </div>
                                 </div>
@@ -224,7 +255,7 @@ class NewFeedExchange extends BaseController
                                 <div className="box-body" >
                                     <div className="form-group">
                                         <label>Event start date</label>
-                                        <div className="">{AppData.FormData.startDate ? moment(AppData.FormData.startDate).format('DD MMM Y H:mm A') : <i>It is not possible to calculate due to the lack of players in teams</i>}</div>
+                                        <div className="">{FormData.startDate ? moment(FormData.startDate).format('DD MMM Y H:mm A') : <i>It is not possible to calculate due to the lack of players in teams</i>}</div>
                                     </div>
                                 </div>
                             </div>
@@ -379,9 +410,9 @@ class NewFeedExchange extends BaseController
         else
         {
             (new InfoMessages).show({
-                title: '',
+                title: title,
                 message: message,
-                color: InfoMessages.WARN,
+                color: InfoMessages.ERROR,
             });
         } // endif
     }
@@ -403,11 +434,11 @@ class NewFeedExchange extends BaseController
     {
         if( isOpen )
         {
-            $(this.CreateFormBlock).slideDown(400);
+            $(this.BlockCreateCat).slideDown(400, () => this.newCatForm.focus(1));
         }
         else
         {
-            $(this.CreateFormBlock).slideUp(200);
+            $(this.BlockCreateCat).slideUp(200);
         } // endif
     }
 
@@ -416,9 +447,40 @@ class NewFeedExchange extends BaseController
      * Create category finish callback
      * @private
      */
-    _createCatFinishCallback()
+    _createCatFinishCallback(props)
     {
-        this._onCreateCatClick(false);
+        0||console.log( 'p1', {props} );
+
+        if( props.code == 100 )
+        {
+            (new InfoMessages).show({
+                title: 'SUCCESS',
+                message: props.message,
+                color: InfoMessages.SUCCESS,
+            });
+
+            this._onCreateCatClick(false);
+        }
+        else
+        {
+            (new InfoMessages).show({
+                title: 'ERROR',
+                message: props.message,
+                color: InfoMessages.WARN,
+            });
+        } // endif
+    }
+
+
+    /**
+     * Move players table to top
+     * @private
+     */
+    _onAdaptClick()
+    {
+        $('html, body').animate({
+            scrollTop: $(this.blockTablePlayers).offset().top - 20
+        }, 300);
     }
 }
 

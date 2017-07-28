@@ -5,7 +5,7 @@ import React from 'react';
 import EventOrders from './sidebar/YourOrders.jsx';
 // import NewOrder from './sidebar/order/NewOrder.jsx';
 // import ActiveTrader from './sidebar/ActiveTrader.jsx';
-import TradeSlip from './sidebar/TradeSlip';
+// import TradeSlip from './sidebar/TradeSlip';
 import ActiveTrader from './Sidebar/tradeSlip/ActiveTrader';
 import YourOrders from './sidebar/YourOrders';
 import Disqus from './Disqus';

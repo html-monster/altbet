@@ -51,9 +51,9 @@ class UserPage extends BaseController
 
                 <Settings data={{header: $tabHeaderHtml, active: this.props.route.tab === "sett"}}/>
 
-                <ChangePassword data={{active: this.props.route.tab === "pass"}}/>
+                <ChangePassword data={{header: $tabHeaderHtml, active: this.props.route.tab === "pass"}}/>
 
-                <SelfExclusion data={{active: this.props.route.tab === "self_sett"}}/>
+                <SelfExclusion data={{header: $tabHeaderHtml, active: this.props.route.tab === "self_sett"}}/>
             </div>
         </div>;
     }

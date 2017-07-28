@@ -21,6 +21,11 @@ import disqus from './disqusReducer';
 import registerBox from './registerReducer';
 import confirmRegisterPage from './confirmRegisterPageReducer';
 
+import GidxVerificationReducer from './GidxVerificationReducer.ts';
+import GidxCashierReducer from './GidxCashierReducer.ts';
+import {Framework} from '../common/Framework.ts';
+
+
 
 let reducers = {};
 // export default combineReducers({
@@ -44,6 +49,13 @@ const common = {
 	mainMenu,
 	registerBox,
 };
+
+const pressetStatic = () => {return{
+    App: appState,
+    header,
+    mainMenu,
+	registerBox,
+}};
 
 
 switch (ABpp.config.currentPage)
@@ -110,6 +122,23 @@ switch (ABpp.config.currentPage)
 		};
 		break;
 	}
+
+	case ABpp.CONSTS.PAGE_GIDX_VERIFICATION: {
+		reducers = {
+			...pressetStatic(),
+            gidxVerification: Framework.getHandler(GidxVerificationReducer),
+		};
+		break;
+	}
+
+	case ABpp.CONSTS.PAGE_GIDX_WITHDRAW: {
+		reducers = {
+			...pressetStatic(),
+            gidxCashier: Framework.getHandler(GidxCashierReducer),
+		};
+		break;
+	}
+
 	case ABpp.CONSTS.PAGE_ANSWER:{
 		reducers = {
 			...common,

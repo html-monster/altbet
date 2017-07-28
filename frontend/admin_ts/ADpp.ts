@@ -3,6 +3,7 @@
  */
 
 /// <reference path="./../js/.d/common.d.ts" />
+/// <reference path="../js/.d/jquery.d.ts" />
 
 
 import {CategoryController} from "./controller/CategoryController";

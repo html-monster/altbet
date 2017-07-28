@@ -1,8 +1,9 @@
-.ac-newfeedexchange {
+.ac-newfeedexchange, .ac-editfeedexchange {
   $color1: #f2fbe9;
   $color1: #d9f1c2;
   .content-wrapper {
     .input-button { padding: 5px 12px; }
+    .cb-size { width: 70px }
 
     .team-filters, .pos-filters { display: inline-block; margin-right: 30px;
       a { padding: 0 2px; }
@@ -10,14 +11,23 @@
     .events-filters { display: inline-block; margin-left: 20px; }
     .pos-filters { margin-right: 0 }
     .h-players {
-      .f-btn.active { font-weight: bold }
-      .fa-plus { color: #00a65a; }
       tr.used td { background: $color1 }
       tr.used.team2 td { background: darken($color1, 10%) }
     }
-    .h-team {
-    }
+    .f-btn.active { font-weight: bold }
+    .fa-plus { color: #00a65a; }
   }
+
+  .adapt { position: absolute; right: 0 }
+
+  .players-block { overflow: auto; }
+  /*
+  .tabl-players {
+    tr td, tr th { border: 1px solid red;}
+    //thead { display: block; }
+    //tbody { display: block; overflow: auto; }
+  }
+  */
   .teams-table {
     tr.empty td { color: gray; }
     tr.empty td+td+td { font-size: 12px }
@@ -36,5 +46,6 @@
   }
 
   .btn-ok { width: 100px }
-}
 
+  .defence span { border-bottom: 1px dotted $colorBody }
+}

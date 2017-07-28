@@ -95,12 +95,11 @@ export class RegisterForm extends React.PureComponent
     hiddenInputRender({ id, className, label, hint, inputLabel, currVal, type, meta: { error, dirty }, ...input })
     {
         delete input.value;
-        0||console.log( 'input', input );
         return <input type="hidden" value={currVal} {...input}/>;
     }
 
 
-    inputRender({ id, className, label, hint, inputLabel, type, meta: { error, dirty }, ...input })
+    inputRender({ id, className, label, hint, inputLabel, zIndex, type, meta: { error, dirty }, ...input })
     {
         return <span className={classnames(`input_animate input--yoshiko`, {NickName: input.name === 'NickName'},{Email: input.name === 'Email'}, {Password: input.name === 'Password'},{ComparePassword: input.name === 'ComparePassword'}) + (type === 'password' ? ' pass_container' : '')}>
                 { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
@@ -111,7 +110,7 @@ export class RegisterForm extends React.PureComponent
                 </label>
                 {/*<span className="validation-summary-errors"></span>*/}
                 {
-                    hint && <span className="info bottom">
+                    hint && <span className="info bottom" style={{zIndex: zIndex}}>
                         <i>{hint}</i>
                     </span>
                 }
@@ -321,17 +320,18 @@ export class RegisterForm extends React.PureComponent
                                      className={'input__field input__field--yoshiko'}
                                      initialValue={__DEBUG__ ? "FedoryakaBest" : ""}
                                      label="User Name" type='text'
-                                     validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
-                                     hint="User's login allow to use symbols such as: symbols, digits, dot, underscore, dash"/>
+                                     validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, dot, underscore, dash"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
+                                     //validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
+                                     hint="User's login allow to use symbols such as: symbols, digits, dot, underscore, dash"
+                                     zIndex="100"/>
 
                     <InputValidation renderContent={this.inputRender} id='e_name' name="Email"
                                      className={'input__field input__field--yoshiko'}
                                      label="Email Address" type='text'
                                      initialValue={__DEBUG__ ? "Zotaper@yandex.ru" : ""}
                                      validate={[emptyValidation, mailValidation, lengthValidation.bind(null, {max: 128})]} input={input}
-                                     hint="Specify your valid email. A message with registration
-                                        confirmation will be sent at that address. Also that address
-                                        will be used for communication with you"/>
+                                     hint="Specify your valid email. A message with registration confirmation will be sent at that address. Also that address will be used for communication with you"
+                                     zIndex="99"/>
 
                     <InputValidation renderContent={this.inputRender} id='r_pass' name="Password"
                                      className={'input__field input__field--yoshiko '}
@@ -358,7 +358,7 @@ export class RegisterForm extends React.PureComponent
                     <InputValidation renderContent={this.dropBoxRender} id='st_name' name="State"
                                      className={'country-states' + (this.state.States.length ? "" : " states-hidden")}
                                      items={this.state.States}
-                                     initLabel="Select state ..."
+                                     initLabel="Select State ..."
                                      afterChange={::this.dropStateChange}
                                      validate={this.state.States.length ? [emptyValidation] : []} input={input}
                                      hint=""/>
@@ -403,10 +403,10 @@ export class RegisterForm extends React.PureComponent
                 </div>
 
                 <hr/>
-                <div className={'answer-message' + (error && ' validation-summary-errors')}>{error}</div>
+                <div className={'register_form_message answer-message' + (error && ' validation-summary-errors')}>{error}</div>
                 <div className="submit">
                     {/*<input type="submit" value="Register" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue"/>*/}
-                    <button type="submit" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue">Join to ALT.BET!</button>
+                    <button type="submit" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue">Join ALT.BET EXCHANGE</button>
 
                 </div>
             </form>

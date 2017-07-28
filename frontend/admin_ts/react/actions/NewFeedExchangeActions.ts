@@ -15,11 +15,15 @@ import {
     ON_GEN_URL,
     ON_SAVE_EVENT_OK,
     ON_SAVE_EVENT_FAIL,
+    ON_ADD_TEAM_DEFENCE,
+    ON_REM_TEAM_DEFENCE,
+    AFTER_CATEGORY_ADDED,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
-import {MainConfig} from '../../inc/MainConfig';
+import {MainConfig, DS} from '../../inc/MainConfig';
 import {Common} from '../common/Common';
+import {InfoMessage} from "../../component/InfoMessage";
 
 
 var __DEBUG__ = !true;
@@ -89,49 +93,50 @@ export default class Actions extends BaseActions
     {
         return (dispatch, getState) =>
         {
-            0||console.log( 'inProps', inProps );
-            return;
+            0||console.log( 'inProps', {inProps} );
+            // prepare data
+            let data : any = {};
+            inProps.formData.forEach((val) => data[val.name] = val.value);
+            data.ParentId = inProps.ParentId;
 
             const ajaxPromise = (new AjaxSend()).send({
-                formData: {'EventId': inProps},
-                message: `Error while registering user, please, try again`,
-                // url: ABpp.baseUrl + $form.attr('action'),
-                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GETPLAYERS,
+                formData: data,
+                message: `Error while adding category, please, try again`,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_ADD,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 respCodes: [
-                    {code: 100, message: ""},
-                    // {code: -101, message: "Some custom error"},
+                    {code: 100, message: `Category “${data.Name}” created successfully`},
+                    {code: -101, message: "Category name is not unique"},
+                    {code: -102, message: "Category url is not unique"},
+                    {code: -103, message: "You cannot add subcategory because parent category is not empty"},
                 ],
-                // beforeChkResponse: (data) =>
-                // {
-                //     // DEBUG: emulate
-                //     data = {Error: 101};
-                //     // data.Param1 = "TOR-PHI-3152017"; // id
-                //     // data.Param1 = "?path=sport&status=approved";
-                //     // data.Param1 = "?status=New";
-                //     // data.Param2 = "Buffalo Bills_vs_New England Patriots";
-                //     // data.Param3 = "TOR-PHI-3152017"; // id
-                //
-                //     return data;
-                // },
+/*                beforeChkResponse: (data) =>
+                {
+                    // DEBUG: emulate
+                    data = {Error: 103};
+                    // data.Param1 = "TOR-PHI-3152017"; // id
+                    // data.Param1 = "?path=sport&status=approved";
+                    // data.Param1 = "?status=New";
+                    // data.Param2 = "Buffalo Bills_vs_New England Patriots";
+                    // data.Param3 = "TOR-PHI-3152017"; // id
+
+                    return data;
+                },*/
             });
 
 
             ajaxPromise.then( result =>
                 {
+                    0||console.log( 'result', result, result.code );
+                    inProps.callback && inProps.callback(result);
                     dispatch({
-                        type: ON_CHANGE_EVENT,
-                        payload: [result.data.Players, inProps],
+                        type: AFTER_CATEGORY_ADDED,
+                        payload: {Categories: result.data.Categories, Emulate: data.Name},
                     });
                 },
                 result => {
-                    // 0||console.log( 'result', result, result.code );
-                    if( result.code != 100 )
-                    {
-                        dispatch({
-                            type: ON_CHANGE_EVENT,
-                            payload: [[], inProps],
-                        });
-                    }
+                    0||console.log( 'result', result, result.code );
+                    inProps.callback && inProps.callback(result);
                 });
         };
     }
@@ -176,6 +181,7 @@ export default class Actions extends BaseActions
 
             ajaxPromise.then( result =>
                 {
+                    // 0||console.log( 'result.data.TimeEvent', result.data.TimeEvent );
                     dispatch({
                         type: ON_CHANGE_EVENTS_PERIOD,
                         payload: [result.data.TimeEvent, filterVal],
@@ -223,6 +229,8 @@ export default class Actions extends BaseActions
             {
             } // endif
 
+            // DEBUG:
+            ret = false;
 
             // some errors
             if (ret)
@@ -234,23 +242,30 @@ export default class Actions extends BaseActions
 
             // prepare data
             data = this.prepareData(data);
-
+            // data = data.HomeTeam;
+__DEV__ && console.log( 'data', data );
 
             // post data to server
             // let data = new FormData();
             const ajaxPromise = (new AjaxSend()).send({
-                formData: data,
-                message: `Error ...`,
+                formData: JSON.stringify(data),
+                message: `Error while saving new event, please try again`, // error 100 and other
                 // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
                 url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
+                exData: {
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    // traditional: true,
+                },
                 // respCodes: [
                 //     {code: 100, message: ""},
-                //     // {code: -101, message: "Some custom error"},
+                //     // {code: -100, message: ""},
                 // ],
                 beforeChkResponse: (data) =>
                 {
                     // DEBUG: emulate
-                    data = {Error: 101};
+                    // data = {Error: 100};
+                    // data = {"Error":200,"UrlExchange":"?path=fantasy-sport/american-football/nfl\u0026status=New\u0026lastnode=last-node","Exchanges":["GB-SEA-HC-9212015","GB-SEA-ML-9212015","GB-SEA-TP-9212015"]};
                     // data.Param1 = "TOR-PHI-3152017"; // id
                     // data.Param1 = "?path=sport&status=approved";
                     // data.Param1 = "?status=New";
@@ -264,20 +279,14 @@ export default class Actions extends BaseActions
 
             ajaxPromise.then( result =>
                 {
-                    dispatch({
-                        type: ON_SAVE_EVENT_OK,
-                        payload: inProps,
-                    });
+                    0||console.log( 'result', result, result.code );
+
+                    // Common.redirectWMessage({url: result.data.UrlExchange, message: `Event “${data.FullName}” was saved successfully`, type: InfoMessage.TYPE_SUCCESS, title: 'SUCCESS', exInfo: {id: result.data.Exchanges}});
                 },
                 result => {
-                    let message = 'Save error';
-                    switch( result.code )
-                    {
-                        case 100 :
-                        default: ;
-                    }
+                    0||console.log( 'result', result, result.code );
 
-                    inProps.callback({errorCode: result.code, title: '', message});
+                    inProps.callback({errorCode: result.code, title: 'ERROR', message: result.message});
                 });
         };
     }
@@ -297,7 +306,7 @@ export default class Actions extends BaseActions
                     payload: inProps, //this.setPPGValues.bind(this, inProps),
                     // payload: this.setPPGValues.bind(this, inProps),
                 })},
-                500
+                300
             );
         };
     }
@@ -363,6 +372,37 @@ export default class Actions extends BaseActions
                 type: ON_GEN_URL,
                 payload: inProps,
                 // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Add team defence
+     */
+    public actionAddTeamDefence(inProps?)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_ADD_TEAM_DEFENCE,
+                payload: inProps,
+                // payload: this.addTeamDefence.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Remove team defence
+     */
+    public actionDelTeamDefence(inProps?)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_REM_TEAM_DEFENCE,
+                payload: inProps,
             });
         };
     }
@@ -659,40 +699,55 @@ export default class Actions extends BaseActions
     private prepareData(inProps)
     {
         let resObj: any = {};
-        const {category, fullName, startDate, teamName1, teamName2, url,} = inProps.FormData;
-        let {Team1name, Team2name, EventId, PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable} = inProps;
+        const {category, fullName, startDate, teamName1, teamName2, url, Team1Defense, Team2Defense, PlayerTopTeam1, PlayerTopTeam2, HomeTeamId, AwayTeamId, Exchange,} = inProps.FormData;
+        let {Team1name, Team2name, EventId, PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, IsEditFeedExchange} = inProps;
 
         resObj.FullName = fullName;
         resObj.CategoryId = category;
         resObj.HomeName = teamName1;
         resObj.AwayName = teamName2;
-        resObj.HomeAlias = Team1name;
-        resObj.AwayAlias = Team2name;
-        resObj.StartDate = startDate;
+
+        resObj.HomeDefense = Team1Defense;
+        resObj.AwayDefense = Team2Defense;
+        resObj.StartDate = startDate.format();
         resObj.UrlExchange = url;
         resObj.EventId = EventId;
+
+        // in new mode
+        resObj.HomeAlias = Team1name;
+        resObj.AwayAlias = Team2name;
+        resObj.PlayerHome = PlayerTopTeam1;
+        resObj.PlayerAway = PlayerTopTeam2;
+
+        // in edit mode
+        resObj.HomeTeamId = HomeTeamId;
+        resObj.AwayTeamId = AwayTeamId;
+        resObj.Exchange = Exchange;
+
 // [07.07.17 17:04:53] Vitaliy Yakubovskiy: ты мне должен передать для exchange - FullName, HomeName, HomeAlias, AwayName, AwayAlias, StartDate, UrlExchange, CategoryId, OptionExchanges(0-HC, 1-ML, 2-TP), HomeTeam(список игроков team1), AwayTeam(список игроков team2), EventId
 // [07.07.17 17:07:38] Vitaliy Yakubovskiy: и для игроков PlayerId, Fppg, Eppg, TeamType (0-Basic, 1-Reserve, 2-Variable)
 
         // prepare teams
-        PlayersTeam1 = PlayersTeam1.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 0}});
-        PlayersTeam2 = PlayersTeam2.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 0}});
-        PlayersTeam1Reserve = PlayersTeam1Reserve.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 1}});
-        PlayersTeam2Reserve = PlayersTeam2Reserve.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 1}});
-        PlayersTeam1Variable = PlayersTeam1Variable.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 2}});
-        PlayersTeam2Variable = PlayersTeam2Variable.players.map((val) => {return{...val, PlayerId: val.Id, TeamType: 2}});
-        0||console.log( 'inProps.PlayersTeam1, ', inProps.PlayersTeam1, PlayersTeam1 );
-// - Variable reserve players
-// - Позиция D
-// - 2-9 игроков остальные делать блокированными
-// - Status Out Красным
-// - Добавить All в выбор events
-// - Добавить Возможность описания evemt в Lineup с WISIWYG
-        resObj.HomeTeam = {...PlayersTeam1, ...PlayersTeam1Reserve, ...PlayersTeam1Variable};
-        resObj.AwayTeam = {...PlayersTeam2, ...PlayersTeam2Reserve, ...PlayersTeam2Variable};
+        PlayersTeam1 = PlayersTeam1.players.map((val) => {return{...val, PlayerId: val.PlayerId, TeamType: 0}});
+        PlayersTeam2 = PlayersTeam2.players.map((val) => {return{...val, PlayerId: val.PlayerId, TeamType: 0}});
+        PlayersTeam1Reserve = PlayersTeam1Reserve.players.map((val) => {return{...val, PlayerId: val.PlayerId, TeamType: 1}});
+        PlayersTeam2Reserve = PlayersTeam2Reserve.players.map((val) => {return{...val, PlayerId: val.PlayerId, TeamType: 1}});
+        PlayersTeam1Variable = PlayersTeam1Variable.players.map((val) => {return{...val, PlayerId: val.PlayerId, TeamType: 2}});
+        PlayersTeam2Variable = PlayersTeam2Variable.players.map((val) => {return{...val, PlayerId: val.PlayerId, TeamType: 2}});
+
+        resObj.HomeTeam = PlayersTeam1.concat(PlayersTeam1Reserve).concat(PlayersTeam1Variable);
+        resObj.AwayTeam = PlayersTeam2.concat(PlayersTeam2Reserve).concat(PlayersTeam2Variable);
 
 
         return resObj;
+    }
+
+
+    /**
+     * Add real team to defence
+     */
+    private TODEL_addTeamDefence({TeamId, team})
+    {
     }
 }
 

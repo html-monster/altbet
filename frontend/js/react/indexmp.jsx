@@ -16,9 +16,11 @@ import AccountPage from './containers/UserPage';
 import PageMyPos from './components/PageMyPos.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import RegisterBox from './containers/RegisterBox.jsx';
+import GidxVerification from './containers/GidxVerification.jsx';
+import GidxCashier from './containers/GidxCashier.jsx';
 
 var $node ;
-
+let Component;
 // Altbet App object
 // let constants = ABpp.ABpp;
 // ABpp = ABpp.ABpp.getInstance();
@@ -27,6 +29,25 @@ var $node ;
 const store = configureStore();
 ABpp.Store = store;
 
+
+switch( ABpp.config.currentPage )
+{
+	// Gidx user verification
+    case ABpp.CONSTS.PAGE_GIDX_VERIFICATION:
+        Component = GidxVerification();
+        mountById('DiGidxVerificationMP', <Component />);
+        break;
+
+	// Gidx withdraw
+    case ABpp.CONSTS.PAGE_GIDX_WITHDRAW:
+        Component = GidxCashier();
+        mountById('DiGidxCashierMP', <Component />);
+        break;
+}
+
+
+if( !globalData.landingPage  )
+{
 	ReactDOM.render(
 		<Provider store={store}>
 			<RApp />
@@ -48,9 +69,6 @@ ABpp.Store = store;
 		</Provider>,
 		document.getElementById('DiMainMenu')
 	);
-
-if( !globalData.landingPage  )
-{
 
 
 	if( ABpp.config.currentPage === ABpp.CONSTS.PAGE_MAIN ) {
@@ -161,6 +179,26 @@ ReactDOM.render(
 
 
 
+
+
+function mountById(inId, inComponent)
+{
+    let mp;
+    if( mp = document.getElementById(inId) )
+    {
+        // if (!store) {
+        //     store = configureStore();
+        //     ADpp.Store = store;
+        // }
+
+        ReactDOM.render(
+            <Provider store={store}>
+                {inComponent}
+            </Provider>,
+          mp
+        );
+    }
+}
 // --display-error-details
 // --display-modules
 

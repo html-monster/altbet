@@ -26,27 +26,33 @@ export default class Funds extends React.PureComponent{
 		// const actions = this.props.actions;
 		const staticData = appData.pageAccountData;
 		var {header, active, tab} = this.props.data;
-		tab || (tab = "balance")
+		tab || (tab = "balance");
 		var tabA = {}; tabA[tab] = "active";
-
 
 		return <div className={"tab_item funds " + (active ? "active" : "")}>
 			<h2>Funds</h2>
 			{header}
 			<div className="funds_tab">
 				<div className="wrapper_user">
-					<div className="tabs tabs_left">
+					<div>
+						<a class="gidx-btn deposit btn-lg-icon btn-h btn_blue2 wave waves-effect waves-button" href={ABpp.baseUrl + "/eng/Account/GidxWebCashierRegister?direction=Pay"}>Deposit</a>
+						&nbsp;
+						<a class="gidx-btn withdraw btn-lg-icon btn-h btn_blue2 wave waves-effect waves-button" href={ABpp.baseUrl + "/eng/Account/GidxWebCashierRegister?direction=Payout"}>Withdraw</a>
+						&nbsp;
+						<a class="gidx-btn history btn-lg-icon btn-h btn_blue2 wave waves-effect waves-button" href={ABpp.baseUrl + "/eng/Account/GidxWebWallet"}>Transaction History</a>
+					</div>
+					<AccountBalance staticData={staticData} active={tabA["balance"]} />
+					{/*<div className="tabs tabs_left">
 						<span className={"tab btn wave " + tabA["balance"]}>Account Balance</span>
 						<span className={"tab btn wave " + tabA["deposit"]}>Deposit Funds</span>
 						<span className="tab btn wave">Withdraw Funds</span>
 						<span className="tab btn wave">Transaction History</span>
 					</div>
 					<div className="tab_content">
-						<AccountBalance staticData={staticData} active={tabA["balance"]} />
 						<Deposit active={tabA["deposit"]} />
 						<Withdraw />
 						<TransHistory staticData={staticData} />
-					</div>
+					</div>*/}
 				</div>
 			</div>
 		</div>

@@ -12,6 +12,7 @@ import {
 
 const initialState = {
     marketsData: appData.pageHomeData ? appData.pageHomeData.Data : null,
+    Breadcrumbs: appData.pageHomeData ? appData.pageHomeData.Breadcrumbs : [],
     isBasicMode: globalData.basicMode,
     isTraiderOn: globalData.autoTradeOn,
 	serverChartsData: null, // need for comparison

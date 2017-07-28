@@ -24,7 +24,20 @@
             });
  */
 
+/// <reference path="../../.d/common.d.ts" />
+
+
+
+ interface JQueryStatic {
+    ajax(p1?, p2?, p3?): any;
+}
+declare var $: JQueryStatic;
+
 var __LDEV__ = !true;
+interface JQueryStatic {
+    ajax(p1?, p2?, p3?): any;
+}
+declare var $: JQueryStatic;
 
 export class AjaxSend
 {
@@ -34,6 +47,8 @@ export class AjaxSend
             headers: { 'X-Requested-With': 'XMLHttpRequest' },
             message: "",
             url: "",
+            exData: {}, // additional jquery ajax params
+            respCodeName: 'Error',
             respCodes: [],
             beforeChkResponse: null,
         };
@@ -69,14 +84,21 @@ export class AjaxSend
 
 
                         // user defined error
-                        if( data.Error > 100 && data.Error < 200 )
+                        if( data[props.respCodeName] > 100 && data[props.respCodeName] < 200 )
                         {
-                            error = -data.Error;
+                            error = -data[props.respCodeName];
+                            throw new Error(message);
+
+
+                        // catched server error, common error
+                        } else if( data[props.respCodeName] == 100 )
+                        {
+                            error = -100;
                             throw new Error(message);
 
 
                         // success
-                        } else if( data.Error == 200 )
+                        } else if( data[props.respCodeName] == 200 )
                         {
                             error = 100;
                             throw new Error("");
@@ -117,6 +139,7 @@ export class AjaxSend
                 },
                 // Form data
                 data: props.formData || new FormData(),
+                ...props.exData,
                 // Options to tell jQuery not to process data or worry about the content-type
                 cache: false,
                 // contentType: false,
