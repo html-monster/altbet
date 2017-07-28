@@ -44,7 +44,7 @@ export default class ChangePassword extends React.PureComponent
 	{
 		return <div className={"tab_item " + (this.props.data.active ? "active" : "")}>
 			<form className="change_password" onSubmit={::this._onSubmit}>
-				<h3 className="section_user passw_change">Change Password</h3>
+				<h2 className="section_user passw_change">Change Password</h2>
 				<hr/>
 				<span className="input_animate input--yoshiko pass_container">
 					<input className="input__field input__field--yoshiko" id="user_curr_pass" name="OldPassword" type="password"/>
