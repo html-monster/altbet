@@ -18,7 +18,7 @@ let __LDEV__ = false;
 
 class Actions extends BaseActions
 {
-    public actionFormSubmit(context, values, serverValidation, event, p1, p2)
+    public actionFormSubmit(context, props, values, serverValidation, event)
     {
         var self = this;
         return (dispatch, getState) =>
@@ -60,11 +60,13 @@ class Actions extends BaseActions
                         0||console.log( 'success', result );
                         serverValidation({message: 'Registration is successful'});
 
-                        $('.sign_up_form .close').click();
+                        // close reg form
+                        props.closeFunc && props.closeFunc();
 
                         new Dialog({
                             render: true,
                             type: Dialog.TYPE_MESSAGE,
+                            closableBg: false,
                             vars: {
                                 contentHtml: `<span class="">Registration is successful. You need to activate account. Please, check your email for  activation link.</span>`,
                                 btn1Text: "OK",
@@ -75,13 +77,18 @@ class Actions extends BaseActions
                     },
                     result => {
                         0||console.log( 'result', result );
+
+                        let message = 'User registration failed, please, refresh the page and try again';
                         switch( result.code )
                         {
+                            case -100:
+                                serverValidation({error: result.data.Error ? result.data.Error : message});
+                                break;
                             case -101:
                                 serverValidation({error: 'User name failed, correct it, please', FirstName: "User name failed"});
                                 break;
                             default:
-                                serverValidation({error: 'User registration failed, please, refresh the page and try again'});
+                                serverValidation({error: message});
                         }
                     });
 
