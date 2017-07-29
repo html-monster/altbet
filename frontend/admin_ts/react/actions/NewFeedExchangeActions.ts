@@ -18,6 +18,7 @@ import {
     ON_ADD_TEAM_DEFENCE,
     ON_REM_TEAM_DEFENCE,
     AFTER_CATEGORY_ADDED,
+    ON_CH_TEAM_SIZE,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -206,13 +207,14 @@ export default class Actions extends BaseActions
         return (dispatch, getState) =>
         {
             let data = getState().newFeedExchange;
+            let IsEditFeedExchange = data.IsEditFeedExchange;
             let ret;
 
             // check for correct team fillness
-            if( ret = this.checkTeam(data.PlayersTeam1, data.Positions, 1, data.UPlayerData) )
+            if( ret = this.checkTeam(data.PlayersTeam1, data.Positions, 1, data.UPlayerData, data.TeamSize) )
             {
             // check for correct team fillness
-            } else if (ret = this.checkTeam(data.PlayersTeam2, data.Positions, 2, data.UPlayerData))
+            } else if (ret = this.checkTeam(data.PlayersTeam2, data.Positions, 2, data.UPlayerData, data.TeamSize))
             {
             // check for reserve
             } else if (ret = this.checkReserveTeam(data.PlayersTeam1Reserve, 1))
@@ -229,8 +231,9 @@ export default class Actions extends BaseActions
             {
             } // endif
 
-            // DEBUG:
-            ret = false;
+
+            // DEBUG
+            // ret = false;
 
             // some errors
             if (ret)
@@ -245,13 +248,15 @@ export default class Actions extends BaseActions
             // data = data.HomeTeam;
 __DEV__ && console.log( 'data', data );
 
+            // edit or insert url
+            let url = MainConfig.BASE_URL + "/" + (IsEditFeedExchange ? MainConfig.AJAX_FEED_CHANGE_FEED_EXCHANGE : MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE);
+
             // post data to server
-            // let data = new FormData();
             const ajaxPromise = (new AjaxSend()).send({
                 formData: JSON.stringify(data),
                 message: `Error while saving new event, please try again`, // error 100 and other
-                // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
-                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
+                // url: url,
                 exData: {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -516,11 +521,26 @@ __DEV__ && console.log( 'data', data );
 
 
     /**
+     * Del team player action
+     */
+    public actionChangeTeamSize(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_CH_TEAM_SIZE,
+                payload: inProps, // this.delTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
      * Check for form data
      */
     private checkFormData(data)
     {
-        const { category, fullName, teamName1, teamName2, url } = data;
+        const { category, fullName, teamName1, teamName2, url, Team1Defense, Team2Defense } = data;
         let message, error;
 
 
@@ -537,7 +557,7 @@ __DEV__ && console.log( 'data', data );
         else if( teamName2 === '' )
         {
             message = 'Please fill team 2 name';
-            error = -303;
+            error = -302;
         }
         else if( fullName === '' )
         {
@@ -548,6 +568,16 @@ __DEV__ && console.log( 'data', data );
         {
             message = 'Please fill url for event';
             error = -305;
+        }
+        else if( !Team1Defense.TeamId )
+        {
+            message = 'Please set the defence of team 1';
+            error = -303;
+        }
+        else if( !Team2Defense.TeamId )
+        {
+            message = 'Please set the defence of team 2';
+            error = -303;
         } // endif
 
         if (message) return {message, error};
@@ -558,15 +588,31 @@ __DEV__ && console.log( 'data', data );
     /**
      * Check for team positions fillness etc
      */
-    private checkTeam(data, inPositions, inTeam, Rules)
+    private checkTeam(data, inPositions, inTeam, Rules, TeamSize)
     {
         const { players, positions } = data;
         let message, error, teams = {};
 
 
         try {
+            // check for size
+            if (players.length > TeamSize)
+            {
+                message = `Command ${inTeam} is greater than the specified command size in options`;
+                error = -310;
+                throw new Error(message);
+            }
+            // check for size
+            if (players.length < TeamSize)
+            {
+                message = `Command ${inTeam} is lower than the specified command size in options`;
+                error = -310;
+                throw new Error(message);
+            }
+
+
             // check positions
-            for( let val of inPositions  )
+/*            for( let val of inPositions  )
             {
                 if (!val) continue;
                 if (positions[val.Index] != val.Quantity)
@@ -576,14 +622,14 @@ __DEV__ && console.log( 'data', data );
                     error = -306;
                     throw new Error(message);
                 }
-            } // endfor
+            }*/ // endfor
 
 
             // check fppg and eppg fillness
             for( let val of players  )
             {
                 teams[val.TeamId] = true;
-
+/*
                 if( !Common.isNumeric(val.Fppg) )
                 {
                     message = `Please fill the FPPG for player "${val.Name}" in team ${inTeam}`;
@@ -595,7 +641,7 @@ __DEV__ && console.log( 'data', data );
                     message = `Please fill the EPPG for player "${val.Name}" in team ${inTeam}`;
                     error = -308;
                     throw new Error(message);
-                } // endif
+                } // endif*/
             } // endfor
 
 
@@ -716,8 +762,8 @@ __DEV__ && console.log( 'data', data );
         // in new mode
         resObj.HomeAlias = Team1name;
         resObj.AwayAlias = Team2name;
-        resObj.PlayerHome = PlayerTopTeam1;
-        resObj.PlayerAway = PlayerTopTeam2;
+        resObj.PlayerHome = PlayerTopTeam1.Name;
+        resObj.PlayerAway = PlayerTopTeam2.Name;
 
         // in edit mode
         resObj.HomeTeamId = HomeTeamId;

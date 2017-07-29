@@ -357,6 +357,10 @@
   }
 }
 
+.sign_in_form{
+  .show_password{position: absolute; right: 5px; top: 13px; z-index: 999;}
+}
+
 .self_exclusion {
   section {
     border-bottom: 1px solid rgba(255, 255, 255, 0.7);
