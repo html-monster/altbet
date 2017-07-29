@@ -914,8 +914,9 @@ export default class Reducer
     /**
      * Set top team player
      */
-    private setTopPlayer({teamNum, Name, Team}, state)
+    private setTopPlayer({teamNum, ...float}, state)
     {
+        const { Name, Team } = float;
         let leadPlayer: any = {Eppg: 0};
         for( let val of state['PlayersTeam' + teamNum].players )
         {
