@@ -6,7 +6,7 @@
   color: $main-color;
   h1 {
     margin-top: 0;
-    font-size: 22px;
+    font-size: 22px
     //color: #505458;
   }
   p{  font-size: 14px;  }
@@ -14,26 +14,58 @@
     background: $sign_in_bg;
     border-radius: 5px;
   }
-  ul.tabs { width: 15%; height: calc(100% - 90px); margin-right: 10px; margin-left: 10px; padding: 15px; position: fixed;
+  ul.tabs  { width: 15%; height: calc(100% - 90px); margin-right: 10px; margin-left: 10px; padding: 15px; position: fixed;
     top: 80px; list-style-type: none; font-size: 16px; //color: rgba(255, 255, 255, 0.8);
     li {
-      padding-right: 10px;
+      position: relative;
+      padding:0 10px 0 35px;
       transition: 0.1s ease-out;
-      &.active, &:hover { a { color: #3498da; } }
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-bottom: 24px;
+      font-size: 14px;
+      &.active, &:hover {
+        a { color: #3498da; }
+        &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -453px -387px; }
+        &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -347px -387px;}
+        &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -417px -387px; }
+        &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -548px -387px;}
+        &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -383px -387px; }
+        //&.self_sett_b::after{ background: blue; opacity: .4; z-index: 10 }
+      }
+
+      &::before{
+        content: '';
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        left: 0;
+        top: -5px;
+      }
+      &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -451px -352px; }
+      &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -346px -353px;}
+      &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -415px -352px; }
+      &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -548px -351px;}
+      &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -379px -352px; }
     }
     a {
-      color: $main-color;
+      display: inline-block;
+      font-size: 14px;
+      color: #fff;
+      font-weight: bold;
       transition: 0.1s ease-out;
+      text-transform: uppercase;
     }
   }
   .inactive{  opacity: 0.3;  }
-  .submit_container{  margin: 35px 0; width: 400px;   }
+  .submit_container{  margin: 35px 0; width: 200px;   }
   input[type=submit]{
     width: 100%;
     padding: 7px 6px;
     border-radius: 4px;
 		box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
-		background-color: #f39e00 !important;
+		background-color: #01BCFF !important;
     background-position: 98% center;
     background-size: 5% 38%;
     color: #ffffff;
@@ -72,6 +104,7 @@
     background-image: $sign_in_bg;
     //@include scroll;
     .tab_item {
+      margin-left: 20px;
       //display: none;
       position: relative;
       //&:first-child {  display: block;  }
@@ -80,43 +113,35 @@
         top: 11px;
         right: 0;
         text-align: right;
-        strong{  display: block;  font-weight: normal;  }
-        //display: flex;
-        //align-items: center;
-        //margin-bottom: 10px;
-        //.logo {
-        //  display: block;
-        //  width: 150px;
-        //  height: 50px;
-        //  background: url(#{$pathImage}/sprite.svg) no-repeat -11px -17px;
-        //}
-        //.personal_info {
-        //  width: calc(100% - 150px);
-        //  color: rgba(255, 255, 255, 0.8);
-        //  margin-left: 20px;
-        //  h3 {
-        //    font-size: 24px;
-        //    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
-        //    margin: 5px 0;
-        //    padding: 5px 0;
-        //  }
-        //  strong {
-        //    display: block;
-        //    font-size: 18px;
-        //  }
-        //}
+        strong{  display: block; color: #1b95e0; font-weight: bold;
+        &:nth-of-type(2){ padding: 10px 0px }}
       }
       h2 {
+        color: #1b95e0;
         margin-bottom: 55px;
-        font-size: 24px;
-        font-weight: normal;
+        font-size: 26px;
         border-bottom: 1px solid $main_color;
+        font-weight: bold;
       }
       h3{
+          position: relative;
           opacity: 0.8;
           margin: 20px 0 10px;
           padding-bottom: 10px;
+          font-size: 24px;
+      &:before{
+        content: '';
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        left: -28px;
+        top: 6px;
       }
+
+        &.pers_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -420px -421px; }
+        &.cont_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -455px -421px; }
+        //&.passw_change:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -135px -6px; }
+        }
       h4{  margin: 15px 0 5px; font-weight: normal;  }
     }
 
@@ -166,7 +191,7 @@
     i{  width: 275px;  }
   }
   i.btn{  width: 100%;  }
-  .settings .column {  width: 100%;  }
+  .settings .column {  width: 100%; margin-left: 20px; }
   .document_upload{  margin: 25px 0;  }
   .miniatures {
     display: flex;
