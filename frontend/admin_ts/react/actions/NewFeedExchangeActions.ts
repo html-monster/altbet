@@ -232,8 +232,8 @@ export default class Actions extends BaseActions
             } // endif
 
 
-            // DEBUG
-            // ret = false;
+            // DEBUG:
+            ret = false;
 
             // some errors
             if (ret)
@@ -255,8 +255,8 @@ __DEV__ && console.log( 'data', data );
             const ajaxPromise = (new AjaxSend()).send({
                 formData: JSON.stringify(data),
                 message: `Error while saving new event, please try again`, // error 100 and other
-                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
-                // url: url,
+                // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
+                url: url,
                 exData: {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
