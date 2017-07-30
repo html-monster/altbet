@@ -46,7 +46,7 @@ class RegisterBox extends BaseController
                                     <div className="tab_item real">
                                         <span ref={(val) => this.closeForm = val} className="close"><span>{}</span></span>
 
-                                        <RegisterForm onSubmit={this.props.actions.actionFormSubmit.bind(null, this, {closeFunc: ::this._onCloseClick})}/>
+                                        <RegisterForm onSubmit={this.props.actions.actionFormSubmit.bind(null, this)} submitData={{closeFunc: ::this._onCloseClick}}/>
                                     </div>
                                 </div>
                             </div>

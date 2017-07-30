@@ -28,7 +28,7 @@ export class TabMyOrderHistory extends React.Component
 		let data = this.state.data;
 
 			return (
-				<div className="tab_item">
+				<div className="">
 					<div className="my_position_tab">
 						<div className="wrapper">
 							<div className="my_order_history table_content" id="my_order_history">

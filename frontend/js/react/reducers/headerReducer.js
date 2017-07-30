@@ -20,6 +20,7 @@ const initialState = {
 	isBasicMode: globalData.basicMode,
 };
 
+
 export default function header(state = initialState, action)
 {
 	switch (action.type)
@@ -37,5 +38,4 @@ export default function header(state = initialState, action)
 			__DEV__&&console.log( 'state.serverData', state.serverData );
 			return state;
 	}
-
 }

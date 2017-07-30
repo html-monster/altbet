@@ -74,6 +74,9 @@ class Actions extends BaseActions
                             },
                             callbackOK: (inProps) => {location.reload()},
                         });
+
+                        // form callback
+                        props.callback && props.callback(result);
                     },
                     result => {
                         0||console.log( 'result', result );
@@ -90,6 +93,9 @@ class Actions extends BaseActions
                             default:
                                 serverValidation({error: message});
                         }
+
+                        // form callback
+                        props.callback && props.callback(result);
                     });
 
             }

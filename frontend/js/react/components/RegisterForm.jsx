@@ -15,7 +15,7 @@ import {Common} from '../common/Common';
 import classnames from 'classnames';
 
 
-var __DEBUG__ = true;
+var __DEBUG__ = !true;
 
 
 export class RegisterForm extends React.PureComponent
@@ -48,7 +48,7 @@ export class RegisterForm extends React.PureComponent
         }
 
 
-        this.state = {States: [], ageRestrict: 18, deniedText: '', birthDate: ""};
+        this.state = {States: [], ageRestrict: 18, deniedText: '', birthDate: "", loading: false};
 	}
 
 
@@ -324,6 +324,9 @@ export class RegisterForm extends React.PureComponent
 
 	render()
 	{
+        const { onSubmit, submitData } = this.props;
+        const { loading } = this.state;
+
 		const formContent = ({ input, error, successMessage, format/*, data:{ data, plan, depositQuantity, pricePlan }*/, handleSubmit }) => {
             //return <form action="http://localhost/AltBet.Admin/Category/TestAction" ref="F1regForm" method="post" onSubmit={handleSubmit}>
             return <form action={`${ABpp.baseUrl}/Account/Register`} onSubmit={handleSubmit}>
@@ -430,21 +433,43 @@ export class RegisterForm extends React.PureComponent
 
                 <hr/>
                 <div className={'register_form_message answer-message' + (error && ' validation-summary-errors')}>{error}</div>
-                <div className="submit">
+                <div className={classnames("submit", {"loading": loading})}>
                     {/*<input type="submit" value="Register" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue"/>*/}
-                    <button type="submit" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue">Join ALT.BET EXCHANGE</button>
-
+                    <button type="submit" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue" onClick={this._loading.bind(this, true)}>Join ALT.BET EXCHANGE</button>
                 </div>
             </form>
 		};
+
+
+        submitData.callback = ::this._sumbmitCallback;
 
 
 		return <FormValidation
 			renderContent={formContent}
 			/*data={this.props.data}
 			format={this.props.format}*/
-			handleSubmit={this.props.onSubmit}
+			handleSubmit={onSubmit.bind(null, submitData)}
 			serverValidation={true}
 		/>;
 	}
+
+
+    /**
+     * Callback after submit
+     * @private
+     */
+    _sumbmitCallback()
+    {
+        this._loading(false);
+    }
+
+
+    /**
+     * Loader show/hide
+     * @private
+     */
+    _loading(loading)
+    {
+        this.setState({...this.state, loading});
+    }
 }

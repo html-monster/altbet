@@ -132,7 +132,7 @@ export class ABpp
             return ABpp.PAGE_MYPOS;
         else if( globalData.landingPage )
             return ABpp.PAGE_LANDING;
-        else if( globalData.actionName === "getstaticpage" )
+        else if( globalData.action === "getstaticpage" )
             return ABpp.PAGE_STATIC;
         else if( globalData.answerPageOn )
             return ABpp.PAGE_ANSWER;

@@ -157,5 +157,6 @@ switch (ABpp.config.currentPage)
 	}
 
 }
+__DEV__&&console.log( 'reducers', reducers );
 
 export default combineReducers(reducers);
