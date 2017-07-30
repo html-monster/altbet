@@ -79,7 +79,7 @@ class GroupingOrder extends React.Component
 			<div className="my_order">
 				<div className="order-title">
 					<div className="container">
-						<h3>{data.Symbol}</h3>
+						<h3>{`${data.Orders[0].Symbol.HomeName} (vs. ${data.Orders[0].Symbol.AwayName})`}</h3>
 						{
 							(data.LastSide) ?
 								<strong className={`last-price ${data.LastSide ? 'down' : 'up'}`}>{(data.LastPrice).toFixed(2)}</strong>
@@ -165,7 +165,7 @@ class OrderItem extends React.Component
 	{
 		const { actions, data } = this.props;
 		//const allData = this.props.allData;
-		const date = new Date(+data.Time.slice(6).slice(0, -2));
+		// const date = new Date(+data.Time.slice(6).slice(0, -2));
 		const formData = {
 			url: ABpp.baseUrl + '/Order/Edit',
 			action: 'edit'
@@ -183,9 +183,8 @@ class OrderItem extends React.Component
 					<strong className="amount"> <span className="price">{(data.Price).toFixed(2)}</span></strong>
 					<strong className="qty"> <span className="volume">{data.Volume}</span></strong>
 					<strong className="dt timestamp help balloon_only">
-		 				<span className="date">{`${(date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)}/${date.getDate() < 10 ? '0' +
-							date.getDate() : date.getDate()}/${date.getFullYear()}`}</span>&nbsp;
-                        <span className="time">{`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
+		 				<span className="date">{(new DateLocalization).fromSharp(data.Time, 0).unixToLocalDate({format: 'MM/DD/YYYY'})}</span>&nbsp;
+                        <span className="time">{(new DateLocalization).fromSharp(data.Time, 0).unixToLocalDate({format: 'HH:mm'})}</span>
 						<span className="help_message"><strong>MM/DD/YYYY HH:MM</strong></span>
 					</strong>
 					<div className="button_container">

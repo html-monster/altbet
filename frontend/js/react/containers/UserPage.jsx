@@ -32,7 +32,7 @@ class UserPage extends BaseController
         let $tabHeaderHtml = <div className="user_info">
 				<div className="personal_info">
 					<strong>{staticData.UserInfo.Email}</strong>
-					<strong>{`${staticData.UserInfo.FirstName} ${staticData.UserInfo.LastName}`}</strong>
+					<strong>{staticData.UserInfo.FirstName} {staticData.UserInfo.LastName}</strong>
 				</div>
 			</div>;
 

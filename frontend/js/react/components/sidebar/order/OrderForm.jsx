@@ -563,7 +563,7 @@ export default class OrderForm extends React.Component
 					{
 						 (orderView === 'simple' && side === 'buy') || orderView !== 'simple'  ?
 							<i className="submit wave waves-input-wrapper waves-effect waves-button">
-								<button type="submit" className={`btn buy submit`}
+								<button type="submit" className={`btn buy submit${$.browser.mozilla ? ' balloon' : ''}`}
 										//style={{textTransform: 'uppercase'}}
 										onClick={this.onClickSide.bind(this, 'buy')}
 										onMouseUp={this.rippleHide}>
@@ -587,7 +587,7 @@ export default class OrderForm extends React.Component
 					{
 						(orderView === 'simple' && side === 'sell') || orderView !== 'simple'  ?
 							<i className="submit wave waves-input-wrapper waves-effect waves-button">
-								<button type="submit" className={`btn sell submit`}
+								<button type="submit" className={`btn sell submit${$.browser.mozilla ? ' balloon' : ''}`}
 										//style={{textTransform: 'uppercase'}}
 										onClick={this.onClickSide.bind(this, 'sell')}
 										onMouseUp={this.rippleHide}>

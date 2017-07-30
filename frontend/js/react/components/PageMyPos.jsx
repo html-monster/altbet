@@ -77,8 +77,6 @@ class PageMyPos extends BaseController //React.Component
                     </ul>
 
                     <div className="tab_content">
-
-
                         {/* // BM: --------------------------------------------------- OPENED ORDERS ---*/}
                         <div className={classnames("tab_item", {"active" : route.tab === "open-games"})}>
                             {route.tab === "open-games" && <TabOpenOrders data={openOrdersData} yourOrdersActions={yourOrdersActions}/>}

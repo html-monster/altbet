@@ -64,12 +64,20 @@
     padding-top: 20px;
     background: #18151b;
     text-align: left;
-    h4{ margin-bottom: 10px; }
-    table{ display: block; width: 100%; height: 430px; position: relative; background: $main-bg; border-radius: 5px; overflow-y: auto;
+    //h4{ margin-bottom: 10px; }
+    th{
+      padding: 0 5px;
+      font-size: 14px;
+      font-weight: normal;
+      &:first-of-type{ width: 60%; padding-left: 0; }
+      &:nth-of-type(2){ width: 20%; }
+      &:last-of-type{ width: 20%; text-align: center }
+    }
+    table.body{ display: block; width: 100%; height: 430px; position: relative; background: $main-bg; border-radius: 5px; overflow-y: auto;
       @include scrollWhite;
     }
     //tbody{  transition: 0.4s ease-out;  }
-    tr{
+    tr {
       display: table;
       table-layout: fixed;
       width: 100%;
@@ -141,7 +149,7 @@
 .l-team__team tr:hover .b-pl-info { visibility: visible; opacity: 1 }
 //.l-team__team tr:active .b-pl-info { visibility: visible; opacity: 1 }
 .b-pl-info { position: absolute; left: 20px; top: 100%; padding: 10px;
-      text-align: right;  text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
+      text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
       @include main_page_lineup_hind;
   &__main-inf {  }
   &__statistic { font-size: 12px; }
@@ -330,7 +338,7 @@
         }
       }
 
-      &.opener { visibility: visible; position: absolute; right: 35px; top: calc(50% - 35px/2); width: auto; //@include visibleAttr;
+      &.opener { visibility: visible; position: absolute; right: 3px; top: calc(50% - 35px/2); width: auto; //@include visibleAttr;
           opacity: 1; transition: .4s;
         button { display: flex; align-items: center; padding: 0 10px; color: #333; font-size: 14px; background: linear-gradient(to top, #bdc0cd, #ffffff); font-weight: bold; text-transform: none }
         i { display: inline-block; position: relative; margin-right: 10px; width: 18px; height: 18px;

@@ -380,7 +380,7 @@
     }
     i.submit{
       display: block;  flex-grow: 1;  border-radius: 0;
-      &:hover{  overflow: inherit !important;  }
+      &:hover{  overflow: visible !important;  }
       &:active{
         overflow: hidden !important;
         .help_message{  visibility: hidden; }
@@ -392,6 +392,7 @@
         //  border-left: 1px solid #fff;
         //}
       }
+      button.balloon:hover .help_message{  visibility: visible;  opacity: 1;  }
       //.help_message{
       //  t
       //}

@@ -38,13 +38,17 @@ export class DateLocalization
      * @param inTimeStamp
      * @return {string}
      */
-    public unixToLocalDate(inProps: any = {timestamp: '', format: 'MM/DD/Y', TZOffset: false})
+    public unixToLocalDate(inProps: any = {timestamp: '', format: 'MM/DD/Y', TZOffset: 0})
     {
         let ts : any = inProps.timestamp;
         if (!ts) ts = this.currentTimestamp;
 
         // time zone offset
-        if (inProps.TZOffset) ts += (new Date()).getTimezoneOffset() * 60 * 1000;
+        if (inProps.TZOffset)
+        {
+            if(inProps.TZOffset === 1) ts += (new Date()).getTimezoneOffset() * 60 * 1000;
+            else ts -= (new Date()).getTimezoneOffset() * 60 * 1000;
+        }
 
         return ts > 0 ? moment.unix(ts/1000).format(inProps.format) : undefined;
         // return ts > 0 ? moment.unix(ts/1000).utcOffset(moment().utcOffset()).format(inProps.format) : undefined;

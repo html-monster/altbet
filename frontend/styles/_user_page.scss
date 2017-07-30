@@ -14,8 +14,9 @@
     background: $sign_in_bg;
     border-radius: 5px;
   }
-  ul.tabs  { width: 15%; height: calc(100% - 90px); margin-right: 10px; margin-left: 10px; padding: 15px; position: fixed;
+  ul.tabs { width: 15%;  min-width: 203px; height: calc(100% - 90px); margin-right: 10px; margin-left: 10px; padding: 15px; position: fixed;
     top: 80px; list-style-type: none; font-size: 16px; //color: rgba(255, 255, 255, 0.8);
+    @include mdmax(1350){  position: absolute;  }
     li {
       position: relative;
       padding:0 10px 0 35px;

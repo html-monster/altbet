@@ -45,6 +45,8 @@ select {
 ul{  list-style-type: none;  }
 *:focus{  outline: none;  }
 body{
+  min-width: 1350px;
+  @include mdmax(1350) {  position: relative;  }
   //overflow-x: auto;
   &.blocked{ overflow: hidden; }
   &>.wrapper{
