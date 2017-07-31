@@ -35,7 +35,6 @@ export default function header(state = initialState, action)
 			return {...state, isBasicMode: action.payload};
 
 		default:
-			__DEV__&&console.log( 'state.serverData', state.serverData );
 			return state;
 	}
 }
