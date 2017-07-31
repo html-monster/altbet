@@ -378,12 +378,11 @@ label.disabled {
 
 input ~ .info {
   display: block;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   //background: $help_block;
-  background: url("#{$pathImage}/qeustion.png") no-repeat;
-  background-size: contain;
-
+  background: url("#{$pathImage}/sprite.svg") no-repeat;
+  background-position: -393px -431px;
   position: absolute;
   top: 14px;
   right: 5px;
@@ -418,6 +417,7 @@ input ~ .info {
   }
   &:hover {
     opacity: 1;
+    z-index: 500;
     i {
       visibility: visible;
       opacity: 1;
