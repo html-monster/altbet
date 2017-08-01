@@ -15,7 +15,7 @@ import {MainConfig} from '../../inc/MainConfig';
 import {Framework} from 'common/Framework.ts';
 
 
-class FeedEvents extends BaseController
+class HomeEvents extends BaseController
 {
     LoadingObj;
 

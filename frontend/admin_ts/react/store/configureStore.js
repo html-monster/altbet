@@ -4,7 +4,7 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
 // import { ping } from './enhancers/ping'
-import getRootReducer from '../reducers/index.jsx';
+import getRootReducer from '../reducers/indexReducer';
 
 
 export default function configureStore(initialState)

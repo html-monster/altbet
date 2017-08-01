@@ -1,6 +1,6 @@
 import {
     ON_GET_NEW_TABLE_DATA,
-} from '../constants/ActionTypesFeedEvents.js';
+} from '../constants/ActionTypesHomeEvents.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
 import {MainConfig} from '../../inc/MainConfig';

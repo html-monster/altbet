@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import NewFeedExchangeReducer from './newFeedExchangeReducer.ts';
 import FeedEventsReducer from './FeedEventsReducer.ts';
+import HomeEventsReducer from './HomeEventsReducer.ts';
 import {Framework} from 'common/Framework.ts';
 
 
@@ -16,22 +17,30 @@ if( globalData.ac )
 {
 	const { controller, action } = globalData.ac;
 
-	if ( controller === "feed" && (action === "newfeedexchange" || action === "editfeedexchange") ) page = "applyfeedexchange";
-	if ( controller === "feed" && action === "index" ) page = "xmlfeedevents";
+	if ( controller === "feed" && (action === "newfeedexchange" || action === "editfeedexchange") ) page = "APPLY_FEED_EXCHANGE";
+	if ( controller === "feed" && action === "index" ) page = "XML_FEED_EVENTS";
+	if ( controller === "home" && action === "index" ) page = "HOME_EVENTS";
 
 
 	switch (page)
 	{
-		case "applyfeedexchange":
+		case "APPLY_FEED_EXCHANGE":
 			reducers = {
 				newFeedExchange: Framework.getHandler(NewFeedExchangeReducer),
 				...common,
 			};
 			break;
 
-		case "xmlfeedevents":
+		case "XML_FEED_EVENTS":
 			reducers = {
 				FeedEvents: Framework.getHandler(FeedEventsReducer),
+				...common,
+			};
+			break;
+
+		case "HOME_EVENTS":
+			reducers = {
+				HomeEvents: Framework.getHandler(HomeEventsReducer),
 				...common,
 			};
 			break;

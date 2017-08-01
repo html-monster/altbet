@@ -4,7 +4,7 @@ declare let globalData;
 
 import {
     ON_GET_NEW_TABLE_DATA,
-} from '../constants/ActionTypesFeedEvents.js';
+} from '../constants/ActionTypesHomeEvents.js';
 /// TS_IGNORE
 import {Common} from "../common/Common";
 
@@ -12,9 +12,6 @@ import {Common} from "../common/Common";
 
 export default class Reducer
 {
-    // public static USING_TEAM = 1;
-
-
     private initialState = {
         // Players: [],
         ...globalData.Model,
@@ -50,10 +47,12 @@ export default class Reducer
     /**
      * Change current event in dropbox
      */
+/*
     private setCurrentEvent(inProps, state)
     {
         return {...state};
     }
+*/
 }
 
 //
