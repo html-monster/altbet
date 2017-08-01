@@ -33,6 +33,8 @@ export class DefenceChoose extends React.Component
         const { CurrentEventObj, FormData, actions } = this.props.data;
         let res;
 
+        __DEV__&&console.log( 'this.props', this.props );
+
         const addT1Disabled = FormData.Team1Defense.TeamId;
         const addT2Disabled = FormData.Team2Defense.TeamId;
 

@@ -73,8 +73,6 @@ class Settings extends React.Component
                         <i>{hint}</i>
                     </span>
                 }
-
-{/*<span class="input_animate input--yoshiko input--filled input--filled"><label class="input__label input__label--yoshiko" for="n_name"><span class="input__label-content input__label-content--yoshiko" data-content="User Name">User Name</span></label><input type="text" class="input__field input__field--yoshiko false" name="UserName" maxlength="20" disabled="" value="vova"/></span>*/}
             </span>;
     }
 
@@ -134,7 +132,7 @@ class Settings extends React.Component
                                      //initialValue
                                      afterChange={this.dateBirthChange.bind(this)}
                                      currVal={birthDateStr}
-                                     label={'Date of birth'} type={'text'} filled={true}
+                                     label={'Date of birth'} type={'text'}
                                      validate={emptyValidation} input={input}/>
 
 
