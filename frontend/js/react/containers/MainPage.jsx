@@ -92,11 +92,12 @@ class MainPage extends BaseController
     {
         // let isBasicMode = ABpp.config.basicMode;
         const data = this.props.data;
-        const { actions, data:{ Breadcrumbs, activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn, orderDetails: { orderPrice, showOrder } } } = this.props;
+        const { actions, data:{ activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn, orderDetails: { orderPrice, showOrder }, lineupsData } } = this.props;
         const { currentExchange } = this.state;
         let $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
         let urlBase = appData.baseUrl.MainPage;
+        let Breadcrumbs = this.props.data.Breadcrumbs ? this.props.data.Breadcrumbs : [];
         // let nb = "&nbsp;";
 
         // sort tabs data
@@ -148,6 +149,7 @@ class MainPage extends BaseController
                                         setCurrentExchangeFn={::this._setCurrentExchange}
                                         actions={actions}
                                         disqusActions={this.props.disqusActions}
+                                        lineupsData={lineupsData}
                                     />
                                 )}
                             </div>
@@ -248,7 +250,8 @@ class MainPage extends BaseController
 			// ABpp.config.tradeOn = false;
 			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
 
-			if(globalData.tradeOn) sidebarActions.actionOnTraderOnChange(checked);
+			if(globalData.tradeOn) sidebarActions.tabSwitch(sidebarActions, 'ActiveTrader');
+			else sidebarActions.tabSwitch(sidebarActions, 'YourOrders');
 		}
 		else
 		{
@@ -258,7 +261,7 @@ class MainPage extends BaseController
 			// ABpp.config.tradeOn = true;
 			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
 
-			sidebarActions.actionOnTraderOnChange(checked);
+            sidebarActions.tabSwitch(sidebarActions, 'YourOrders');
 		}
     }
 */

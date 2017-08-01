@@ -26,9 +26,8 @@ export default class Funds extends React.PureComponent{
 		// const actions = this.props.actions;
 		const staticData = appData.pageAccountData;
 		var {header, active, tab} = this.props.data;
-		tab || (tab = "balance")
+		tab || (tab = "balance");
 		var tabA = {}; tabA[tab] = "active";
-
 
 		return <div className={"tab_item funds " + (active ? "active" : "")}>
 			<h2>Funds</h2>

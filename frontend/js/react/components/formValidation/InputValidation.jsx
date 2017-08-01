@@ -162,10 +162,10 @@ export default class InputValidation extends React.Component
 	}
 }
 
-	// validate: React.PropTypes.func,
-// InputValidation.propTypes = {
-// 	renderContent: React.PropTypes.any.isRequired,
-// };
+//	validate: React.PropTypes.func,
+InputValidation.propTypes = {
+	renderContent: React.PropTypes.any.isRequired,
+};
 
 // export default connect(
 // 	state => ({

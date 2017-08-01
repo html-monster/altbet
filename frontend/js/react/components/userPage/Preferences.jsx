@@ -134,6 +134,8 @@ export default class Preferences extends React.Component
         const { header, active } = this.props.data;
         const { answerMessage, answerClass, loading, radioButtonsDisabled } = this.state;
 
+
+
         return <div className={"tab_item preferences " + (active ? "active" : "")}>
                 <h2>Preferences</h2>
                 {header}
@@ -161,7 +163,7 @@ export default class Preferences extends React.Component
 								{/*<input id="IsMode" type="checkbox" checked={this.state.IsMode} onChange={this._onChkChange.bind(this, "IsMode")}/>*/}
 								{/*@Html.CheckBoxFor(m=>m.IsMode, new { @checked = Model.IsMode })*/}
 								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "IsMode", checked: IsMode}}>
-									<strong className="label">Expert Mode:</strong>
+									<strong className="label">Detailed View:</strong>
 								</CheckBox>
 							</li>
 							<li>
@@ -244,13 +246,13 @@ export default class Preferences extends React.Component
 						</ul>
 					</section>
 					<div className="input_animate input--yoshiko submit_container">
-						<input type="submit" value="Submit" className="btn wave submit" disabled={loading}/>
+						<input type="submit" value="Save Changes" className="btn wave submit" disabled={loading}/>
 						<span className={`answer_message ${answerClass}`} dangerouslySetInnerHTML={{__html: answerMessage}}>{}</span>
 					</div>
 				</form>
             </div>;
     }
-	
+
 	/**
 	 * save checkbox state if it changed, need to unchecked checkbox
 	 * @param context - checkbox context

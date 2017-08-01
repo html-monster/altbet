@@ -45,6 +45,8 @@ select {
 ul{  list-style-type: none;  }
 *:focus{  outline: none;  }
 body{
+  min-width: 1350px;
+  @include mdmax(1350) {  position: relative;  }
   //overflow-x: auto;
   &.blocked{ overflow: hidden; }
   &>.wrapper{
@@ -380,22 +382,29 @@ input ~ .info {
   display: block;
   width: 12px;
   height: 12px;
-  background: $help_block;
+  //background: $help_block;
+  background: url("#{$pathImage}/qeustion.png") no-repeat;
+  background-size: contain;
+
   position: absolute;
   top: 14px;
   right: 5px;
-  z-index: 70;
+  z-index: 170;
   opacity: 0.5;
   cursor: help;
   transition: 0.4s ease-out;
   @include reg_help_message;
   &.top {
     i {
-      bottom: 19px;
+      bottom: 26px;
       right: -15px;
+      z-index: 500;
+      background-color: rgba(255, 255, 255, 0.5);
       color: transparentize($checkbox_label_color, 0.5);
+      //background: url(../../_SourceControl/Icons/qeustion.png) no-repeat;
+      //background-size: cover;
       &:before { bottom: 0; right: 9px; }
-      &:after { bottom: -5px; right: 15px; }
+      &:after { bottom: -7px; right: 15px; }
     }
   }
   &.bottom {
@@ -407,6 +416,7 @@ input ~ .info {
       &:before { top: 0; right: 9px; }
       &:after { top: -5px; right: 15px; box-shadow: -5px -5px 10px -3px rgba(0, 0, 0, 0.5); }
     }
+
   }
   &:hover {
     opacity: 1;
@@ -439,8 +449,8 @@ input ~ .info {
       content: '';
       opacity: 0.5;
       display: block;
-      width: 13px;
-      height: 13px;
+      width: 20px;
+      height: 20px;
       position: absolute;
       border-radius: 0 4px 0 0;
       transform: rotate(45deg);
@@ -633,7 +643,7 @@ input ~ .info {
   transition: 0.4s ease-out;
   cursor: pointer;
   user-select: none;
-  &[data-disabled] { cursor: default; opacity: 0.6; }
+  &[data-disabled], &[disabled] { cursor: default; opacity: 0.6; }
 }
 
 .tab_item {

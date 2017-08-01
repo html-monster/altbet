@@ -11,6 +11,8 @@ import AnimateOnUpdate from '../components/Animation';
 import {CheckBox} from '../components/common/CheckBox';
 import OddsConverter from '../models/oddsConverter/oddsConverter.js';
 import {DropBox} from '../components/common/DropBox';
+import classnames from 'classnames';
+
 
 
 class Header extends React.Component
@@ -61,18 +63,19 @@ class Header extends React.Component
 
 	render()
 	{
-		let { actions, serverData } = this.props;
+		let { actions, serverData, isBasicMode } = this.props;
         let $filter = appData.urlQuery ? appData.urlQuery.filter : '';
 
-		// serverData = !serverData ? {} : serverData;
 
-        // todo: при отсутствии данных с сокета, не фурычит, еще и меню ломается
 		if(serverData && serverData.GainLost !== undefined){
 			serverData.Profitlost = serverData.GainLost;
 			serverData.Exposure = serverData.Invested;
 			serverData.Available= serverData.CurrentBalance;
 		}
         const profitlost = serverData.Profitlost;
+
+        __DEV__&&console.log( 'ABpp.config.currentPage, ABpp.PAGE_MYPOS, ABpp', ABpp.config.currentPage, ABpp.PAGE_MYPOS, ABpp );
+
 
         return <div className="header_info">
 			{/*<div className="video btn">*/}
@@ -87,7 +90,7 @@ class Header extends React.Component
 				<div className="fast_menu">
 					<a href={globalData.Urls.Home} className={`f_button f_but_bor${globalData.action === 'index' && globalData.controller === 'home' && $filter !== 'live' ? " active" : ''}`}><span>Exchange</span> </a>
 					<a href={globalData.Urls.Home + "?filter=live"}  className={"f_button f_but_before f_but_bor" + ($filter === 'live' ? ' active' : '')}><span>My Games</span></a>
-					<a href="#" className="f_button f_but_before f_but_bor"><span className="history_event">My History</span></a>
+					<a href={globalData.Urls.MyActivity + "#/history"} className={classnames("f_button f_but_before f_but_bor", {"active": ABpp.config.currentPage === ABpp.CONSTS.PAGE_MYPOS})}><span className="history_event">My History</span></a>
 					<a href={globalData.Urls.TradingRules} className="f_button f_but_before"><span>Rules</span> </a>
 				</div>
 			</div>
@@ -155,15 +158,7 @@ class Header extends React.Component
 										</strong>
 									</li>
 */}
-									<li>
-										{/*<div className="item checkbox-v2-right">
-											<label>
-												<span>Detailed View</span>
-												<input type="checkbox" defaultChecked={false} onClick={::this._onDetailedViewClick} defaultValue={"aa"}/>
-											</label>
-										</div>*/}
-                                        <CheckBox data={{className: "item checkbox-v2-right", label: "Detailed View"}} onChange={::this._modeSwitch} />
-									</li>
+									<li><CheckBox data={{className: "item checkbox-v2-right", label: "Detailed View", checked: !isBasicMode}} onChange={::this._modeSwitch} /></li>
 									<li><a href={ABpp.baseUrl + '/Account'}>Account</a></li>
 									<li><a href={ABpp.baseUrl + '/Account/Logout'}>Log out</a></li>
 								</ul>
@@ -177,12 +172,14 @@ class Header extends React.Component
 							:
 							<div className="log_out active">
 								<a href="#login" className="sign_in">Join/Login</a>
+{/*
 								<div className="change-color">
 									<strong>Theme color</strong>
 									<button className={'dark color_pick' + (globalData.theme === 'dark' ? ' active' : '')} title="dark theme">{}</button>
 									{' '}
 									<button className={'light color_pick' + (globalData.theme === 'light' ? ' active' : '')} title="light theme">{}</button>
 								</div>
+*/}
 							</div>
 					}
 				</div>

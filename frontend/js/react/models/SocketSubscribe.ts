@@ -14,6 +14,7 @@ export class SocketSubscribe
     public static CURRENT_ORDERS = '4';
     public static AP_ACCOUNT_DATA = '6';
     public static MP_CHARTS_SYMBOL = '7';
+    public static MP_LINEUP = '8';
 
     private subscribeParams = { // last subscribe params
             UserBrowser: "",
@@ -50,6 +51,7 @@ export class SocketSubscribe
         {
             case SocketSubscribe.MP_SYMBOLS_AND_ORDERS : ret = this.setSymbolsAndOrders(data); break;
             case SocketSubscribe.MP_CHARTS_SYMBOL : ret = this.setMpChartsSymbol(data); break;
+            case SocketSubscribe.MP_LINEUP : ret = this.setCurrentOrders(data); break;
             case SocketSubscribe.AP_ACCOUNT_DATA : ret = this.setAccountData(data); break;
             case SocketSubscribe.EP_ACTIVE_ORDER : ret = this.setActiveOrder(data); break;
             case SocketSubscribe.MYP_ORDERS_POSITIONS_HISTORY : ret = this.setOrdersPositionsHistory(data); break;
@@ -96,6 +98,7 @@ export class SocketSubscribe
             User: ABpp.User.login,
             PageName: 'MainPage',
             ExchangeName: props.exchange,
+            LineupsSymbol: props.symbol,
             ActiveTrader: ABpp.config.tradeOn ? "1" : "0",
             // CurrentOrders: "0",
             PaginationNumber: appData.urlQuery.pageNum || "1",

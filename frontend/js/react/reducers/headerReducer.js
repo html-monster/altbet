@@ -10,9 +10,16 @@ import {
 
 const initialState = {
 	currentOddSystem: localStorage.getItem('currentOddSystem') ? localStorage.getItem('currentOddSystem') : 'Implied',
-	serverData: appData ? appData.headerData : null,
+	serverData: {
+		CurrentBalance: 0,
+		GainLost: 0,
+		Invested: 0,
+		Profitlost: 0,
+		...(appData ? appData.headerData : {}),
+	},
 	isBasicMode: globalData.basicMode,
 };
+
 
 export default function header(state = initialState, action)
 {
@@ -30,5 +37,4 @@ export default function header(state = initialState, action)
 		default:
 			return state;
 	}
-
 }

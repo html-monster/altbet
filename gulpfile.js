@@ -240,7 +240,10 @@ gulp.task('clean', function() {
 
 
 // BM: ============================================================================================== ONE TIME BUILD ===
-gulp.task('build', gulp.series(gulp.parallel('styles', 'js', 'vendor', 'styles-admin')/*, 'assets', 'fonts'*/));
+gulp.task('build', gulp.series(gulp.parallel('styles', 'js', 'vendor', 'styles-admin', 'localization')/*, 'assets', 'fonts'*/));
+
+// BM: ========================================================================================== ONE TIME BUILD ADM ===
+gulp.task('build-adm', gulp.series(gulp.parallel('styles-admin')/*, 'assets', 'fonts'*/));
 
 
 
@@ -254,6 +257,7 @@ gulp.task('watch-admin', function () {
 });
 
 // BM: ========================================================================================== FRONT DEV BUILDING ===
+
 gulp.task('watch-front-js-styles', function () {
     gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
     gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));

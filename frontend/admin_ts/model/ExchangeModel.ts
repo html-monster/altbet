@@ -8,6 +8,10 @@ import { MainConfig, DS } from "../inc/MainConfig";
 import {AjaxSend} from "../component/AjaxSend";
 import {DateLocalization} from "../component/DateLocalization";
 
+interface JQueryStatic {
+    ajax(p1?, p2?, p3?): any;
+}
+declare var $: JQueryStatic;
 
 var __LDEV__ = true;
 interface JQueryStatic {
@@ -296,8 +300,8 @@ export default class ExchangeModel
                             case -102 : message = "Url is not unique"; break;
                             case -103 : message = "Invalid start date. Start time must be less then end time."; break;
                             case -104 : message = "Exchange event time may not be earlier than the current time"; break;
-                            case -100: ; // some backend not controlled error
-                            case -1000 : ; break;
+                            case -100:  // some backend not controlled error
+                            case -1000 :  break;
                             default: error = -1001;
                         }
                     }

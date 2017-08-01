@@ -54,7 +54,8 @@ export class ABpp
         makerFees: null,      // maker fees
         basicMode: true,      // play mode
         tradeOn: false,       // active trader state
-    };
+        // disqusOn: globalData.userIdentity === 'False' // disqus state
+};
     public baseUrl: "";                 // add before urls
 
 
@@ -132,7 +133,7 @@ export class ABpp
             return ABpp.PAGE_MYPOS;
         else if( globalData.landingPage )
             return ABpp.PAGE_LANDING;
-        else if( globalData.actionName === "getstaticpage" )
+        else if( globalData.action === "getstaticpage" )
             return ABpp.PAGE_STATIC;
         else if( globalData.answerPageOn )
             return ABpp.PAGE_ANSWER;

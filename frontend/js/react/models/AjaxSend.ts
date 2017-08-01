@@ -2,9 +2,10 @@
  * Created by Vlasakh on 08.03.2017.
  */
 
-
-/// <reference path="../../.d/common.d.ts" />
-
+interface JQueryStatic {
+    ajax(p1?, p2?, p3?): any;
+}
+declare var $: JQueryStatic;
 
 
 var __LDEV__ = true;
@@ -23,7 +24,6 @@ export class AjaxSend
             respCodes: [],
             beforeChkResponse: null,
         };
-
 
     public send(inProps)
     {
