@@ -3,11 +3,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import BaseController from './BaseController';
-import Actions from '../actions/FeedEventsActions';
+import Actions from '../actions/HomeEventsActions';
 import {DropBox} from '../components/common/DropBox';
 import {PagerBox} from '../components/common/PagerBox';
 import {DateLocalization} from '../common/DateLocalization';
-import classNames from 'classnames';
+import classnames from 'classnames';
 import {Common} from "common/Common.ts";
 import {InfoMessages} from "common/InfoMessages.ts";
 import {Loading} from "common/Loading.ts";
@@ -23,7 +23,7 @@ class HomeEvents extends BaseController
     {
         super(props);
 
-        __DEV__&&console.debug( 'FeedEvents props', props );
+        __DEV__&&console.debug( 'HomeEvents props', props );
 
         // const { Players } = this.props.data;
         this.LoadingObj = new Loading;
@@ -31,125 +31,181 @@ class HomeEvents extends BaseController
     }
 
 
-/*
-    componentDidUpdate()
-    {
-        __DEV__&&console.debug( 'this.props', this.props );
-    }
-*/
-
-
     render()
     {
-        let { actions, data: {AllSport, AllLeague, Sport, League, FeedEvents, CurrentOrderBy, OrderBy, StartDateSort, PageInfo} } = this.props;
-        // const { okBtnDisabled } = this.state;
-        let sportsItems = [], ligItems = [], currSport, currLig;
+        let { actions, data: {LastNode, Status, StatusEvent, Links, Exchanges} } = this.props;
         let $DateLocalization = new DateLocalization();
 
 
         // prepare sport filter
-        AllSport && AllSport.unshift('All') || (AllSport = ['All']);
-        if (sportsItems) sportsItems = sportsItems.concat(AllSport.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
-        currSport = sportsItems.slice().filter((val) => val.value == Sport || !Sport && !val.value )[0];
+        // AllSport && AllSport.unshift('All') || (AllSport = ['All']);
+        // if (sportsItems) sportsItems = sportsItems.concat(AllSport.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
+        // currSport = sportsItems.slice().filter((val) => val.value == Sport || !Sport && !val.value )[0];
 
         // prepare lig filter
-        AllLeague && AllLeague.unshift('All') || (AllLeague = ['All']);
-        if (AllLeague) ligItems = ligItems.concat(AllLeague.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
-        currLig = ligItems.slice().filter((val) => val.value == League || !League && !val.value )[0];
+        // AllLeague && AllLeague.unshift('All') || (AllLeague = ['All']);
+        // if (AllLeague) ligItems = ligItems.concat(AllLeague.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
+        // currLig = ligItems.slice().filter((val) => val.value == League || !League && !val.value )[0];
+        let actFilClass = [], actFilTitle = [];
+        let filtersClass = ["primary", "success", "warning", "default"];
+        // @if (Model.Status == StatusEvent.New) { index = 0; }
+        // @if (Model.Status == StatusEvent.Completed) { index = 2; }
+        // @if (Model.Status == StatusEvent.Settlement) { index = 3; }
+        actFilClass[Status] = " active";
+        actFilTitle[Status] = "Active filter";
 
 
-        return (
-                <div class="">
-                    <div class="box-header">
-                        <h3 class="box-title">Xml feed events</h3>
-                    </div>
+        return <div class="">
+            <div class="row">
+                <div class="col-sm-8">
+                    {LastNode &&
+                        <div class="box box-success collapsed-box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Add new exchange</h3>
 
-                    <div class="box-body pad table-responsive">
-                        {/*<div class={classNames("box", {"box-widget": false})}></div>*/}
-                        <div className="row">
-                            <div className="col-sm-3">
-                                <div className="form-group">
-                                    <label>Filter by sport</label>
-                                    <DropBox name="selected-state" items={sportsItems}
-                                        /*items={[
-                                            { value: '1', label: 'var 1'},
-                                            { value: '2', label: 'var 2'},
-                                        ]}*/
-                                        clearable={false} value={currSport} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc', page: 1}, 'Sport')}/>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-plus"/>
+                                    </button>
+                                </div>
+                                {/*<!-- /.box-tools -->*/}
+                            </div>
+                            {/*<!-- /.box-header -->*/}
+                            <div class="box-body">
+                                <div id="addExchange">
+                                    <br />
+                                    {/*@Html.Action("NewExchange")*/}
                                 </div>
                             </div>
-
-                            { ligItems.length > 1 &&
-                                <div className="col-sm-3">
-                                    <div className="form-group">
-                                        <label>Filter by ligue</label>
-                                        <DropBox name="selected-state" items={ligItems}
-                                            /*items={[
-                                                { value: '1', label: 'var 1'},
-                                                { value: '2', label: 'var 2'},
-                                            ]}*/
-                                            clearable={false} value={currLig} searchable={true} afterChange={this._onFiterClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: 'Asc', page: 1}, 'League')}/>
-                                    </div>
-                                </div>
-                            }
+                            {/*<!-- /.box-body -->*/}
                         </div>
+                    }
+                </div>
+            </div>
+            <div class="box box-@statClass[index]">
+                <div class="box-header">
+                    {/*<i class="fa fa-navicon"></i>*/}
+                    <h3 class="box-title">Exchanges</h3>
+                </div>
+                <div class="box-body pad table-responsive">
+                    <div>
+                        <a class={classnames("btn-filter btn btn-primary btn-xs", {'active': actFilClass[0]})} href={Links.New} title={actFilTitle[0]}>New</a>
+                        <a class={classnames("btn-filter btn btn-success btn-xs", {'active': actFilClass[1]})} href={Links.Approved} title={actFilTitle[1]}>Approved</a>
+                        <a class={classnames("btn-filter btn btn-warning btn-xs", {'active': actFilClass[2]})} href={Links.Completed} title={actFilTitle[2]}>Completed</a>
+                        <a class={classnames("btn-filter btn btn-default btn-xs", {'active': actFilClass[3]})} href={Links.Settlement} title={actFilTitle[3]}>Settlement</a>
+                    </div>
 
 
 
-                        <table class="table exchanges">
-                            <thead>
+                    <table class="exchanges xml_fied table" data-js="tabl-exch">
+                        <thead>
                             <tr>
-                                <th><span>FullName</span></th>
-                                <th><span>Sport</span></th>
-                                <th><span>League</span></th>
-                                <th><span>Status</span></th>
                                 <th>
-                                    <span className={classNames(`${CurrentOrderBy}`, {'icon': CurrentOrderBy && StartDateSort.indexOf('StartDate') > -1, 'active': StartDateSort.indexOf('StartDate') > -1})}>
-                                        <a href="#" onClick={this._onSortClick.bind(this, {Sport, League, sort: 'StartDate' + OrderBy, OrderBy, page: 1})}>Start date</a>
-                                        {/*<a href={MainConfig.BASE_URL + `/Feed?` + getUrlParams()}>Start date</a>*/}
+                                    <span class="">
+                                        Full name
+                                        {/*@Html.ActionLink("Full name", "Index", new { @path = Model.Path, @status = Model.Status, ln = Model.LastNode, @sortBy = Model.NameSort, @orderBy = Model.OrderBy })*/}
                                     </span>
-{/*
-                    <span class="icon @Model.OrderBy @((Model.StartDateSort.Contains(" StartDate")) ? "
-                          active" : "")">
-                        @Html.ActionLink("Start date", "Index", new { @sport = Model.Sport, @league = Model.League, @sort = Model.StartDateSort, @orderBy = Model.OrderBy })
-                    </span>
-*/}
                                 </th>
+                                <th><span>Home name</span></th>
+                                <th><span>Handicap</span></th>
+                                <th><span>Away name</span></th>
+                                <th><span>Handicap</span></th>
+                                <th>
+                                    <span class={`icon`}>
+                                        Start date
+                                        {/*@Html.ActionLink("Start date", "Index", new { @path = Model.Path, @status = Model.Status, ln = Model.LastNode, @sortBy = Model.StartDateSort, @orderBy = Model.OrderBy })*/}
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class={`icon`}>
+                                        End date
+                                        {/*@Html.ActionLink("End date", "Index", new { @path = Model.Path, @status = Model.Status, ln = Model.LastNode, @sortBy = Model.EndDateSort, @orderBy = Model.OrderBy })*/}
+                                    </span>
+                                </th>
+                                <th><span>Type</span></th>
+                                <th><span>Url</span></th>
+                                { Status == StatusEvent.Settlement &&
+                                    <th><span>Result</span></th>
+                                }
                                 <th></th>
                             </tr>
-                            </thead>
-                            <tbody>
-                            {
-                                FeedEvents.map((item) =>
-                                    <tr key={item.EventId}>
-                                        <td>
-                                            {item.FullName}
-                                        </td>
-                                        <td>{item.Sport}</td>
-                                        <td>{item.League}</td>
-                                        <td>{item.Status} </td>
-                                        <td>{$DateLocalization.fromSharp2(item.StartDate, 0).toLocalDate({format: 'MM/DD/Y h:mm A'})}</td>
-                                        <td class="controls">
-                                            <a href={MainConfig.BASE_URL + "/Feed/NewFeedExchange?eventId=" + item.EventId} className="btn btn-sm btn-default">Apply</a>
-                                            {/*<a href="#" className="btn btn-sm btn-default">Apply</a>*/}
-                                        </td>
-                                    </tr>
-                                )
-                            }
+                        </thead>
 
+                        { Exchanges.map(val =>
+                            <tbody key={val.Symbol.Exchange}>
+                                <tr class="exch-row" data-id={val.Symbol.Exchange}>
+                                    <td data-js="TD-FullName">{val.Symbol.FullName}</td>
+                                    <td data-js="TD-HomeName">{val.Symbol.HomeName}</td>
+                                    <td data-js="TD-HomeHandicap">{val.Symbol.HomeHandicap}</td>
+                                    <td data-js="TD-AwayName">{val.Symbol.AwayName}</td>
+                                    <td data-js="TD-AwayHandicap">{val.Symbol.AwayHandicap}</td>
+                                    <td data-js="TD-StartDate">{val.Symbol.StartDate}</td>
+                                    <td data-js="TD-EndDate">{val.Symbol.EndDate}</td>
+                                    <td data-js="">{val.Symbol.TypeEvent}</td>
+                                    <td data-js="TD-UrlExchange">{val.Symbol.UrlExchange}</td>
+                                    {Status == StatusEvent.Settlement &&
+                                        <td>{val.Symbol.ResultExchange}</td>
+                                    }
+                                    <td>
+                                        <div class="controls">
+                                            <div class="btn-group">
+                                                <button type="button" data-js-btn-def-action="" class="btn btn-sm btn-default">Action</button>
+                                                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    <span class="caret"/>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+{/*
+                                                    @switch (item.Symbol.Status)
+                                                    {
+                                                        case StatusEvent.New:
+                                                            <li>
+                                                                @if (item.Symbol.TypeEvent.ToString() == "Fantasy")
+                                                                {
+                                                                    @Html.ActionLink("Edit", "EditFeedExchange", "Feed", new { @exchange = item.Symbol.Exchange }, null);
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a href="#" class="js-btn-crud" data-type="edit" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Edit exchange">Edit</a>
+                                                                }
+                                                            </li>
+                                                            <li><a href="#" class="js-btn-crud" data-type="del" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Delete exchange">Delete</a></li>
+                                                            <li class="divider"></li>
+                                                            <li><a href="#" class="js-btn-status" data-type="approve" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Set approved status">Set approved</a></li>
+                                                            break;
+                                                        case StatusEvent.Approved:
+                                                        <li><a href="#" data-js-btn-detail="" title="Details exchange">Details</a></li>
+                                                        <li><a href="#" class="js-btn-crud" data-type="edit" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Edit exchange">Edit</a></li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#" class="js-btn-status" data-type="complete" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Set completed status">Set completed</a></li>
+                                                            break;
+                                                        case StatusEvent.Completed:
+                                                        <li><a href="#" data-js-btn-detail="" title="Details exchange">Details</a></li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#" class="js-btn-status" data-type="settlement" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Set settlement status">Set settlement</a></li>
+                                                        <li><a href="#" class="js-btn-status" data-type="uncomplete" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Set approved status">Resume (set approved)</a></li>
+                                                            break;
+                                                        case StatusEvent.Settlement:
+                                                        <li><a href="#" data-js-btn-detail="" title="Details exchange">Details</a></li>
+                                                            break;
+                                                    }
+*/}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="details">
+                                    <td colSpan="10"/>
+                                </tr>
                             </tbody>
-                        </table>
-
-                        <div className="row">
-                            <div className="col-xs-12">
-                                <PagerBox total={PageInfo.TotalPages} current={PageInfo.CurrentPage - 1} visiblePage={5} onPageChange={this._onPagerClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: CurrentOrderBy})} />
-                                </div>
-                        </div>
-
-                    </div>
+                        )}
+                    </table>
                 </div>
+                {/*<!-- /.box -->*/}
+            </div>
 
-        );
+        </div>;
         // return <Chart data={this.props.MainPage} actions={this.props.chartActions} />
     }
 
@@ -240,13 +296,12 @@ class HomeEvents extends BaseController
 // __DEV__&&console.debug( 'connect', connect );
 
 export default connect(
-    state => {
-        return ({
-        data: state.FeedEvents,
+    state => {return ({
+        data: state.HomeEvents,
         // test: state.Ttest,
     })
     },
     dispatch => ({
         actions: bindActionCreators(Framework.initAction(Actions), dispatch),
     })
-)(FeedEvents)
+)(HomeEvents)

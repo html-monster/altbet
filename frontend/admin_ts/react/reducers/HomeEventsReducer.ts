@@ -14,7 +14,7 @@ export default class Reducer
 {
     private initialState = {
         // Players: [],
-        ...globalData.Model,
+        ...globalData.AppData,
     };
 
 
