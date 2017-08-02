@@ -108,7 +108,7 @@
       margin-left: 20px;
       //display: none;
       position: relative;
-      //&:first-child {  display: block;  }
+      //&:first-child { display: block; }
       .user_info {
         position: absolute;
         top: 11px;
@@ -336,9 +336,9 @@
 
 
   .gidx-btn {
-    &::before { background: url("#{$pathImage}/sprite.svg") no-repeat -102px -394px; }
-    &.withdraw::before { background-position: -134px -394px; }
-    &.history::before { background-position: -170px -394px; }
+    &::before { background: url("#{$pathImage}/sprite.svg") no-repeat -555px -420px; }
+    &.withdraw::before { background-position: -530px -420px; }
+    &.history::before { background-position: -495px -420px }
   }
 }
 
