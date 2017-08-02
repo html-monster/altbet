@@ -72,6 +72,9 @@ export default class ADpp
             this.currentController['action' + globalData.controller.action]();
 
             (new BodyView()).addClass(globalData.controller.name);
+            // setTimeout(() => {
+            //     __DEV__&&console.log( 'ready', 0 );
+            // }, 1000);
         }
     }
 }
