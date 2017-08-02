@@ -10,8 +10,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 // import { Router, Route, IndexRedirect, hashHistory } from 'react-router'
 
-import configureStore from './react/store/configureStore';
+import configureStore from './react/store/configureStore.js';
 import App from "./ADpp";
+import HomeEvents from "./react/containers/HomeEvents";
 import FeedEvents from "./react/containers/FeedEvents";
 import NewFeedExchange from "./react/containers/NewFeedExchange";
 
@@ -27,6 +28,9 @@ $(document).ready(function()
 
 
 // BM: Mount points
+// Home events table
+mountById('DiMPHomeEvents', <HomeEvents />);
+
 // Feed events table
 mountById('DiFeedEvents', <FeedEvents />);
 
