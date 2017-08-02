@@ -210,4 +210,4 @@ export default class OddsConverter
 	// 	return Math.round10(ABpp.config.takerFees * volume, -2)
 	// }
 }
-// export let OddsConverterObj = new OddsConverter(localStorage.getItem('currentOddSystem') ? localStorage.getItem('currentOddSystem') : 'Implied');
+// export let OddsConverterObj = new OddsConverterComp(localStorage.getItem('currentOddSystem') ? localStorage.getItem('currentOddSystem') : 'Implied');

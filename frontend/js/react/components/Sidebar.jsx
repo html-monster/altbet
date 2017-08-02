@@ -11,9 +11,9 @@ import YourOrders from './sidebar/YourOrders';
 import Disqus from './Disqus';
 import sidebarActions from '../actions/sidebarActions.ts';
 import classnames from 'classnames';
-// import {OddsConverter} from '../models/oddsConverter/oddsConverter.ts';
+// import {OddsConverterComp} from '../models/oddsConverter/oddsConverter.ts';
 
-// new OddsConverter('implied_probability');
+// new OddsConverterComp('implied_probability');
 // export default
 class Sidebar extends React.Component
 {

@@ -7,7 +7,7 @@ import {
 	ON_ACTIVE_SYMBOL_CHANGED,
 	ON_SIDEBAR_ODD_SYS_CHANGE,
 } from '../constants/ActionTypesSidebar.js';
-// import OddsConverter from '../models/oddsConverter/oddsConverter';
+// import OddsConverterComp from '../models/oddsConverter/oddsConverter';
 
 const initialState = {
     activeTab: globalData.userIdentity === 'True' ?

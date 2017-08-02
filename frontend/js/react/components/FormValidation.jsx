@@ -3,7 +3,13 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
+/**
+ * @param renderContent - function that returns Dom object
+ * @param handleSubmit: function - it is called when a form is being submitted
+ * @param serverValidation - params necessary for inputs, it is created by FormValidation
+ */
 export default class FormValidation extends React.Component
 {
 	constructor()
@@ -110,10 +116,12 @@ export default class FormValidation extends React.Component
 		);
 	}
 }
-
-FormValidation.propTypes = {
-	renderContent: React.PropTypes.any.isRequired,
-	handleSubmit: React.PropTypes.func,
-};
-
-
+//	validate: React.PropTypes.func,
+if(__DEV__)
+{
+	FormValidation.propTypes = {
+		renderContent   : PropTypes.func.isRequired,
+		handleSubmit    : PropTypes.func,
+		serverValidation: PropTypes.bool,
+	};
+}

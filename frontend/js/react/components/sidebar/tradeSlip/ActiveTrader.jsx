@@ -7,7 +7,7 @@ import TraderDefaultForm from './activeTrader/TraderDefaultForm';
 import TraderSpreadForm from './activeTrader/TraderSpreadForm';
 import traderActions from '../../../actions/Sidebar/tradeSlip/traderActions';
 import defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
-import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
+import OddsConverter from '../../../models/oddsConverter.js';
 import { DateLocalization	 } from '../../../models/DateLocalization';
 // import RebuildServerData from '../../../actions/Sidebar/activeTrader/rebuildServerData';
 

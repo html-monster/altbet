@@ -99,7 +99,7 @@ class Settings extends React.Component
         const { birthDate } = this.state;
 
 
-        __DEV__&&console.log( 'appData.pageAccountData.UserInfo', appData.pageAccountData.UserInfo );
+        // __DEV__&&console.log( 'appData.pageAccountData.UserInfo', appData.pageAccountData.UserInfo );
 
 
 		const formContent = ({ input, error, successMessage, userInfo:{ FirstName, LastName, UserName, DateOfBirth, Email,

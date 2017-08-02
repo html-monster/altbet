@@ -3,10 +3,7 @@ import React from 'react';
 // import { connect } from 'react-redux';
 // import * as orderFormActions from '../../../actions/order/orderFormActions.ts';
 import InputNumber from '../../InputNumber';
-import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
-
-let OddsConverterObj = new OddsConverter();
-
+import OddsConverter from '../../../models/oddsConverter';
 
 /**
  * props:{
