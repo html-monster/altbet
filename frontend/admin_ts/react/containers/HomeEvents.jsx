@@ -31,6 +31,15 @@ class HomeEvents extends BaseController
         // const { Players } = this.props.data;
         this.LoadingObj = new Loading;
         // this.state = {currTeamKey: 0, okBtnDisabled: false};
+
+        // Hardcode for MVC code access
+        window.HomeEvents = this;
+    }
+
+
+    setEditedData(data)
+    {
+        __DEV__&&console.log( 'data', data );
     }
 
 
@@ -58,7 +67,7 @@ class HomeEvents extends BaseController
 
 
         return <div class="">
-            <EditHomeEvent data={{vars:{data:{}}, data:{}}}/>
+            {/*<EditHomeEvent data={{vars:{data:{}}, data:{}}}/>*/}
             <div class="row">
                 <div class="col-sm-8">
                     {LastNode &&
@@ -146,7 +155,7 @@ class HomeEvents extends BaseController
                                                         menu = <ul class="dropdown-menu" role="menu">
                                                             <li>
                                                                 {val.Symbol.TypeEvent == TypeEvent.Fantasy ?
-                                                                    <a href={LinksMenu.EditFantasy + `?exchange=${val.Symbol.Exchange}`} title="Edit fantasy exchange">Edit fantasy</a>
+                                                                    <a href={LinksMenu.EditFantasy + `?exchange=${val.Symbol.Exchange}`} title="Edit fantasy exchange">Edit</a>
                                                                     :
                                                                     <a href="#" class="js-btn-crud" data-type="edit" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Edit exchange">Edit</a>
                                                                 }
