@@ -15,6 +15,7 @@ import {MainConfig} from '../../inc/MainConfig';
 import {Framework} from 'common/Framework.ts';
 
 import {NewHomeEvent} from '../components/HomeEvents/NewHomeEvent';
+import {EditHomeEvent} from '../components/HomeEvents/EditHomeEvent';
 
 
 class HomeEvents extends BaseController
@@ -57,6 +58,7 @@ class HomeEvents extends BaseController
 
 
         return <div class="">
+            <EditHomeEvent data={{vars:{data:{}}, data:{}}}/>
             <div class="row">
                 <div class="col-sm-8">
                     {LastNode &&
@@ -146,29 +148,29 @@ class HomeEvents extends BaseController
                                                                 {val.Symbol.TypeEvent == TypeEvent.Fantasy ?
                                                                     <a href={LinksMenu.EditFantasy + `?exchange=${val.Symbol.Exchange}`} title="Edit fantasy exchange">Edit fantasy</a>
                                                                     :
-                                                                    <a href="#" class="js-btn-crud" data-type="edit" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Edit exchange">Edit</a>
+                                                                    <a href="#" class="js-btn-crud" data-type="edit" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Edit exchange">Edit</a>
                                                                 }
 
                                                             </li>
-                                                            <li><a href="#" class="js-btn-crud" data-type="del" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Delete exchange">Delete</a></li>
+                                                            <li><a href="#" class="js-btn-crud" data-type="del" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Delete exchange">Delete</a></li>
                                                             <li class="divider"></li>
-                                                            <li><a href="#" class="js-btn-status" data-type="approve" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Set approved status">Set approved</a></li>
+                                                            <li><a href="#" class="js-btn-status" data-type="approve" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Set approved status">Set approved</a></li>
                                                         </ul>;
                                                         break;
                                                     case StatusEvent.Approved:
                                                         menu = <ul class="dropdown-menu" role="menu">
                                                             <li><a href="#" data-js-btn-detail="" title="Details exchange">Details</a></li>
-                                                            <li><a href="#" class="js-btn-crud" data-type="edit" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Edit exchange">Edit</a></li>
+                                                            <li><a href="#" class="js-btn-crud" data-type="edit" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Edit exchange">Edit</a></li>
                                                             <li class="divider"></li>
-                                                            <li><a href="#" class="js-btn-status" data-type="complete" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Set completed status">Set completed</a></li>
+                                                            <li><a href="#" class="js-btn-status" data-type="complete" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Set completed status">Set completed</a></li>
                                                         </ul>;
                                                         break;
                                                     case StatusEvent.Completed:
                                                         menu = <ul class="dropdown-menu" role="menu">
                                                             <li><a href="#" data-js-btn-detail="" title="Details exchange">Details</a></li>
                                                             <li class="divider"></li>
-                                                            <li><a href="#" class="js-btn-status" data-type="settlement" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Set settlement status">Set settlement</a></li>
-                                                            <li><a href="#" class="js-btn-status" data-type="uncomplete" data-id="@item.Symbol.Exchange" data-name="@item.Symbol.FullName" title="Set approved status">Resume (set approved)</a></li>
+                                                            <li><a href="#" class="js-btn-status" data-type="settlement" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Set settlement status">Set settlement</a></li>
+                                                            <li><a href="#" class="js-btn-status" data-type="uncomplete" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Set approved status">Resume (set approved)</a></li>
                                                                 break;
                                                             case StatusEvent.Settlement:
                                                             <li><a href="#" data-js-btn-detail="" title="Details exchange">Details</a></li>

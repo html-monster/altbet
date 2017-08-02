@@ -305,10 +305,11 @@ export class IndexView extends BaseView
 
     public renderEditForm(data, callbackOk)
     {
-        this.DialogEdit = new Dialog({
-            TPLName: '#TPLeditExchangeDialog',
-            target: '.js-mp-dialog',
-            render: true,
+        // this.DialogEdit = new Dialog({
+        window.DialogEdit.openDialog({
+            // TPLName: '#TPLeditExchangeDialog',
+            // target: '.js-mp-dialog',
+            // render: true,
             vars: {
                 title: `Edit exchange “${data.name}”`,
                 btnOkTitle: 'Save',
@@ -316,12 +317,14 @@ export class IndexView extends BaseView
                 data: data.data.Symbol,
                 // type: 'modal-default',
             },
-            afterInit: (dialogContext, wrapper) =>
+            afterInit: (dialogContext, wrapper, {TypeEvent}) =>
             {
+                wrapper = $(wrapper);
+
                 (new RadioBtns({
                     activeClass: "btn-success",
                     target: "[data-js=radio-btn]",
-                    defaultIndex: data.data.Symbol.TypeEvent == 1 ? 0 : 1,
+                    defaultIndex: TypeEvent == 1 ? 0 : 1,
                     callbacks: [() => $("[data-js=EdFullname]", wrapper).slideUp(200), () => $("[data-js=EdFullname]", wrapper).slideDown(400)],
                 })).apply();
 
