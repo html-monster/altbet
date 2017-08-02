@@ -1,3 +1,7 @@
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// адская садомия сюда больше ничего не добавлять
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 .sign_up_form, .sign_in_form, .change_password, #form2, .setting_form, .self_exclusion {
 
   input[type=email] {
@@ -29,30 +33,30 @@
     margin: 0 0 2em;
     height: 57px;
     text-align: center;
-    &.inpt_password:before {
-      content: '';
-      position: absolute;
-      top: 11px;
-      left: 8px;
-      width: 15px;
-      height: 21px;
-      font-size: 17px;
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
-      z-index: 99;
-      opacity: 0.7;
-    }
-    &:before {
-      content: '';
-      position: absolute;
-      top: 11px;
-      left: 8px;
-      width: 15px;
-      height: 21px;
-      font-size: 17px;
-      z-index: 9;
-      opacity: 0.7;
-    }
-    &.inpt_mail:before {
+    //&.input_password:before {
+    //  content: '';
+    //  position: absolute;
+    //  top: 11px;
+    //  left: 8px;
+    //  width: 15px;
+    //  height: 21px;
+    //  font-size: 17px;
+    //  background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
+    //  z-index: 99;
+    //  opacity: 0.7;
+    //}
+    //&:before {
+    //  content: '';
+    //  position: absolute;
+    //  top: 11px;
+    //  left: 8px;
+    //  width: 15px;
+    //  height: 21px;
+    //  font-size: 17px;
+    //  z-index: 9;
+    //  opacity: 0.7;
+    //}
+    &.input_mail:before {
       content: '@';
       position: absolute;
       top: 11px;
@@ -62,32 +66,32 @@
       z-index: 9999;
     }
     &.NickName:before {
-          background: url(../../Images/sprite.svg) no-repeat -525px -53px;
+          background: url("#{$pathImage}/sprite.svg") no-repeat -525px -53px;
     }
     &.Email:before {
       content: '@';
       color: #afabc8;
     }
     &.Password:before, &.ComparePassword:before {
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
     }
     &:nth-child(5) {
       .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; font-size: 13px }
       .Select-placeholder { padding-left: 35px; font-size: 13px }
       &:before {
-        background: url(../../Images/sprite.svg) no-repeat -549px -53px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -549px -53px;
       }
     }
     &.country-states {
      .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; font-size: 13px }
       .Select-placeholder { padding-left: 35px; font-size: 13px }
       &:before {
-        background: url(../../Images/sprite.svg) no-repeat -549px -53px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -549px -53px;
       }
     }
     &.datePickerRender:before {
       width: 20px;
-      background: url(../../Images/sprite.svg) no-repeat -573px -51px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -573px -51px;
     }
 
     &.invalid {
@@ -98,7 +102,7 @@
         color: #ff4810;
       }
       &.inpt_password:before {
-        background: url(../../Images/sprite.svg) no-repeat -574px -26px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -574px -26px;
       }
     }
   }
@@ -117,7 +121,7 @@
     background: transparent;
     text-align: left;
     transition: opacity 0.3s;
-    padding-left: 35px;
+    padding-left: 0px;
     &:focus {
       outline: none;
     }
@@ -136,15 +140,19 @@
 
   .input__label {
     float: right;
-    padding: 0 1em;
+    padding: 0;
     color: #afabc8;
     font-family: "open_sans_semibold", sans-serif;
     width: 100%;
     font-weight: bold;
     font-size: 13px;
     position: absolute;
-    left: 15px;
+    left: 0px;
     text-align: left;
+
+  }
+  .opacity_field{
+    opacity: .6;
   }
 
   .input__label-content {
@@ -160,6 +168,7 @@
     opacity: 0;
   }
 
+
   //.input__field--kuro + .input__label--kuro .input__label-content--kuro,
   //.input--filled .input__label-content--kuro {
   //  opacity: 0;
@@ -170,7 +179,7 @@
     //label:first-of-type { display: block; }
 /*    input { display: none; }
     input:checked + span { color: #d4d0ed; }
-    input:checked + span:before { background: url(../../Images/sprite.svg) no-repeat -310px -28px; }
+    input:checked + span:before { background: url("#{$pathImage}/sprite.svg") no-repeat -310px -28px; }
 
     span {
       font-size: 12px;
@@ -229,28 +238,6 @@
     //padding: 1.6em 0;
     width: 100%;
   }
-
-  //.global_message_container {
-  //  width: 300px;
-  //  padding: 10px 15px;
-  //  margin-top: 15px;
-  //  position: fixed;
-  //  right: -100%;
-  //  bottom: 10px;
-  //  background: rgba(0, 0, 0, 0.7);
-  //  box-shadow: 0 0 23px -5px rgba(0, 0, 0, 0.5);
-  //  z-index: 500;
-  //  transition: 0.4s ease-out;
-  //  &.active {
-  //    right: 10px;
-  //    animation-duration: 0.7s;
-  //    animation-fill-mode: both;
-  //  }
-  //  &.error p { color: #ff4810; }
-  //  &.alert p { color: #ef8022; }
-  //  &.info p { color: #3498DA; }
-  //  p { font-size: 12px; }
-  //}
 
   .invalid_message, .validation-summary-errors {
     position: absolute;
@@ -334,7 +321,7 @@
       width: 15px;
       height: 21px;
       font-size: 17px;
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
       z-index: 99;
       opacity: 0.7;
     }
@@ -350,11 +337,16 @@
     &:nth-child(5):before { display: none; }
     .input__field {
       padding-left: 5px;
+      color: #afabc8;
     }
     .input__label {
-      left: -15px;
+      left: 0px;
     }
   }
+}
+
+.sign_in_form{
+  .show_password{position: absolute; right: 5px; top: 13px; z-index: 999;}
 }
 
 .self_exclusion {

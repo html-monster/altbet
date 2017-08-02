@@ -21,6 +21,7 @@ import {
     ON_ADD_TEAM_DEFENCE,
     ON_REM_TEAM_DEFENCE,
     AFTER_CATEGORY_ADDED,
+    ON_CH_TEAM_SIZE,
 } from '../constants/ActionTypesNewFeedExchange';
 /// TS_IGNORE
 import {Common} from "../common/Common";
@@ -70,8 +71,8 @@ export default class Reducer
             fullName: '',
             category: '',
             url: '',
-            PlayerTopTeam1: '', // PlayerHome
-            PlayerTopTeam2: '', // PlayerAway
+            PlayerTopTeam1: {Name: '', Team: ''}, // PlayerHome
+            PlayerTopTeam2: {Name: '', Team: ''}, // PlayerAway
             Team1Defense: {TeamId: null, EventId: null}, // HomeDefense
             Team2Defense: {TeamId: null, EventId: null}, // AwayDefense
             HomeTeamId: '', // in edit mode
@@ -80,8 +81,7 @@ export default class Reducer
         },
         Team1name: '', // team1 alias from server
         Team2name: '', // team2 alias from server
-        TeamSize1: '', // team1 custom size
-        TeamSize2: '', // team2 custom size
+        TeamSize: '', // team custom size
         ...globalData.AppData,
     };
 
@@ -97,7 +97,9 @@ export default class Reducer
 
 
         this.initialState.Positions = this.preparePositions(globalData.AppData.Positions);
-        // __DEV__&&console.log( '00000000000 this.initialState', this.initialState );
+
+        // init teams size
+        this.initialState.TeamSize = this._getTeamSize(this.initialState.Positions);
 
         // load saved teams
         if( globalData.IsEditFeedExchange )
@@ -138,11 +140,6 @@ export default class Reducer
                 break;
             }
         } // endfor
-
-        // init teams size
-        let len;
-        this.initialState.Positions.forEach((val) => len += val.Quantity);
-        this.initialState.TeamSize1 = this.initialState.TeamSize2 = len;
     }
 
 
@@ -223,6 +220,10 @@ export default class Reducer
 
             case AFTER_CATEGORY_ADDED:
                 state = this.refreshCategories(action.payload, state);
+                return {...state};
+
+            case ON_CH_TEAM_SIZE:
+                state = this.setTeamSize({TeamSize: action.payload}, state);
                 return {...state};
 
             default:
@@ -333,7 +334,6 @@ export default class Reducer
             }
             else if( val.TeamType == 3 )
             {
-                __DEV__&&console.log( 'Defence val', val );
                 this.addTeamDefence({TeamId: val.TeamId, team, EventId: val.EventId, name: val.TeamName}, this.initialState)
             } // endif
         };
@@ -351,9 +351,9 @@ export default class Reducer
      * Save user teams data
      * @param state { PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId }
      */
-    private saveData({ PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId, FormData })
+    private saveData({ PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId, FormData, TeamSize })
     {
-        let data = { PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId, FormData };
+        let data = { PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, LastEventId, Players, EventId, FormData, TeamSize };
         localStorage.setItem('newFeedExchange', JSON.stringify(data));
     }
 
@@ -745,6 +745,10 @@ export default class Reducer
             } // endif;
         } // endfor
 
+
+        this.setTopPlayer({teamNum: 1}, state);
+        this.setTopPlayer({teamNum: 2}, state);
+
         // save teams data
         this.saveData(state);
 
@@ -758,6 +762,7 @@ export default class Reducer
     private delTeamPlayer({player, team, used}, state)
     {
         // 0||console.log( '{player, team, used}', {player, team, used} );
+        const { Players } = state;
         // remove from team
         switch( used )
         {
@@ -779,11 +784,15 @@ export default class Reducer
                     player.Position = val.Position = val.meta.PositionOrig;
                     player.meta = val.meta = null;
                 } // endif
+                player.Eppg = 0;
+                player.Fppg = 0;
                 player.used = val.used = false;
                 $Team.players.splice(ii, 1);
                 break;
             } // endif;
         } // endfor
+
+        Players.forEach((val, key) => { if (player.PlayerId == val.PlayerId) Players[key] = player});
 
 
         // count positions limits
@@ -856,11 +865,6 @@ export default class Reducer
         let $events: any = [];
         let startDate = '';
 
-/*        state.Players.forEach((val) =>
-        {
-            if (!teams.find((val2) => val2 == val.TeamId)) teams.push(val.TeamId);
-        })*/
-
         state.PlayersTeam1.players.forEach((val) =>
         {
             if (!$events.find((val2) => val2 == val.EventId)) $events.push(val.EventId);
@@ -882,7 +886,7 @@ export default class Reducer
         });
 
         state.FormData.startDate = startDate;
-        0||console.log( 'state.FormData.startDate', {'11': state.FormData.startDate, startDate, '22': state.Players} );
+        // 0||console.log( 'state.FormData.startDate', {'11': state.FormData.startDate, startDate, '22': state.Players} );
     }
 
 
@@ -890,9 +894,15 @@ export default class Reducer
     /**
      * Generate team name from top player
      */
-    private generateTeamName({teamNum}, state)
+    private generateTeamName({teamNum, Name, Team}, state)
     {
-        if (state.FormData[`PlayerTopTeam` + teamNum]) state.FormData[`teamName` + teamNum] = `Team ${state.FormData[`PlayerTopTeam` + teamNum].split(' ')[1].trim()}, ${state[`Team${teamNum}name`]}`;
+        this.setTopPlayer({teamNum, Name, Team}, state);
+
+        Name = state.FormData[`PlayerTopTeam` + teamNum].Name;
+        Team = state.FormData[`PlayerTopTeam` + teamNum].Team;
+
+        if (Name) state.FormData[`teamName` + teamNum] = `Team ${Name.split(' ')[1].trim()}, ${Team}`;
+        // if (state.FormData[`PlayerTopTeam` + teamNum].Name) state.FormData[`teamName` + teamNum] = `Team ${state.FormData[`PlayerTopTeam` + teamNum].split(' ')[1].trim()}, ${state[`Team${teamNum}name`]}`;
 
         // save teams data
         this.saveData(state);
@@ -904,17 +914,25 @@ export default class Reducer
     /**
      * Set top team player
      */
-    private setTopPlayer({teamNum}, state)
+    private setTopPlayer({teamNum, ...float}, state)
     {
+        const { Name, Team } = float;
         let leadPlayer: any = {Eppg: 0};
         for( let val of state['PlayersTeam' + teamNum].players )
         {
             if (val.Eppg && val.Eppg > leadPlayer.Eppg) leadPlayer = val;
         } // endfor
 
-        if (!leadPlayer.Name && state['PlayersTeam' + teamNum].players.length) leadPlayer = state['PlayersTeam' + teamNum].players[0];
+        if( Name )
+        {
+            state.FormData[`PlayerTopTeam` + teamNum] = {Name, Team};
+        }
+        else
+        {
+            if (!leadPlayer.Name && state['PlayersTeam' + teamNum].players.length) leadPlayer = state['PlayersTeam' + teamNum].players[0];
 
-        if (leadPlayer.Name) state.FormData[`PlayerTopTeam` + teamNum] = leadPlayer.Name;
+            if (leadPlayer.Name) state.FormData[`PlayerTopTeam` + teamNum] = {Name: leadPlayer.Name, Team: leadPlayer.Team};
+        } // endif
 
         // save teams data
         this.saveData(state);
@@ -990,7 +1008,7 @@ export default class Reducer
             if (val.AwayId === TeamId) Defence = {name: val.AwayTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`};
         });
 
-        if (!name) Defence.name = `Team ${team} defence`;
+        if (!name && !Defence.name) Defence.name = `Team ${team} defence`;
 
         state.FormData[`Team${team}Defense`] = {TeamId, EventId, name, ...Defence};
 
@@ -1047,6 +1065,31 @@ export default class Reducer
 
         // set new cattegories
         state.Categories = Categories;
+
+        return state;
+    }
+
+
+    /**
+     * Get teams size
+     * @private
+     */
+    _getTeamSize(Positions)
+    {
+        let len = 0;
+        Positions.forEach((val) => len += val.Quantity);
+        return len;
+    }
+
+
+    /**
+     * Set teams size
+     * @private
+     */
+    setTeamSize({TeamSize}, state)
+    {
+        state.TeamSize = TeamSize;
+        this.saveData(state);
 
         return state;
     }

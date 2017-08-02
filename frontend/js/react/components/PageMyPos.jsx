@@ -5,6 +5,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 
 import {TabMyPos} from './pageMyPos/TabMyPos';
 import {TabOpenOrders} from './pageMyPos/TabOpenOrders';
@@ -14,6 +15,7 @@ import actions from '../actions/ordersPageActions';
 import myPositionsActions from '../actions/OrderPage/myPositionsActions.ts';
 import yourOrdersActions from '../actions/Sidebar/yourOrderActions.ts';
 import defaultOrderSidebarActions from '../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
+import classnames from 'classnames';
 // import {Common} from '../common/Common';
 
 
@@ -60,30 +62,35 @@ class PageMyPos extends BaseController //React.Component
     render()
     {
         const { openOrdersData, positionData, historyData } = this.state.data;
-        const { defaultOrderActions, yourOrdersActions } = this.props;
-        // __DEV__ && console.log( 'PageMyPos props', this.props.route );
+        const { defaultOrderActions, yourOrdersActions, route } = this.props;
 
-        // const myOpenOrdersFilters = ['openOrders_Sport', 'openOrders_Finance', 'openOrders_E-sport', 'openOrders_Society'];
-        // const myPosFilers = ['MyPos_Sport', 'MyPos_Finance', 'MyPos_E-sport', 'MyPos_Society'];
 
         return <div className="my_position">
                 <div className="container">
-                    <div className="tabs tabs_left">
-                        <span className="tab">Open Games</span>
-                        <span className="tab active">My Games</span>
-                        <span className="tab">History</span>
-                    </div>
+                    <ul className="tabs tabs_left">
+                        {/*<span className="tab">Open Games</span>*/}
+                        {/*<span className="tab active">My Games</span>*/}
+                        {/*<span className="tab">History</span>*/}
+                        <li className={classnames("tab ", {"active" : route.tab === "open-games"})}><Link to={`/open-games`}>Open Games</Link></li>
+                        <li className={classnames("tab ", {"active" : route.tab === "my-games"})}><Link to={`/my-games`}>My Games</Link></li>
+                        <li className={classnames("tab ", {"active" : route.tab === "history"})}><Link to={`/history`}>History</Link></li>
+                    </ul>
 
                     <div className="tab_content">
                         {/* // BM: --------------------------------------------------- OPENED ORDERS ---*/}
-                        <TabOpenOrders data={openOrdersData} yourOrdersActions={yourOrdersActions}/>
+                        <div className={classnames("tab_item", {"active" : route.tab === "open-games"})}>
+                            {route.tab === "open-games" && <TabOpenOrders data={openOrdersData} yourOrdersActions={yourOrdersActions}/>}
+                        </div>
 
                         {/* // BM: --------------------------------------------------- MY POSITIONS ---*/}
-                        <TabMyPos data={positionData} defaultOrderActions={defaultOrderActions} actions={this.props.myPositionsActions}/>
-
+                        <div className={classnames("tab_item", {"active" : route.tab === "my-games"})}>
+                            {route.tab === "my-games" && <TabMyPos data={positionData} defaultOrderActions={defaultOrderActions} actions={this.props.myPositionsActions}/>}
+                        </div>
 
                         {/* // BM: --------------------------------------------------- ORDER HISTORY ---*/}
-                        <TabMyOrderHistory key="my_order_history" data={historyData}/>
+                        <div className={classnames("tab_item", {"active" : route.tab === "history"})}>
+                            {route.tab === "history" && <TabMyOrderHistory key="my_order_history" data={historyData}/>}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -22,7 +22,9 @@ class Settings extends React.Component
     {
         super();
 
-        this.state = {birthDate: props.DateOfBirth};
+        const birthDateStr = (new DateLocalization()).fromSharp2(props.UserInfo.DateOfBirthStr, 0).toLocalDate({format: "MM/DD/Y"});
+        const birthDateVal = (new DateLocalization()).fromSharp2(props.UserInfo.DateOfBirthStr, 0).toLocalDate({format: "Y-MM-DD"});
+        this.state = {birthDateStr, birthDateVal};
     }
 
 
@@ -43,8 +45,9 @@ class Settings extends React.Component
      */
 	dateBirthChange(onCustomChange, val, date)
     {
-        // this.birthDate = {date};
-        this.setState({...this.state, birthDate: val});
+        // this.birthDateStr = {date};
+        __DEV__&&console.log( '{val, date}', {val, date} );
+        this.setState({...this.state, birthDateStr: val, birthDateVal: date});
         // 0||console.log( 'onCustomChange, val, date', onCustomChange, val, date );
 
         onCustomChange(date);
@@ -62,7 +65,7 @@ class Settings extends React.Component
                     {...input}
                 />
                 <label className="input__label input__label--yoshiko" htmlFor={id}>
-                    <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
+                    <span className="input__label-content  input__label-content--yoshiko" data-content={label}>{label}</span>
                 </label>
                 {/*<span className="validation-summary-errors"></span>*/}
                 {
@@ -70,8 +73,6 @@ class Settings extends React.Component
                         <i>{hint}</i>
                     </span>
                 }
-
-{/*<span class="input_animate input--yoshiko input--filled input--filled"><label class="input__label input__label--yoshiko" for="n_name"><span class="input__label-content input__label-content--yoshiko" data-content="User Name">User Name</span></label><input type="text" class="input__field input__field--yoshiko false" name="UserName" maxlength="20" disabled="" value="vova"/></span>*/}
             </span>;
     }
 
@@ -86,7 +87,7 @@ class Settings extends React.Component
                         <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                     </label>
                     { dirty && error && <span className="validation-summary-errors">{error}</span> }
-                    { info && <span className="info top"><i>{ info }</i></span> }
+                    { info && <span className="info bottom"><i>{ info }</i></span> }
                 </span>
     };
 
@@ -96,10 +97,7 @@ class Settings extends React.Component
     {
         const { actions, data: { header, active }, files, loadError, loadProgress, UserInfo, Country, Address, Phone } = this.props;
         // const { Country, Address, Phone, DateOfBirth } = appData.pageAccountData.UserInfo;
-        const { birthDate } = this.state;
-
-
-        // __DEV__&&console.log( 'appData.pageAccountData.UserInfo', appData.pageAccountData.UserInfo );
+        const { birthDateStr } = this.state;
 
 
 		const formContent = ({ input, error, successMessage, userInfo:{ FirstName, LastName, UserName, DateOfBirth, Email,
@@ -107,14 +105,14 @@ class Settings extends React.Component
         {
 			return <form action={appData.pageAccountUserInfoUrl} className="setting_form" method="post"
                          noValidate="novalidate" onSubmit={handleSubmit}>
-                    <h3 className="section_user">Personal info</h3>
+                    <h3 className="section_user pers_inf">Personal info</h3>
                     <hr/>
 
                     <InputValidation renderContent={this.inputRender} id={'f_name'} name="FirstName"
                                      initialValue={FirstName} info="Your first name as specified in your passport"
                                      label={'First Name'} type={'text'} filled={FirstName}
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]}
-                                     input={input} maxLength="20"/>
+                                      input={input} maxLength="20"/>
 
                     <InputValidation renderContent={this.inputRender} id={'l_name'} name="LastName"
                                      initialValue={LastName} info="Your second name as specified in your passport"
@@ -123,22 +121,22 @@ class Settings extends React.Component
                                      maxLength="20"/>
 
 
-                    <InputValidation renderContent={this.inputRender} id={'n_name'} name="UserName"
+                    <InputValidation renderContent={this.inputRender} id={'n_name'} className="opacity_field"  name="UserName"
                                      initialValue={UserName}
                                      label={'User Name'} type={'text'} filled={UserName}
                                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20})]} input={input}
                                      maxLength="20" disabled={true}/>
 
                     <InputValidation renderContent={this.datePickerRender} id={'user_b_day'} name="DateOfBirth"
-                                     className={'input__field input__field--yoshiko datePickerJs'}
+                                     className={'input__field  input__field--yoshiko datePickerJs'}
                                      //initialValue
                                      afterChange={this.dateBirthChange.bind(this)}
-                                     currVal={(new DateLocalization()).fromSharp(birthDate, 0).unixToLocalDate({format: "MM/DD/Y"})}
-                                     label={'Date of birth'} type={'text'} filled={true}
+                                     currVal={birthDateStr}
+                                     label={'Date of birth'} type={'text'}
                                      validate={emptyValidation} input={input}/>
 
 
-                    <h3 className="section_user">Contact Info</h3>
+                    <h3 className="section_user cont_inf">Contact Info</h3>
                     <hr/>
 
                     <InputValidation renderContent={this.inputRender} id={'e_name'} name="Email"

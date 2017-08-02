@@ -16,19 +16,15 @@
 			border-radius: 4px;
 		}
 		.tabs { @include my_pos_tab_container_styles; text-align: left }
-		.tab {
-			display: inline-block;
-			margin-right: 4px;
-			padding: 10px 15px;
-			border-radius: 5px 5px 0 0;
-			border: 1px solid transparent;
-			color: transparentize($my_pos_color, 0.3);
-			font-size: 14px;
+		.tab { display: inline-block; margin-right: 4px; padding: 10px 15px; border-radius: 5px 5px 0 0; border: 1px solid transparent;
+			color: transparentize($my_pos_color, 0.3); font-size: 14px;
 			@include my_pos_tab;
 			&.active {
 				color: $my_pos_color;
 				@include my_pos_active_tab;
+				a { color: #fff; }
 			}
+			a { color: $color5TextWhite; }
 		}
 		//.tab_item {
 		//	display: none;

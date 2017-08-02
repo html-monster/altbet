@@ -18,6 +18,7 @@ export class Dialog
             target: "[data-js-dialog-mp]",  // mount point for html template
             render: false,                  // render after construct
             type: 1,
+            closableBg: true,
             vars: {
                 contentHtml: 'Please, confirm your action',
                 btn1Text: "Yes",
@@ -64,7 +65,8 @@ export class Dialog
         $("[data-js-message]", $wrapper).html(this.options.vars.contentHtml);
 
 
-        $("[data-js-wrapper]", $wrapper).click(function(e) { self.onWrapperClick(e, this) });
+        // close on bg click
+        if (this.options.closableBg) $("[data-js-wrapper]", $wrapper).click(function(e) { self.onWrapperClick(e, this) });
         // cancel btn
         $("[data-js-btn2]", $wrapper).click(function(e) { self.onBtn2Click(e, this) });
         // yes btn

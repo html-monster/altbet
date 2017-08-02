@@ -29,6 +29,12 @@ export class DateLocalization
     }
 
 
+    /**
+     * Real UTC format
+     * @param inDate
+     * @param {number} inReturn
+     * @returns {DateLocalization}
+     */
     public fromSharp2(inDate, inReturn = 1, props = {})
     {
         let retval ;

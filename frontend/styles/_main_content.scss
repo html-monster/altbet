@@ -285,7 +285,7 @@
         .value{ display: inline-block; margin-top: -2px; transition: 0s; }
         i { display: none; position: relative; margin-top: -2px; margin-right: -5px; width: 15px; height: 16px; background-size: cover;
             background: url("#{$pathImage}/sprite.svg") no-repeat; }
-            //background: url(../../Images/temp/sprite-01.svg) no-repeat; background-position: 0px 0px; }
+            //background: url("#{$pathImage}/temp/sprite-01.svg") no-repeat; background-position: 0px 0px; }
       }
       .title{ display: block; color: $color4TextWhite; font-size: 11px }
     }

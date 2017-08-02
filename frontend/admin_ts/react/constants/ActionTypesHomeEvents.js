@@ -1,0 +1,2 @@
+
+export const ON_GET_NEW_TABLE_DATA = "ON_HO_GET_NEW_TABLE_DATA" ;

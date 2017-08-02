@@ -7,6 +7,8 @@
 export class DateLocalization
 {
     private currentTimestamp = 0;
+    private dateTime = null;
+
 
     /**
      * Convert C# excellent format to unixtimestamp
@@ -53,5 +55,38 @@ export class DateLocalization
         return ts > 0 ? moment.unix(ts/1000).format(inProps.format) : undefined;
         // return ts > 0 ? moment.unix(ts/1000).utcOffset(moment().utcOffset()).format(inProps.format) : undefined;
         // return ts > 0 ? moment.unix(ts/1000).utc().format(inProps.format) : undefined;
+    }
+
+
+    /**
+     * Real UTC format
+     * @param inDate
+     * @param {number} inReturn
+     * @returns {DateLocalization}
+     */
+    public fromSharp2(inDate, inReturn = 1, props = {})
+    {
+        let retval ;
+        try {
+            // "/Date(1489287600000+0000)/"
+            retval = this.dateTime = new Date(Date.parse(inDate));
+            // if (props.TZOffset) retval -= (new Date()).getTimezoneOffset() * 60 * 1000;
+        } catch (e) {
+            retval = undefined;
+        }
+            return inReturn ? retval : this;
+    }
+
+
+    /**
+     * Convert native Date to string date with format and localization
+     * @param dateTime
+     * @return {string}
+     */
+    public toLocalDate(inProps = {dateTime: '', format: 'MM/DD/Y'})
+    {
+        let dt : any = inProps.dateTime;
+        if (!dt) dt = this.dateTime;
+        return dt != null ? moment(dt).format(inProps.format) : undefined;
     }
 }

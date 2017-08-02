@@ -27,8 +27,8 @@ $reg_title: transparentize(#ffffff, 0.2);
 	i{
 		background-image: linear-gradient(to bottom, #3b3a44, #292830);
 		color: transparentize(#ffffff, 0.2);
-		&:before{  background: #2b2a32;  }
-		&:after{  background: #292830;  }
+		&:before{  color: rgba(255, 255, 255, 0.5);  }
+		&:after{  color: rgba(255, 255, 255, 0.5);  }
 	}
 	&.bottom i {
 		&:before, &:after{  background: #3b3a44  }

@@ -10,7 +10,7 @@ import sidebarActions from '../actions/sidebarActions.ts';
 import AnimateOnUpdate from '../components/Animation';
 import {CheckBox} from '../components/common/CheckBox';
 import OddsConverterComp from '../components/OddsConverter';
-
+import classnames from 'classnames';
 // import {DropBox2} from '../components/common/DropBox2';
 
 
@@ -65,15 +65,16 @@ class Header extends React.Component
 		let { actions, serverData, isBasicMode } = this.props;
         let $filter = appData.urlQuery ? appData.urlQuery.filter : '';
 
-		// serverData = !serverData ? {} : serverData;
 
-        // todo: при отсутствии данных с сокета, не фурычит, еще и меню ломается
 		if(serverData && serverData.GainLost !== undefined){
 			serverData.Profitlost = serverData.GainLost;
 			serverData.Exposure = serverData.Invested;
 			serverData.Available= serverData.CurrentBalance;
 		}
         const profitlost = serverData.Profitlost;
+
+        __DEV__&&console.log( 'ABpp.config.currentPage, ABpp.PAGE_MYPOS, ABpp', ABpp.config.currentPage, ABpp.PAGE_MYPOS, ABpp );
+
 
         return <div className="header_info">
 			{/*<div className="video btn">*/}
@@ -88,7 +89,7 @@ class Header extends React.Component
 				<div className="fast_menu">
 					<a href={globalData.Urls.Home} className={`f_button f_but_bor${globalData.action === 'index' && globalData.controller === 'home' && $filter !== 'live' ? " active" : ''}`}><span>Exchange</span> </a>
 					<a href={globalData.Urls.Home + "?filter=live"}  className={"f_button f_but_before f_but_bor" + ($filter === 'live' ? ' active' : '')}><span>My Games</span></a>
-					<a href="#" className="f_button f_but_before f_but_bor"><span className="history_event">My History</span></a>
+					<a href={globalData.Urls.MyActivity + "#/history"} className={classnames("f_button f_but_before f_but_bor", {"active": ABpp.config.currentPage === ABpp.CONSTS.PAGE_MYPOS})}><span className="history_event">My History</span></a>
 					<a href={globalData.Urls.TradingRules} className="f_button f_but_before"><span>Rules</span> </a>
 				</div>
 			</div>

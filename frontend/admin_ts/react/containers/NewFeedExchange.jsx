@@ -10,6 +10,7 @@ import {DefenceChoose} from 'components/NewFeedExchange/DefenceChoose';
 import {Team1} from '../components/NewFeedExchange/Team1';
 import {TeamResVar} from 'components/NewFeedExchange/TeamResVar';
 import {NewCategory} from '../components/NewFeedExchange/NewCategory';
+import {Options} from '../components/NewFeedExchange/Options';
 import {DateLocalization} from '../common/DateLocalization';
 import classNames from 'classnames';
 import {Common} from "common/Common.ts";
@@ -30,37 +31,48 @@ class NewFeedExchange extends BaseController
     {
         super(props);
 
-        __DEV__&&console.debug( 'this.props', props );
+        __DEV__&&console.log( 'NewFeedExchange', props );
 
         // const { Players } = this.props.data;
         this.LoadingObj = new Loading;
-        this.state = {currTeamKey: 0, okBtnDisabled: false};
+        this.state = {
+            currTeamKey: 0,
+            okBtnDisabled: false,
+            CbEventsItems: this._getCbEventsItems(props.data.TimeEvent),
+            TimeEvent: props.data.TimeEvent
+        };
     }
 
 
-/*
-    componentDidUpdate()
+    componentWillReceiveProps(next)
     {
-        __DEV__&&console.debug( 'this.props', this.props );
+        const { TimeEvent } = next.data;
+
+        if( TimeEvent !== this.state.TimeEvent )
+        {
+            this.state.CbEventsItems = this._getCbEventsItems(TimeEvent);
+            this.state.TimeEvent = TimeEvent;
+            this.setState({...this.state});
+        } // endif
+
+        return true;
     }
-*/
 
 
     render()
     {
         const { actions, data: AppData } = this.props;
-        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, CurrentEventObj, Rules, CurrentTeam, Category, Categories, IsEditFeedExchange } = this.props.data;
-        const { currTeamKey, okBtnDisabled } = this.state;
+        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, CurrentEventObj, Rules, CurrentTeam, Category, Categories, IsEditFeedExchange, TeamSize } = this.props.data;
+        const { currTeamKey, okBtnDisabled, CbEventsItems } = this.state;
         var items = [], currentCat, catItems, ParentId, ParentName;
 
-        //console.log( 'AppData', {AppData}, PlayersTeam1.players );
 
         // prepare command creation interface data
         const playersComponents = [
-            [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={{players: PlayersTeam1.players, TeamDefence: FormData['Team1Defense'], name: FormData['teamName1'], positions: Positions, uplayerdata: UPlayerData, actions, teamNum: "1", }} />,],
+            [1, 1, 'Players team 1', PlayersTeam1.players, <Team1 data={{players: PlayersTeam1.players, TeamDefence: FormData['Team1Defense'], name: FormData['teamName1'], positions: Positions, uplayerdata: UPlayerData, actions, teamNum: "1", TeamSize }} />,],
             [1, 2, 'Reserve players team 1', PlayersTeam1Reserve.players, <TeamResVar players={PlayersTeam1Reserve.players} teamVar="PlayersTeam1Reserve" actions={actions} teamNum="1" />,],
             [1, 3, 'Variable reserve team 1', PlayersTeam1Variable.players, <TeamResVar players={PlayersTeam1Variable.players} teamVar="PlayersTeam1Variable" actions={actions} teamNum="1" />,],
-            [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={{players: PlayersTeam2.players, TeamDefence: FormData['Team2Defense'], name: FormData['teamName2'], positions: Positions, uplayerdata: UPlayerData, actions, teamNum: "2", }} />,],
+            [2, 1, 'Players team 2', PlayersTeam2.players, <Team1 data={{players: PlayersTeam2.players, TeamDefence: FormData['Team2Defense'], name: FormData['teamName2'], positions: Positions, uplayerdata: UPlayerData, actions, teamNum: "2", TeamSize }} />,],
             [2, 2, 'Reserve players team 2', PlayersTeam2Reserve.players, <TeamResVar players={PlayersTeam2Reserve.players} teamVar="PlayersTeam2Reserve" actions={actions} teamNum="2" />,],
             [2, 3, 'Variable reserve team 2', PlayersTeam2Variable.players, <TeamResVar players={PlayersTeam2Variable.players} teamVar="PlayersTeam2Variable" actions={actions} teamNum="2" />,],
         ];
@@ -152,17 +164,12 @@ class NewFeedExchange extends BaseController
                                         <div className="events-filters form-group-filters" title="Filter events by period">
                                             { Object.keys(EventFilter).map((val) => <a href="#" key={val} class={Period == val ? '-bold' : ''} onClick={this._onEventFilterChange.bind(this, val)}> {EventFilter[val]} </a>) }
                                         </div>
-                                        <DropBox name="selected-state" items={items = Object.keys(AppData.TimeEvent).map((key) =>
-                                                { return {
-                                                    value: AppData.TimeEvent[key].EventId,
-                                                    label: `${AppData.TimeEvent[key].HomeTeam} vs ${AppData.TimeEvent[key].AwayTeam} (${(new DateLocalization).fromSharp2(AppData.TimeEvent[key].StartDate, 0).toLocalDate({format: 'MM/DD/Y h:mm A'})})`
-                                                }}
-                                            )}
+                                        <DropBox name="selected-state" items={CbEventsItems}
                                             /*items={[
                                                 { value: '1', label: 'var 1'},
                                                 { value: '2', label: 'var 2'},
                                             ]}*/
-                                            clearable={false} value={items[0]} searchable={true} afterChange={actions.actionChangeEvent}/>
+                                            clearable={false} value={CbEventsItems[0].value} searchable={true} afterChange={actions.actionChangeEvent}/>
                                     </div>
                                 </div>
                             </div>
@@ -179,6 +186,20 @@ class NewFeedExchange extends BaseController
                                     <div class="panel-collapse">
                                         <div class="box-body">
                                             <DefenceChoose data={{CurrentEventObj, FormData, actions}}/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-sm-6">
+                                <div class="panel box box-default">
+                                    <div class="box-header">
+                                        <h4 class="box-title">
+                                            Options
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse">
+                                        <div class="box-body form-horizontal">
+                                            <Options data={{Positions, TeamSize}} actions={actions}/>
                                         </div>
                                     </div>
                                 </div>
@@ -202,6 +223,9 @@ class NewFeedExchange extends BaseController
                                                 EventId,
                                                 t1pos: PlayersTeam1.positions,
                                                 t2pos: PlayersTeam2.positions,
+                                                TeamSize,
+                                                PlayersTeam1,
+                                                PlayersTeam2,
                                                 PlayersTeam1Reserve,
                                                 PlayersTeam2Reserve,
                                                 PlayersTeam1Variable,
@@ -481,6 +505,21 @@ class NewFeedExchange extends BaseController
         $('html, body').animate({
             scrollTop: $(this.blockTablePlayers).offset().top - 20
         }, 300);
+    }
+
+
+    /**
+     * Move players table to top
+     * @private
+     */
+    _getCbEventsItems(TimeEvent)
+    {
+        return Object.keys(TimeEvent).map((key) =>
+            { return {
+                value: TimeEvent[key].EventId,
+                label: `${TimeEvent[key].HomeTeam} vs ${TimeEvent[key].AwayTeam} (${(new DateLocalization).fromSharp2(TimeEvent[key].StartDate, 0).toLocalDate({format: 'MM/DD/Y h:mm A'})})`
+            }}
+        );
     }
 }
 

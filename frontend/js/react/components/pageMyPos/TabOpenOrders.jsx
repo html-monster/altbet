@@ -34,7 +34,7 @@ export class TabOpenOrders extends React.Component
         var filterBtn = (inCatName, $ca) => [<input key={inCatName + "11"} id={$ca = inCatName.replace(" ", "_").replace("-", "_") + "11"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '13'} htmlFor={$ca} className={this.filters[inCatName].toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{this.filters[inCatName]}</span></label>];
 
 
-        return <div className="tab_item">
+        return <div className="">
             <div className="my_position_tab">
                 <div className="wrapper">
                     <div className="filters">

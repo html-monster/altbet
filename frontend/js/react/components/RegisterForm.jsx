@@ -48,7 +48,7 @@ export class RegisterForm extends React.PureComponent
         }
 
 
-        this.state = {States: [], ageRestrict: 18, deniedText: '', birthDate: ""};
+        this.state = {States: [], ageRestrict: 18, deniedText: '', birthDate: "", loading: false};
 	}
 
 
@@ -57,9 +57,9 @@ export class RegisterForm extends React.PureComponent
         if( __DEBUG__ )
         {
             0||console.log( 'emulate here' )
-            setTimeout(() =>
-                {$(".log_out .sign_in").click();
-                    setTimeout(() => $(".register").click(), 500)
+            setTimeout(() => {
+                    $(".log_out .sign_in").click();
+                    setTimeout(() => $(".register_btn").click(), 500)
                 }, 700)
         } // endif
 
@@ -227,6 +227,32 @@ export class RegisterForm extends React.PureComponent
 
 
     /**
+     * Check for right login
+     * @param props - form verify data
+     * @return {boolean,string} - false if verify success
+     */
+    loginCheck(props)
+    {
+        let $error = '';
+        // 0||console.log( 'this.currentCountry', this.currentCountry );
+        // let errorAge = `Your must be greater than <var> years of age`;
+        // let errorDeny = `Notice: Residents of <var> are NOT eligible to participate in the service for real money.`;
+        // 0||console.log( 'years', years );
+
+        __DEV__&&console.log( 'props', props,  );
+
+        if( !props.value.charAt(0).match(/[A-Za-z]/) )
+        {
+            $error = "First User Name symbol must be a letter";
+        }
+        else $error = false;
+
+        // this.setState({...this.state, deniedText});
+        return $error;
+    }
+
+
+    /**
      * Check for states
      * @private
      * @param onCustomChange - for validation
@@ -298,6 +324,9 @@ export class RegisterForm extends React.PureComponent
 
 	render()
 	{
+        const { onSubmit, submitData } = this.props;
+        const { loading } = this.state;
+
 		const formContent = ({ input, error, successMessage, format/*, data:{ data, plan, depositQuantity, pricePlan }*/, handleSubmit }) => {
             //return <form action="http://localhost/AltBet.Admin/Category/TestAction" ref="F1regForm" method="post" onSubmit={handleSubmit}>
             return <form action={`${ABpp.baseUrl}/Account/Register`} onSubmit={handleSubmit}>
@@ -320,7 +349,7 @@ export class RegisterForm extends React.PureComponent
                                      className={'input__field input__field--yoshiko'}
                                      initialValue={__DEBUG__ ? "FedoryakaBest" : ""}
                                      label="User Name" type='text'
-                                     validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, dot, underscore, dash"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
+                                     validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, dot, underscore, dash"}), lengthValidation.bind(null, {min: 3, max: 20}), customValidation.bind(null, ::this.loginCheck)]} input={input}
                                      //validate={[emptyValidation, regexValidation.bind(null, {tmpl: /^[a-zA-Z0-9\.\-_]+$/, message: "Allowed: symbols, digits, .-_"}), lengthValidation.bind(null, {min: 3, max: 20})]} input={input}
                                      hint="User's login allow to use symbols such as: symbols, digits, dot, underscore, dash"
                                      zIndex="100"/>
@@ -368,7 +397,7 @@ export class RegisterForm extends React.PureComponent
 									 label="Date of Birth" type='text'
 									 afterChange={this.dateBirthChange.bind(this)}
 									 // initialValue={__DEBUG__ ? "12 Apr 1999" : ""}
-									 currVal={this.state.birthDate ? this.state.birthDate : __DEBUG__ ? "12 Apr 1999" : ""}
+									 currVal={this.state.birthDate ? this.state.birthDate : __DEBUG__ ? "12 Apr 1997" : ""}
 									 validate={[emptyValidation, customValidation.bind(null, ::this.dateBirthCheck)]} input={input}/>
 
 {/*
@@ -404,21 +433,43 @@ export class RegisterForm extends React.PureComponent
 
                 <hr/>
                 <div className={'register_form_message answer-message' + (error && ' validation-summary-errors')}>{error}</div>
-                <div className="submit">
+                <div className={classnames("submit", {"loading": loading})}>
                     {/*<input type="submit" value="Register" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue"/>*/}
-                    <button type="submit" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue">Join ALT.BET EXCHANGE</button>
-
+                    <button type="submit" id="submit_sign_up" className="register wave btn btn_lg_icon btn_blue" onClick={this._loading.bind(this, true)}>Join ALT.BET EXCHANGE</button>
                 </div>
             </form>
 		};
+
+
+        submitData.callback = ::this._sumbmitCallback;
 
 
 		return <FormValidation
 			renderContent={formContent}
 			/*data={this.props.data}
 			format={this.props.format}*/
-			handleSubmit={this.props.onSubmit}
+			handleSubmit={onSubmit.bind(null, submitData)}
 			serverValidation={true}
 		/>;
 	}
+
+
+    /**
+     * Callback after submit
+     * @private
+     */
+    _sumbmitCallback()
+    {
+        this._loading(false);
+    }
+
+
+    /**
+     * Loader show/hide
+     * @private
+     */
+    _loading(loading)
+    {
+        this.setState({...this.state, loading});
+    }
 }
