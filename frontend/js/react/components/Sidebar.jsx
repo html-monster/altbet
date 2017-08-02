@@ -48,13 +48,21 @@ class Sidebar extends React.Component
 
 	componentWillMount()
     {
-        let data = ABpp.SysEvents.getLastNotifyData(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL);
+		const { actions, sidebar: { traderOn } } = this.props;
+
+		let data = ABpp.SysEvents.getLastNotifyData(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL);
+
         data && this.props.actions.actionOnActiveSymbolChanged(data);
-		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ODD_SYSTEM, (props) => this.props.actions.actionOnOddSystemChange(props));
-		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, (props) => this.props.actions.actionOnActiveSymbolChanged(props));
+		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ODD_SYSTEM, (props) => actions.actionOnOddSystemChange(props));
+		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, (props) => actions.actionOnActiveSymbolChanged(props));
 		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, () => {
 			// ABpp.config.tradeOn = false;
 			// globalData.tradeOn = false;
+			if(	ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS && // костыль из-за разного отображения табов сайдбара
+				!ABpp.config.basicMode && traderOn) actions.tabSwitch(actions, 'ActiveTrader');
+			else
+				actions.tabSwitch(actions, 'YourOrders');
+
 			this.setState({...this.state, isAllowAT: !ABpp.config.basicMode})
 		});
     }
