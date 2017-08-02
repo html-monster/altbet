@@ -305,11 +305,10 @@ export class IndexView extends BaseView
 
     public renderEditForm(data, callbackOk)
     {
-        // this.DialogEdit = new Dialog({
-        window.DialogEdit.openDialog({
-            // TPLName: '#TPLeditExchangeDialog',
-            // target: '.js-mp-dialog',
-            // render: true,
+        this.DialogEdit = new Dialog({
+            TPLName: '#TPLeditExchangeDialog',
+            target: '.js-mp-dialog',
+            render: true,
             vars: {
                 title: `Edit exchange “${data.name}”`,
                 btnOkTitle: 'Save',
@@ -317,14 +316,14 @@ export class IndexView extends BaseView
                 data: data.data.Symbol,
                 // type: 'modal-default',
             },
-            afterInit: (dialogContext, wrapper, {TypeEvent}) =>
+            afterInit: (dialogContext, wrapper) =>
             {
                 wrapper = $(wrapper);
 
                 (new RadioBtns({
                     activeClass: "btn-success",
                     target: "[data-js=radio-btn]",
-                    defaultIndex: TypeEvent == 1 ? 0 : 1,
+                    defaultIndex: data.data.Symbol.TypeEvent == 1 ? 0 : 1,
                     callbacks: [() => $("[data-js=EdFullname]", wrapper).slideUp(200), () => $("[data-js=EdFullname]", wrapper).slideDown(400)],
                 })).apply();
 
@@ -559,16 +558,17 @@ export class IndexView extends BaseView
         });
 
 
+        window.HomeEvents.setEditedData(inProps);
         let $table = $("[data-js=tabl-exch]");
         let $tr = $(`[data-id=${inProps.Exchange}]`, $table);
-        $("[data-js=TD-FullName]", $tr).text(inProps.FullName);
-        $("[data-js=TD-HomeName]", $tr).text(inProps.HomeName);
-        $("[data-js=TD-HomeHandicap]", $tr).text(inProps.HomeHandicap);
-        $("[data-js=TD-AwayName]", $tr).text(inProps.AwayName);
-        $("[data-js=TD-AwayHandicap]", $tr).text(inProps.AwayHandicap);
-        $("[data-js=TD-StartDate]", $tr).text(inProps.StartDate);
-        $("[data-js=TD-EndDate]", $tr).text(inProps.EndDate);
-        $("[data-js=TD-UrlExchange]", $tr).text(inProps.UrlExchange);
+        // $("[data-js=TD-FullName]", $tr).text(inProps.FullName);
+        // $("[data-js=TD-HomeName]", $tr).text(inProps.HomeName);
+        // $("[data-js=TD-HomeHandicap]", $tr).text(inProps.HomeHandicap);
+        // $("[data-js=TD-AwayName]", $tr).text(inProps.AwayName);
+        // $("[data-js=TD-AwayHandicap]", $tr).text(inProps.AwayHandicap);
+        // $("[data-js=TD-StartDate]", $tr).text(inProps.StartDate);
+        // $("[data-js=TD-EndDate]", $tr).text(inProps.EndDate);
+        // $("[data-js=TD-UrlExchange]", $tr).text(inProps.UrlExchange);
 
         this.DialogEdit.close();
 
