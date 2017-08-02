@@ -57,7 +57,7 @@
   svg { width: 100% !important;  }
   img{  width: 100%;  }
 
-  .executed_orders{
+    .executed_orders{
     width: 30%;
     margin-top: -20px;
     padding: 10px;
@@ -114,6 +114,11 @@
         &.fadeColorOut {  animation-name: fadeColorOutBuy;  }
       }
       &.center{ width: 100%; position: absolute; top: calc(50% - 11px); }
+    }
+    .thin{  display: none;  }
+    @include mdmax(1500){
+      .thin{  display: inline;  }
+      .wide{  display: none;  }
     }
   }
 }

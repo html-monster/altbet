@@ -485,7 +485,10 @@ export default class ExchangeItem extends React.Component
 														transitionEnterTimeout={600}
 														transitionLeaveTimeout={500}
 														>
-															<td><span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MM/DD/YYYY hh:mm A', TZOffset: 1})}</span></td>
+															<td>
+																<span className="wide">{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MM/DD/YYYY hh:mm:ss A', TZOffset: 1})}</span>
+																<span className="thin">{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MM/DD/YYYY hh:mm A', TZOffset: 1})}</span>
+															</td>
 															<td className={`price ${side} animated`}><span>${item.Open.toFixed(2)}</span></td>
 															<td className={`volume ${side} animated`}><span>{item.Volume}</span></td>
 														</CSSTransitionGroup>
