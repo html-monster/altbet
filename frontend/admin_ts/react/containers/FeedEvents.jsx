@@ -58,6 +58,9 @@ class FeedEvents extends BaseController
         currLig = ligItems.slice().filter((val) => val.value == League || !League && !val.value )[0];
 
 
+        // sort title (см. как на HomeEvents)
+        let titleAttr = sortVal => (CurrentOrderBy ? CurrentOrderBy === "Asc" ? "sorted ascending" : "sorted descending" : 'click for sorting');
+
         return (
                 <div class="">
                     <div class="box-header">
@@ -105,7 +108,7 @@ class FeedEvents extends BaseController
                                 <th><span>Status</span></th>
                                 <th>
                                     <span className={classNames(`${CurrentOrderBy}`, {'icon': CurrentOrderBy && StartDateSort.indexOf('StartDate') > -1, 'active': StartDateSort.indexOf('StartDate') > -1})}>
-                                        <a href="#" onClick={this._onSortClick.bind(this, {Sport, League, sort: 'StartDate' + OrderBy, OrderBy, page: 1})}>Start date</a>
+                                        <a href="#" className="dotted" onClick={this._onSortClick.bind(this, {Sport, League, sort: 'StartDate' + OrderBy, OrderBy, page: 1})} title={titleAttr('StartDate')}>Start date</a>
                                         {/*<a href={MainConfig.BASE_URL + `/Feed?` + getUrlParams()}>Start date</a>*/}
                                     </span>
 {/*

@@ -45,7 +45,7 @@ class HomeEvents extends BaseController
 
     render()
     {
-        let { actions, data: {LastNode, Status, StatusEvent, Links, LinksMenu, Exchanges, TypeEvent, TypeEventStr, NewEventData} } = this.props;
+        let { actions, data: {Sort, LastNode, Status, StatusEvent, Links, LinksMenu, Exchanges, TypeEvent, TypeEventStr, NewEventData} } = this.props;
         let $DateLocalization = new DateLocalization();
 
         // prepare sport filter
@@ -61,9 +61,13 @@ class HomeEvents extends BaseController
 
         // prepare filters
         let actFilClass = [], actFilTitle = [];
-        let filtersClass = ["primary", "success", "warning", "default"];
+        // let filtersClass = ["primary", "success", "warning", "default"];
         actFilClass[Status] = " active";
         actFilTitle[Status] = "Active filter";
+
+        // active sort title, classes
+        let titleAttr = sortVal => (Sort.SortBy.indexOf(sortVal) > -1 ? Sort.OrderBy === "Asc" ? "sorted ascending" : "sorted descending" : 'click for sorting');
+        let sortClasses = sortVal => classnames('icon -nowrap', Sort.OrderBy, {'active': Sort.SortBy.indexOf(sortVal) > -1})
 
 
         return <div class="">
@@ -94,25 +98,33 @@ class HomeEvents extends BaseController
                         <thead>
                             <tr>
                                 <th>
-                                    <span class="">
-                                        Full name
+                                    <span className={sortClasses('FullName')}>
+                                        <a href={Sort.Links.FullName} title={titleAttr('FullName')}>Full name</a>
                                         {/*@Html.ActionLink("Full name", "Index", new { @path = Model.Path, @status = Model.Status, ln = Model.LastNode, @sortBy = Model.NameSort, @orderBy = Model.OrderBy })*/}
                                     </span>
+      {/*                              @{
+                                        string titleAttr = (Model.OrderBy == "Asc" ? "sorted ascending" : "sorted descending");
+                                        bool flag;
+                                    }*/}
+{/*
+                                    <span class="icon @Model.OrderBy @((flag = Model.SortBy.Contains("FullName")) ? "active" : "")" title="@(flag ? titleAttr : "")">
+                                            @Html.ActionLink("Full name", "Index", new {@path = Model.Path, @status = Model.Status, ln = Model.LastNode, @sortBy = Model.NameSort, @orderBy = Model.OrderBy})
+                                        </span>
+*/}
                                 </th>
                                 <th><span>Home name</span></th>
                                 <th><span>Handicap</span></th>
                                 <th><span>Away name</span></th>
                                 <th><span>Handicap</span></th>
                                 <th>
-                                    <span class={`icon`}>
-                                        Start date
-                                        {/*@Html.ActionLink("Start date", "Index", new { @path = Model.Path, @status = Model.Status, ln = Model.LastNode, @sortBy = Model.StartDateSort, @orderBy = Model.OrderBy })*/}
+                                    <span className={sortClasses('StartDate')}>
+                                        <a href={Sort.Links.StartDate} title={titleAttr('StartDate')}>Start date</a>
                                     </span>
+
                                 </th>
                                 <th>
-                                    <span class={`icon`}>
-                                        End date
-                                        {/*@Html.ActionLink("End date", "Index", new { @path = Model.Path, @status = Model.Status, ln = Model.LastNode, @sortBy = Model.EndDateSort, @orderBy = Model.OrderBy })*/}
+                                    <span className={sortClasses('EndDate')}>
+                                        <a href={Sort.Links.EndDate} title={titleAttr('EndDate')}>End date</a>
                                     </span>
                                 </th>
                                 <th><span>Type</span></th>
@@ -133,8 +145,8 @@ class HomeEvents extends BaseController
                                     <td data-js="TD-HomeHandicap">{val.Symbol.HomeHandicap}</td>
                                     <td data-js="TD-AwayName">{val.Symbol.AwayName}</td>
                                     <td data-js="TD-AwayHandicap">{val.Symbol.AwayHandicap}</td>
-                                    <td data-js="TD-StartDate">{val.Symbol.StartDate}</td>
-                                    <td data-js="TD-EndDate">{val.Symbol.EndDate}</td>
+                                    <td data-js="TD-StartDate">{$DateLocalization.fromSharp2(val.Symbol.StartDate, 0).toLocalDate({format: "MM/DD/Y h:mm A"})}</td>
+                                    <td data-js="TD-EndDate">{val.Symbol.EndDate && $DateLocalization.fromSharp2(val.Symbol.EndDate, 0).toLocalDate({format: "MM/DD/Y h:mm A"})}</td>
                                     <td data-js="">{TypeEventStr[val.Symbol.TypeEvent]}</td>
                                     <td data-js="TD-UrlExchange">{val.Symbol.UrlExchange}</td>
                                     {Status == StatusEvent.Settlement &&
