@@ -20,7 +20,6 @@ export class NewHomeEvent extends React.Component
     render()
     {
         const {data: {CategoryUrl}} = this.props.data;
-        let jj = 0, kk = 1;
 
 
         return <div class="box box-success collapsed-box">

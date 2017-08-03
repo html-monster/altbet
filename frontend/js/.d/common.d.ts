@@ -42,6 +42,7 @@ interface Window
 {
     ADpp : any
     SocketSubscribe : any
+    HomeEvents : any
 }
 
 

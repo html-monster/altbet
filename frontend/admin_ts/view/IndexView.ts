@@ -16,6 +16,14 @@ import {User} from "../model/User";
 import Common from "../inc/Common";
 
 
+interface Window
+{
+    ADpp : any
+    SocketSubscribe : any
+    HomeEvents : any
+}
+
+
 export class IndexView extends BaseView
 {
     private InfoMessage = null;

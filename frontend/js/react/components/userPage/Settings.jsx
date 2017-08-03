@@ -128,7 +128,7 @@ class Settings extends React.Component
                                      maxLength="20" disabled={true}/>
 
                     <InputValidation renderContent={this.datePickerRender} id={'user_b_day'} name="DateOfBirth"
-                                     className={'input__field  input__field--yoshiko datePickerJs'}
+                                     className={'input__field  input__field--yoshiko'}
                                      //initialValue
                                      afterChange={this.dateBirthChange.bind(this)}
                                      currVal={birthDateStr}
