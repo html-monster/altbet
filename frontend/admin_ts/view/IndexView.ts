@@ -318,6 +318,8 @@ export class IndexView extends BaseView
             },
             afterInit: (dialogContext, wrapper) =>
             {
+                wrapper = $(wrapper);
+
                 (new RadioBtns({
                     activeClass: "btn-success",
                     target: "[data-js=radio-btn]",
@@ -556,16 +558,17 @@ export class IndexView extends BaseView
         });
 
 
+        window.HomeEvents.setEditedData(inProps);
         let $table = $("[data-js=tabl-exch]");
         let $tr = $(`[data-id=${inProps.Exchange}]`, $table);
-        $("[data-js=TD-FullName]", $tr).text(inProps.FullName);
-        $("[data-js=TD-HomeName]", $tr).text(inProps.HomeName);
-        $("[data-js=TD-HomeHandicap]", $tr).text(inProps.HomeHandicap);
-        $("[data-js=TD-AwayName]", $tr).text(inProps.AwayName);
-        $("[data-js=TD-AwayHandicap]", $tr).text(inProps.AwayHandicap);
-        $("[data-js=TD-StartDate]", $tr).text(inProps.StartDate);
-        $("[data-js=TD-EndDate]", $tr).text(inProps.EndDate);
-        $("[data-js=TD-UrlExchange]", $tr).text(inProps.UrlExchange);
+        // $("[data-js=TD-FullName]", $tr).text(inProps.FullName);
+        // $("[data-js=TD-HomeName]", $tr).text(inProps.HomeName);
+        // $("[data-js=TD-HomeHandicap]", $tr).text(inProps.HomeHandicap);
+        // $("[data-js=TD-AwayName]", $tr).text(inProps.AwayName);
+        // $("[data-js=TD-AwayHandicap]", $tr).text(inProps.AwayHandicap);
+        // $("[data-js=TD-StartDate]", $tr).text(inProps.StartDate);
+        // $("[data-js=TD-EndDate]", $tr).text(inProps.EndDate);
+        // $("[data-js=TD-UrlExchange]", $tr).text(inProps.UrlExchange);
 
         this.DialogEdit.close();
 

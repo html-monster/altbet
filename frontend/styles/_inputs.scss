@@ -1,5 +1,7 @@
 //dftdgfdgdfgd
-
+.common_form{
+  display: flex;
+  flex-direction: column;
 form.style-type2 {
   .input-group {
     .label {}
@@ -12,4 +14,5 @@ form.style-type3 {
     .label {}
     .input {}
   }
+}
 }

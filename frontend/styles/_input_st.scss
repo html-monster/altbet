@@ -33,29 +33,7 @@
     margin: 0 0 2em;
     height: 57px;
     text-align: center;
-    //&.input_password:before {
-    //  content: '';
-    //  position: absolute;
-    //  top: 11px;
-    //  left: 8px;
-    //  width: 15px;
-    //  height: 21px;
-    //  font-size: 17px;
-    //  background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
-    //  z-index: 99;
-    //  opacity: 0.7;
-    //}
-    //&:before {
-    //  content: '';
-    //  position: absolute;
-    //  top: 11px;
-    //  left: 8px;
-    //  width: 15px;
-    //  height: 21px;
-    //  font-size: 17px;
-    //  z-index: 9;
-    //  opacity: 0.7;
-    //}
+
     &.input_mail:before {
       content: '@';
       position: absolute;
@@ -168,35 +146,8 @@
     opacity: 0;
   }
 
-
-  //.input__field--kuro + .input__label--kuro .input__label-content--kuro,
-  //.input--filled .input__label-content--kuro {
-  //  opacity: 0;
-  //}
-
   .remember_forgot {
     margin: 30px 0 0 0;
-    //label:first-of-type { display: block; }
-/*    input { display: none; }
-    input:checked + span { color: #d4d0ed; }
-    input:checked + span:before { background: url("#{$pathImage}/sprite.svg") no-repeat -310px -28px; }
-
-    span {
-      font-size: 12px;
-      color: #afabc8;
-      &:before {
-        content: '';
-        display: inline-block;
-        margin-top: -3px;
-        margin-right: 5px;
-        width: 16px;
-        height: 16px;
-        border: 1px solid #afabc8;
-        border-radius: 4px;
-        //background: url("#{$pathImage}/sprite.svg") no-repeat -20px -160px;
-        vertical-align: middle;
-      }
-    }*/
     a.forgot_password {
       display: none;
       float: right;
