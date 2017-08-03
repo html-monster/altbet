@@ -16,6 +16,8 @@
 }
 
 .page-Index {
+  .wrapper { overflow: visible; }
+
   .content-wrapper {
     //.box-body { overflow: visible }
     .btn-filter { @include iblock; margin-right: 10px;

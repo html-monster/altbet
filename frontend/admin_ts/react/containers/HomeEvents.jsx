@@ -124,8 +124,9 @@ class HomeEvents extends BaseController
                             </tr>
                         </thead>
 
-                        { Exchanges.map(val =>
-                            <tbody key={val.Symbol.Exchange}>
+                        { Exchanges.map((val, key) => {
+                            const isdropup = false&&key == Exchanges.length-1;
+                            return <tbody key={val.Symbol.Exchange}>
                                 <tr class="exch-row" data-id={val.Symbol.Exchange}>
                                     <td data-js="TD-FullName">{val.Symbol.FullName}</td>
                                     <td data-js="TD-HomeName">{val.Symbol.HomeName}</td>
@@ -141,7 +142,7 @@ class HomeEvents extends BaseController
                                     }
                                     <td>
                                         <div class="controls">
-                                            <div class="btn-group">
+                                            <div class={classnames("btn-group", {'dropup': isdropup})}>
                                                 <button type="button" data-js-btn-def-action="" class="btn btn-sm btn-default">Action</button>
                                                 <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
                                                     <span class="caret"/>
@@ -169,7 +170,9 @@ class HomeEvents extends BaseController
                                                     case StatusEvent.Approved:
                                                         menu = <ul class="dropdown-menu" role="menu">
                                                             <li><a href="#" data-js-btn-detail="" title="Details exchange">Details</a></li>
-                                                            <li><a href="#" class="js-btn-crud" data-type="edit" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Edit exchange">Edit</a></li>
+                                                            {val.Symbol.TypeEvent == TypeEvent.Fantasy ||
+                                                                <li><a href="#" class="js-btn-crud" data-type="edit" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Edit exchange">Edit</a></li>
+                                                            }
                                                             <li class="divider"></li>
                                                             <li><a href="#" class="js-btn-status" data-type="complete" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Set completed status">Set completed</a></li>
                                                         </ul>;
@@ -180,8 +183,10 @@ class HomeEvents extends BaseController
                                                             <li class="divider"></li>
                                                             <li><a href="#" class="js-btn-status" data-type="settlement" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Set settlement status">Set settlement</a></li>
                                                             <li><a href="#" class="js-btn-status" data-type="uncomplete" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Set approved status">Resume (set approved)</a></li>
-                                                                break;
-                                                            case StatusEvent.Settlement:
+                                                        </ul>;
+                                                        break;
+                                                    case StatusEvent.Settlement:
+                                                        menu = <ul class="dropdown-menu" role="menu">
                                                             <li><a href="#" data-js-btn-detail="" title="Details exchange">Details</a></li>
                                                         </ul>;
                                                         break;
@@ -196,7 +201,7 @@ class HomeEvents extends BaseController
                                     <td colSpan="10"/>
                                 </tr>
                             </tbody>
-                        )}
+                        })}
                     </table>
                 </div>
                 {/*<!-- /.box -->*/}

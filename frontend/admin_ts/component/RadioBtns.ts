@@ -36,7 +36,7 @@ export class RadioBtns
             let $buttons = $wrapper.find('button');
             $buttons.each(function(key)
             {
-                __DEV__&&console.log( '$buttons', self.options.defaultIndex, key );
+                // __DEV__&&console.log( '$buttons', self.options.defaultIndex, key );
                 let $that = $(this);
                 $that.attr("data-id", key);
                 if (self.options.defaultIndex == key) $that.removeClass(self.options.defaultClass).addClass("active " + self.options.activeClass);
