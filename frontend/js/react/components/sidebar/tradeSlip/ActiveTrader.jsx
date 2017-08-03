@@ -74,12 +74,12 @@ class ActiveTrader extends React.Component
 		else if((activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate, 1, {TZOffset: false}) < currentDate))
 		{
 			blocked = true;
-			blockMessage = 'This game is closed, try another';
+			blockMessage = 'This game is completed, please try another game';
 		}
 		else if(!userHasOrder)
 		{
 			blocked = true;
-			blockMessage = 'This game is closed, try another';
+			blockMessage = 'This game is completed, please try another game';
 		}
 
 

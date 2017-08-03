@@ -634,7 +634,7 @@ export default class OrderForm extends React.Component
 	{
 		event.preventDefault();
 
-		defaultMethods.showError('This game is closed, please try another');
+		defaultMethods.showError('This game is completed, please try another game');
 	}
 }
 

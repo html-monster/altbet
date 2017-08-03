@@ -131,7 +131,7 @@ export default class TraderSpreadForm extends React.Component {
 
 		if(endDate && moment().format('x') > endDate)
 		{
-			defaultMethods.showError('This game is closed, please try another');
+			defaultMethods.showError('This game is completed, please try another game');
 			return false;
 		}
 

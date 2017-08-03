@@ -115,11 +115,6 @@
       }
       &.center{ width: 100%; position: absolute; top: calc(50% - 11px); }
     }
-    .thin{  display: none;  }
-    @include mdmax(1500){
-      .thin{  display: inline;  }
-      .wide{  display: none;  }
-    }
   }
 }
 

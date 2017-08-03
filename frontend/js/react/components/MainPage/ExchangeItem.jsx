@@ -211,8 +211,25 @@ export default class ExchangeItem extends React.Component
 		let ticks = [];
 		if (chartData && chartData.Ticks.length)
 		{
+			let TSDate = null, TSCurrentDate = null, newTicks = chartData.Ticks.slice().reverse(), increment = 0;
+
 			ticks = chartData.Ticks.slice().reverse();
+
+			ticks.forEach((item, index) => {
+
+				TSCurrentDate = (new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'DD MMM Y', TZOffset: 1});
+
+				if(TSCurrentDate !== TSDate)
+				{
+					newTicks.splice(index + increment, 0, {...item, virtual: true});
+					TSDate = TSCurrentDate;
+					increment += 1;
+				}
+			});
+
+			ticks = newTicks;
 		}
+
 
 		/*
 		 var exchangeSideClickFn = actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
@@ -305,7 +322,7 @@ export default class ExchangeItem extends React.Component
 							<div className="inner animated dur4 mainButtonAnimate">
 								{
 									isEventClosed &&
-									<div className="btn_locker animated dur4 fadeIn">Game is over </div>
+									<div className="btn_locker animated dur4 fadeIn">Game is complete</div>
 								}
 								<ButtonContainer actions={actions} mainContext={mainContext} data={{
 									type    : 'sell',
@@ -347,46 +364,6 @@ export default class ExchangeItem extends React.Component
 							</div>
 						</div>
 					</div>
-					{/*<div className="h-symbol">*/}
-					{/*<h3 className="l-title">{ do {*/}
-					{/*let html = [<span key="0" data-js-title><span className="score">{$awayTotal}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>*/}
-					{/*, (Symbol.AwayHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap}</span> : ''*/}
-					{/*, data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[1]}`}>&nbsp;&nbsp;<i>{}</i>${(1 - data.Symbol.LastPrice).toFixed(2)}</span> : ""];*/}
-					{/*$classActiveExch ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>*/}
-					{/*: <span className="seemore-lnk">{html}</span>*/}
-					{/*}}*/}
-					{/*</h3>*/}
-
-					{/*<div className="l-buttons">*/}
-					{/*<div className="inner">*/}
-					{/*<ButtonContainer actions={actions} mainContext={mainContext} data={{*/}
-					{/*type: 'sell',*/}
-					{/*side: 1,*/}
-					{/*ismirror: true,*/}
-					{/*symbolName: symbol,*/}
-					{/*Orders: data.Orders,*/}
-					{/*...commProps*/}
-					{/*}}/>*/}
-
-					{/*<ButtonContainer actions={actions} mainContext={mainContext} data={{*/}
-					{/*type: 'buy',*/}
-					{/*side: 0,*/}
-					{/*ismirror: true,*/}
-					{/*symbolName: symbol,*/}
-					{/*Orders: data.Orders,*/}
-					{/*...commProps*/}
-					{/*}}/>*/}
-					{/*</div>*/}
-					{/*</div>*/}
-					{/*</div>*/}
-
-					{/*<div className={"event-content" + $classActiveNM} data-symbol={symbol} data-id={Symbol.Exchange} data-mirror="0"
-					 onClick={ABpp.config.tradeOn && actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
-					 isMirror: false,
-					 title: [Symbol.HomeName, Symbol.AwayName],
-					 symbol: symbol,
-					 })}
-					 ></div>*/}
 				</div>
 				{ Symbol.StatusEvent &&
 				<div className="event_info_bottom">
@@ -471,13 +448,13 @@ export default class ExchangeItem extends React.Component
 										{
 											chartData &&
 											ticks.length ?
-												ticks.map((item) =>
+												ticks.map((item, index) =>
 												{
 													let side = item.Side ? 'sell' : 'buy';
 
 													return <CSSTransitionGroup
 														component="tr"
-														key={item.Time + item.Open + item.Volume}
+														key={item.Time + index}//+ item.Open + item.Volume}
 														transitionName={{
 															enter : 'fadeColorOut',
 															leave : 'fadeColorOut',
@@ -490,11 +467,16 @@ export default class ExchangeItem extends React.Component
 														transitionLeaveTimeout={500}
 														>
 															<td>
-																<span className="wide">{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MM/DD/YYYY hh:mm:ss A', TZOffset: 1})}</span>
-																<span className="thin">{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MM/DD/YYYY hh:mm A', TZOffset: 1})}</span>
+																{
+																	item.virtual ?
+																		<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'DD MMM Y', TZOffset: 1})}</span>
+																		:
+																		<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'hh:mm:ss A', TZOffset: 1})}</span>
+																}
 															</td>
-															<td className={`price ${side} animated`}><span>${item.Open.toFixed(2)}</span></td>
-															<td className={`volume ${side} animated`}><span>{item.Volume}</span></td>
+															{!item.virtual && <td className={`price ${side} animated`}><span>${item.Open.toFixed(2)}</span></td>}
+															{!item.virtual && <td className={`volume ${side} animated`}><span>{item.Volume}</span></td>}
+
 														</CSSTransitionGroup>
 												})
 											:
