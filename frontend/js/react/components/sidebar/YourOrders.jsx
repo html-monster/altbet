@@ -225,7 +225,7 @@ class OrderItem extends React.Component
 					symbol={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}
 					startDate={(new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false})}
 					endDate={data.Symbol.EndDate ? (new DateLocalization).fromSharp(data.Symbol.EndDate, 1, {TZOffset: false}) : data.Symbol.EndDate}
-					ResultExchange={data.Symbol.ResultExchange}
+					OptionExchange={data.Symbol.OptionExchange}
 					newOrder={false}
 					showDeleteButton={false}
 					onSubmit={actions.actionOnAjaxSend.bind(null, formData.url)}

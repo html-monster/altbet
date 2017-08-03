@@ -1,13 +1,14 @@
 import React from 'react';
 // import { bindActionCreators } from 'redux';
 // import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 // import * as orderFormActions from '../../../actions/order/orderFormActions.ts';
 import InputNumber from '../../InputNumber';
 import OddsConverter from '../../../models/oddsConverter';
 
 /**
  * props:{
- *  formView: ,
  * 	formUrl: string, form action *required
  * 	id: string
  * 	limit: boolean - *required
@@ -21,7 +22,7 @@ import OddsConverter from '../../../models/oddsConverter';
  * 	symbol - event symbol *required
  * 	startDate: number - date of event beginning
  * 	endDate: number or null - date of event finishing
- * 	ResultExchange: string - event type
+ * 	OptionExchange: number - event type
  *  orderView - can be: 'advanced', 'simple', 'normal'
  *  showDeleteButton: boolean
  *  focus: string - turn on or off focus on price or quantity input; can be: 'price', 'quantity', 'normal'
@@ -303,7 +304,7 @@ export default class OrderForm extends React.Component
 	{
 		const stateData = this.state;
 		const { formUrl, id, side, ask, bid, limit, isMirror, symbol, startDate, endDate, newOrder = true, orderView = 'normal', price, priceDisabled,
-			ResultExchange, showDeleteButton = true, onSubmit, onDelete} = this.props;
+			OptionExchange, showDeleteButton = true, onSubmit, onDelete} = this.props;
 		const fees = Math.round10(ABpp.config.takerFees * stateData.quantity, -2);
 		let checkboxProp = stateData.limit;
 		// let formClass;
@@ -340,7 +341,7 @@ export default class OrderForm extends React.Component
 		if(startDate && startDate > +moment().format('x'))
 		{
 			// inputPrice = (+stateData.minPrice).toFixed(2);
-			if(ResultExchange === 'OU')
+			if(OptionExchange === 2)
 			{
 				buyText = 'If Over - BUY';
 				sellText = 'If Under - SELL';
@@ -635,4 +636,32 @@ export default class OrderForm extends React.Component
 
 		defaultMethods.showError('This game is closed, please try another');
 	}
+}
+
+//	validate: React.PropTypes.func,
+if(__DEV__)
+{
+	OrderForm.propTypes = {
+		formUrl: PropTypes.string.isRequired,
+		id: PropTypes.string,
+		limit: PropTypes.bool.isRequired,
+		side: PropTypes.oneOf(['sell', 'buy']).isRequired,
+		price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+		quantity: PropTypes.number,
+		maxEntries: PropTypes.number,
+		minPrice: PropTypes.number,
+		remainingBal: PropTypes.number,
+		isMirror: PropTypes.oneOf([0, 1]).isRequired,
+		symbol: PropTypes.string.isRequired,
+		startDate: PropTypes.number,
+		endDate: PropTypes.any,
+		OptionExchange: PropTypes.oneOf([0, 1, 2]),
+		orderView: PropTypes.oneOf(['advanced', 'simple', 'normal']),
+		showDeleteButton: PropTypes.bool,
+		focus: PropTypes.oneOf(['price', 'quantity', 'normal']),
+		focusOn: PropTypes.bool,
+		onSubmit: PropTypes.func,
+		onDelete: PropTypes.func,
+		onTypeChange: PropTypes.func,
+	};
 }

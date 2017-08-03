@@ -57,7 +57,7 @@ export default class TraderDefaultForm extends React.Component {
 					symbol={activeExchange.symbol}
 					//startDate={(new DateLocalization).fromSharp(activeExchange.StartDate, 1, {TZOffset: false})}
 					endDate={activeExchange.endDate ? (new DateLocalization).fromSharp(activeExchange.endDate, 1, {TZOffset: false}) : activeExchange.endDate}
-					// ResultExchange={data.ResultExchange}
+					// OptionExchange={data.OptionExchange}
 					newOrder={true}
 					orderView={'simple'}
 					showDeleteButton={true}

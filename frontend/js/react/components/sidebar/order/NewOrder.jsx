@@ -68,7 +68,7 @@ export default class NewOrder extends React.PureComponent
 							symbol={symbol}
 							startDate={(new DateLocalization).fromSharp(data.StartDate, 1, {TZOffset: false})}
 							endDate={data.EndDate ? (new DateLocalization).fromSharp(data.EndDate, 1, {TZOffset: false}) : data.EndDate}
-							ResultExchange={data.ResultExchange}
+							OptionExchange={data.OptionExchange}
 							newOrder={true}
 							showDeleteButton={true}
 							onSubmit={actions.actionOnAjaxSend.bind(null, {...item, formUrl: formData.url}, {defaultOrdersActions: actions, mainPageActions})}

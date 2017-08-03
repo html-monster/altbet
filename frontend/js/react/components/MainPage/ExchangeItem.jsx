@@ -114,11 +114,11 @@ export default class ExchangeItem extends React.Component
 			// 0||console.log( '$awayTotal', $awayTotal );
 		} // endif
 
-		if (lineupsData && Symbol.ResultExchange === 'OU') {
+		if (lineupsData && Symbol.OptionExchange === 2) {
 			spreadTitle = 'Total Points';
 			spreadValue = 'O/U ' + Math.round10(+lineupsData.HomeTotals.EPPG + +lineupsData.AwayTotals.EPPG, -2);
 		}
-		else if (lineupsData && Symbol.ResultExchange === 'ML') {
+		else if (lineupsData && Symbol.OptionExchange === 1) {
 			let coefficient = Math.abs(Symbol.HomeHandicap / lineupsData.HomeTotals.EPPG);
 			spreadTitle = 'Moneyline';
 
@@ -159,13 +159,13 @@ export default class ExchangeItem extends React.Component
 				Currency      : data.Symbol.Currency,
 				Bid           : data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid,
 				Ask           : data.Symbol.LastAsk === 1 ? null : data.Symbol.LastAsk,
-				ResultExchange: Symbol.ResultExchange,
+				OptionExchange: Symbol.OptionExchange,
 				StartDate     : Symbol.StartDate,
 				EndDate       : Symbol.EndDate,
 			}
 		};
 
-		const isEventClosed = Symbol.EndDate && +moment().format('x') > (new DateLocalization).fromSharp(Symbol.EndDate, 1, {TZOffset: false}),//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
+		const isEventClosed = Symbol.EndDate && moment().format('x') > (new DateLocalization).fromSharp(Symbol.EndDate, 1, {TZOffset: false}),//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
 			isEventStarted = +moment().format('x') > (new DateLocalization).fromSharp(Symbol.StartDate, 1, {TZOffset: false});
 
 		//lineupContainer height
@@ -255,7 +255,11 @@ export default class ExchangeItem extends React.Component
                         {date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) ? date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) : ''}
 						{/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>
-					{ !Symbol.EndDate && date.unixToLocalDate({format: 'x'}) < moment().format('x') && <i className="live">Live</i> }
+					{
+						(!Symbol.EndDate || !isEventClosed)
+						&& date.unixToLocalDate({format: 'x'}) < moment().format('x') &&
+						<i className="live">Live</i>
+					}
 					{/*{ Symbol.StatusEvent === 'inprogress' && <i className="live">Live</i> }*/}
 					{/*{ Symbol.StatusEvent === 'halftime' && <i className="halftime">Halftime</i> }*/}
 				</div>
@@ -516,7 +520,7 @@ export default class ExchangeItem extends React.Component
 							StartDate     : Symbol.StartDate,
 							EndDate       : Symbol.EndDate,
 							StartData     : Symbol.StartData,
-							ResultExchange: Symbol.ResultExchange,
+							OptionExchange: Symbol.OptionExchange,
 							minPrice      : spreadTitle === 'Moneyline' ? +(spreadValue.replace('$', '')) : 0.5,
 							Symbol        : {
 								Exchange: Symbol.Exchange,
