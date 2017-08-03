@@ -469,7 +469,7 @@ export default class ExchangeItem extends React.Component
 															<td>
 																{
 																	item.virtual ?
-																		<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'DD MMM Y', TZOffset: 1})}</span>
+																		<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MMM DD Y', TZOffset: 1})}</span>
 																		:
 																		<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'hh:mm:ss A', TZOffset: 1})}</span>
 																}
