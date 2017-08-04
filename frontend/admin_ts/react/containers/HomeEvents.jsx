@@ -99,7 +99,7 @@ class HomeEvents extends BaseController
                             <tr>
                                 <th>
                                     <span className={sortClasses('FullName')}>
-                                        <a href={Sort.Links.FullName} title={titleAttr('FullName')}>Full name</a>
+                                        <a href={Sort.Links.FullName} className="dotted" title={titleAttr('FullName')}>Full name</a>
                                         {/*@Html.ActionLink("Full name", "Index", new { @path = Model.Path, @status = Model.Status, ln = Model.LastNode, @sortBy = Model.NameSort, @orderBy = Model.OrderBy })*/}
                                     </span>
       {/*                              @{
@@ -118,13 +118,13 @@ class HomeEvents extends BaseController
                                 <th><span>Handicap</span></th>
                                 <th>
                                     <span className={sortClasses('StartDate')}>
-                                        <a href={Sort.Links.StartDate} title={titleAttr('StartDate')}>Start date</a>
+                                        <a href={Sort.Links.StartDate} className="dotted" title={titleAttr('StartDate')}>Start date</a>
                                     </span>
 
                                 </th>
                                 <th>
                                     <span className={sortClasses('EndDate')}>
-                                        <a href={Sort.Links.EndDate} title={titleAttr('EndDate')}>End date</a>
+                                        <a href={Sort.Links.EndDate} className="dotted" title={titleAttr('EndDate')}>End date</a>
                                     </span>
                                 </th>
                                 <th><span>Type</span></th>

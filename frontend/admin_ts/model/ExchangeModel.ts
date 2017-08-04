@@ -130,7 +130,7 @@ export default class ExchangeModel
                 type: 'POST',
                 success: function(data)
                 {
-                    __LDEV__&&console.debug( 'data AJAX', data );
+                    __DEV__ && console.log( 'data AJAX', data );
 
                     // correct
                     if( data.Error == 200 )
