@@ -196,7 +196,7 @@ export class IndexView extends BaseView
         } // endfor*/
 
         $CBtz.select2({
-            width: $width,
+            // width: $width,
             data: data,
             dropdownAutoWidth: true,
             templateResult: (state, liItm) => {
