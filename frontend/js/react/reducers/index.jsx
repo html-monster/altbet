@@ -155,4 +155,5 @@ switch (ABpp.config.currentPage)
 
 }
 
-export default combineReducers(reducers);
+
+export default combineReducers(Object.keys(reducers).length ? reducers : common);
