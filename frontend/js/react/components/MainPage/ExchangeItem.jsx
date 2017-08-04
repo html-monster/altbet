@@ -90,7 +90,7 @@ export default class ExchangeItem extends React.Component
 	{
 		const {
 			actions, disqusActions, chartData, data, data: {activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder, orderPrice},
-			mainContext, setCurrentExchangeFn, lineupsData
+			mainContext, setCurrentExchangeFn, lineupsData, SymbolLimitData
 		} = this.props;
 		let {activeTab, chart, isLPOpen,} = this.state;
 		// console.log('this.props:', this.props);
@@ -241,8 +241,7 @@ export default class ExchangeItem extends React.Component
 		// 0||console.log( 'exdata', this.data, Symbol.HomeName, thi7s.data[Symbol.HomeName] );
 
 		return (
-			<div
-				className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`,
+			<div className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`,
 					{not_started: !isEventStarted}, {finished: isEventClosed}, {clickable: !!isTraiderOn}, {active_nearby: currentExchange && !expModeClass},
 					{with_order: showOrder})} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
 				onClick={() => {
@@ -465,21 +464,21 @@ export default class ExchangeItem extends React.Component
 														transitionAppearTimeout={600}
 														transitionEnterTimeout={600}
 														transitionLeaveTimeout={500}
-														>
-															<td>
-																{
-																	item.virtual ?
-																		<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MMM DD Y', TZOffset: 1})}</span>
-																		:
-																		<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'hh:mm:ss A', TZOffset: 1})}</span>
-																}
-															</td>
-															{!item.virtual && <td className={`price ${side} animated`}><span>${item.Open.toFixed(2)}</span></td>}
-															{!item.virtual && <td className={`volume ${side} animated`}><span>{item.Volume}</span></td>}
+													>
+														<td>
+															{
+																item.virtual ?
+																	<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MMM DD Y', TZOffset: 1})}</span>
+																	:
+																	<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'hh:mm:ss A', TZOffset: 1})}</span>
+															}
+														</td>
+														{!item.virtual && <td className={`price ${side} animated`}><span>${item.Open.toFixed(2)}</span></td>}
+														{!item.virtual && <td className={`volume ${side} animated`}><span>{item.Volume}</span></td>}
 
-														</CSSTransitionGroup>
+													</CSSTransitionGroup>
 												})
-											:
+												:
 												<tr><td className="center"><span>You have no Data</span></td></tr>
 										}
 										</tbody>
@@ -496,15 +495,16 @@ export default class ExchangeItem extends React.Component
 					$classActiveExch &&
 					<DefaultOrdersLocal
 						eventData={{
-							ID            : `${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`,
-							EventTitle    : Symbol.HomeName,
-							Positions     : data.Positions,
-							StartDate     : Symbol.StartDate,
-							EndDate       : Symbol.EndDate,
-							StartData     : Symbol.StartData,
-							OptionExchange: Symbol.OptionExchange,
-							minPrice      : spreadTitle === 'Moneyline' ? +(spreadValue.replace('$', '')) : 0.5,
-							Symbol        : {
+							ID             : `${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`,
+							EventTitle     : Symbol.HomeName,
+							Positions      : data.Positions,
+							StartDate      : Symbol.StartDate,
+							EndDate        : Symbol.EndDate,
+							StartData      : Symbol.StartData,
+							OptionExchange : Symbol.OptionExchange,
+							minPrice       : spreadTitle === 'Moneyline' ? +(spreadValue.replace('$', '')) : 0.5,
+							SymbolLimitData: SymbolLimitData,
+							Symbol         : {
 								Exchange: Symbol.Exchange,
 								Name    : Symbol.Name,
 								Currency: Symbol.Currency

@@ -61,7 +61,8 @@ export default function activeTrader(state = initialState, action)
 			return {...state, spread: action.payload};
 
 		case TRADER_ON_SOCKET_MESSAGE:
-			return {...state, data: action.payload.data, rebuiltServerData: action.payload.rebuiltServerData };
+			return {...state, SymbolLimitData: action.payload.SymbolLimitData, data: action.payload.data,
+				rebuiltServerData: action.payload.rebuiltServerData };
 
 		case TRADER_ON_EXCHANGE_CHANGE:
 			return {...state, ...action.payload};

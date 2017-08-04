@@ -30,7 +30,7 @@ export default class TraderDefaultForm extends React.Component {
 	render()
 	{
 		const { activeString, bestPrice, cmpData: { activeExchange }, direction, focusOn, price, limit, index, traderContext,
-			isMirror, traderActions, quantity } = this.props;
+			isMirror, traderActions, quantity, SymbolLimitData } = this.props;
 		// console.log('this.props:', this.props);
 		// let orderFormStyle = {position: 'absolute', left: 0, zIndex: 10, marginTop: 10};
 		// console.log('bestPrice:', bestPrice);
@@ -50,8 +50,8 @@ export default class TraderDefaultForm extends React.Component {
 					ask={bestPrice.ask}
 					bid={bestPrice.bid}
 					price={price}
-					maxEntries={100}
-					remainingBal={95}
+					maxEntries={SymbolLimitData.EntryLimit}
+					remainingBal={SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance}
 					quantity={quantity}
 					isMirror={isMirror}
 					symbol={activeExchange.symbol}

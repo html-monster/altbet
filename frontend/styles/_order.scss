@@ -378,7 +378,7 @@
       &.buy{  background-color: #2dc7ca;  }
       //&.success{  background: url("#{$pathImage}/ico-success-w.png") no-repeat center #969696;  }
     }
-    i.submit{
+    &:not(.spread) i.submit{
       display: block;  flex-grow: 1;  border-radius: 0;
       &:hover{  overflow: visible !important;  }
       &:active{

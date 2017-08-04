@@ -40,21 +40,21 @@ class Actions extends BaseActions
             // flag && setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false,
             //     HomeName: data.Symbol.HomeName, AwayName: data.Symbol.AwayName, startDate: data.Symbol.StartDate, endDate: data.Symbol.EndDate}), 700);
 
-            ABpp.Websocket.subscribe(({SymbolsAndOrders, lineupsData}) =>
+            ABpp.Websocket.subscribe(({SymbolsAndOrders, lineupsData, SymbolLimitData}) =>
             {
                 let state = getState().mainPage;
 
                 let compare = SymbolsAndOrders.some((item, index)=>{
-                    delete item.TimeRemains;// костыль убирает TimeRemains (надо этот момент подправить)
-                    delete state.marketsData[index].TimeRemains;
-                    return JSON.stringify(item) !== JSON.stringify(state.marketsData[index])
+                        delete item.TimeRemains;// костыль убирает TimeRemains (надо этот момент подправить)
+                        delete state.marketsData[index].TimeRemains;
+                        return JSON.stringify(item) !== JSON.stringify(state.marketsData[index])
                 });
 
-                if( compare )
+                if( compare || JSON.stringify(state.SymbolLimitData) !== JSON.stringify(SymbolLimitData) )
                 {
                     dispatch({
                         type: MP_ON_SOCKET_MESSAGE,
-                        payload: {dataName: 'SymbolsAndOrders', SymbolsAndOrders}
+                        payload: {dataName: 'SymbolsAndOrders', SymbolsAndOrders, SymbolLimitData}
                     });
                     __DEV__ && console.log('re-render');
                 } // endif

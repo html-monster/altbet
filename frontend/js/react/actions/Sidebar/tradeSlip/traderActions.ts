@@ -15,7 +15,7 @@ import {
 import { ON_ACTIVE_SYMBOL_CHANGED } from '../../../constants/ActionTypesSidebar.js';
 import BaseActions from '../../BaseActions';
 import {RebuildServerData} from './activeTrader/rebuildServerData';
-import { orderForm } from '../../../components/formValidation/validation';
+// import { orderForm } from '../../../components/formValidation/validation';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 /// <reference path="../../../../.d/common.d.ts" />
 declare let __DEV__;
@@ -37,7 +37,7 @@ class Actions extends BaseActions
 			const { traderActions } = context.props;
 			let isMirror;
 
-			window.ee.addListener('activeOrders.update', (newData) => {
+			window.ee.addListener('activeOrders.update', ({ActiveOrders, SymbolLimitData}) => {
 				const state = getState();
 				// if($('#IsMir	ror').length)
 				// 	isMirror = $('#IsMirror').val() == 'False' ? 0 : 1;
@@ -53,7 +53,7 @@ class Actions extends BaseActions
 
 				let currSymbData : any = {};
 
-				$(newData).each(function(){
+				$(ActiveOrders).each(function(){
 					// let currentSymbol = `${this.Symbol.Exchange}_${this.Symbol.Name}_${this.Symbol.Currency}`;
 					let currentSymbol = this.Symbol.Exchange;
 
@@ -70,12 +70,14 @@ class Actions extends BaseActions
 					if(currSymbData.Symbol.LastBid == 0) currSymbData.Symbol.LastBid = null;
 				}
 				// console.log(JSON.stringify(state.activeTrader.data), JSON.stringify(currSymbData));
-				if(JSON.stringify(state.activeTrader.data) != JSON.stringify(currSymbData) || state.activeTrader.isMirror != isMirror)
+				if(JSON.stringify(state.activeTrader.data) !== JSON.stringify(currSymbData) || state.activeTrader.isMirror != isMirror ||
+					JSON.stringify(SymbolLimitData) !== JSON.stringify(state.activeTrader.SymbolLimitData))
 				{
 				// console.log('getState().activeTrader:', getState().activeTrader.orderInfo.outputOrder);
 					dispatch({
 						type: TRADER_ON_SOCKET_MESSAGE,
 						payload: {
+                            SymbolLimitData: SymbolLimitData,
 							data: currSymbData,
 							rebuiltServerData: traderActions.actionOnServerDataRebuild(currSymbData, isMirror)}
 					});
@@ -562,7 +564,7 @@ class Actions extends BaseActions
 			event.preventDefault();
 			const { cmpData: { activeExchange }, traderActions } = context.props;
 
-            if(!orderForm(event.currentTarget)) return false;
+            // if(!orderForm(event.currentTarget)) return false;
 
 			function OnBeginAjax()
 			{

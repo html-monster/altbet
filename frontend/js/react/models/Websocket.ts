@@ -210,7 +210,7 @@ export class WebsocketModel
             // if(globalData.mainPage) {
                 // 0||console.debug( 'data.SymbolsAndOrders.Result', data.SymbolsAndOrders.Result );
                 // dataController.updateOrderData(data.SymbolsAndOrders.Result);
-                self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]({SymbolsAndOrders: data.SymbolsAndOrders.Result, lineupsData: data.LineupData});
+                self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]({SymbolsAndOrders: data.SymbolsAndOrders.Result, lineupsData: data.LineupData, SymbolLimitData: data.CurrentSymbolLimitData});
             }
         }
 
@@ -221,7 +221,7 @@ export class WebsocketModel
 
         if(ABpp.config.tradeOn && !ABpp.config.basicMode)
         {
-            window.ee.emit('activeOrders.update', data.ActiveOrders);//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
+            window.ee.emit('activeOrders.update', {ActiveOrders: data.ActiveOrders, SymbolLimitData: data.CurrentSymbolLimitData});//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
         }
 
         // BM: event page data

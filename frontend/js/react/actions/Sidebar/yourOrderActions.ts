@@ -8,7 +8,7 @@ import {
 	ON_YOUR_ORDER_DELETE,
 } from "../../constants/ActionTypesYourOrders.js";
 import BaseActions from '../BaseActions';
-import { orderForm } from '../../components/formValidation/validation';
+// import { orderForm } from '../../components/formValidation/validation';
 
 class Actions extends BaseActions
 {
@@ -110,7 +110,7 @@ class Actions extends BaseActions
 
 			const form = event.currentTarget;
 
-			if(!orderForm(form)) return false;
+			// if(!orderForm(form)) return false;
 
 			function OnBeginAjax()
 			{

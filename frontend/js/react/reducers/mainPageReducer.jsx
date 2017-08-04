@@ -12,6 +12,7 @@ import {
 
 const initialState = {
     marketsData: appData.pageHomeData ? appData.pageHomeData.Data : null,
+	SymbolLimitData: null,
     Breadcrumbs: appData.pageHomeData ? appData.pageHomeData.Breadcrumbs : [],
     isBasicMode: globalData.basicMode,
     isTraiderOn: globalData.autoTradeOn,
@@ -41,7 +42,7 @@ export default function mainPage(state = initialState, action)
 			if(action.payload.dataName === 'lineupsData')
             	return {...state, lineupsData: action.payload.lineupsData};
             else
-            	return {...state, marketsData: action.payload.SymbolsAndOrders};
+            	return {...state, marketsData: action.payload.SymbolsAndOrders, SymbolLimitData: action.payload.SymbolLimitData};
 
         case MP_CHART_ON_SOCKET_MESSAGE:
             return {...state, charts: action.payload.newObj, serverChartsData: action.payload.serverChartsData};
