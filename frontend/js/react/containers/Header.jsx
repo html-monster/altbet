@@ -66,7 +66,7 @@ class Header extends React.Component
 		let { actions, serverData, isBasicMode } = this.props;
         let $filter = appData.urlQuery ? appData.urlQuery.filter : '';
 
-        __DEV__&&console.log( 'ABpp.config.currentPage, ABpp.PAGE_MYPOS, ABpp', ABpp.config.currentPage, ABpp.PAGE_MYPOS, ABpp );
+        __DEV__&&console.log( 'ABpp.condatefig.currentPage, ABpp.PAGE_MYPOS, ABpp', ABpp.config.currentPage, ABpp.PAGE_MYPOS, ABpp );
 
 		if(serverData && serverData.GainLost !== undefined){
 			serverData.Profitlost = serverData.GainLost;

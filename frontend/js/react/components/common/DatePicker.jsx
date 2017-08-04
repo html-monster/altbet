@@ -38,10 +38,13 @@ export class DatePicker extends React.PureComponent
 
 
         // init first value
-        let $dt = moment(value);
-        // __DEV__&&console.warn( 'value', value, $dt, $dt.getFullYear);
-        // __DEV__&&console.warn( 'value ffff', $dt.format("Y-MM-DD") );
-		afterChange && afterChange(value, $dt.format("Y-MM-DD"));
+		if( value )
+		{
+			let $dt = moment(value);
+			// __DEV__&&console.warn( 'value', value, $dt, $dt.getFullYear);
+			// __DEV__&&console.warn( 'value ffff', $dt.format("Y-MM-DD") );
+			 afterChange && afterChange(value, $dt.format("Y-MM-DD"));
+		} // endif
     }
 
 
