@@ -184,8 +184,8 @@ class OrderItem extends React.Component
 					<strong className="qty"> <span className="volume">{data.Volume}</span></strong>
 					<strong className="dt timestamp help balloon_only">
 		 				<span className="date">{(new DateLocalization).fromSharp(data.Time, 0).unixToLocalDate({format: 'MM/DD/YYYY'})}</span>&nbsp;
-                        <span className="time">{(new DateLocalization).fromSharp(data.Time, 0).unixToLocalDate({format: 'HH:mm'})}</span>
-						<span className="help_message"><strong>MM/DD/YYYY HH:MM</strong></span>
+                        <span className="time">{(new DateLocalization).fromSharp(data.Time, 0).unixToLocalDate({format: 'hh:mm:ss a'})}</span>
+						<span className="help_message"><strong>MM/DD/YYYY HH:MM:SS</strong></span>
 					</strong>
 					<div className="button_container">
 						<button className="edit" title="edit or change the order" onClick={::this.showForm}/>
