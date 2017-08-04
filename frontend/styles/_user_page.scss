@@ -14,8 +14,9 @@
     background: $sign_in_bg;
     border-radius: 5px;
   }
-  ul.tabs  { width: 15%; height: calc(100% - 90px); margin-right: 10px; margin-left: 10px; padding: 15px; position: fixed;
+  ul.tabs { width: 15%;  min-width: 203px; height: calc(100% - 90px); margin-right: 10px; margin-left: 10px; padding: 15px; position: fixed;
     top: 80px; list-style-type: none; font-size: 16px; //color: rgba(255, 255, 255, 0.8);
+    @include mdmax(1350){  position: absolute;  }
     li {
       position: relative;
       padding:0 10px 0 35px;
@@ -64,8 +65,8 @@
     width: 100%;
     padding: 7px 6px;
     border-radius: 4px;
-		box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
-		background-color: #01BCFF !important;
+    box-shadow: inset 0 -18px 25px -8px rgba(0, 0, 0, 0.3);
+    background-color: #01BCFF !important;
     background-position: 98% center;
     background-size: 5% 38%;
     color: #ffffff;
@@ -105,14 +106,14 @@
     //@include scroll;
     .tab_item {
       position: relative;
-      //&:first-child {  display: block;  }
+      //&:first-child { display: block; }
       .user_info {
         position: absolute;
         top: 11px;
         right: 0;
         text-align: right;
         strong{  display: block; color: #1b95e0; font-weight: bold;
-        &:nth-of-type(2){ padding: 10px 0px }}
+          &:nth-of-type(2){ padding: 10px 0px }}
       }
       h2 {
         color: #1b95e0;
@@ -122,28 +123,28 @@
         font-weight: bold;
       }
       h3{
-          position: relative;
-          opacity: 0.8;
-          margin: 20px 0 10px;
-          padding-bottom: 10px;
-          font-size: 24px;
-      &:before{
-        content: '';
-        position: absolute;
-        width: 25px;
-        height: 25px;
-        left: -28px;
-        top: 6px;
-      }
+        position: relative;
+        opacity: 0.8;
+        margin: 20px 0 10px;
+        padding-bottom: 10px;
+        font-size: 24px;
+        &:before{
+          content: '';
+          position: absolute;
+          width: 25px;
+          height: 25px;
+          left: -28px;
+          top: 6px;
+        }
 
         &.pers_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -420px -421px; }
         &.cont_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -455px -421px; }
         //&.passw_change:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -135px -6px; }
-        }
+      }
       h4{  margin: 15px 0 5px; font-weight: normal;  }
     }
 
-		.input_animate{display: block;}
+    .input_animate{display: block;}
 
     hr {
       clear: both;
@@ -161,30 +162,29 @@
       display: inline-block;
       width: 100%;
       li{  height: 22px;  }
-			label{
-				padding-left: 325px;
-				position: relative;
-				&>span{  position: relative;  }
+      label{
+        padding-left: 325px;
+        position: relative;
+        &>span{  position: relative;  }
         &.checkbox{  padding-left: 367px;  }
-        &.radio_button{  padding-left: 0; }
-        &.change-color{
-          height: 44px;
-          strong{  color: $color-min;  }
-        }
-			}
+        &.radio_button{  padding-left: 0; }        &.change-color{
+                                                     height: 44px;
+                                                     strong{  color: $color-min;  }
+                                                   }
+      }
       input:checked ~ strong{
         color: $checkbox_label_color;
       }
       .help_message strong{  font-size: 12px;  }
-			.label{
-				font-weight: normal;
-				font-size: 14px;
-				position: absolute;
-				top: calc(50% - 11px);
-				left: 0;
+      .label{
+        font-weight: normal;
+        font-size: 14px;
+        position: absolute;
+        top: calc(50% - 11px);
+        left: 0;
         transition: 0.4s ease-out;
-			}
-		}
+      }
+    }
 
     i{  width: 275px;  }
   }
@@ -333,9 +333,9 @@
 
 
   .gidx-btn {
-    &::before { background: url("#{$pathImage}/sprite.svg") no-repeat -102px -394px; }
-    &.withdraw::before { background-position: -134px -394px; }
-    &.history::before { background-position: -170px -394px; }
+    &::before { background: url("#{$pathImage}/sprite.svg") no-repeat -555px -420px; }
+    &.withdraw::before { background-position: -530px -420px; }
+    &.history::before { background-position: -495px -420px }
   }
 }
 

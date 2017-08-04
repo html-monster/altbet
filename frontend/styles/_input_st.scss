@@ -44,7 +44,7 @@
       z-index: 9999;
     }
     &.NickName:before {
-          background: url("#{$pathImage}/sprite.svg") no-repeat -525px -53px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -525px -53px;
     }
     &.Email:before {
       content: '@';
@@ -61,7 +61,7 @@
       }
     }
     &.country-states {
-     .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; font-size: 13px }
+      .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; font-size: 13px }
       .Select-placeholder { padding-left: 35px; font-size: 13px }
       &:before {
         background: url("#{$pathImage}/sprite.svg") no-repeat -549px -53px;
@@ -294,6 +294,10 @@
       left: 0px;
     }
   }
+}
+
+.sign_in_form{
+  .show_password{position: absolute; right: 5px; top: 13px; z-index: 999;}
 }
 
 .self_exclusion {

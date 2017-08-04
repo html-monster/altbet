@@ -1,18 +1,31 @@
-//dftdgfdgdfgd
-.common_form{
-  display: flex;
-  flex-direction: column;
-form.style-type2 {
-  .input-group {
-    .label {}
-    .input {}
-  }
-}
+////dftdgfdgdfgd
+//.common_form{
+//  display: flex;
+//  flex-direction: column;
+//
+//  .etalon { display: block; visibility: visible; position: relative; margin: 0 0 0 1px; padding: 15px; top: 0; left: 0; z-index: 10;
+//    width: 100px; height: 100px; min-height: 10px; border: 1px solid #000; color: #fff; background: #fff1f1; }
+//  .input-group { display: block; position: relative; margin: 0 0 1em; padding-top: 0.5em; width: 100%; height: 55px; max-width: 400px;
+//    vertical-align: top; text-align: center; transition: 0.4s ease-out;
+//    label {
 
-form.style-type3 {
-  .input-group {
-    .label {}
-    .input {}
+.formForInp{ display: block; margin: 0 0 1em; position: relative; height: 55px; width: 100%; max-width: 400px;
+             padding-top: 0.5em;
+
+  .common_line{ clear: both; margin-bottom: 5px; border-top: 1px solid #17161b; border-bottom: 1px solid #484753; display: block;
+      -webkit-margin-before: 0.5em; -webkit-margin-after: 0.5em; -webkit-margin-start: auto; -webkit-margin-end: auto; }
+
+  .input_group{ display: block; position: relative; margin: 0 0 1em; height: 55px; float: right; padding: 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+        color: #afabc8; background: transparent; width: calc(100% - 5px); z-index: 5; box-shadow: none; text-align: left;
+        font-size: 14px; transition: opacity 0.3s;
+      label{ position: absolute; padding: 0; float: right; opacity: 0; color: #afabc8; font-family: "open_sans_semibold", sans-serif; width: 100%;
+             font-weight: bold; font-size: 13px; text-align: left; }
+
+      .error{ display: block; position: absolute; padding: 10px 0; max-width: 265px; height: 36px; bottom: -34px; right: 0;
+              color: #ff4810; font-size: 12px; }
+
+      .bottom{ display: block; position: absolute; width: 10px; height: 10px; top: 20px; right: 5px; z-index: 170;
+              background: url("#{$pathImage}/sprite.svg") no-repeat -393px -431px; opacity: 0.5;  cursor: help;
+              transition: 0.4s ease-out; @include reg_help_message; }
   }
-}
 }
