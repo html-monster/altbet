@@ -147,7 +147,7 @@
     font-weight: bold;
     font-size: 13px;
     position: absolute;
-    left: 22px;
+    left: 20px;
     text-align: left;
 
   }
@@ -314,13 +314,17 @@
       color: #afabc8;
     }
     .input__label {
-      left: 0px;
+      left: 0;
     }
   }
 }
 
 .sign_in_form{
   .show_password{position: absolute; right: 5px; top: 13px; z-index: 999;}
+  .input__label{left: 35px;}
+}.change_password{
+  .input__label{left: 5px;}
+   .input__field{padding-left: 10px;}
 }
 
 .self_exclusion {
