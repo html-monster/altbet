@@ -511,7 +511,7 @@ export class IndexView extends BaseView
             let $StartDate = $("[data-js=StartDate]", form);
             let $EndDate = $("[data-js=EndDate]", form);
 
-            __DEV__&&console.log( 'item1.prop("checked"),item2.prop("checked")', item1.prop("checked"),item2.prop("checked") );
+            // __DEV__&&console.log( 'item1.prop("checked"),item2.prop("checked")', item1.prop("checked"),item2.prop("checked") );
 
             if( !item1.prop('checked') ) {ret.item = $StartDate; throw new Error("Set start date")};
             if( !item2.prop('checked') ) {ret.item = $EndDate; throw new Error("Set end date")};
