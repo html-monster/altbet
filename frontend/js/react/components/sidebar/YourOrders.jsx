@@ -101,7 +101,7 @@ class GroupingOrder extends React.Component
 						data.Orders.map((item) =>
 							<OrderItem
 									key={item.ID}
-									//allData={data}
+									LimitUserData={data.LimitUserData}
 									data={item}
 									onDelete={actions.actionOrderDelete.bind(null, item, this.props.indexGr)}
 									actions={actions}
@@ -129,8 +129,9 @@ class OrderItem extends React.Component
 		this.state = {currentOddSystem: ABpp.config.currentOddSystem}
 	}
 
-	showPopUp(){
-		const isEventStarted = +moment().format('x') > (this.props.data.Symbol.StartDate).split('+')[0].slice(6);
+	showPopUp()
+	{
+		const isEventStarted = moment().format('x') > (new DateLocalization).fromSharp(this.props.data.Symbol.StartDate, 1, {TZOffset: false});
 
 		if(isEventStarted)
 			$(this.refs.deletePopUp).fadeIn();
@@ -138,17 +139,29 @@ class OrderItem extends React.Component
 			defaultMethods.showWarning('You can`t delete the order before the game starts');
 	}
 
-	showForm(){
-		$(this.refs.formContainer).slideToggle(200);
+	showForm()
+	{
+		const isEventStarted = moment().format('x') > (new DateLocalization).fromSharp(this.props.data.Symbol.StartDate, 1, {TZOffset: false});
+
+		if(isEventStarted)
+			$(this.refs.formContainer).slideToggle(200);
+		else
+			defaultMethods.showWarning('You can`t edit order before the game starts');
 	}
 
-	hidePopUp(){
+	hidePopUp()
+	{
 		$(this.refs.deletePopUp).fadeOut();
 	}
 
-	shouldComponentUpdate(nextProps){
-		if(this.props.data.ID === nextProps.data.ID && this.props.data.Volume === nextProps.data.Volume &&
-			this.state.currentOddSystem === ABpp.config.currentOddSystem)
+	shouldComponentUpdate(nextProps)
+	{
+		const { data, LimitUserData } = this.props;
+
+		if(data.ID === nextProps.data.ID && data.Volume === nextProps.data.Volume &&
+			this.state.currentOddSystem === ABpp.config.currentOddSystem && (LimitUserData &&
+			LimitUserData.CurrentEntryBalance === nextProps.LimitUserData.CurrentEntryBalance &&
+			LimitUserData.EntryLimit === nextProps.LimitUserData.EntryLimit))
 			return false;
 
 		this.state.currentOddSystem = ABpp.config.currentOddSystem;
@@ -163,9 +176,10 @@ class OrderItem extends React.Component
 
 	render()
 	{
-		const { actions, data } = this.props;
+		const { actions, data, LimitUserData } = this.props;
 		//const allData = this.props.allData;
 		// const date = new Date(+data.Time.slice(6).slice(0, -2));
+
 		const formData = {
 			url: ABpp.baseUrl + '/Order/Edit',
 			action: 'edit'
@@ -184,8 +198,8 @@ class OrderItem extends React.Component
 					<strong className="qty"> <span className="volume">{data.Volume}</span></strong>
 					<strong className="dt timestamp help balloon_only">
 		 				<span className="date">{(new DateLocalization).fromSharp(data.Time, 0).unixToLocalDate({format: 'MM/DD/YYYY'})}</span>&nbsp;
-                        <span className="time">{(new DateLocalization).fromSharp(data.Time, 0).unixToLocalDate({format: 'HH:mm'})}</span>
-						<span className="help_message"><strong>MM/DD/YYYY HH:MM</strong></span>
+                        <span className="time">{(new DateLocalization).fromSharp(data.Time, 0).unixToLocalDate({format: 'hh:mm:ss a'})}</span>
+						<span className="help_message"><strong>MM/DD/YYYY HH:MM:SS</strong></span>
 					</strong>
 					<div className="button_container">
 						<button className="edit" title="edit or change the order" onClick={::this.showForm}/>
@@ -217,15 +231,15 @@ class OrderItem extends React.Component
 					bid={data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid}
 					price={(data.Price).toFixed(2)}
 					priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false})}
-					maxEntries={100}
+					maxEntries={LimitUserData ? LimitUserData.EntryLimit : null}
 					minPrice={data.Price}
-					remainingBal={95}
+					remainingBal={LimitUserData ? LimitUserData.EntryLimit - LimitUserData.CurrentEntryBalance : null}
 					quantity={data.Volume}
 					isMirror={data.isMirror}
 					symbol={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}
 					startDate={(new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false})}
 					endDate={data.Symbol.EndDate ? (new DateLocalization).fromSharp(data.Symbol.EndDate, 1, {TZOffset: false}) : data.Symbol.EndDate}
-					ResultExchange={data.Symbol.ResultExchange}
+					OptionExchange={data.Symbol.OptionExchange}
 					newOrder={false}
 					showDeleteButton={false}
 					onSubmit={actions.actionOnAjaxSend.bind(null, formData.url)}

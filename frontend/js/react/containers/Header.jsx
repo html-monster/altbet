@@ -9,29 +9,28 @@ import headerActions from '../actions/headerActions.ts';
 import sidebarActions from '../actions/sidebarActions.ts';
 import AnimateOnUpdate from '../components/Animation';
 import {CheckBox} from '../components/common/CheckBox';
-import OddsConverter from '../models/oddsConverter/oddsConverter.js';
-import {DropBox} from '../components/common/DropBox';
+import OddsConverterComp from '../components/OddsConverter';
 import classnames from 'classnames';
-
+// import {DropBox2} from '../components/common/DropBox2';
 
 
 class Header extends React.Component
 {
-    /**@private*/ userMenu;
-    /**@private*/ OddsConverterObj;
+    /**@private*/ _userMenu;
+    // /**@private*/ _OddsConverterObj;
 
 
 	constructor(props)
 	{
 		super(props);
-		this.OddsConverterObj = new OddsConverter();
+		// this._OddsConverterObj = new OddsConverterComp();
 	}
 
 	componentDidMount()
 	{
 		this.props.actions.actionSocketSubscribe();
 
-		0||console.log( 'this.props', this.props );
+		// 0||console.log( 'this.props', this.props );
 
 		/** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, () => this.props.actions.actionSwitchBasicMode(ABpp.config.basicMode));
 	}
@@ -131,24 +130,14 @@ class Header extends React.Component
 
 				{ ABpp.User.isAuthorized() ? <a className="my_order btn wave waves-effect waves-button" href={globalData.Urls.MyActivity}>My Activity</a> : ''}
 				{ ABpp.User.isAuthorized() ? <a href={ABpp.baseUrl + "/eng/Account/GidxWebCashierRegister?direction=Pay"} className="btn deposit wave waves-effect waves-button">Deposit</a> : ''}
-				{/*<button className="price_plan btn">Pricing Plans</button>*/}
-				{/*<DropBox className="odds_converter" name={name} items={this._setCurrOddItem([{key: 'Implied', val: 'Implied'}, {key: 'Decimal', val: 'Decimal'}, {key: 'American', val: 'American'}, {key: 'Fractional', val: 'Fractional'}])} hint="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Bettor" afterChoose={(props) => actions.changeOddSystem(props.val)} />*/}
-				<DropBox className="odds_converter" name={name} items={this._setCurrOddItem([{val: 'Implied'}, {val: 'Decimal'}, {val: 'American'}, {val: 'Fractional'}])} hint="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Player" afterChoose={(props) => actions.changeOddSystem(props.val)} />
 
-				{/*<div className="odds_converter select" title="This feature shows values in different odds, while pointing at the values in Trade Slip or Active Bettor ">
-					<span className="active_selection active_odd btn wave" onClick={this.listSlide.bind(this, true)}>{this.OddsConverterObj.getSystemName()}<i>{}</i></span>
-					<ul className="select_list odds_list" ref="oddsList" onClick={this.listSlide.bind(this, false)}>
-						<li onClick={actions.changeOddSystem.bind(null, 'Implied')}>Implied</li>
-						<li onClick={actions.changeOddSystem.bind(null, 'Decimal')}>Decimal</li>
-						<li onClick={actions.changeOddSystem.bind(null, 'American')}>American</li>
-						<li onClick={actions.changeOddSystem.bind(null, 'Fractional')}>Fractional</li>
-					</ul>
-				</div>*/}
+				<OddsConverterComp/>
+
 				<div className="user">
 					{
 						ABpp.User.userIdentity ?
 							<div className="log_in active">
-								<ul ref={(val) => this.userMenu = val} className="user-menu">
+								<ul ref={(val) => this._userMenu = val} className="user-menu">
 {/*
 									<li>
 										<strong className="change-color">
@@ -190,20 +179,20 @@ class Header extends React.Component
 	}
 
 
-	_setCurrOddItem(inItems)
-	{
-		inItems.every((vv,kk) =>
-		{
-			if( vv.val == this.OddsConverterObj.getSystemName() )
-			{
-				inItems[kk].selected = true;
-				return false;
-			} // endif
-			return true;
-		});
-
-		return inItems;
-	}
+	// _setCurrOddItem(inItems)
+	// {
+		// inItems.every((vv,kk) =>
+		// {
+		// 	if( vv.val == this._OddsConverterObj.getSystemName() )
+		// 	{
+		// 		inItems[kk].selected = true;
+		// 		return false;
+		// 	} // endif
+		// 	return true;
+		// });
+		//
+		// return inItems;
+	// }
 
 
     /**
@@ -212,7 +201,7 @@ class Header extends React.Component
      */
     _onLoginClick()
     {
-        $(this.userMenu).slideToggle().toggleClass('active');
+        $(this._userMenu).slideToggle().toggleClass('active');
     }
 
 

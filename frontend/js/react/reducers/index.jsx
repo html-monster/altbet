@@ -17,6 +17,7 @@ import transHistory from './userPage/transHistory';
 import myPosReduce from './MyPosReducer';
 import accountSetting from './userPage/settingReducer';
 import disqus from './disqusReducer';
+import oddsReducer from './oddsReducer';
 // import tradeSlip from './sidebar/tradeSlipReducer';
 import registerBox from './registerReducer';
 import confirmRegisterPage from './confirmRegisterPageReducer';
@@ -48,6 +49,7 @@ const common = {
 	header,
 	mainMenu,
 	registerBox,
+	oddsReducer
 };
 
 const pressetStatic = () => {return{

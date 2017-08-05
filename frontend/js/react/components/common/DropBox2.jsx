@@ -4,10 +4,20 @@
 
 import React from 'react';
 import Select from 'react-select';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 
 /**
  * @param className - class name of the container
+ * @param name - name of hidden field (for the forms)
+ * @param items: object[] - list item data, necessary parameter is: value, label. Example: [{label: "United State", value: "US"}, {label: "Canada", value: "CA"}, ]
+ * @param placeholder - select placeholder
+ * @param hint - onHover tip
+ * @param value - initial value
+ * @param clearable - create button, that clear select value
+ * @param searchable - gives able to enter the value in input
+ * @param afterChange - callback for after dropbox item click
  */
 export class DropBox2 extends React.Component
 {
@@ -21,13 +31,18 @@ export class DropBox2 extends React.Component
         const { clearable, searchable, disabled, value } = this.props;
         this.state = {
 			disabled: disabled,
-			searchable: searchable,
+			searchable: searchable || false,
 			selectValue: value,
-			clearable: clearable,
+			clearable: clearable || false,
 		};
 
     }
 
+	componentWillReceiveProps(nextProps)
+	{
+		this.setState({ selectValue: nextProps.value })
+		// this.state.selectValue = nextProps.value;
+	}
 
 /*
     componentDidMount()
@@ -41,13 +56,13 @@ export class DropBox2 extends React.Component
 
     render()
     {
-        const { name, items, placeholder, afterChange } = this.props;
+        const { name, className, items, placeholder, hint, afterChange } = this.props;
 
         return (
-            <div className="h-dropdown2">
+            <div className={classnames('h-dropdown2', className)} title={hint}>
                 <Select placeholder={placeholder} options={items} /*autofocus*/ simpleValue clearable={this.state.clearable}
                         disabled={this.state.disabled} value={this.state.selectValue} searchable={this.state.searchable}
-                        onChange={afterChange ? this._onChange.bind(this, afterChange, items) : null}/>
+                        onChange={(newValue) => this._onChange({afterChange, items, newValue})}/>
                 <input type="hidden" name={name}  value={this.state.selectValue || ""} /*ref={(input) => { this.valInput = input; }}*//>
             </div>
         );
@@ -57,10 +72,39 @@ export class DropBox2 extends React.Component
     /**
      * @private
      */
-    _onChange(afterChange, items, newValue)
+    _onChange(props)
     {
-        afterChange( newValue, items.filter((val) => val['value'] == newValue) );
+    	const { afterChange, items, newValue } = props;
+
+		afterChange && afterChange( newValue, items.filter((val) => val['value'] === newValue) );
 
         this.setState({ selectValue: newValue });
     }
 }
+
+
+//	validate: React.PropTypes.func,
+if(__DEV__)
+{
+	DropBox2.propTypes = {
+		items: PropTypes.arrayOf(PropTypes.shape({
+			value: PropTypes.string.isRequired,
+			label: PropTypes.string.isRequired,
+		})).isRequired,
+		className: PropTypes.string,
+		name: PropTypes.string,
+		placeholder: PropTypes.string,
+		hint: PropTypes.string,
+		value: PropTypes.string,
+		clearable: PropTypes.bool,
+		searchable: PropTypes.bool,
+		afterChange: PropTypes.func,
+	};
+}
+
+
+
+
+
+
+

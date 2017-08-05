@@ -7,7 +7,7 @@ import TraderDefaultForm from './activeTrader/TraderDefaultForm';
 import TraderSpreadForm from './activeTrader/TraderSpreadForm';
 import traderActions from '../../../actions/Sidebar/tradeSlip/traderActions';
 import defaultOrderActions from '../../../actions/Sidebar/tradeSlip/defaultOrderSidebarActions';
-import OddsConverter from '../../../models/oddsConverter/oddsConverter.js';
+import OddsConverter from '../../../models/oddsConverter.js';
 import { DateLocalization	 } from '../../../models/DateLocalization';
 // import RebuildServerData from '../../../actions/Sidebar/activeTrader/rebuildServerData';
 
@@ -34,7 +34,7 @@ class ActiveTrader extends React.Component
 		// const { activeString, showDefaultOrder } = this.state;
 		const { data, ...info } = this.props;
 		const { activeExchangeSymbol, dragData: { popUpShow }, cmpData:{ activeExchange, traderOn, autoTradeOn, startDate }, isMirror, orderInfo:{...orderInfo},
-			rebuiltServerData, spread, showQuantityError, quantity, traderActions } = this.props;
+			rebuiltServerData, spread, showQuantityError, quantity, traderActions, SymbolLimitData } = this.props;
 		// let copyData = $.extend(true, {}, data);
 		// let className, $active, $activeM;
 		let className = '';
@@ -74,12 +74,12 @@ class ActiveTrader extends React.Component
 		else if((activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate, 1, {TZOffset: false}) < currentDate))
 		{
 			blocked = true;
-			blockMessage = 'This game is closed, try another';
+			blockMessage = 'This game is completed, please try another game';
 		}
 		else if(!userHasOrder)
 		{
 			blocked = true;
-			blockMessage = 'This game is closed, try another';
+			blockMessage = 'This game is completed, please try another game';
 		}
 
 
@@ -208,6 +208,7 @@ class ActiveTrader extends React.Component
 									mainData={data}
 									quantity={quantity}
 									traderContext={this}
+									SymbolLimitData={SymbolLimitData}
 									{...info}
 									{...orderInfo}
 								/>
@@ -223,6 +224,7 @@ class ActiveTrader extends React.Component
 									mainData={data}
 									quantity={quantity}
 									traderContext={this}
+									SymbolLimitData={SymbolLimitData}
 									{...info}
 									{...orderInfo}
 								/>
@@ -382,6 +384,7 @@ class ActiveTrader extends React.Component
 						mainData={data}
 						quantity={quantity}
 						traderContext={this}
+						SymbolLimitData={SymbolLimitData}
 						{...info}
 						{...orderInfo}
 					/>
@@ -407,6 +410,7 @@ class ActiveTrader extends React.Component
 									orderInfo={orderInfo}
 									index={index}
 									traderContext={this}
+									SymbolLimitData={SymbolLimitData}
 									{...info}
 								/>
 							)
@@ -504,7 +508,7 @@ class TraderString extends React.Component {
 	{
 		// const { traderActions, activeString, data, mainData, index, inputQuantityContext, isMirror, quantity } = this.props;
 		const { activeExchangeSymbol, data, dragPrevPrice, dropActiveString, cmpData: { autoTradeOn, activeExchange }, index,
-			isMirror, orderInfo: {...info}, traderContext, spreadHighLight, quantity, spread, ...other } = this.props;
+			isMirror, orderInfo: {...info}, traderContext, spreadHighLight, quantity, spread, SymbolLimitData, ...other } = this.props;
 		// const {  showDefaultOrder  } = this.state;
 		// console.log(this.props);
 		const spreadPricePos = Math.round10(data.Price + +spread, -2);
@@ -722,6 +726,7 @@ class TraderString extends React.Component {
 								quantity={quantity}
 								isMirror={isMirror}
 								traderContext={traderContext}
+								SymbolLimitData={SymbolLimitData}
 								{...other}
 								{...info}
 							/>
@@ -737,6 +742,7 @@ class TraderString extends React.Component {
 								spread={spread}
 								isMirror={isMirror}
 								traderContext={traderContext}
+								SymbolLimitData={SymbolLimitData}
 								// inputQuantityContext={inputQuantityContext}
 								{...other}
 								{...info}

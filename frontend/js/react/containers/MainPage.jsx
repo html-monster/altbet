@@ -92,7 +92,7 @@ class MainPage extends BaseController
     {
         // let isBasicMode = ABpp.config.basicMode;
         const data = this.props.data;
-        const { actions, data:{ activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn, orderDetails: { orderPrice, showOrder }, lineupsData } } = this.props;
+        const { actions, data:{ activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn, orderDetails: { orderPrice, showOrder }, lineupsData, SymbolLimitData } } = this.props;
         const { currentExchange } = this.state;
         let $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
@@ -150,6 +150,7 @@ class MainPage extends BaseController
                                         actions={actions}
                                         disqusActions={this.props.disqusActions}
                                         lineupsData={lineupsData}
+                                        SymbolLimitData={SymbolLimitData}
                                     />
                                 )}
                             </div>

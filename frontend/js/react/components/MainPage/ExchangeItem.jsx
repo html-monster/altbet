@@ -90,7 +90,7 @@ export default class ExchangeItem extends React.Component
 	{
 		const {
 			actions, disqusActions, chartData, data, data: {activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder, orderPrice},
-			mainContext, setCurrentExchangeFn, lineupsData
+			mainContext, setCurrentExchangeFn, lineupsData, SymbolLimitData
 		} = this.props;
 		let {activeTab, chart, isLPOpen,} = this.state;
 		// console.log('this.props:', this.props);
@@ -114,11 +114,11 @@ export default class ExchangeItem extends React.Component
 			// 0||console.log( '$awayTotal', $awayTotal );
 		} // endif
 
-		if (lineupsData && Symbol.ResultExchange === 'OU') {
+		if (lineupsData && Symbol.OptionExchange === 2) {
 			spreadTitle = 'Total Points';
 			spreadValue = 'O/U ' + Math.round10(+lineupsData.HomeTotals.EPPG + +lineupsData.AwayTotals.EPPG, -2);
 		}
-		else if (lineupsData && Symbol.ResultExchange === 'ML') {
+		else if (lineupsData && Symbol.OptionExchange === 1) {
 			let coefficient = Math.abs(Symbol.HomeHandicap / lineupsData.HomeTotals.EPPG);
 			spreadTitle = 'Moneyline';
 
@@ -159,13 +159,13 @@ export default class ExchangeItem extends React.Component
 				Currency      : data.Symbol.Currency,
 				Bid           : data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid,
 				Ask           : data.Symbol.LastAsk === 1 ? null : data.Symbol.LastAsk,
-				ResultExchange: Symbol.ResultExchange,
+				OptionExchange: Symbol.OptionExchange,
 				StartDate     : Symbol.StartDate,
 				EndDate       : Symbol.EndDate,
 			}
 		};
 
-		const isEventClosed = Symbol.EndDate && +moment().format('x') > (new DateLocalization).fromSharp(Symbol.EndDate, 1, {TZOffset: false}),//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
+		const isEventClosed = Symbol.EndDate && moment().format('x') > (new DateLocalization).fromSharp(Symbol.EndDate, 1, {TZOffset: false}),//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
 			isEventStarted = +moment().format('x') > (new DateLocalization).fromSharp(Symbol.StartDate, 1, {TZOffset: false});
 
 		//lineupContainer height
@@ -211,8 +211,25 @@ export default class ExchangeItem extends React.Component
 		let ticks = [];
 		if (chartData && chartData.Ticks.length)
 		{
+			let TSDate = null, TSCurrentDate = null, newTicks = chartData.Ticks.slice().reverse(), increment = 0;
+
 			ticks = chartData.Ticks.slice().reverse();
+
+			ticks.forEach((item, index) => {
+
+				TSCurrentDate = (new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'DD MMM Y', TZOffset: 1});
+
+				if(TSCurrentDate !== TSDate)
+				{
+					newTicks.splice(index + increment, 0, {...item, virtual: true});
+					TSDate = TSCurrentDate;
+					increment += 1;
+				}
+			});
+
+			ticks = newTicks;
 		}
+
 
 		/*
 		 var exchangeSideClickFn = actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
@@ -224,8 +241,7 @@ export default class ExchangeItem extends React.Component
 		// 0||console.log( 'exdata', this.data, Symbol.HomeName, thi7s.data[Symbol.HomeName] );
 
 		return (
-			<div
-				className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`,
+			<div className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`,
 					{not_started: !isEventStarted}, {finished: isEventClosed}, {clickable: !!isTraiderOn}, {active_nearby: currentExchange && !expModeClass},
 					{with_order: showOrder})} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
 				onClick={() => {
@@ -255,7 +271,11 @@ export default class ExchangeItem extends React.Component
                         {date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) ? date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) : ''}
 						{/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>
-					{ !Symbol.EndDate && date.unixToLocalDate({format: 'x'}) < moment().format('x') && <i className="live">Live</i> }
+					{
+						(!Symbol.EndDate || !isEventClosed)
+						&& date.unixToLocalDate({format: 'x'}) < moment().format('x') &&
+						<i className="live">Live</i>
+					}
 					{/*{ Symbol.StatusEvent === 'inprogress' && <i className="live">Live</i> }*/}
 					{/*{ Symbol.StatusEvent === 'halftime' && <i className="halftime">Halftime</i> }*/}
 				</div>
@@ -301,7 +321,7 @@ export default class ExchangeItem extends React.Component
 							<div className="inner animated dur4 mainButtonAnimate">
 								{
 									isEventClosed &&
-									<div className="btn_locker animated dur4 fadeIn">Game is over </div>
+									<div className="btn_locker animated dur4 fadeIn">Game is complete</div>
 								}
 								<ButtonContainer actions={actions} mainContext={mainContext} data={{
 									type    : 'sell',
@@ -343,46 +363,6 @@ export default class ExchangeItem extends React.Component
 							</div>
 						</div>
 					</div>
-					{/*<div className="h-symbol">*/}
-					{/*<h3 className="l-title">{ do {*/}
-					{/*let html = [<span key="0" data-js-title><span className="score">{$awayTotal}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>*/}
-					{/*, (Symbol.AwayHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap}</span> : ''*/}
-					{/*, data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[1]}`}>&nbsp;&nbsp;<i>{}</i>${(1 - data.Symbol.LastPrice).toFixed(2)}</span> : ""];*/}
-					{/*$classActiveExch ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>*/}
-					{/*: <span className="seemore-lnk">{html}</span>*/}
-					{/*}}*/}
-					{/*</h3>*/}
-
-					{/*<div className="l-buttons">*/}
-					{/*<div className="inner">*/}
-					{/*<ButtonContainer actions={actions} mainContext={mainContext} data={{*/}
-					{/*type: 'sell',*/}
-					{/*side: 1,*/}
-					{/*ismirror: true,*/}
-					{/*symbolName: symbol,*/}
-					{/*Orders: data.Orders,*/}
-					{/*...commProps*/}
-					{/*}}/>*/}
-
-					{/*<ButtonContainer actions={actions} mainContext={mainContext} data={{*/}
-					{/*type: 'buy',*/}
-					{/*side: 0,*/}
-					{/*ismirror: true,*/}
-					{/*symbolName: symbol,*/}
-					{/*Orders: data.Orders,*/}
-					{/*...commProps*/}
-					{/*}}/>*/}
-					{/*</div>*/}
-					{/*</div>*/}
-					{/*</div>*/}
-
-					{/*<div className={"event-content" + $classActiveNM} data-symbol={symbol} data-id={Symbol.Exchange} data-mirror="0"
-					 onClick={ABpp.config.tradeOn && actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
-					 isMirror: false,
-					 title: [Symbol.HomeName, Symbol.AwayName],
-					 symbol: symbol,
-					 })}
-					 ></div>*/}
 				</div>
 				{ Symbol.StatusEvent &&
 				<div className="event_info_bottom">
@@ -467,13 +447,13 @@ export default class ExchangeItem extends React.Component
 										{
 											chartData &&
 											ticks.length ?
-												ticks.map((item) =>
+												ticks.map((item, index) =>
 												{
 													let side = item.Side ? 'sell' : 'buy';
 
 													return <CSSTransitionGroup
 														component="tr"
-														key={item.Time + item.Open + item.Volume}
+														key={item.Time + index}//+ item.Open + item.Volume}
 														transitionName={{
 															enter : 'fadeColorOut',
 															leave : 'fadeColorOut',
@@ -484,13 +464,21 @@ export default class ExchangeItem extends React.Component
 														transitionAppearTimeout={600}
 														transitionEnterTimeout={600}
 														transitionLeaveTimeout={500}
-														>
-															<td><span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MM/DD/YYYY hh:mm A', TZOffset: 1})}</span></td>
-															<td className={`price ${side} animated`}><span>${item.Open.toFixed(2)}</span></td>
-															<td className={`volume ${side} animated`}><span>{item.Volume}</span></td>
-														</CSSTransitionGroup>
+													>
+														<td>
+															{
+																item.virtual ?
+																	<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MMM DD Y', TZOffset: 1})}</span>
+																	:
+																	<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'hh:mm:ss A', TZOffset: 1})}</span>
+															}
+														</td>
+														{!item.virtual && <td className={`price ${side} animated`}><span>${item.Open.toFixed(2)}</span></td>}
+														{!item.virtual && <td className={`volume ${side} animated`}><span>{item.Volume}</span></td>}
+
+													</CSSTransitionGroup>
 												})
-											:
+												:
 												<tr><td className="center"><span>You have no Data</span></td></tr>
 										}
 										</tbody>
@@ -507,15 +495,16 @@ export default class ExchangeItem extends React.Component
 					$classActiveExch &&
 					<DefaultOrdersLocal
 						eventData={{
-							ID            : `${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`,
-							EventTitle    : Symbol.HomeName,
-							Positions     : data.Positions,
-							StartDate     : Symbol.StartDate,
-							EndDate       : Symbol.EndDate,
-							StartData     : Symbol.StartData,
-							ResultExchange: Symbol.ResultExchange,
-							minPrice      : spreadTitle === 'Moneyline' ? +(spreadValue.replace('$', '')) : 0.5,
-							Symbol        : {
+							ID             : `${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`,
+							EventTitle     : Symbol.HomeName,
+							Positions      : data.Positions,
+							StartDate      : Symbol.StartDate,
+							EndDate        : Symbol.EndDate,
+							StartData      : Symbol.StartData,
+							OptionExchange : Symbol.OptionExchange,
+							minPrice       : spreadTitle === 'Moneyline' ? +(spreadValue.replace('$', '')) : 0.5,
+							SymbolLimitData: SymbolLimitData,
+							Symbol         : {
 								Exchange: Symbol.Exchange,
 								Name    : Symbol.Name,
 								Currency: Symbol.Currency

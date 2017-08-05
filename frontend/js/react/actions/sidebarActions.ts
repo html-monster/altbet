@@ -11,7 +11,7 @@ import {
 // import { Common } from '../common/Common';
 import BaseActions from './BaseActions';
 import {SocketSubscribe} from "../models/SocketSubscribe";
-import OddsConverter from '../models/oddsConverter/oddsConverter';
+import OddsConverter from '../models/oddsConverter';
 
 var __LDEV__ = true;
 // var __LDEV__ = false;

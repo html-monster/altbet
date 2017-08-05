@@ -16,7 +16,7 @@ import OrderActions from '../../OrderActions';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 
 
-// let OddsConverterObj = new OddsConverter('implied_probability');
+// let OddsConverterObj = new OddsConverterComp('implied_probability');
 
 
 class Actions extends OrderActions

@@ -38,11 +38,11 @@ class UserPage extends BaseController
 
         return <div className="wrapper_about wrapper_user_page">
             <ul className="tabs tabs_left">
-                <li className={"tab fund_b " + (this.props.route.tab === "funds" ? "active" : "")}><Link to={`/funds`}>Funds</Link></li>
-                <li className={"tab pref_b " + (this.props.route.tab === "pref" ? "active" : "")}><Link to={`/preferences`}>My Preferences</Link></li>
-                <li className={"tab sett_b " + (this.props.route.tab === "sett" ? "active" : "")}><Link to={`/settings`}>Settings</Link></li>
-                <li className={"tab pass_b " + (this.props.route.tab === "pass" ? "active" : "")}><Link to={`/change_password`}>Change Password</Link></li>
-                <li className={"tab self_sett_b " + (this.props.route.tab === "self_sett" ? "active" : "")}><Link to={`/self_exclusion`}>Self Exclusion</Link></li>
+                <li className={"tab custom fund_b " + (this.props.route.tab === "funds" ? "active" : "")}><Link to={`/funds`}>Funds</Link></li>
+                <li className={"tab custom pref_b " + (this.props.route.tab === "pref" ? "active" : "")}><Link to={`/preferences`}>My Preferences</Link></li>
+                <li className={"tab custom sett_b " + (this.props.route.tab === "sett" ? "active" : "")}><Link to={`/settings`}>Settings</Link></li>
+                <li className={"tab custom pass_b " + (this.props.route.tab === "pass" ? "active" : "")}><Link to={`/change_password`}>Change Password</Link></li>
+                <li className={"tab custom self_sett_b " + (this.props.route.tab === "self_sett" ? "active" : "")}><Link to={`/self_exclusion`}>Self Exclusion</Link></li>
             </ul>
             <div className="tab_content">
                 <Funds data={{header: $tabHeaderHtml, active: this.props.route.tab === "funds", tab: this.props.params.tabname}}/>
