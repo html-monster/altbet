@@ -248,8 +248,6 @@ gulp.task('clean', function() {
 // BM: ========================================================================================= ONE TIME IMAGE COPY ===
 gulp.task('RUN-IMAGE-COPY', gulp.series('imagescopy'));
 
-// BM: ============================================================================================== ONE TIME BUILD ===
-gulp.task('RUN-BUILD', gulp.series('styles', 'js', 'vendor', 'styles-admin', 'localization'));
 
 // BM: ========================================================================================== ONE TIME BUILD ADM ===
 gulp.task('RUN-BUILD-ADM', gulp.series('styles-admin'));
@@ -265,8 +263,12 @@ gulp.task('WATCH-ADMIN', function () {
     return false;
 });
 
-// BM: ========================================================================================== FRONT DEV BUILDING ===
 
+
+// BM: ============================================================================================== ONE TIME BUILD ===
+gulp.task('RUN-BUILD', gulp.series('styles', 'js', 'vendor', 'styles-admin', 'localization'));
+
+// BM: ========================================================================================== FRONT DEV BUILDING ===
 gulp.task('WATCH-FRONT-JS-STYLES', function () {
     gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
     gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));
