@@ -39,7 +39,8 @@ class HomeEvents extends BaseController
 
     setEditedData(data)
     {
-        __DEV__&&console.log( 'data', data );
+        __DEV__&&console.log( 'data', data, this.props );
+        this.props.actions.actionSetEditedEventData({data});
     }
 
 
@@ -238,6 +239,7 @@ class HomeEvents extends BaseController
      * show loading
      * @private
      */
+/*
     sendingMode(mode)
     {
         // turn on
@@ -251,12 +253,14 @@ class HomeEvents extends BaseController
         } // endif
         // this.setState({...this.state});
     }
+*/
 
 
     /**
      * Click on sport filter
      * @private
      */
+/*
     _onFiterClick(props, filter, newFilter)
     {
         // 0||console.log( '{props, filter, ee, p1}', {props, filter, ee, p1} );
@@ -268,53 +272,7 @@ class HomeEvents extends BaseController
         this.sendingMode(true);
         actions.actionGetNewTableData({props, callback: ::this._onSortCallback});
     }
-
-
-    /**
-     * Click on column header
-     * @private
-     */
-    _onSortClick(props, ee)
-    {
-        const { actions, data } = this.props;
-
-        ee.preventDefault();
-        props.page = 1;
-
-        this.sendingMode(true);
-        actions.actionGetNewTableData({props, callback: ::this._onSortCallback});
-    }
-
-
-    /**
-     * Click on pager
-     * @private
-     */
-    _onPagerClick(props, newPage)
-    {
-        const { actions } = this.props;
-
-        this.sendingMode(true);
-
-        props.page = newPage + 1;
-
-        actions.actionGetNewTableData({props, callback: ::this._onSortCallback});
-    }
-
-
-    /**@private*/ _onSortCallback({errorCode, title, message})
-    {
-        this.sendingMode(false);
-
-        if( errorCode !== 100)
-        {
-            (new InfoMessages).show({
-                title: '',
-                message: message,
-                color: InfoMessages.WARN,
-            });
-        } // endif
-    }
+*/
 }
 
 // __DEV__&&console.debug( 'connect', connect );
@@ -323,8 +281,7 @@ export default connect(
     state => {return ({
         data: state.HomeEvents,
         // test: state.Ttest,
-    })
-    },
+    })},
     dispatch => ({
         actions: bindActionCreators(Framework.initAction(Actions), dispatch),
     })
