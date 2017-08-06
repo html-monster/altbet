@@ -267,7 +267,7 @@ export default class ExchangeItem extends React.Component
 				{/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
 				<div className={"event-date " + data.CategoryIcon}>
-                    <span className="date" title={Symbol.Exchange}>
+                    <span className="date" title={'Start time of the game'}>
                         {date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) ? date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) : ''}
 						{/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>

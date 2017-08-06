@@ -370,7 +370,7 @@ export default class OrderForm extends React.Component
 						<label className="with_info" htmlFor={`${id}_price`}>
 							{
 								checkboxProp ?
-									'Per Unit'
+									'Price'
 									:
 									'Market price'
 							}
