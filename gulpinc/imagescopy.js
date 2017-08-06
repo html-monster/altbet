@@ -11,6 +11,7 @@ module.exports = {
         return function ()
         {
             return gulp.src(options.src + '/**/*.{svg,png,jpg,gif,ico}')
+                .pipe($.newer(options.dst))
                 .pipe($.notify(function (file) {
                     var options = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
                     return "Copied " + file.relative + ' ' + (new Date()).toLocaleString("ru", options);

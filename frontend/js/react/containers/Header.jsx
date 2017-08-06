@@ -35,29 +35,21 @@ class Header extends React.Component
 		/** @var ABpp ABpp */ ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, () => this.props.actions.actionSwitchBasicMode(ABpp.config.basicMode));
 	}
 
-	listSlide(toggle, event)
+
+
+    /**
+     * Open login form
+     * @public
+     */
+	loginClick(ee)
 	{
-		event.stopPropagation();
+        if( !ABpp.User.isAuthorized() )
+        {
+            ee.preventDefault();
 
-		if(toggle)
-			$(this.refs.oddsList).slideToggle(200);
-		else
-			$(this.refs.oddsList).slideUp(200);
+            $(this.refs.loginBtn).click();
+        } // endif
 	}
-
-
-	testSockOpen()
-    {
-        0||console.log( 'manual open' );
-        ABpp.Websocket.connectSocketServer();
-    }
-
-
-	testSockClose()
-    {
-        0||console.log( 'manual close' );
-        ABpp.Websocket.testClose();
-    }
 
 
 	render()
@@ -88,19 +80,19 @@ class Header extends React.Component
 				</div>
 				<div className="fast_menu">
 					<a href={globalData.Urls.Home} className={`f_button f_but_bor${globalData.action === 'index' && globalData.controller === 'home' && $filter !== 'live' ? " active" : ''}`}><span>Exchange</span> </a>
-					<a href={globalData.Urls.Home + "?filter=live"}  className={"f_button f_but_before f_but_bor" + ($filter === 'live' ? ' active' : '')}><span>My Games</span></a>
-					<a href={globalData.Urls.MyActivity + "#/history"} className={classnames("f_button f_but_before f_but_bor", {"active": ABpp.config.currentPage === ABpp.CONSTS.PAGE_MYPOS})}><span className="history_event">My History</span></a>
+					<a href={globalData.Urls.Home + "?filter=live"}  className={"f_button f_but_before f_but_bor" + ($filter === 'live' ? ' active' : '')} onClick={::this.loginClick}><span>My Games</span></a>
+					<a href={globalData.Urls.MyActivity + "#/history"} className={classnames("f_button f_but_before f_but_bor", {"active": ABpp.config.currentPage === ABpp.CONSTS.PAGE_MYPOS})} onClick={::this.loginClick}><span className="history_event">My History</span></a>
 					<a href={globalData.Urls.TradingRules} className="f_button f_but_before"><span>Rules</span> </a>
 				</div>
 			</div>
 			<div className="header_right">
 				<div className="reconnect help balloon_only">
-                	<button className="btn connect wave waves-effect waves-button" onClick={() => this.testSockOpen()} data-js-connect-label="">{}</button>
+                	<button className="btn connect wave waves-effect waves-button" onClick={this._openSocket} data-js-connect-label="">{}</button>
 					<div className="help_message w200 ce-bo">There is no connection to server now. <br />Click here for reconnect</div>
 				</div>
 
 				{
-					ABpp.User.userIdentity ?
+					ABpp.User.isAuthorized() ?
 						<AnimateOnUpdate
 							component="div"
 							className={`user_info ${ABpp.User.userIdentity ? 'active' : ''}`}
@@ -160,7 +152,7 @@ class Header extends React.Component
 							</div>
 							:
 							<div className="log_out active">
-								<a href="#login" className="sign_in">Join/Login</a>
+								<a ref="loginBtn" href="#login" className="sign_in">Join/Login</a>
 {/*
 								<div className="change-color">
 									<strong>Theme color</strong>
@@ -205,6 +197,10 @@ class Header extends React.Component
     }
 
 
+    /**
+     * Switch mode to simple/detailed view
+     * @private
+     */
     _modeSwitch(ee, p1, isChecked, p3)
     {
         // 0||console.log( '{ee, p1, p2, p3}', {ee, p1, p2, p3} );
@@ -233,6 +229,17 @@ class Header extends React.Component
 
 			sidebarActions.actionOnTraderOnChange(checked);
 		}
+    }
+
+
+    /**
+     * Try to reconnect to socket
+     * @private
+     */
+	_openSocket()
+    {
+        0||console.log( 'manual open' );
+        ABpp.Websocket.connectSocketServer();
     }
 }
 
