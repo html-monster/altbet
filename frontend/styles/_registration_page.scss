@@ -131,6 +131,7 @@
   }
   .tab_content { position: relative; padding: 30px; width: 450px; border-radius: 4px; background-image: $sign_in_bg;
     @include scrollWhite;
+    @include mdmax(1400){  padding: 15px 30px;  }
     .tab_item {
       display: block;
     }

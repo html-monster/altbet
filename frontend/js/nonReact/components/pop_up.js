@@ -25,7 +25,7 @@ class popUpClass{
 		function callback(e)
 		{
 			// return scrolling
-			$('body').removeClass('no-scroll');
+			// $('body').removeClass('no-scroll');
 
 			e = e || event;
 			e.preventDefault();
@@ -47,7 +47,6 @@ class popUpClass{
 	static popUpOpen(openButton, popUpWindow, focusElement)
 	{
 		let browser = $.browser.chrome && ($.browser.version.slice(0, 2) > 53) || $.browser.mozilla;
-
 		$(openButton).click(callback);
 		function callback(e)
 		{
@@ -78,7 +77,6 @@ class popUpClass{
 	{
 		$(document).click(callback);
 		// $(document).on('click', callback);
-
 		function callback(e)
 		{
 			e = e || event;
@@ -88,22 +86,26 @@ class popUpClass{
 			}
 
 			// return scrolling
-			$('body').removeClass('no-scroll');
-
-            // 0||console.log( '$(popUp)', $(popUp), popUp, method );
-			$(popUp).removeClass('active');
-
-			if (!$('.pop_up').hasClass('active')){
-				// $('body>.wrapper').removeClass('blur');
-				$('.video_form iframe').removeAttr('src', '');
+			if($(popUp).hasClass('active'))
+			{
+				console.log('popUp:', popUp);
+				$('body').removeClass('no-scroll');
+				$(popUp).removeClass('active');
+				if(method == 'slideUp')
+					$(popUp).slideUp(400);
+				else if(method == 'hide')
+					$(popUp).hide();
+				else
+					$(popUp).fadeOut(400);
 			}
 
-			if(method == 'slideUp')
-				$(popUp).slideUp(400);
-			else if(method == 'hide')
-				$(popUp).hide();
-			else
-				$(popUp).fadeOut(400);
+            // 0||console.log( '$(popUp)', $(popUp), popUp, method );
+
+			// if (!$('.pop_up').hasClass('active')){
+			// 	// $('body>.wrapper').removeClass('blur');
+			// 	$('.video_form iframe').removeAttr('src', '');
+			// }
+
 
             // $(document).off('click', callback);
 		}
