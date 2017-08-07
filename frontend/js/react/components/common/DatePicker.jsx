@@ -20,7 +20,7 @@ export class DatePicker extends React.PureComponent
 
     componentDidMount()
     {
-		// this.props.dateFormat
+		const { exdata:{afterChange}, value } = this.props;
 
 		let input = $( this.textInput );
 		input.keyup(() => false);
@@ -33,8 +33,18 @@ export class DatePicker extends React.PureComponent
 			changeMonth: true,
 			changeYear: true,
 			showAnim: 'slideDown',
-			onClose: (text, dtObj) => {this.props.exdata.afterChange(text, `${dtObj.selectedYear}-${dtObj.currentMonth+1}-${dtObj.selectedDay}`)},
+			onClose: (text, dtObj) => {afterChange(text, `${dtObj.selectedYear}-${dtObj.currentMonth+1}-${dtObj.selectedDay}`)},
 		});
+
+
+        // init first value
+		if( value )
+		{
+			let $dt = moment(value);
+			// __DEV__&&console.warn( 'value', value, $dt, $dt.getFullYear);
+			// __DEV__&&console.warn( 'value ffff', $dt.format("Y-MM-DD") );
+			 afterChange && afterChange(value, $dt.format("Y-MM-DD"));
+		} // endif
     }
 
 

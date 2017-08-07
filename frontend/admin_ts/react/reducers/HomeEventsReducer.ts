@@ -4,6 +4,7 @@ declare let globalData;
 
 import {
     ON_GET_NEW_TABLE_DATA,
+    ON_SET_EDITED_EVENT_DATA,
 } from '../constants/ActionTypesHomeEvents.js';
 /// TS_IGNORE
 import {Common} from "../common/Common";
@@ -33,6 +34,10 @@ export default class Reducer
         switch (action.type)
         {
             case ON_GET_NEW_TABLE_DATA:
+                state = action.payload(state);
+                return {...state};
+
+            case ON_SET_EDITED_EVENT_DATA:
                 state = action.payload(state);
                 return {...state};
 

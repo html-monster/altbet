@@ -1,18 +1,8 @@
-//html { height: auto; }
-//html, body { width: 100%; height: 100% !important; }
-//body { position: relative; font-family: $font-Roboto-Regular, $font-Myriad-Pro, Verdana, Arial; color: $color2Black; }
-//
-//a { color: $color2Black; @include a-nou;
-//  &:hover { @include a-nou; color: $color1Green }
-//}
-//
-//a.main { color: $color1Green; @include a-nou;
-//    &:hover { @include a-nou; color: $color5Orange }
-//}
-//
-//%hx { @include upper; font-family: $font-RobotoCondensed-Regular; }
-//h1 { @extend %hx; }
-//h3 { @extend %hx; }
+a {
+  &.dotted {border-bottom: 1px dotted lighten($colorBody, 20%); color: $colorBody;
+    &:hover { border-bottom-style: solid }
+  }
+}
 
 
 .-iblock { display: inline-block !important; }
@@ -26,10 +16,11 @@
 .-silver { color: silver !important; }
 .-nobold { font-weight: normal !important; }
 .-bold { font-weight: bold !important; }
-.nowrap { white-space: nowrap; }
+.nowrap, .-nowrap { white-space: nowrap; }
 .-icon-before-16 { position: relative; padding-left: 22px;
   &::before { content: ' '; @include box(b,a, 21 16 px); left: 0; top: 2px; @include bg("ico-icons-03.png"); }
 }
+
 
 abbr { border: 0 !important;
   &[title=""] { text-decoration: none; cursor: auto; }

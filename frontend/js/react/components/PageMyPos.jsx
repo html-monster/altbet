@@ -79,17 +79,18 @@ class PageMyPos extends BaseController //React.Component
                     <div className="tab_content">
                         {/* // BM: --------------------------------------------------- OPENED ORDERS ---*/}
                         <div className={classnames("tab_item", {"active" : route.tab === "open-games"})}>
-                            {route.tab === "open-games" && <TabOpenOrders data={openOrdersData} yourOrdersActions={yourOrdersActions}/>}
+                            {/*{route.tab === "open-games" && ""}*/}
+                            <TabOpenOrders data={openOrdersData} yourOrdersActions={yourOrdersActions}/>
                         </div>
 
                         {/* // BM: --------------------------------------------------- MY POSITIONS ---*/}
                         <div className={classnames("tab_item", {"active" : route.tab === "my-games"})}>
-                            {route.tab === "my-games" && <TabMyPos data={positionData} defaultOrderActions={defaultOrderActions} actions={this.props.myPositionsActions}/>}
+                            <TabMyPos data={positionData} defaultOrderActions={defaultOrderActions} actions={this.props.myPositionsActions}/>
                         </div>
 
                         {/* // BM: --------------------------------------------------- ORDER HISTORY ---*/}
                         <div className={classnames("tab_item", {"active" : route.tab === "history"})}>
-                            {route.tab === "history" && <TabMyOrderHistory key="my_order_history" data={historyData}/>}
+                            <TabMyOrderHistory key="my_order_history" data={historyData}/>
                         </div>
                     </div>
                 </div>

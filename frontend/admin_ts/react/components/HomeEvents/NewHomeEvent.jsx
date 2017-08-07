@@ -20,7 +20,6 @@ export class NewHomeEvent extends React.Component
     render()
     {
         const {data: {CategoryUrl}} = this.props.data;
-        let jj = 0, kk = 1;
 
 
         return <div class="box box-success collapsed-box">
@@ -38,7 +37,7 @@ export class NewHomeEvent extends React.Component
             <div class="box-body">
                 <div id="addExchange">
                     <br />
-                    <form>
+                    <form action="/Home/CreateExchange" class="F1addExch">
                         <input type="hidden" name="Category" defaultValue={CategoryUrl}/>
                         <div class="js-info-mess"></div>
 

@@ -28,23 +28,23 @@
       font-size: 14px;
       &.active, &:hover {
         a { color: #3498da; }
-        &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -453px -387px; }
+        &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -454px -388px; }
         &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -347px -387px;}
         &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -417px -387px; }
         &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -548px -387px;}
-        &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -383px -387px; }
+        &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -379px -353px; }
         //&.self_sett_b::after{ background: blue; opacity: .4; z-index: 10 }
       }
 
       &::before{
         content: '';
         position: absolute;
-        width: 25px;
-        height: 25px;
+        width: 26px;
+        height: 26px;
         left: 0;
-        top: -5px;
+        top: -3px;
       }
-      &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -451px -352px; }
+      &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -451px -353px; }
       &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -346px -353px;}
       &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -415px -352px; }
       &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -548px -351px;}
@@ -106,10 +106,8 @@
     background-image: $sign_in_bg;
     //@include scroll;
     .tab_item {
-      margin-left: 20px;
-      //display: none;
       position: relative;
-      //&:first-child {  display: block;  }
+      //&:first-child { display: block; }
       .user_info {
         position: absolute;
         top: 11px;
@@ -140,7 +138,7 @@
         top: 6px;
       }
 
-        &.pers_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -420px -421px; }
+        &.pers_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -420px -422px; }
         &.cont_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -455px -421px; }
         //&.passw_change:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -135px -6px; }
         }
@@ -347,9 +345,9 @@
 
 
   .gidx-btn {
-    &::before { background: url("#{$pathImage}/sprite.svg") no-repeat -102px -394px; }
-    &.withdraw::before { background-position: -134px -394px; }
-    &.history::before { background-position: -170px -394px; }
+    &::before { background: url("#{$pathImage}/sprite.svg") no-repeat -559px -420px; }
+    &.withdraw::before { background-position: -532px -420px; }
+    &.history::before { background-position: -495px -420px }
   }
 }
 
