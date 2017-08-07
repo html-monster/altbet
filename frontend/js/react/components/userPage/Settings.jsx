@@ -167,10 +167,19 @@ class Settings extends React.Component
                                      validate={[emptyValidation, phoneValidation]} input={input}
                                      maxLength="20"/>
 
+
+                            {/*ввела класс input*/}
                     <span className="input_animate input--yoshiko submit_container">
                         <input type="submit" value="Submit" className="btn wave submit"/>
                         {/*<span className="answer_message"></span>*/}
                         <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
+						<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
+                    </span>
+
+                <span className="input_animate input--yoshiko submit_container input">
+                        <input type="submit" value="Submit" className="btn wave submit"/>
+                    {/*<span className="answer_message"></span>*/}
+                    <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
 						<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
                     </span>
             </form>

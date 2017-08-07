@@ -44,7 +44,7 @@
         left: 0;
         top: -5px;
       }
-      &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -451px -352px; }
+      &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -451px -353px; }
       &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -346px -353px;}
       &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -415px -352px; }
       &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -548px -351px;}
@@ -137,8 +137,8 @@
           top: 6px;
         }
 
-        &.pers_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -420px -421px; }
-        &.cont_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -455px -421px; }
+        &.pers_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -420px -424px; }
+        &.cont_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -455px -424px; }
         //&.passw_change:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -135px -6px; }
       }
       h4{  margin: 15px 0 5px; font-weight: normal;  }
