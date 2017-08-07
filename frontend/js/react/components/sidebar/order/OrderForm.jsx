@@ -633,8 +633,8 @@ export default class OrderForm extends React.Component
 	_onSubmit(event)
 	{
 		const { inputPrice: { refs: { input: inputPrice } }, inputQuantity: { refs: { input: inputQuantity } } } = this.refs;
-		const { price, quantity, } = this.state;
-		const { remainingBal, endDate, side, onSubmit } = this.props;
+		const { price, quantity, side } = this.state;
+		const { remainingBal, endDate, onSubmit } = this.props;
 		event.preventDefault();
 
 		if(!ABpp.User.userIdentity)

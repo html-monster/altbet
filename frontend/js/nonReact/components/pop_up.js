@@ -88,7 +88,6 @@ class popUpClass{
 			// return scrolling
 			if($(popUp).hasClass('active'))
 			{
-				console.log('popUp:', popUp);
 				$('body').removeClass('no-scroll');
 				$(popUp).removeClass('active');
 				if(method == 'slideUp')
