@@ -1,4 +1,1 @@
-/**
- * Created by Htmlbook on 28.12.2016.
- */
-
+export const SUBSCRIBE_ONE_SIGNAL = 'SUBSCRIBE_ONE_SIGNAL';

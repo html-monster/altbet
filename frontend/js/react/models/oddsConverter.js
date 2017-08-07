@@ -98,6 +98,7 @@ export default class OddsConverter
 		return ABpp.config.currentOddSystem;
 	}
 
+
 	setOddSystem(oddSystem)
 	{
 		// this.oddsSystem = oddSystem;

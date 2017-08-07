@@ -13,6 +13,8 @@ import Preferences from '../components/userPage/Preferences';
 import Settings from '../components/userPage/Settings';
 import ChangePassword from '../components/userPage/settings/ChangePassword.jsx';
 import SelfExclusion from '../components/userPage/SelfExclusion.jsx';
+import Actions from '../actions/UserPageAction.ts';
+import {Framework} from '../common/Framework.ts';
 
 // import ChangePassword from '../components/userPage/settings/ChangePassword';
 
@@ -23,6 +25,9 @@ class UserPage extends BaseController
     {
         super(props);
         __DEV__ && console.log( 'UserPage props', props );
+
+        props.actions.actionOnLoad();
+
     }
 
 
@@ -62,12 +67,9 @@ class UserPage extends BaseController
 
 export default connect(
     state => ({
-        // data: state.myPosReduce,
-        // test: state.Ttest,
+        data: state.userPage,
     }),
     dispatch => ({
-        // actions: bindActionCreators(actions, dispatch),
-        // myPositionsActions: bindActionCreators(myPositionsActions, dispatch),
+        actions: bindActionCreators(Framework.initAction(Actions), dispatch)
     })
 )(UserPage)
-
