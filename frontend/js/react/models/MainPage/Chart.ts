@@ -94,7 +94,7 @@ export default class Chart
     {
         let self = this;
 
-        this.chartType = Chart.TYPE_SPLINE;
+        this.chartType = ABpp.config.chartView === 'area' ? Chart.TYPE_AREASPLINE : Chart.TYPE_SPLINE;
         this.chartTheme = Chart.THEME_LIGHT == ABpp.config.currentTheme ? Chart.THEME_LIGHT : Chart.THEME_DARK;
 
         this.Generator = new Generator();
@@ -647,7 +647,7 @@ export default class Chart
 
                         let newTicks;
 
-                        if(this.chart.series[0].points[this.chart.series[0].points.length - 1].virtual)
+                        if(this.chart.series[0].points.length && this.chart.series[0].points[this.chart.series[0].points.length - 1].virtual)
                             newTicks = newData.Ticks.slice(newData.Ticks.length - (newData.Ticks.length - (this.chart.series[0].points.length - 1)));
                         else
                             newTicks = newData.Ticks.slice(newData.Ticks.length - (newData.Ticks.length - this.chart.series[0].points.length));

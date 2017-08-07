@@ -107,6 +107,14 @@
 @mixin hide-text { display:block; text-indent:-9000px; overflow:hidden; }
 
 
+@mixin media-min($width) {
+  @if( $allowMedia ) {
+    @media (min-width:$width) {
+      @content
+    }
+  }
+}
+
 @mixin media-xs() {
   @if( $allowMedia ) {
     @media (max-width:350px) {

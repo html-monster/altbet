@@ -73,8 +73,6 @@ class Settings extends React.Component
                         <i>{hint}</i>
                     </span>
                 }
-
-{/*<span class="input_animate input--yoshiko input--filled input--filled"><label class="input__label input__label--yoshiko" for="n_name"><span class="input__label-content input__label-content--yoshiko" data-content="User Name">User Name</span></label><input type="text" class="input__field input__field--yoshiko false" name="UserName" maxlength="20" disabled="" value="vova"/></span>*/}
             </span>;
     }
 
@@ -130,11 +128,11 @@ class Settings extends React.Component
                                      maxLength="20" disabled={true}/>
 
                     <InputValidation renderContent={this.datePickerRender} id={'user_b_day'} name="DateOfBirth"
-                                     className={'input__field  input__field--yoshiko datePickerJs'}
+                                     className={'input__field  input__field--yoshiko'}
                                      //initialValue
                                      afterChange={this.dateBirthChange.bind(this)}
                                      currVal={birthDateStr}
-                                     label={'Date of birth'} type={'text'} filled={true}
+                                     label={'Date of birth'} type={'text'}
                                      validate={emptyValidation} input={input}/>
 
 

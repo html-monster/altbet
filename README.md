@@ -46,3 +46,7 @@
 
 ## Disqus
 - Стилизайия под сайт (https://help.disqus.com/customer/portal/articles/545277)
+
+##Gidx
+- GIDX Service - Web API - Web Cashier Service (WebCashier API v2.14).pdf (http://www.tsevo.com/Docs/WebCashier)
+- для Deposit: window.gidxServiceStatus

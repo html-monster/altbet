@@ -5,7 +5,7 @@ import header from './headerReducer';
 import mainMenu from './menuReduser';
 import mainPage from './mainPageReducer';
 import eventPage from './eventPageReducer';
-// import accountPage from './accountPageReducer';
+import accountPage from './accountPageReducer';
 import sidebar from './sidebarReducer';
 import defaultOrdersSidebar from './sidebar/tradeSlip/defaultOrdersSidebar';
 import defaultOrdersLocal from './defaultOrdersLocal';
@@ -17,13 +17,13 @@ import transHistory from './userPage/transHistory';
 import myPosReduce from './MyPosReducer';
 import accountSetting from './userPage/settingReducer';
 import disqus from './disqusReducer';
+import oddsReducer from './oddsReducer';
 // import tradeSlip from './sidebar/tradeSlipReducer';
 import registerBox from './registerReducer';
 import confirmRegisterPage from './confirmRegisterPageReducer';
 
 import GidxVerificationReducer from './GidxVerificationReducer.ts';
 import GidxCashierReducer from './GidxCashierReducer.ts';
-import UserPageReducer from './UserPageReducer.ts';
 import {Framework} from '../common/Framework.ts';
 
 
@@ -49,6 +49,7 @@ const common = {
 	header,
 	mainMenu,
 	registerBox,
+	oddsReducer
 };
 
 const pressetStatic = () => {return{
@@ -96,7 +97,7 @@ switch (ABpp.config.currentPage)
 	}
 	case ABpp.CONSTS.PAGE_ACCOUNT:{
 		reducers = {
-			userPage: Framework.getHandler(UserPageReducer),
+			accountPage,
 			deposit,
 			withdraw,
 			transHistory,
@@ -156,4 +157,5 @@ switch (ABpp.config.currentPage)
 
 }
 
-export default combineReducers(reducers);
+
+export default combineReducers(Object.keys(reducers).length ? reducers : common);

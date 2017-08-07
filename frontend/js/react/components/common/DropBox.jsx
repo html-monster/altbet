@@ -3,6 +3,8 @@
  */
 
 import React from 'react';
+import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 
 /**
@@ -67,7 +69,7 @@ export class DropBox extends React.Component
         else input = {};
 
         // 0||console.log( 'currItem', currItem );
-        if ( currItem != null ) {
+        if ( currItem !== null ) {
             dboxKey = items[currItem].key;
         }
         else
@@ -76,7 +78,7 @@ export class DropBox extends React.Component
         }
 
 // 0||console.log( 'input', input );
-        return <div className={`select ` + this.props.className + (this.state.isopened ? " -opened" : "")} title={hint}>
+        return <div className={classnames('select', this.props.className, {'-opened': this.state.isopened})} title={hint}>
                     <input ref="dboxVal" type="hidden" name={name} value={currItemVal} {...input}/>
                     <span className="active_selection btn wave" onClick={this._listSlide.bind(this, true)}>{dboxKey}<i>{}</i></span>
                     <ul className="select_list" ref="dropList" onClick={this._listSlide.bind(this, false)}>
@@ -103,7 +105,7 @@ export class DropBox extends React.Component
         if( !this.state.isopened ) $('body').on('click', this.closeSlideFunc);
         else $('body').off('click', this.closeSlideFunc); // endif
 
-        if ( event.target.nodeName.toLowerCase() != 'li' )
+        if ( event.target.nodeName.toLowerCase() !== 'li' )
         {
             event.stopPropagation();
             this.setState({...this.state, isopened: !this.state.isopened});
@@ -172,7 +174,7 @@ export class DropBox extends React.Component
             // currItem = 0;
             for( let ii = 0, countii = $items.length; ii < countii; ii++ )
             {
-                if ($items[ii].key == undefined) $items[ii].key = $items[ii].val;
+                if ($items[ii].key === undefined) $items[ii].key = $items[ii].val;
                 if( $items[ii].selected ) {
                     currItem = ii;
                     currItemVal = $items[ii].val;
@@ -182,4 +184,18 @@ export class DropBox extends React.Component
 
         return [$items, currItem];
     }
+}
+
+//	validate: React.PropTypes.func,
+if(__DEV__)
+{
+	DropBox.propTypes = {
+		items: PropTypes.array.isRequired,
+		className: PropTypes.string,
+		name: PropTypes.string,
+		initLabel: PropTypes.string,
+		hint: PropTypes.string,
+		afterChoose: PropTypes.func,
+		onCustomChange: PropTypes.func,
+	};
 }

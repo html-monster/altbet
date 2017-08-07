@@ -1,6 +1,6 @@
 declare let __DEV__;
 /** @var ABpp */
-declare let ABpp;
+declare let avABpp;
 declare let __LDEV__;
 declare let moment;
 declare let appData;
@@ -42,6 +42,7 @@ interface Window
 {
     ADpp : any
     SocketSubscribe : any
+    HomeEvents : any
 }
 
 

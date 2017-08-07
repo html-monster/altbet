@@ -1,3 +1,7 @@
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// адская садомия сюда больше ничего не добавлять
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 .sign_up_form, .sign_in_form, .change_password, #form2, .setting_form, .self_exclusion {
 
   input[type=email] {
@@ -29,30 +33,30 @@
     margin: 0 0 2em;
     height: 57px;
     text-align: center;
-    //&.input_password:before {
-    //  content: '';
-    //  position: absolute;
-    //  top: 11px;
-    //  left: 8px;
-    //  width: 15px;
-    //  height: 21px;
-    //  font-size: 17px;
-    //  background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
-    //  z-index: 99;
-    //  opacity: 0.7;
-    //}
-    //&:before {
-    //  content: '';
-    //  position: absolute;
-    //  top: 11px;
-    //  left: 8px;
-    //  width: 15px;
-    //  height: 21px;
-    //  font-size: 17px;
-    //  z-index: 9;
-    //  opacity: 0.7;
-    //}
-    &.input_mail:before {
+    &.inpt_password:before {
+      content: '';
+      position: absolute;
+      top: 11px;
+      left: 8px;
+      width: 15px;
+      height: 21px;
+      font-size: 17px;
+      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+      z-index: 99;
+      opacity: 0.7;
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      top: 11px;
+      left: 8px;
+      width: 15px;
+      height: 21px;
+      font-size: 17px;
+      z-index: 9;
+      opacity: 0.7;
+    }
+    &.inpt_mail:before {
       content: '@';
       position: absolute;
       top: 11px;
@@ -117,7 +121,7 @@
     background: transparent;
     text-align: left;
     transition: opacity 0.3s;
-    padding-left: 0px;
+    padding-left: 35px;
     &:focus {
       outline: none;
     }
@@ -143,7 +147,7 @@
     font-weight: bold;
     font-size: 13px;
     position: absolute;
-    left: 0px;
+    left: 20px;
     text-align: left;
 
   }
@@ -164,35 +168,8 @@
     opacity: 0;
   }
 
-
-  //.input__field--kuro + .input__label--kuro .input__label-content--kuro,
-  //.input--filled .input__label-content--kuro {
-  //  opacity: 0;
-  //}
-
   .remember_forgot {
     margin: 30px 0 0 0;
-    //label:first-of-type { display: block; }
-/*    input { display: none; }
-    input:checked + span { color: #d4d0ed; }
-    input:checked + span:before { background: url("#{$pathImage}/sprite.svg") no-repeat -310px -28px; }
-
-    span {
-      font-size: 12px;
-      color: #afabc8;
-      &:before {
-        content: '';
-        display: inline-block;
-        margin-top: -3px;
-        margin-right: 5px;
-        width: 16px;
-        height: 16px;
-        border: 1px solid #afabc8;
-        border-radius: 4px;
-        //background: url("#{$pathImage}/sprite.svg") no-repeat -20px -160px;
-        vertical-align: middle;
-      }
-    }*/
     a.forgot_password {
       display: none;
       float: right;
@@ -234,28 +211,6 @@
     //padding: 1.6em 0;
     width: 100%;
   }
-
-  //.global_message_container {
-  //  width: 300px;
-  //  padding: 10px 15px;
-  //  margin-top: 15px;
-  //  position: fixed;
-  //  right: -100%;
-  //  bottom: 10px;
-  //  background: rgba(0, 0, 0, 0.7);
-  //  box-shadow: 0 0 23px -5px rgba(0, 0, 0, 0.5);
-  //  z-index: 500;
-  //  transition: 0.4s ease-out;
-  //  &.active {
-  //    right: 10px;
-  //    animation-duration: 0.7s;
-  //    animation-fill-mode: both;
-  //  }
-  //  &.error p { color: #ff4810; }
-  //  &.alert p { color: #ef8022; }
-  //  &.info p { color: #3498DA; }
-  //  p { font-size: 12px; }
-  //}
 
   .invalid_message, .validation-summary-errors {
     position: absolute;
@@ -339,6 +294,7 @@
       width: 15px;
       height: 21px;
       font-size: 17px;
+
       background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
       z-index: 99;
       opacity: 0.7;
@@ -358,13 +314,17 @@
       color: #afabc8;
     }
     .input__label {
-      left: 0px;
+      left: 0;
     }
   }
 }
 
 .sign_in_form{
   .show_password{position: absolute; right: 5px; top: 13px; z-index: 999;}
+  .input__label{left: 35px;}
+}.change_password{
+  .input__label{left: 5px;}
+   .input__field{padding-left: 10px;}
 }
 
 .self_exclusion {

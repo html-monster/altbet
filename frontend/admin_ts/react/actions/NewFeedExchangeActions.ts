@@ -286,7 +286,7 @@ __DEV__ && console.log( 'data', data );
                 {
                     0||console.log( 'result', result, result.code );
 
-                    // Common.redirectWMessage({url: result.data.UrlExchange, message: `Event “${data.FullName}” was saved successfully`, type: InfoMessage.TYPE_SUCCESS, title: 'SUCCESS', exInfo: {id: result.data.Exchanges}});
+                    Common.redirectWMessage({url: result.data.UrlExchange, message: `Event “${data.FullName}” was saved successfully`, type: InfoMessage.TYPE_SUCCESS, title: 'SUCCESS', exInfo: {id: result.data.Exchanges}});
                 },
                 result => {
                     0||console.log( 'result', result, result.code );

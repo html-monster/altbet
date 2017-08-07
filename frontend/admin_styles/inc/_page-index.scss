@@ -16,6 +16,10 @@
 }
 
 .page-Index {
+  .wrapper { overflow: visible; }
+
+
+
   .content-wrapper {
     //.box-body { overflow: visible }
     .btn-filter { @include iblock; margin-right: 10px;
@@ -27,11 +31,6 @@
     }
 
     .exchanges { margin-top: 20px;
-      .icon {
-        a { border-bottom: 1px dotted lighten($colorBody, 20%); color: $colorBody;
-          &:hover { border-bottom-style: solid }
-        }
-      }
       & > tbody + tbody {
           border-top: 0;
       }
@@ -67,7 +66,12 @@
     }
 
 
-    .cb-timezones { max-width: 100%; }
+    .cb-timezones { max-width: 100%;
+      width: 183px;
+      @include media-min(1200px) { width: 208px }
+      @include media-min(1370px) { width: 240px }
+      @include media-min(1500px) { width: 334px }
+    }
     //.cb-timezones+.select2 { width: 100% !important; }
   }
 }

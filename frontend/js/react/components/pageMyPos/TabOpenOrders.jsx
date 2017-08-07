@@ -79,7 +79,7 @@ export class TabOpenOrders extends React.Component
                                                         <td>
                                                             <span className="timestamp">
                                                                 <span className="date">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'MM/DD/YYYY'})}</span>
-                                                                <span className="time"> {(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'hh:mm A'})}</span>
+                                                                <span className="time"> {(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'hh:mm:ss A'})}</span>
                                                             </span>
                                                         </td>
                                                         <td>{(item.isMirror ? (item.Side ? 'Buy' : 'Sell') : (item.Side ? 'Sell' : 'Buy'))}</td>

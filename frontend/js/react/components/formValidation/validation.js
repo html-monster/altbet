@@ -178,48 +178,37 @@ export const customValidation = (customFunc, value) =>
 
 
 // злоебучий адский валидатор от Лёхи, Я его люблю
-export const orderForm = function (context) {
+// export const orderForm = function (context) {
+//
+// 	if($(context).find('[data-log-out]').attr('data-log-out')) return false;
+//
+// 	let price = +(($(context).find('.price input').val()).replace('$', '')),
+// 		volume = +$(context).find('.volume input').val(),
+// 		// sum = $(context).find('.obligations input').val() ? +(($(context).find('.obligations input').val()).replace('$', '')) : null,
+// 		// maxEntries = $(context).find('#maxEntries').val(),
+// 		remainingBal = (+$(context).find('#remainingBal').val()).toFixed(2),
+// 		checkboxProp = $(context).find('input[type="checkbox"]').length ? $(context).find('input[type="checkbox"]').prop('checked') : 1;
 
-	if($(context).find('[data-log-out]').attr('data-log-out')) return false;
+	// if(!ABpp.User.userIdentity){
+	// 	$('.sign_in_form').fadeIn(200);  //'.sign_in_form'
+	// 	$('#login-email').focus(); //'#email'
+	// 	return false;
+	// }
 
-	let price = +(($(context).find('.price input').val()).replace('$', '')),
-		volume = +$(context).find('.volume input').val(),
-		// sum = $(context).find('.obligations input').val() ? +(($(context).find('.obligations input').val()).replace('$', '')) : null,
-		// maxEntries = $(context).find('#maxEntries').val(),
-		remainingBal = (+$(context).find('#remainingBal').val()).toFixed(2),
-		checkboxProp = $(context).find('input[type="checkbox"]').length ? $(context).find('input[type="checkbox"]').prop('checked') : 1;
-
-	if(!ABpp.User.userIdentity){
-		$('.sign_in_form').fadeIn(200);  //'.sign_in_form'
-		$('#login-email').focus(); //'#email'
-		return false;
-	}
-
-	if($(context).find('.side').val() === 'Sell' && remainingBal < Math.round10((1 - price) * volume, -2))
-	{
-		defaultMethods.showWarning(`Your remaining entry balance of this game is $${remainingBal}, it's not enough to create the order`);
-		return false;
-	}
-	else if( $(context).find('.side').val() === 'Buy' && remainingBal < Math.round10(price * volume, -2))
-	{
-		defaultMethods.showWarning(`Your remaining entry balance of this game is $${remainingBal}, it's not enough to create the order`);
-		return false;
-	}
-
-	if(checkboxProp){
-		if(0 >= price || price > 0.99){
-			$(context).find('.price input').next().fadeIn(200);
-			return false;
-		}
-		if(0 >= volume || !(defaultMethods.isInteger(volume))){//|| +volume > 999999
-			$(context).find('.volume input').next().fadeIn(200);
-			return false;
-		}
+	// if(checkboxProp){
+	// 	if(0 >= price || price > 0.99){
+	// 		$(context).find('.price input').next().fadeIn(200);
+	// 		return false;
+	// 	}
+	// 	if(0 >= volume || !(defaultMethods.isInteger(volume))){//|| +volume > 999999
+	// 		$(context).find('.volume input').next().fadeIn(200);
+	// 		return false;
+	// 	}
 		// if(sum !== null && 0 >= sum){// || +sum > 999999
 		// 	$(context).find('.obligations input').next().fadeIn(200);
 		// 	return false;
 		// }
-	}
+	// }
 	// else{
 	// 	if((0 >= volume || !(defaultMethods.isInteger(volume))) && sum == ''){//|| +volume > 999999
 	// 		$(context).find('.volume input').next().fadeIn(200);
@@ -231,8 +220,8 @@ export const orderForm = function (context) {
 	// 	// }
 	// }
 
-	return true;
-};
+	// return true;
+// };
 
 
 

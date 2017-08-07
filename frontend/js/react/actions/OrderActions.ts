@@ -2,7 +2,7 @@
  * Created by Htmlbook on 12.06.2017.
  */
 import BaseActions from './BaseActions';
-import { orderForm } from '../components/formValidation/validation';
+// import { orderForm } from '../components/formValidation/validation';
 
 /// <reference path="../../.d/common.d.ts" />
 declare let __DEV__;
@@ -19,7 +19,7 @@ abstract class OrderActions extends BaseActions
             const form = $(event.currentTarget);
 
             // if(!ABpp.User.userIdentity) return false;
-            if(!orderForm(event.currentTarget)) return false;
+            // if(!orderForm(event.currentTarget)) return false;
 
             function OnBeginAjax()
             {
