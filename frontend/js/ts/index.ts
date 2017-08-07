@@ -33,6 +33,8 @@ export class ABpp
     public static PAGE_STATIC = 'PAGE_STATIC';
     public static PAGE_ANSWER = 'PAGE_ANSWER';
     public static PAGE_ACCOUNT_CONFIRM = 'P8';
+    public static PAGE_GIDX_VERIFICATION = 'P9';
+    public static PAGE_GIDX_WITHDRAW = 'P10';
     public static TAKER_FEES = 0.04;
     public static MAKER_FEES = 0.04;
 
@@ -52,7 +54,8 @@ export class ABpp
         makerFees: null,      // maker fees
         basicMode: true,      // play mode
         tradeOn: false,       // active trader state
-    };
+        // disqusOn: globalData.userIdentity === 'False' // disqus state
+};
     public baseUrl: "";                 // add before urls
 
 
@@ -130,13 +133,16 @@ export class ABpp
             return ABpp.PAGE_MYPOS;
         else if( globalData.landingPage )
             return ABpp.PAGE_LANDING;
-        else if( globalData.actionName === "getstaticpage" )
+        else if( globalData.action === "getstaticpage" )
             return ABpp.PAGE_STATIC;
         else if( globalData.answerPageOn )
             return ABpp.PAGE_ANSWER;
         else if( globalData.action === "confirm" && globalData.controller === "account" )
-            return ABpp.PAGE_ACCOUNT_CONFIRM
-            ;
+            return ABpp.PAGE_ACCOUNT_CONFIRM;
+        else if( globalData.action === "gidxverificationregister" && globalData.controller === "account" )
+            return ABpp.PAGE_GIDX_VERIFICATION;
+        else if( globalData.action === "gidxwebcashierregister" && globalData.controller === "account" )
+            return ABpp.PAGE_GIDX_WITHDRAW;
     }
 
 

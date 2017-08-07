@@ -1,0 +1,14 @@
+//обертка списка навигации
+.page_content_plan {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 100px;
+    li { display: block; padding-right: 50px; }
+    a { color: $color2About;
+      &:visited { color: transparentize($color2About, 0.4);}
+      &:hover { color: $color2About * 1.8; }
+      &:before { display: none; }
+    }
+  }
+
+

@@ -18,7 +18,7 @@
 .-iblock { display: inline-block !important; }
 .-nblock { display: none; }
 .-left { text-align: left !important; }
-.-center { text-align: center }
+.-center { text-align: center !important; }
 .-justify { @include jalign; }
 .-green { color: $color1Green !important; }
 .-red { color: $color9Red !important; }
@@ -31,6 +31,9 @@
   &::before { content: ' '; @include box(b,a, 21 16 px); left: 0; top: 2px; @include bg("ico-icons-03.png"); }
 }
 
+abbr { border: 0 !important;
+  &[title=""] { text-decoration: none; cursor: auto; }
+}
 
 //.-btn-green { background: linear-gradient(to bottom, #00a65a, darken(#00a65a, 10%)) !important;
 //  &:active { background: linear-gradient(to bottom, darken(#00a65a, 10%), #00a65a ) !important }

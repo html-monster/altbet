@@ -43,10 +43,10 @@
 		&.trader .help_message {
 			width: 250px;
 		}
-		&.auto_trade {
-			left: auto;
-			right: 15px;
-		}
+		//&.auto_trade {
+		//	left: auto;
+		//	right: 15px;
+		//}
 	}
 	.tabs {
 		display: flex;
@@ -57,12 +57,20 @@
 		.tab {
 			width: 50%;
 			height: 35px;
-			color: $order_sidebar_tab_color;
-			font-size: 14px;
-			line-height: 33px;
+			padding: 0;
 			position: relative;
 			border: 1px solid $order_sidebar_tab_color;
-			border-radius: 4px 0 0 4px;
+			line-height: 33px;
+			color: $order_sidebar_tab_color;
+			font-size: 14px;
+			border-radius: 0;
+			transition: 0s;
+			&:first-of-type{ border-radius: 4px 0 0 4px; }
+			&:last-of-type {
+				//&.active{  border-left: 1px solid #445b69;  }
+				border-radius: 0 4px 4px 0;
+				border-left: none;
+			}
 			&.active {
 				background-image: $active_bg;
 				border: none;
@@ -70,11 +78,6 @@
 			}
 			&.divide {
 				@include order_sidebar_tab_separator;
-			}
-			&:last-child {
-				//&.active{  border-left: 1px solid #445b69;  }
-				border-radius: 0 4px 4px 0;
-				border-left: none;
 			}
 		}
 	}
@@ -93,11 +96,12 @@
 	}
 	.tab_item {
 		//display: none;
-		padding-bottom: 80px;
+		padding-bottom: 60px;
 		overflow-x: hidden;
-		@include scroll;
+		@include scrollWhite;
 		transition: 0.4s ease-out;
 		//&:first-child { display: block; }
 	}
 }
-.default_orders, &#current-orders{  border-top: 1px solid $order_sidebar_head_separator;  }
+.default_orders, #current-orders, .disqus {  border-top: 1px solid $order_sidebar_head_separator;  }
+.disqus{ padding: 7px; }

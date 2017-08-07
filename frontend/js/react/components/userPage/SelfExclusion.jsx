@@ -312,9 +312,10 @@ export default class SelfExclusion extends React.Component
 						<span className="alert_block for_cont_pass"> This will block you from using the site for 6 months this actions cannot be reversed under any circumstances</span>
                        <div className="time_container">
                            <span className="input_animate input--yoshiko pass_container Password">
-					            <input className="input__field input__field--yoshiko" id="user_curr_pass" name="Password" type="password"/>
+					            <input className="input__field input__field--yoshiko" id="resp_time_pass"
+									   name="Password" type="password"/>
 					             <span className="show_password">{}</span>
-					                <label className="input__label input__label--yoshiko" htmlFor="user_curr_pass">
+					                <label className="input__label input__label--yoshiko" htmlFor="resp_time_pass">
 						        <span className="input__label-content input__label-content--yoshiko" data-content="Current Password">Password</span>
 					            </label>
 					             <span className="validation-summary-errors">{}</span>
@@ -331,10 +332,10 @@ export default class SelfExclusion extends React.Component
 
                         <div className="pass_container">
                             <span className="input_animate input--yoshiko pass_container Password">
-                            	<input className="input__field input__field--yoshiko" id="user_curr_pass" name="Password" type="password"/>
+                            	<input className="input__field input__field--yoshiko" id="time_pass" name="Password" type="password"/>
 					          		<span className="show_password">{}</span>
-					          		<label className="input__label input__label--yoshiko" htmlFor="user_curr_pass">
-						        		<span className="input__label-content input__label-content--yoshiko" data-content="Current 				password">Password</span>
+					          		<label className="input__label input__label--yoshiko" htmlFor="time_pass">
+						        		<span className="input__label-content input__label-content--yoshiko" data-content="Current password">Password</span>
 					            	</label>
 					             	<span className="validation-summary-errors">{}</span>
 							</span>

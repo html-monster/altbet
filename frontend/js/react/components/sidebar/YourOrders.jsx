@@ -4,7 +4,8 @@ import React from 'react';
 
 import OrderForm from './order/OrderForm.jsx';
 import yourOrdersActions from '../../actions/Sidebar/yourOrderActions.ts';
-import { DateLocalization	 } from '../../models/DateLocalization';
+import classnames from 'classnames';
+import { DateLocalization } from '../../models/DateLocalization';
 
 class YourOrders extends React.Component
 {
@@ -42,7 +43,7 @@ class YourOrders extends React.Component
 	{
 		// let yourOrdersData = this.state.data;
 		let yourOrdersData = this.props.yourOrders;
-		return <div className={'tab_item' + (ABpp.User.userIdentity ? ' active' : '')} id="current-orders">
+		return <div className={classnames('tab_item animated dur3', {active: this.props.activeTab === 'YourOrders'}, {fadeIn: this.props.activeTab === 'YourOrders'})} id="current-orders">
 			{
 				ABpp.User.login ?
 					yourOrdersData.yourOrders.length ?
@@ -78,7 +79,7 @@ class GroupingOrder extends React.Component
 			<div className="my_order">
 				<div className="order-title">
 					<div className="container">
-						<h3>{data.Symbol}</h3>
+						<h3>{`${data.Orders[0].Symbol.HomeName} (vs. ${data.Orders[0].Symbol.AwayName})`}</h3>
 						{
 							(data.LastSide) ?
 								<strong className={`last-price ${data.LastSide ? 'down' : 'up'}`}>{(data.LastPrice).toFixed(2)}</strong>
@@ -164,7 +165,7 @@ class OrderItem extends React.Component
 	{
 		const { actions, data } = this.props;
 		//const allData = this.props.allData;
-		const date = new Date(+data.Time.slice(6).slice(0, -2));
+		// const date = new Date(+data.Time.slice(6).slice(0, -2));
 		const formData = {
 			url: ABpp.baseUrl + '/Order/Edit',
 			action: 'edit'
@@ -182,9 +183,8 @@ class OrderItem extends React.Component
 					<strong className="amount"> <span className="price">{(data.Price).toFixed(2)}</span></strong>
 					<strong className="qty"> <span className="volume">{data.Volume}</span></strong>
 					<strong className="dt timestamp help balloon_only">
-		 				<span className="date">{`${(date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)}/${date.getDate() < 10 ? '0' +
-							date.getDate() : date.getDate()}/${date.getFullYear()}`}</span>&nbsp;
-                        <span className="time">{`${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`}</span>
+		 				<span className="date">{(new DateLocalization).fromSharp(data.Time, 0).unixToLocalDate({format: 'MM/DD/YYYY'})}</span>&nbsp;
+                        <span className="time">{(new DateLocalization).fromSharp(data.Time, 0).unixToLocalDate({format: 'HH:mm'})}</span>
 						<span className="help_message"><strong>MM/DD/YYYY HH:MM</strong></span>
 					</strong>
 					<div className="button_container">
@@ -216,15 +216,15 @@ class OrderItem extends React.Component
 					ask={data.Symbol.LastAsk === 1 ? null : data.Symbol.LastAsk}
 					bid={data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid}
 					price={(data.Price).toFixed(2)}
-					priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.Symbol.StartDate)}
+					priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false})}
 					maxEntries={100}
 					minPrice={data.Price}
 					remainingBal={95}
 					quantity={data.Volume}
 					isMirror={data.isMirror}
 					symbol={`${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`}
-					startDate={(new DateLocalization).fromSharp(data.Symbol.StartDate)}
-					endDate={data.Symbol.EndDate ? (new DateLocalization).fromSharp(data.Symbol.EndDate) : data.Symbol.EndDate}
+					startDate={(new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false})}
+					endDate={data.Symbol.EndDate ? (new DateLocalization).fromSharp(data.Symbol.EndDate, 1, {TZOffset: false}) : data.Symbol.EndDate}
 					ResultExchange={data.Symbol.ResultExchange}
 					newOrder={false}
 					showDeleteButton={false}

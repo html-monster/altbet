@@ -4,18 +4,8 @@ $main_page_tab_color_active: #211e25;
 $main_page_tab_bg: linear-gradient(to bottom, #53515e, #292830);;
 $main_page_gif: url("#{$pathImage}/ajax-loader.gif");
 $main_page_pos_color: #bab500;
-@mixin main_page_tab_icon{
-	&:before {
-		content: '';
-		display: inline-block;
-		width: 18px;
-		height: 38px;
-		margin-top: -2px;
-		margin-right: 5px;
-		background: url("#{$pathImage}/sprite.svg") no-repeat -326px -176px;
-		vertical-align: middle;
-		transition: 0.4s ease-out;
-	}
+@mixin main_page_tab_icon {
+	&:before { background: url("#{$pathImage}/sprite.svg") no-repeat -326px -176px; }
 	&:nth-of-type(2):before{  background-position: -367px -176px;  }
 	//&:nth-of-type(3):before{  background-position: -407px -176px;  }
 	&:nth-of-type(3):before{  background-position: -446px -176px;  }

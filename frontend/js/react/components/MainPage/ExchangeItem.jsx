@@ -8,29 +8,35 @@ import ChartObj from '../../models/MainPage/Chart';
 import Chart from '../MainPage/ChartEvent';
 import DefaultOrdersLocal from '../DefaultOrdersLocal';
 import classnames from 'classnames';
+// import AnimateOnUpdate from '../Animation';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
+
 
 
 // import {Common} from './../../common/Common';
 
 
-export default class ExchangeItem extends React.Component {
-	constructor(props) {
+export default class ExchangeItem extends React.Component
+{
+	constructor(props)
+	{
 		super(props);
 		// __DEV__&&console.debug( 'ExchangeItem.props.data', this.props.data );
 
 		// эмуляция времени игроков
-		this.data = gLineupPageData;
+		// this.data = gLineupPageData;
 
 		this.state = {
-			activeTab: (this.data[props.data.Symbol.HomeName] && this.data[props.data.Symbol.AwayName] &&
+			activeTab: [" active", ""],/* (this.data[props.data.Symbol.HomeName] && this.data[props.data.Symbol.AwayName] &&
 			this.data[props.data.Symbol.HomeName].team && this.data[props.data.Symbol.AwayName].team) ?
-				[" active", ""] : ["", " active"],
+				[" active", ""] : ["", " active"],*/
 			chart    : null,
 			isLPOpen : false,
 		};
 	}
 
-	componentWillUpdate(nextProps, nextState) {
+	componentWillUpdate(nextProps, nextState)
+	{
 		// if(nextProps.data.currentExchange === nextProps.data.Symbol.Exchange && nextState.activeTab[1] && nextState.isLPOpen)
 		// {
 		// 	if(nextProps.chartData && !nextState.chart)
@@ -51,7 +57,8 @@ export default class ExchangeItem extends React.Component {
 		}
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate()
+	{
 		let currentProps = this.props;
 		let currentState = this.state;
 
@@ -74,15 +81,16 @@ export default class ExchangeItem extends React.Component {
 				currentState.chart.updateChart(currentProps.chartData);
 			}
 		}
-		else if(currentState.chart) currentState.chart.stopGenerator();
+		else if(currentState.chart) currentState.chart.stopGenerator()
 
 	}
 
 
-	render() {
+	render()
+	{
 		const {
-			actions, chartData, data, data: {activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder, orderPrice},
-			mainContext, setCurrentExchangeFn
+			actions, disqusActions, chartData, data, data: {activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder, orderPrice},
+			mainContext, setCurrentExchangeFn, lineupsData
 		} = this.props;
 		let {activeTab, chart, isLPOpen,} = this.state;
 		// console.log('this.props:', this.props);
@@ -93,25 +101,25 @@ export default class ExchangeItem extends React.Component {
 		let noTeamsClass, $homeTotal, $awayTotal, spreadTitle, spreadValue;//noTeamsWrappClass = "",
 
 		// todo: check for no team hardcode
-		const $HomeTeamObj = this.data[Symbol.HomeName];
-		const $AwayTeamObj = this.data[Symbol.AwayName];
-		noTeamsClass = $HomeTeamObj && $AwayTeamObj && $HomeTeamObj.team && $AwayTeamObj.team ? "" : " hidden";
+		// const $HomeTeamObj = this.data[Symbol.HomeName];
+		// const $AwayTeamObj = this.data[Symbol.AwayName];
+		// noTeamsClass = $HomeTeamObj && $AwayTeamObj && $HomeTeamObj.team && $AwayTeamObj.team ? "" : " hidden";
 		if (noTeamsClass) {
 			// noTeamsWrappClass = "no_lineups";
 			activeTab = ['', " active"];
 		}
-		else {
-			$homeTotal = $HomeTeamObj.Totals.score;
-			$awayTotal = $AwayTeamObj.Totals.score;
+		else if(lineupsData) {
+			$homeTotal = lineupsData.HomeTotals.Score;
+			$awayTotal = lineupsData.AwayTotals.Score;
 			// 0||console.log( '$awayTotal', $awayTotal );
 		} // endif
 
-		if (Symbol.ResultExchange === 'OU') {
+		if (lineupsData && Symbol.ResultExchange === 'OU') {
 			spreadTitle = 'Total Points';
-			spreadValue = 'O/U ' + Math.round10(+$HomeTeamObj.Totals.eppg + +$AwayTeamObj.Totals.eppg, -2);
+			spreadValue = 'O/U ' + Math.round10(+lineupsData.HomeTotals.EPPG + +lineupsData.AwayTotals.EPPG, -2);
 		}
-		else if (Symbol.ResultExchange === 'ML') {
-			let coefficient = Math.abs(Symbol.HomeHandicap / $HomeTeamObj.Totals.eppg);
+		else if (lineupsData && Symbol.ResultExchange === 'ML') {
+			let coefficient = Math.abs(Symbol.HomeHandicap / lineupsData.HomeTotals.EPPG);
 			spreadTitle = 'Moneyline';
 
 			if (coefficient <= 0.05) spreadValue = `$0.70`;
@@ -157,8 +165,8 @@ export default class ExchangeItem extends React.Component {
 			}
 		};
 
-		const isEventClosed = Symbol.EndDate && +moment().format('x') > (new DateLocalization).fromSharp(Symbol.EndDate),//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
-			isEventStarted = +moment().format('x') > (new DateLocalization).fromSharp(Symbol.StartDate);
+		const isEventClosed = Symbol.EndDate && +moment().format('x') > (new DateLocalization).fromSharp(Symbol.EndDate, 1, {TZOffset: false}),//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
+			isEventStarted = +moment().format('x') > (new DateLocalization).fromSharp(Symbol.StartDate, 1, {TZOffset: false});
 
 		//lineupContainer height
 		let height;
@@ -190,6 +198,7 @@ export default class ExchangeItem extends React.Component {
 
 		// exdata for lineup
 		let date = $DateLocalization.fromSharp(Symbol.StartDate, 0, {TZOffset: false});
+
 		const exdata = {
 			HomeAlias: Symbol.HomeAlias,
 			AwayAlias: Symbol.AwayAlias,
@@ -198,6 +207,12 @@ export default class ExchangeItem extends React.Component {
 
 		let $lastPriceClass = data.Symbol.PriceChangeDirection === -1 ? ["down", "up"] : data.Symbol.PriceChangeDirection === 1 ? ["up", "down"] : ["", ""];
 
+		//time and sales get data
+		let ticks = [];
+		if (chartData && chartData.Ticks.length)
+		{
+			ticks = chartData.Ticks.slice().reverse();
+		}
 
 		/*
 		 var exchangeSideClickFn = actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
@@ -206,7 +221,7 @@ export default class ExchangeItem extends React.Component {
 		 symbol: symbol,
 		 });
 		 */
-		// 0||console.log( 'exdata', this.data, Symbol.HomeName, this.data[Symbol.HomeName] );
+		// 0||console.log( 'exdata', this.data, Symbol.HomeName, thi7s.data[Symbol.HomeName] );
 
 		return (
 			<div
@@ -218,6 +233,7 @@ export default class ExchangeItem extends React.Component {
 					// {
 					setCurrentExchangeFn(Symbol.Exchange);
 
+					disqusActions.getEventData({ url: data.CategoryUrl, identifier: data.Symbol.Exchange });
 					//ABpp.config.tradeOn &&
 					actions.exchangeSideClick({
 						name     : Symbol.Exchange,
@@ -230,16 +246,17 @@ export default class ExchangeItem extends React.Component {
 
 					// }
 				}}
-				id={symbol} data-js-hevent="" style={$homeTotal ? {} : {display: 'none'}}
+				id={symbol} data-js-hevent=""
 			>
 				{/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
 				<div className={"event-date " + data.CategoryIcon}>
                     <span className="date" title={Symbol.Exchange}>
-                        {(date = date.unixToLocalDate({format: 'DD MMM Y h:mm A'})) ? date : ''}
+                        {date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) ? date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) : ''}
 						{/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>
-					{ Symbol.StatusEvent === 'inprogress' && <i className="live">Live</i> }
+					{ !Symbol.EndDate && date.unixToLocalDate({format: 'x'}) < moment().format('x') && <i className="live">Live</i> }
+					{/*{ Symbol.StatusEvent === 'inprogress' && <i className="live">Live</i> }*/}
 					{/*{ Symbol.StatusEvent === 'halftime' && <i className="halftime">Halftime</i> }*/}
 				</div>
 
@@ -253,19 +270,19 @@ export default class ExchangeItem extends React.Component {
 									<span className="title">Score</span>
 										<span
 											className={spreadTitle === 'Spread' && +$homeTotal + spreadValue < $awayTotal ? 'low' : ''}>{$homeTotal}</span> : {$awayTotal} </span>
-									{
-										$classActiveExch ?
-											<a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="event_title"
-											   title="See more">
-												<span
-													className="title">Market </span>{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}
-											</a>
-											:
+									{/*{*/}
+										{/*$classActiveExch ?*/}
+											{/*<a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="event_title"*/}
+											   {/*title="See more">*/}
+												{/*<span*/}
+													{/*className="title">Market </span>{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}*/}
+											{/*</a>*/}
+											{/*:*/}
 											<span className="event_title" title="Event title">
 												<span
 													className="title">Market </span>{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}
 											</span>
-									}
+									{/*}*/}
 									</span>
 								, (Symbol.HomeHandicap !== null) ?
 									<span key="1" className="handicap" style={{paddingRight: 5}} title={spreadTitle}>
@@ -416,24 +433,70 @@ export default class ExchangeItem extends React.Component {
 					 </div>
 					 */}
 					<div className="h-lup__tab_content tab_content">
-						{ noTeamsClass ? <div className="h-lup__tab_item tab_item">{}</div>
+						{ !lineupsData ? <div className="h-lup__tab_item tab_item">{}</div>
 							: <LineupPage className={"h-lup__tab_item h-lup__tab1_item tab_item" + activeTab[0]}
 										  exdata={exdata}
-										  data={this.data} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName}
+										  data={lineupsData} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName}
 										  ref="lineupContainer"/>
 						}
 
 						{/*<div className={"h-lup__tab_item tab_item highcharts-tab" + (chart ? '' : ' loading') + activeTab[1]}*/}
 						{/*id={"container_" + symbol} data-js-highchart="" ref={'chartContainer'}>{}</div>*/}
 						{/*<img src="~/Images/chart_white.svg" alt=""/>*/}
-						<div
-							className={"h-lup__tab_item tab_item highcharts-tab" + (chart ? '' : ' loading') + activeTab[1]}>
-							<Chart
-								id={`${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`}
-								chartData={this.state.chart}
-								ref={'chartComponent'}
-								chartTypeChange={::this.chartTypeChange}
-							/>
+						<div className={"h-lup__tab_item tab_item" + (chart ? '' : ' loading') + activeTab[1]}>
+							<div className="highcharts-tab">
+								<Chart
+									id={`${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`}
+									chartData={this.state.chart}
+									ref={'chartComponent'}
+									chartTypeChange={::this.chartTypeChange}
+								/>
+								<div className="executed_orders">
+									<table>
+										<thead>
+											<tr>
+												<th>Time</th>
+												<th>Price</th>
+												<th>Unit</th>
+											</tr>
+										</thead>
+									</table>
+									{/*<h4>Time & Sales</h4>*/}
+									<table className="body">
+										<tbody>
+										{
+											chartData &&
+											ticks.length ?
+												ticks.map((item) =>
+												{
+													let side = item.Side ? 'sell' : 'buy';
+
+													return <CSSTransitionGroup
+														component="tr"
+														key={item.Time + item.Open + item.Volume}
+														transitionName={{
+															enter : 'fadeColorOut',
+															leave : 'fadeColorOut',
+															appear: 'fadeColorOut'
+														}}
+														transitionAppear={true}
+														transitionLeave={false}
+														transitionAppearTimeout={600}
+														transitionEnterTimeout={600}
+														transitionLeaveTimeout={500}
+														>
+															<td><span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MM/DD/YYYY hh:mm A', TZOffset: 1})}</span></td>
+															<td className={`price ${side} animated`}><span>${item.Open.toFixed(2)}</span></td>
+															<td className={`volume ${side} animated`}><span>{item.Volume}</span></td>
+														</CSSTransitionGroup>
+												})
+											:
+												<tr><td className="center"><span>You have no Data</span></td></tr>
+										}
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 
 					</div>

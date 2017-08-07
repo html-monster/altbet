@@ -175,7 +175,7 @@ $(document).ready(function () {
         });
         input.datepicker({  // remove "hasDatepicker" !!!!!!!!!!!!!!
             yearRange: "1901:c+0",
-            dateFormat: "d M yy",
+            dateFormat: "mm/dd/yy",
             maxDate: "0",
             minDate: new Date(1, 1 - 1, 1),
             changeMonth: true,
@@ -207,9 +207,11 @@ $(document).ready(function () {
     // });
 
 
-    $('.log_in').click(function () { //header account dropdown list
+    // BM: header account dropdown list
+    $('[data-js-login]').click(function () {
         $('.user-menu').slideToggle().toggleClass('active');
     });
+
 
     $('.show_password').mousedown(function () { // show password
         $(this).parents('.pass_container').find('input[type=password]').attr('type', 'text');
@@ -253,22 +255,24 @@ $(document).ready(function () {
         // $(".validation-summary-errors").css('opacity', '0');
     });
 
-        // $('#submit').click(function () {
-        //
-        //     $("#form2").trigger('reset')
+
+// STATIC PAGES
+// todo: move in the separate file
+//glossary ========================================================================================================
+
+    $('.js-titleMain h4').click(function () {
+        $('.js-titleMain h4').not(this).next().slideUp(200);
+        $(this).next().slideToggle(200);
+    });
+
+//terms and conditions______________________________________________________________________________________________
+    $('.js-titleMain').click(function(){
+        $('.js-titleMain').not(this).next().slideUp(200);
+       $(this).next().slideToggle(200);
+    });
 
 
-    // });
-    // setTimeout(function () {
-    //
-    //     $('#submit').on('click', function () {
-    //
-    //         $("#form2").trigger('reset');
-    //         $('.input__field').blur().focusout().removeClass('validJs')
-    //
-    //     }, 1000);
-    //
-    // });
+//help______________________________________________________________________________________________
+
 });
-
 

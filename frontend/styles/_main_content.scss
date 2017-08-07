@@ -39,10 +39,10 @@
 
   //&__tab1_item { padding-bottom: 40px; }
 
-  &__tab_item { display: none !important;
+  &__tab_item { //display: none;
     &.loading:after { content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%;
       border-radius: 6px; background: $main_page_gif no-repeat center $main_page_tab_color_active; }
-    &.active { display: block !important; }
+    //&.active { display: block; }
   }
 
   .lineup_swch{
@@ -50,11 +50,72 @@
       &.active{  line-height: 18px;  }
     }
   }
-  .highcharts-tab { text-align: right; }
+  .highcharts-tab { display: flex; text-align: right; }
+  .chart_container{ width: 70%; }
   .chk-chart-type { margin-right: 7px; }
   .highcharts-container { display: inline-block; }
   svg { width: 100% !important;  }
   img{  width: 100%;  }
+
+  .executed_orders{
+    width: 30%;
+    margin-top: -20px;
+    padding: 10px;
+    padding-top: 20px;
+    background: #18151b;
+    text-align: left;
+    //h4{ margin-bottom: 10px; }
+    th{
+      padding: 0 5px;
+      font-size: 14px;
+      font-weight: normal;
+      &:first-of-type{ width: 60%; padding-left: 0; }
+      &:nth-of-type(2){ width: 20%; }
+      &:last-of-type{ width: 20%; text-align: center }
+    }
+    table.body{ display: block; width: 100%; height: 430px; position: relative; background: $main-bg; border-radius: 5px; overflow-y: auto;
+      @include scrollWhite;
+    }
+    //tbody{  transition: 0.4s ease-out;  }
+    tr {
+      display: table;
+      table-layout: fixed;
+      width: 100%;
+      //&.sell td:nth-of-type(2), &.sell td:nth-of-type(3){  color: #ef4d22;  }
+      //&.buy td:nth-of-type(2), &.buy td:nth-of-type(3){  color: #3498da;  }
+    }
+    //th{
+    //  text-align: left;
+    //  color: $main-color;
+    //  font-weight: 600;
+    //  font-size: 14px;
+    //  span{
+    //    display: inline-block;
+    //    padding-bottom: 5px;
+    //  }
+    //}
+    //&.sell td:nth-of-type(2), &.sell td:nth-of-type(3){  color: #ef4d22;  }
+    //&.buy td:nth-of-type(2), &.buy td:nth-of-type(3){  color: #3498da;  }
+    //tr:last-of-type td{  padding-bottom: 5px;  }
+    td{
+      padding: 0 5px;
+      font-size: 14px;
+      color: $main-color;
+      &:first-of-type{ width: 60%; }
+      &:nth-of-type(2), &:last-of-type{ width: 20%; }
+      &:last-of-type{ text-align: center; }
+      &.animated{  animation-duration: 0s; }
+      &.sell{
+        color: #ef5b33;
+        &.fadeColorOut {  animation-name: fadeColorOutSell;  }
+      }
+      &.buy{
+        color: #3498da;
+        &.fadeColorOut {  animation-name: fadeColorOutBuy;  }
+      }
+      &.center{ width: 100%; position: absolute; top: calc(50% - 11px); }
+    }
+  }
 }
 
 
@@ -88,7 +149,7 @@
 .l-team__team tr:hover .b-pl-info { visibility: visible; opacity: 1 }
 //.l-team__team tr:active .b-pl-info { visibility: visible; opacity: 1 }
 .b-pl-info { position: absolute; left: 20px; top: 100%; padding: 10px;
-      text-align: right;  text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
+      text-shadow: none; white-space: nowrap; z-index: 10; opacity: 0; transition: opacity .5s; visibility: hidden;
       @include main_page_lineup_hind;
   &__main-inf {  }
   &__statistic { font-size: 12px; }
@@ -107,14 +168,13 @@
     }
   }
   .tab_item { margin-top: 20px }
-  .tab_item1 { padding: 10px 15px 15px; text-align: left; overflow: hidden; @include scroll; }
+  .tab_item1 { padding: 10px 15px 15px; text-align: left; overflow: hidden; @include scrollWhite; }
   .tab_item2 { width: 100%;
     .list { display: inline-block; width: 50%; text-align: center; }
     ul { display: inline-block; }
     li { padding-bottom: 10px; text-align: left; }
   }
 }
-
 
 
 // BM: Exchanges (events)
@@ -140,7 +200,7 @@
       .l-title {
         .score { color: #3f9622; }
         .seemore-lnk { color: $color4TextBlack;
-          a{ color: $color4TextBlack }
+          //a{ color: $color4TextBlack }
         }
         .title{ color: $color4TextBlack }
       }
@@ -216,8 +276,8 @@
       .event_title{ display: inline-block; max-width: 450px; transition: 0s; }
       .handicap{ display: inline-block; width: 80px; position: absolute; right: 70px; } // для показа
       .seemore-lnk { color: $color4TextWhite; transition: color 0s;
-        a{ color: $color4TextWhite }
-        a:hover { color: $color-blue; }
+        //a{ color: $color4TextWhite }
+        //a:hover { color: $color-blue; }
       }
       .last-price { position: absolute; top: 0; right: 0; white-space: nowrap; // для показа
         &.down i { display: inline-block; top: 2px; background-position: -309px -308px; }
@@ -225,7 +285,7 @@
         .value{ display: inline-block; margin-top: -2px; transition: 0s; }
         i { display: none; position: relative; margin-top: -2px; margin-right: -5px; width: 15px; height: 16px; background-size: cover;
             background: url("#{$pathImage}/sprite.svg") no-repeat; }
-            //background: url(../../Images/temp/sprite-01.svg) no-repeat; background-position: 0px 0px; }
+            //background: url("#{$pathImage}/temp/sprite-01.svg") no-repeat; background-position: 0px 0px; }
       }
       .title{ display: block; color: $color4TextWhite; font-size: 11px }
     }
@@ -236,7 +296,6 @@
         //@include mdmax(1600) { min-width: 191px; }
       }
     }
-
 
     .button-container { display: inline-flex; position: relative; width: 50%; height: 35px; vertical-align: middle; //transition: .3s;
       &:first-of-type { padding-right: 3px; text-align: left }
@@ -279,7 +338,7 @@
         }
       }
 
-      &.opener { visibility: visible; position: absolute; right: 35px; top: calc(50% - 35px/2); width: auto; //@include visibleAttr;
+      &.opener { visibility: visible; position: absolute; right: 3px; top: calc(50% - 35px/2); width: auto; //@include visibleAttr;
           opacity: 1; transition: .4s;
         button { display: flex; align-items: center; padding: 0 10px; color: #333; font-size: 14px; background: linear-gradient(to top, #bdc0cd, #ffffff); font-weight: bold; text-transform: none }
         i { display: inline-block; position: relative; margin-right: 10px; width: 18px; height: 18px;
@@ -438,8 +497,38 @@
   .nav_items {
     &.loaded .pagination { display: block; }
     .wrapper>.tab_content{  padding-top: 30px;  }
+
+  }
+
+  .sort-btns { position: fixed; left: 70px; top: 70px; padding: 15px; width: calc(78% - 70px); background: $main-bg; z-index: 93;
+        text-align: right;
+    @include mdmax(1350) { position: absolute; left: 0; width: 100%; }
+    a.stab { display: inline-block; margin-right: 10px; padding: 0 15px; border-radius: 6px; font-size: 12px; cursor: pointer;
+        font-family: "open_sans_regular", sans-serif; background: $main_page_tab_bg; color: $main_page_tab_color;
+      &.active { @include main_page_tab_icon_active;
+        span { position: relative; margin-top: 2px;
+          &:after { margin-top: 9px; margin-bottom: 0; }
+          &:before {  margin-top: -28px;  }
+        }
+      }
+      span { display: inline-block; vertical-align: middle; overflow: hidden;
+        &:before, &:after { content: attr(data-content); display: block; transition: 0.4s ease-out; }
+        &:after{  margin-bottom: -26px;  margin-top: 6px;  color: $main_page_tab_color_active * 0.95; }
+        &:before{  margin-top: -2px; color: $main_page_tab_color; }
+      }
+      @include main_page_tab_icon;
+      &:before { content: ''; display: inline-block; margin-right: 5px; margin-top: -2px; width: 18px; height: 34px;
+		  vertical-align: middle; transition: 0.4s ease-out; }
+    }
+
+
+    .breadcrumbs { float: left; margin: 10px 0 0 0; font-size: 12px;
+      a:not(.link) { color: $color-link1 }
+      span { display: inline-block; padding: 0 0 0 7px }
+    }
   }
 }
+
 
 // ------------- ВСЁ ЧТО НИЖЕ БУДЕТ УДАЛЕНО !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ----------------------------------
 .content {
@@ -478,7 +567,7 @@
         }
       }
     }
-    .stattabs {
+    /*.stattabs {
       width: calc(78% - 70px);
       padding: 15px;
       background: $main-bg;
@@ -510,7 +599,7 @@
         }
         span{
           display: inline-block;
-          padding: 10px 0;
+          //padding: 10px 0;
           vertical-align: middle;
           overflow: hidden;
           &:before, &:after{
@@ -523,7 +612,7 @@
         }
         @include main_page_tab_icon;
       }
-    }
+    }*/
     //.tab_content{  padding-top: 50px;  }
     .ui-state-highlight{
       height: 102px;
@@ -759,15 +848,14 @@
           }
         }
       }
-
     }
 
     //.pagination { display: none; }
   }
   .mp-exchanges {  padding-top: 5px;  }
-  .tab_item:first-child {
-    display: block;
-  }
+  //.tab_item:first-child {
+  //  display: block;
+  //}
   .help_message{
     strong{
       display: block;

@@ -13,8 +13,8 @@ export class MainConfig
 
     // public static AJAX_TEST = 'Category/GetAjax';
     // public static AJAX_TEST = 'Category/EditCategory?catery=nfl';
-    // public static AJAX_TEST = 'Category/TestAction';
-    public static AJAX_TEST = 'http://localhost/AltBet.Admin/Category/TestAction';
+    public static AJAX_TEST = 'Category/TestAction';
+    // public static AJAX_TEST = 'http://localhost/AltBet.Admin/Category/TestAction';
 
     public static AJAX_CATEGORY_ADD = 'Category/AddCategory';
     public static AJAX_CATEGORY_EDIT = 'Category/ChangeCategory';
@@ -34,4 +34,5 @@ export class MainConfig
     public static AJAX_FEED_GETTIMEEVENT = 'Feed/GetTimeEvent';
     public static AJAX_FEED_GET_EVENTS = 'Feed/GetEvents';
     public static AJAX_FEED_CREATE_FEED_EXCHANGE = 'Feed/CreateFeedExchange';
+    public static AJAX_FEED_CHANGE_FEED_EXCHANGE = 'Feed/ChangeFeedExchange';
 }

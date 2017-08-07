@@ -62,8 +62,8 @@ input {
 }
 
 input[type="button"],
-	input[type="reset"],
-	input[type="submit"] {
+input[type="reset"],
+input[type="submit"] {
 	-webkit-appearance: button;/* iOS 8+ */
 }
 
@@ -76,7 +76,7 @@ input[type="search"] {
 }
 
 input[type="search"]::-webkit-search-cancel-button,
-		input[type="search"]::-webkit-search-decoration {
+input[type="search"]::-webkit-search-decoration {
 	-webkit-appearance: none;/* Chrome 45+, Safari 9+ */
 }
 
@@ -175,7 +175,7 @@ select,
 textarea,
 [tabindex] {
 	-ms-touch-action: manipulation;
-	    touch-action: manipulation;
+	touch-action: manipulation;
 }
 
 /* specify the standard appearance of selects */

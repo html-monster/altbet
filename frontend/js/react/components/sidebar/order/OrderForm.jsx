@@ -366,7 +366,7 @@ export default class OrderForm extends React.Component
 
 		return (
 			<form action={formUrl} className={side + ' animated'} autoComplete="off" method="post" data-verify={['price', 'quantity']}
-					  onSubmit={endDate && +moment().format('x') > endDate  ? this._onSubmit : onSubmit}>
+					  onSubmit={endDate && moment().format('x') > endDate  ? this._onSubmit : onSubmit}>
 				<div className={'container' + (showDeleteButton && onDelete ? ' close_btn' : '')}>
 					<div className="price">
 						<label className="with_info" htmlFor={`${id}_price`}>
@@ -563,7 +563,7 @@ export default class OrderForm extends React.Component
 					{
 						 (orderView === 'simple' && side === 'buy') || orderView !== 'simple'  ?
 							<i className="submit wave waves-input-wrapper waves-effect waves-button">
-								<button type="submit" className={`btn buy submit`}
+								<button type="submit" className={`btn buy submit${$.browser.mozilla ? ' balloon' : ''}`}
 										//style={{textTransform: 'uppercase'}}
 										onClick={this.onClickSide.bind(this, 'buy')}
 										onMouseUp={this.rippleHide}>
@@ -587,7 +587,7 @@ export default class OrderForm extends React.Component
 					{
 						(orderView === 'simple' && side === 'sell') || orderView !== 'simple'  ?
 							<i className="submit wave waves-input-wrapper waves-effect waves-button">
-								<button type="submit" className={`btn sell submit`}
+								<button type="submit" className={`btn sell submit${$.browser.mozilla ? ' balloon' : ''}`}
 										//style={{textTransform: 'uppercase'}}
 										onClick={this.onClickSide.bind(this, 'sell')}
 										onMouseUp={this.rippleHide}>

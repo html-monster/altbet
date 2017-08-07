@@ -64,7 +64,7 @@ export class Generator
     {
         if (this.flagForceStop) return;
         // __HiDEV__||console.warn( 'Try cancel' );
-        this._stopTimer();
+        this.stopTimer();
 
         this._deleteVirtPoint();
     }
@@ -108,7 +108,7 @@ export class Generator
         const { notLast } = props;
 
         let delPoints = [];
-        let data = Highcharts.charts[0].series[0].data;
+        let data = this.chartObj.chart.series[0].data;
         // search for virtual points
         let countii = notLast ? data.length - 1 : data.length;
         // let countii = data.length;
@@ -136,7 +136,7 @@ export class Generator
      * stop generator Timer
      * @private
      */
-    private _stopTimer()
+    public stopTimer()
     {
         // __HiDEV__||console.debug( 'this.TiGenerator.length', this.TiGenerator.length );
         while( this.TiGenerator.length )

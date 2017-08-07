@@ -42,18 +42,17 @@ export class LineupPage extends React.Component
 
     render()
     {
-        const { className, exdata, data, HomeName, AwayName } = this.props;
-        var date;
+        const { className, exdata, data: { HomeTeam, AwayTeam, HomeTotals, AwayTotals }, HomeName, AwayName } = this.props;
+        let date;
 
 
         return <div className={"l-lup " + className} data-js-team="" ref={'container'}>
-                { data[HomeName] && data[AwayName] &&
                     <div className="lineup_container">
                         <div className="l-team1 team_table" key="tab1content">
                             <div className="l-lup__rules"><a href="#" className="l-lup__link text_decoration" onClick={::this._onRaSClick}>Rules & Scoring</a></div>
 
                             <div className="l-team">
-                                <div className="l-team__title">{data[HomeName].teamName} ({data[HomeName].Totals.eppg})</div>
+                                <div className="l-team__title">{HomeTeam.Name}, {HomeTeam.Alias} ({HomeTeam.Points})</div>
                                 <table className="l-team__team">
                                     <tbody>
                                     <tr>
@@ -66,30 +65,29 @@ export class LineupPage extends React.Component
                                         <th title="Estimated Time Remaining">ETR</th>
                                     </tr>
                                     {
-                                        data[HomeName].team.map((itm, key) =>
+										HomeTeam.Items.map((itm, key) =>
                                             <tr key={key}>
                                                 <td>{key + 1}</td>
                                                 <td className="pl">
-                                                    <strong>{itm.name} ({itm.team.toUpperCase()})</strong>
+                                                    <strong>{itm.Name}</strong>
                                                     <div className="b-pl-info">
-                                                        {/*<div className="b-pl-info__main-inf">{`${exdata.HomeAlias} vs ${exdata.AwayAlias} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>*/}
-                                                        <div className="b-pl-info__main-inf">{`${itm.plInfo.vs} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>
-                                                        <div className="b-pl-info__statistic">{itm.plInfo.action}</div>
+                                                        <div className="b-pl-info__main-inf">{HomeTeam.Alias} vs {AwayTeam.Alias}</div>
+                                                        <div className="b-pl-info__statistic">{itm.Description}</div>
                                                     </div>
                                                 </td>
-                                                <td>{itm.status}</td>
-                                                <td>{itm.fppg}</td>
-                                                <td>{itm.eppg}</td>
-                                                <td><strong>{itm.score || "-"}</strong></td>
-                                                <td title="Estimated Time Remaining">{itm.timeEnd}</td>
+                                                <td>{itm.Status}</td>
+                                                <td>{itm.FPPG}</td>
+                                                <td>{itm.EPPG}</td>
+                                                <td><strong>{itm.Score || "-"}</strong></td>
+                                                <td title="Estimated Time Remaining">{itm.ETR}</td>
                                             </tr>)
                                     }
-                                    <tr className="totals">
+					                <tr className="totals">
                                         <td colSpan={3}>Totals</td>
-                                        <td>{data[HomeName].Totals.fppg}</td>
-                                        <td>{data[HomeName].Totals.eppg}</td>
-                                        <td>{data[HomeName].Totals.score}</td>
-                                        <td>{data[HomeName].Totals.etr}</td>
+                                        <td>{HomeTotals.FPPG}</td>
+                                        <td>{HomeTotals.EPPG}</td>
+                                        <td>{HomeTotals.Score}</td>
+                                        <td>{HomeTotals.ETR}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -99,7 +97,7 @@ export class LineupPage extends React.Component
                             {/*<div className="l-lup__rules"><a href="#" className="l-lup__link text_decoration" onClick={::this._onRaSClick}>Rules & Scoring</a></div>*/}
 
                             <div className="l-team">
-                                <div className="l-team__title">{data[AwayName].teamName} ({data[AwayName].Totals.eppg})</div>
+                                <div className="l-team__title">{AwayTeam.Name}, {AwayTeam.Alias} ({AwayTeam.Points})</div>
                                 <table className="l-team__team">
                                     <tbody>
                                     <tr>
@@ -112,36 +110,35 @@ export class LineupPage extends React.Component
                                         <th title="Estimated Time Remaining">ETR</th>
                                     </tr>
                                     {
-                                        data[AwayName].team.map((itm, key) => <tr key={key}>
+										AwayTeam.Items.map((itm, key) => <tr key={key}>
                                             <td>{key + 1}</td>
                                             <td className="pl">
-                                                <strong>{itm.name} ({itm.team.toUpperCase()})</strong>
+                                                <strong>{itm.Name}</strong>
                                                 <div className="b-pl-info">
-                                                    <div className="b-pl-info__main-inf">{`${itm.plInfo.vs} ${((date = exdata.StartDate) ? date.unixToLocalDate({format: 'h:mm a MMM DD, Y'}) : "")}`}</div>
-                                                    <div className="b-pl-info__statistic">{itm.plInfo.action}</div>
+                                                    <div className="b-pl-info__main-inf">{HomeTeam.Alias} vs {AwayTeam.Alias}</div>
+                                                    <div className="b-pl-info__statistic">{itm.Description}</div>
                                                 </div>
 
                                             </td>
-                                            <td>{itm.status}</td>
-                                            <td>{itm.fppg}</td>
-                                            <td>{itm.eppg}</td>
-                                            <td><strong>{itm.score || "-"}</strong></td>
-                                            <td title="Estimated Time Remaining">{itm.timeEnd}</td>
+                                            <td>{itm.Status}</td>
+                                            <td>{itm.FPPG}</td>
+                                            <td>{itm.EPPG}</td>
+                                            <td><strong>{itm.Score || "-"}</strong></td>
+                                            <td title="Estimated Time Remaining">{itm.ETR}</td>
                                         </tr>)
                                     }
                                     <tr className="totals">
                                         <td colSpan={3}>Totals</td>
-                                        <td>{data[AwayName].Totals.fppg}</td>
-                                        <td>{data[AwayName].Totals.eppg}</td>
-                                        <td>{data[AwayName].Totals.score}</td>
-                                        <td>{data[AwayName].Totals.etr}</td>
+                                        <td>{AwayTotals.FPPG}</td>
+                                        <td>{AwayTotals.EPPG}</td>
+                                        <td>{AwayTotals.Score}</td>
+                                        <td>{AwayTotals.ETR}</td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-				}
 
                 { this.state.isPopupVisible &&
                     <Popup closeFunc={::this._onClose}>

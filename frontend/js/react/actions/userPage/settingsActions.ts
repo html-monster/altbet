@@ -5,12 +5,13 @@ import {
     SETTING_ON_FILE_LOAD,
     SETTING_CHANGE_PROGRESS_BAR,
     SETTING_LOAD_FILE_ERROR,
-} from "../../constants/ActionTypesSetting";
+} from "../../constants/ActionTypesGidxVerification.js";
 import BaseActions from '../BaseActions';
 /// <reference path="../../.d/common.d.ts" />
 
 class Actions extends BaseActions
 {
+
     public actionAjaxUserDataUpdate(values, serverValidation, event)
     {
         return () =>

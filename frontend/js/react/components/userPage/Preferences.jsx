@@ -5,22 +5,25 @@
 import React from 'react';
 
 import {CheckBox} from '../common/CheckBox';
+import {PushNotification} from "../../models/PushNotification";
 
 
 export default class Preferences extends React.Component
 {
-	constructor()
-	{
-		super();
+    constructor() {
+        super();
 
-		this.state = {
-			answerMessage: '',
-			answerClass: null,
-			loading: false,
-			radioButtonsDisabled: appData.pageAccountData.Account.MailActivity,
-			serverData: appData.pageAccountData.Account
-		};
-	}
+        let OneSignal = new PushNotification();
+
+        this.state = {
+            answerMessage: '',
+            answerClass: null,
+            loading: false,
+            pushNotification: OneSignal.oneSignalCollback(),
+            radioButtonsDisabled: appData.pageAccountData.Account.MailActivity,
+            serverData: appData.pageAccountData.Account
+        };
+    }
 
 	sendData(event)
 	{
@@ -130,11 +133,9 @@ export default class Preferences extends React.Component
 
     render()
     {
-        const { IsMode, IsBettor, IsTrade, MailActivity, MailFrequency, MailNews, MailUpdates, SmsActivity } = this.state.serverData;
+        const { IsMode, IsBettor, IsTrade, MailActivity, MailFrequency, MailNews, MailUpdates, SmsActivity, PushNotification } = this.state.serverData;
         const { header, active } = this.props.data;
         const { answerMessage, answerClass, loading, radioButtonsDisabled } = this.state;
-
-
 
         return <div className={"tab_item preferences " + (active ? "active" : "")}>
                 <h2>Preferences</h2>
@@ -163,7 +164,7 @@ export default class Preferences extends React.Component
 								{/*<input id="IsMode" type="checkbox" checked={this.state.IsMode} onChange={this._onChkChange.bind(this, "IsMode")}/>*/}
 								{/*@Html.CheckBoxFor(m=>m.IsMode, new { @checked = Model.IsMode })*/}
 								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "IsMode", checked: IsMode}}>
-									<strong className="label">Expert Mode:</strong>
+									<strong className="label">Detailed View:</strong>
 								</CheckBox>
 							</li>
 							<li>
@@ -245,13 +246,33 @@ export default class Preferences extends React.Component
 							</li>
 						</ul>
 					</section>
+
+					<section>
+						<h3 className="section_user">Push Notifications:</h3>
+						<hr/>
+						{/*<h4>Gameday Updates</h4>*/}
+						<ul className="preferences_list">
+							<li>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "PushNotification", checked: PushNotification, alwaysUpdate: true}}
+										  onChange={::this._checkSubscribe}>
+									<strong className="label">Subscribe/unsubscribe:</strong>
+								</CheckBox>
+
+							</li>
+						</ul>
+					</section>
+
+
+
 					<div className="input_animate input--yoshiko submit_container">
-						<input type="submit" value="Submit" className="btn wave submit" disabled={loading}/>
+						<input type="submit" value="Save Changes" className="btn wave submit" disabled={loading}/>
 						<span className={`answer_message ${answerClass}`} dangerouslySetInnerHTML={{__html: answerMessage}}>{}</span>
 					</div>
 				</form>
             </div>;
     }
+
+
 
 	/**
 	 * save checkbox state if it changed, need to unchecked checkbox
@@ -262,6 +283,16 @@ export default class Preferences extends React.Component
 	_saveCheckboxState(event, context)
 	{
 		this.state.serverData[context.name] = event.target.checked;
+	}
+
+	_checkSubscribe(event)
+	{
+		let checked = event.currentTarget.checked;
+	  // let OneSignal = new PushNotification();
+	  OneSignal.oneSignalCollback(checked);
+	  //
+	  //
+	  this.setState({...this.state, pushNotification: checked})
 	}
 
 	/**
@@ -283,4 +314,9 @@ export default class Preferences extends React.Component
 		this.state[opt] = !this.state[opt];
 		this.setState({...this.state});
 	}
+
+
+
+
+
 }

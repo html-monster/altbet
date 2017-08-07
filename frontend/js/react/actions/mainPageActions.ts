@@ -13,10 +13,10 @@ import { Common } from '../common/Common';
 import BaseActions from './BaseActions';
 import { SocketSubscribe } from "../models/SocketSubscribe";
 import {DateLocalization} from "../models/DateLocalization";
+import {PushNotification} from "../models/PushNotification.js";
 
 var __LDEV__ = !true;
 /// <reference path="../../.d/common.d.ts" />
-
 
 // declare let orderClass;
 
@@ -24,6 +24,11 @@ class Actions extends BaseActions
 {
     public actionOnLoad()
     {
+
+        let OneSignal = new PushNotification();
+        OneSignal.init();
+        OneSignal.pushOneSignal();
+
         return (dispatch, getState) =>
         {
             let flag = true;
@@ -34,30 +39,72 @@ class Actions extends BaseActions
 
             // console.log('data:', data);
             let symbol = `${data.Symbol.Exchange}_${data.Symbol.Name}_${data.Symbol.Currency}`;
-            ABpp.Websocket.sendSubscribe({exchange: data.Symbol.Exchange}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
+            ABpp.Websocket.sendSubscribe({exchange: data.Symbol.Exchange, symbol: data.Symbol.Exchange}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
             flag && ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false,
                 HomeName: data.Symbol.HomeName, AwayName: data.Symbol.AwayName, startDate: data.Symbol.StartDate, endDate: data.Symbol.EndDate});
             // flag && setTimeout(() => ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: data.Symbol.Exchange, symbol: symbol, isMirror: false,
             //     HomeName: data.Symbol.HomeName, AwayName: data.Symbol.AwayName, startDate: data.Symbol.StartDate, endDate: data.Symbol.EndDate}), 700);
 
-            ABpp.Websocket.subscribe((inData) =>
+            ABpp.Websocket.subscribe(({SymbolsAndOrders, lineupsData}) =>
             {
-                let state = getState().mainPage.marketsData;
+                let state = getState().mainPage;
 
-                let compare = inData.some((item, index)=>{
+                let compare = SymbolsAndOrders.some((item, index)=>{
                     delete item.TimeRemains;// костыль убирает TimeRemains (надо этот момент подправить)
-                    delete state[index].TimeRemains;
-                    return JSON.stringify(item) !== JSON.stringify(state[index])
+                    delete state.marketsData[index].TimeRemains;
+                    return JSON.stringify(item) !== JSON.stringify(state.marketsData[index])
                 });
 
                 if( compare )
                 {
                     dispatch({
                         type: MP_ON_SOCKET_MESSAGE,
-                        payload: inData
+                        payload: {dataName: 'SymbolsAndOrders', SymbolsAndOrders}
                     });
                     __DEV__ && console.log('re-render');
                 } // endif
+
+                if(!state.lineupsData || JSON.stringify(lineupsData.HomeTeam) !== JSON.stringify(state.lineupsData.HomeTeam) ||
+                    JSON.stringify(lineupsData.AwayTeam) !== JSON.stringify(state.lineupsData.AwayTeam))
+                {
+                    let fppg = 0, eppg = 0, score = 0, etr = 0;
+
+                    lineupsData.HomeTeam.Items.forEach((item) =>
+                    {
+                        fppg += item.FPPG;
+                        eppg += item.EPPG;
+                        score += item.Score;
+                        etr += item.ETR;
+                    });
+                    lineupsData.HomeTotals = {
+                        FPPG: Math.round10(fppg, -2),
+                        EPPG: Math.round10(eppg, -2),
+                        Score: Math.round10(score, -2),
+                        ETR: Math.round10(etr, -2)
+                    };
+
+                    fppg = 0; eppg = 0; score = 0; etr = 0;
+
+                    lineupsData.AwayTeam.Items.forEach((item) =>
+                    {
+                        fppg += item.FPPG;
+                        eppg += item.EPPG;
+                        score += item.Score;
+                        etr += item.ETR;
+                    });
+                    lineupsData.AwayTotals = {
+                        FPPG: Math.round10(fppg, -2),
+                        EPPG: Math.round10(eppg, -2),
+                        Score: Math.round10(score, -2),
+                        ETR: Math.round10(etr, -2)
+                    };
+
+                    dispatch({
+                        type: MP_ON_SOCKET_MESSAGE,
+                        payload: {dataName: 'lineupsData', lineupsData}
+                    });
+                    __DEV__ && console.log('lineups re-render');
+                }
 
             }, WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES);
 
@@ -254,7 +301,7 @@ class Actions extends BaseActions
                 // console.log('inProps:', inProps);
                 ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: inProps.name, HomeName: inProps.title[0],
                     AwayName: inProps.title[1], isMirror: inProps.isMirror, symbol: inProps.symbol, startDate: inProps.startDate, endDate: inProps.endDate});
-                ABpp.Websocket.sendSubscribe({exchange: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
+                ABpp.Websocket.sendSubscribe({exchange: inProps.name, symbol: inProps.name}, SocketSubscribe.MP_SYMBOLS_AND_ORDERS);
 
                 if($('#ChkLimit').prop('checked')) globalData.tradeOn = true;
                 // orderClass.tabReturn();

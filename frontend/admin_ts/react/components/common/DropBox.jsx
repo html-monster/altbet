@@ -16,23 +16,34 @@ export class DropBox extends React.Component
         super(props);
 
 
-        const { clearable, searchable, disabled, value } = this.props;
+        const { value, } = this.props;
         this.state = {
-			disabled: disabled,
-			searchable: searchable,
-			selectValue: value,
-			clearable: clearable,
+			value,
 		};
-
     }
+
+
+/*
+    shouldComponentUpdate(nextProp)
+    {
+        __DEV__&&console.log( 'nextProp', nextProp.value );
+        const { value, items } = nextProp;
+
+        if( JSON.stringify(items) !== JSON.stringify(this.state.items) )
+        {
+            this.setState({...this.state, value, items});
+        } // endif
+
+        return true;
+    }
+*/
 
 
     render()
     {
-        const { name, items, afterChange } = this.props;
-        const { disabled, searchable, selectValue, clearable } = this.state;
+        const { name, afterChange, clearable, searchable, disabled, items } = this.props;
+        const { value, } = this.state;
 
-
-        return <Select name={name} options={items} /*autofocus*/ simpleValue clearable={clearable} disabled={disabled} value={selectValue} searchable={searchable} onChange={(newValue) => { afterChange( newValue ); this.setState({ selectValue: newValue }); }}/>;
+        return <Select name={name} options={items} /*autofocus*/ simpleValue clearable={clearable} disabled={disabled} value={value} searchable={searchable} onChange={(newValue) => { afterChange( newValue ); this.setState({ value: newValue }); }}/>;
     }
 }

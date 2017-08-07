@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRedirect, hashHistory } from 'react-router'
+import { Router, Route, IndexRedirect, hashHistory, browserHistory  } from 'react-router'
 
 import configureStore from './store/configureStore';
 import RApp from './containers/RApp';
@@ -16,9 +16,11 @@ import AccountPage from './containers/UserPage';
 import PageMyPos from './components/PageMyPos.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import RegisterBox from './containers/RegisterBox.jsx';
+import GidxVerification from './containers/GidxVerification.jsx';
+import GidxCashier from './containers/GidxCashier.jsx';
 
 var $node ;
-
+let Component;
 // Altbet App object
 // let constants = ABpp.ABpp;
 // ABpp = ABpp.ABpp.getInstance();
@@ -26,6 +28,22 @@ var $node ;
 
 const store = configureStore();
 ABpp.Store = store;
+
+
+switch( ABpp.config.currentPage )
+{
+	// Gidx user verification
+    case ABpp.CONSTS.PAGE_GIDX_VERIFICATION:
+        Component = GidxVerification();
+        mountById('DiGidxVerificationMP', <Component />);
+        break;
+
+	// Gidx withdraw
+    case ABpp.CONSTS.PAGE_GIDX_WITHDRAW:
+        Component = GidxCashier();
+        mountById('DiGidxCashierMP', <Component />);
+        break;
+}
 
 
 if( !globalData.landingPage  )
@@ -103,11 +121,15 @@ if( !globalData.landingPage  )
 		// рендерим PageMyPos
 		ReactDOM.render(
 			<Provider store={store}>
-				{/*<Router history={hashHistory}>*/}
-					{/*<Route path='/' component={PageMyPos} someval="aaaaaa" />*/}
-					{/*<Route path='/test' component={PageMyPos} someval="bbb" />*/}
-				{/*</Router>*/}
-				<PageMyPos />
+				<Router history={hashHistory}>
+					<Route path='/'>
+						<IndexRedirect to="/my-games" />
+						<Route path='/open-games' component={PageMyPos} tab="open-games" />
+						<Route path='/my-games' component={PageMyPos} tab="my-games" />
+						<Route path='/history' component={PageMyPos} tab="history" />
+					</Route>
+				</Router>
+				{/*<PageMyPos />*/}
 			</Provider>,
 			document.getElementById('DiPageMyAssets')
 		);
@@ -161,6 +183,26 @@ ReactDOM.render(
 
 
 
+
+
+function mountById(inId, inComponent)
+{
+    let mp;
+    if( mp = document.getElementById(inId) )
+    {
+        // if (!store) {
+        //     store = configureStore();
+        //     ADpp.Store = store;
+        // }
+
+        ReactDOM.render(
+            <Provider store={store}>
+                {inComponent}
+            </Provider>,
+          mp
+        );
+    }
+}
 // --display-error-details
 // --display-modules
 

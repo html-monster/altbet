@@ -66,12 +66,12 @@ class ActiveTrader extends React.Component
 		// console.log('endDate:',activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate) < currentDate);
 		// console.log('currentDate:',currentDate);
         let blocked = false, blockMessage, userHasOrder = true;
-		if((new DateLocalization).fromSharp(activeExchange.startDate) > currentDate)
+		if((new DateLocalization).fromSharp(activeExchange.startDate, 1, {TZOffset: false}) > currentDate)
 		{
 			blocked = true;
 			blockMessage = 'This game has not started yet, please try again, once event is underway';
 		}
-		else if((activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate) < currentDate))
+		else if((activeExchange.endDate && (new DateLocalization).fromSharp(activeExchange.endDate, 1, {TZOffset: false}) < currentDate))
 		{
 			blocked = true;
 			blockMessage = 'This game is closed, try another';
@@ -109,25 +109,25 @@ class ActiveTrader extends React.Component
 				<tbody>
 					<tr>
 						<td className="open_pnl trader_info">
-							<a href="#">
-								W/L
+							<span>
+								W/L:
 								<span className={'quantity ' + className}>{gainLoss}</span>
 								<span className="help"><span className="help_message right"><strong>Profit in this event</strong></span></span>
-							</a>
+							</span>
 						</td>
 						<td className="open_contracts trader_info">
-							<a href="#">
-								Units
+							<span>
+								Units:
 								<span className="pos">{data.Positions || 0}</span>
 								<span className="help"><span className="help_message"><strong>Open positions</strong></span></span>
-							</a>
+							</span>
 						</td>
 						<td className="amount trader_info">
-							<a href="#">
-								Avg. Price
+							<span>
+								Avg. Price:
 								<span className="quantity up">{}</span>
 								<span className="help"><span className="help_message"><strong>Average price of position</strong></span></span>
-							</a>
+							</span>
 						</td>
 					</tr>
 				</tbody>
