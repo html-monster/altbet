@@ -5,6 +5,7 @@
 import React from 'react';
 
 import {CheckBox} from '../common/CheckBox';
+import {PushNotification} from "../../models/PushNotification";
 import {DropBox2} from '../common/DropBox2';
 // import OddsConverter from '../../models/oddsConverter';
 import OddsConverterComp from '../../components/OddsConverter';
@@ -12,22 +13,20 @@ import OddsConverterComp from '../../components/OddsConverter';
 
 export default class Preferences extends React.Component
 {
-	// /**@private*/ _OddsConverterObj;
+    constructor() {
+        super();
 
-	constructor()
-	{
-		super();
+        // let OneSignal = new PushNotification();
 
-		// this._OddsConverterObj = new OddsConverter();
-
-		this.state = {
-			answerMessage: '',
-			answerClass: null,
-			loading: false,
-			radioButtonsDisabled: appData.pageAccountData.Account.MailActivity,
-			serverData: appData.pageAccountData.Account
-		};
-	}
+        this.state = {
+            answerMessage: '',
+            answerClass: null,
+            loading: false,
+            pushNotification: false, //OneSignal.oneSignalCollback(),
+            radioButtonsDisabled: appData.pageAccountData.Account.MailActivity,
+            serverData: appData.pageAccountData.Account
+        };
+    }
 
 	sendData(event)
 	{
@@ -137,7 +136,7 @@ export default class Preferences extends React.Component
 
     render()
     {
-        const { IsMode, IsBettor, IsTrade, ChartView, MailFrequency, MailNews, MailUpdates, SmsActivity } = this.state.serverData;
+        const { IsMode, IsBettor, IsTrade, ChartView, MailFrequency, MailNews, MailUpdates, SmsActivity, PushNotification } = this.state.serverData;
         const { header, active } = this.props.data;
         const { answerMessage, answerClass, loading, radioButtonsDisabled } = this.state;
 
@@ -209,7 +208,6 @@ export default class Preferences extends React.Component
 							</li>
 						</ul>
 					</section>
-
 					<section className="section">
 						<h3 className="section_user">Email Notifications:</h3>
 						<hr/>
@@ -277,6 +275,24 @@ export default class Preferences extends React.Component
 							</li>
 						</ul>
 					</section>
+
+					<section>
+						<h3 className="section_user">Push Notifications:</h3>
+						<hr/>
+						{/*<h4>Gameday Updates</h4>*/}
+						<ul className="preferences_list">
+							<li>
+								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "PushNotification", checked: PushNotification, alwaysUpdate: true}}
+										  onChange={::this._checkSubscribe}>
+									<strong className="label">Subscribe/unsubscribe:</strong>
+								</CheckBox>
+
+							</li>
+						</ul>
+					</section>
+
+
+
 					<div className="input_animate input--yoshiko submit_container">
 						<input type="submit" value="Save Changes" className="btn wave submit" disabled={loading}/>
 						<span className={`answer_message ${answerClass}`} dangerouslySetInnerHTML={{__html: answerMessage}}>{}</span>
@@ -294,6 +310,16 @@ export default class Preferences extends React.Component
 	_saveCheckboxState(event, context)
 	{
 		this.state.serverData[context.name] = event.target.checked;
+	}
+
+	_checkSubscribe(event)
+	{
+		let checked = event.currentTarget.checked;
+	  // let OneSignal = new PushNotification();
+	  OneSignal.oneSignalCollback(checked);
+	  //
+	  //
+	  this.setState({...this.state, pushNotification: checked})
 	}
 
 	/**

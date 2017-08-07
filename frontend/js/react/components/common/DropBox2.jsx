@@ -40,7 +40,10 @@ export class DropBox2 extends React.Component
 
 	componentWillReceiveProps(nextProps)
 	{
-		this.setState({ selectValue: nextProps.value })
+        if( nextProps.value !== this.props.value )
+        {
+		    this.setState({ selectValue: nextProps.value })
+        } // endif
 		// this.state.selectValue = nextProps.value;
 	}
 

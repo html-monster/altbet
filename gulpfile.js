@@ -17,7 +17,7 @@ const debug = require('gulp-debug');
 const sourcemaps = require('gulp-sourcemaps');
 const sass = require("gulp-sass");
 const autoprefixer = require("gulp-autoprefixer");
-const browserSync = require('browser-sync').create();
+// const browserSync = require('browser-sync').create();
 const gulpIf = require('gulp-if');
 const cssnano = require('gulp-cssnano');
 // const rev = require('gulp-rev');
@@ -280,13 +280,15 @@ gulp.task('WATCH-FRONT-JS-STYLES', function () {
 
 
 
+/*
 gulp.task('serve', function() {
   browserSync.init({
     server: 'public'
   });
 
-  browserSync.watch('public/**/*.*').on('change', browserSync.reload);
+  browserSync.watch('public/!**!/!*.*').on('change', browserSync.reload);
 });
+*/
 
 
 /*

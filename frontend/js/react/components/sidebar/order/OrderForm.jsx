@@ -522,7 +522,7 @@ export default class OrderForm extends React.Component
 					</div>
 				</div>
 				{
-					stateData.maxEntries &&// || stateData.startDate > moment().format('x')) &&
+					!!stateData.maxEntries &&// || stateData.startDate > moment().format('x')) &&
 					<div className="container conditions">
 						{
 							stateData.maxEntries &&

@@ -13,6 +13,7 @@ import { Common } from '../common/Common';
 import BaseActions from './BaseActions';
 import { SocketSubscribe } from "../models/SocketSubscribe";
 import {DateLocalization} from "../models/DateLocalization";
+import {PushNotification} from "../models/PushNotification.js";
 
 var __LDEV__ = !true;
 /// <reference path="../../.d/common.d.ts" />
@@ -24,6 +25,11 @@ class Actions extends BaseActions
 {
     public actionOnLoad()
     {
+
+        let OneSignal = new PushNotification();
+        OneSignal.init();
+        OneSignal.pushOneSignal();
+
         return (dispatch, getState) =>
         {
             let flag = true;
@@ -59,8 +65,8 @@ class Actions extends BaseActions
                     __DEV__ && console.log('re-render');
                 } // endif
 
-                if(!state.lineupsData || JSON.stringify(lineupsData.HomeTeam) !== JSON.stringify(state.lineupsData.HomeTeam) ||
-                    JSON.stringify(lineupsData.AwayTeam) !== JSON.stringify(state.lineupsData.AwayTeam))
+                if(lineupsData && (!state.lineupsData || JSON.stringify(lineupsData.HomeTeam) !== JSON.stringify(state.lineupsData.HomeTeam) ||
+                    JSON.stringify(lineupsData.AwayTeam) !== JSON.stringify(state.lineupsData.AwayTeam)))
                 {
                     let fppg = 0, eppg = 0, score = 0, etr = 0;
 

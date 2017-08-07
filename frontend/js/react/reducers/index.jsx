@@ -1,11 +1,12 @@
-import { combineReducers } from 'redux';
+	import { combineReducers } from 'redux';
 
 import appState from './appReducer';
 import header from './headerReducer';
 import mainMenu from './menuReduser';
 import mainPage from './mainPageReducer';
 import eventPage from './eventPageReducer';
-import accountPage from './accountPageReducer';
+// import accountPage from './accountPageReducer';  вроде не нужне, со временем удалить
+import UserPageReducer from './UserPageReducer.ts';
 import sidebar from './sidebarReducer';
 import defaultOrdersSidebar from './sidebar/tradeSlip/defaultOrdersSidebar';
 import defaultOrdersLocal from './defaultOrdersLocal';
@@ -97,7 +98,8 @@ switch (ABpp.config.currentPage)
 	}
 	case ABpp.CONSTS.PAGE_ACCOUNT:{
 		reducers = {
-			accountPage,
+			// accountPage,  вроде не нужне, со временем удалить
+            userPage: Framework.getHandler(UserPageReducer),
 			deposit,
 			withdraw,
 			transHistory,
