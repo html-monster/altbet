@@ -512,7 +512,7 @@ class Actions extends BaseActions
 
 			function onErrorAjax()
 			{
-				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+				defaultMethods.showError('The connectionhas been lost. Please check your internet connection or try again.');
 			}
 		}
 	}
@@ -552,7 +552,7 @@ class Actions extends BaseActions
 
 			function onErrorAjax()
 			{
-				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+				defaultMethods.showError('The connectionhas been lost. Please check your internet connection or try again.');
 			}
 		}
 	}
@@ -580,7 +580,7 @@ class Actions extends BaseActions
 			function onErrorAjax()
 			{
 				$(event.target).find('[type=submit]').removeAttr('disabled');
-				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+				defaultMethods.showError('The connectionhas been lost. Please check your internet connection or try again.');
 			}
 
 			defaultMethods.sendAjaxRequest({
@@ -685,7 +685,7 @@ class Actions extends BaseActions
     //
 	// 		function onErrorAjax()
 	// 		{
-	// 			defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+	// 			defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
 	// 		}
     //
 	// 		function onSuccessAjax(answer)
@@ -754,13 +754,13 @@ class Actions extends BaseActions
 
 			function onErrorAjax()
 			{
-				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+				defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
 			}
 
 			function onSuccessAjax(answer)
 			{
 				if(answer !== 'success')
-					defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+					defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
 			}
 
 			if(popUpShow){
@@ -851,7 +851,7 @@ class Actions extends BaseActions
 			{
 				__DEV__ && console.log('XMLHTTPRequest object: ', x);
 				__DEV__ && console.log('textStatus: ',  y);
-				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+				defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
 			}
 		}
 	}

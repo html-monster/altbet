@@ -615,7 +615,7 @@ export default class OrderForm extends React.Component
 					{/*<span className="close" onClick={onDelete}><span>{}</span></span>*/}
 				</div>
 				{/*<div className="error_pop_up">*/}
-					{/*<span>The connection to the server has been lost. Please check your internet connection or try again.</span>*/}
+					{/*<span>The connection has been lost. Please check your internet connection or try again.</span>*/}
 					{/*<span className="close"><span>{}</span></span>*/}
 				{/*</div>*/}
 				{!newOrder && id ? <input name="ID" type="hidden" value={id}/> : ''}

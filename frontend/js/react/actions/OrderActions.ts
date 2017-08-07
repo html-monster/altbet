@@ -37,7 +37,7 @@ abstract class OrderActions extends BaseActions
             {
                 form.removeClass('loading');
                 form.find('[type=submit]').removeAttr('disabled');
-                defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+                defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
             }
 
             defaultMethods.sendAjaxRequest({
