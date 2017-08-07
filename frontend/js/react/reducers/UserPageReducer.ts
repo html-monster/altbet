@@ -13,6 +13,7 @@ import {Common} from "../common/Common";
 export default class Reducer
 {
     private initialState = {
+        pageEventData: appData ? appData.pageEventData : {},
         OneSignal : null,
     };
 

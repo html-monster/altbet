@@ -1,6 +1,6 @@
 declare let __DEV__;
 /** @var ABpp */
-declare let avABpp;
+declare let ABpp;
 declare let __LDEV__;
 declare let moment;
 declare let appData;

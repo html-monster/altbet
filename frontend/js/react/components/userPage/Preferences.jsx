@@ -16,13 +16,13 @@ export default class Preferences extends React.Component
     constructor() {
         super();
 
-        let OneSignal = new PushNotification();
+        // let OneSignal = new PushNotification();
 
         this.state = {
             answerMessage: '',
             answerClass: null,
             loading: false,
-            pushNotification: OneSignal.oneSignalCollback(),
+            pushNotification: false, //OneSignal.oneSignalCollback(),
             radioButtonsDisabled: appData.pageAccountData.Account.MailActivity,
             serverData: appData.pageAccountData.Account
         };

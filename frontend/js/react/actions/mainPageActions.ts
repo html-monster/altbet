@@ -65,8 +65,8 @@ class Actions extends BaseActions
                     __DEV__ && console.log('re-render');
                 } // endif
 
-                if(!state.lineupsData || JSON.stringify(lineupsData.HomeTeam) !== JSON.stringify(state.lineupsData.HomeTeam) ||
-                    JSON.stringify(lineupsData.AwayTeam) !== JSON.stringify(state.lineupsData.AwayTeam))
+                if(lineupsData && (!state.lineupsData || JSON.stringify(lineupsData.HomeTeam) !== JSON.stringify(state.lineupsData.HomeTeam) ||
+                    JSON.stringify(lineupsData.AwayTeam) !== JSON.stringify(state.lineupsData.AwayTeam)))
                 {
                     let fppg = 0, eppg = 0, score = 0, etr = 0;
 

@@ -239,11 +239,11 @@ export class RegisterForm extends React.PureComponent
         // let errorDeny = `Notice: Residents of <var> are NOT eligible to participate in the service for real money.`;
         // 0||console.log( 'years', years );
 
-        __DEV__&&console.log( 'props', props,  );
+        // __DEV__&&console.log( 'props', props,  );
 
         if( !props.value.charAt(0).match(/[A-Za-z]/) )
         {
-            $error = "First User Name symbol must be a letter";
+            $error = "The first symbol of User Name should be a letter";
         }
         else $error = false;
 
