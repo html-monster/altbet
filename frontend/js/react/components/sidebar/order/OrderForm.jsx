@@ -275,9 +275,14 @@ export default class OrderForm extends React.Component
 					quantity.focus();
 					break;
 				default:
-					if (limit) price.focus();
+					if (limit)
+					{
+						price.focus();
+					}
 					else quantity.focus();
 			}
+			quantity.selectionStart = price.value.length;
+			price.selectionStart = price.value.length;
 		}
 	}
 

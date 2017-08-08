@@ -21,7 +21,7 @@ export default class NewOrder extends React.PureComponent
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
 		};
-__DEV__&&console.log( 'data.SymbolLimitData', data.SymbolLimitData );
+
 		return <div className={classnames(`order_content new animated`, { local_view: localView })}>
 			<div className="order-title">
 				{
