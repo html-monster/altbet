@@ -76,8 +76,8 @@ $(document).ready(function () {
     popUpClass.popUpOpen('[data-log-out]', '.sign_in_form', '#login-email');
     popUpClass.popUpOpen('.sign_in_form a.register', '.sign_up_form', '#f_name');
     popUpClass.popUpOpen('.first_page_wrapper .join', '.sign_up_form', '#f_name');
-    popUpClass.popUpOpen('.video button', '.video_form');
-    popUpClass.popUpOpen('header .price_plan', '.price_plan_form');
+    // popUpClass.popUpOpen('.video button', '.video_form');
+    // popUpClass.popUpOpen('header .price_plan', '.price_plan_form');
 
     popUpClass.popUpClose('.sign_in_form a.register', 'fadeOut', '.sign_in_form');
     popUpClass.popUpClose('.sign_in_form .close', 'fadeOut', '.sign_in_form'); // pop-up login
@@ -86,12 +86,12 @@ $(document).ready(function () {
 
     popUpClass.globalPopUpClose('.warning'); // all warning message
     popUpClass.globalPopUpClose('.user-menu', 'slideUp', '.log_in'); // login user menu
-    popUpClass.globalPopUpClose('.odds_list', 'slideUp', '.odds_converter'); // login user menu
+    // popUpClass.globalPopUpClose('.odds_list', 'slideUp', '.odds_converter'); // login user menu
     popUpClass.globalPopUpClose('.sign_up_form', 'fadeOut', '.sign_up_content', '.sign_in_form a.register', '.first_page_wrapper .join', '#ui-datepicker-div', '.ui-corner-all', /*'.sign_up_content *'*/); // pop-up registration
     popUpClass.globalPopUpClose('.sign_in_form', 'fadeOut', '.sign_in_content', '.log_out .sign_in', 'header .deposit',
         'header .my_order', '.order_screening', '[data-log-out]'); //pop-up login
-    popUpClass.globalPopUpClose('.video_form', 'fadeOut', '.pop_up_content', '.video button');
-    popUpClass.globalPopUpClose('.price_plan_js', 'fadeOut', '.pop_up_content', 'header .price_plan');
+    // popUpClass.globalPopUpClose('.video_form', 'fadeOut', '.pop_up_content', '.video button');
+    // popUpClass.globalPopUpClose('.price_plan_js', 'fadeOut', '.pop_up_content', 'header .price_plan');
     popUpClass.globalPopUpClose('.wrapper_user_page .payment_message', 'fadeOut', '.wrapper_user_page .payment_message .pop_up_content');//payment message
 
     // defaultMethods.maxHeight('.sign_up_form  .tab_content ', 105 + window.innerHeight * 0.1);

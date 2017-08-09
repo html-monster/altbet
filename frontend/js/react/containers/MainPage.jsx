@@ -274,7 +274,6 @@ export default connect(
     state => {
 		return ({
 			data: state.mainPage,
-			// test: state.Ttest,
 		})
     },
     dispatch => ({

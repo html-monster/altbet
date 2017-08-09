@@ -53,7 +53,7 @@ export class TabOpenOrders extends React.Component
                                         <th>Type</th>
                                         <th>Units</th>
                                         <th>Price</th>
-                                        <th>Latest</th>
+                                        <th>Last Price</th>
                                         <th>Position</th>
                                         <th/>
                                     </tr>

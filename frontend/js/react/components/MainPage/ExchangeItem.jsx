@@ -175,10 +175,10 @@ export default class ExchangeItem extends React.Component
 			height = $(this.refs.lineupContainer.refs.container).height();
 			height = height > 495 ? height : 495;
 		}
-		// else
-		// {
-		//     height = 400;
-		// }
+		else
+		{
+		    height = 495;
+		}
 
 		// activate current exchange global
 		let $classActive = '', $classActiveNM = '', $classActiveM = '';
@@ -268,7 +268,7 @@ export default class ExchangeItem extends React.Component
 				{/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
 				<div className={"event-date " + data.CategoryIcon}>
-                    <span className="date" title={Symbol.Exchange}>
+                    <span className="date" title={'Start time of the game'}>
                         {date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) ? date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) : ''}
 						{/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>
@@ -419,7 +419,7 @@ export default class ExchangeItem extends React.Component
 					 </div>
 					 */}
 					<div className="h-lup__tab_content tab_content">
-						{ !lineupsData ? <div className="h-lup__tab_item tab_item">{}</div>
+						{ !lineupsData ? <div className={"h-lup__tab_item h-lup__tab1_item tab_item empty" + activeTab[0]}><span>Lineups empty</span></div>
 							: <LineupPage className={"h-lup__tab_item h-lup__tab1_item tab_item" + activeTab[0]}
 										  exdata={exdata}
 										  data={lineupsData} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName}

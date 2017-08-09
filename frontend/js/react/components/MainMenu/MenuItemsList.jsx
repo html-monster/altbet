@@ -35,17 +35,27 @@ export default class MenuItemsList extends React.Component
 				</a>
 			</li>
 			{
-				exchanges.some((item) => currentData.CatId === item.CategoryId) ?
+				/*exchanges.some((item) => currentData.CatId === item.CategoryId) ?
 					(exchanges.filter((item) => item.CategoryId === currentData.CatId)).map((item) =>
 						<li key={item.ExchangeUrl}>
 							<a href={`${ABpp.baseUrl}/eng/event/${item.CategoryUrl}?exchange=${item.ExchangeUrl}`}>{(item.FullName).replace('_vs_', ' - ')}</a>
 						</li>
 					)
-					:
+					:*/
 					((categoryMenu.filter((item) => item.CatParentId === currentData.CatId)).sort((a, b) => a.CatPosition - b.CatPosition)).map((item) =>
-						<li key={item.CatId} onClick={actions.getMenuCategory.bind(null, actions, item)}>
-							<span>{item.CatName}</span>
-						</li>
+						exchanges.some((itemChild) => item.CatId === itemChild.CategoryId) ?
+							<li key={item.CatId}>
+								<a href={`${ABpp.baseUrl}/eng/home/${item.CatUrlChain}`}>{(item.CatName)}</a>
+							</li>
+							:
+							do{
+								const isCategoryEmpty = !categoryMenu.some((itemChild) => item.CatId === itemChild.CatParentId);
+
+								<li key={item.CatId} className={isCategoryEmpty ? 'disabled' : ''} onClick={isCategoryEmpty ? null : actions.getMenuCategory.bind(null, actions, item)}
+									title={isCategoryEmpty ? 'This category is empty' : ''}>
+									<span>{item.CatName}</span>
+								</li>
+							}
 					)
 			}
 		</ul>

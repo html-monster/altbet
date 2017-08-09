@@ -106,6 +106,8 @@ class Actions extends BaseActions
                     });
                     __DEV__ && console.log('lineups re-render');
                 }
+                // console.log('oldData', state.lineupsData.HomeTeam);
+                // console.log('newData', lineupsData.HomeTeam);
 
             }, WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES);
 

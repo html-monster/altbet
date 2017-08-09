@@ -114,7 +114,7 @@ export default class SelfExclusion extends React.Component
 		{
 			this.setState({
 				...this.state,
-				answerMessage: 'The connection to the server has been lost. Please check your internet connection or try again.',
+				answerMessage: 'The connection has been lost. Please check your internet connection or try again.',
 				answerClass: 'invalid_message',
 				loading: false
 			});

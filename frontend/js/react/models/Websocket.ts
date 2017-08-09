@@ -173,6 +173,7 @@ export class WebsocketModel
         let data = JSON.parse(evt.data);
         this.socketData = data; // for debug only
 // console.log(data);
+        if(!data) return;
 
         if (data.Result) {
             // code - тип сообщения (closedmarket|logout|etc)
@@ -210,7 +211,7 @@ export class WebsocketModel
             // if(globalData.mainPage) {
                 // 0||console.debug( 'data.SymbolsAndOrders.Result', data.SymbolsAndOrders.Result );
                 // dataController.updateOrderData(data.SymbolsAndOrders.Result);
-                self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]({SymbolsAndOrders: data.SymbolsAndOrders.Result, lineupsData: data.LineupData, SymbolLimitData: data.CurrentSymbolLimitData});
+                    self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]({SymbolsAndOrders: data.SymbolsAndOrders.Result, lineupsData: data.LineupData, SymbolLimitData: data.CurrentSymbolLimitData});
             }
         }
 

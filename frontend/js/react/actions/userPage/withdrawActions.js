@@ -146,7 +146,7 @@ export function actionOnAjaxSend(context, payment, values, serverValidation, eve
 			serverValidation(data);
 			$(context.refs.paymentMessage).find('.hide').unbind('click');
 			// getState().withdraw.approved = false;
-			// defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+			// defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
 		}
 
 		if(!error && !approved) {
