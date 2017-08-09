@@ -2,7 +2,7 @@
 // адская садомия сюда больше ничего не добавлять
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.sign_up_form, .sign_in_form, .change_password, #form2, .setting_form, .self_exclusion {
+.sign_up_form, .sign_in_form, .change_password, #form2, .self_exclusion { //.setting_form
 
   input[type=email] {
     &:-webkit-autofill {
