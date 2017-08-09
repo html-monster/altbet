@@ -9,7 +9,7 @@ import classnames from 'classnames';
 
 import mainMenuActions from '../actions/mainMenuActions';
 import MenuItemsList from '../components/MainMenu/MenuItemsList';
-import GlobalCloseClass from '../common/GlobalClose';
+import GlobalCloseClass from '../common/GlobalClose.ts';
 
 class MainMenu extends React.Component
 {
