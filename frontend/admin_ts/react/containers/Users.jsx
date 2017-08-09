@@ -105,7 +105,7 @@ class Users extends BaseController
                             </tr>
                             </thead>
                             <tbody>
-                            {
+                            { Users && Users.length ?
                                 Users.map((item) =>
                                     <tr key={item.Email}>
                                         <td>
@@ -115,16 +115,21 @@ class Users extends BaseController
                                         <td>{item.Email}</td>
                                     </tr>
                                 )
+                                :
+                                <tr colSpan="4">
+                                    <td><i>No users</i></td>
+                                </tr>
                             }
-
                             </tbody>
                         </table>
 
+{/*
                         <div className="row">
                             <div className="col-xs-12">
                                 <PagerBox total={PageInfo.TotalPages} current={PageInfo.CurrentPage - 1} visiblePage={5} onPageChange={this._onPagerClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: CurrentOrderBy})} />
                                 </div>
                         </div>
+*/}
 
                     </div>
                 </div>
