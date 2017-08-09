@@ -50,7 +50,8 @@ export default class GlobalCloseClass
             console.error(error);
         }
 
-        $(document).bind('click', (event) => {
+        $(document).bind('click', (event) =>
+        {
             // __DEV__ && console.log('document click');
             GlobalCloseClass.event = event;
 

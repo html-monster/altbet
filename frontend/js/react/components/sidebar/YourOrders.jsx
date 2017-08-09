@@ -129,30 +129,15 @@ class OrderItem extends React.Component
 		this.state = {currentOddSystem: ABpp.config.currentOddSystem}
 	}
 
-	showPopUp()
-	{
-		const isEventStarted = moment().format('x') > (new DateLocalization).fromSharp(this.props.data.Symbol.StartDate, 1, {TZOffset: false});
-
-		if(isEventStarted)
-			$(this.refs.deletePopUp).fadeIn();
-		else
-			defaultMethods.showWarning('You can`t delete the order before the game starts');
-	}
-
-	showForm()
-	{
-		const isEventStarted = moment().format('x') > (new DateLocalization).fromSharp(this.props.data.Symbol.StartDate, 1, {TZOffset: false});
-
-		if(isEventStarted)
-			$(this.refs.formContainer).slideToggle(200);
-		else
-			defaultMethods.showWarning('You can`t edit order before the game starts');
-	}
-
-	hidePopUp()
-	{
-		$(this.refs.deletePopUp).fadeOut();
-	}
+	// showForm()
+	// {
+	// 	const isEventStarted = moment().format('x') > (new DateLocalization).fromSharp(this.props.data.Symbol.StartDate, 1, {TZOffset: false});
+	//
+	// 	if(isEventStarted)
+	// 		$(this.refs.formContainer).slideToggle(200);
+	// 	else
+	// 		defaultMethods.showWarning('You can`t edit order before the game starts');
+	// }
 
 	shouldComponentUpdate(nextProps)
 	{
@@ -168,11 +153,6 @@ class OrderItem extends React.Component
 
 		return true;
 	}
-
-	// successHandler(serverData)
-	// {
-	// 	console.log(serverData);
-	// }
 
 	render()
 	{
@@ -202,23 +182,24 @@ class OrderItem extends React.Component
 						<span className="help_message"><strong>MM/DD/YYYY HH:MM:SS</strong></span>
 					</strong>
 					<div className="button_container">
-						<button className="edit" title="edit or change the order" onClick={::this.showForm}/>
-						<button className="delete" title="delete the order" onClick={::this.showPopUp}/>
+						{/*<button className="edit" title="edit or change the order" onClick={::this.showForm}/>*/}
+						<button className="delete" title="delete the order"
+								onClick={actions.actionDeleteFormToggle.bind(null, true, (new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false}), this.deletePopUp)}/>
 					</div>
 				</div>
 
-				<div className="pop_up" ref="deletePopUp">
+				<div className="pop_up" ref={(popup) => this.deletePopUp = popup}>
 					<div className="confirmation">
-						<form action="/AltBet/eng/Order/Cancel" method="post"
-									noValidate="novalidate" onSubmit={actions.actionOrderDeleteAjax.bind(null, this)} ref="deleteForm">
+						<form method="post" onSubmit={actions.actionOrderDeleteAjax.bind(null, this)} ref={(form) => this.deleteForm = form}>
 							<input name="id" type="hidden" value={data.ID}/>
 							<button className="yes btn">Delete</button>
 						</form>
-						<button className="no btn" onClick={::this.hidePopUp}>No</button>
+						<button className="no btn"
+								onClick={actions.actionDeleteFormToggle.bind(null, false, (new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false}), this.deletePopUp)}>No</button>
 					</div>
 				</div>
 			</div>
-			<div className={`form-container ${className}-container`} ref="formContainer">
+			{/*<div className={`form-container ${className}-container`} ref="formContainer">
 				<OrderForm
 					formUrl={formData.url}
 					id={data.ID}
@@ -247,7 +228,7 @@ class OrderItem extends React.Component
 						//formData={formData}
 						//actions={actions}
 				/>
-			</div>
+			</div>*/}
 		</div>
 	}
 }

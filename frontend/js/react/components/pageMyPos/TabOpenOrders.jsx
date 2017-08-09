@@ -95,8 +95,11 @@ export class TabOpenOrders extends React.Component
                                                         </td>
                                                         <td className={item.isPosition ? 'pos' : ''}>{}</td>
                                                         <td>
-                                                            <button className="edit btn wave" onClick={yourOrdersActions.actionOpenEditForm.bind(null, item.ID)}>Edit</button>
-                                                            <button className="delete btn wave" onClick={yourOrdersActions.actionOpenDeleteForm.bind(null, item.ID)} style={{marginLeft : 10}}>Cancel</button>
+                                                            {/*<button className="edit btn wave" onClick={yourOrdersActions.actionOpenEditForm.bind(null, item.ID)}>Edit</button>*/}
+                                                            <button className="delete btn wave"
+                                                                    onClick={yourOrdersActions.actionDeleteFormToggle.bind(null,
+                                                                        true, (new DateLocalization).fromSharp(item.Symbol.StartDate, 1, {TZOffset: false}), item.ID)}
+                                                                    style={{marginLeft : 10}}>Cancel</button>
                                                         </td>
                                                     </tr>;
                                                 })
