@@ -10,14 +10,14 @@
 //    label {
 
 
-.input_group{ display: block; position: relative; margin: 0 0 15px; padding: 4px; height: 55px; float: right; color: #afabc8;
+.input_group{ display: block; position: relative; margin: 0 0 13px; height: 55px; float: right; color: #afabc8;
   background: transparent; width: calc(100% - 5px); z-index: 5; box-shadow: none; text-align: left;
   font-size: 14px; transition: opacity 0.3s;
-  .input{  padding-left: 5px; width: 100%; border-bottom: 1px solid rgba(255, 255, 255, 0.6); }
+  .input{  padding-left: 5px; padding-bottom: 5px; width: 100%; border-bottom: 1px solid rgba(255, 255, 255, 0.6); }
   label{ position: absolute; padding: 0; float: right; opacity: 0; color: #afabc8; font-family: "open_sans_semibold", sans-serif; width: 100%;
     font-weight: bold; font-size: 13px; text-align: left; }
 
-  .error{ display: block; position: absolute; padding: 15px 0; max-width: 265px; height: 36px; bottom: -30px; right: 8px;
+  .error{ display: block; position: absolute; padding: 15px 0; max-width: 265px; height: 36px; bottom: -18px; right: 8px;
     color: #ff4810; font-size: 12px; }
 
   .bottom{ display: block; position: absolute; margin-top: 13px; top: 20px; right: 5px; width: 10px; height: 10px; z-index: 170;
@@ -40,7 +40,7 @@
     }
   }
   // buyer
-  &:nth-of-type(3){ padding-left: 5px; color: #afabc8; opacity: .6;}
+  &:nth-of-type(3){ color: #afabc8; opacity: .6;}
   &.valid { color: #4dac2e; border-color: #4dac2e; border-bottom: 1px solid #4dac2e; }
 }
 
