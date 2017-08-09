@@ -42,7 +42,7 @@
         &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -347px -387px;}
         &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -417px -387px; }
         &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -548px -387px;}
-        &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -379px -353px; }
+        &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -384px -388px; }
         //&.self_sett_b::after{ background: blue; opacity: .4; z-index: 10 }
       }
 
@@ -58,7 +58,7 @@
       &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -346px -353px;}
       &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -415px -352px; }
       &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -548px -351px;}
-      &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -379px -352px; }
+      &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -379px -353px; }
     }
     a {
       display: inline-block;
@@ -127,7 +127,7 @@
       }
       h2 {
         color: #1b95e0;
-        margin-bottom: 55px;
+        margin-bottom: 25px;
         font-size: 26px;
         border-bottom: 1px solid $main_color;
         font-weight: bold;
@@ -146,9 +146,10 @@
           left: -28px;
           //top: 6px;
         }
+        &.cont_inf{ display: inline-block; margin-top: 25px; }
 
         &.pers_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -420px -422px; top: 5px;}
-        &.cont_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -455px -422px; top: 272px; }
+        &.cont_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -455px -422px; top: 6px; }
         //&.passw_change:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -135px -6px; }
       }
       h4{  margin: 15px 0 5px; font-weight: normal;  }
@@ -158,7 +159,6 @@
 
     hr {
       clear: both;
-      margin-bottom: 5px;
       @include separator;
     }
   }
