@@ -107,56 +107,56 @@ class Settings extends React.Component
                  <h3 className="section_user pers_inf">Personal info</h3>
                  <hr/>
 
-                 <InputValidation renderContent={this.inputRender} id={'f_name'} name="First Name"
+                 <InputValidation renderContent={this.inputRender} id={'f_name'} name="FirstName"
                      initialValue={FirstName} info="Your first name as specified in your passport"
                      label={'First Name'} type={'text'} filled={FirstName}
                      validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]}
                      input={input} maxLength="20"/>
 
-                 <InputValidation renderContent={this.inputRender} id={'l_name'} name="Last Name"
-                 initialValue={LastName} info="Your second name as specified in your passport"
-                 label={'Last Name'} type={'text'} filled={LastName}
-                 validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]} input={input}
-                 maxLength="20"/>
+                 <InputValidation renderContent={this.inputRender} id={'l_name'} name="LastName"
+                     initialValue={LastName} info="Your second name as specified in your passport"
+                     label={'Last Name'} type={'text'} filled={LastName}
+                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]} input={input}
+                     maxLength="20"/>
 
 
                  <InputValidation renderContent={this.inputRender} id={'n_name'} className="opacity_field"  name="UserName"
-                 initialValue={UserName}
-                 label={'User Name'} type={'text'} filled={UserName}
-                 validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20})]} input={input}
-                 maxLength="20" disabled={true}/>
+                     initialValue={UserName}
+                     label={'User Name'} type={'text'} filled={UserName}
+                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20})]} input={input}
+                     maxLength="20" disabled={true}/>
 
                  <InputValidation renderContent={this.datePickerRender} id={'user_b_day'} name="DateOfBirth"
-                 className={'input'}
-                 //initialValue
-                 afterChange={this.dateBirthChange.bind(this)}
-                 currVal={birthDateStr}
-                 label={'Date of birth'} type={'text'}
-                 validate={emptyValidation} input={input}/>
+                     className={'input'}
+                     //initialValue
+                     afterChange={this.dateBirthChange.bind(this)}
+                     currVal={birthDateStr}
+                     label={'Date of birth'} type={'text'}
+                     validate={emptyValidation} input={input}/>
 
 
                  <h3 className="section_user cont_inf">Contact Info</h3>
                  <hr/>
 
                  <InputValidation renderContent={this.inputRender} id={'e_name'} name="Email"
-                 initialValue={Email}
-                 info={`Specify your valid email. A message with registration
-                 confirmation will be sent at that address. Also that address
-                 will be used for communication with you`}
-                 label={'Email Address'} type={'email'} filled={Email}
-                 validate={[emptyValidation, mailValidation]} input={input} disabled={true}/>
+                     initialValue={Email}
+                     info={`Specify your valid email. A message with registration
+                     confirmation will be sent at that address. Also that address
+                     will be used for communication with you`}
+                     label={'Email Address'} type={'email'} filled={Email}
+                     validate={[emptyValidation, mailValidation]} input={input} disabled={true}/>
 
                  <InputValidation renderContent={this.inputRender} id={'c_name'} name="Country"
-                 initialValue={Country} info="Indicate the country of your permanent residence"
-                 label={'Country'} type={'text'} filled={Country}
-                 validate={[emptyValidation, lettersOnlyValidation, lengthValidation.bind(null, {min: 2, max: 128})]}
-                 input={input} maxLength="20"/>
+                     initialValue={Country} info="Indicate the country of your permanent residence"
+                     label={'Country'} type={'text'} filled={Country}
+                     validate={[emptyValidation, lettersOnlyValidation, lengthValidation.bind(null, {min: 2, max: 128})]}
+                     input={input} maxLength="20"/>
 
                  <InputValidation renderContent={this.inputRender} id={'s_name'} name="Address"
-                 initialValue={Address} info="Enter address manually"
-                 label={'Address'} type={'text'} filled={Address}
-                 validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 200}), regexValidation.bind(null, {tmpl: /^[a-zA-Z.,-/'`()\d\s]+$/, message: "Not available special symbols like @#$%^~ etc."})]} input={input}
-                 maxLength="200"/>
+                     initialValue={Address} info="Enter address manually"
+                     label={'Address'} type={'text'} filled={Address}
+                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 200}), regexValidation.bind(null, {tmpl: /^[a-zA-Z.,-/'`()\d\s]+$/, message: "Not available special symbols like @#$%^~ etc."})]} input={input}
+                     maxLength="200"/>
 
                  <InputValidation renderContent={this.inputRender} id={'t_number'} name="Phone"
                      initialValue={Phone}
@@ -164,12 +164,12 @@ class Settings extends React.Component
                      validate={[emptyValidation, phoneValidation]} input={input}
                      maxLength="20"/>
 
-                <span className="input_animate input--yoshiko submit_container">
-                 <input type="submit" value="Save Changes" className="btn wave submit"/>
-                 <span className={'answer_message' + (error && ' error')}>{error}</span>
-                 <span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
+                 <span className="input_animate input--yoshiko submit_container">
+                     <input type="submit" value="Save Changes" className="btn wave submit"/>
+                     <span className={'answer_message' + (error && ' error')}>{error}</span>
+                     <span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
                  </span>
-             </form>
+             </form>;
 
             {/*
         return

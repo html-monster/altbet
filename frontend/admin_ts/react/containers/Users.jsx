@@ -108,11 +108,10 @@ class Users extends BaseController
                             { Users && Users.length ?
                                 Users.map((item) =>
                                     <tr key={item.Email}>
-                                        <td>
-                                            {item.UserName}
-                                        </td>
+                                        <td>{item.UserName}</td>
                                         <td>{item.LastName} {item.FirstName}</td>
                                         <td>{item.Email}</td>
+                                        <td>{item.Country}</td>
                                     </tr>
                                 )
                                 :
