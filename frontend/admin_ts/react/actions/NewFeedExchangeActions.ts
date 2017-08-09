@@ -18,6 +18,7 @@ import {
     ON_ADD_TEAM_DEFENCE,
     ON_REM_TEAM_DEFENCE,
     AFTER_CATEGORY_ADDED,
+    ON_CH_TEAM_SIZE,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -102,8 +103,8 @@ export default class Actions extends BaseActions
             const ajaxPromise = (new AjaxSend()).send({
                 formData: data,
                 message: `Error while adding category, please, try again`,
-                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_ADD,
-                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
+                // url: MainConfig.BASE_URL + DS + MainConfig.AJAX_CATEGORY_ADD,
+                url: MainConfig.BASE_URL + DS + MainConfig.AJAX_TEST,
                 respCodes: [
                     {code: 100, message: `Category “${data.Name}” created successfully`},
                     {code: -101, message: "Category name is not unique"},
@@ -206,13 +207,14 @@ export default class Actions extends BaseActions
         return (dispatch, getState) =>
         {
             let data = getState().newFeedExchange;
+            let IsEditFeedExchange = data.IsEditFeedExchange;
             let ret;
 
             // check for correct team fillness
-            if( ret = this.checkTeam(data.PlayersTeam1, data.Positions, 1, data.UPlayerData) )
+            if( ret = this.checkTeam(data.PlayersTeam1, data.Positions, 1, data.UPlayerData, data.TeamSize) )
             {
             // check for correct team fillness
-            } else if (ret = this.checkTeam(data.PlayersTeam2, data.Positions, 2, data.UPlayerData))
+            } else if (ret = this.checkTeam(data.PlayersTeam2, data.Positions, 2, data.UPlayerData, data.TeamSize))
             {
             // check for reserve
             } else if (ret = this.checkReserveTeam(data.PlayersTeam1Reserve, 1))
@@ -228,6 +230,7 @@ export default class Actions extends BaseActions
             } else if (ret = this.checkFormData(data.FormData))
             {
             } // endif
+
 
             // DEBUG:
             ret = false;
@@ -245,13 +248,15 @@ export default class Actions extends BaseActions
             // data = data.HomeTeam;
 __DEV__ && console.log( 'data', data );
 
+            // edit or insert url
+            let url = MainConfig.BASE_URL + "/" + (IsEditFeedExchange ? MainConfig.AJAX_FEED_CHANGE_FEED_EXCHANGE : MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE);
+
             // post data to server
-            // let data = new FormData();
             const ajaxPromise = (new AjaxSend()).send({
                 formData: JSON.stringify(data),
                 message: `Error while saving new event, please try again`, // error 100 and other
                 // url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_TEST,
-                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_CREATE_FEED_EXCHANGE,
+                url: url,
                 exData: {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -516,11 +521,26 @@ __DEV__ && console.log( 'data', data );
 
 
     /**
+     * Del team player action
+     */
+    public actionChangeTeamSize(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_CH_TEAM_SIZE,
+                payload: inProps, // this.delTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
      * Check for form data
      */
     private checkFormData(data)
     {
-        const { category, fullName, teamName1, teamName2, url } = data;
+        const { category, fullName, teamName1, teamName2, url, Team1Defense, Team2Defense } = data;
         let message, error;
 
 
@@ -537,7 +557,7 @@ __DEV__ && console.log( 'data', data );
         else if( teamName2 === '' )
         {
             message = 'Please fill team 2 name';
-            error = -303;
+            error = -302;
         }
         else if( fullName === '' )
         {
@@ -548,6 +568,16 @@ __DEV__ && console.log( 'data', data );
         {
             message = 'Please fill url for event';
             error = -305;
+        }
+        else if( !Team1Defense.TeamId )
+        {
+            message = 'Please set the defence of team 1';
+            error = -303;
+        }
+        else if( !Team2Defense.TeamId )
+        {
+            message = 'Please set the defence of team 2';
+            error = -303;
         } // endif
 
         if (message) return {message, error};
@@ -558,15 +588,31 @@ __DEV__ && console.log( 'data', data );
     /**
      * Check for team positions fillness etc
      */
-    private checkTeam(data, inPositions, inTeam, Rules)
+    private checkTeam(data, inPositions, inTeam, Rules, TeamSize)
     {
         const { players, positions } = data;
         let message, error, teams = {};
 
 
         try {
+            // check for size
+            if (players.length > TeamSize)
+            {
+                message = `Command ${inTeam} is greater than the specified command size in options`;
+                error = -310;
+                throw new Error(message);
+            }
+            // check for size
+            if (players.length < TeamSize)
+            {
+                message = `Command ${inTeam} is lower than the specified command size in options`;
+                error = -310;
+                throw new Error(message);
+            }
+
+
             // check positions
-            for( let val of inPositions  )
+/*            for( let val of inPositions  )
             {
                 if (!val) continue;
                 if (positions[val.Index] != val.Quantity)
@@ -576,14 +622,14 @@ __DEV__ && console.log( 'data', data );
                     error = -306;
                     throw new Error(message);
                 }
-            } // endfor
+            }*/ // endfor
 
 
             // check fppg and eppg fillness
             for( let val of players  )
             {
                 teams[val.TeamId] = true;
-
+/*
                 if( !Common.isNumeric(val.Fppg) )
                 {
                     message = `Please fill the FPPG for player "${val.Name}" in team ${inTeam}`;
@@ -595,7 +641,7 @@ __DEV__ && console.log( 'data', data );
                     message = `Please fill the EPPG for player "${val.Name}" in team ${inTeam}`;
                     error = -308;
                     throw new Error(message);
-                } // endif
+                } // endif*/
             } // endfor
 
 
@@ -699,21 +745,31 @@ __DEV__ && console.log( 'data', data );
     private prepareData(inProps)
     {
         let resObj: any = {};
-        const {category, fullName, startDate, teamName1, teamName2, url, Team1Defense, Team2Defense} = inProps.FormData;
-        let {Team1name, Team2name, EventId, PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable} = inProps;
+        const {category, fullName, startDate, teamName1, teamName2, url, Team1Defense, Team2Defense, PlayerTopTeam1, PlayerTopTeam2, HomeTeamId, AwayTeamId, Exchange,} = inProps.FormData;
+        let {Team1name, Team2name, EventId, PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, IsEditFeedExchange} = inProps;
 
         resObj.FullName = fullName;
         resObj.CategoryId = category;
         resObj.HomeName = teamName1;
         resObj.AwayName = teamName2;
-        resObj.HomeAlias = Team1name;
-        resObj.AwayAlias = Team2name;
 
         resObj.HomeDefense = Team1Defense;
         resObj.AwayDefense = Team2Defense;
         resObj.StartDate = startDate.format();
         resObj.UrlExchange = url;
         resObj.EventId = EventId;
+
+        // in new mode
+        resObj.HomeAlias = Team1name;
+        resObj.AwayAlias = Team2name;
+        resObj.PlayerHome = PlayerTopTeam1.Name;
+        resObj.PlayerAway = PlayerTopTeam2.Name;
+
+        // in edit mode
+        resObj.HomeTeamId = HomeTeamId;
+        resObj.AwayTeamId = AwayTeamId;
+        resObj.Exchange = Exchange;
+
 // [07.07.17 17:04:53] Vitaliy Yakubovskiy: ты мне должен передать для exchange - FullName, HomeName, HomeAlias, AwayName, AwayAlias, StartDate, UrlExchange, CategoryId, OptionExchanges(0-HC, 1-ML, 2-TP), HomeTeam(список игроков team1), AwayTeam(список игроков team2), EventId
 // [07.07.17 17:07:38] Vitaliy Yakubovskiy: и для игроков PlayerId, Fppg, Eppg, TeamType (0-Basic, 1-Reserve, 2-Variable)
 

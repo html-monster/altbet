@@ -4,7 +4,7 @@
 // import "babel-polyfill";
 
 import {SysEvents} from "../react/models/SysEvents";
-// import OddsConverter from '../react/models/oddsConverter/oddsConverter';
+// import OddsConverterComp from '../react/models/oddsConverter/oddsConverter';
 
 declare let globalData : any;
 declare let window : any;
@@ -54,7 +54,9 @@ export class ABpp
         makerFees: null,      // maker fees
         basicMode: true,      // play mode
         tradeOn: false,       // active trader state
-    };
+        chartView: null,       // main page chart view
+        // disqusOn: globalData.userIdentity === 'False' // disqus state
+};
     public baseUrl: "";                 // add before urls
 
 
@@ -65,7 +67,7 @@ export class ABpp
     public Websocket = null;                    // websocket object
     public SysEvents: SysEvents = null;         // system events
     public Store = null;                        // redux store
-    // public OddsConverter = null;                        // redux store
+    // public OddsConverterComp = null;                        // redux store
     public Localization = null;                 // localization module
     public Chart = null;                        // EP chart
 
@@ -80,7 +82,7 @@ export class ABpp
 
 
 
-    private constructor()
+    constructor()
     {
         // set current theme from server
         this.config.currentTheme = globalData.theme;
@@ -99,11 +101,13 @@ export class ABpp
         this.createUser();
 
         this.config.currentOddSystem = localStorage.getItem('currentOddSystem') ? localStorage.getItem('currentOddSystem') : 'Implied';
-        // this.OddsConverter = new OddsConverter();
+        // this.OddsConverterComp = new OddsConverterComp();
 
         // set basic mode from user settings
         this.config.basicMode = this.User.settings.basicMode;
         this.config.tradeOn = this.User.settings.tradeOn;
+
+        this.config.chartView = this.User.settings.chartView;
 
         // set curr ver
         globalData.AppVersion = this.ver; // for debug only
@@ -132,7 +136,7 @@ export class ABpp
             return ABpp.PAGE_MYPOS;
         else if( globalData.landingPage )
             return ABpp.PAGE_LANDING;
-        else if( globalData.actionName === "getstaticpage" )
+        else if( globalData.action === "getstaticpage" )
             return ABpp.PAGE_STATIC;
         else if( globalData.answerPageOn )
             return ABpp.PAGE_ANSWER;
@@ -153,6 +157,7 @@ export class ABpp
             basicMode: globalData.basicMode,
             tradeOn: globalData.tradeOn,
             autoTradeOn: globalData.autoTradeOn,
+            chartView: globalData.chartView,
         });
     }
 }

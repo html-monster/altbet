@@ -17,7 +17,7 @@ const debug = require('gulp-debug');
 const sourcemaps = require('gulp-sourcemaps');
 const sass = require("gulp-sass");
 const autoprefixer = require("gulp-autoprefixer");
-const browserSync = require('browser-sync').create();
+// const browserSync = require('browser-sync').create();
 const gulpIf = require('gulp-if');
 const cssnano = require('gulp-cssnano');
 // const rev = require('gulp-rev');
@@ -91,6 +91,12 @@ lazyRequire('front-css-rev', 'def', './gulpinc/css-rev', {
 lazyRequire('localization', 'def', './gulpinc/localization', {
     src: 'frontend/js/react/localization',
     dst: $pathDestServer + '/Scripts/dist/localization',
+});
+
+// BM: ================================================================================================ LOCALIZATION ===
+lazyRequire('imagescopy', 'def', './gulpinc/imagescopy', {
+    src: 'frontend/Images/dist',
+    dst: $pathDestServer + '/Images',
 });
 
 // TODO: is used anymore?
@@ -239,56 +245,66 @@ gulp.task('clean', function() {
 });
 
 
-// BM: ============================================================================================== ONE TIME BUILD ===
-gulp.task('build', gulp.series(gulp.parallel('styles', 'js', 'vendor', 'styles-admin', 'localization')/*, 'assets', 'fonts'*/));
+// BM: ========================================================================================= ONE TIME IMAGE COPY ===
+gulp.task('RUN-IMAGE-COPY', gulp.series('imagescopy'));
+
 
 // BM: ========================================================================================== ONE TIME BUILD ADM ===
-gulp.task('build-adm', gulp.series(gulp.parallel('styles-admin')/*, 'assets', 'fonts'*/));
+gulp.task('RUN-BUILD-ADM', gulp.series('styles-admin'));
 
 
 
 // BMS: --- WATCHES ----------------------------------------------------------------------------------------------------
 // BM: ========================================================================================== ADMIN DEV BUILDING ===
-gulp.task('watch-admin', function () {
+gulp.task('WATCH-ADMIN', function () {
     gulp.watch('frontend/admin_styles/**/*.*', gulp.series('styles-admin'));
     gulp.watch(OPTIONS.path.dest_server_admin + '/Content/dist/*.*', {delay: 700}, gulp.series('admin-css-rev'));
     gulp.watch(OPTIONS.path.dest_server_admin + '/Scripts/dist/*.*', {delay: 700}, gulp.series('admin-js-rev'));
     return false;
 });
 
-// BM: ========================================================================================== FRONT DEV BUILDING ===
 
-gulp.task('watch-front-js-styles', function () {
+
+// BM: ============================================================================================== ONE TIME BUILD ===
+gulp.task('RUN-BUILD', gulp.series('styles', 'js', 'vendor', 'styles-admin', 'localization'));
+
+// BM: ========================================================================================== FRONT DEV BUILDING ===
+gulp.task('WATCH-FRONT-JS-STYLES', function () {
     gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
     gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));
     gulp.watch('frontend/js/react/localization/*.js', gulp.series('localization'));
     gulp.watch($pathDestServer + '/Scripts/dist/**/*.*', {delay: 700}, gulp.series('front-js-rev'));
     gulp.watch($pathDestServer + '/Content/dist/*.*', {delay: 700}, gulp.series('front-css-rev'));
+    gulp.watch('frontend/Images/dist/*.*', {delay: 700}, gulp.series('imagescopy'));
 });
 
 
 
+/*
 gulp.task('serve', function() {
   browserSync.init({
     server: 'public'
   });
 
-  browserSync.watch('public/**/*.*').on('change', browserSync.reload);
+  browserSync.watch('public/!**!/!*.*').on('change', browserSync.reload);
 });
+*/
 
 
+/*
 gulp.task('dev',
     gulp.series(
         'build',
         gulp.parallel(
             'serve',
             function() {
-              gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
-              gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));
-              gulp.watch('frontend/assets/**/*.html', gulp.series('assets'));
-              gulp.watch('frontend/fonts/**/*.*', gulp.series('fonts'));
-              gulp.watch('frontend/Images/**/*.{svg,png,jpg,gif,ico}', gulp.series('styles:assets'));
+              gulp.watch('frontend/styles/!**!/!*.scss', gulp.series('styles'));
+              gulp.watch('frontend/js/nonReact/!**!/!*.js', gulp.series('js'));
+              gulp.watch('frontend/assets/!**!/!*.html', gulp.series('assets'));
+              gulp.watch('frontend/fonts/!**!/!*.*', gulp.series('fonts'));
+              gulp.watch('frontend/Images/!**!/!*.{svg,png,jpg,gif,ico}', gulp.series('styles:assets'));
             }
         )
     )
 );
+*/

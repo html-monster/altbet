@@ -130,13 +130,13 @@ export default class ExchangeModel
                 type: 'POST',
                 success: function(data)
                 {
-                    __LDEV__&&console.debug( 'data AJAX', data );
+                    __DEV__ && console.log( 'data AJAX', data );
 
                     // correct
                     if( data.Error == 200 )
                     {
-                        data.Param1 = data.ParamObj.Exchange.Symbols["0"];
-                        data.Param1.Exchange = data.ParamObj.Exchange.Name;
+                        data.Param1 = data.Param1.Exchange.Symbols["0"];
+                        data.Param1.Exchange = data.Param1.Name;
                         // data.Param1.StartDate = data.Param1.StartDate && (new DateLocalization).fromSharp(data.Param1.StartDate, 0).unixToLocalDate({format: "M/D/Y h:mm:ss A"});
                         data.Param1.StartDate = data.Param1.StartDateStr && (new DateLocalization).fromSharp2(data.Param1.StartDateStr, 0).toUtcDate({format: "M/D/Y h:mm:ss A"});
                         data.Param1.EndDate = data.Param1.EndDateStr && (new DateLocalization).fromSharp2(data.Param1.EndDateStr, 0).toUtcDate({format: "M/D/Y h:mm:ss A"});

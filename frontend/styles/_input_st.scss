@@ -33,8 +33,30 @@
     margin: 0 0 2em;
     height: 57px;
     text-align: center;
-
-    &.input_mail:before {
+    &.inpt_password:before {
+      content: '';
+      position: absolute;
+      top: 11px;
+      left: 8px;
+      width: 15px;
+      height: 21px;
+      font-size: 17px;
+      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+      z-index: 99;
+      opacity: 0.7;
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      top: 11px;
+      left: 8px;
+      width: 15px;
+      height: 21px;
+      font-size: 17px;
+      z-index: 9;
+      opacity: 0.7;
+    }
+    &.inpt_mail:before {
       content: '@';
       position: absolute;
       top: 11px;
@@ -99,7 +121,7 @@
     background: transparent;
     text-align: left;
     transition: opacity 0.3s;
-    padding-left: 0px;
+    padding-left: 35px;
     &:focus {
       outline: none;
     }
@@ -125,7 +147,7 @@
     font-weight: bold;
     font-size: 13px;
     position: absolute;
-    left: 0px;
+    left: 20px;
     text-align: left;
 
   }
@@ -291,13 +313,18 @@
       color: #afabc8;
     }
     .input__label {
-      left: 0px;
+      left: 0;
     }
   }
 }
 
 .sign_in_form{
   .show_password{position: absolute; right: 5px; top: 13px; z-index: 999;}
+  .input__label{left: 35px;}
+}
+.change_password{
+  .input__label{left: 5px;}
+   .input__field{padding-left: 10px;}
 }
 
 .self_exclusion {

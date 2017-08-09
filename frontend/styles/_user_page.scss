@@ -38,21 +38,21 @@
       font-size: 14px;
       &.active, &:hover {
         a { color: #3498da; }
-        &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -453px -387px; }
+        &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -454px -388px; }
         &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -347px -387px;}
         &.sett_b::before{ background: #1b95e0; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -417px -387px; }
         &.pass_b::before{ background: #00a65a; background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -548px -387px;}
-        &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -383px -387px; }
+        &.self_sett_b::before{ background: #1b1b1b; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -379px -353px; }
         //&.self_sett_b::after{ background: blue; opacity: .4; z-index: 10 }
       }
 
       &::before{
         content: '';
         position: absolute;
-        width: 25px;
-        height: 25px;
+        width: 26px;
+        height: 26px;
         left: 0;
-        top: -5px;
+        top: -3px;
       }
       &.fund_b::before{ background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -451px -353px; }
       &.pref_b::before{  background: #ccc; background: url("#{$pathImage}/sprite.svg") no-repeat ; background-position: -346px -353px;}
@@ -102,6 +102,7 @@
     font-size: 12px;
     border: none !important;
     box-shadow: none !important;
+    text-align: center;
     &.validation-summary-errors{  position: static;  }
   }
   .input--yoshiko .validation-summary-errors{  max-width: 265px;  }
@@ -116,14 +117,13 @@
     //@include scroll;
     .tab_item {
       position: relative;
-      //&:first-child { display: block; }
       .user_info {
         position: absolute;
         top: 11px;
         right: 0;
         text-align: right;
         strong{  display: block; color: #1b95e0; font-weight: bold;
-          &:nth-of-type(2){ padding: 10px 0px }}
+        &:nth-of-type(2){ padding: 10px 0px }}
       }
       h2 {
         color: #1b95e0;
@@ -171,32 +171,43 @@
     .preferences_list{
       display: inline-block;
       width: 100%;
-      li{  height: 22px;  }
-      label{
-        padding-left: 325px;
-        position: relative;
-        &>span{  position: relative;  }
-        &.checkbox{  padding-left: 367px;  }
-        &.radio_button{  padding-left: 0; }        &.change-color{
-                                                     height: 44px;
-                                                     strong{  color: $color-min;  }
-                                                   }
+      li{
+        min-height: 22px;
+        &.center{  display: flex;  align-items: center;  }
+        &.select_item{
+          .label{  padding-right: 137px;  }
+        }
       }
+			.item{
+				padding-left: 325px;
+				position: relative;
+				&>span{  position: relative;  }
+        &.checkbox{  padding-left: 367px;  }
+        &.radio_button{  padding-left: 0; }
+        &.change-color{
+          height: 44px;
+          strong{  color: $color-min;  }
+        }
+			}
       input:checked ~ strong{
         color: $checkbox_label_color;
       }
       .help_message strong{  font-size: 12px;  }
-      .label{
-        font-weight: normal;
-        font-size: 14px;
-        position: absolute;
-        top: calc(50% - 11px);
-        left: 0;
+			.label{
+				font-weight: normal;
+				font-size: 14px;
+			}
+      .item .label{
+				position: absolute;
+				top: calc(50% - 11px);
+				left: 0;
         transition: 0.4s ease-out;
       }
-    }
+		}
 
-    i{  width: 275px;  }
+    .h-dropdown2{  width: 121px;  }
+
+    //i{  width: 275px;  }
   }
   i.btn{  width: 100%;  }
   .settings .column {  width: 100%; margin-left: 20px; }
@@ -343,8 +354,8 @@
 
 
   .gidx-btn {
-    &::before { background: url("#{$pathImage}/sprite.svg") no-repeat -555px -420px; }
-    &.withdraw::before { background-position: -530px -420px; }
+    &::before { background: url("#{$pathImage}/sprite.svg") no-repeat -559px -420px; }
+    &.withdraw::before { background-position: -532px -420px; }
     &.history::before { background-position: -495px -420px }
   }
 }

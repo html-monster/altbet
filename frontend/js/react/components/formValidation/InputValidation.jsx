@@ -3,11 +3,17 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 // import { bindActionCreators } from 'redux';
 // import { connect } from 'react-redux';
 //
 // import * as actions from '../../actions/formValidation';
 
+/**
+ * @param renderContent - function that return Dom object
+ * @param validate: function || arrayOf(function) - validation function that returns string. Example: const emptyValidation = (value) => !value ? 'Required' : ''
+ * @param input - params necessary for inputs, it is created by FormValidation
+ */
 export default class InputValidation extends React.Component
 {
 	constructor(props)
@@ -162,10 +168,15 @@ export default class InputValidation extends React.Component
 	}
 }
 
-	// validate: React.PropTypes.func,
-// InputValidation.propTypes = {
-// 	renderContent: React.PropTypes.any.isRequired,
-// };
+//	validate: React.PropTypes.func,
+if(__DEV__)
+{
+	InputValidation.propTypes = {
+		renderContent: PropTypes.func.isRequired,
+		validate: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.func), PropTypes.func]),
+		input: PropTypes.object.isRequired,
+	};
+}
 
 // export default connect(
 // 	state => ({

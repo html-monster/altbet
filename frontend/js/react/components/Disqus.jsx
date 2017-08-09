@@ -35,7 +35,7 @@ class Disqus extends React.PureComponent
 				reload: true,
 				config: function () {
 					this.page.identifier = identifier;
-					this.page.url = `${url}`;
+					this.page.url = `http://${location.host}${ABpp.baseUrl}${url}`;
 				}
 			});
 		} // endif
@@ -54,7 +54,6 @@ class Disqus extends React.PureComponent
 			}
 		</div>
 	}
-
 }
 
 Disqus.propTypes = {

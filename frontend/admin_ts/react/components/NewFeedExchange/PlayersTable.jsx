@@ -4,6 +4,8 @@
 
 import React from 'react' ;
 import classNames from 'classnames';
+import {InfoMessages} from "common/InfoMessages.ts";
+import {Common} from "common/Common.ts";
 
 export class PlayersTable extends React.Component
 {
@@ -54,12 +56,10 @@ export class PlayersTable extends React.Component
 
     render()
     {
-        const { data, data: {t1pos, t2pos, actions, positions, CurrEvtId, EventId, uplayerdata: {uniPositionIndex, uniPositionName}, Rules, CurrentTeam} } = this.props;
-        // const data = this.props.data;
+        const { data, data: {t1pos, t2pos, actions, positions, CurrEvtId, EventId, uplayerdata: {uniPositionIndex, uniPositionName}, Rules, CurrentTeam, PlayersTeam1, PlayersTeam2, TeamSize} } = this.props;
         const { data: Players, filters, posFilters } = this.state;
         let num = 1;
 
-        0||console.log( 'Rules, this.props.data', Rules, this.props.data );
 
         // filter btn
         var filterBtn = (filter, filters, onClick) => <span key={filter + '11'}><a href="#" className={"f-btn" + (this.state[filters][filter] ? " active" : "")} data-filter={filter} onClick={onClick}>{filter}</a>&nbsp;</span>;
@@ -176,15 +176,15 @@ export class PlayersTable extends React.Component
                                                 <div class="btn-group">
                                                     {CurrentTeam.type === 1 ?
                                                         <div>
-                                                            <button type="button" class="btn btn-default -btn-default btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title={addTeamdisable[$TNum] ? `Position ${itm.Position} is full` : `Add to team ${$TNum}`} disabled={addTeamdisable[$TNum]} onClick={this._onAddPlayerClick.bind(this, addTeamdisable[$TNum], actions.actionAddTeamplayer, {player: itm, team: $TNum})}><i class="fa fa-plus"/> Add T{$TNum}</button>
+                                                            <button type="button" class="btn btn-default -btn-default btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title={addTeamdisable[$TNum] ? `Position ${itm.Position} is full` : `Add to team ${$TNum}`} disabled={addTeamdisable[$TNum]} onClick={this._onAddPlayerClick.bind(this, addTeamdisable[$TNum], 1, {player: itm, team: $TNum})}><i class="fa fa-plus"/> Add T{$TNum}</button>
                                                             &nbsp;
-                                                            <button type="button" class={"btn btn-default -btn-default btn-xs"} title={upAddTitle[$TNum]} disabled={ addTeamUPdisable[$TNum]} onClick={this._onAddPlayerClick.bind(this, addTeamUPdisable[$TNum], actions.actionAddUPTeamplayer, {player: itm, team: $TNum})}><i class="fa fa-plus"/> Add UP</button>
+                                                            <button type="button" class={"btn btn-default -btn-default btn-xs"} title={upAddTitle[$TNum]} disabled={ addTeamUPdisable[$TNum]} onClick={this._onAddPlayerClick.bind(this, addTeamUPdisable[$TNum], 2, {player: itm, team: $TNum})}><i class="fa fa-plus"/> Add UP</button>
                                                         </div>
                                                         :
                                                      CurrentTeam.type === 2 ?
-                                                        <button type="button" class="btn btn-default -btn-default btn-xs" disabled={addTeamReserveDisable[$TNum]} title={upAddTitle[$TNum]} onClick={this._onAddPlayerClick.bind(this, addTeamReserveDisable[$TNum], actions.actionAddTeamplayerReserve, {player: itm, team: CurrentTeam.num})}><i class="fa fa-plus"/> Add to RES</button>
+                                                        <button type="button" class="btn btn-default -btn-default btn-xs" disabled={addTeamReserveDisable[$TNum]} title={upAddTitle[$TNum]} onClick={this._onAddPlayerClick.bind(this, addTeamReserveDisable[$TNum], 3, {player: itm, team: CurrentTeam.num})}><i class="fa fa-plus"/> Add to RES</button>
                                                         :
-                                                        <button type="button" class="btn btn-default -btn-default btn-xs" disabled={addTeamVariableDisable[$TNum]} title={resAddTitle[$TNum]} onClick={this._onAddPlayerClick.bind(this, addTeamVariableDisable[$TNum], actions.actionAddTeamplayerVariable, {player: itm, team: CurrentTeam.num})}><i class="fa fa-plus"/> Add to VAR</button>
+                                                        <button type="button" class="btn btn-default -btn-default btn-xs" disabled={addTeamVariableDisable[$TNum]} title={resAddTitle[$TNum]} onClick={this._onAddPlayerClick.bind(this, addTeamVariableDisable[$TNum], 4, {player: itm, team: CurrentTeam.num})}><i class="fa fa-plus"/> Add to VAR</button>
                                                     }
 
     {/*
@@ -212,10 +212,36 @@ export class PlayersTable extends React.Component
     }
 
 
-    _onAddPlayerClick(disallow, clickFunc, params, ee)
+    _onAddPlayerClick(disallow, type, params, ee)
     {
-        // 0||console.log( 'ee.preventDefault', {disallow, clickFunc, proxy, ee} );
+        const { data, data: {actions} } = this.props;
+        let clickFunc;
+
         ee.preventDefault();
+        __DEV__&&console.log( 'params', params );
+
+        switch( type )
+        {
+            case 1 : clickFunc = actions.actionAddTeamplayer; break;
+            case 2 : clickFunc = actions.actionAddUPTeamplayer; break;
+            case 3 : clickFunc = actions.actionAddTeamplayerReserve; break;
+            case 4 : clickFunc = actions.actionAddTeamplayerVariable; break;
+        }
+
+
+        if( Common.inArray(type, [1,2]) && data['PlayersTeam' + params.team].players.length >= data.TeamSize )
+        {
+            (new InfoMessages).show({
+                title: 'WARNING',
+                message: `Team size is full`,
+                color: InfoMessages.WARN,
+            });
+
+            return;
+        } // endif
+
+
+        // 0||console.log( 'ee.preventDefault', {disallow, clickFunc, proxy, ee} );
         disallow || clickFunc(params);
         return false;
     }

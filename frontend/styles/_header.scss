@@ -16,10 +16,7 @@ header {
       top: 6px;
     }
   }
-  @include mdmax(1350){
-    position: absolute;
-
-  }
+  @include mdmax(1350){  position: absolute;  left: 0;  }
 
   // reconnect button
   .reconnect{
@@ -64,29 +61,31 @@ header {
   .odds_converter {
     margin-right: 5px;
     width: 121px;
-    .active_selection {
-      height: 36px;
-      padding-top: 3px;
-      line-height: 30px;
-      color: #ffffff;
-      background: linear-gradient(to bottom, #53515e, #292830);
-      border: 1px solid #000000;
-    }
-    ul {
-      background: linear-gradient(to bottom, #45434c, #292830);
-      border: 1px solid #000
-    }
-    li {
-      color: #ffffff;
-      border-top: 1px solid #53515e * 1.2;
-      border-bottom: 1px solid #000;
-      &:hover {
-        background: #31303c * 1.2;
-      }
-      &:active {
-        background: #31303c * 1.5;
-      }
-    }
+    .Select-control{  height: 32px;  }
+    .Select-placeholder, .Select--single > .Select-control .Select-value{  height: 32px; line-height: 30px;  }
+    //.active_selection {
+    //  height: 36px;
+    //  padding-top: 3px;
+    //  line-height: 30px;
+    //  color: #ffffff;
+    //  background: linear-gradient(to bottom, #53515e, #292830);
+    //  border: 1px solid #000000;
+    //}
+    //ul {
+    //  background: linear-gradient(to bottom, #45434c, #292830);
+    //  border: 1px solid #000
+    //}
+    //li {
+    //  color: #ffffff;
+    //  border-top: 1px solid #53515e * 1.2;
+    //  border-bottom: 1px solid #000;
+    //  &:hover {
+    //    background: #31303c * 1.2;
+    //  }
+    //  &:active {
+    //    background: #31303c * 1.5;
+    //  }
+    //}
   }
   .header_info {
     //@include span(last 10.19 of 12);

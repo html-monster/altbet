@@ -37,6 +37,10 @@
 		}
 	}
 	.order-title{  padding-left: 5px; }
+	@include mdmax(1500){
+		h3{ font-size: 11px; }
+		strong.current-order{ min-width: 70px; padding-left: 5px; text-align: right; font-size: 11px; }
+	}
 	.current-order-content{
 		padding: 5px 5px 10px;
 		text-align: center;

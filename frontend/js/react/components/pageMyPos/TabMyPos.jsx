@@ -52,7 +52,7 @@ export class TabMyPos extends React.Component
         var filterBtn = (inCatName, $ca) => [<input key={inCatName + "22"} id={$ca = inCatName.replace(" ", "_").replace("-", "_") + "22"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '23'} htmlFor={$ca} className={this.filters[inCatName].toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{this.filters[inCatName]}</span></label>];
 
 
-        return <div className="tab_item active">
+        return <div className="">
                     <div className="my_position_tab">
                         <div className="wrapper">
                             <div className="filters">
@@ -161,12 +161,12 @@ export class TabMyPos extends React.Component
                                                                     </td>
                                                                     <td className={'pl ' + plClass}>{(item2.CommonProfitLoss < 0) ? `($${(Math.abs(item2.CommonProfitLoss)).toFixed(2)})` : '$' + (item2.CommonProfitLoss).toFixed(2)}</td>
                                                                     <td>
-                                                                        <span className="buy"><button className="buy btn event wave empty btnJs"
-                                                                            onClick={() => actions.actionOnBuySellClick({type: 0, exdata: commProps}, defaultOrderActions)}
-                                                                            disabled={true}>Buy</button></span>
-                                                                        <span className="sell"><button className="sell btn event wave empty btnJs"
-                                                                            onClick={() => actions.actionOnBuySellClick({type: 1, exdata: commProps}, defaultOrderActions)}
-                                                                            style={{marginLeft : 10}} disabled={true}>Sell</button></span>
+                                                                        {/*<span className="buy"><button className="buy btn event wave empty btnJs"*/}
+                                                                            {/*onClick={() => actions.actionOnBuySellClick({type: 0, exdata: commProps}, defaultOrderActions)}*/}
+                                                                            {/*disabled={true}>Buy</button></span>*/}
+                                                                        {/*<span className="sell"><button className="sell btn event wave empty btnJs"*/}
+                                                                            {/*onClick={() => actions.actionOnBuySellClick({type: 1, exdata: commProps}, defaultOrderActions)}*/}
+                                                                            {/*style={{marginLeft : 10}} disabled={true}>Sell</button></span>*/}
                                                                     </td>
                                                                 </tr>
                                                             })

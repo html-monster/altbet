@@ -24,14 +24,14 @@ export class Team1 extends React.Component
 
     render()
     {
-        const { players, name, positions, teamNum, TeamDefence, actions, uplayerdata: {uniPositionIndex, uniPositionName} } = this.props.data;
+        const { players, name, positions, teamNum, TeamDefence, actions, uplayerdata: {uniPositionIndex, uniPositionName}, TeamSize } = this.props.data;
         let jj = 0, kk = 1;
         // let Defence = {};
         // TimeEvent.forEach((val) => {
         //     if (TeamDefence.TeamId) Defence = {name: val.HomeTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
         //     if (TeamDefence.TeamId) Defence = {name: val.AwayTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
         // });
-        // 0||console.log( 'TeamDefence', TeamDefence );
+        //0||console.log( 'players', players, teamNum );
 
         return (
             <div className="h-team">
@@ -40,19 +40,22 @@ export class Team1 extends React.Component
                         <label className="col-sm-3 control-label">Team {teamNum} name</label>
                         <div class="col-sm-9 input-group">
                             <input className="form-control" type="text" name={`team${teamNum}name`} value={name} onChange={::this._onChangeTeamName} />
-                            <span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateTeamName} title="Generate team name"><i class="fa fa-repeat"/></button></span>
+                            {/*<span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateTeamName} title="Generate team name"><i class="fa fa-repeat"/></button></span>*/}
+                            <div class="btn-group input-button -dropdown input-group-addon">
+                                <button type="button" class="btn btn-default btn-xs" onClick={this._onGenerateTeamName.bind(this, {})}><i class="fa fa-repeat"/></button>
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    {players.map(val =>
+                                        <li key={val.PlayerId}><a href="#" onClick={this._onGenerateTeamName.bind(this, {Name: val.Name, Team: val.Team})}>({val.Position}) <b>Team {val.Name.split(' ')[1].trim()}, {val.Team}</b></a></li>
+                                    )}
+                                </ul>
+                            </div>
                         </div>
                     </div>
-{/*
-                    <div className="form-group">
-                        <label className="col-sm-3 control-label">Team size</label>
-                        <div class="col-sm-9 input-group">
-                            <select class="cb-size form-control">
-                                {this._checkTeamSize(positions)}
-                            </select>
-                        </div>
-                    </div>
-*/}
                 </div>
 {/*
                 <div className="form-group">
@@ -78,6 +81,7 @@ export class Team1 extends React.Component
                             let ret = [];
                             for( let ii = 0; ii < itm.Quantity; ii++ )
                             {
+                                // players[jj]&&__DEV__&&console.log( 'players[jj], itm.Index', players[jj].Index, itm.Index );
                                 if( players[jj] && players[jj].Index == itm.Index )
                                 {
                                     ret.push(<tr key={itm.Name + ii}>
@@ -97,7 +101,15 @@ export class Team1 extends React.Component
                                     ret.push(<tr className="empty">
                                         <td>{}</td>
                                         <td>{itm.Name === uniPositionName ? <span title="Universal player">UP</span> : itm.Name}</td>
-                                        <td colSpan="5"><i>Add player to this position...</i></td>
+                                        <td colSpan="5">
+                                            <i>
+                                                {players.length >= TeamSize ?
+                                                    'Team is full'
+                                                    :
+                                                    'Add player to this position...'
+                                                }
+                                            </i>
+                                        </td>
                                     </tr>)
                                 } // endif
                             } // endfor
@@ -110,7 +122,7 @@ export class Team1 extends React.Component
 
                 {TeamDefence.name ?
                     <div className="defence">
-                        <b>Defence</b>: <span title={`From event “${TeamDefence.event}”`}>{TeamDefence.name}</span>
+                        <b>Defence</b>: <abbr title={TeamDefence.event ? `From event “${TeamDefence.event}”` : ''}>{TeamDefence.name}</abbr>
                     </div>
                     :
                     <div className="defence"><b>Defence</b>: <i>Not set, please, choose a command for defence</i></div>
@@ -136,24 +148,13 @@ export class Team1 extends React.Component
     }
 
 
-    /**@private*/ _onGenerateTeamName(ee)
+    /**@private*/ _onGenerateTeamName(props, ee)
     {
+        // __DEV__&&console.log( 'props, ee, p1, p2, p3', {props, ee, p1, p2, p3} );
         const { actions, teamNum } = this.props.data;
-        actions.actionGenerateTeamName({teamNum});
-    }
 
+        ee.preventDefault();
 
-    /**@private*/ _checkTeamSize(Positions)
-    {
-        let len = 0, ret = [];
-        Positions.forEach((val) => len += val.Quantity);
-
-        0||console.log( 'len', len );
-
-        for( var ii = 0, countii = len-1; ii < countii; ii++ )
-        {
-            ret.push(<option>{ii+1}</option>);
-        } // endfor
-        ret.push(<option selected>{ii+1}</option>);
+        actions.actionGenerateTeamName({teamNum, ...props});
     }
 }

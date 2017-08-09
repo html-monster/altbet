@@ -11,9 +11,9 @@ import YourOrders from './sidebar/YourOrders';
 import Disqus from './Disqus';
 import sidebarActions from '../actions/sidebarActions.ts';
 import classnames from 'classnames';
-// import {OddsConverter} from '../models/oddsConverter/oddsConverter.ts';
+// import {OddsConverterComp} from '../models/oddsConverter/oddsConverter.ts';
 
-// new OddsConverter('implied_probability');
+// new OddsConverterComp('implied_probability');
 // export default
 class Sidebar extends React.Component
 {
@@ -48,13 +48,21 @@ class Sidebar extends React.Component
 
 	componentWillMount()
     {
-        let data = ABpp.SysEvents.getLastNotifyData(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL);
+		const { actions, sidebar: { traderOn } } = this.props;
+
+		let data = ABpp.SysEvents.getLastNotifyData(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL);
+
         data && this.props.actions.actionOnActiveSymbolChanged(data);
-		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ODD_SYSTEM, (props) => this.props.actions.actionOnOddSystemChange(props));
-		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, (props) => this.props.actions.actionOnActiveSymbolChanged(props));
+		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ODD_SYSTEM, (props) => actions.actionOnOddSystemChange(props));
+		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, (props) => actions.actionOnActiveSymbolChanged(props));
 		ABpp.SysEvents.subscribe(this, ABpp.SysEvents.EVENT_TURN_BASIC_MODE, () => {
 			// ABpp.config.tradeOn = false;
 			// globalData.tradeOn = false;
+			if(	ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS && // костыль из-за разного отображения табов сайдбара
+				!ABpp.config.basicMode && traderOn) actions.tabSwitch(actions, 'ActiveTrader');
+			else
+				actions.tabSwitch(actions, 'YourOrders');
+
 			this.setState({...this.state, isAllowAT: !ABpp.config.basicMode})
 		});
     }
@@ -92,7 +100,6 @@ class Sidebar extends React.Component
 		// 	}
 		// });
     }
-
 
 	render()
 	{
@@ -143,7 +150,7 @@ class Sidebar extends React.Component
 					{
 						(ABpp.User.userIdentity && !ABpp.config.basicMode) && ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS &&
 						<button className={classnames('custom tab', {active: activeTab === 'ActiveTrader'})} onClick={actions.tabSwitch.bind(null, actions, 'ActiveTrader')}>
-							{ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS ? 'Active player' : 'Trade Slip'}
+							{ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS ? 'Active Player' : 'Trade Slip'}
 						</button>
 					}
 					<button className={classnames('custom tab js-tab2 ', {active: activeTab === 'YourOrders'},

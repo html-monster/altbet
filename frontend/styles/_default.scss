@@ -45,6 +45,8 @@ select {
 ul{  list-style-type: none;  }
 *:focus{  outline: none;  }
 body{
+  min-width: 1350px;
+  @include mdmax(1350) {  position: relative;  }
   //overflow-x: auto;
   &.blocked{ overflow: hidden; }
   &>.wrapper{
@@ -549,7 +551,7 @@ input ~ .info {
   }
 }*/
 
-.select { position: relative; color: $main-color;
+.select { position: relative; color: $main-color; cursor: pointer;
   &.-opened .active_selection i { transform: rotateX(180deg);
     &::before { top: 0; }
   }
@@ -567,7 +569,7 @@ input ~ .info {
     border-radius: 4px; background: $active_selection_bg; box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.5); z-index: 2; overflow-y: auto;
     @include scrollWhite;
   }
-  li { padding: 2px 35px 2px 10px; transition: 0.2s ease-out; cursor: pointer; @include user_page_li; }
+  li { padding: 2px 10px; transition: 0.2s ease-out; cursor: pointer; @include user_page_li; }
   li:last-of-type{  border-bottom: none;  }
     .has-value.is-pseudo-focused .Select-input {
       opacity: 0;

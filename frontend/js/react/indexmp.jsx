@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRedirect, hashHistory } from 'react-router'
+import { Router, Route, IndexRedirect, hashHistory, browserHistory  } from 'react-router'
 
 import configureStore from './store/configureStore';
 import RApp from './containers/RApp';
@@ -121,11 +121,15 @@ if( !globalData.landingPage  )
 		// рендерим PageMyPos
 		ReactDOM.render(
 			<Provider store={store}>
-				{/*<Router history={hashHistory}>*/}
-					{/*<Route path='/' component={PageMyPos} someval="aaaaaa" />*/}
-					{/*<Route path='/test' component={PageMyPos} someval="bbb" />*/}
-				{/*</Router>*/}
-				<PageMyPos />
+				<Router history={hashHistory}>
+					<Route path='/'>
+						<IndexRedirect to="/my-games" />
+						<Route path='/open-games' component={PageMyPos} tab="open-games" />
+						<Route path='/my-games' component={PageMyPos} tab="my-games" />
+						<Route path='/history' component={PageMyPos} tab="history" />
+					</Route>
+				</Router>
+				{/*<PageMyPos />*/}
 			</Provider>,
 			document.getElementById('DiPageMyAssets')
 		);

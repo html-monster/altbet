@@ -34,4 +34,5 @@ export class MainConfig
     public static AJAX_FEED_GETTIMEEVENT = 'Feed/GetTimeEvent';
     public static AJAX_FEED_GET_EVENTS = 'Feed/GetEvents';
     public static AJAX_FEED_CREATE_FEED_EXCHANGE = 'Feed/CreateFeedExchange';
+    public static AJAX_FEED_CHANGE_FEED_EXCHANGE = 'Feed/ChangeFeedExchange';
 }

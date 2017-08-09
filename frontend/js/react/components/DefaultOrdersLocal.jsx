@@ -54,8 +54,9 @@ class DefaultOrdersLocal extends React.PureComponent
 							  Bid       : orderData.Bid,
 							  StartDate : eventData.StartDate,
 							  EndDate   : eventData.EndDate,
-							  ResultExchange   : eventData.ResultExchange,
+							  OptionExchange   : eventData.OptionExchange,
 							  minPrice   : eventData.minPrice,
+							  SymbolLimitData   : eventData.SymbolLimitData,
 							  Orders    : [{
 								  Price   : orderData.Orders[0].Price,
 								  Side    : orderData.Orders[0].Side,

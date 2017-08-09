@@ -62,7 +62,7 @@ class ajaxRegistrationControllerClass{
 
 	static OnFailureJs(){
 		$('#submit_sign_up').removeAttr('disabled');
-		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+		defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
 	}
 }
 */
