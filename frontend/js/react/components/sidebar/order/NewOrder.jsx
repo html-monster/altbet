@@ -21,7 +21,7 @@ export default class NewOrder extends React.PureComponent
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
 		};
-		
+
 		return <div className={classnames(`order_content new animated`, { local_view: localView })}>
 			<div className="order-title">
 				{
@@ -60,9 +60,9 @@ export default class NewOrder extends React.PureComponent
 							bid={data.Bid === 0 ? null : data.Bid}
 							price={item.Price}
 							priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.StartDate, 1, {TZOffset: false})}
-							maxEntries={data.SymbolLimitData.EntryLimit}
+							maxEntries={data.SymbolLimitData ? data.SymbolLimitData.EntryLimit : 0}
 							minPrice={data.minPrice ? data.minPrice : 0.5}
-							remainingBal={data.SymbolLimitData.EntryLimit - data.SymbolLimitData.CurrentEntryBalance}
+							remainingBal={data.SymbolLimitData ? data.SymbolLimitData.EntryLimit - data.SymbolLimitData.CurrentEntryBalance : 0}
 							quantity={item.Volume}
 							isMirror={item.isMirror}
 							symbol={symbol}

@@ -15,6 +15,7 @@ import App from "./ADpp";
 import HomeEvents from "./react/containers/HomeEvents";
 import FeedEvents from "./react/containers/FeedEvents";
 import NewFeedExchange from "./react/containers/NewFeedExchange";
+import Users from "./react/containers/Users";
 
 
 let store;
@@ -37,6 +38,9 @@ mountById('DiFeedEvents', <FeedEvents />);
 // Apply feed event
 mountById('DiNewFeedExchange', <NewFeedExchange />);
 
+// Users
+mountById('DiUserMP', <Users />);
+
 
 
 function mountById(inId, inComponent)
@@ -55,5 +59,8 @@ function mountById(inId, inComponent)
             </Provider>,
           mp
         );
+
+        return true;
     }
+    return;
 }

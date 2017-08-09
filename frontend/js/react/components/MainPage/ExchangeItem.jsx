@@ -114,6 +114,7 @@ export default class ExchangeItem extends React.Component
 			// 0||console.log( '$awayTotal', $awayTotal );
 		} // endif
 
+        //Game type
 		if (lineupsData && Symbol.OptionExchange === 2) {
 			spreadTitle = 'Total Points';
 			spreadValue = 'O/U ' + Math.round10(+lineupsData.HomeTotals.EPPG + +lineupsData.AwayTotals.EPPG, -2);
@@ -174,10 +175,10 @@ export default class ExchangeItem extends React.Component
 			height = $(this.refs.lineupContainer.refs.container).height();
 			height = height > 495 ? height : 495;
 		}
-		// else
-		// {
-		//     height = 400;
-		// }
+		else
+		{
+		    height = 495;
+		}
 
 		// activate current exchange global
 		let $classActive = '', $classActiveNM = '', $classActiveM = '';
@@ -267,7 +268,7 @@ export default class ExchangeItem extends React.Component
 				{/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
 				<div className={"event-date " + data.CategoryIcon}>
-                    <span className="date" title={Symbol.Exchange}>
+                    <span className="date" title={'Start time of the game'}>
                         {date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) ? date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) : ''}
 						{/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>
@@ -288,8 +289,13 @@ export default class ExchangeItem extends React.Component
 																							   style={{paddingRight: 5}}
 																							   title="Score">
 									<span className="title">Score</span>
-										<span
-											className={spreadTitle === 'Spread' && +$homeTotal + spreadValue < $awayTotal ? 'low' : ''}>{$homeTotal}</span> : {$awayTotal} </span>
+                                    {/*{$homeTotal && $awayTotal &&  }*/}
+                                    {$homeTotal !== undefined && $awayTotal !== undefined ?
+                                        [<span key={1} className={spreadTitle === 'Spread' && +$homeTotal + spreadValue < $awayTotal ? 'low' : ''}>{$homeTotal}</span>,<span key={2}> : {$awayTotal}</span>]
+                                        :
+									    <span title="Not available">- : -</span>
+                                    }
+                                    </span>
 									{/*{*/}
 										{/*$classActiveExch ?*/}
 											{/*<a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="event_title"*/}
@@ -413,7 +419,7 @@ export default class ExchangeItem extends React.Component
 					 </div>
 					 */}
 					<div className="h-lup__tab_content tab_content">
-						{ !lineupsData ? <div className="h-lup__tab_item tab_item">{}</div>
+						{ !lineupsData ? <div className={"h-lup__tab_item h-lup__tab1_item tab_item empty" + activeTab[0]}><span>Lineups empty</span></div>
 							: <LineupPage className={"h-lup__tab_item h-lup__tab1_item tab_item" + activeTab[0]}
 										  exdata={exdata}
 										  data={lineupsData} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName}
@@ -445,8 +451,7 @@ export default class ExchangeItem extends React.Component
 									<table className="body">
 										<tbody>
 										{
-											chartData &&
-											ticks.length ?
+											chartData && ticks.length ?
 												ticks.map((item, index) =>
 												{
 													let side = item.Side ? 'sell' : 'buy';
@@ -479,7 +484,7 @@ export default class ExchangeItem extends React.Component
 													</CSSTransitionGroup>
 												})
 												:
-												<tr><td className="center"><span>You have no Data</span></td></tr>
+												<tr><td className="center"><span>There are no data in this game</span></td></tr>
 										}
 										</tbody>
 									</table>

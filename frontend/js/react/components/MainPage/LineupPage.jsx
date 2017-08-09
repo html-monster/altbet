@@ -43,8 +43,6 @@ export class LineupPage extends React.Component
     render()
     {
         const { className, exdata, data: { HomeTeam, AwayTeam, HomeTotals, AwayTotals }, HomeName, AwayName } = this.props;
-        let date;
-
 
         return <div className={"l-lup " + className} data-js-team="" ref={'container'}>
                     <div className="lineup_container">

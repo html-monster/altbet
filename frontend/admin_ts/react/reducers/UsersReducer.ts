@@ -3,8 +3,8 @@
 declare let globalData;
 
 import {
-    SUBSCRIBE_ONE_SIGNAL,
-} from '../constants/ActionTypesUserPage.js';
+    ON_GET_NEW_TABLE_DATA,
+} from '../constants/ActionTypesUsers.js';
 /// TS_IGNORE
 import {Common} from "../common/Common";
 
@@ -12,17 +12,20 @@ import {Common} from "../common/Common";
 
 export default class Reducer
 {
+    // public static USING_TEAM = 1;
+
+
     private initialState = {
-        pageEventData: appData ? appData.pageEventData : {},
-        OneSignal : null,
+        // Players: [],
+        ...globalData.AppData,
     };
 
 
 
-    private init()
+    init()
     {
-        /*let loadedData = {};
-        this.initialState = {...this.initialState, ...loadedData};*/
+        let loadedData = {};
+        this.initialState = {...this.initialState, ...loadedData};
     }
 
 
@@ -32,9 +35,9 @@ export default class Reducer
 
         switch (action.type)
         {
-            case SUBSCRIBE_ONE_SIGNAL:
-                return {...state, OneSignal: action.payload.OneSignal};
-
+            case ON_GET_NEW_TABLE_DATA:
+                state = action.payload(state);
+                return {...state};
 
             default:
                 this.init();
@@ -55,3 +58,6 @@ export default class Reducer
 */
 }
 
+//
+// const $Reducer = new Reducer();
+// export default $Reducer.actionsHandler.bind($Reducer);

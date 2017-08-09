@@ -275,9 +275,14 @@ export default class OrderForm extends React.Component
 					quantity.focus();
 					break;
 				default:
-					if (limit) price.focus();
+					if (limit)
+					{
+						price.focus();
+					}
 					else quantity.focus();
 			}
+			quantity.selectionStart = price.value.length;
+			price.selectionStart = price.value.length;
 		}
 	}
 
@@ -370,7 +375,7 @@ export default class OrderForm extends React.Component
 						<label className="with_info" htmlFor={`${id}_price`}>
 							{
 								checkboxProp ?
-									'Per Unit'
+									'Price'
 									:
 									'Market price'
 							}
@@ -522,7 +527,7 @@ export default class OrderForm extends React.Component
 					</div>
 				</div>
 				{
-					stateData.maxEntries &&// || stateData.startDate > moment().format('x')) &&
+					!!stateData.maxEntries &&// || stateData.startDate > moment().format('x')) &&
 					<div className="container conditions">
 						{
 							stateData.maxEntries &&
@@ -615,7 +620,7 @@ export default class OrderForm extends React.Component
 					{/*<span className="close" onClick={onDelete}><span>{}</span></span>*/}
 				</div>
 				{/*<div className="error_pop_up">*/}
-					{/*<span>The connection to the server has been lost. Please check your internet connection or try again.</span>*/}
+					{/*<span>The connection has been lost. Please check your internet connection or try again.</span>*/}
 					{/*<span className="close"><span>{}</span></span>*/}
 				{/*</div>*/}
 				{!newOrder && id ? <input name="ID" type="hidden" value={id}/> : ''}
@@ -633,8 +638,8 @@ export default class OrderForm extends React.Component
 	_onSubmit(event)
 	{
 		const { inputPrice: { refs: { input: inputPrice } }, inputQuantity: { refs: { input: inputQuantity } } } = this.refs;
-		const { price, quantity, } = this.state;
-		const { remainingBal, endDate, side, onSubmit } = this.props;
+		const { price, quantity, side } = this.state;
+		const { remainingBal, endDate, onSubmit } = this.props;
 		event.preventDefault();
 
 		if(!ABpp.User.userIdentity)

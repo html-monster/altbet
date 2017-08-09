@@ -11,6 +11,7 @@ export class PushNotification
     init() {
 
         this.OneSignal = window.OneSignal || [];
+        __DEV__&&console.log( 'this.OneSignal', this.OneSignal );
         // this.OneSignal.pushOneSignal();
 
     }
@@ -27,7 +28,6 @@ export class PushNotification
             notifyButton: {
                 enable: true // Set to false to hide /
             }
-
         }]);
     }
 
@@ -36,8 +36,8 @@ export class PushNotification
         this.OneSignal.setSubscription(false);
     }
 
-    //callBack for Subscribed Users
 
+    //callBack for Subscribed Users
     oneSignalCollback()
     {
         let userSubscribe;
@@ -78,6 +78,7 @@ export class PushNotification
 
         return userSubscribe;
     }
+
 
     subscribeOneSignal() {
         if (useragentid != null) {
