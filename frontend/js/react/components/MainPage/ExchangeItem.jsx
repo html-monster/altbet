@@ -113,11 +113,11 @@ export default class ExchangeItem extends React.Component
 			$awayTotal = lineupsData.AwayTotals.Score;
 			// 0||console.log( '$awayTotal', $awayTotal );
 		} // endif
-
+		Symbol.HomeHandicap = null;
         //Game type
 		if (lineupsData && Symbol.OptionExchange === 2) {
 			spreadTitle = 'Total Points';
-			spreadValue = 'O/U ' + Math.round10(+lineupsData.HomeTotals.EPPG + +lineupsData.AwayTotals.EPPG, -2);
+			spreadValue = 'O/U ' + Math.round10(lineupsData.HomeTotals.EPPG + lineupsData.AwayTotals.EPPG, -2);
 		}
 		else if (lineupsData && Symbol.OptionExchange === 1) {
 			let coefficient = Math.abs(Symbol.HomeHandicap / lineupsData.HomeTotals.EPPG);
@@ -310,7 +310,7 @@ export default class ExchangeItem extends React.Component
 											</span>
 									{/*}*/}
 									</span>
-								, (Symbol.HomeHandicap !== null) ?
+								, (Symbol.HomeHandicap !== null || (lineupsData && spreadTitle === 'Total Points')) ?
 									<span key="1" className="handicap" style={{paddingRight: 5}} title={spreadTitle}>
 										<span className="title">{spreadTitle}</span> {spreadValue}</span> : ''
 								, data.Symbol.LastPrice && isEventStarted ?

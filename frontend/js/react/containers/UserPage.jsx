@@ -45,7 +45,7 @@ class UserPage extends BaseController
             <ul className="tabs tabs_left">
                 <li className={"tab custom fund_b " + (this.props.route.tab === "funds" ? "active" : "")}><Link to={`/funds`}>Funds</Link></li>
                 <li className={"tab custom pref_b " + (this.props.route.tab === "pref" ? "active" : "")}><Link to={`/preferences`}>My Preferences</Link></li>
-                <li className={"tab custom sett_b " + (this.props.route.tab === "sett" ? "active" : "")}><Link to={`/settings`}>Settings</Link></li>
+                <li className={"tab custom sett_b " + (this.props.route.tab === "sett" ? "active" : "")}><Link to={`/settings`}>User info</Link></li>
                 <li className={"tab custom pass_b " + (this.props.route.tab === "pass" ? "active" : "")}><Link to={`/change_password`}>Change Password</Link></li>
                 <li className={"tab custom self_sett_b " + (this.props.route.tab === "self_sett" ? "active" : "")}><Link to={`/self_exclusion`}>Self Exclusion</Link></li>
             </ul>

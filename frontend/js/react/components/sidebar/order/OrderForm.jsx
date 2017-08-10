@@ -14,8 +14,9 @@ import OddsConverter from '../../../models/oddsConverter';
  * 	limit: boolean - *required
  * 	side: string - order side *required
  * 	price - order price
- * 	maxEntries: number - maximum entry fees
  * 	minPrice: number - min price of event
+ * 	priceDisabled: boolean - disable input price
+ * 	maxEntries: number - maximum entry fees
  * 	remainingBal: number - user's remaining entry balance of event
  * 	quantity - order quantity
  * 	isMirror *required
@@ -275,10 +276,7 @@ export default class OrderForm extends React.Component
 					quantity.focus();
 					break;
 				default:
-					if (limit)
-					{
-						price.focus();
-					}
+					if (limit) price.focus();
 					else quantity.focus();
 			}
 			quantity.selectionStart = price.value.length;
@@ -653,12 +651,12 @@ export default class OrderForm extends React.Component
 			defaultMethods.showError('This game is completed, please try another game');
 
 
-		if(side === 'sell' && remainingBal < Math.round10((1 - price) * quantity, -2))
+		if(remainingBal !== null && side === 'sell' && remainingBal < Math.round10((1 - price) * quantity, -2))
 		{
 			defaultMethods.showWarning(`You are trying to create the order on $${(Math.round10((1 - price) * quantity, -2)).toFixed(2)}, but your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
 			return false;
 		}
-		else if( side === 'buy' && remainingBal < Math.round10(price * quantity, -2))
+		else if(remainingBal !== null && side === 'buy' && remainingBal < Math.round10(price * quantity, -2))
 		{
 			defaultMethods.showWarning(`You are trying to create the order on $${(Math.round10(price * quantity, -2)).toFixed(2)}, but your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
 			return false;
@@ -688,10 +686,11 @@ if(__DEV__)
 		limit: PropTypes.bool.isRequired,
 		side: PropTypes.oneOf(['sell', 'buy']).isRequired,
 		price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-		quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-		maxEntries: PropTypes.number,
 		minPrice: PropTypes.number,
-		remainingBal: PropTypes.number,
+		priceDisabled: PropTypes.bool,
+		quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+		maxEntries: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([null])]).isRequired,
+		remainingBal: PropTypes.number.isRequired,
 		isMirror: PropTypes.oneOf([0, 1]).isRequired,
 		symbol: PropTypes.string.isRequired,
 		startDate: PropTypes.number,
