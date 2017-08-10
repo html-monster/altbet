@@ -31,7 +31,7 @@ $reg_title: transparentize(#ffffff, 0.2);
 		&:after{  color: rgba(255, 255, 255, 0.5);  }
 	}
 	&.bottom i {
-		&:before, &:after{  background: #3b3a44  }
+		//&:before, &:after{  background: #3b3a44  }
 	}
 }
 @mixin reg_contact_method{

@@ -1,0 +1,175 @@
+input ~ .tooltip {
+  display: block;
+  width: 10px;
+  height: 10px;
+  //background: $help_block;
+  background: url("#{$pathImage}/sprite.svg") no-repeat;
+  background-position: -393px -431px;
+  position: absolute;
+  top: 20px;
+  right: 5px;
+  z-index: 170;
+  opacity: 0.5;
+  cursor: help;
+  transition: 0.4s ease-out;
+  @include reg_help_message;
+  &.top { top: 33px; background: url("#{$pathImage}/sprite.svg") no-repeat -393px -433px;
+
+    i {  bottom: 18px; right: 10px; z-index: 500; padding: 20px; overflow: hidden; background: #3a3943; color: transparentize($checkbox_label_color, 0.5);
+
+      &:before { display: inline-block;  position: absolute; bottom: 5px; left: 268px; width: 26px; height: 10px; z-index: 700;
+        content: ''; background: #3a3943; transform: rotate(135deg); }
+      &:after { display: inline-block;  position: absolute; width: 15px; height: 15px; background: rgba(255, 255, 255, 0.5);
+        bottom: 0; left: 279px; content: '';  }
+    }
+  }
+  &.bottom {
+    display: block; position: absolute; margin-top: 13px; top: 20px; right: 5px; width: 10px; height: 10px; z-index: 170;
+    background: url("#{$pathImage}/sprite.svg") no-repeat -393px -433px; opacity: 0.5;  cursor: help;
+    transition: 0.4s ease-out; @include reg_help_message;
+
+    i { top: 19px; right: -6px; overflow: hidden; visibility: hidden; z-index: 500; background: #3a3943; color: transparentize($checkbox_label_color, 0.5);
+        padding: 15px; width: 295px; position: absolute; text-align: center; opacity: 0; transition: 0.4s ease-out;
+
+      &:before { display: inline-block;  position: absolute; top: 5px; left: 267px; width: 26px; height: 10px; z-index: 700;
+        content: ''; background: #3a3943; transform: rotate(45deg); }
+      &:after { display: inline-block;  position: absolute; width: 15px; height: 15px; background: rgba(255, 255, 255, 0.5);
+        top: 1px; left: 279px; content: '';  }
+    }
+
+  }
+  &:hover {
+    opacity: 1;
+    z-index: 500;
+    i {
+      visibility: visible;
+      opacity: 1;
+      &:before, &:after { opacity: 1; }
+    }
+  }
+  i {
+    visibility: hidden;
+    width: 295px;
+    padding: 5px 10px;
+    position: absolute;
+    border-radius: 4px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: 0.4s ease-out;
+    //&:before {
+    //  content: '';
+    //  opacity: 0;
+    //  display: none;
+    //  width: 25px;
+    //  height: 10px;
+    //  position: absolute;
+    //  z-index: 1;
+    //  border-radius: 4px;
+    //}
+    //&:after {
+    //  content: '';
+    //  opacity: 0.5;
+    //  display: none;
+    //  width: 20px;
+    //  height: 20px;
+    //  position: absolute;
+    //  border-radius: 0 4px 0 0;
+    //  transform: rotate(45deg);
+    //  box-shadow: 5px 5px 10px -3px rgba(0, 0, 0, 0.5);
+    //  transition: 0.4s ease-out;
+    //}
+  }
+}
+
+
+input ~ .info {
+  display: block;
+  width: 10px;
+  height: 10px;
+  //background: $help_block;
+  background: url("#{$pathImage}/sprite.svg") no-repeat;
+  background-position: -393px -431px;
+  position: absolute;
+  top: 20px;
+  right: 5px;
+  z-index: 170;
+  opacity: 0.5;
+  cursor: help;
+  transition: 0.4s ease-out;
+  @include reg_help_message;
+  &.top {
+    i {
+      bottom: 26px;
+      right: -15px;
+      z-index: 500;
+      padding: 20px;
+      overflow: hidden;
+      background: #3a3943;
+      color: transparentize($checkbox_label_color, 0.5);
+
+      &:before { display: inline-block;  position: absolute; top: 5px; left: 267px; width: 26px; height: 23px; z-index: 700;
+        content: ''; background: #3a3943; transform: rotate(45deg); }
+      &:after { display: inline-block;  position: absolute; width: 15px; height: 15px; background: #fff;
+        top: 1px; left: 279px; content: '';}
+    }
+  }
+  &.bottom {
+    i {
+      top: 19px;
+      right: -15px;
+      z-index: 500;
+      padding: 20px;
+      overflow: hidden;
+      background: #3a3943;
+      color: transparentize($checkbox_label_color, 0.5);
+
+      &:before { display: inline-block;  position: absolute; top: 5px; left: 267px; width: 26px; height: 23px; z-index: 700;
+        content: ''; background: #3a3943; transform: rotate(45deg); }
+      &:after { display: inline-block;  position: absolute; width: 15px; height: 15px; background: #fff;
+        top: 1px; left: 279px; content: '';}
+    }
+
+  }
+  &:hover {
+    opacity: 1;
+    z-index: 500;
+    i {
+      visibility: visible;
+      opacity: 1;
+      &:before, &:after { opacity: 1; }
+    }
+  }
+  i {
+    visibility: hidden;
+    width: 295px;
+    padding: 5px 10px;
+    position: absolute;
+    border-radius: 4px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: 0.4s ease-out;
+    //&:before {
+    //  content: '';
+    //  opacity: 0;
+    //  display: none;
+    //  width: 25px;
+    //  height: 10px;
+    //  position: absolute;
+    //  z-index: 1;
+    //  border-radius: 4px;
+    //}
+    //&:after {
+    //  content: '';
+    //  opacity: 0.5;
+    //  display: none;
+    //  width: 20px;
+    //  height: 20px;
+    //  position: absolute;
+    //  border-radius: 0 4px 0 0;
+    //  transform: rotate(45deg);
+    //  box-shadow: 5px 5px 10px -3px rgba(0, 0, 0, 0.5);
+    //  transition: 0.4s ease-out;
+    //}
+  }
+}
+
