@@ -169,21 +169,32 @@ class Actions extends BaseActions
 
     /**
      * @param showPopup : boolean - show or hide popup
-     * @param startDate : number - timestamp date when event starts
+     * @param startDate : number || null - timestamp date when event starts
+     * @param endDate : number || null - timestamp date when event starts
      * @param popupElement : string || Dom element - popup element, it can be order Id
      * @returns {() => any}
      */
-	public actionDeleteFormToggle(showPopup, startDate, popupElement)
+	public actionDeleteFormToggle(showPopup, startDate, endDate, popupElement)
 	{
 		return () =>
 		{
-            const isEventStarted = moment().format('x') > startDate;
+			if(showPopup)
+			{
+				const isEventStarted = moment().format('x') > startDate;
+				const isEventFinished = moment().format('x') > endDate;
 
-            if(!isEventStarted)
-            {
-                defaultMethods.showWarning('You can`t delete the order before the game starts');
-                return;
-            }
+				if(!isEventStarted)
+				{
+					defaultMethods.showWarning('You can`t delete the order before the game starts');
+					return;
+				}
+
+				if(isEventFinished)
+				{
+                    defaultMethods.showWarning('You can`t delete the order, this game is completed');
+                    return;
+				}
+			}
 
             if(defaultMethods.getType(popupElement) === 'String' && showPopup) // отрабатывает на стр. my activity, когда нужно открыть форму удаления нативно
 			{
@@ -205,24 +216,23 @@ class Actions extends BaseActions
     /**
      * @param id : string - order id
      * @param handle : string - it can be 'edit' ro 'delete' (now isn`t using)
-     * @returns {boolean}
      * @private
      */
 	private _moveToElement(id, handle) {
 		const currentOrders = $('#current-orders');
 		const tab = $('.left_order .tab');
-		const activeTadFirst = tab.eq(0).hasClass('active');
+		// const activeTadFirst = tab.eq(0).hasClass('active');
 		const scrollPos = $(id)[0].offsetTop - 150;
 
 		// console.log('2: ', scrollPos);
-		currentOrders.find('.form-container').slideUp(200);
+		// currentOrders.find('.form-container').slideUp(200);
 		currentOrders.find('.pop_up').fadeOut();
 
-		if(activeTadFirst){
-			$('#order').hide();
-			tab.removeClass('active');
-			tab.eq(1).addClass('active');
-			currentOrders.fadeIn();
+		// if(activeTadFirst){
+		// 	$('#order').hide();
+		// 	tab.removeClass('active');
+			// tab.eq(1).addClass('active');
+			// currentOrders.fadeIn();
 			// if(handle == 'edit' && !this._checkOnLastElement(id)){
 			// 	setTimeout(()=>{
 			// 		currentOrders.animate({scrollTop: scrollPos} , 200);
@@ -233,14 +243,14 @@ class Actions extends BaseActions
 			// 		currentOrders.animate({scrollTop: scrollPos} , 200);
 			// 	}, 450);
 			// }
-		}
+		// }
 		// else{
 			// if(handle == 'edit' && !this._checkOnLastElement(id)) currentOrders.animate({scrollTop: scrollPos} , 200);
 			// else currentOrders.animate({scrollTop: scrollPos} , 200);
 		// }
 		currentOrders.animate({scrollTop: scrollPos} , 200);
 
-		return activeTadFirst;
+		// return activeTadFirst;
 	}
 
 	// private _checkOnLastElement(id)

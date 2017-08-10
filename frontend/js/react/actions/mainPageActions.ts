@@ -70,13 +70,19 @@ class Actions extends BaseActions
                 {
                     let fppg = 0, eppg = 0, score = 0, etr = 0;
 
-                    lineupsData.HomeTeam.Items.forEach((item) =>
-                    {
-                        fppg += item.FPPG;
-                        eppg += item.EPPG;
-                        score += item.Score;
-                        etr += item.ETR;
-                    });
+                    try{
+                        lineupsData.HomeTeam.Items.forEach((item) =>
+                        {
+                            fppg += item.FPPG;
+                            eppg += item.EPPG;
+                            score += item.Score;
+                            etr += item.ETR;
+                        });
+                    }
+                    catch (error){
+                        __DEV__ && console.error(error);
+                    }
+
                     lineupsData.HomeTotals = {
                         FPPG: Math.round10(fppg, -2),
                         EPPG: Math.round10(eppg, -2),
@@ -86,13 +92,19 @@ class Actions extends BaseActions
 
                     fppg = 0; eppg = 0; score = 0; etr = 0;
 
-                    lineupsData.AwayTeam.Items.forEach((item) =>
-                    {
-                        fppg += item.FPPG;
-                        eppg += item.EPPG;
-                        score += item.Score;
-                        etr += item.ETR;
-                    });
+                    try{
+                        lineupsData.AwayTeam.Items.forEach((item) =>
+                        {
+                            fppg += item.FPPG;
+                            eppg += item.EPPG;
+                            score += item.Score;
+                            etr += item.ETR;
+                        });
+                    }
+                    catch (error){
+                        __DEV__ && console.error(error);
+                    }
+
                     lineupsData.AwayTotals = {
                         FPPG: Math.round10(fppg, -2),
                         EPPG: Math.round10(eppg, -2),
