@@ -13,9 +13,9 @@ input ~ .tooltip {
   cursor: help;
   transition: 0.4s ease-out;
   @include reg_help_message;
-  &.top { top: 33px; background: url("#{$pathImage}/sprite.svg") no-repeat -393px -433px;
+  &.top { top: 33px; background: url("#{$pathImage}/sprite.svg") no-repeat -393px -433px; text-align: center;
 
-    i {  bottom: 18px; right: 10px; z-index: 500; padding: 20px; overflow: hidden; background: #3a3943; color: transparentize($checkbox_label_color, 0.5);
+    i {  bottom: 18px; right: -6px; z-index: 500; padding: 20px; overflow: hidden; background: #3a3943; color: transparentize($checkbox_label_color, 0.5);
 
       &:before { display: inline-block;  position: absolute; bottom: 5px; left: 268px; width: 26px; height: 10px; z-index: 700;
         content: ''; background: #3a3943; transform: rotate(135deg); }
