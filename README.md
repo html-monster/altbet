@@ -25,6 +25,7 @@
   - Оптимизация производительности в React (http://habrahabr.net/thread/7947)
 - Momentjs Format (https://momentjs.com/docs/#/displaying/format/)
 - Bootstrap dark theme (https://bootswatch.com/cyborg/)
+- Блокирующий рендеринг (https://webformyself.com/obrabatyvaem-blokiruyushhij-rendering-css-dlya-uskoreniya-renderinga-sajta/) 
 
 
 ## Plugins
