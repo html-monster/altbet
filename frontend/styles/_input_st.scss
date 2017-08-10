@@ -2,7 +2,7 @@
 // адская садомия сюда больше ничего не добавлять
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.sign_up_form, .sign_in_form, .change_password, #form2, .setting_form, .self_exclusion {
+.sign_up_form, .sign_in_form, .change_password, #form2, .self_exclusion { //.setting_form
 
   input[type=email] {
     &:-webkit-autofill {
@@ -66,7 +66,7 @@
       z-index: 9999;
     }
     &.NickName:before {
-          background: url("#{$pathImage}/sprite.svg") no-repeat -525px -53px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -525px -53px;
     }
     &.Email:before {
       content: '@';
@@ -83,7 +83,7 @@
       }
     }
     &.country-states {
-     .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; font-size: 13px }
+      .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; font-size: 13px }
       .Select-placeholder { padding-left: 35px; font-size: 13px }
       &:before {
         background: url("#{$pathImage}/sprite.svg") no-repeat -549px -53px;
@@ -294,7 +294,6 @@
       width: 15px;
       height: 21px;
       font-size: 17px;
-
       background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
       z-index: 99;
       opacity: 0.7;
@@ -322,7 +321,8 @@
 .sign_in_form{
   .show_password{position: absolute; right: 5px; top: 13px; z-index: 999;}
   .input__label{left: 35px;}
-}.change_password{
+}
+.change_password{
   .input__label{left: 5px;}
    .input__field{padding-left: 10px;}
 }

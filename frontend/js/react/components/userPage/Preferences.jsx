@@ -276,13 +276,14 @@ export default class Preferences extends React.Component
 						</ul>
 					</section>
 
+
 					<section>
 						<h3 className="section_user">Push Notifications:</h3>
 						<hr/>
 						{/*<h4>Gameday Updates</h4>*/}
 						<ul className="preferences_list">
 							<li>
-								<CheckBox data={{className: "checkbox checkbox_horizontal", name: "PushNotification", checked: PushNotification, alwaysUpdate: true}}
+								<CheckBox data={{className: "item checkbox checkbox_horizontal", name: "PushNotification", checked: PushNotification, alwaysUpdate: true}}
 										  onChange={::this._checkSubscribe}>
 									<strong className="label">Subscribe/unsubscribe:</strong>
 								</CheckBox>

@@ -57,8 +57,8 @@ class Settings extends React.Component
     datePickerRender({ id, className, label, hint, inputLabel, currVal, type, afterChange, meta: { error, dirty, onCustomChange }, ...input })
     {
         delete input.value;
-        return <span className="input_animate input--yoshiko "/*datePickerRender*/>
-                { dirty && error && <span className="field-validation-valid validation-summary-errors">{error}</span> }
+        return <span className="input_group"/*datePickerRender*/>
+                { dirty && error && <span className="error">{error}</span> }
                 <DatePicker className={`${className} ${dirty && (error ? ' invalidJs' : ' validJs')}`} id={id}
                     exdata={{afterChange: afterChange.bind(null, onCustomChange), dateFormat: "d M yy"}}
                     value={currVal}
@@ -80,13 +80,12 @@ class Settings extends React.Component
     inputRender({ id, className, info, label, filled, inputLabel, meta: { error, dirty }, ...input })
     {
 
-        return  <span className={'input_animate input--yoshiko input--filled' + (filled ? ' input--filled' : '')}>
-                    <input className={`input__field input__field--yoshiko ${className ? className : ''}
-                     ${!input.disabled && dirty && (error ? ' invalidJs' : ' validJs')}`} {...input}/>
+        return  <span className={'input_group' + (filled ? ' input--filled' : '')}>
+                    <input className={`input ${className ? className : ''} ${!input.disabled && dirty && (error ? ' invalidJs' : ' validJs')}`} {...input}/>
                     <label className="input__label input__label--yoshiko" htmlFor={id}>
                         <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                     </label>
-                    { dirty && error && <span className="validation-summary-errors">{error}</span> }
+                    { dirty && error && <span className="error">{error}</span> }
                     { info && <span className="info bottom"><i>{ info }</i></span> }
                 </span>
     };
@@ -103,75 +102,149 @@ class Settings extends React.Component
 		const formContent = ({ input, error, successMessage, userInfo:{ FirstName, LastName, UserName, DateOfBirth, Email,
             Country, Address, Phone }, handleSubmit }) =>
         {
-			return <form action={appData.pageAccountUserInfoUrl} className="setting_form" method="post"
-                         noValidate="novalidate" onSubmit={handleSubmit}>
-                    <h3 className="section_user pers_inf">Personal info</h3>
-                    <hr/>
+			return <form action={appData.pageAccountUserInfoUrl} className="setting-form" method="post"
+                 noValidate="novalidate" onSubmit={handleSubmit}>
+                 <h3 className="section_user pers_inf">Personal info</h3>
+                 <hr/>
 
-                    <InputValidation renderContent={this.inputRender} id={'f_name'} name="FirstName"
-                                     initialValue={FirstName} info="Your first name as specified in your passport"
-                                     label={'First Name'} type={'text'} filled={FirstName}
-                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]}
-                                      input={input} maxLength="20"/>
+                 <InputValidation renderContent={this.inputRender} id={'f_name'} name="FirstName"
+                     initialValue={FirstName} info="Your first name as specified in your passport"
+                     label={'First Name'} type={'text'} filled={FirstName}
+                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]}
+                     input={input} maxLength="20"/>
 
-                    <InputValidation renderContent={this.inputRender} id={'l_name'} name="LastName"
-                                     initialValue={LastName} info="Your second name as specified in your passport"
-                                     label={'Last Name'} type={'text'} filled={LastName}
-                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]} input={input}
-                                     maxLength="20"/>
-
-
-                    <InputValidation renderContent={this.inputRender} id={'n_name'} className="opacity_field"  name="UserName"
-                                     initialValue={UserName}
-                                     label={'User Name'} type={'text'} filled={UserName}
-                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20})]} input={input}
-                                     maxLength="20" disabled={true}/>
-
-                    <InputValidation renderContent={this.datePickerRender} id={'user_b_day'} name="DateOfBirth"
-                                     className={'input__field  input__field--yoshiko'}
-                                     //initialValue
-                                     afterChange={this.dateBirthChange.bind(this)}
-                                     currVal={birthDateStr}
-                                     label={'Date of birth'} type={'text'}
-                                     validate={emptyValidation} input={input}/>
+                 <InputValidation renderContent={this.inputRender} id={'l_name'} name="LastName"
+                     initialValue={LastName} info="Your second name as specified in your passport"
+                     label={'Last Name'} type={'text'} filled={LastName}
+                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]} input={input}
+                     maxLength="20"/>
 
 
-                    <h3 className="section_user cont_inf">Contact Info</h3>
-                    <hr/>
+                 <InputValidation renderContent={this.inputRender} id={'n_name'} className="opacity_field"  name="UserName"
+                     initialValue={UserName}
+                     label={'User Name'} type={'text'} filled={UserName}
+                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20})]} input={input}
+                     maxLength="20" disabled={true}/>
 
-                    <InputValidation renderContent={this.inputRender} id={'e_name'} name="Email"
-                                     initialValue={Email}
-                                     info={`Specify your valid email. A message with registration
-                                     confirmation will be sent at that address. Also that address
-                                     will be used for communication with you`}
-                                     label={'Email Address'} type={'email'} filled={Email}
-                                     validate={[emptyValidation, mailValidation]} input={input} disabled={true}/>
+                 <InputValidation renderContent={this.datePickerRender} id={'user_b_day'} name="DateOfBirth"
+                     className={'input'}
+                     //initialValue
+                     afterChange={this.dateBirthChange.bind(this)}
+                     currVal={birthDateStr}
+                     label={'Date of birth'} type={'text'}
+                     validate={emptyValidation} input={input}/>
 
-                    <InputValidation renderContent={this.inputRender} id={'c_name'} name="Country"
-                                     initialValue={Country} info="Indicate the country of your permanent residence"
-                                     label={'Country'} type={'text'} filled={Country}
-                                     validate={[emptyValidation, lettersOnlyValidation, lengthValidation.bind(null, {min: 2, max: 128})]}
-                                     input={input} maxLength="20"/>
 
-                    <InputValidation renderContent={this.inputRender} id={'s_name'} name="Address"
-                                     initialValue={Address} info="Enter address manually"
-                                     label={'Address'} type={'text'} filled={Address}
-                                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 200}), regexValidation.bind(null, {tmpl: /^[a-zA-Z.,-/'`()\d\s]+$/, message: "Not available special symbols like @#$%^~ etc."})]} input={input}
-                                     maxLength="200"/>
+                 <h3 className="section_user cont_inf">Contact Info</h3>
+                 <hr/>
 
-                    <InputValidation renderContent={this.inputRender} id={'t_number'} name="Phone"
-                                     initialValue={Phone}
-                                     label={'Phone'} type={'tel'} filled={Phone}
-                                     validate={[emptyValidation, phoneValidation]} input={input}
-                                     maxLength="20"/>
+                 <InputValidation renderContent={this.inputRender} id={'e_name'} name="Email"
+                     initialValue={Email}
+                     info={`Specify your valid email. A message with registration
+                     confirmation will be sent at that address. Also that address
+                     will be used for communication with you`}
+                     label={'Email Address'} type={'email'} filled={Email}
+                     validate={[emptyValidation, mailValidation]} input={input} disabled={true}/>
 
-                    <span className="input_animate input--yoshiko submit_container">
-                        <input type="submit" value="Save Changes" className="btn wave submit"/>
-                        {/*<span className="answer_message"></span>*/}
-                        <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
-						<span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
-                    </span>
-            </form>
+                 <InputValidation renderContent={this.inputRender} id={'c_name'} name="Country"
+                     initialValue={Country} info="Indicate the country of your permanent residence"
+                     label={'Country'} type={'text'} filled={Country}
+                     validate={[emptyValidation, lettersOnlyValidation, lengthValidation.bind(null, {min: 2, max: 128})]}
+                     input={input} maxLength="20"/>
+
+                 <InputValidation renderContent={this.inputRender} id={'s_name'} name="Address"
+                     initialValue={Address} info="Enter address manually"
+                     label={'Address'} type={'text'} filled={Address}
+                     validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 200}), regexValidation.bind(null, {tmpl: /^[a-zA-Z.,-/'`()\d\s]+$/, message: "Not available special symbols like @#$%^~ etc."})]} input={input}
+                     maxLength="200"/>
+
+                 <InputValidation renderContent={this.inputRender} id={'t_number'} name="Phone"
+                     initialValue={Phone}
+                     label={'Phone'} type={'tel'} filled={Phone}
+                     validate={[emptyValidation, phoneValidation]} input={input}
+                     maxLength="20"/>
+
+                 <span className="input_animate input--yoshiko submit_container">
+                     <input type="submit" value="Save Changes" className="btn wave submit"/>
+                     <span className={'answer_message' + (error && ' error')}>{error}</span>
+                     <span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
+                 </span>
+             </form>;
+
+            {/*
+        return
+            <form action={appData.pageAccountUserInfoUrl} className="setting-form" method="post"
+                     noValidate="novalidate" onSubmit={handleSubmit}>
+            <h3 className="section_user pers_inf">Personal info</h3>
+            <hr/>
+
+            <InputValidation renderContent={this.inputRender} id={'f_name'} name="FirstName"
+                             initialValue={FirstName} info="Your first name as specified in your passport"
+                             label={'First Name'} type={'text'} filled={FirstName}
+                             validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]}
+                             input={input} maxLength="20"/>
+
+            <InputValidation renderContent={this.inputRender} id={'l_name'} name="LastName"
+                             initialValue={LastName} info="Your second name as specified in your passport"
+                             label={'Last Name'} type={'text'} filled={LastName}
+                             validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20}), lettersOnlyValidation]} input={input}
+                             maxLength="20"/>
+
+
+            <InputValidation renderContent={this.inputRender} id={'n_name'} className="opacity_field"  name="UserName"
+                             initialValue={UserName}
+                             label={'User Name'} type={'text'} filled={UserName}
+                             validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 20})]} input={input}
+                             maxLength="20" disabled={true}/>
+
+            <InputValidation renderContent={this.datePickerRender} id={'user_b_day'} name="DateOfBirth"
+                             className={'input  datePickerJs'}
+                //initialValue
+                             afterChange={this.dateBirthChange.bind(this)}
+                             currVal={birthDateStr}
+                             label={'Date of birth'} type={'text'}
+                             validate={emptyValidation} input={input}/>
+
+
+
+
+
+
+
+            <h3 className="section_user cont_inf">Contact Info</h3>
+            <hr/>
+            <InputValidation renderContent={this.inputRender} id={'e_name'} name="Email"
+                             initialValue={Email}
+                             info={`Specify your valid email. A message with registration
+             confirmation will be sent at that address. Also that address
+             will be used for communication with you`}
+                             label={'Email Address'} type={'email'} filled={Email}
+                             validate={[emptyValidation, mailValidation]} input={input} disabled={true}/>
+
+            <InputValidation renderContent={this.inputRender} id={'c_name'} name="Country"
+                             initialValue={Country} info="Indicate the country of your permanent residence"
+                             label={'Country'} type={'text'} filled={Country}
+                             validate={[emptyValidation, lettersOnlyValidation, lengthValidation.bind(null, {min: 2, max: 128})]}
+                             input={input} maxLength="20"/>
+
+            <InputValidation renderContent={this.inputRender} id={'s_name'} name="Address"
+                             initialValue={Address} info="Enter address manually"
+                             label={'Address'} type={'text'} filled={Address}
+                             validate={[emptyValidation, lengthValidation.bind(null, {min: 2, max: 200}), regexValidation.bind(null, {tmpl: /^[a-zA-Z.,-/'`()\d\s]+$/, message: "Not available special symbols like @#$%^~ etc."})]} input={input}
+                             maxLength="200"/>
+
+            <InputValidation renderContent={this.inputRender} id={'t_number'} name="Phone"
+                             initialValue={Phone}
+                             label={'Phone'} type={'tel'} filled={Phone}
+                             validate={[emptyValidation, phoneValidation]} input={input}
+                             maxLength="20"/>
+
+            <span className="input_animate input--yoshiko submit_container">
+                    <input type="submit" value="Submit" className="btn wave submit"/>
+                    <span className={'answer_message' + (error && ' validation-summary-errors')}>{error}</span>
+                    <span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
+                </span>
+        </form>*/}
 		};
 
 
