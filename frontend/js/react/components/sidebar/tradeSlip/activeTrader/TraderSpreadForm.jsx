@@ -13,12 +13,15 @@ export default class TraderSpreadForm extends React.Component {
 	{
 		const { traderActions, activeString, mainData: { Symbol }, cmpData: { activeExchange }, direction, price, index, traderContext,//inputQuantityContext,
 			isMirror, quantity, spread, SymbolLimitData } = this.props;
+
 		let spreadPricePos = Math.round10(price + +spread, -2);
 		spreadPricePos = spreadPricePos > 0.98 ? 0.99 : spreadPricePos.toFixed(2);
 		spreadPricePos = direction === 'ask' ? price.toFixed(2) : spreadPricePos;
+
 		let spreadPriceNeg = Math.round10(price - spread, -2);
 		spreadPriceNeg = spreadPriceNeg < 0.02 ? 0.01 : spreadPriceNeg.toFixed(2);
 		spreadPriceNeg = direction === 'bid' ? price.toFixed(2) : spreadPriceNeg;
+
 		let bidsProb = '';
 		let offersProb = '';
 
@@ -37,7 +40,7 @@ export default class TraderSpreadForm extends React.Component {
 			if (Symbol.LastAsk && spreadPriceNeg < Math.round10(Symbol.LastAsk - 0.15, -2)) bidsProb = ' low';
 		}
 
-		const maxEntries = SymbolLimitData.EntryLimit, remainingBal = SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance;
+		const remainingBal = SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance;
 
 		return <div className={'order_content spread animated' + (index === activeString || !index ? ' fadeInUp' : '')}
 					id="order_content"
@@ -47,7 +50,7 @@ export default class TraderSpreadForm extends React.Component {
 				<form action={ABpp.baseUrl + '/Order/Spreader'}
 					  autoComplete="off"
 					  className="spread"
-					  onSubmit={this._onSubmit.bind(this, {maxEntries, remainingBal, spreadPricePos, spreadPriceNeg, quantity, traderActions})}
+					  onSubmit={this._onSubmit.bind(this, {remainingBal, spreadPricePos, spreadPriceNeg, quantity, traderActions})}
 				>
 					<div className="container">
 						<div className="price sell">

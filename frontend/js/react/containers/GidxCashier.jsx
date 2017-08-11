@@ -21,9 +21,9 @@ class GidxCashier extends BaseController
         // ABpp.controllers.EventPage
 
         // this.state = {data: props.data};
-        __DEV__&&console.debug( 'GidxVerification props', props );
+        __DEV__&&console.debug( 'GidxCashier props', props );
 
-        // this.actions = props.eventPageActions;
+        props.actions.actionOnLoad();
 
         this.state = {errorMessageAmount: ''}
     }
@@ -31,38 +31,66 @@ class GidxCashier extends BaseController
 
     render()
     {
-        const { data: {depositQuantity, validationMessage}, actions, } = this.props;
+        const { data: {depositQuantity, validationMessage, gidxData}, actions, } = this.props;
         const { errorMessageAmount, } = this.state;
 
+        __DEV__&&console.log( 'gidxData', gidxData );
+
         return <div className="withdraw-page">
-			<div className="quantity_control">
-				<strong>Select withdrawal amount</strong>
-				<div className="controls">
-					<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>10</button>
-					<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>25</button>
-					<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>50</button>
-					<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>100</button>
-					<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>250</button>
-					<button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>500</button>
+            {gidxData.PayActionCode === "Pay" ?
+                <div></div>
+                :
+                <div className="quantity_control">
+                    <strong>Select withdrawal amount</strong>
+                    <div className="controls">
+                        <button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>10</button>
+                        <button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>25</button>
+                        <button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>50</button>
+                        <button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>100</button>
+                        <button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>250</button>
+                        <button className="btn wave" onClick={actions.actionOnButtonQuantityClick}>500</button>
+                        <br />
+                        <InputNumber type="tel" value={depositQuantity} inputValidate="integer" hard="true" onChange={actions.actionOnInputQuantityChange} maxLength="7" autoFocus/>
+                        <span className="validation-errors">{errorMessageAmount}</span>
+                        <span className="label">$</span>
+                    </div>
                     <br />
-					<InputNumber type="tel" value={depositQuantity} inputValidate="integer" hard="true" onChange={actions.actionOnInputQuantityChange} maxLength="7" autoFocus/>
-					<span className="validation-errors">{errorMessageAmount}</span>
-					<span className="label">$</span>
-				</div>
-                <br />
-                <form ref={(elm) => this.formElement = elm} action="" method="get" onSubmit={::this._onSubmit}>
-                    <input type="hidden" name="amount" value={depositQuantity}/>
-                    <input type="hidden" name="direction" value="Payout"/>
-				    <button type="submit" class="btn-md btn-h btn_yellow wave waves-effect waves-button">Withdraw</button>
-                </form>
-				<span class="answer_message validation-summary-errors">{validationMessage}</span>
-			</div>
+                    <form ref={(elm) => this.formElement = elm} action="" method="get" onSubmit={::this._onSubmit}>
+                        <input type="hidden" name="amount" value={depositQuantity}/>
+                        <input type="hidden" name="direction" value="Payout"/>
+                        <button type="submit" class="btn-md btn-h btn_yellow wave waves-effect waves-button">Withdraw</button>
+                    </form>
+                    <span class="answer_message validation-summary-errors">{validationMessage}</span>
+                </div>
+            }
         </div>
     }
 
 
     /**
+     * Some
+     * @private
+     */
+/*
+    _onGidxServiceStatusListenCallback(ee)
+    {
+        ee.preventDefault();
+
+        if( this.props.data.depositQuantity )
+        {
+            this.formElement.submit();
+        }
+        else
+        {
+            this._setError('Input withdraw amount, please', 'errorMessageAmount');
+        } // endif
+    }
+*/
+
+
+    /**
      * Begin withdraw
+     * @private
      */
     _onSubmit(ee)
     {
@@ -79,6 +107,9 @@ class GidxCashier extends BaseController
     }
 
 
+    /**
+     * @private
+     */
     _setError(message, messageElement)
     {
         this.state[messageElement] = message;

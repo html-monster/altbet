@@ -480,14 +480,29 @@ class Actions extends BaseActions
 	public actionOnAjaxAutoTrade(context, orderData){
 		return () =>
 		{
-			const { cmpData, isMirror, quantity } = context.props;
+			const { cmpData, isMirror, quantity, SymbolLimitData } = context.props;
 			const { direction, limit, price } = orderData;
+			const remainingBal = SymbolLimitData ? SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance : null;
 			let url : string, ajaxData : any = {};
+
+            if(remainingBal !== null && direction === 'sell' && remainingBal < Math.round10((1 - price) * quantity, -2))
+            {
+                defaultMethods.showWarning(`You are trying to create the order on $${(Math.round10((1 - price) * quantity, -2)).toFixed(2)}, but your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
+                return false;
+            }
+            else if(remainingBal !== null && direction === 'buy' && remainingBal < Math.round10(price * quantity, -2))
+            {
+                defaultMethods.showWarning(`You are trying to create the order on $${(Math.round10(price * quantity, -2)).toFixed(2)}, but your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
+                return false;
+            }
+
 
 			ajaxData.Symbol = `${cmpData.activeExchange.symbol}`;
 			ajaxData.Quantity = quantity;
 			ajaxData.isMirror = isMirror;
 			ajaxData.OrderType = limit;
+			ajaxData.Side = (direction)[0].toUpperCase() + (direction).slice(1);
+
 			if(limit){
 				ajaxData.LimitPrice = price;
 				url = globalData.rootUrl + 'Order/Create';
@@ -495,8 +510,7 @@ class Actions extends BaseActions
 			else
 				url = globalData.rootUrl + 'Order/MarketTrading';
 
-			ajaxData.Side = (direction)[0].toUpperCase() + (direction).slice(1);
-			context.props.traderActions.actionRemoveOrderForm();
+			// context.props.traderActions.actionRemoveOrderForm();
 
 			defaultMethods.sendAjaxRequest({
 				httpMethod: 'POST',
@@ -520,18 +534,33 @@ class Actions extends BaseActions
 	public actionOnAjaxAutoTradeSpread(context, orderData){
 		return () =>
 		{
-			const { cmpData, isMirror, quantity, spread } = context.props;
+			const { cmpData, isMirror, quantity, spread, SymbolLimitData } = context.props;
 			const { direction, price } = orderData;
-			const spreadPricePos = Math.round10(price + +spread, -2);
-			const spreadPriceNeg = Math.round10(price - spread, -2);
-			let url : string, ajaxData : any = {};
+
+            let spreadPricePos = Math.round10(price + +spread, -2);
+            spreadPricePos = spreadPricePos > 0.98 ? 0.99 : spreadPricePos.toFixed(2);
+            spreadPricePos = direction === 'ask' ? price.toFixed(2) : spreadPricePos;
+
+            let spreadPriceNeg = Math.round10(price - spread, -2);
+            spreadPriceNeg = spreadPriceNeg < 0.02 ? 0.01 : spreadPriceNeg.toFixed(2);
+            spreadPriceNeg = direction === 'bid' ? price.toFixed(2) : spreadPriceNeg;
+
+            const sum = ((1 - spreadPricePos) * quantity) + (spreadPriceNeg * quantity);
+            const remainingBal = SymbolLimitData ? SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance : null;
+            let url : string, ajaxData : any = {};
+
+            if(sum > remainingBal)
+            {
+                defaultMethods.showWarning(`You are trying to create the order on $${Math.round10(sum, -2).toFixed(2)}, your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
+                return false;
+            }
 
 			ajaxData.Symbol = `${cmpData.activeExchange.symbol}`;
 
 			ajaxData.SellOrderQuantity = quantity;
 			ajaxData.BuyOrderQuantity = quantity;
-			ajaxData.SellOrderLimitPrice = direction == 'ask' ? price : (spreadPricePos > 0.98 ? 0.99 : spreadPricePos);
-			ajaxData.BuyOrderLimitPrice = direction == 'bid' ? price : (spreadPriceNeg < 0.02 ? 0.01 : spreadPriceNeg);
+			ajaxData.SellOrderLimitPrice = spreadPricePos;
+			ajaxData.BuyOrderLimitPrice = spreadPriceNeg;
 			ajaxData.isMirror = isMirror;
 
 			// ajaxData.Quantity = quantity;
@@ -620,18 +649,18 @@ class Actions extends BaseActions
 	// 	}, delay);
 	// };
 
-	public actionOnTabMirrorClick(context, isMirror)
-	{
-		return (dispatch, getState) =>
-		{
-			if( getState().activeTrader.isMirror != isMirror ) $(context.refs.activeTrader).addClass('loading');
-			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: getState().sidebar.activeExchange.name, isMirror: isMirror, symbol: getState().sidebar.activeExchange.symbol});
-			dispatch({
-				type: ON_ACTIVE_SYMBOL_CHANGED,
-				payload: {isMirror}
-			});
-		}
-	}
+	// public actionOnTabMirrorClick(context, isMirror)
+	// {
+	// 	return (dispatch, getState) =>
+	// 	{
+	// 		if( getState().activeTrader.isMirror != isMirror ) $(context.refs.activeTrader).addClass('loading');
+	// 		ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_CHANGE_ACTIVE_SYMBOL, {id: getState().sidebar.activeExchange.name, isMirror: isMirror, symbol: getState().sidebar.activeExchange.symbol});
+	// 		dispatch({
+	// 			type: ON_ACTIVE_SYMBOL_CHANGED,
+	// 			payload: {isMirror}
+	// 		});
+	// 	}
+	// }
 
 	// public onDragStart(context, dragSide, price, event)
 	// {

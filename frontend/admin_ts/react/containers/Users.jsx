@@ -7,7 +7,7 @@ import Actions from '../actions/FeedEventsActions';
 import {DropBox} from '../components/common/DropBox';
 import {PagerBox} from '../components/common/PagerBox';
 import {DateLocalization} from '../common/DateLocalization';
-import classNames from 'classnames';
+import classnames from 'classnames';
 import {Common} from "common/Common.ts";
 import {InfoMessages} from "common/InfoMessages.ts";
 import {Loading} from "common/Loading.ts";
@@ -41,7 +41,7 @@ class Users extends BaseController
 
     render()
     {
-        let { actions, data: {Users, } } = this.props;
+        let { actions, data: {Users, SortBy, } } = this.props;
         let sportsItems = [], ligItems = [], currSport, currLig;
         let $DateLocalization = new DateLocalization();
 
@@ -59,6 +59,8 @@ class Users extends BaseController
 
         // sort title (см. как на HomeEvents)
         // let titleAttr = sortVal => (CurrentOrderBy ? CurrentOrderBy === "Asc" ? "sorted ascending" : "sorted descending" : 'click for sorting');
+        let sortClasses = sortVal => classnames('icon -nowrap', Sort.OrderBy, {'active': Sort.SortBy.indexOf(sortVal) > -1})
+
 
         return (
                 <div class="">
@@ -98,33 +100,41 @@ class Users extends BaseController
                         <table class="table exchanges">
                             <thead>
                             <tr>
-                                <th><span>Login</span></th>
+                                <th>
+                                    <span className={sortClasses('StartDate')}>
+                                        <a href={Sort.Links.StartDate} className="dotted" title={titleAttr('StartDate')}>Login</a>
+                                    </span>
+                                </th>
                                 <th><span>Name</span></th>
                                 <th><span>E-mail</span></th>
                                 <th><span>Country</span></th>
                             </tr>
                             </thead>
                             <tbody>
-                            {
+                            { Users && Users.length ?
                                 Users.map((item) =>
                                     <tr key={item.Email}>
-                                        <td>
-                                            {item.UserName}
-                                        </td>
+                                        <td>{item.UserName}</td>
                                         <td>{item.LastName} {item.FirstName}</td>
                                         <td>{item.Email}</td>
+                                        <td>{item.Country}</td>
                                     </tr>
                                 )
+                                :
+                                <tr colSpan="4">
+                                    <td><i>No users</i></td>
+                                </tr>
                             }
-
                             </tbody>
                         </table>
 
+{/*
                         <div className="row">
                             <div className="col-xs-12">
                                 <PagerBox total={PageInfo.TotalPages} current={PageInfo.CurrentPage - 1} visiblePage={5} onPageChange={this._onPagerClick.bind(this, {Sport, League, sort: StartDateSort, OrderBy: CurrentOrderBy})} />
                                 </div>
                         </div>
+*/}
 
                     </div>
                 </div>

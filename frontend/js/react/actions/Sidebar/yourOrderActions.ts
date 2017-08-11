@@ -57,7 +57,7 @@ class Actions extends BaseActions
 		return () =>
 		{
 			event.preventDefault();
-			const form = $(context.refs.deleteForm);
+			const form = $(context.deleteForm);
 
 			function BeforeAjax()
 			{
@@ -102,98 +102,137 @@ class Actions extends BaseActions
 		}
 	}
 
-	public actionOnAjaxSend(formUrl, event)
+	// public actionOnAjaxSend(formUrl, event)
+	// {
+	// 	return () =>
+	// 	{
+	// 		event.preventDefault();
+    //
+	// 		const form = event.currentTarget;
+    //
+	// 		// if(!orderForm(form)) return false;
+    //
+	// 		function OnBeginAjax()
+	// 		{
+	// 			$(form).find('[type=submit]').attr('disabled', 'true');
+	// 		}
+    //
+	// 		function onSuccessAjax()
+	// 		{
+	// 			console.log('Order sending finished: ' + $(form).find('[name=ID]').val());
+	// 		}
+    //
+	// 		function onErrorAjax()
+	// 		{
+	// 			$(form).find('[type=submit]').removeAttr('disabled');
+	// 			defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
+	// 		}
+    //
+	// 		defaultMethods.sendAjaxRequest({
+	// 			httpMethod: 'POST',
+	// 			url: formUrl,
+	// 			callback: onSuccessAjax,
+	// 			onError: onErrorAjax,
+	// 			beforeSend: OnBeginAjax,
+	// 			context: $(form)
+	// 		});
+	// 	}
+	// }
+
+	// public actionOpenEditForm(id)
+	// {
+	// 	return () =>
+	// 	{
+	// 		id = `#${id}__order`;
+	// 		const activeFirstTab = this._moveToElement(id, 'edit');
+	// 		const scrollPos = $(id)[0].offsetTop + 150;
+	// 		// console.log('1: ', scrollPos);
+    //
+	// 		if(this._checkOnLastElement(id)){
+	// 			$(id).find('.form-container').slideToggle(200, ()=>{
+	// 				if(activeFirstTab){
+	// 					setTimeout(() => {
+	// 						$('#current-orders').animate({scrollTop: scrollPos} , 200);
+	// 					}, 450);
+	// 				}
+	// 				else
+	// 					$('#current-orders').animate({scrollTop: scrollPos} , 200);
+	// 			});
+	// 		}
+	// 		else{
+	// 			setTimeout(() => {
+	// 				$(id).find('.form-container').slideToggle(200);
+	// 			}, 300);
+	// 		}
+	// 	}
+	// }
+
+    /**
+     * @param showPopup : boolean - show or hide popup
+     * @param startDate : number || null - timestamp date when event starts
+     * @param endDate : number || null - timestamp date when event starts
+     * @param popupElement : string || Dom element - popup element, it can be order Id
+     * @returns {() => any}
+     */
+	public actionDeleteFormToggle(showPopup, startDate, endDate, popupElement)
 	{
 		return () =>
 		{
-			event.preventDefault();
-
-			const form = event.currentTarget;
-
-			// if(!orderForm(form)) return false;
-
-			function OnBeginAjax()
+			if(showPopup)
 			{
-				$(form).find('[type=submit]').attr('disabled', 'true');
+				const isEventStarted = moment().format('x') > startDate;
+				const isEventFinished = moment().format('x') > endDate;
+
+				if(!isEventStarted)
+				{
+					defaultMethods.showWarning('You can`t delete the order before the game starts');
+					return;
+				}
+
+				if(isEventFinished)
+				{
+                    defaultMethods.showWarning('You can`t delete the order, this game is completed');
+                    return;
+				}
 			}
 
-			function onSuccessAjax()
+            if(defaultMethods.getType(popupElement) === 'String' && showPopup) // отрабатывает на стр. my activity, когда нужно открыть форму удаления нативно
 			{
-				console.log('Order sending finished: ' + $(form).find('[name=ID]').val());
+				popupElement = `#${popupElement}__order`;
+				this._moveToElement(popupElement, 'delete');
+                setTimeout(() => {
+                    $(popupElement).find('.pop_up').fadeIn();
+                }, 300);
+			}
+			else
+			{
+				if(showPopup) $(popupElement).fadeIn();
+				else $(popupElement).fadeOut();
 			}
 
-			function onErrorAjax()
-			{
-				$(form).find('[type=submit]').removeAttr('disabled');
-				defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
-			}
-
-			defaultMethods.sendAjaxRequest({
-				httpMethod: 'POST',
-				url: formUrl,
-				callback: onSuccessAjax,
-				onError: onErrorAjax,
-				beforeSend: OnBeginAjax,
-				context: $(form)
-			});
 		}
 	}
 
-	public actionOpenEditForm(id)
-	{
-		return () =>
-		{
-			id = `#${id}__order`;
-			const activeFirstTab = this._prepeareToMove(id, 'edit');
-			const scrollPos = $(id)[0].offsetTop + 150;
-			// console.log('1: ', scrollPos);
-
-			if(this._checkOnLastElement(id)){
-				$(id).find('.form-container').slideToggle(200, ()=>{
-					if(activeFirstTab){
-						setTimeout(() => {
-							$('#current-orders').animate({scrollTop: scrollPos} , 200);
-						}, 450);
-					}
-					else
-						$('#current-orders').animate({scrollTop: scrollPos} , 200);
-				});
-			}
-			else{
-				setTimeout(() => {
-					$(id).find('.form-container').slideToggle(200);
-				}, 300);
-			}
-		}
-	}
-
-	public actionOpenDeleteForm(id)
-	{
-		return () =>
-		{
-			id = `#${id}__order`;
-			this._prepeareToMove(id, 'delete');
-			setTimeout(function () {
-				$(id).find('.pop_up').fadeIn();
-			}, 300);
-		}
-	}
-
-	private _prepeareToMove(id, handle) {
+    /**
+     * @param id : string - order id
+     * @param handle : string - it can be 'edit' ro 'delete' (now isn`t using)
+     * @private
+     */
+	private _moveToElement(id, handle) {
 		const currentOrders = $('#current-orders');
 		const tab = $('.left_order .tab');
-		const activeTadFirst = tab.eq(0).hasClass('active');
+		// const activeTadFirst = tab.eq(0).hasClass('active');
 		const scrollPos = $(id)[0].offsetTop - 150;
 
 		// console.log('2: ', scrollPos);
-		currentOrders.find('.form-container').slideUp(200);
+		// currentOrders.find('.form-container').slideUp(200);
 		currentOrders.find('.pop_up').fadeOut();
 
-		if(activeTadFirst){
-			$('#order').hide();
-			tab.removeClass('active');
-			tab.eq(1).addClass('active');
-			currentOrders.fadeIn();
+		// if(activeTadFirst){
+		// 	$('#order').hide();
+		// 	tab.removeClass('active');
+			// tab.eq(1).addClass('active');
+			// currentOrders.fadeIn();
 			// if(handle == 'edit' && !this._checkOnLastElement(id)){
 			// 	setTimeout(()=>{
 			// 		currentOrders.animate({scrollTop: scrollPos} , 200);
@@ -204,25 +243,25 @@ class Actions extends BaseActions
 			// 		currentOrders.animate({scrollTop: scrollPos} , 200);
 			// 	}, 450);
 			// }
-		}
+		// }
 		// else{
 			// if(handle == 'edit' && !this._checkOnLastElement(id)) currentOrders.animate({scrollTop: scrollPos} , 200);
 			// else currentOrders.animate({scrollTop: scrollPos} , 200);
 		// }
 		currentOrders.animate({scrollTop: scrollPos} , 200);
 
-		return activeTadFirst;
+		// return activeTadFirst;
 	}
 
-	private _checkOnLastElement(id)
-	{
-		const lastOrders = $('#current-orders').find('.order_content:last-of-type .order_container');
-		const ids = [];
-		for(let ii = -4; ii <= -1; ii++){
-			ids.push('#' + lastOrders.eq(ii).attr('id'));
-		}
-		 return ids.some((item)=> item == id)
-	}
+	// private _checkOnLastElement(id)
+	// {
+	// 	const lastOrders = $('#current-orders').find('.order_content:last-of-type .order_container');
+	// 	const ids = [];
+	// 	for(let ii = -4; ii <= -1; ii++){
+	// 		ids.push('#' + lastOrders.eq(ii).attr('id'));
+	// 	}
+	// 	 return ids.some((item)=> item == id)
+	// }
 }
 
 

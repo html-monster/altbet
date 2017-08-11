@@ -59,11 +59,11 @@ export default class NewOrder extends React.PureComponent
 							ask={data.Ask === 1 ? null : data.Ask}
 							bid={data.Bid === 0 ? null : data.Bid}
 							price={item.Price}
-							priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.StartDate, 1, {TZOffset: false})}
-							maxEntries={data.SymbolLimitData ? data.SymbolLimitData.EntryLimit : 0}
 							minPrice={data.minPrice ? data.minPrice : 0.5}
-							remainingBal={data.SymbolLimitData ? data.SymbolLimitData.EntryLimit - data.SymbolLimitData.CurrentEntryBalance : 0}
+							priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.StartDate, 1, {TZOffset: false})}
 							quantity={item.Volume}
+							maxEntries={data.SymbolLimitData ? data.SymbolLimitData.EntryLimit : null}
+							remainingBal={data.SymbolLimitData ? data.SymbolLimitData.EntryLimit - data.SymbolLimitData.CurrentEntryBalance : null}
 							isMirror={item.isMirror}
 							symbol={symbol}
 							startDate={(new DateLocalization).fromSharp(data.StartDate, 1, {TZOffset: false})}
