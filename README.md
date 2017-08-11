@@ -25,6 +25,7 @@
   - Оптимизация производительности в React (http://habrahabr.net/thread/7947)
 - Momentjs Format (https://momentjs.com/docs/#/displaying/format/)
 - Bootstrap dark theme (https://bootswatch.com/cyborg/)
+- Блокирующий рендеринг (https://webformyself.com/obrabatyvaem-blokiruyushhij-rendering-css-dlya-uskoreniya-renderinga-sajta/) 
 
 
 ## Plugins
@@ -48,5 +49,6 @@
 - Стилизайия под сайт (https://help.disqus.com/customer/portal/articles/545277)
 
 ##Gidx
+- Test card 41111111111111111 (123)
 - GIDX Service - Web API - Web Cashier Service (WebCashier API v2.14).pdf (http://www.tsevo.com/Docs/WebCashier)
 - для Deposit: window.gidxServiceStatus

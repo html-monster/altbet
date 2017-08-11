@@ -23,7 +23,7 @@ export default class Actions extends BaseActions
                 formData: props,
                 type: 'GET',
                 message: `Error while get new data from server`,
-                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_FEED_GET_EVENTS,
+                url: MainConfig.BASE_URL + "/" + MainConfig.AJAX_USER_INDEX,
             });
 
 

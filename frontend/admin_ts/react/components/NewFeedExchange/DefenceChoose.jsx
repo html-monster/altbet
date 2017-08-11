@@ -43,15 +43,15 @@ export class DefenceChoose extends React.Component
                     <td>{CurrentEventObj.HomeTeam}</td>
                     {(res = this._checkDefenceTeam(CurrentEventObj, FormData, 1)) ?
                         <td>
-                            <button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamDefence.bind(null, {team: res.team})} title={`Remove team ${res.team} defence`}><i className="fa fa-remove -red"/> remove</button>&nbsp;&nbsp;
+                            <button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamDefence.bind(null, {team: res.team})} title={`Remove team ${res.team} defense`}><i className="fa fa-remove -red"/> remove</button>&nbsp;&nbsp;
                             <span> Team {res.team} </span>
                         </td>
                         :
                         <td>
                             &nbsp;
-                            <button type="button" class="btn btn-default -btn-default btn-xs" title="Add to team 1 defence" disabled={addT1Disabled} onClick={actions.actionAddTeamDefence.bind(null, {TeamId: CurrentEventObj.HomeId, team: 1, EventId: CurrentEventObj.EventId})}><i class="fa fa-plus"/> Add T1</button>
+                            <button type="button" class="btn btn-default -btn-default btn-xs" title="Add to team 1 defense" disabled={addT1Disabled} onClick={actions.actionAddTeamDefence.bind(null, {TeamId: CurrentEventObj.HomeId, team: 1, EventId: CurrentEventObj.EventId})}><i class="fa fa-plus"/> Add T1</button>
                             &nbsp;
-                            <button type="button" class="btn btn-default -btn-default btn-xs" title="Add to team 2 defence" disabled={addT2Disabled} onClick={actions.actionAddTeamDefence.bind(null, {TeamId: CurrentEventObj.HomeId, team: 2, EventId: CurrentEventObj.EventId})}><i class="fa fa-plus"/> Add T2</button>
+                            <button type="button" class="btn btn-default -btn-default btn-xs" title="Add to team 2 defense" disabled={addT2Disabled} onClick={actions.actionAddTeamDefence.bind(null, {TeamId: CurrentEventObj.HomeId, team: 2, EventId: CurrentEventObj.EventId})}><i class="fa fa-plus"/> Add T2</button>
                         </td>
                     }
                 </tr>
@@ -59,15 +59,15 @@ export class DefenceChoose extends React.Component
                     <td>{CurrentEventObj.AwayTeam}</td>
                     {(res = this._checkDefenceTeam(CurrentEventObj, FormData, 2)) ?
                         <td>
-                            <button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamDefence.bind(null, {team: res.team})} title={`Remove team ${res.team} defence`}><i className="fa fa-remove -red"/> remove</button>&nbsp;&nbsp;
+                            <button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamDefence.bind(null, {team: res.team})} title={`Remove team ${res.team} defense`}><i className="fa fa-remove -red"/> remove</button>&nbsp;&nbsp;
                             <span> Team {res.team} </span>
                         </td>
                         :
                         <td>
                             &nbsp;
-                            <button type="button" class="btn btn-default -btn-default btn-xs" title="Add to team 1 defence" disabled={addT1Disabled} onClick={actions.actionAddTeamDefence.bind(null, {TeamId: CurrentEventObj.AwayId, team: 1, EventId: CurrentEventObj.EventId})}><i class="fa fa-plus"/> Add T1</button>
+                            <button type="button" class="btn btn-default -btn-default btn-xs" title="Add to team 1 defense" disabled={addT1Disabled} onClick={actions.actionAddTeamDefence.bind(null, {TeamId: CurrentEventObj.AwayId, team: 1, EventId: CurrentEventObj.EventId})}><i class="fa fa-plus"/> Add T1</button>
                             &nbsp;
-                            <button type="button" class="btn btn-default -btn-default btn-xs" title="Add to team 2 defence" disabled={addT2Disabled} onClick={actions.actionAddTeamDefence.bind(null, {TeamId: CurrentEventObj.AwayId, team: 2, EventId: CurrentEventObj.EventId})}><i class="fa fa-plus"/> Add T2</button>
+                            <button type="button" class="btn btn-default -btn-default btn-xs" title="Add to team 2 defense" disabled={addT2Disabled} onClick={actions.actionAddTeamDefence.bind(null, {TeamId: CurrentEventObj.AwayId, team: 2, EventId: CurrentEventObj.EventId})}><i class="fa fa-plus"/> Add T2</button>
                         </td>
                     }
                 </tr>
