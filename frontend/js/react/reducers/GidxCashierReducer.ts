@@ -19,6 +19,7 @@ export default class Reducer
         depositQuantity: '',
         form: null,
         validationMessage: appData.Gidx ? appData.Gidx.response : '',
+        gidxData: appData.Gidx ? appData.Gidx : {},
     };
 
 
