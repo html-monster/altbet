@@ -49,5 +49,6 @@
 - Стилизайия под сайт (https://help.disqus.com/customer/portal/articles/545277)
 
 ##Gidx
+- Test card 41111111111111111 (123)
 - GIDX Service - Web API - Web Cashier Service (WebCashier API v2.14).pdf (http://www.tsevo.com/Docs/WebCashier)
 - для Deposit: window.gidxServiceStatus

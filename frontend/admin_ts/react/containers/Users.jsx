@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import BaseController from './BaseController';
-import Actions from '../actions/FeedEventsActions';
+import Actions from '../actions/UsersActions';
 import {DropBox} from '../components/common/DropBox';
 import {PagerBox} from '../components/common/PagerBox';
 import {DateLocalization} from '../common/DateLocalization';
@@ -41,10 +41,11 @@ class Users extends BaseController
 
     render()
     {
-        let { actions, data: {Users, SortBy, } } = this.props;
+        let { actions, data: {Model: {Users}, Sort} } = this.props;
         let sportsItems = [], ligItems = [], currSport, currLig;
         let $DateLocalization = new DateLocalization();
 
+__DEV__&&console.log( 'Users', Users );
 
         // prepare sport filter
         // AllSport && AllSport.unshift('All') || (AllSport = ['All']);
@@ -58,7 +59,7 @@ class Users extends BaseController
 
 
         // sort title (см. как на HomeEvents)
-        // let titleAttr = sortVal => (CurrentOrderBy ? CurrentOrderBy === "Asc" ? "sorted ascending" : "sorted descending" : 'click for sorting');
+        let titleAttr = sortVal => (Sort.SortBy.indexOf(sortVal) > -1 ? Sort.OrderBy === "Asc" ? "sorted ascending" : "sorted descending" : 'click for sorting');
         let sortClasses = sortVal => classnames('icon -nowrap', Sort.OrderBy, {'active': Sort.SortBy.indexOf(sortVal) > -1})
 
 
@@ -100,12 +101,12 @@ class Users extends BaseController
                         <table class="table exchanges">
                             <thead>
                             <tr>
+                                <th><span>User Name</span></th>
                                 <th>
-                                    <span className={sortClasses('StartDate')}>
-                                        <a href={Sort.Links.StartDate} className="dotted" title={titleAttr('StartDate')}>Login</a>
+                                    <span className={sortClasses('FullName')}>
+                                        <a href="#" className="dotted" title={titleAttr('FullName')} onClick={this._onSortClick.bind(this, {sort: 'FullName' + Sort.OrderBy, OrderBy: Sort.OrderBy, page: 1})}>Full Name</a>
                                     </span>
                                 </th>
-                                <th><span>Name</span></th>
                                 <th><span>E-mail</span></th>
                                 <th><span>Country</span></th>
                             </tr>
