@@ -162,7 +162,7 @@ class Sidebar extends React.Component
 					{
 						ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS ?
 							// traderOn && !ABpp.config.basicMode &&
-							<div className={classnames('tab_item animated dur3', {active: activeTab === 'ActiveTrader'}, {fadeIn: activeTab === 'ActiveTrader'})} id="order">
+							<div className={classnames('tab_item animated dur8', {active: activeTab === 'ActiveTrader'}, {fadeIn: activeTab === 'ActiveTrader'})} id="order">
 
 								{/*/!* // BM: --------------------------------------------------- ACTIVE TRADER ---*!/*/}
 								<ActiveTrader cmpData={{...this.props.sidebar}}/>
@@ -177,7 +177,7 @@ class Sidebar extends React.Component
 					{/* // BM: --------------------------------------------------- DISQUS ---*/}
 					{
 						ABpp.config.currentPage !== ABpp.CONSTS.PAGE_MYPOS &&
-						<div className={classnames('tab_item animated dur3', {active: activeTab === 'Disqus'}, {fadeIn: activeTab === 'Disqus'})}>
+						<div className={classnames('tab_item animated dur8', {active: activeTab === 'Disqus'}, {fadeIn: activeTab === 'Disqus'})}>
 							<Disqus appearance={!ABpp.config.tradeOn}/>
 						</div>
 					}

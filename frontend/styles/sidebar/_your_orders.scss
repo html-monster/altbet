@@ -25,6 +25,47 @@
 //	//animation-duration: 0.5s;
 //	//animation-fill-mode: both;
 //}
+.order_content{
+	.order_container{ position: relative; border-bottom: 1px solid $order_sidebar_head_separator;
+		&:last-child{  border-bottom: none;  }
+		&:before{  content: '';  display: block;  position: absolute;  left: 0;  top: 0;  width: 100%;  height: 100%;  }
+		&:after{ content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 1px;
+			background: rgba(255, 255, 255, 0.1); }
+	}
+	.order_info { position: relative; padding: 0 5px 0 5px;
+		@include mdmax(1400){
+			padding: 0;
+			padding-left: 5px;
+		}
+		&.buy{
+			background-image: linear-gradient(to bottom, transparentize(#64C9EF, 0.7), transparentize(#3498DA, 0.7));
+			@include order_sidebar_current_order_title_buy;
+		}
+		&.sell{
+			background-image: linear-gradient(to bottom, transparentize(#F88447, 0.9), transparentize(#EF4D22, 0.9));
+			@include order_sidebar_current_order_title_sell;
+		}
+	}
+	.order-title{
+		padding: 5px 25px 5px 15px;
+		//@include scroll;
+		position: relative;
+		overflow: hidden;
+		cursor: pointer;
+	}
+	.container{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		&.close_btn div:last-of-type label{ width: calc(100% - 18px); }
+	}
+	.timestamp{
+		font-size: 10px;
+		&:before{  right: 9px;  }
+		.time{  color: $order_sidebar_current_order_title_color;  }
+		.help_message{ width: 160px; right: 4px; top: 25px; }
+	}
+}
 .my_order{
 	.form-container{
 		display: none;
