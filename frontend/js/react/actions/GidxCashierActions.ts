@@ -13,31 +13,43 @@ var __DEBUG__ = !true;
 
 export default class Actions extends BaseActions
 {
-    public actionGidxServiceStatusListener({service, action, json})
+    /**
+     * Listen for gidx payment events
+     * @param gidxData - gidx server data
+     */
+    public actionGidxServiceStatusListener({service, action, json}, gidxData)
     {
-        __DEV__&&console.log( '{service, action, json}', {service, action, json} );
-/*            new Dialog({
+        __DEV__&&console.log( '{service, action, json}', {service, action, json, gidxData} );
+        if( service === gidxData.ServiceStatus.service && action === gidxData.ServiceStatus.action )
+        {
+            // __DEV__&&console.warn( 'cashierComplete-plate ended', 1 );
+            new Dialog({
                 render: true,
                 type: Dialog.TYPE_MESSAGE,
                 closableBg: false,
                 vars: {
-                    contentHtml: `<span class="">Registration is successful. You need to activate account. Please, check your email for  activation link.</span>`,
+                    contentHtml: `<span class="">Payment is accepted, please wait a few minutes for balance refreshing</span>`,
                     btn1Text: "OK",
                     // btn2Text: "No",
                 },
-                callbackOK: (inProps) => {location.reload()},
-            })*/;
+                callbackOK: (props) => {location.href = globalData.Urls.Home},
+            });
+        } // endif
     }
 
 
+    /**
+     * On GidxCashier JSX load
+     */
     public actionOnLoad(event)
     {
         return (dispatch, getState) =>
         {
+            let gidxData = getState().gidxCashier.gidxData;
             __DEV__&&console.log( 'window.gidxServiceStatus', window.gidxServiceStatus );
             window.gidxServiceStatus = (service, action, json) =>
             {
-                this.actionGidxServiceStatusListener({service, action, json});
+                this.actionGidxServiceStatusListener({service, action, json}, gidxData);
             }
         }
     }
