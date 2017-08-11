@@ -90,8 +90,8 @@ export default class ExchangeItem extends React.Component
 	{
 		const {
 			actions, disqusActions, chartData, data, data: {activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder, orderPrice},
-			mainContext, setCurrentExchangeFn, lineupsData, SymbolLimitData
-		} = this.props;
+			mainContext, setCurrentExchangeFn, lineupsData, SymbolLimitData} = this.props;
+
 		let {activeTab, chart, isLPOpen,} = this.state;
 		// console.log('this.props:', this.props);
 		// if(chart) console.log( 'chart', Symbol.Exchange, chart );
@@ -113,14 +113,18 @@ export default class ExchangeItem extends React.Component
 			$awayTotal = lineupsData.AwayTotals.Score;
 			// 0||console.log( '$awayTotal', $awayTotal );
 		} // endif
-		Symbol.HomeHandicap = null;
+
         //Game type
+		let handicap = null;
+
+		if(lineupsData) handicap = lineupsData.HomeTotals.EPPG - lineupsData.AwayTotals.EPPG;
+
 		if (lineupsData && Symbol.OptionExchange === 2) {
 			spreadTitle = 'Total Points';
 			spreadValue = 'O/U ' + Math.round10(lineupsData.HomeTotals.EPPG + lineupsData.AwayTotals.EPPG, -2);
 		}
 		else if (lineupsData && Symbol.OptionExchange === 1) {
-			let coefficient = Math.abs(Symbol.HomeHandicap / lineupsData.HomeTotals.EPPG);
+			let coefficient = Math.abs((Symbol.HomeHandicap || handicap) / lineupsData.HomeTotals.EPPG);
 			spreadTitle = 'Moneyline';
 
 			if (coefficient <= 0.05) spreadValue = `$0.70`;
@@ -130,9 +134,9 @@ export default class ExchangeItem extends React.Component
 			else if (coefficient <= 0.25) spreadValue = `$0.90`;
 			else spreadValue = `$0.95`;
 		}
-		else {
+		else if(Symbol.OptionExchange === 0) {
 			spreadTitle = 'Spread';
-			spreadValue = Symbol.HomeHandicap;
+			spreadValue = Symbol.HomeHandicap || handicap;
 		}
 
 
@@ -310,7 +314,7 @@ export default class ExchangeItem extends React.Component
 											</span>
 									{/*}*/}
 									</span>
-								, (Symbol.HomeHandicap !== null || (lineupsData && spreadTitle === 'Total Points')) ?
+								, (spreadValue !== null || (lineupsData && spreadTitle === 'Total Points')) ?
 									<span key="1" className="handicap" style={{paddingRight: 5}} title={spreadTitle}>
 										<span className="title">{spreadTitle}</span> {spreadValue}</span> : ''
 								, data.Symbol.LastPrice && isEventStarted ?

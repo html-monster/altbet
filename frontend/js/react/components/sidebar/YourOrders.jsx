@@ -158,7 +158,8 @@ class OrderItem extends React.Component
 	{
 		const { actions, data, LimitUserData } = this.props;
 		//const allData = this.props.allData;
-		// const date = new Date(+data.Time.slice(6).slice(0, -2));
+		const startDate = (new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false});
+		const endDate = (new DateLocalization).fromSharp(data.Symbol.EndDate, 1, {TZOffset: false});
 
 		const formData = {
 			url: ABpp.baseUrl + '/Order/Edit',
@@ -184,7 +185,7 @@ class OrderItem extends React.Component
 					<div className="button_container">
 						{/*<button className="edit" title="edit or change the order" onClick={::this.showForm}/>*/}
 						<button className="delete" title="delete the order"
-								onClick={actions.actionDeleteFormToggle.bind(null, true, (new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false}), this.deletePopUp)}/>
+								onClick={actions.actionDeleteFormToggle.bind(null, true, startDate, endDate, this.deletePopUp)}/>
 					</div>
 				</div>
 
@@ -195,7 +196,7 @@ class OrderItem extends React.Component
 							<button className="yes btn">Delete</button>
 						</form>
 						<button className="no btn"
-								onClick={actions.actionDeleteFormToggle.bind(null, false, (new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false}), this.deletePopUp)}>No</button>
+								onClick={actions.actionDeleteFormToggle.bind(null, false, null, null, this.deletePopUp)}>No</button>
 					</div>
 				</div>
 			</div>

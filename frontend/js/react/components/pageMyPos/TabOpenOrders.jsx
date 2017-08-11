@@ -98,7 +98,8 @@ export class TabOpenOrders extends React.Component
                                                             {/*<button className="edit btn wave" onClick={yourOrdersActions.actionOpenEditForm.bind(null, item.ID)}>Edit</button>*/}
                                                             <button className="delete btn wave"
                                                                     onClick={yourOrdersActions.actionDeleteFormToggle.bind(null,
-                                                                        true, (new DateLocalization).fromSharp(item.Symbol.StartDate, 1, {TZOffset: false}), item.ID)}
+                                                                        true, (new DateLocalization).fromSharp(item.Symbol.StartDate, 1, {TZOffset: false}),
+                                                                        (new DateLocalization).fromSharp(item.Symbol.EndDate, 1, {TZOffset: false}), item.ID)}
                                                                     style={{marginLeft : 10}}>Cancel</button>
                                                         </td>
                                                     </tr>;
