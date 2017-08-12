@@ -67,6 +67,10 @@
 	0% {  opacity: 0;  transform: translate3d(-100%, 0, 0);  }
 	100% {  opacity: 1;  transform: none;  }
 }
+//@keyframes fadeInRightShort {
+//	0% {  opacity: 0;  transform: translate3d(10%, 0, 0);  }
+//	100% {  opacity: 1;  transform: none;  }
+//}
 @keyframes fadeColorGreen {
 	0% {  color: orange;  }
 	100% {  color: #4dac2e;  }
@@ -114,9 +118,9 @@
 	100% {  background-color: transparent;  }
 }
 @keyframes zoomIn {
-	0% {  opacity: 0;  transform: scale3d(.3,.3,.3)  }
-	50% {  opacity: 1  }
-}
+	 0% {  opacity: 0;  transform: scale3d(.3,.3,.3)  }
+	 50% {  opacity: 1  }
+ }
 
 //@keyframes testAnim {
 //	0% {  background-color: orange;  }
@@ -144,6 +148,7 @@
 .fadeInDown {  animation-name: fadeInDown;  }
 //.fadeInDownLong {  animation-name: fadeInDownLong;  }
 .fadeInLeft {  animation-name: fadeInLeft;  }
+//.fadeInRightShort {  animation-name: fadeInRightShort;  }
 .shake {  animation-name: shake;  }
 .updateAnimation-active span:after {  animation-name: updateAnimation;  }
 .updateAnimation-active:before {  animation-name: updateAnimation;  }

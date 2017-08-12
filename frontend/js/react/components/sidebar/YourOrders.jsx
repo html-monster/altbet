@@ -2,9 +2,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 
-import OrderForm from './order/OrderForm.jsx';
-import yourOrdersActions from '../../actions/Sidebar/yourOrderActions.ts';
+// import OrderForm from './order/OrderForm.jsx';
 import classnames from 'classnames';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
+import {Collapse} from 'react-collapse';
+import yourOrdersActions from '../../actions/Sidebar/yourOrderActions.ts';
 import { DateLocalization } from '../../models/DateLocalization';
 
 class YourOrders extends React.Component
@@ -26,7 +28,7 @@ class YourOrders extends React.Component
 			// 	console.log('re-render');
 			// }
 		// });
-		this.props.actions.actionOnSocketMessage();
+		this.props.actions.actionOnSocketMessage(this.props.actions);
 	}
 
 	// handleOrderDelete(order, indexGr)
@@ -41,27 +43,41 @@ class YourOrders extends React.Component
 
 	render()
 	{
-		// let yourOrdersData = this.state.data;
-		let yourOrdersData = this.props.yourOrders;
-		return <div className={classnames('tab_item animated dur3', {active: this.props.activeTab === 'YourOrders'}, {fadeIn: this.props.activeTab === 'YourOrders'})} id="current-orders">
+		const { yourOrdersData, openGroupIndex } = this.props;
+
+		return <CSSTransitionGroup
+			component="div"
+			className={classnames('tab_item animated dur8', {active: this.props.activeTab === 'YourOrders'}, {fadeIn: this.props.activeTab === 'YourOrders'})}
+			id="current-orders"
+			transitionName={{
+				enter : 'fadeInDown',
+				leave : 'fadeInDown',
+				appear: 'fadeInDown'
+			}}
+			transitionAppear={true}
+			transitionLeave={false}
+			transitionAppearTimeout={600}
+			transitionEnterTimeout={600}
+			transitionLeaveTimeout={500}
+		>
 			{
 				ABpp.User.login ?
-					yourOrdersData.yourOrders.length ?
-						yourOrdersData.yourOrders.map((item, index) =>
-						<GroupingOrder
+					yourOrdersData.length ?
+						yourOrdersData.map((item, index) =>
+							<GroupingOrder
 								key={item.ID}
 								indexGr={index}
-								allData={yourOrdersData}
+								openGroupIndex={openGroupIndex}
 								data={item}
 								//onOrderDelete={::this.props.actions.actionOrderDelete}
 								actions={this.props.actions}
-						/>)
+							/>)
+						:
+						<p className="default_order_info animated dur4">You have no orders</p>
 					:
-						<p className="default_order_info">You have no orders</p>
-				:
-					<p className="default_order_info">You must login to see your orders</p>
+					<p className="default_order_info animated dur4">You must login to see your orders</p>
 			}
-		</div>
+		</CSSTransitionGroup>
 	}
 }
 
@@ -71,13 +87,13 @@ class GroupingOrder extends React.Component
 {
 	render()
 	{
-		const { actions, data } = this.props;
+		const { actions, data, indexGr, openGroupIndex } = this.props;
 		// let data = this.props.data;
 		// let onOrderDelete = this.props.onOrderDelete;
 
-		return <div className="order_content" id={data.ID}>
+		return <div className="order_content animated" id={data.ID}>
 			<div className="my_order">
-				<div className="order-title">
+				<div className="order-title" onClick={actions.collapseOrderGroup.bind(null, indexGr)}>
 					<div className="container">
 						<h3>{`${data.Orders[0].Symbol.HomeName} (vs. ${data.Orders[0].Symbol.AwayName})`}</h3>
 						{
@@ -89,25 +105,27 @@ class GroupingOrder extends React.Component
 						<strong className="current-order pos"> Total: <span>{data.Positions}</span></strong>
 					</div>
 				</div>
-				<div className="order_info">
-					<div className="container">
-						<strong className="amount">Price</strong>
-						<strong className="qty">Units</strong>
-						<strong className="dt">Datetime</strong>
-						<div className="button_container">{}</div>
+				<Collapse isOpened={indexGr === openGroupIndex}>
+					<div className="order_info">
+						<div className="container">
+							<strong className="amount">Price</strong>
+							<strong className="qty">Units</strong>
+							<strong className="dt">Datetime</strong>
+							<div className="button_container">{}</div>
+						</div>
 					</div>
-				</div>
-				{
-						data.Orders.map((item) =>
-							<OrderItem
+						{
+							data.Orders.map((item) =>
+								<OrderItem
 									key={item.ID}
 									LimitUserData={data.LimitUserData}
 									data={item}
 									onDelete={actions.actionOrderDelete.bind(null, item, this.props.indexGr)}
 									actions={actions}
-							/>
-						)
-				}
+								/>
+							)
+						}
+				</Collapse>
 			</div>
 			<div className="pop_up">
 				<div className="confirmation not-sort">
@@ -156,15 +174,14 @@ class OrderItem extends React.Component
 
 	render()
 	{
-		const { actions, data, LimitUserData } = this.props;
-		//const allData = this.props.allData;
+		const { actions, data } = this.props;
 		const startDate = (new DateLocalization).fromSharp(data.Symbol.StartDate, 1, {TZOffset: false});
 		const endDate = (new DateLocalization).fromSharp(data.Symbol.EndDate, 1, {TZOffset: false});
 
-		const formData = {
-			url: ABpp.baseUrl + '/Order/Edit',
-			action: 'edit'
-		};
+		// const formData = {
+		// 	url: ABpp.baseUrl + '/Order/Edit',
+		// 	action: 'edit'
+		// };
 		data.Price = data.isMirror ? Math.round10(1 - data.Price, -2) : Math.round10(data.Price, -2);
 		const className = (data.isMirror) ?
 											data.Side ? 'buy' : 'sell'
@@ -172,7 +189,7 @@ class OrderItem extends React.Component
 											data.Side ? 'sell' : 'buy';
 
 
-		return <div className="order_container not-sort" id={data.ID + '__order'}>
+		return <div className={'order_container animated updateAnimation-active'} id={data.ID + '__order'}>
 			<div className={'order_info ' + className}>
 				<div className="container">
 					<strong className="amount"> <span className="price">{(data.Price).toFixed(2)}</span></strong>
@@ -185,7 +202,7 @@ class OrderItem extends React.Component
 					<div className="button_container">
 						{/*<button className="edit" title="edit or change the order" onClick={::this.showForm}/>*/}
 						<button className="delete" title="delete the order"
-								onClick={actions.actionDeleteFormToggle.bind(null, true, startDate, endDate, this.deletePopUp)}/>
+								onClick={() => actions.actionDeleteFormToggle(true, startDate, endDate, this.deletePopUp)}/>
 					</div>
 				</div>
 
@@ -196,7 +213,7 @@ class OrderItem extends React.Component
 							<button className="yes btn">Delete</button>
 						</form>
 						<button className="no btn"
-								onClick={actions.actionDeleteFormToggle.bind(null, false, null, null, this.deletePopUp)}>No</button>
+								onClick={() => actions.actionDeleteFormToggle(false, null, null, this.deletePopUp)}>No</button>
 					</div>
 				</div>
 			</div>
@@ -236,7 +253,7 @@ class OrderItem extends React.Component
 
 
 export default connect(state => ({
-		yourOrders: state.yourOrders,
+		...state.yourOrders,
 	}),
 	dispatch => ({
 		actions: bindActionCreators(yourOrdersActions, dispatch),

@@ -122,10 +122,10 @@ export class Team1 extends React.Component
 
                 {TeamDefence.name ?
                     <div className="defence">
-                        <b>Defence</b>: <abbr title={TeamDefence.event ? `From event “${TeamDefence.event}”` : ''}>{TeamDefence.name}</abbr>
+                        <b>Defense</b>: <abbr title={TeamDefence.event ? `From event “${TeamDefence.event}”` : ''}>{TeamDefence.name}</abbr>
                     </div>
                     :
-                    <div className="defence"><b>Defence</b>: <i>Not set, please, choose a command for defence</i></div>
+                    <div className="defence"><b>Defense</b>: <i>Not set, please, choose a command for defense</i></div>
                 }
             </div>
         );

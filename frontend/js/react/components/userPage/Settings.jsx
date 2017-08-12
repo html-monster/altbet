@@ -69,7 +69,7 @@ class Settings extends React.Component
                 </label>
                 {/*<span className="validation-summary-errors"></span>*/}
                 {
-                    hint && <span className="info top">
+                    hint && <span className="tooltip bottom">
                         <i>{hint}</i>
                     </span>
                 }
@@ -86,7 +86,7 @@ class Settings extends React.Component
                         <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                     </label>
                     { dirty && error && <span className="error">{error}</span> }
-                    { info && <span className="info bottom"><i>{ info }</i></span> }
+                    { info && <span className="tooltip bottom"><i>{ info }</i></span> }
                 </span>
     };
 

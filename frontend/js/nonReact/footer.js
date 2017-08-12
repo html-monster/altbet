@@ -21,8 +21,8 @@ class footerClass{
 			if (footer.hasClass('active') ){
 				scroll = orderSidebarHeight - footerHeight;
 				$('body > .wrapper').css('padding-bottom', footerHeight);
-				orderContent.css('height', scroll);
-				currentOrders.css('height', scroll);
+				orderContent.css('maxHeight', scroll);
+				currentOrders.css('maxHeight', scroll);
 				// tbody.css('height', actveTraderHeight - footerHeight);
 				activeTraderClass.tbodyResize(true);
 				tabContent.removeClass('footer_active');
@@ -31,8 +31,8 @@ class footerClass{
 			else {
 				scroll = orderSidebarHeight ;
 				$('body > .wrapper').css('padding-bottom', 0);
-				orderContent.css('height', scroll);
-				currentOrders.css('height', scroll);
+				orderContent.css('maxHeight', scroll);
+				currentOrders.css('maxHeight', scroll);
 				activeTraderClass.tbodyResize(true);
 				// tbody.css('height', actveTraderHeight);
 				tabContent.addClass('footer_active');
@@ -45,8 +45,8 @@ class footerClass{
 		// 			$('.active_trader .control.remote').outerHeight() + $('.active_trader .limit thead').height() + 12);
 			// tbody.css('max-height', actveTraderHeight);
 		// } , 0);
-		orderContent.css('height', scroll);
-		currentOrders.css('height', scroll);
+		orderContent.css('maxHeight', scroll);
+		currentOrders.css('maxHeight', scroll);
 		tabContent.addClass('footer_active');
 
 		$(window).resize(function () {

@@ -301,16 +301,16 @@ $(document).ready(function () {
 	// 	price -= 0.01;
 	// }
 
-	var currentOrders = $('#current-orders');
-	currentOrders.on('click', '.confirmation .yes', function (e) {
-		let parent = $(this).parents('.order_content');
+	// var currentOrders = $('#current-orders');
+	// currentOrders.on('click', '.confirmation .yes', function (e) {
+	// 	let parent = $(this).parents('.order_content');
 // e.preventDefault();
 
 		// if ($(this).parents('.my_order').children().length > 2)
 		// 	$(this).parents('.order_container').remove();
 		// else
 		// 	parent.remove();
-	});
+	// });
 	// currentOrders.on('submit', '.confirmation form', function () {
 	// 	console.log(123);
 	// });
