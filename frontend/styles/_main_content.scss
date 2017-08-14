@@ -278,7 +278,7 @@
       .handicap{ display: inline-block; width: 80px; position: absolute; right: 70px; } // для показа
       .seemore-lnk { color: $color4TextWhite; transition: color 0s;
         //a{ color: $color4TextWhite }
-        //a:hover { color: $color-blue; }
+        //&:hover .event_title{ color: $color-blue; }
       }
       .last-price { position: absolute; top: 0; right: 0; white-space: nowrap; // для показа
         &.down i { display: inline-block; top: 2px; background-position: -309px -308px; }

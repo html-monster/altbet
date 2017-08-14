@@ -9,6 +9,7 @@ import mainPageActions from '../actions/MainPageActions.ts';
 import defaultOrderLocalActions from '../actions/OrderActions/defaultOrdersLocalActions';
 import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 import sidebarActions from '../actions/sidebarActions.ts';
+import yourOrderActions from '../actions/Sidebar/yourOrderActions';
 import disqusActions from '../actions/disqusActions';
 import { Framework } from '../common/Framework';
 // import chartActions from '../actions/MainPage/chartActions';
@@ -149,6 +150,7 @@ class MainPage extends BaseController
                                         setCurrentExchangeFn={::this._setCurrentExchange}
                                         actions={actions}
                                         disqusActions={this.props.disqusActions}
+                                        yourOrderActions={this.props.yourOrderActions}
                                         lineupsData={lineupsData}
                                         SymbolLimitData={SymbolLimitData}
                                     />
@@ -279,6 +281,7 @@ export default connect(
     dispatch => ({
 		sidebarActions: bindActionCreators(sidebarActions, dispatch),
 		traderActions: bindActionCreators(traderActions, dispatch),
+		yourOrderActions: bindActionCreators(yourOrderActions, dispatch),
 		// defaultOrderActions: bindActionCreators(defaultOrderSidebarActions, dispatch),
 		defaultOrderActions: bindActionCreators(defaultOrderLocalActions, dispatch),
 		// chartActions: bindActionCreators(Framework.initAction(chartActions), dispatch),
