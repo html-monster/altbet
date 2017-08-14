@@ -223,6 +223,8 @@ i.wave { display: inline-block; font-style: normal; border-radius: 4px; }
 
 .show_password {
   display: inline-block;
+  left: 370px;
+  bottom: 25px;
   width: 20px;
   height: 20px;
   background: url("#{$pathImage}/ico-eye.png") no-repeat;

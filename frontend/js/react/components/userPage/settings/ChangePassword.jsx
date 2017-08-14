@@ -46,20 +46,20 @@ export default class ChangePassword extends React.PureComponent
 
 
 		return <div className={"tab_item " + (this.props.data.active ? "active" : "")}>
-			<form className="change_password" onSubmit={::this._onSubmit}>
+			<form className="setting-form change_password" onSubmit={::this._onSubmit}>
 				<h2 className="section_user passw_change">Change Password</h2>
 
-				<span className="input_animate input--yoshiko pass_container">
-					<input className="input__field input__field--yoshiko" id="user_curr_pass" name="OldPassword" type="password"/>
+				<span className="input_group  pass_container">
+					<input  className="input" id="user_curr_pass" name="OldPassword" type="password"/>
 					<span className="show_password">{}</span>
-					<label className="input__label input__label--yoshiko" htmlFor="user_curr_pass">
+					<label  className="input__label input__label--yoshiko" htmlFor="user_curr_pass">
 						<span className="input__label-content input__label-content--yoshiko" data-content="Current Password">Current Password</span>
 					</label>
 					<span className="validation-summary-errors">{}</span>
 				</span>
 
-				<span className="input_animate input--yoshiko pass_container">
-					<input className="input__field input__field--yoshiko" id="user_pass" name="NewPassword" type="password"/>
+				<span className="input_group pass_container">
+					<input className="input" id="user_pass" name="NewPassword" type="password"/>
 					<span className="show_password">{}</span>
 					<label className="input__label input__label--yoshiko" htmlFor="user_pass">
 						<span className="input__label-content input__label-content--yoshiko" data-content="New Password">New Password</span>
@@ -67,15 +67,15 @@ export default class ChangePassword extends React.PureComponent
 					<span className="validation-summary-errors">{}</span>
 				</span>
 
-				<span className="input_animate input--yoshiko pass_container">
-					<input className="input__field input__field--yoshiko" id="user_confirm_pass" name="ConfirmPassword" type="password"/>
+				<span className="input_group  pass_container">
+					<input className="input" id="user_confirm_pass" name="ConfirmPassword" type="password"/>
 					<span className="show_password">{}</span>
 					<label className="input__label input__label--yoshiko" htmlFor="user_confirm_pass">
 						<span className="input__label-content input__label-content--yoshiko" data-content="Confirm Password">Confirm Password</span>
 					</label>
 					<span className="validation-summary-errors">{}</span>
 				</span>
-				<span className="input_animate input--yoshiko submit_container">
+				<span className="input_group  submit_container">
 					<input type="submit" value="Change Password" id="submit" className="btn wave submit"/>
 					<span className="answer_message">{}</span>
 				</span>
