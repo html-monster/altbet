@@ -81,7 +81,7 @@ class Settings extends React.Component
     {
 
         return  <span className={'input_group' + (filled ? ' input--filled' : '')}>
-                    <input className={`input ${className ? className : ''} ${!input.disabled && dirty && (error ? ' invalidJs' : ' validJs')}`} {...input}/>
+                    <input placeholder={label} className={`input ${className ? className : ''} ${!input.disabled && dirty && (error ? ' invalidJs' : ' validJs')}`} {...input}/>
                     <label className="input__label input__label--yoshiko" htmlFor={id}>
                         <span className="input__label-content input__label-content--yoshiko" data-content={label}>{label}</span>
                     </label>

@@ -50,9 +50,9 @@ export default class ChangePassword extends React.PureComponent
 				<h2 className="section_user passw_change">Change Password</h2>
 
 				<span className="input_group  pass_container">
-					<input className="input" id="user_curr_pass" name="OldPassword" type="password"/>
+					<input  className="input" id="user_curr_pass" name="OldPassword" type="password"/>
 					<span className="show_password">{}</span>
-					<label className="input__label input__label--yoshiko" htmlFor="user_curr_pass">
+					<label  className="input__label input__label--yoshiko" htmlFor="user_curr_pass">
 						<span className="input__label-content input__label-content--yoshiko" data-content="Current Password">Current Password</span>
 					</label>
 					<span className="validation-summary-errors">{}</span>
