@@ -22,6 +22,8 @@ import {
     ON_REM_TEAM_DEFENCE,
     AFTER_CATEGORY_ADDED,
     ON_CH_TEAM_SIZE,
+    ON_ADD_ALL_TEAM_PLAYERS,
+    ON_DEL_ALL_TEAM_PLAYERS,
 } from '../constants/ActionTypesNewFeedExchange';
 /// TS_IGNORE
 import {Common} from "../common/Common";
@@ -59,6 +61,7 @@ export default class Reducer
         Rules: {
             reserveLen: 5, // reserve players count
             variableLen: 5, // reserve players count
+            nosave: false,
         },
         CurrentTeam: {
             num: 1,
@@ -70,6 +73,7 @@ export default class Reducer
             startDate: '',
             fullName: '',
             category: '',
+            OptionExchanges: '', //
             url: '',
             PlayerTopTeam1: {Name: '', Team: ''}, // PlayerHome
             PlayerTopTeam2: {Name: '', Team: ''}, // PlayerAway
@@ -113,6 +117,10 @@ export default class Reducer
         0||console.log( 'this.initialState', this.initialState );
 
 
+        // cancel saving data for F5
+        this.initialState.Rules.nosave = globalData.IsEditFeedExchange;
+
+
         // 0||console.log( 'this.initialState, loadedData', this.initialState, loadedData );
         this.initialState = {...this.initialState, ...loadedData};
         //DEBUG: emulate
@@ -153,6 +161,10 @@ export default class Reducer
                 state = this.addTeamPlayer(action.payload, state);
                 return {...state};
 
+            case ON_ADD_ALL_TEAM_PLAYERS:
+                state = this.addAllTeamPlayers(action.payload, state);
+                return {...state};
+
             case ON_ADD_TEAM_UP_PLAYER:
                 state = this.addTeamUPPlayer(action.payload, state);
                 return {...state};
@@ -167,6 +179,10 @@ export default class Reducer
 
             case ON_DEL_TEAM_PLAYER:
                 state = this.delTeamPlayer(action.payload, state);
+                return {...state};
+
+            case ON_DEL_ALL_TEAM_PLAYERS:
+                state = this.delAllTeamPlayers(action.payload, state);
                 return {...state};
 
             case ON_ENTER_PPG:
@@ -410,6 +426,59 @@ export default class Reducer
 
         // common add part
         this.afterAddPlayer({player, addedPlayer, team}, state);
+
+        return state;
+    }
+
+
+    /**
+     * Add several team players action
+     * // DEBUG: добавлено для тестирования
+     */
+    private addAllTeamPlayers({players, team}, state)
+    {
+        let $Team = state["PlayersTeam"+team];
+        let addedPlayer;
+
+
+        // mark player on players table
+        players.forEach(itm => {
+            for( let val of state.Players )
+            {
+                if( itm.PlayerId == val.PlayerId && !val.used )
+                {
+                    // mark current player
+                    val.used = Reducer.USING_TEAM;
+                    val.usedTeam = team;
+                    val.CustomPosition = val.Position;
+
+                    // add player to team
+                    itm.used = Reducer.USING_TEAM;
+                    itm.usedTeam = team;
+                    itm.CustomPosition = itm.Position;
+                    $Team.players.push(itm);
+                    addedPlayer = itm;
+                    break;
+                } // endif;
+            } // endfor
+        });
+
+
+
+        // sort players
+        state["PlayersTeam"+team].players = this.sortTeam($Team.players);
+
+        // count positions limits
+        state["PlayersTeam"+team] = this.recountPositions($Team);
+
+        // mark used players
+        // this.markPlayers(state);
+
+        // save teams data
+        if (!state.Rules.nosave) this.saveData(state);
+
+        // common add part
+        this.afterAddPlayer({player: {}, addedPlayer: {}, team}, state);
 
         return state;
     }
@@ -802,7 +871,51 @@ export default class Reducer
         // this.markPlayers(state);
 
         // save teams data
-        this.saveData(state);
+        state.Rules.nosave || this.saveData(state);
+
+        return state;
+    }
+
+
+    /**
+     * Remove all players from said team
+     */
+    private delAllTeamPlayers({team}, state)
+    {
+        const { Players } = state;
+
+        state["PlayersTeam"+team].players.forEach(itm => {
+            for( let ii in state.Players  )
+            {
+                let val = state.Players[ii];
+                if( itm.PlayerId == val.PlayerId )
+                {
+                    if( val.used === 2 )
+                    {
+                        state.Players[ii].Index = val.Index = val.meta.IndexOrig;
+                        state.Players[ii].Position = val.Position = val.meta.PositionOrig;
+                        state.Players[ii].meta = val.meta = null;
+                    } // endif
+                    state.Players[ii].Eppg = 0;
+                    state.Players[ii].Fppg = 0;
+                    state.Players[ii].used = val.used = false;
+                    break;
+                } // endif;
+            } // endfor
+        });
+
+        // Players.forEach((val, key) => { if (player.PlayerId == val.PlayerId) Players[key] = player});
+        state['PlayersTeam' + team] = {positions: {}, players: []};
+
+
+        // count positions limits
+        // state[team] = this.recountPositions($Team);
+
+        // mark used players
+        // this.markPlayers(state);
+
+        // save teams data
+        state.Rules.nosave || this.saveData(state);
 
         return state;
     }
