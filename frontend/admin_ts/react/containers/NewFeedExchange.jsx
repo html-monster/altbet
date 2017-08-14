@@ -180,7 +180,7 @@ class NewFeedExchange extends BaseController
                                 <div class="panel box box-default">
                                     <div class="box-header">
                                         <h4 class="box-title">
-                                            Chose command for defence
+                                            Chose command for defense
                                         </h4>
                                     </div>
                                     <div class="panel-collapse">

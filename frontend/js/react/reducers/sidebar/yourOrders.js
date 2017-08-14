@@ -4,12 +4,14 @@
 import {
 	ON_YOUR_ORDER_SOCKET_MESSAGE,
 	ON_YOUR_ORDER_DELETE,
+	ON_YOUR_ORDER_GROUP_INDEX,
 } from '../../constants/ActionTypesYourOrders.js';
 
 
 	// mode: ABpp.config.basicMode,
 const initialState = {
-	yourOrders: appData.yourOrders
+	yourOrdersData: appData.yourOrders,
+	openGroupIndex: 0
 };
 
 
@@ -18,10 +20,13 @@ export default function yourOrders(state = initialState, action)
 	switch (action.type)
 	{
 		case ON_YOUR_ORDER_DELETE:
-			return {...state, yourOrders: action.payload};
+			return {...state, yourOrdersData: action.payload};
 
 		case ON_YOUR_ORDER_SOCKET_MESSAGE:
-			return {...state, yourOrders: action.payload};
+			return {...state, yourOrdersData: action.payload};
+
+		case ON_YOUR_ORDER_GROUP_INDEX:
+			return {...state, openGroupIndex: action.payload};
 
 		default:
 			return state
