@@ -250,7 +250,7 @@ gulp.task('RUN-IMAGE-COPY', gulp.series('imagescopy'));
 
 
 // BM: ========================================================================================== ONE TIME BUILD ADM ===
-gulp.task('RUN-BUILD-ADM', gulp.series('styles-admin'));
+gulp.task('RUN-BUILD-ADM', gulp.series('styles-admin', 'admin-js-rev'));
 
 
 
