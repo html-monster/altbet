@@ -89,7 +89,7 @@ export default class ExchangeItem extends React.Component
 	render()
 	{
 		const {
-			actions, disqusActions, chartData, data, data: {activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder, orderPrice},
+			actions, disqusActions, yourOrderActions, chartData, data, data: {activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder, orderPrice},
 			mainContext, setCurrentExchangeFn, lineupsData, SymbolLimitData} = this.props;
 
 		let {activeTab, chart, isLPOpen,} = this.state;
@@ -249,13 +249,17 @@ export default class ExchangeItem extends React.Component
 			<div className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`,
 					{not_started: !isEventStarted}, {finished: isEventClosed}, {clickable: !!isTraiderOn}, {active_nearby: currentExchange && !expModeClass},
 					{with_order: showOrder})} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
-				onClick={() => {
-					// if(this.props.data.currentExchange !== this.props.data.Symbol.Exchange)
-					// {
+
+				 id={symbol} data-js-hevent=""
+
+				 onClick={() => {
 					setCurrentExchangeFn(Symbol.Exchange);
 
+					yourOrderActions.actionChangeActiveEvent(Symbol.Exchange);
+					yourOrderActions.collapseOrderGroup(Symbol.Exchange);
+
 					disqusActions.getEventData({ url: data.CategoryUrl, identifier: data.Symbol.Exchange });
-					//ABpp.config.tradeOn &&
+
 					actions.exchangeSideClick({
 						name     : Symbol.Exchange,
 						isMirror : false,
@@ -265,9 +269,7 @@ export default class ExchangeItem extends React.Component
 						endDate  : Symbol.EndDate,
 					})
 
-					// }
 				}}
-				id={symbol} data-js-hevent=""
 			>
 				{/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 

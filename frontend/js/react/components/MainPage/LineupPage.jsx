@@ -50,7 +50,7 @@ export class LineupPage extends React.Component
                             <div className="l-lup__rules"><a href="#" className="l-lup__link text_decoration" onClick={::this._onRaSClick}>Rules & Scoring</a></div>
 
                             <div className="l-team">
-                                <div className="l-team__title">{HomeTeam.Name}, {HomeTeam.Alias} ({HomeTeam.Points})</div>
+                                <div className="l-team__title">{AwayTeam.Name}, ({AwayTeam.Points})</div>
                                 <table className="l-team__team">
                                     <tbody>
                                     <tr>
@@ -63,13 +63,13 @@ export class LineupPage extends React.Component
                                         <th title="Estimated Time Remaining">ETR</th>
                                     </tr>
                                     {
-										HomeTeam.Items.map((itm, key) =>
+										AwayTeam.Items.map((itm, key) =>
                                             <tr key={key}>
                                                 <td>{key + 1}</td>
                                                 <td className="pl">
                                                     <strong>{itm.Name}</strong>
                                                     <div className="b-pl-info">
-                                                        <div className="b-pl-info__main-inf">{HomeTeam.Alias} vs {AwayTeam.Alias}</div>
+                                                        <div className="b-pl-info__main-inf">{AwayTeam.Alias} vs {HomeTeam.Alias}</div>
                                                         <div className="b-pl-info__statistic">{itm.Description}</div>
                                                     </div>
                                                 </td>
@@ -82,10 +82,10 @@ export class LineupPage extends React.Component
                                     }
 					                <tr className="totals">
                                         <td colSpan={3}>Totals</td>
-                                        <td>{HomeTotals.FPPG}</td>
-                                        <td>{HomeTotals.EPPG}</td>
-                                        <td>{HomeTotals.Score}</td>
-                                        <td>{HomeTotals.ETR}</td>
+                                        <td>{AwayTotals.FPPG}</td>
+                                        <td>{AwayTotals.EPPG}</td>
+                                        <td>{AwayTotals.Score}</td>
+                                        <td>{AwayTotals.ETR}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -95,7 +95,7 @@ export class LineupPage extends React.Component
                             {/*<div className="l-lup__rules"><a href="#" className="l-lup__link text_decoration" onClick={::this._onRaSClick}>Rules & Scoring</a></div>*/}
 
                             <div className="l-team">
-                                <div className="l-team__title">{AwayTeam.Name}, {AwayTeam.Alias} ({AwayTeam.Points})</div>
+                                <div className="l-team__title">{HomeTeam.Name}, ({HomeTeam.Points})</div>
                                 <table className="l-team__team">
                                     <tbody>
                                     <tr>
@@ -108,12 +108,12 @@ export class LineupPage extends React.Component
                                         <th title="Estimated Time Remaining">ETR</th>
                                     </tr>
                                     {
-										AwayTeam.Items.map((itm, key) => <tr key={key}>
+										HomeTeam.Items.map((itm, key) => <tr key={key}>
                                             <td>{key + 1}</td>
                                             <td className="pl">
                                                 <strong>{itm.Name}</strong>
                                                 <div className="b-pl-info">
-                                                    <div className="b-pl-info__main-inf">{HomeTeam.Alias} vs {AwayTeam.Alias}</div>
+                                                    <div className="b-pl-info__main-inf">{AwayTeam.Alias} vs {HomeTeam.Alias}</div>
                                                     <div className="b-pl-info__statistic">{itm.Description}</div>
                                                 </div>
 
@@ -127,10 +127,10 @@ export class LineupPage extends React.Component
                                     }
                                     <tr className="totals">
                                         <td colSpan={3}>Totals</td>
-                                        <td>{AwayTotals.FPPG}</td>
-                                        <td>{AwayTotals.EPPG}</td>
-                                        <td>{AwayTotals.Score}</td>
-                                        <td>{AwayTotals.ETR}</td>
+                                        <td>{HomeTotals.FPPG}</td>
+                                        <td>{HomeTotals.EPPG}</td>
+                                        <td>{HomeTotals.Score}</td>
+                                        <td>{HomeTotals.ETR}</td>
                                     </tr>
                                     </tbody>
                                 </table>

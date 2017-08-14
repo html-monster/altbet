@@ -143,13 +143,7 @@ export default class Preferences extends React.Component
         return <div className={"tab_item preferences " + (active ? "active" : "")}>
                 <h2>Preferences</h2>
                 {header}
-				<form action={appData.pageAccountPreferencesUrl} className={loading ? 'loading' : ''} onSubmit={::this.sendData}
-					  // id="form0" method="post" noValidate="novalidate"
-					  // data-ajax="true"
-					  // data-ajax-failure="ajaxPreferencesClass.onErrorAjax"
-					  // data-ajax-success="ajaxPreferencesClass.onSuccessAjax"
-					  // data-ajax-url={appData.pageAccountPreferencesUrl}
-				>
+				<form action={'/eng/Account/EditPreferences'} className={loading ? 'loading' : ''} onSubmit={::this.sendData}>
 					<section className="section">
 						<h3 className="section_user">General</h3>
 						<hr/>
