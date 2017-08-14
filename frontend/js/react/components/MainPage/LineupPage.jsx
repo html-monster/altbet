@@ -71,7 +71,7 @@ export class LineupPage extends React.Component
                                                     <div className="b-pl-info">
                                                         <div className="b-pl-info__main-inf">{AwayTeam.Alias} vs {HomeTeam.Alias}</div>
 														{
-															itm.Description.map((item, index) => <div className="b-pl-info__statistic" key={index}>{index}{item}</div>)
+															itm.Description && itm.Description.map((item, index) => <div className="b-pl-info__statistic" key={index}>{item}</div>)
 														}
                                                     </div>
                                                 </td>
@@ -117,7 +117,9 @@ export class LineupPage extends React.Component
                                                 <strong>{itm.Name}</strong>
                                                 <div className="b-pl-info">
                                                     <div className="b-pl-info__main-inf">{AwayTeam.Alias} vs {HomeTeam.Alias}</div>
-                                                    <div className="b-pl-info__statistic">{itm.Description}</div>
+													{
+														itm.Description && itm.Description.map((item, index) => <div className="b-pl-info__statistic" key={index}>{item}</div>)
+													}
                                                 </div>
 
                                             </td>
