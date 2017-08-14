@@ -43,7 +43,6 @@ export class LineupPage extends React.Component
     render()
     {
         const { className, exdata, data: { HomeTeam, AwayTeam, HomeTotals, AwayTotals }, HomeName, AwayName } = this.props;
-
         return <div className={"l-lup " + className} data-js-team="" ref={'container'}>
                     <div className="lineup_container">
                         <div className="l-team1 team_table" key="tab1content">
@@ -63,14 +62,17 @@ export class LineupPage extends React.Component
                                         <th title="Estimated Time Remaining">ETR</th>
                                     </tr>
                                     {
-										AwayTeam.Items.map((itm, key) =>
-                                            <tr key={key}>
+										AwayTeam.Items.map((itm, key) => {
+											// itm.Description = ['asdasd asdasd', 'asdada', 'asdasdasdasdadas asd ad asd as da', 'asdasd', 'asda as dasd a', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as']
+											return 	<tr key={key}>
                                                 <td>{key + 1}</td>
                                                 <td className="pl">
                                                     <strong>{itm.Name}</strong>
                                                     <div className="b-pl-info">
                                                         <div className="b-pl-info__main-inf">{AwayTeam.Alias} vs {HomeTeam.Alias}</div>
-                                                        <div className="b-pl-info__statistic">{itm.Description}</div>
+														{
+															itm.Description.map((item, index) => <div className="b-pl-info__statistic" key={index}>{index}{item}</div>)
+														}
                                                     </div>
                                                 </td>
                                                 <td>{itm.Status}</td>
@@ -78,7 +80,8 @@ export class LineupPage extends React.Component
                                                 <td>{itm.EPPG}</td>
                                                 <td><strong>{itm.Score || "-"}</strong></td>
                                                 <td title="Estimated Time Remaining">{itm.ETR}</td>
-                                            </tr>)
+                                            </tr>
+										})
                                     }
 					                <tr className="totals">
                                         <td colSpan={3}>Totals</td>
