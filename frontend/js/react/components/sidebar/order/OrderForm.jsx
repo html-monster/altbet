@@ -651,16 +651,16 @@ export default class OrderForm extends React.Component
 			defaultMethods.showError('This game is completed, please try another game');
 
 
-		if(remainingBal !== null && side === 'sell' && remainingBal < Math.round10((1 - price) * quantity, -2))
-		{
-			defaultMethods.showWarning(`You are trying to create the order on $${(Math.round10((1 - price) * quantity, -2)).toFixed(2)}, but your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
-			return false;
-		}
-		else if(remainingBal !== null && side === 'buy' && remainingBal < Math.round10(price * quantity, -2))
-		{
-			defaultMethods.showWarning(`You are trying to create the order on $${(Math.round10(price * quantity, -2)).toFixed(2)}, but your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
-			return false;
-		}
+		// if(remainingBal !== null && side === 'sell' && remainingBal < Math.round10((1 - price) * quantity, -2))
+		// {
+		// 	defaultMethods.showWarning(`You are trying to create the order on $${(Math.round10((1 - price) * quantity, -2)).toFixed(2)}, but your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
+		// 	return false;
+		// }
+		// else if(remainingBal !== null && side === 'buy' && remainingBal < Math.round10(price * quantity, -2))
+		// {
+		// 	defaultMethods.showWarning(`You are trying to create the order on $${(Math.round10(price * quantity, -2)).toFixed(2)}, but your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
+		// 	return false;
+		// }
 
 		if(0 >= price || price > 0.99)
 		{
