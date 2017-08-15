@@ -312,7 +312,7 @@ export default class ExchangeItem extends React.Component
 											{/*:*/}
 											<span className="event_title" title="Event title">
 												<span
-													className="title">Market </span>{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}
+													className="title">Market </span>{Symbol.FullName}
 											</span>
 									{/*}*/}
 									</span>

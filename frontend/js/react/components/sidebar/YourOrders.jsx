@@ -96,7 +96,7 @@ class GroupingOrder extends React.Component
 			<div className="my_order">
 				<div className="order-title" onClick={actions.collapseOrderGroup.bind(null, data.Orders[0].Symbol.Exchange)}>
 					<div className="container">
-						<h3>{`${data.Orders[0].Symbol.HomeName} (vs. ${data.Orders[0].Symbol.AwayName})`}</h3>
+						<h3>{data.Orders[0].Symbol.FullName}</h3>
 						{
 							(data.LastSide) ?
 								<strong className={`last-price ${data.LastSide ? 'down' : 'up'}`}>{(data.LastPrice).toFixed(2)}</strong>
