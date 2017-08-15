@@ -31,7 +31,7 @@ export class Team1 extends React.Component
         //     if (TeamDefence.TeamId) Defence = {name: val.HomeTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
         //     if (TeamDefence.TeamId) Defence = {name: val.AwayTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
         // });
-        //0||console.log( 'players', players, teamNum );
+        0||console.log( 'players', players, teamNum );
 
         return (
             <div className="h-team">
@@ -72,10 +72,28 @@ export class Team1 extends React.Component
                         <th>EPPG</th>
                         <th>FPPG</th>
                         <th>Status</th>
-                        <th></th>
+                        <th><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelAllTeamplayers.bind(null, {team: teamNum})} title="Remove all players"><i className="fa fa-remove -red">{}</i></button></th>
                     </tr>
                     </thead>
                     <tbody>
+                    { // DEBUG: выводим просто списком для возможности добавить сколько хош игроков для тестирования
+                      players.length ?
+                        players.map(itm =>
+                            <tr key={itm.Name + itm.PlayerId}>
+                                <td> {kk++} </td>
+                                <td> {itm.Position} </td>
+                                <td> {itm.Team} </td>
+                                <td> {itm.Name} </td>
+                                <td><NumericInput className="eppg js-eppg" value={itm.Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: itm, team: "PlayersTeam"+teamNum, type: 'Eppg'})} style={ false } /></td>
+                                <td><NumericInput className="fppg js-fppg" value={itm.Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: itm, team: "PlayersTeam"+teamNum, type: 'Fppg'})} style={ false } /></td>
+                                <td>{itm.Status.toLowerCase() === 'out' ? <span style={{color: 'red'}}>{itm.Status}</span> : itm.Status}</td>
+                                <td><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: itm, team: teamNum, used: itm.used})} title="Remove player"><i className="fa fa-remove -red">{}</i></button></td>
+                            </tr>
+                        )
+                        :
+                        <tr><td/><td colSpan={7}><i>Add players to team {teamNum}</i></td></tr>
+                    }
+{/*
                     { positions.map((itm) =>
                         do {
                             let ret = [];
@@ -91,7 +109,7 @@ export class Team1 extends React.Component
                                         <td> {players[jj].Name} </td>
                                         <td><NumericInput className="eppg js-eppg" value={players[jj].Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: players[jj], team: "PlayersTeam"+teamNum, type: 'Eppg'})} style={ false } /></td>
                                         <td><NumericInput className="fppg js-fppg" value={players[jj].Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: players[jj], team: "PlayersTeam"+teamNum, type: 'Fppg'})} style={ false } /></td>
-                                        <td> {players[jj].Status} </td>
+                                        <td> {players[jj].Status.toUpperCase() === 'OUT' ? <span style={{color: 'red'}}>{players[jj].Status}</span> : players[jj].Status} </td>
                                         <td><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: players[jj], team: teamNum, used: players[jj].used})} title="Remove player"><i className="fa fa-remove -red">{}</i></button></td>
                                     </tr>);
                                     jj++;
@@ -117,6 +135,7 @@ export class Team1 extends React.Component
                             ret;
                         })
                     }
+*/}
                     </tbody>
                 </table>
 

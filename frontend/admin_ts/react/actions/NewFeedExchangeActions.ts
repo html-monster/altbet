@@ -19,6 +19,8 @@ import {
     ON_REM_TEAM_DEFENCE,
     AFTER_CATEGORY_ADDED,
     ON_CH_TEAM_SIZE,
+    ON_ADD_ALL_TEAM_PLAYERS,
+    ON_DEL_ALL_TEAM_PLAYERS,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -448,6 +450,25 @@ __DEV__ && console.log( 'data', data );
 
 
     /**
+     * Add several team players action
+     * // DEBUG: добавлено для тестирования
+     */
+    public actionAddAllTeamplayers(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            if( confirm("Add all players to team ?") )
+            {
+                dispatch({
+                    type: ON_ADD_ALL_TEAM_PLAYERS,
+                    payload: inProps,
+                });
+            }
+        };
+    }
+
+
+    /**
      * Add team reserver player
      */
     public actionAddTeamplayerReserve(inProps)
@@ -504,6 +525,25 @@ __DEV__ && console.log( 'data', data );
                 payload: inProps,
                 // payload: this.addTeamPlayer.bind(this, inProps),
             });
+        };
+    }
+
+
+    /**
+     * Del all team players action
+     * // DEBUG: добавлено для тестирования
+     */
+    public actionDelAllTeamplayers(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            if( confirm("Delete all players from team ?") )
+            {
+                dispatch({
+                    type: ON_DEL_ALL_TEAM_PLAYERS,
+                    payload: inProps, // this.delTeamPlayer.bind(this, inProps),
+                });
+            } // endif
         };
     }
 
