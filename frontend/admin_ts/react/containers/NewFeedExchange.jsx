@@ -158,48 +158,56 @@ class NewFeedExchange extends BaseController
                     <div className="box-body pad table-responsive">
                         <div className="row">
                             <div className="col-sm-6">
-                                <div className="box-body" >
-                                    <div className="form-group">
-                                        <label>Event <span class="-nobold" title="Available events">({Object.keys(AppData.TimeEvent).length})</span></label>
-                                        <div className="events-filters form-group-filters" title="Filter events by period">
-                                            { Object.keys(EventFilter).map((val) => <a href="#" key={val} class={Period == val ? '-bold' : ''} onClick={this._onEventFilterChange.bind(this, val)}> {EventFilter[val]} </a>) }
+                                <div className="row">
+                                    <div className="col-xs-12">
+                                        <div className="box-body" >
+                                            <div className="form-group">
+                                                <label>Event <span class="-nobold" title="Available events">({Object.keys(AppData.TimeEvent).length})</span></label>
+                                                <div className="events-filters form-group-filters" title="Filter events by period">
+                                                    { Object.keys(EventFilter).map((val) => <a href="#" key={val} class={Period == val ? '-bold' : ''} onClick={this._onEventFilterChange.bind(this, val)}> {EventFilter[val]} </a>) }
+                                                </div>
+                                                <DropBox name="selected-state" items={CbEventsItems}
+                                                    /*items={[
+                                                        { value: '1', label: 'var 1'},
+                                                        { value: '2', label: 'var 2'},
+                                                    ]}*/
+                                                    clearable={false} value={CbEventsItems[0].value} searchable={true} afterChange={actions.actionChangeEvent}/>
+                                            </div>
                                         </div>
-                                        <DropBox name="selected-state" items={CbEventsItems}
-                                            /*items={[
-                                                { value: '1', label: 'var 1'},
-                                                { value: '2', label: 'var 2'},
-                                            ]}*/
-                                            clearable={false} value={CbEventsItems[0].value} searchable={true} afterChange={actions.actionChangeEvent}/>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-xs-12">
+                                        <div class="panel box box-default">
+                                            <div class="box-header">
+                                                <h4 class="box-title">
+                                                    Chose command for defense
+                                                </h4>
+                                            </div>
+                                            <div class="panel-collapse">
+                                                <div class="box-body">
+                                                    <DefenceChoose data={{CurrentEventObj, FormData, actions}}/>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="row">
                             <div className="col-sm-6">
-                                <div class="panel box box-default">
-                                    <div class="box-header">
-                                        <h4 class="box-title">
-                                            Chose command for defense
-                                        </h4>
-                                    </div>
-                                    <div class="panel-collapse">
-                                        <div class="box-body">
-                                            <DefenceChoose data={{CurrentEventObj, FormData, actions}}/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-sm-6">
-                                <div class="panel box box-default">
-                                    <div class="box-header">
-                                        <h4 class="box-title">
-                                            Options
-                                        </h4>
-                                    </div>
-                                    <div class="panel-collapse">
-                                        <div class="box-body form-horizontal">
-                                            <Options data={{Positions, TeamSize}} actions={actions}/>
+                                <div className="row">
+                                    <div className="col-xs-12">
+                                        <div class="panel box box-default">
+                                            <div class="box-header">
+                                                <h4 class="box-title">
+                                                    Options
+                                                </h4>
+                                            </div>
+                                            <div class="panel-collapse">
+                                                <div class="box-body">
+                                                    <Options data={{Positions, TeamSize}} actions={actions}/>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

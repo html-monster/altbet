@@ -101,8 +101,9 @@ export class PlayersTable extends React.Component
                                     if( CurrentTeam.type === 1 )
                                     {
                                         // block add for full team position
-                                        addTeamdisable[1] = positions[itm.Index].Quantity == t1pos[itm.Index];
-                                        addTeamdisable[2] = positions[itm.Index].Quantity == t2pos[itm.Index];
+                                        // DEBUG: убрано для тестирования
+                                        // addTeamdisable[1] = positions[itm.Index].Quantity == t1pos[itm.Index];
+                                        // addTeamdisable[2] = positions[itm.Index].Quantity == t2pos[itm.Index];
 
 
                                         // block add for full uni position
