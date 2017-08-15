@@ -36,7 +36,7 @@ module.exports = {
     // entry: [ './frontend/js/react/indexmp.tsx' ].concat(applicationEntries),
 
     output: {
-        path: __dirname + options.path.destServerAdmin + '/Scripts/dist', //Content
+        path: __dirname + options.path.destServerAdmin + '/Assets-frontend/Assembly/Scripts/dist', //Content
         // path: 'D:/Project/altbetNew/RefactoredCore/Alt.Bet/Scripts',
         // publicPath: __dirname + options.path.destServerAdmin + '/Scripts/js-assets/',
         filename: "[name].js",
