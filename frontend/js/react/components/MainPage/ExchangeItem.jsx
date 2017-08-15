@@ -117,7 +117,7 @@ export default class ExchangeItem extends React.Component
         //Game type
 		let handicap = null;
 
-		if(lineupsData && !Symbol.HomeHandicap) handicap = lineupsData.HomeTotals.EPPG - lineupsData.AwayTotals.EPPG;
+		if(lineupsData && !Symbol.HomeHandicap) handicap = Math.round10(lineupsData.AwayTotals.EPPG - lineupsData.HomeTotals.EPPG, -2);
 
 		if (lineupsData && Symbol.OptionExchange === 2) {
 			spreadTitle = 'Total Points';
