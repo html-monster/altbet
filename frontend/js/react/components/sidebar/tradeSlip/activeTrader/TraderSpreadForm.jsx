@@ -130,7 +130,7 @@ export default class TraderSpreadForm extends React.Component {
 	_onSubmit(data, event)
 	{
 		event.preventDefault();
-		const sum = ((1 - data.spreadPricePos) * data.quantity) + (data.spreadPriceNeg * data.quantity);
+		// const sum = ((1 - data.spreadPricePos) * data.quantity) + (data.spreadPriceNeg * data.quantity);
 		const endDate = this.props.cmpData.activeExchange.endDate;
 
 		if(endDate && moment().format('x') > endDate)

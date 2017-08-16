@@ -88,7 +88,7 @@ export class LineupPage extends React.Component
                                         <td>{AwayTotals.FPPG}</td>
                                         <td>{AwayTotals.EPPG}</td>
                                         <td>{AwayTotals.Score}</td>
-                                        <td>{AwayTotals.ETR}</td>
+                                        {/*<td>{AwayTotals.ETR}</td>*/}
                                     </tr>
                                     </tbody>
                                 </table>
@@ -135,7 +135,7 @@ export class LineupPage extends React.Component
                                         <td>{HomeTotals.FPPG}</td>
                                         <td>{HomeTotals.EPPG}</td>
                                         <td>{HomeTotals.Score}</td>
-                                        <td>{HomeTotals.ETR}</td>
+                                        {/*<td>{HomeTotals.ETR}</td>*/}
                                     </tr>
                                     </tbody>
                                 </table>
