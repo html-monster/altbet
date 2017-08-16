@@ -40,7 +40,7 @@ export default class TraderSpreadForm extends React.Component {
 			if (Symbol.LastAsk && spreadPriceNeg < Math.round10(Symbol.LastAsk - 0.15, -2)) bidsProb = ' low';
 		}
 
-		const remainingBal = SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance;
+		const remainingBal = SymbolLimitData ? SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance : null;
 
 		return <div className={'order_content spread animated' + (index === activeString || !index ? ' fadeInUp' : '')}
 					id="order_content"
