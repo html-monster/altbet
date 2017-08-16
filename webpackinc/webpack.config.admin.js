@@ -4,6 +4,9 @@ const webpack = require('webpack');
 const WebpackNotifierPlugin = require('webpack-notifier');
 var HappyPack = require('happypack');
 
+const WebpackAutoInject = require('webpack-auto-inject-version');
+const StringReplacePlugin = require("string-replace-webpack-plugin");
+
 // const ManifestPlugin = require('webpack-manifest-plugin');
 // const AssetsPlugin = require('assets-webpack-plugin');
 
@@ -74,7 +77,7 @@ module.exports = {
     },
 
     plugins: [
-        // new WebpackNotifierPlugin({title: 'bundle ADM.js', alwaysNotify: true}),
+        new WebpackNotifierPlugin({title: 'bundle ADM.js', contentImage: path.join(__dirname, '../frontend/Images/ImagesSrc/favicon-adm.png')}),
         // new ExtractTextPlugin('[name].css', {
         //     allChunks: true
         // })
@@ -93,6 +96,13 @@ module.exports = {
             id: 'js',
             threads: 4,
             loaders: ['babel-loader']
+        }),
+
+        new StringReplacePlugin(),
+        new WebpackAutoInject({
+            components: {
+                AutoIncreaseVersion: true
+            }
         }),
     ],
     // ].concat(sourceMap),
@@ -125,6 +135,19 @@ module.exports = {
                 //     plugins: [['transform-class-properties', { "spec": true }], ["remove-comments"]],
                 //   }
             },
+            {
+                test: /\.ts$/,
+                loader: StringReplacePlugin.replace({
+                    replacements: [
+                        {
+                            pattern: /<<REPLACE VERSION>>/ig,
+                            replacement: function (match, p1, offset, string) {
+                                return getBuildTime();
+                            }
+                        }
+                    ]
+                })
+            }
         ]
     },
 
@@ -142,3 +165,10 @@ module.exports = {
     },
     // postcss: postcssInit,
 };
+
+
+function getBuildTime()
+{
+    let $now = new Date();
+    return `${$now.getDate()} ${$now.getHours()}:${$now.getMinutes()}:${$now.getSeconds()}`;
+}
