@@ -6,6 +6,7 @@ import React from 'react';
 import classnames from 'classnames';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 import {Collapse} from 'react-collapse';
+
 import yourOrdersActions from '../../actions/Sidebar/yourOrderActions.ts';
 import { DateLocalization } from '../../models/DateLocalization';
 
@@ -43,7 +44,7 @@ class YourOrders extends React.Component
 
 	render()
 	{
-		const { yourOrdersData, openGroupIndex } = this.props;
+		const { yourOrdersData, openGroupSymbol, activeExchange } = this.props;
 
 		return <CSSTransitionGroup
 			component="div"
@@ -63,11 +64,11 @@ class YourOrders extends React.Component
 			{
 				ABpp.User.login ?
 					yourOrdersData.length ?
-						yourOrdersData.map((item, index) =>
+						yourOrdersData.map((item) =>
 							<GroupingOrder
 								key={item.ID}
-								indexGr={index}
-								openGroupIndex={openGroupIndex}
+								openGroupSymbol={openGroupSymbol}
+								activeExchange={activeExchange}
 								data={item}
 								//onOrderDelete={::this.props.actions.actionOrderDelete}
 								actions={this.props.actions}
@@ -87,15 +88,15 @@ class GroupingOrder extends React.Component
 {
 	render()
 	{
-		const { actions, data, indexGr, openGroupIndex } = this.props;
+		const { actions, data, openGroupSymbol, activeExchange } = this.props;
 		// let data = this.props.data;
 		// let onOrderDelete = this.props.onOrderDelete;
 
-		return <div className="order_content animated" id={data.ID}>
+		return <div className={classnames('order_content animated', {active: activeExchange === data.Orders[0].Symbol.Exchange})} id={data.ID}>
 			<div className="my_order">
-				<div className="order-title" onClick={actions.collapseOrderGroup.bind(null, indexGr)}>
+				<div className="order-title" onClick={actions.collapseOrderGroup.bind(null, data.Orders[0].Symbol.Exchange)}>
 					<div className="container">
-						<h3>{`${data.Orders[0].Symbol.HomeName} (vs. ${data.Orders[0].Symbol.AwayName})`}</h3>
+						<h3>{data.Orders[0].Symbol.FullName}</h3>
 						{
 							(data.LastSide) ?
 								<strong className={`last-price ${data.LastSide ? 'down' : 'up'}`}>{(data.LastPrice).toFixed(2)}</strong>
@@ -105,7 +106,7 @@ class GroupingOrder extends React.Component
 						<strong className="current-order pos"> Total: <span>{data.Positions}</span></strong>
 					</div>
 				</div>
-				<Collapse isOpened={indexGr === openGroupIndex}>
+				<Collapse isOpened={data.Orders[0].Symbol.Exchange === openGroupSymbol}>
 					<div className="order_info">
 						<div className="container">
 							<strong className="amount">Price</strong>

@@ -48,12 +48,12 @@ export class TabMyOrderHistory extends React.Component
 										{
 											data.map(function (item, key) {
 												// let date = new Date(+item.Time.slice(6).slice(0, -2));
-                                                let $handicap = (item.isMirror ? item.Symbol.AwayHandicap : item.Symbol.HomeHandicap);
+												// let $handicap = (item.isMirror ? item.Symbol.AwayHandicap : item.Symbol.HomeHandicap);
 												return (
 														<tr className={(item.IsMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))}
 																key={key}>
 															<td>
-																{item.Symbol.HomeName} - {item.Symbol.AwayName}
+																{item.Symbol.FullName}
 																{/*<span className="muted">{$handicap && ` (${$handicap})`}</span>*/}
 																{/*<br />*/}
                                                                 {/*<span className="fullname muted">{item.Symbol.HomeName} - {item.Symbol.AwayName}</span>*/}

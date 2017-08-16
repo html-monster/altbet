@@ -31,6 +31,7 @@ module.exports = {
                 .pipe($.notify(function (file) {
                     var options = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
                     return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options);
+                        // " (" + options.chList + ")";
                 }))
                 ;
         }

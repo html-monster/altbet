@@ -19,7 +19,7 @@ export class TabMyPos extends React.Component
 
     _onFilterChange(ee)
     {
-        0||console.log( 'ee', ee.target, ee.target.dataset, this.state );
+        // 0||console.log( 'ee', ee.target, ee.target.dataset, this.state );
         // 0||console.log( 'this.state.filters[ee.target.dataset.filter]', this.state.filters[ee.target.dataset.filter], this.state );
         this.state.filters[ee.target.dataset.filter] = !this.state.filters[ee.target.dataset.filter];
         this.setState({...this.state});
@@ -91,7 +91,7 @@ export class TabMyPos extends React.Component
                                                     if( this.state.filters[item.Category.toLowerCase()] ) return <table key={key} className="pos tmp">
                                                         <thead>
                                                         <tr>
-                                                            <th className="title">{item.Symbol.HomeName + ' - ' + item.Symbol.AwayName}</th>
+                                                            <th className="title">{item.Symbol.FullName}</th>
                                                             <th>{}</th>
                                                             <th><span className="quantity">{item.CommonSymbolVolume}</span></th>
                                                             <th>{}</th>

@@ -8,6 +8,14 @@ import NumericInput from 'react-numeric-input';
 
 export class Options extends React.Component
 {
+    constructor(props)
+    {
+        super();
+
+        // Spread(HC) - 0, ManeyLine(ML) - 1, TotalPoints(TP) -2
+        // this.state({Spread: false, ManeyLine: false, TotalPoints: false})
+    }
+
     render()
     {
         const { Positions, TeamSize } = this.props.data;
@@ -19,15 +27,31 @@ export class Options extends React.Component
         // });
         //0||console.log( 'players', players, teamNum );
 
-        return <div className="form-group">
-            <label className="col-sm-3 control-label">Team size</label>
-            <div class="col-sm-9 input-group">
-                {do{
-                    let data = this._checkTeamSize(Positions);
-                    <select class="cb-size form-control" defaultValue={TeamSize} onChange={::this._onChangeTeamSize}>
-                        {data.items}
-                    </select>
-                }}
+        return <div className="">
+            <div className="row">
+                <div className="col-sm-6">
+                    <div class="form-group">
+                        <label>Team size</label>
+                        {do{
+                            let data = this._checkTeamSize(Positions);
+                            <select class="cb-size form-control" defaultValue={TeamSize} onChange={::this._onChangeTeamSize}>
+                                {data.items}
+                            </select>
+                        }}
+                    </div>
+                </div>
+{/*
+                <div className="col-sm-6">
+                    <div class="form-group">
+                        <label>Event types</label>
+                        <div class="btn-group" role="group" aria-label="..." style={{display: 'block'}}>
+                            <button type="button" class="btn btn-default">Left</button>
+                            <button type="button" class="btn btn-default">Middle</button>
+                            <button type="button" class="btn btn-default">Right</button>
+                        </div>
+                    </div>
+                </div>
+*/}
             </div>
         </div>
         ;

@@ -159,17 +159,20 @@ class HomeEvents extends BaseController
                                         <td>
                                             <div class="controls">
                                                 <div class={classnames("btn-group", {'dropup': isdropup})}>
-                                                    <button type="button" data-js-btn-def-action="" class="btn btn-sm btn-default">Action</button>
+                                                    {/*<button type="button" data-js-btn-def-action="" class="btn btn-sm btn-default">Action</button>
                                                     <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
                                                         <span class="caret"/>
                                                         <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>*/}
+                                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Action&nbsp;<span class="caret"></span>
                                                     </button>
 
                                                     {do{
                                                     let menu;
                                                     switch (val.Symbol.Status) {
                                                         case StatusEvent.New:
-                                                            menu = <ul class="dropdown-menu" role="menu">
+                                                            menu = <ul class="dropdown-menu">
                                                                 <li>
                                                                     {val.Symbol.TypeEvent == TypeEvent.Fantasy ?
                                                                         <a href={LinksMenu.EditFantasy + `?exchange=${val.Symbol.Exchange}`} title="Edit fantasy exchange">Edit</a>
@@ -186,9 +189,14 @@ class HomeEvents extends BaseController
                                                         case StatusEvent.Approved:
                                                             menu = <ul class="dropdown-menu" role="menu">
                                                                 <li><a href="#" data-js-btn-detail="" title="Details exchange">Details</a></li>
-                                                                {val.Symbol.TypeEvent == TypeEvent.Fantasy ||
-                                                                    <li><a href="#" class="js-btn-crud" data-type="edit" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Edit exchange">Edit</a></li>
-                                                                }
+                                                                {/*{val.Symbol.TypeEvent == TypeEvent.Fantasy ||}*/}
+                                                                <li>
+                                                                    {val.Symbol.TypeEvent == TypeEvent.Fantasy ?
+                                                                        <a href={LinksMenu.EditFantasy + `?exchange=${val.Symbol.Exchange}`} title="Edit fantasy exchange">Edit</a>
+                                                                        :
+                                                                        <a href="#" class="js-btn-crud" data-type="edit" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Edit exchange">Edit</a>
+                                                                    }
+                                                                </li>
                                                                 <li class="divider"></li>
                                                                 <li><a href="#" class="js-btn-status" data-type="complete" data-id={val.Symbol.Exchange} data-name={val.Symbol.FullName} title="Set completed status">Set completed</a></li>
                                                             </ul>;

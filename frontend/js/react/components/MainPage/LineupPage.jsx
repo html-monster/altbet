@@ -43,14 +43,13 @@ export class LineupPage extends React.Component
     render()
     {
         const { className, exdata, data: { HomeTeam, AwayTeam, HomeTotals, AwayTotals }, HomeName, AwayName } = this.props;
-
         return <div className={"l-lup " + className} data-js-team="" ref={'container'}>
                     <div className="lineup_container">
                         <div className="l-team1 team_table" key="tab1content">
                             <div className="l-lup__rules"><a href="#" className="l-lup__link text_decoration" onClick={::this._onRaSClick}>Rules & Scoring</a></div>
 
                             <div className="l-team">
-                                <div className="l-team__title">{HomeTeam.Name}, {HomeTeam.Alias} ({HomeTeam.Points})</div>
+                                <div className="l-team__title">{AwayTeam.Name}, ({AwayTeam.Points})</div>
                                 <table className="l-team__team">
                                     <tbody>
                                     <tr>
@@ -63,14 +62,17 @@ export class LineupPage extends React.Component
                                         <th title="Estimated Time Remaining">ETR</th>
                                     </tr>
                                     {
-										HomeTeam.Items.map((itm, key) =>
-                                            <tr key={key}>
+										AwayTeam.Items.map((itm, key) => {
+											// itm.Description = ['asdasd asdasd', 'asdada', 'asdasdasdasdadas asd ad asd as da', 'asdasd', 'asda as dasd a', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as']
+											return 	<tr key={key}>
                                                 <td>{key + 1}</td>
                                                 <td className="pl">
                                                     <strong>{itm.Name}</strong>
                                                     <div className="b-pl-info">
-                                                        <div className="b-pl-info__main-inf">{HomeTeam.Alias} vs {AwayTeam.Alias}</div>
-                                                        <div className="b-pl-info__statistic">{itm.Description}</div>
+                                                        <div className="b-pl-info__main-inf">{AwayTeam.Alias} vs {HomeTeam.Alias}</div>
+														{
+															itm.Description && itm.Description.map((item, index) => <div className="b-pl-info__statistic" key={index}>{item}</div>)
+														}
                                                     </div>
                                                 </td>
                                                 <td>{itm.Status}</td>
@@ -78,14 +80,15 @@ export class LineupPage extends React.Component
                                                 <td>{itm.EPPG}</td>
                                                 <td><strong>{itm.Score || "-"}</strong></td>
                                                 <td title="Estimated Time Remaining">{itm.ETR}</td>
-                                            </tr>)
+                                            </tr>
+										})
                                     }
 					                <tr className="totals">
                                         <td colSpan={3}>Totals</td>
-                                        <td>{HomeTotals.FPPG}</td>
-                                        <td>{HomeTotals.EPPG}</td>
-                                        <td>{HomeTotals.Score}</td>
-                                        <td>{HomeTotals.ETR}</td>
+                                        <td>{AwayTotals.FPPG}</td>
+                                        <td>{AwayTotals.EPPG}</td>
+                                        <td>{AwayTotals.Score}</td>
+                                        <td>{AwayTotals.ETR}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -95,7 +98,7 @@ export class LineupPage extends React.Component
                             {/*<div className="l-lup__rules"><a href="#" className="l-lup__link text_decoration" onClick={::this._onRaSClick}>Rules & Scoring</a></div>*/}
 
                             <div className="l-team">
-                                <div className="l-team__title">{AwayTeam.Name}, {AwayTeam.Alias} ({AwayTeam.Points})</div>
+                                <div className="l-team__title">{HomeTeam.Name}, ({HomeTeam.Points})</div>
                                 <table className="l-team__team">
                                     <tbody>
                                     <tr>
@@ -108,13 +111,15 @@ export class LineupPage extends React.Component
                                         <th title="Estimated Time Remaining">ETR</th>
                                     </tr>
                                     {
-										AwayTeam.Items.map((itm, key) => <tr key={key}>
+										HomeTeam.Items.map((itm, key) => <tr key={key}>
                                             <td>{key + 1}</td>
                                             <td className="pl">
                                                 <strong>{itm.Name}</strong>
                                                 <div className="b-pl-info">
-                                                    <div className="b-pl-info__main-inf">{HomeTeam.Alias} vs {AwayTeam.Alias}</div>
-                                                    <div className="b-pl-info__statistic">{itm.Description}</div>
+                                                    <div className="b-pl-info__main-inf">{AwayTeam.Alias} vs {HomeTeam.Alias}</div>
+													{
+														itm.Description && itm.Description.map((item, index) => <div className="b-pl-info__statistic" key={index}>{item}</div>)
+													}
                                                 </div>
 
                                             </td>
@@ -127,10 +132,10 @@ export class LineupPage extends React.Component
                                     }
                                     <tr className="totals">
                                         <td colSpan={3}>Totals</td>
-                                        <td>{AwayTotals.FPPG}</td>
-                                        <td>{AwayTotals.EPPG}</td>
-                                        <td>{AwayTotals.Score}</td>
-                                        <td>{AwayTotals.ETR}</td>
+                                        <td>{HomeTotals.FPPG}</td>
+                                        <td>{HomeTotals.EPPG}</td>
+                                        <td>{HomeTotals.Score}</td>
+                                        <td>{HomeTotals.ETR}</td>
                                     </tr>
                                     </tbody>
                                 </table>
