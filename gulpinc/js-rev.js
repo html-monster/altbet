@@ -9,6 +9,11 @@ const path = require('path');
 const RevAll = require('gulp-rev-all');
 const revDelRedundant = require('gulp-rev-del-redundant');
 
+// var filenames = require("gulp-filenames");
+// gulp.src("./src/*.coffee")
+//     .pipe(filenames("coffeescript"))
+//     .pipe(gulp.dest("./dist"));
+
 
 module.exports = {
     def: function (options) {
@@ -22,6 +27,7 @@ module.exports = {
                 //     var options = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
                 //     return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options);
                 // }))
+                .pipe($.filenames("scripts-list"))
                 .pipe(RevAll.revision({
                     fileNameManifest: "js-assets.json",
                     transformFilename: function (file, hash) {
@@ -35,7 +41,8 @@ module.exports = {
                 .pipe(gulp.dest(options.manifestPath))
                 .pipe($.notify(function (file) {
                     var options = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
-                    return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options);
+                    return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options) +
+                        " (" + $.filenames.get("scripts-list") + ")";
                 }))
                 ;
         }

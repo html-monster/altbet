@@ -458,6 +458,9 @@ export default class Reducer
                     itm.CustomPosition = itm.Position;
                     $Team.players.push(itm);
                     addedPlayer = itm;
+
+                    // common add part
+                    this.afterAddPlayer({player: {}, addedPlayer: {}, team}, state);
                     break;
                 } // endif;
             } // endfor
@@ -476,9 +479,6 @@ export default class Reducer
 
         // save teams data
         if (!state.Rules.nosave) this.saveData(state);
-
-        // common add part
-        this.afterAddPlayer({player: {}, addedPlayer: {}, team}, state);
 
         return state;
     }
@@ -999,7 +999,7 @@ export default class Reducer
         });
 
         state.FormData.startDate = startDate;
-        // 0||console.log( 'state.FormData.startDate', {'11': state.FormData.startDate, startDate, '22': state.Players} );
+        0||console.log( 'state.FormData.startDate', {'11': state.FormData.startDate, startDate, '22': state.Players} );
     }
 
 
