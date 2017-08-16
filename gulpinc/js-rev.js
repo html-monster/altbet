@@ -27,7 +27,7 @@ module.exports = {
                 //     var options = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
                 //     return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options);
                 // }))
-                .pipe($.filenames("scripts-list"))
+                // .pipe($.filenames("scripts-list", {overrideMode: true}))
                 .pipe(RevAll.revision({
                     fileNameManifest: "js-assets.json",
                     transformFilename: function (file, hash) {
@@ -41,8 +41,7 @@ module.exports = {
                 .pipe(gulp.dest(options.manifestPath))
                 .pipe($.notify(function (file) {
                     var options = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
-                    return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options) +
-                        " (" + $.filenames.get("scripts-list") + ")";
+                    return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options);
                 }))
                 ;
         }

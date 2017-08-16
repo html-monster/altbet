@@ -1,5 +1,7 @@
 'use strict';
 
+var gCssChList;
+
 const OPTIONS = require('./gulpinc/pathes');
 const $pathDestServer = OPTIONS.path.destServer;
 // console.log($pathDestServer);
@@ -68,6 +70,7 @@ lazyRequire('admin-css-rev', 'def', './gulpinc/css-rev', {
     src: OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Content/dist',
     dst: OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Content/css-assets',
     manifestPath: OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Content',
+    chList: gCssChList,
 });
 
 
@@ -240,6 +243,10 @@ gulp.task('styles:assets', function() {
       .pipe(gulp.dest('public/Images'));
 });
 
+gulp.task('bolvan', function() {
+  return gulp.src('frontend/Images/**/*.{svg,png,jpg,gif,ico}', {since: gulp.lastRun('styles:assets')});
+});
+
 gulp.task('clean', function() {
   return del(['public', 'manifest']);
 });
@@ -257,7 +264,14 @@ gulp.task('RUN-BUILD-ADM', gulp.series('styles-admin', 'admin-css-rev', 'admin-j
 // BMS: --- WATCHES ----------------------------------------------------------------------------------------------------
 // BM: ========================================================================================== ADMIN DEV BUILDING ===
 gulp.task('WATCH-ADMIN', function () {
-    gulp.watch('frontend/admin_styles/**/*.*', gulp.series('styles-admin'));
+    var watcher = gulp.watch('frontend/admin_styles/**/*.*', gulp.series('styles-admin'));
+/*
+    watcher.on('change', function (path, stats) {
+        gCssChList = baseName(path);
+        console.log('File ' + baseName(path) + ' was changed');bolvan
+        gulp.series('styles-admin')
+    });
+*/
     gulp.watch(OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Content/dist/*.*', {delay: 700}, gulp.series('admin-css-rev'));
     gulp.watch(OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Scripts/dist/*.*', {delay: 700}, gulp.series('admin-js-rev'));
     return false;
@@ -308,3 +322,11 @@ gulp.task('dev',
     )
 );
 */
+
+
+
+function baseName(str)
+{
+   var base = new String(str).substring(str.lastIndexOf('\\') + 1);
+   return base;
+}

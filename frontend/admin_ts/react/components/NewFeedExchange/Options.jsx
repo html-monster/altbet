@@ -8,6 +8,14 @@ import NumericInput from 'react-numeric-input';
 
 export class Options extends React.Component
 {
+    constructor(props)
+    {
+        super();
+
+        // Spread(HC) - 0, ManeyLine(ML) - 1, TotalPoints(TP) -2
+        // this.state({Spread: false, ManeyLine: false, TotalPoints: false})
+    }
+
     render()
     {
         const { Positions, TeamSize } = this.props.data;
@@ -32,17 +40,15 @@ export class Options extends React.Component
                         }}
                     </div>
                 </div>
-            </div>
-            <div className="row">
                 <div className="col-sm-6">
-                    {/*<div class="form-group">
+                    <div class="form-group">
                         <label>Event types</label>
                         <div class="btn-group" role="group" aria-label="..." style={{display: 'block'}}>
                             <button type="button" class="btn btn-default">Left</button>
                             <button type="button" class="btn btn-default">Middle</button>
                             <button type="button" class="btn btn-default">Right</button>
                         </div>
-                    </div>*/}
+                    </div>
                 </div>
             </div>
         </div>

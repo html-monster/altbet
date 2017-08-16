@@ -17,7 +17,6 @@ module.exports = {
             // var scssOpts = {outputStyle: options.isDevelopment ? 'compact' : 'compressed'};
 
             return gulp.src(options.src + '/*.*')
-                .pipe($.filenames("styles-list"))
                 .pipe(RevAll.revision({
                     fileNameManifest: "css-assets.json",
                     transformFilename: function (file, hash) {
@@ -31,8 +30,8 @@ module.exports = {
                 .pipe(gulp.dest(options.manifestPath))
                 .pipe($.notify(function (file) {
                     var options = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
-                    return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options) +
-                        " (" + $.filenames.get("styles-list") + ")";
+                    return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options);
+                        // " (" + options.chList + ")";
                 }))
                 ;
         }

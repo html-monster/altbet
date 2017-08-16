@@ -460,7 +460,7 @@ export default class Reducer
                     addedPlayer = itm;
 
                     // common add part
-                    this.afterAddPlayer({player: {}, addedPlayer: {}, team}, state);
+                    this.afterAddPlayer({player: {}, addedPlayer, team}, state);
                     break;
                 } // endif;
             } // endfor
@@ -999,7 +999,7 @@ export default class Reducer
         });
 
         state.FormData.startDate = startDate;
-        0||console.log( 'state.FormData.startDate', {'11': state.FormData.startDate, startDate, '22': state.Players} );
+        // 0||console.log( 'state.FormData.startDate', {'11': state.FormData.startDate, startDate, '22': state.Players} );
     }
 
 
