@@ -2,7 +2,7 @@
 
   // setting section
   .setting-form{ display: block; margin: 0 0 1em; position: relative;  width: 100%; max-width: 400px;
-    padding-top: 0.5em;
+
 
     .common_line{ clear: both; margin-bottom: 5px; border-top: 1px solid #17161b; border-bottom: 1px solid #484753; display: block;
       -webkit-margin-before: 0.5em; -webkit-margin-after: 0.5em; -webkit-margin-start: auto; -webkit-margin-end: auto; }
@@ -146,10 +146,11 @@
           left: -28px;
           //top: 6px;
         }
+        &.pers_inf{ display: inline-block; }
         &.cont_inf{ display: inline-block; margin-top: 25px; }
 
-        &.pers_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -420px -422px; top: 5px;}
-        &.cont_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -455px -422px; top: 6px; }
+        &.pers_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -420px -422px; top: 4px;}
+        &.cont_inf:before{  background: url("#{$pathImage}/sprite.svg") no-repeat ;  background-position: -455px -422px; top: 4px; }
         //&.passw_change:before{  background: url("#{$pathImage}/sprite_account.svg") no-repeat ;  background-position: -135px -6px; }
       }
       h4{  margin: 15px 0 5px; font-weight: normal;  }
