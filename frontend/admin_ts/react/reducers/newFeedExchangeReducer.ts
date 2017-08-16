@@ -936,9 +936,9 @@ export default class Reducer
      */
     private eventTypeSelect(type, state)
     {
-        // state.FormData.OptionExchanges[type]
-        // __DEV__&&console.log( '{type, checked}', {type, checked} );
-        // this.setState((state) => {state[type] = !checked; return state;})
+        state.FormData.OptionExchanges[type].checked = !state.FormData.OptionExchanges[type].checked;
+
+        state.Rules.nosave || this.saveData(state);
 
         return state
     }

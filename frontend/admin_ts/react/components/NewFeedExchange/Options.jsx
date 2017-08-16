@@ -7,20 +7,18 @@ import NumericInput from 'react-numeric-input';
 import classnames from 'classnames';
 
 
-export class Options extends React.Component
+export class Options extends React.PureComponent
 {
-/*
     constructor(props)
     {
         super();
 
-        this.state = {Spread: false, MoneyLine: false, TotalPoints: false}
+        // this.state = {Spread: false, MoneyLine: false, TotalPoints: false}
     }
-*/
 
     render()
     {
-        const { data: {Positions, TeamSize, FormData: {OptionExchanges: {Spread, ManeyLine, TotalPoints}}}, actions } = this.props;
+        const { data: {Positions, TeamSize, FormData: {OptionExchanges: {Spread, MoneyLine, TotalPoints}}}, actions } = this.props;
         let jj = 0, kk = 1;
         // let Defence = {};
         // TimeEvent.forEach((val) => {
@@ -31,7 +29,7 @@ export class Options extends React.Component
 
         return <div className="">
             <div className="row">
-                <div className="col-sm-6">
+                <div className="col-sm-4">
                     <div class="form-group">
                         <label>Team size</label>
                         {do{
@@ -42,13 +40,13 @@ export class Options extends React.Component
                         }}
                     </div>
                 </div>
-                <div className="col-sm-6">
+                <div className="col-sm-8">
                     <div class="form-group">
                         <label>Event types</label>
                         <div class="btn-group" role="group" aria-label="..." style={{display: 'block'}}>
-                            <button type="button" class={classnames("btn", {'btn-default': !Spread.checked, 'btn-primary active': Spread.checked})} onClick={actions.actionEventTypeClick.bind(null, 'Spread')}>Left</button>
-                            <button type="button" class="btn btn-default">Middle</button>
-                            <button type="button" class="btn btn-default">Right</button>
+                            <button type="button" class={classnames("btn", {'btn-default': !Spread.checked, 'btn-primary active': Spread.checked})} onClick={actions.actionEventTypeClick.bind(null, 'Spread')}>Spread</button>
+                            <button type="button" class={classnames("btn", {'btn-default': !MoneyLine.checked, 'btn-primary active': MoneyLine.checked})} onClick={actions.actionEventTypeClick.bind(null, 'MoneyLine')}>Money Line</button>
+                            <button type="button" class={classnames("btn", {'btn-default': !TotalPoints.checked, 'btn-primary active': TotalPoints.checked})} onClick={actions.actionEventTypeClick.bind(null, 'TotalPoints')}>Total Points</button>
                         </div>
                     </div>
                 </div>
