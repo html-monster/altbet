@@ -205,7 +205,7 @@ class NewFeedExchange extends BaseController
                                             </div>
                                             <div class="panel-collapse">
                                                 <div class="box-body">
-                                                    <Options data={{Positions, TeamSize}} actions={actions}/>
+                                                    <Options data={{Positions, TeamSize, FormData}} actions={actions}/>
                                                 </div>
                                             </div>
                                         </div>

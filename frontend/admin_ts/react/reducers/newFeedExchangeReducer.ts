@@ -24,6 +24,7 @@ import {
     ON_CH_TEAM_SIZE,
     ON_ADD_ALL_TEAM_PLAYERS,
     ON_DEL_ALL_TEAM_PLAYERS,
+    ON_EVENT_TYPE_SELECT,
 } from '../constants/ActionTypesNewFeedExchange';
 /// TS_IGNORE
 import {Common} from "../common/Common";
@@ -73,7 +74,11 @@ export default class Reducer
             startDate: '',
             fullName: '',
             category: '',
-            OptionExchanges: '', //
+            OptionExchanges: {
+                Spread: {checked: false, index: 0},
+                MoneyLine: {checked: false, index: 1},
+                TotalPoints: {checked: false, index: 2},
+            },
             url: '',
             PlayerTopTeam1: {Name: '', Team: ''}, // PlayerHome
             PlayerTopTeam2: {Name: '', Team: ''}, // PlayerAway
@@ -183,6 +188,10 @@ export default class Reducer
 
             case ON_DEL_ALL_TEAM_PLAYERS:
                 state = this.delAllTeamPlayers(action.payload, state);
+                return {...state};
+
+            case ON_EVENT_TYPE_SELECT:
+                state = this.eventTypeSelect(action.payload, state);
                 return {...state};
 
             case ON_ENTER_PPG:
@@ -919,6 +928,19 @@ export default class Reducer
         state.Rules.nosave || this.saveData(state);
 
         return state;
+    }
+
+
+    /**
+     * Set event types
+     */
+    private eventTypeSelect(type, state)
+    {
+        // state.FormData.OptionExchanges[type]
+        // __DEV__&&console.log( '{type, checked}', {type, checked} );
+        // this.setState((state) => {state[type] = !checked; return state;})
+
+        return state
     }
 
 

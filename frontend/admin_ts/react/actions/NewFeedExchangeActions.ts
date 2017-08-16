@@ -21,6 +21,7 @@ import {
     ON_CH_TEAM_SIZE,
     ON_ADD_ALL_TEAM_PLAYERS,
     ON_DEL_ALL_TEAM_PLAYERS,
+    ON_EVENT_TYPE_SELECT,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -442,6 +443,22 @@ __DEV__ && console.log( 'data', data );
         {
             dispatch({
                 type: ON_ADD_TEAM_PLAYER,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Add team player action
+     */
+    public actionEventTypeClick(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_EVENT_TYPE_SELECT,
                 payload: inProps,
                 // payload: this.addTeamPlayer.bind(this, inProps),
             });
