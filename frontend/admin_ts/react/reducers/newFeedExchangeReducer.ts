@@ -867,6 +867,8 @@ export default class Reducer
         // count positions limits
         state[team] = this.recountPositions($Team);
 
+        this.recountStartDate(state);
+
         // mark used players
         // this.markPlayers(state);
 
@@ -911,8 +913,7 @@ export default class Reducer
         // count positions limits
         // state[team] = this.recountPositions($Team);
 
-        // mark used players
-        // this.markPlayers(state);
+        this.recountStartDate(state);
 
         // save teams data
         state.Rules.nosave || this.saveData(state);

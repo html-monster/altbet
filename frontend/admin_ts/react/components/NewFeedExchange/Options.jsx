@@ -40,6 +40,7 @@ export class Options extends React.Component
                         }}
                     </div>
                 </div>
+{/*
                 <div className="col-sm-6">
                     <div class="form-group">
                         <label>Event types</label>
@@ -50,6 +51,7 @@ export class Options extends React.Component
                         </div>
                     </div>
                 </div>
+*/}
             </div>
         </div>
         ;
