@@ -7,9 +7,9 @@
 
   $('#fullpage').fullpage({
     menu: '#menu',
-    anchors: (globalData.userIdentity == 'True') ? ['secondPage', 'fourthPage'] : ['firstPage', 'secondPage', 'fourthPage'],
+    anchors: (globalData.userIdentity == 'True') ? ['secondPage', 'thirdPage', 'fourthPage'] : ['firstPage', 'secondPage', 'thirdPage', 'fourthPage'],
     navigation: true,
-    navigationTooltips: (globalData.userIdentity == 'True') ? ['Markets', 'Contacts'] : ['Start', 'Markets', 'Contacts'],
+    navigationTooltips: (globalData.userIdentity == 'True') ? ['Markets', 'Advantages', 'Contacts'] : ['Start', 'Markets', 'Advantages', 'Contacts'],
     slidesNavigation: false,
     slidesNavPosition: 'bottom',
     loopBottom: true,
