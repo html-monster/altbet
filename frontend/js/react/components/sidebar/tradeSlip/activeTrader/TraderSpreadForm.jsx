@@ -139,11 +139,11 @@ export default class TraderSpreadForm extends React.Component {
 			return false;
 		}
 
-		if(sum > data.remainingBal)
-		{
-			defaultMethods.showWarning(`You are trying to create the order on $${Math.round10(sum, -2).toFixed(2)}, your remaining entry balance of this game is $${data.remainingBal.toFixed(2)}, it's not enough to create the order`);
-			return false;
-		}
+		// if(sum > data.remainingBal)
+		// {
+		// 	defaultMethods.showWarning(`You are trying to create the order on $${Math.round10(sum, -2).toFixed(2)}, your remaining entry balance of this game is $${data.remainingBal.toFixed(2)}, it's not enough to create the order`);
+		// 	return false;
+		// }
 
 		data.traderActions.actionOnAjaxSend(this, event);
 	}
