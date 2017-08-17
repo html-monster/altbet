@@ -81,7 +81,7 @@ export class PlayersTable extends React.Component
                             <th>Team</th>
                             <th>Name</th>
                             <th>Status</th>
-                            <th></th>
+                            <th><button type="button" class="btn btn-default -btn-default btn-xs" title={`Add all players to team ${CurrentTeam.num}`} onClick={this._onAddAllPlayersClick.bind(this, {team: CurrentTeam.num})}><i class="fa fa-plus"/> Add all to T{CurrentTeam.num}</button></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -101,8 +101,9 @@ export class PlayersTable extends React.Component
                                     if( CurrentTeam.type === 1 )
                                     {
                                         // block add for full team position
-                                        addTeamdisable[1] = positions[itm.Index].Quantity == t1pos[itm.Index];
-                                        addTeamdisable[2] = positions[itm.Index].Quantity == t2pos[itm.Index];
+                                        // DEBUG: убрано для тестирования
+                                        // addTeamdisable[1] = positions[itm.Index].Quantity == t1pos[itm.Index];
+                                        // addTeamdisable[2] = positions[itm.Index].Quantity == t2pos[itm.Index];
 
 
                                         // block add for full uni position
@@ -118,9 +119,6 @@ export class PlayersTable extends React.Component
                                             addTeamUPdisable[$TNum] = 2;
                                             upAddTitle[$TNum] = `This position is not avaliable for Universal player`;
                                         } else upAddTitle[$TNum] = 'Add to universal position'; // endif
-
-                                        // if( positions[uniPositionIndex].Quantity == t2pos[uniPositionIndex] ) addTeam2UPdisable = 1;
-                                        // else upAdd2Title = '';
 
                                     // check add to reserve
                                     } else if (CurrentTeam.type === 2 )
@@ -160,7 +158,7 @@ export class PlayersTable extends React.Component
                                         <td className="-center">{itm.Position === uniPositionName ? <span title="Universal player">{itm.meta.PositionOrig} (UP)</span> : itm.Position}</td>
                                         <td style={{minWidth: '52px'}}> {itm.Team} </td>
                                         <td> {itm.Name} </td>
-                                        <td> {itm.Status} </td>
+                                        <td> {itm.Status.toLowerCase() === 'out' ? <span style={{color: 'red'}}>{itm.Status}</span> : itm.Status} </td>
                                         { itm.used ?
                                             <td className="nowrap">
                                                 <button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: itm, team: itm.usedTeam, used: itm.used})} title="Remove player"><i className="fa fa-remove -red"/> remove</button>&nbsp;&nbsp;
@@ -212,6 +210,38 @@ export class PlayersTable extends React.Component
     }
 
 
+    /**
+     * Add all filtered players to team
+     * // DEBUG: добавлено для тестирования
+     * @private
+     */
+    _onAddAllPlayersClick(params, ee)
+    {
+        const { data, data: {actions} } = this.props;
+        const { data: Players, filters, posFilters } = this.state;
+        let clickFunc;
+
+
+        // get all filtered players
+        let players = [];
+        Players.forEach((itm, key) => {
+            if ( (this.currFilter === "All" || this.currFilter === itm.Team) &&
+                    (this.currPosFilter === "All" ||
+                     itm.Position === "Util" && itm.meta.PositionOrig === this.currPosFilter ||
+                     this.currPosFilter === itm.Position) &&
+                  !itm.used )
+            {
+                players.push(itm);
+            }
+        });
+
+
+        // 0||console.log( 'ee.preventDefault', {disallow, clickFunc, proxy, ee} );
+        actions.actionAddAllTeamplayers({...params, players});
+        return false;
+    }
+
+
     _onAddPlayerClick(disallow, type, params, ee)
     {
         const { data, data: {actions} } = this.props;
@@ -229,7 +259,8 @@ export class PlayersTable extends React.Component
         }
 
 
-        if( Common.inArray(type, [1,2]) && data['PlayersTeam' + params.team].players.length >= data.TeamSize )
+        // DEBUG: убрано для тестирования
+/*        if( Common.inArray(type, [1,2]) && data['PlayersTeam' + params.team].players.length >= data.TeamSize )
         {
             (new InfoMessages).show({
                 title: 'WARNING',
@@ -238,7 +269,7 @@ export class PlayersTable extends React.Component
             });
 
             return;
-        } // endif
+        }*/ // endif
 
 
         // 0||console.log( 'ee.preventDefault', {disallow, clickFunc, proxy, ee} );
@@ -274,9 +305,10 @@ export class PlayersTable extends React.Component
 
     _prepareTeamFilters(inData)
     {
-        var filters = {'All': false};
+        var filters = {};
 
         inData.forEach((val) => filters[val.Team] = false);
+        filters['All'] = false;
 
         // Object.keys(filters).forEach((item) => { filters[item] = false });
         filters[this.currFilter = Object.keys(filters)[0]] = true;
@@ -289,9 +321,10 @@ export class PlayersTable extends React.Component
      */
     _preparePosFilters(inData, Rules)
     {
-        var filters = {'All': false};
+        var filters = {};
 
         inData.forEach((val) => { if (Rules.uniPositionIndex != val.Index) filters[val.Name] = false });
+        filters['All'] = false;
 
         // Object.keys(filters).forEach((item) => { filters[item] = false });
         filters[this.currPosFilter = Object.keys(filters)[0]] = true;

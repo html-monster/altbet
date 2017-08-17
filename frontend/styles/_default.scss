@@ -1,9 +1,6 @@
 ::-webkit-input-placeholder { color: #dbdbdb; }
-
 ::-moz-placeholder { color: #dbdbdb; }
-
 :-moz-placeholder { color: #dbdbdb; }
-
 :-ms-input-placeholder { color: #dbdbdb; }
 
 .b-clear { clear: both }
@@ -223,6 +220,7 @@ i.wave { display: inline-block; font-style: normal; border-radius: 4px; }
 
 .show_password {
   display: inline-block;
+  bottom: 27px;
   width: 20px;
   height: 20px;
   background: url("#{$pathImage}/ico-eye.png") no-repeat;
@@ -350,7 +348,6 @@ label.disabled {
 .input {
   display: inline-block;
   position: relative;
-  margin-top: 25px;
   .regulator {
     width: 18px;
     height: 100%;

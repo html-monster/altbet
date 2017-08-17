@@ -76,7 +76,7 @@ class Actions extends BaseActions
                             fppg += item.FPPG;
                             eppg += item.EPPG;
                             score += item.Score;
-                            etr += item.ETR;
+                            // etr += item.ETR;
                         });
                     }
                     catch (error){
@@ -87,7 +87,7 @@ class Actions extends BaseActions
                         FPPG: Math.round10(fppg, -2),
                         EPPG: Math.round10(eppg, -2),
                         Score: Math.round10(score, -2),
-                        ETR: Math.round10(etr, -2)
+                        // ETR: Math.round10(etr, -2)
                     };
 
                     fppg = 0; eppg = 0; score = 0; etr = 0;
@@ -98,7 +98,7 @@ class Actions extends BaseActions
                             fppg += item.FPPG;
                             eppg += item.EPPG;
                             score += item.Score;
-                            etr += item.ETR;
+                            // etr += item.ETR;
                         });
                     }
                     catch (error){
@@ -109,7 +109,7 @@ class Actions extends BaseActions
                         FPPG: Math.round10(fppg, -2),
                         EPPG: Math.round10(eppg, -2),
                         Score: Math.round10(score, -2),
-                        ETR: Math.round10(etr, -2)
+                        // ETR: Math.round10(etr, -2)
                     };
 
                     dispatch({

@@ -482,19 +482,19 @@ class Actions extends BaseActions
 		{
 			const { cmpData, isMirror, quantity, SymbolLimitData } = context.props;
 			const { direction, limit, price } = orderData;
-			const remainingBal = SymbolLimitData ? SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance : null;
+			// const remainingBal = SymbolLimitData ? SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance : null;
 			let url : string, ajaxData : any = {};
 
-            if(remainingBal !== null && direction === 'sell' && remainingBal < Math.round10((1 - price) * quantity, -2))
-            {
-                defaultMethods.showWarning(`You are trying to create the order on $${(Math.round10((1 - price) * quantity, -2)).toFixed(2)}, but your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
-                return false;
-            }
-            else if(remainingBal !== null && direction === 'buy' && remainingBal < Math.round10(price * quantity, -2))
-            {
-                defaultMethods.showWarning(`You are trying to create the order on $${(Math.round10(price * quantity, -2)).toFixed(2)}, but your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
-                return false;
-            }
+            // if(remainingBal !== null && direction === 'sell' && remainingBal < Math.round10((1 - price) * quantity, -2))
+            // {
+            //     defaultMethods.showWarning(`You are trying to create the order on $${(Math.round10((1 - price) * quantity, -2)).toFixed(2)}, but your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
+            //     return false;
+            // }
+            // else if(remainingBal !== null && direction === 'buy' && remainingBal < Math.round10(price * quantity, -2))
+            // {
+            //     defaultMethods.showWarning(`You are trying to create the order on $${(Math.round10(price * quantity, -2)).toFixed(2)}, but your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
+            //     return false;
+            // }
 
 
 			ajaxData.Symbol = `${cmpData.activeExchange.symbol}`;
@@ -545,15 +545,15 @@ class Actions extends BaseActions
             spreadPriceNeg = spreadPriceNeg < 0.02 ? 0.01 : spreadPriceNeg.toFixed(2);
             spreadPriceNeg = direction === 'bid' ? price.toFixed(2) : spreadPriceNeg;
 
-            const sum = ((1 - spreadPricePos) * quantity) + (spreadPriceNeg * quantity);
-            const remainingBal = SymbolLimitData ? SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance : null;
+            // const sum = ((1 - spreadPricePos) * quantity) + (spreadPriceNeg * quantity);
+            // const remainingBal = SymbolLimitData ? SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance : null;
             let url : string, ajaxData : any = {};
 
-            if(sum > remainingBal)
-            {
-                defaultMethods.showWarning(`You are trying to create the order on $${Math.round10(sum, -2).toFixed(2)}, your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
-                return false;
-            }
+            // if(sum > remainingBal)
+            // {
+            //     defaultMethods.showWarning(`You are trying to create the order on $${Math.round10(sum, -2).toFixed(2)}, your remaining entry balance of this game is $${remainingBal.toFixed(2)}, it's not enough to create the order`);
+            //     return false;
+            // }
 
 			ajaxData.Symbol = `${cmpData.activeExchange.symbol}`;
 

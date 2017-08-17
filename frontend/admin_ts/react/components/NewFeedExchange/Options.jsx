@@ -4,13 +4,21 @@
 
 import React from 'react' ;
 import NumericInput from 'react-numeric-input';
+import classnames from 'classnames';
 
 
-export class Options extends React.Component
+export class Options extends React.PureComponent
 {
+    constructor(props)
+    {
+        super();
+
+        // this.state = {Spread: false, MoneyLine: false, TotalPoints: false}
+    }
+
     render()
     {
-        const { Positions, TeamSize } = this.props.data;
+        const { data: {Positions, TeamSize, FormData: {OptionExchanges: {Spread, MoneyLine, TotalPoints}}}, actions } = this.props;
         let jj = 0, kk = 1;
         // let Defence = {};
         // TimeEvent.forEach((val) => {
@@ -19,15 +27,29 @@ export class Options extends React.Component
         // });
         //0||console.log( 'players', players, teamNum );
 
-        return <div className="form-group">
-            <label className="col-sm-3 control-label">Team size</label>
-            <div class="col-sm-9 input-group">
-                {do{
-                    let data = this._checkTeamSize(Positions);
-                    <select class="cb-size form-control" defaultValue={TeamSize} onChange={::this._onChangeTeamSize}>
-                        {data.items}
-                    </select>
-                }}
+        return <div className="">
+            <div className="row">
+                <div className="col-sm-4">
+                    <div class="form-group">
+                        <label>Team size</label>
+                        {do{
+                            let data = this._checkTeamSize(Positions);
+                            <select class="cb-size form-control" defaultValue={TeamSize} onChange={::this._onChangeTeamSize}>
+                                {data.items}
+                            </select>
+                        }}
+                    </div>
+                </div>
+                <div className="col-sm-8">
+                    <div class="form-group">
+                        <label>Event types</label>
+                        <div class="btn-group" role="group" aria-label="..." style={{display: 'block'}}>
+                            <button type="button" class={classnames("btn", {'btn-default': !Spread.checked, 'btn-primary active': Spread.checked})} onClick={actions.actionEventTypeClick.bind(null, 'Spread')}>Spread</button>
+                            <button type="button" class={classnames("btn", {'btn-default': !MoneyLine.checked, 'btn-primary active': MoneyLine.checked})} onClick={actions.actionEventTypeClick.bind(null, 'MoneyLine')}>Money Line</button>
+                            <button type="button" class={classnames("btn", {'btn-default': !TotalPoints.checked, 'btn-primary active': TotalPoints.checked})} onClick={actions.actionEventTypeClick.bind(null, 'TotalPoints')}>Total Points</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         ;

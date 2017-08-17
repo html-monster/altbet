@@ -41,6 +41,10 @@ export default class ADpp
         else MainConfig.BASE_URL = '/Admin';
 
 
+        window.ADpp.ver = '[AIV]{version}[/AIV]';
+        __DEV__&&console.info( '--------------------------------------------------' );
+        __DEV__&&console.info( `version: ${window.ADpp.ver} (<<REPLACE VERSION>>)` );
+
         // init current controller (sets in razor views)
         if( globalData && globalData.controller )
         {

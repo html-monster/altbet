@@ -40,7 +40,7 @@ export default class TraderSpreadForm extends React.Component {
 			if (Symbol.LastAsk && spreadPriceNeg < Math.round10(Symbol.LastAsk - 0.15, -2)) bidsProb = ' low';
 		}
 
-		const remainingBal = SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance;
+		const remainingBal = SymbolLimitData ? SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance : null;
 
 		return <div className={'order_content spread animated' + (index === activeString || !index ? ' fadeInUp' : '')}
 					id="order_content"
@@ -130,7 +130,7 @@ export default class TraderSpreadForm extends React.Component {
 	_onSubmit(data, event)
 	{
 		event.preventDefault();
-		const sum = ((1 - data.spreadPricePos) * data.quantity) + (data.spreadPriceNeg * data.quantity);
+		// const sum = ((1 - data.spreadPricePos) * data.quantity) + (data.spreadPriceNeg * data.quantity);
 		const endDate = this.props.cmpData.activeExchange.endDate;
 
 		if(endDate && moment().format('x') > endDate)
@@ -139,11 +139,11 @@ export default class TraderSpreadForm extends React.Component {
 			return false;
 		}
 
-		if(sum > data.remainingBal)
-		{
-			defaultMethods.showWarning(`You are trying to create the order on $${Math.round10(sum, -2).toFixed(2)}, your remaining entry balance of this game is $${data.remainingBal.toFixed(2)}, it's not enough to create the order`);
-			return false;
-		}
+		// if(sum > data.remainingBal)
+		// {
+		// 	defaultMethods.showWarning(`You are trying to create the order on $${Math.round10(sum, -2).toFixed(2)}, your remaining entry balance of this game is $${data.remainingBal.toFixed(2)}, it's not enough to create the order`);
+		// 	return false;
+		// }
 
 		data.traderActions.actionOnAjaxSend(this, event);
 	}

@@ -19,6 +19,9 @@ import {
     ON_REM_TEAM_DEFENCE,
     AFTER_CATEGORY_ADDED,
     ON_CH_TEAM_SIZE,
+    ON_ADD_ALL_TEAM_PLAYERS,
+    ON_DEL_ALL_TEAM_PLAYERS,
+    ON_EVENT_TYPE_SELECT,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -289,7 +292,7 @@ __DEV__ && console.log( 'data', data );
                     // reset saved data
                     localStorage.setItem('newFeedExchange', JSON.stringify({}));
 
-                    Common.redirectWMessage({url: result.data.UrlExchange, message: `Event “${data.FullName}” was saved successfully`, type: InfoMessage.TYPE_SUCCESS, title: 'SUCCESS', exInfo: {id: result.data.Exchanges}});
+                    // Common.redirectWMessage({url: result.data.UrlExchange, message: `Event “${data.FullName}” was saved successfully`, type: InfoMessage.TYPE_SUCCESS, title: 'SUCCESS', exInfo: {id: result.data.Exchanges}});
                 },
                 result => {
                     0||console.log( 'result', result, result.code );
@@ -448,6 +451,41 @@ __DEV__ && console.log( 'data', data );
 
 
     /**
+     * Add team player action
+     */
+    public actionEventTypeClick(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            dispatch({
+                type: ON_EVENT_TYPE_SELECT,
+                payload: inProps,
+                // payload: this.addTeamPlayer.bind(this, inProps),
+            });
+        };
+    }
+
+
+    /**
+     * Add several team players action
+     * // DEBUG: добавлено для тестирования
+     */
+    public actionAddAllTeamplayers(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            if( confirm("Add all players to team ?") )
+            {
+                dispatch({
+                    type: ON_ADD_ALL_TEAM_PLAYERS,
+                    payload: inProps,
+                });
+            }
+        };
+    }
+
+
+    /**
      * Add team reserver player
      */
     public actionAddTeamplayerReserve(inProps)
@@ -504,6 +542,25 @@ __DEV__ && console.log( 'data', data );
                 payload: inProps,
                 // payload: this.addTeamPlayer.bind(this, inProps),
             });
+        };
+    }
+
+
+    /**
+     * Del all team players action
+     * // DEBUG: добавлено для тестирования
+     */
+    public actionDelAllTeamplayers(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            if( confirm("Delete all players from team ?") )
+            {
+                dispatch({
+                    type: ON_DEL_ALL_TEAM_PLAYERS,
+                    payload: inProps, // this.delTeamPlayer.bind(this, inProps),
+                });
+            } // endif
         };
     }
 
@@ -748,7 +805,7 @@ __DEV__ && console.log( 'data', data );
     private prepareData(inProps)
     {
         let resObj: any = {};
-        const {category, fullName, startDate, teamName1, teamName2, url, Team1Defense, Team2Defense, PlayerTopTeam1, PlayerTopTeam2, HomeTeamId, AwayTeamId, Exchange,} = inProps.FormData;
+        const {category, fullName, startDate, teamName1, teamName2, url, Team1Defense, Team2Defense, PlayerTopTeam1, PlayerTopTeam2, HomeTeamId, AwayTeamId, Exchange, OptionExchanges} = inProps.FormData;
         let {Team1name, Team2name, EventId, PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, IsEditFeedExchange} = inProps;
 
         resObj.FullName = fullName;
@@ -772,6 +829,12 @@ __DEV__ && console.log( 'data', data );
         resObj.HomeTeamId = HomeTeamId;
         resObj.AwayTeamId = AwayTeamId;
         resObj.Exchange = Exchange;
+
+        // set event type
+        resObj.OptionExchanges = [];
+        Object.keys(OptionExchanges).forEach(itm => {
+            if( OptionExchanges[itm].checked ) resObj.OptionExchanges.push(OptionExchanges[itm].index)
+        });
 
 // [07.07.17 17:04:53] Vitaliy Yakubovskiy: ты мне должен передать для exchange - FullName, HomeName, HomeAlias, AwayName, AwayAlias, StartDate, UrlExchange, CategoryId, OptionExchanges(0-HC, 1-ML, 2-TP), HomeTeam(список игроков team1), AwayTeam(список игроков team2), EventId
 // [07.07.17 17:07:38] Vitaliy Yakubovskiy: и для игроков PlayerId, Fppg, Eppg, TeamType (0-Basic, 1-Reserve, 2-Variable)
