@@ -13,11 +13,15 @@
 	a.link-logo { @include box(b,0); float: left; width: 230px; height: 50px; padding: 5px 0; background-color: $color3Brown; @include calign;
 	  img { height: 100%; }
 	}
-	.navbar { background-color: $color3Brown;
+	/*.navbar { background-color: $color3Brown;
       a { color: #fff;  }
       .user-menu a { transition: background-color .5s }
       .btn { @include box(i,r); margin: -9px 0 -5px 5px; width: auto; }
-	}
+	}*/
+}
+
+.skin-blue-light .main-header .navbar {
+    background-color: #3c8dbc;
 }
 
 .navbar-nav>.user-menu .user-image { font-size: 24px; }
