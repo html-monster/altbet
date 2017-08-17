@@ -63,6 +63,7 @@ export default class Reducer
             reserveLen: 5, // reserve players count
             variableLen: 5, // reserve players count
             nosave: false,
+            teamLabels: [, "Favorite Team", "Outsiders Team",]
         },
         CurrentTeam: {
             num: 1,

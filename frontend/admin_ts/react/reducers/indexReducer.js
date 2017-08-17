@@ -4,6 +4,7 @@ import NewFeedExchangeReducer from './newFeedExchangeReducer.ts';
 import FeedEventsReducer from './FeedEventsReducer.ts';
 import HomeEventsReducer from './HomeEventsReducer.ts';
 import UsersReducer from './UsersReducer.ts';
+import HeaderReducer from './HeaderReducer.ts';
 import {Framework} from 'common/Framework.ts';
 
 
@@ -11,6 +12,7 @@ let reducers;
 let page = "";
 
 const common = {
+	HeaderData: Framework.getHandler(HeaderReducer),
 };
 
 

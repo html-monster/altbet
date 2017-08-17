@@ -115,9 +115,9 @@ class HomeEvents extends BaseController
                                         </span>
 */}
                                 </th>
-                                <th><span>Home name</span></th>
+                                <th><span>Favorite name</span></th>
                                 <th><span>Handicap</span></th>
-                                <th><span>Away name</span></th>
+                                <th><span>Outsider name</span></th>
                                 <th><span>Handicap</span></th>
                                 <th>
                                     <span className={sortClasses('StartDate')}>
@@ -130,6 +130,7 @@ class HomeEvents extends BaseController
                                         <a href={Sort.Links.EndDate} className="dotted" title={titleAttr('EndDate')}>End date</a>
                                     </span>
                                 </th>
+                                <th><span>Exch type</span></th>
                                 <th><span>Type</span></th>
                                 <th><span>Url</span></th>
                                 { Status == StatusEvent.Settlement &&
@@ -151,6 +152,7 @@ class HomeEvents extends BaseController
                                         <td data-js="TD-AwayHandicap">{val.Symbol.AwayHandicap}</td>
                                         <td data-js="TD-StartDate">{$DateLocalization.fromSharp2(val.Symbol.StartDate, 0).toLocalDate({format: "MM/DD/Y h:mm A"})}</td>
                                         <td data-js="TD-EndDate">{val.Symbol.EndDate && $DateLocalization.fromSharp2(val.Symbol.EndDate, 0).toLocalDate({format: "MM/DD/Y h:mm A"})}</td>
+                                        <td data-js="">{val.Symbol.ResultExchange}</td>
                                         <td data-js="">{TypeEventStr[val.Symbol.TypeEvent]}</td>
                                         <td data-js="TD-UrlExchange">{val.Symbol.UrlExchange}</td>
                                         {Status == StatusEvent.Settlement &&

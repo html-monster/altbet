@@ -24,36 +24,29 @@ export class Team1 extends React.Component
 
     render()
     {
-        const { players, name, positions, teamNum, TeamDefence, actions, uplayerdata: {uniPositionIndex, uniPositionName}, TeamSize } = this.props.data;
+        const { players, name, positions, teamNum, TeamDefence, Rules, actions, uplayerdata: {uniPositionIndex, uniPositionName}, TeamSize } = this.props.data;
         let jj = 0, kk = 1;
-        // let Defence = {};
-        // TimeEvent.forEach((val) => {
-        //     if (TeamDefence.TeamId) Defence = {name: val.HomeTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
-        //     if (TeamDefence.TeamId) Defence = {name: val.AwayTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
-        // });
-        0||console.log( 'players', players, teamNum );
+
 
         return (
             <div className="h-team">
                 <div className="form-horizontal">
-                    <div className="form-group">
-                        <label className="col-sm-3 control-label">Team {teamNum} name</label>
-                        <div class="col-sm-9 input-group">
-                            <input className="form-control" type="text" name={`team${teamNum}name`} value={name} onChange={::this._onChangeTeamName} />
-                            {/*<span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateTeamName} title="Generate team name"><i class="fa fa-repeat"/></button></span>*/}
-                            <div class="btn-group input-button -dropdown input-group-addon">
-                                <button type="button" class="btn btn-default btn-xs" onClick={this._onGenerateTeamName.bind(this, {})}><i class="fa fa-repeat"/></button>
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                    <span class="caret"></span>
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    {players.map(val =>
-                                        <li key={val.PlayerId}><a href="#" onClick={this._onGenerateTeamName.bind(this, {Name: val.Name, Team: val.Team})}>({val.Position}) <b>Team {val.Name.split(' ')[1].trim()}, {val.Team}</b></a></li>
-                                    )}
-                                </ul>
-                            </div>
+                    <label className="col-sm-4 control-label">{Rules.teamLabels[teamNum]} name</label>
+                    <div class="col-sm-8 input-group">
+                        <input className="form-control" type="text" name={`team${teamNum}name`} value={name} onChange={::this._onChangeTeamName} />
+                        {/*<span class="input-button input-group-addon"><button type="button" className="btn btn-default btn-xs" onClick={::this._onGenerateTeamName} title="Generate team name"><i class="fa fa-repeat"/></button></span>*/}
+                        <div class="btn-group input-button -dropdown input-group-addon">
+                            <button type="button" class="btn btn-default btn-xs" onClick={this._onGenerateTeamName.bind(this, {})}><i class="fa fa-repeat"/></button>
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                {players.map(val =>
+                                    <li key={val.PlayerId}><a href="#" onClick={this._onGenerateTeamName.bind(this, {Name: val.Name, Team: val.Team})}>({val.Position}) <b>Team {val.Name.split(' ')[1].trim()}, {val.Team}</b></a></li>
+                                )}
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -91,7 +84,7 @@ export class Team1 extends React.Component
                             </tr>
                         )
                         :
-                        <tr><td/><td colSpan={7}><i>Add players to team {teamNum}</i></td></tr>
+                        <tr><td/><td colSpan={7}><i>Add players to {Rules.teamLabels[teamNum]}</i></td></tr>
                     }
 {/*
                     { positions.map((itm) =>
