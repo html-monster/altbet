@@ -117,12 +117,12 @@ class defaultMethods
 		$(element).css('max-height', windowHeight - fixedSubtractionHeight - totalSubtractionHeight)
 	}
 
-	static activated(element){
-		$(element).click(function (e) {
-			e.preventDefault();
-			$(this).toggleClass('active');
-		});
-	}
+	// static activated(element){
+	// 	$(element).click(function (e) {
+	// 		e.preventDefault();
+	// 		$(this).toggleClass('active');
+	// 	});
+	// }
 
 	static getType(obj) {
 		return {}.toString.call(obj).slice(8, -1);

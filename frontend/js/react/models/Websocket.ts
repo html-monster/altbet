@@ -180,7 +180,7 @@ export class WebsocketModel
             // message - текст
             // type - вид сообщения - success|info|warning|error
             defaultMethods.showMessage(data.Message, defaultMethods.MESSAGE_TYPES[data.Type]);
-            if(data.Code === 'LogIn' && data.Message.slice(-20) === 'has been logged out.' && Visibility.state() === 'hidden') location.reload();// костыль чтобы перезагружались все страницы при разлогировании
+            // if(data.Code === 'LogIn' && data.Message.slice(-20) === 'has been logged out.' && Visibility.state() === 'hidden') location.reload();// костыль чтобы перезагружались все страницы при разлогировании
             __DEV__&& console.log( data );
         }
 

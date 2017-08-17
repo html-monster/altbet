@@ -5,14 +5,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 
+import classnames from 'classnames';
+
 import headerActions from '../actions/headerActions.ts';
 import sidebarActions from '../actions/sidebarActions.ts';
 import AnimateOnUpdate from '../components/Animation';
 import {CheckBox} from '../components/common/CheckBox';
 import OddsConverterComp from '../components/OddsConverter';
-import classnames from 'classnames';
+import Notification from '../common/Notification';
 // import {DropBox2} from '../components/common/DropBox2';
-
 
 class Header extends React.Component
 {
@@ -83,6 +84,11 @@ class Header extends React.Component
 					<a href={globalData.Urls.Home + "?filter=live"}  className={"f_button f_but_before f_but_bor" + ($filter === 'live' ? ' active' : '')} onClick={::this.loginClick}><span>My Games</span></a>
 					<a href={globalData.Urls.MyActivity + "#/history"} className={classnames("f_button f_but_before f_but_bor", {"active": ABpp.config.currentPage === ABpp.CONSTS.PAGE_MYPOS})} onClick={::this.loginClick}><span className="history_event">My History</span></a>
 					<a href={globalData.Urls.TradingRules} className="f_button f_but_before"><span>Rules</span> </a>
+					{/*<button className="btn" onClick={()=> (new Notification).showMessage({msg: 'Hello hello!!!'}, 'success')}>m</button>*/}
+					{/*<button className="btn" onClick={()=> (new Notification).showError({msg: 'Hello hello!!!'})}>e</button>*/}
+					{/*<button className="btn" onClick={()=> (new Notification).showWarning({msg: 'Hello hello!!!'})}>w</button>*/}
+					{/*<button className="btn" onClick={()=> (new Notification).showInfo({msg: 'Hello hello!!!'})}>i</button>*/}
+					{/*<button className="btn" onClick={()=> (new Notification).showSuccess({msg: 'Hello hello!!!'})}>s</button>*/}
 				</div>
 			</div>
 			<div className="header_right">
