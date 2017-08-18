@@ -77,8 +77,8 @@ export class Team1 extends React.Component
                                 <td> {itm.Position} </td>
                                 <td> {itm.Team} </td>
                                 <td> {itm.Name} </td>
-                                <td><NumericInput className="eppg js-eppg" value={itm.Eppg} precision={2} onChange={this._onPPGChange.bind(this, {player: itm, team: "PlayersTeam"+teamNum, type: 'Eppg'})} style={ false } /></td>
-                                <td><NumericInput className="fppg js-fppg" value={itm.Fppg} precision={2} onChange={this._onPPGChange.bind(this, {player: itm, team: "PlayersTeam"+teamNum, type: 'Fppg'})} style={ false } /></td>
+                                <td><NumericInput className="eppg js-eppg" value={itm.Eppg} precision={1} onChange={this._onPPGChange.bind(this, {player: itm, team: "PlayersTeam"+teamNum, type: 'Eppg'})} style={ false } /></td>
+                                <td><NumericInput className="fppg js-fppg" value={itm.Fppg} precision={1} onChange={this._onPPGChange.bind(this, {player: itm, team: "PlayersTeam"+teamNum, type: 'Fppg'})} style={ false } /></td>
                                 <td>{itm.Status.toLowerCase() === 'out' ? <span style={{color: 'red'}}>{itm.Status}</span> : itm.Status}</td>
                                 <td><button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamplayer.bind(null, {player: itm, team: teamNum, used: itm.used})} title="Remove player"><i className="fa fa-remove -red">{}</i></button></td>
                             </tr>

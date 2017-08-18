@@ -22,6 +22,7 @@ import {
     ON_ADD_ALL_TEAM_PLAYERS,
     ON_DEL_ALL_TEAM_PLAYERS,
     ON_EVENT_TYPE_SELECT,
+    ON_ACTION_EXCHANGE_LIMIT,
 } from '../constants/ActionTypesNewFeedExchange.js';
 import BaseActions from './BaseActions';
 import {AjaxSend} from '../common/AjaxSend';
@@ -292,7 +293,7 @@ __DEV__ && console.log( 'data', data );
                     // reset saved data
                     localStorage.setItem('newFeedExchange', JSON.stringify({}));
 
-                    // Common.redirectWMessage({url: result.data.UrlExchange, message: `Event “${data.FullName}” was saved successfully`, type: InfoMessage.TYPE_SUCCESS, title: 'SUCCESS', exInfo: {id: result.data.Exchanges}});
+                    Common.redirectWMessage({url: result.data.UrlExchange, message: `Event “${data.FullName}” was saved successfully`, type: InfoMessage.TYPE_SUCCESS, title: 'SUCCESS', exInfo: {id: result.data.Exchanges}});
                 },
                 result => {
                     0||console.log( 'result', result, result.code );
@@ -335,6 +336,25 @@ __DEV__ && console.log( 'data', data );
                 payload: inProps,
                 // payload: this.addTeamPlayer.bind(this, inProps),
             });
+        };
+    }
+
+
+    /**
+     * Add change team name
+     */
+    public actionExchangeLimit(inProps)
+    {
+        return (dispatch, getState) =>
+        {
+            if( inProps )
+            {
+                dispatch({
+                    type: ON_ACTION_EXCHANGE_LIMIT,
+                    payload: inProps,
+                    // payload: this.addTeamPlayer.bind(this, inProps),
+                });
+            } // endif
         };
     }
 
@@ -805,7 +825,7 @@ __DEV__ && console.log( 'data', data );
     private prepareData(inProps)
     {
         let resObj: any = {};
-        const {category, fullName, startDate, teamName1, teamName2, url, Team1Defense, Team2Defense, PlayerTopTeam1, PlayerTopTeam2, HomeTeamId, AwayTeamId, Exchange, OptionExchanges} = inProps.FormData;
+        const {category, fullName, StartEventId, teamName1, teamName2, url, Team1Defense, Team2Defense, PlayerTopTeam1, PlayerTopTeam2, HomeTeamId, AwayTeamId, Exchange, OptionExchanges, ExchangeLimit} = inProps.FormData;
         let {Team1name, Team2name, EventId, PlayersTeam1, PlayersTeam2, PlayersTeam1Reserve, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, IsEditFeedExchange} = inProps;
 
         resObj.FullName = fullName;
@@ -815,9 +835,11 @@ __DEV__ && console.log( 'data', data );
 
         resObj.HomeDefense = Team1Defense;
         resObj.AwayDefense = Team2Defense;
-        resObj.StartDate = startDate.format();
+        // resObj.StartDate = startDate.format();
+        resObj.StartEventId = StartEventId;
         resObj.UrlExchange = url;
         resObj.EventId = EventId;
+        resObj.ExchangeLimit = ExchangeLimit;
 
         // in new mode
         resObj.HomeAlias = Team1name;

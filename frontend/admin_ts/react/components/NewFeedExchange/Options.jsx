@@ -18,14 +18,13 @@ export class Options extends React.PureComponent
 
     render()
     {
-        const { data: {Positions, TeamSize, FormData: {OptionExchanges: {Spread, MoneyLine, TotalPoints}}}, actions } = this.props;
+        const { data: {Positions, TeamSize, IsEditFeedExchange, FormData: {OptionExchanges: {Spread, MoneyLine, TotalPoints}, ExchangeLimit}, Exchanges}, actions } = this.props;
         let jj = 0, kk = 1;
         // let Defence = {};
         // TimeEvent.forEach((val) => {
         //     if (TeamDefence.TeamId) Defence = {name: val.HomeTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
         //     if (TeamDefence.TeamId) Defence = {name: val.AwayTeam, event: `${val.HomeTeam} vs ${val.AwayTeam}`}
         // });
-        //0||console.log( 'players', players, teamNum );
 
         return <div className="">
             <div className="row">
@@ -41,14 +40,41 @@ export class Options extends React.PureComponent
                     </div>
                 </div>
                 <div className="col-sm-8">
-                    <div class="form-group">
-                        <label>Event types</label>
-                        <div class="btn-group" role="group" aria-label="..." style={{display: 'block'}}>
-                            <button type="button" class={classnames("btn", {'btn-default': !Spread.checked, 'btn-primary active': Spread.checked})} onClick={actions.actionEventTypeClick.bind(null, 'Spread')}>Spread</button>
-                            <button type="button" class={classnames("btn", {'btn-default': !MoneyLine.checked, 'btn-primary active': MoneyLine.checked})} onClick={actions.actionEventTypeClick.bind(null, 'MoneyLine')}>Money Line</button>
-                            <button type="button" class={classnames("btn", {'btn-default': !TotalPoints.checked, 'btn-primary active': TotalPoints.checked})} onClick={actions.actionEventTypeClick.bind(null, 'TotalPoints')}>Total Points</button>
+                    {IsEditFeedExchange ?
+                        <div class="form-group">
+                            <label>Event types</label>
+                            <div class="">
+                                {do{ let ret;
+                                    switch( Exchanges[0].Symbol.OptionExchange )
+                                    {
+                                        case 0: ret = 'Spread'; break;
+                                        case 1: ret = 'Money Line'; break;
+                                        case 2: ret = 'Total Points'; break;
+                                    }
+                                    ret;
+                                }}
+                            </div>
                         </div>
-                    </div>
+                        :
+                        <div class="form-group">
+                            <label>Event types</label>
+                            <div class="btn-group" role="group" aria-label="..." style={{display: 'block'}}>
+                                <button type="button" class={classnames("btn", {'btn-default': !Spread.checked, 'btn-primary active': Spread.checked})} onClick={actions.actionEventTypeClick.bind(null, 'Spread')}>Spread</button>
+                                <button type="button" class={classnames("btn", {'btn-default': !MoneyLine.checked, 'btn-primary active': MoneyLine.checked})} onClick={actions.actionEventTypeClick.bind(null, 'MoneyLine')}>Money Line</button>
+                                <button type="button" class={classnames("btn", {'btn-default': !TotalPoints.checked, 'btn-primary active': TotalPoints.checked})} onClick={actions.actionEventTypeClick.bind(null, 'TotalPoints')}>Total Points</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-sm-6">
+                    <div class="form-group">
+                            <label>Exchange Limit</label>
+                            <div class="">
+                                <NumericInput className="exchange-limit" value={ExchangeLimit} precision={2} onChange={(num) => actions.actionExchangeLimit(num)} style={ false } />
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -77,5 +103,12 @@ export class Options extends React.PureComponent
     {
         // __DEV__&&console.log( '{p1, p2,p3}', ee.target.value );
         this.props.actions.actionChangeTeamSize(ee.target.value);
+    }
+
+
+    /**@private*/ _onExchangeLimitClick(props, num, p1)
+    {
+        // if (num) this.props.actions.actionPPGValues({player, team, type, num});
+        if (num) this.props.data.actions.actionPPGValues({...props, num});
     }
 }

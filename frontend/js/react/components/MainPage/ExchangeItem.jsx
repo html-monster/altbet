@@ -270,7 +270,7 @@ export default class ExchangeItem extends React.Component
 					})
 
 				}}
-			>
+			data-smbl={symbol}>
 				{/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
 				<div className={"event-date " + data.CategoryIcon}>

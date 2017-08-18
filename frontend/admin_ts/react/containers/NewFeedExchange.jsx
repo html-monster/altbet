@@ -62,10 +62,11 @@ class NewFeedExchange extends BaseController
     render()
     {
         const { actions, data: AppData } = this.props;
-        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, CurrentEventObj, Rules, CurrentTeam, Category, Categories, IsEditFeedExchange, TeamSize } = this.props.data;
+        const { Players, FormData, PlayersTeam1, PlayersTeam1Reserve, PlayersTeam2, PlayersTeam2Reserve, PlayersTeam1Variable, PlayersTeam2Variable, Positions, UPlayerData, EventFilter, Period, LastEventId, EventId, CurrentEventObj, Rules, CurrentTeam, Category, Categories, IsEditFeedExchange, TeamSize, Exchanges } = this.props.data;
         const { currTeamKey, okBtnDisabled, CbEventsItems } = this.state;
         var items = [], currentCat, catItems, ParentId, ParentName;
 
+        __DEV__&&console.log( 'AppData', AppData );
 
         // prepare command creation interface data
         const playersComponents = [
@@ -205,7 +206,7 @@ class NewFeedExchange extends BaseController
                                             </div>
                                             <div class="panel-collapse">
                                                 <div class="box-body">
-                                                    <Options data={{Positions, TeamSize, FormData}} actions={actions}/>
+                                                    <Options data={{Positions, TeamSize, FormData, IsEditFeedExchange, Exchanges}} actions={actions}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -287,7 +288,7 @@ class NewFeedExchange extends BaseController
                                 <div className="box-body" >
                                     <div className="form-group">
                                         <label>Event start date</label>
-                                        <div className="">{FormData.startDate ? moment(FormData.startDate).format('DD MMM Y H:mm A') : <i>It is not possible to calculate due to the lack of players in teams</i>}</div>
+                                        <div className="">{FormData.startDate ? moment(FormData.startDate).format('DD MMM Y h:mm A') : <i>It is not possible to calculate due to the lack of players in teams</i>}</div>
                                     </div>
                                 </div>
                             </div>

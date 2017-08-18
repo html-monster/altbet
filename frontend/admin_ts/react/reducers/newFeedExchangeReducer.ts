@@ -25,6 +25,7 @@ import {
     ON_ADD_ALL_TEAM_PLAYERS,
     ON_DEL_ALL_TEAM_PLAYERS,
     ON_EVENT_TYPE_SELECT,
+    ON_ACTION_EXCHANGE_LIMIT,
 } from '../constants/ActionTypesNewFeedExchange';
 /// TS_IGNORE
 import {Common} from "../common/Common";
@@ -73,6 +74,8 @@ export default class Reducer
             teamName1: '',
             teamName2: '',
             startDate: '',
+            StartEventId: '',
+            ExchangeLimit: 10,
             fullName: '',
             category: '',
             OptionExchanges: {
@@ -214,6 +217,10 @@ export default class Reducer
             case ON_CH_TEAM_NAME:
                 let {name, teamNum} = action.payload;
                 state.FormData[`teamName` + teamNum] = name;
+                return {...state};
+
+            case ON_ACTION_EXCHANGE_LIMIT:
+                state.FormData['ExchangeLimit'] = action.payload;
                 return {...state};
 
             case ON_GEN_TEAM_NAME:
@@ -1001,6 +1008,7 @@ export default class Reducer
     {
         let $events: any = [];
         let startDate = '';
+        let StartEventId = '';
 
         state.PlayersTeam1.players.forEach((val) =>
         {
@@ -1017,12 +1025,19 @@ export default class Reducer
             if ($events.find((val2) => val2 == val.EventId))
             {
                 let dt1 = moment(val.StartDate);
-                if (!startDate) startDate = dt1;
-                else if (dt1.isBefore(startDate)) startDate = dt1;
+                if (!startDate) {
+                    startDate = dt1;
+                    StartEventId = val.EventId;
+                }
+                else if (dt1.isBefore(startDate)) {
+                    startDate = dt1;
+                    StartEventId = val.EventId;
+                }
             }
         });
 
         state.FormData.startDate = startDate;
+        state.FormData.StartEventId = StartEventId;
         // 0||console.log( 'state.FormData.startDate', {'11': state.FormData.startDate, startDate, '22': state.Players} );
     }
 
