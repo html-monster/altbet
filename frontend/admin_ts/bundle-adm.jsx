@@ -7,11 +7,14 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
+// import { connect } from 'react-redux'
+
 // import { Router, Route, IndexRedirect, hashHistory } from 'react-router'
 
 import configureStore from './react/store/configureStore.js';
 import App from "./ADpp";
+import Header from "./react/containers/Header";
 import HomeEvents from "./react/containers/HomeEvents";
 import FeedEvents from "./react/containers/FeedEvents";
 import NewFeedExchange from "./react/containers/NewFeedExchange";
@@ -29,6 +32,9 @@ $(document).ready(function()
 
 
 // BM: Mount points
+// Header
+// mountById2('DiHeaderMP', Header);
+
 // Home events table
 mountById('DiMPHomeEvents', <HomeEvents />);
 
@@ -59,6 +65,33 @@ function mountById(inId, inComponent)
             </Provider>,
           mp
         );
+
+        return true;
+    }
+    return;
+}
+
+function mountById2(inId, inClass)
+{
+    let mp;
+    if( mp = document.getElementById(inId) )
+    {
+        if (!store) {
+            store = configureStore();
+            ADpp.Store = store;
+        }
+
+        let $Component = connect(
+            state => ({data: state.HeaderData})//inClass.connect.state(state),
+            // dispatch => inClass.connect.actions(dispatch)
+        )(inClass);
+
+        // ReactDOM.render(
+        //     <Provider store={store}>
+        //         {inComponent}
+        //     </Provider>,
+        //   mp
+        // );
 
         return true;
     }
