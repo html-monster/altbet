@@ -521,12 +521,6 @@
       &:before { content: ''; display: inline-block; margin-right: 5px; margin-top: -2px; width: 18px; height: 34px;
 		  vertical-align: middle; transition: 0.4s ease-out; }
     }
-
-
-    .breadcrumbs { float: left; margin: 10px 0 0 0; font-size: 12px;
-      a:not(.link) { color: $color-link1 }
-      span { display: inline-block; padding: 0 0 0 7px }
-    }
   }
 }
 
