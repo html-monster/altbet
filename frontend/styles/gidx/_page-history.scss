@@ -8,6 +8,7 @@
     &:hover, &:focus{ background: transparent; color: #2a9fd6; border: none;}
     .badge { background: transparent; color: #2a9fd6; }
   }
+  .table-hover > tbody > tr:hover > td, [data-gidx] .table-hover > tbody > tr:hover > th{ background: #35343e; }
 
    .nav-tabs > li > a{ color: #fff; background: transparent; border: none;
      &:hover, &:focus{ background: transparent; borer: none;} }
