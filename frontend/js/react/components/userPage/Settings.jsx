@@ -164,7 +164,7 @@ class Settings extends React.Component
                      validate={[emptyValidation, phoneValidation]} input={input}
                      maxLength="20"/>
 
-                 <span className="input_animate input--yoshiko submit_container">
+                 <span className="input_animate input_group input--yoshiko submit_container">
                      <input type="submit" value="Save Changes" className="btn wave submit"/>
                      <span className={'answer_message' + (error && ' error')}>{error}</span>
                      <span className={'answer_message' + (successMessage && ' validJs')}>{successMessage}</span>
