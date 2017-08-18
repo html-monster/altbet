@@ -1,0 +1,26 @@
+.gidx-container [data-gidx] {
+  .bg-info { box-sizing: border-box; background: #35343e;  color: white; }
+  .text-info, text-info:hover{ color: #fff !important; }
+  .dwBase .tab-content .tab-pane{ padding: 0; }
+  .tabs-left > .nav-tabs{ border-right: none; }
+
+  .nav-tabs > li.active > a{ color: #2a9fd6; background: transparent;  border: none;
+    &:hover, &:focus{ background: transparent; color: #2a9fd6; border: none;}
+    .badge { background: transparent; color: #2a9fd6; }
+  }
+
+   .nav-tabs > li > a{ color: #fff; background: transparent; border: none;
+     &:hover, &:focus{ background: transparent; borer: none;} }
+
+  .table{ margin-left: 20px; width: 96%;}
+  tr{
+    td:nth-child(3),td:nth-child(4),td:nth-child(5){
+
+      color: green!important;
+
+    }
+    &:nth-child(odd){ td{color: #fff!important;} }
+  }
+
+  .dwBase .tab-content .tab-pane .tab-heading{ margin: 10px 0px 10px 0px; background: #ccc; color: #333333; font-weight: bold; }
+}
