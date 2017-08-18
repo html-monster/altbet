@@ -5,7 +5,7 @@
   .tabs-left > .nav-tabs{ border-right: none; }
 
   .nav-tabs > li.active > a{ color: #2a9fd6; background: transparent;  border: none;
-    &:hover, &:focus{ background: transparent; color: #2a9fd6; border: none;}
+    &:hover, &:focus{ background: transparent; color: #2a9fd6; border: none }
     .badge { background: transparent; color: #2a9fd6; }
   }
   .table-hover > tbody > tr:hover > td, [data-gidx] .table-hover > tbody > tr:hover > th{ background: #35343e; }
