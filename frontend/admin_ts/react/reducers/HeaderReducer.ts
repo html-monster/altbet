@@ -3,8 +3,8 @@
 declare let globalData;
 
 import {
-    ON_GET_NEW_TABLE_DATA,
-} from '../constants/ActionTypesUsers.js';
+    ON_TEST_MODE,
+} from '../constants/ActionTypesHeader.js';
 /// TS_IGNORE
 import {Common} from "../common/Common";
 
@@ -42,7 +42,7 @@ export default class Reducer
 
         switch (action.type)
         {
-            case ON_GET_NEW_TABLE_DATA:
+            case ON_TEST_MODE:
                 state = action.payload(state);
                 return {...state};
 
