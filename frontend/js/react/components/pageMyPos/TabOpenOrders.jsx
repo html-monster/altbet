@@ -34,7 +34,7 @@ export class TabOpenOrders extends React.Component
         var filterBtn = (inCatName, $ca) => [<input key={inCatName + "11"} id={$ca = inCatName.replace(" ", "_").replace("-", "_") + "11"} type="checkbox" className="checkbox" checked={this.state.filters[inCatName]} data-filter={inCatName} onChange={::this._onFilterChange} />, <label key={inCatName + '13'} htmlFor={$ca} className={this.filters[inCatName].toLowerCase().replace("-", "_").replace(" ", "-")}><span className="sub_tab">{this.filters[inCatName]}</span></label>];
 
 
-        return <div className="tab_item">
+        return <div className="">
             <div className="my_position_tab">
                 <div className="wrapper">
                     <div className="filters">
@@ -53,7 +53,7 @@ export class TabOpenOrders extends React.Component
                                         <th>Type</th>
                                         <th>Units</th>
                                         <th>Price</th>
-                                        <th>Latest</th>
+                                        <th>Last Price</th>
                                         <th>Position</th>
                                         <th/>
                                     </tr>
@@ -67,19 +67,19 @@ export class TabOpenOrders extends React.Component
                                             {
                                                 openOrdersData.map((item, key) =>
                                                 {
-                                                    const $handicap = (item.isMirror ? item.Symbol.AwayHandicap : item.Symbol.HomeHandicap);
+                                                    // const $handicap = (item.isMirror ? item.Symbol.AwayHandicap : item.Symbol.HomeHandicap);
 
                                                     if( this.state.filters[item.Category.toLowerCase()] ) return <tr key={key} className={(item.isMirror ? (item.Side ? 'buy' : 'sell') : (item.Side ? 'sell' : 'buy'))} id={item.ID}>
                                                         <td className="title">
-                                                            {(item.isMirror ? item.Symbol.AwayName : item.Symbol.HomeName)}
-                                                            <span className="muted">{$handicap && ` (${$handicap})`}</span>
-                                                            <br />
-                                                            <span className="fullname muted">{item.Symbol.HomeName} - {item.Symbol.AwayName}</span>
+															{item.Symbol.FullName}
+                                                            {/*<span className="muted">{$handicap && ` (${$handicap})`}</span>*/}
+                                                            {/*<br />*/}
+                                                            {/*<span className="fullname muted">{item.Symbol.HomeName} - {item.Symbol.AwayName}</span>*/}
                                                         </td>
                                                         <td>
                                                             <span className="timestamp">
-                                                                <span className="date">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'DD MMM Y'})}</span>
-                                                                <span className="time">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: ' hh:mm'})}</span>
+                                                                <span className="date">{(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'MM/DD/YYYY'})}</span>
+                                                                <span className="time"> {(new DateLocalization).fromSharp(item.Time, 0).unixToLocalDate({format: 'hh:mm:ss A'})}</span>
                                                             </span>
                                                         </td>
                                                         <td>{(item.isMirror ? (item.Side ? 'Buy' : 'Sell') : (item.Side ? 'Sell' : 'Buy'))}</td>
@@ -95,8 +95,12 @@ export class TabOpenOrders extends React.Component
                                                         </td>
                                                         <td className={item.isPosition ? 'pos' : ''}>{}</td>
                                                         <td>
-                                                            <button className="edit btn wave" onClick={yourOrdersActions.actionOpenEditForm.bind(null, item.ID)}>Edit</button>
-                                                            <button className="delete btn wave" onClick={yourOrdersActions.actionOpenDeleteForm.bind(null, item.ID)} style={{marginLeft : 10}}>Cancel</button>
+                                                            {/*<button className="edit btn wave" onClick={yourOrdersActions.actionOpenEditForm.bind(null, item.ID)}>Edit</button>*/}
+                                                            <button className="delete btn wave"
+                                                                    onClick={yourOrdersActions.actionDeleteFormToggle.bind(null,
+                                                                        true, (new DateLocalization).fromSharp(item.Symbol.StartDate, 1, {TZOffset: false}),
+                                                                        (new DateLocalization).fromSharp(item.Symbol.EndDate, 1, {TZOffset: false}), item.ID)}
+                                                                    style={{marginLeft : 10}}>Cancel</button>
                                                         </td>
                                                     </tr>;
                                                 })

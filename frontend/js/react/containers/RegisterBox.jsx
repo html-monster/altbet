@@ -15,7 +15,11 @@ import {RegisterForm} from '../components/RegisterForm.jsx';
 import actions from '../actions/registerActions.ts';
 
 
-class RegisterBox extends BaseController {
+class RegisterBox extends BaseController
+{
+    /**@private*/ closeForm;
+
+
     constructor(props) {
         super(props);
         // __DEV__ && console.log( 'RegisterBox props', props );
@@ -40,25 +44,35 @@ class RegisterBox extends BaseController {
                                         </div>
                                     </div>
                                     <div className="tab_item real">
-                                        <span className="close"><span>{}</span></span>
+                                        <span ref={(val) => this.closeForm = val} className="close"><span>{}</span></span>
 
-                                        <RegisterForm onSubmit={this.props.actions.actionFormSubmit.bind(null, this)}/>
+                                        <RegisterForm onSubmit={this.props.actions.actionFormSubmit.bind(null, this)} submitData={{closeFunc: ::this._onCloseClick}}/>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="confirm pop_up">
+                        {/*<div className="confirm pop_up">
                             <div className="pop_up_container">
                                 <span className="pop_up_content">
                                     A letter of confirmation of registration has been sent to you by email. Follow the link in the email to activate your Account.
                                     <button className="btn">Ok</button>
                                 </span>
                             </div>
-                        </div>
+                        </div>*/}
                     </div>
                 </div>
             </div>
         );
+    }
+
+
+    /**
+     * On close click
+     * @private
+     */
+    _onCloseClick()
+    {
+        $(this.closeForm).click();
     }
 }
 

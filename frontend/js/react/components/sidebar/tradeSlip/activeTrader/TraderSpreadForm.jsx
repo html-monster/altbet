@@ -12,13 +12,16 @@ export default class TraderSpreadForm extends React.Component {
 	render()
 	{
 		const { traderActions, activeString, mainData: { Symbol }, cmpData: { activeExchange }, direction, price, index, traderContext,//inputQuantityContext,
-			isMirror, quantity, spread } = this.props;
+			isMirror, quantity, spread, SymbolLimitData } = this.props;
+
 		let spreadPricePos = Math.round10(price + +spread, -2);
 		spreadPricePos = spreadPricePos > 0.98 ? 0.99 : spreadPricePos.toFixed(2);
 		spreadPricePos = direction === 'ask' ? price.toFixed(2) : spreadPricePos;
+
 		let spreadPriceNeg = Math.round10(price - spread, -2);
 		spreadPriceNeg = spreadPriceNeg < 0.02 ? 0.01 : spreadPriceNeg.toFixed(2);
 		spreadPriceNeg = direction === 'bid' ? price.toFixed(2) : spreadPriceNeg;
+
 		let bidsProb = '';
 		let offersProb = '';
 
@@ -37,7 +40,7 @@ export default class TraderSpreadForm extends React.Component {
 			if (Symbol.LastAsk && spreadPriceNeg < Math.round10(Symbol.LastAsk - 0.15, -2)) bidsProb = ' low';
 		}
 
-		const maxEntries = 100, remainingBal = 95;
+		const remainingBal = SymbolLimitData ? SymbolLimitData.EntryLimit - SymbolLimitData.CurrentEntryBalance : null;
 
 		return <div className={'order_content spread animated' + (index === activeString || !index ? ' fadeInUp' : '')}
 					id="order_content"
@@ -46,7 +49,8 @@ export default class TraderSpreadForm extends React.Component {
 			<div className="sell-buy-container">
 				<form action={ABpp.baseUrl + '/Order/Spreader'}
 					  autoComplete="off"
-					  onSubmit={this._onSubmit.bind(this, {maxEntries, remainingBal, spreadPricePos, spreadPriceNeg, quantity, traderActions})}
+					  className="spread"
+					  onSubmit={this._onSubmit.bind(this, {remainingBal, spreadPricePos, spreadPriceNeg, quantity, traderActions})}
 				>
 					<div className="container">
 						<div className="price sell">
@@ -126,20 +130,20 @@ export default class TraderSpreadForm extends React.Component {
 	_onSubmit(data, event)
 	{
 		event.preventDefault();
-		const sum = ((1 - data.spreadPricePos) * data.quantity) + (data.spreadPriceNeg * data.quantity);
+		// const sum = ((1 - data.spreadPricePos) * data.quantity) + (data.spreadPriceNeg * data.quantity);
 		const endDate = this.props.cmpData.activeExchange.endDate;
 
 		if(endDate && moment().format('x') > endDate)
 		{
-			defaultMethods.showError('This game is closed, please try another');
+			defaultMethods.showError('This game is completed, please try another game');
 			return false;
 		}
 
-		if(sum > data.remainingBal)
-		{
-			defaultMethods.showWarning(`Order total sum is $${Math.round10(sum, -2)}, your remaining entry balance of this game is $${data.remainingBal}, it's not enough to create the order`);
-			return false;
-		}
+		// if(sum > data.remainingBal)
+		// {
+		// 	defaultMethods.showWarning(`You are trying to create the order on $${Math.round10(sum, -2).toFixed(2)}, your remaining entry balance of this game is $${data.remainingBal.toFixed(2)}, it's not enough to create the order`);
+		// 	return false;
+		// }
 
 		data.traderActions.actionOnAjaxSend(this, event);
 	}

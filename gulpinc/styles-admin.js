@@ -23,12 +23,12 @@ module.exports = {
             .pipe($.autoprefixer({
                 browsers: ['last 4 versions']
             }))
-            .pipe($.notify(function (file) {
-                // 0||console.info( 'file.relative', file.relative );
-                var options = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
-                if (['index-admin.css'].indexOf(file.relative) >= 0) return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options);
-                else return false;
-            }))
+            // .pipe($.notify(function (file) {
+            //     // 0||console.info( 'file.relative', file.relative );
+            //     var options = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
+            //     if (['index-admin.css'].indexOf(file.relative) >= 0) return "Compiled " + file.relative + ' ' + (new Date()).toLocaleString("ru", options);
+            //     else return false;
+            // }))
             .pipe($.if(options.isDevelopment, $.sourcemaps.write()))
             .pipe(gulp.dest(options.dst));
         }

@@ -173,13 +173,15 @@ export class WebsocketModel
         let data = JSON.parse(evt.data);
         this.socketData = data; // for debug only
 // console.log(data);
+        if(!data) return;
 
         if (data.Result) {
             // code - тип сообщения (closedmarket|logout|etc)
             // message - текст
             // type - вид сообщения - success|info|warning|error
             defaultMethods.showMessage(data.Message, defaultMethods.MESSAGE_TYPES[data.Type]);
-            __DEV__&&console.log( data );
+            if(data.Code === 'LogIn' && data.Message.slice(-20) === 'has been logged out.' && Visibility.state() === 'hidden') location.reload();// костыль чтобы перезагружались все страницы при разлогировании
+            __DEV__&& console.log( data );
         }
 
         if(data.CurrentOrders && (globalData.myOrdersOn || globalData.myPosOn))
@@ -204,14 +206,13 @@ export class WebsocketModel
         }
 
         // BM: main page events data
-// 0||console.debug( 'data.SymbolsAndOrders', data.SymbolsAndOrders );
         if (data.SymbolsAndOrders && data.SymbolsAndOrders.Result.length) {
             if(self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]) {
                 // 0||console.debug( 'data.SymbolsAndOrders2', data.SymbolsAndOrders );
             // if(globalData.mainPage) {
                 // 0||console.debug( 'data.SymbolsAndOrders.Result', data.SymbolsAndOrders.Result );
                 // dataController.updateOrderData(data.SymbolsAndOrders.Result);
-                self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES](data.SymbolsAndOrders.Result);
+                    self.callbacks[WebsocketModel.CALLBACK_MAINPAGE_EXCHANGES]({SymbolsAndOrders: data.SymbolsAndOrders.Result, lineupsData: data.LineupData, SymbolLimitData: data.CurrentSymbolLimitData});
             }
         }
 
@@ -222,7 +223,7 @@ export class WebsocketModel
 
         if(ABpp.config.tradeOn && !ABpp.config.basicMode)
         {
-            window.ee.emit('activeOrders.update', data.ActiveOrders);//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
+            window.ee.emit('activeOrders.update', {ActiveOrders: data.ActiveOrders, SymbolLimitData: data.CurrentSymbolLimitData});//activeTraderControllerClass.updateActiveTraiderData(data.ActiveOrders);
         }
 
         // BM: event page data

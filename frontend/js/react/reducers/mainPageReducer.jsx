@@ -12,11 +12,14 @@ import {
 
 const initialState = {
     marketsData: appData.pageHomeData ? appData.pageHomeData.Data : null,
+	SymbolLimitData: null,
+    Breadcrumbs: appData.pageHomeData ? appData.pageHomeData.Breadcrumbs : [],
     isBasicMode: globalData.basicMode,
     isTraiderOn: globalData.autoTradeOn,
 	serverChartsData: null, // need for comparison
 	charts: null,
     chartSubscribing: false,
+	lineupsData: null,
 	orderDetails: {
 		showOrder: false,
 		orderPrice: 0,
@@ -36,7 +39,10 @@ export default function mainPage(state = initialState, action)
             // 0||console.debug( 'state', state );
             // 0||console.debug( 'newVar', newVar );
             //     let newVar = {...state, marketsData: action.payload};
-            return {...state, marketsData: action.payload};
+			if(action.payload.dataName === 'lineupsData')
+            	return {...state, lineupsData: action.payload.lineupsData};
+            else
+            	return {...state, marketsData: action.payload.SymbolsAndOrders, SymbolLimitData: action.payload.SymbolLimitData};
 
         case MP_CHART_ON_SOCKET_MESSAGE:
             return {...state, charts: action.payload.newObj, serverChartsData: action.payload.serverChartsData};

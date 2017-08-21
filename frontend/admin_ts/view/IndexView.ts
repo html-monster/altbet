@@ -16,6 +16,14 @@ import {User} from "../model/User";
 import Common from "../inc/Common";
 
 
+interface Window
+{
+    ADpp : any
+    SocketSubscribe : any
+    HomeEvents : any
+}
+
+
 export class IndexView extends BaseView
 {
     private InfoMessage = null;
@@ -188,7 +196,7 @@ export class IndexView extends BaseView
         } // endfor*/
 
         $CBtz.select2({
-            width: $width,
+            // width: $width,
             data: data,
             dropdownAutoWidth: true,
             templateResult: (state, liItm) => {
@@ -318,6 +326,8 @@ export class IndexView extends BaseView
             },
             afterInit: (dialogContext, wrapper) =>
             {
+                wrapper = $(wrapper);
+
                 (new RadioBtns({
                     activeClass: "btn-success",
                     target: "[data-js=radio-btn]",
@@ -426,6 +436,9 @@ export class IndexView extends BaseView
 
     public highlightAddedExch(data)
     {
+        let firstTr;
+        let ids = data.id;
+
         this.InfoMessage = new InfoMessage({
             TPLName: '#TPLinfoMessageAbs',
             target: "[data-js=DiInfoMP]",
@@ -437,11 +450,22 @@ export class IndexView extends BaseView
             }
         });
 
-        let $tr = $("[data-js=tabl-exch] " + `[data-id=${data.id}]`);
-        $tr.addClass('added').attr('title', 'added');
-        setTimeout(() => $tr.addClass('animated').attr('title', ''), 5000);
 
-        if( $tr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: $tr.offset().top - 50 }, 500);
+        if( !Array.isArray(ids) ) ids = [ids];
+
+
+        ids.forEach((val) =>
+        {
+            let $tr = $("[data-js=tabl-exch] " + `[data-id=${val}]`);
+
+            if (!firstTr) firstTr = $tr;
+
+            $tr.addClass('added').attr('title', 'added');
+            setTimeout(() => $tr.addClass('animated').attr('title', ''), 5000);
+        });
+
+
+        if( firstTr && firstTr.offset().top > $(window).innerHeight() ) $('body').animate({scrollTop: firstTr.offset().top - 50 }, 500);
     }
 
 
@@ -484,11 +508,13 @@ export class IndexView extends BaseView
             let form = $(props.item).closest('form');
             let item1 = $("[data-js=ChkStartDate] input", form);
             let item2 = $("[data-js=ChkEndDate] input", form);
-            let item3 = $("[data-js=StartDate]", form);
+            let $StartDate = $("[data-js=StartDate]", form);
+            let $EndDate = $("[data-js=EndDate]", form);
 
-            0||console.log( 'item1.val()', item2.prop('checked'), item2.val() );
+            // __DEV__&&console.log( 'item1.prop("checked"),item2.prop("checked")', item1.prop("checked"),item2.prop("checked") );
 
-            if( !item1.prop('checked') && !item2.prop('checked') ) {ret.item = item3; throw new Error("Set start date or end date")};
+            if( !item1.prop('checked') ) {ret.item = $StartDate; throw new Error("Set start date")};
+            if( !item2.prop('checked') ) {ret.item = $EndDate; throw new Error("Set end date")};
 
         } catch (e) {
             return {...ret, message: e.message};
@@ -542,16 +568,17 @@ export class IndexView extends BaseView
         });
 
 
+        window.HomeEvents.setEditedData(inProps);
         let $table = $("[data-js=tabl-exch]");
         let $tr = $(`[data-id=${inProps.Exchange}]`, $table);
-        $("[data-js=TD-FullName]", $tr).text(inProps.FullName);
-        $("[data-js=TD-HomeName]", $tr).text(inProps.HomeName);
-        $("[data-js=TD-HomeHandicap]", $tr).text(inProps.HomeHandicap);
-        $("[data-js=TD-AwayName]", $tr).text(inProps.AwayName);
-        $("[data-js=TD-AwayHandicap]", $tr).text(inProps.AwayHandicap);
-        $("[data-js=TD-StartDate]", $tr).text(inProps.StartDate);
-        $("[data-js=TD-EndDate]", $tr).text(inProps.EndDate);
-        $("[data-js=TD-UrlExchange]", $tr).text(inProps.UrlExchange);
+        // $("[data-js=TD-FullName]", $tr).text(inProps.FullName);
+        // $("[data-js=TD-HomeName]", $tr).text(inProps.HomeName);
+        // $("[data-js=TD-HomeHandicap]", $tr).text(inProps.HomeHandicap);
+        // $("[data-js=TD-AwayName]", $tr).text(inProps.AwayName);
+        // $("[data-js=TD-AwayHandicap]", $tr).text(inProps.AwayHandicap);
+        // $("[data-js=TD-StartDate]", $tr).text(inProps.StartDate);
+        // $("[data-js=TD-EndDate]", $tr).text(inProps.EndDate);
+        // $("[data-js=TD-UrlExchange]", $tr).text(inProps.UrlExchange);
 
         this.DialogEdit.close();
 

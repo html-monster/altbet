@@ -1,4 +1,8 @@
-.sign_up_form, .sign_in_form, .change_password, .setting_form, .self_exclusion {
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// адская садомия сюда больше ничего не добавлять
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+.sign_up_form, .sign_in_form, .change_password, .self_exclusion { //.setting_form
 
   input[type=email] {
     &:-webkit-autofill {
@@ -62,28 +66,32 @@
       z-index: 9999;
     }
     &.NickName:before {
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -525px -53px;
     }
     &.Email:before {
       content: '@';
       color: #afabc8;
     }
-    &.Password:before {
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
-    }
-    &.ComparePassword {
-      padding-left: 15px;
+    &.Password:before, &.ComparePassword:before {
+      background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
     }
     &:nth-child(5) {
-      .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; }
-      .Select-placeholder { padding-left: 35px; }
+      .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; font-size: 13px }
+      .Select-placeholder { padding-left: 35px; font-size: 13px }
       &:before {
-        background: url(../../Images/sprite.svg) no-repeat -549px -53px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -549px -53px;
+      }
+    }
+    &.country-states {
+      .Select-value-label, .Select-multi-value-wrapper { padding-left: 25px; font-size: 13px }
+      .Select-placeholder { padding-left: 35px; font-size: 13px }
+      &:before {
+        background: url("#{$pathImage}/sprite.svg") no-repeat -549px -53px;
       }
     }
     &.datePickerRender:before {
       width: 20px;
-      background: url(../../Images/sprite.svg) no-repeat -573px -51px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -573px -51px;
     }
 
     &.invalid {
@@ -94,7 +102,7 @@
         color: #ff4810;
       }
       &.inpt_password:before {
-        background: url(../../Images/sprite.svg) no-repeat -574px -26px;
+        background: url("#{$pathImage}/sprite.svg") no-repeat -574px -26px;
       }
     }
   }
@@ -114,10 +122,9 @@
     text-align: left;
     transition: opacity 0.3s;
     padding-left: 35px;
-    &:focus { outline: none; }
-    &[disabled]{ opacity: 0.4; }
-    &#r_confirm_pass { padding-left: 20px; }
-
+    &:focus {
+      outline: none;
+    }
     &.input-validation-error {
       color: #ff4810;
       border-color: #ff4810;
@@ -133,15 +140,19 @@
 
   .input__label {
     float: right;
-    padding: 0 1em;
+    padding: 0;
     color: #afabc8;
     font-family: "open_sans_semibold", sans-serif;
     width: 100%;
     font-weight: bold;
     font-size: 13px;
     position: absolute;
-    left: 15px;
+    left: 20px;
     text-align: left;
+
+  }
+  .opacity_field{
+    opacity: .6;
   }
 
   .input__label-content {
@@ -157,34 +168,8 @@
     opacity: 0;
   }
 
-  //.input__field--kuro + .input__label--kuro .input__label-content--kuro,
-  //.input--filled .input__label-content--kuro {
-  //  opacity: 1;
-  //}
-
   .remember_forgot {
     margin: 30px 0 0 0;
-    //label:first-of-type { display: block; }
-    input { display: none; }
-    input:checked + span { color: #d4d0ed; }
-    input:checked + span:before { background: url(../../Images/sprite.svg) no-repeat -310px -28px; }
-
-    span {
-      font-size: 12px;
-      color: #afabc8;
-      &:before {
-        content: '';
-        display: inline-block;
-        margin-top: -3px;
-        margin-right: 5px;
-        width: 16px;
-        height: 16px;
-        border: 1px solid #afabc8;
-        border-radius: 4px;
-        //background: url("#{$pathImage}/sprite.svg") no-repeat -20px -160px;
-        vertical-align: middle;
-      }
-    }
     a.forgot_password {
       display: none;
       float: right;
@@ -209,7 +194,6 @@
       }
     }
   }
-
   .valid input { border: 1px solid #afabc8 !important; color: #afabc8 !important; }
 
   .invalid input {
@@ -228,28 +212,6 @@
     width: 100%;
   }
 
-  //.global_message_container {
-  //  width: 300px;
-  //  padding: 10px 15px;
-  //  margin-top: 15px;
-  //  position: fixed;
-  //  right: -100%;
-  //  bottom: 10px;
-  //  background: rgba(0, 0, 0, 0.7);
-  //  box-shadow: 0 0 23px -5px rgba(0, 0, 0, 0.5);
-  //  z-index: 500;
-  //  transition: 0.4s ease-out;
-  //  &.active {
-  //    right: 10px;
-  //    animation-duration: 0.7s;
-  //    animation-fill-mode: both;
-  //  }
-  //  &.error p { color: #ff4810; }
-  //  &.alert p { color: #ef8022; }
-  //  &.info p { color: #3498DA; }
-  //  p { font-size: 12px; }
-  //}
-
   .invalid_message, .validation-summary-errors {
     position: absolute;
     right: 0;
@@ -260,6 +222,7 @@
     color: #ff4810;
     font-size: 12px;
   }
+  .register_form_message { bottom: 25px; }
 
 
 
@@ -293,12 +256,35 @@
   }
 }
 
-.change_password {
+.sign_up_form {
+  .input_animate {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.5em;
+    max-width: 400px;
+    width: 100%;
+    vertical-align: top;
+    /* margin: 0 0 1em; */
+    height: 40px;
+    text-align: center;
+  }
+}
+
+#form0 {
+  .show_password {
+    position: absolute;
+    right: 5px;
+    top: 13px;
+    z-index: 99999;
+  }
+}
+
+#form2 {
   display: flex;
   flex-direction: column;
   .input_animate {
     .validation-summary-errors {
-      bottom: -17px;
+      bottom: -18px;
     }
     &.pass_container:before {
       content: '';
@@ -308,13 +294,14 @@
       width: 15px;
       height: 21px;
       font-size: 17px;
-      background: url(../../Images/sprite.svg) no-repeat -533px -26px;
+      background: url("#{$pathImage}/sprite.svg") no-repeat -533px -26px;
       z-index: 99;
       opacity: 0.7;
     }
   }
 
 }
+
 
 .setting_form {
   .input_animate {
@@ -323,11 +310,21 @@
     &:nth-child(5):before { display: none; }
     .input__field {
       padding-left: 5px;
+      color: #afabc8;
     }
     .input__label {
-      left: -15px;
+      left: 0;
     }
   }
+}
+
+.sign_in_form{
+  .show_password{position: absolute; right: 5px; top: 13px; z-index: 999;}
+  .input__label{left: 35px;}
+}
+.change_password{
+  .input__label{left: 5px;}
+   .input__field{padding-left: 10px;}
 }
 
 .self_exclusion {
@@ -379,7 +376,7 @@
           width: 100px;
         }
       }
-
     }
   }
 }
+

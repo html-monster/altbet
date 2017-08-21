@@ -1,9 +1,6 @@
 ::-webkit-input-placeholder { color: #dbdbdb; }
-
 ::-moz-placeholder { color: #dbdbdb; }
-
 :-moz-placeholder { color: #dbdbdb; }
-
 :-ms-input-placeholder { color: #dbdbdb; }
 
 .b-clear { clear: both }
@@ -45,6 +42,8 @@ select {
 ul{  list-style-type: none;  }
 *:focus{  outline: none;  }
 body{
+  min-width: 1350px;
+  @include mdmax(1350) {  position: relative;  }
   //overflow-x: auto;
   &.blocked{ overflow: hidden; }
   &>.wrapper{
@@ -106,11 +105,11 @@ body{
   }
 }
 
-.error-massage {
-  color: red;
-  font-size: 12px;
-  font-weight: bold;
-}
+//.error-massage {
+//  color: red;
+//  font-size: 12px;
+//  font-weight: bold;
+//}
 
 
 i.btn [type=submit], [type=submit] {
@@ -221,6 +220,7 @@ i.wave { display: inline-block; font-style: normal; border-radius: 4px; }
 
 .show_password {
   display: inline-block;
+  bottom: 27px;
   width: 20px;
   height: 20px;
   background: url("#{$pathImage}/ico-eye.png") no-repeat;
@@ -376,84 +376,6 @@ label.disabled {
   }
 }
 
-input ~ .info {
-  display: block;
-  width: 12px;
-  height: 12px;
-  //background: $help_block;
-  background: url("#{$pathImage}/qeustion.png") no-repeat;
-  background-size: contain;
-
-  position: absolute;
-  top: 14px;
-  right: 5px;
-  z-index: 70;
-  cursor: help;
-  transition: 0.4s ease-out;
-  @include reg_help_message;
-  &.top {
-    i {
-      bottom: 19px;
-      right: -15px;
-      color: transparentize($checkbox_label_color, 0.5);
-      background: url(../../_SourceControl/Icons/qeustion.png) no-repeat;
-      background-size: cover;
-      &:before { bottom: 0; right: 9px; }
-      &:after { bottom: -5px; right: 15px; }
-    }
-  }
-  &.bottom {
-    i {
-      top: 19px;
-      right: -15px;
-      z-index: 500;
-      color: transparentize($checkbox_label_color, 0.5);
-      &:before { top: 0; right: 9px; }
-      &:after { top: -5px; right: 15px; box-shadow: -5px -5px 10px -3px rgba(0, 0, 0, 0.5); }
-    }
-  }
-  &:hover {
-    opacity: 1;
-    i {
-      visibility: visible;
-      opacity: 1;
-      &:before, &:after { opacity: 1; }
-    }
-  }
-  i {
-    visibility: hidden;
-    width: 295px;
-    padding: 5px 10px;
-    position: absolute;
-    border-radius: 4px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    transition: 0.4s ease-out;
-    &:before {
-      content: '';
-      opacity: 0;
-      display: block;
-      width: 25px;
-      height: 10px;
-      position: absolute;
-      z-index: 1;
-      border-radius: 4px;
-    }
-    &:after {
-      content: '';
-      opacity: 0.5;
-      display: block;
-      width: 13px;
-      height: 13px;
-      position: absolute;
-      border-radius: 0 4px 0 0;
-      transform: rotate(45deg);
-      box-shadow: 5px 5px 10px -3px rgba(0, 0, 0, 0.5);
-      transition: 0.4s ease-out;
-    }
-  }
-}
-
 
 @include input_validation;
 
@@ -544,7 +466,7 @@ input ~ .info {
   }
 }*/
 
-.select { position: relative; color: $main-color;
+.select { position: relative; color: $main-color; cursor: pointer;
   &.-opened .active_selection i { transform: rotateX(180deg);
     &::before { top: 0; }
   }
@@ -562,7 +484,7 @@ input ~ .info {
     border-radius: 4px; background: $active_selection_bg; box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.5); z-index: 2; overflow-y: auto;
     @include scrollWhite;
   }
-  li { padding: 2px 35px 2px 10px; transition: 0.2s ease-out; cursor: pointer; @include user_page_li; }
+  li { padding: 2px 10px; transition: 0.2s ease-out; cursor: pointer; @include user_page_li; }
   li:last-of-type{  border-bottom: none;  }
     .has-value.is-pseudo-focused .Select-input {
       opacity: 0;
@@ -637,7 +559,7 @@ input ~ .info {
   transition: 0.4s ease-out;
   cursor: pointer;
   user-select: none;
-  &[data-disabled] { cursor: default; opacity: 0.6; }
+  &[data-disabled], &[disabled] { cursor: default; opacity: 0.6; }
 }
 
 .tab_item {

@@ -2,7 +2,7 @@
 let path = require('path');
 const options = require('./pathes');
 const webpack = require('webpack');
-// const WebpackNotifierPlugin = require('webpack-notifier');
+const WebpackNotifierPlugin = require('webpack-notifier');
 const WebpackAutoInject = require('webpack-auto-inject-version');
 const StringReplacePlugin = require("string-replace-webpack-plugin");
 
@@ -69,7 +69,7 @@ module.exports = {
     },
 
     plugins: [
-        // new WebpackNotifierPlugin({title: 'bundleR.js', alwaysNotify: true}),
+        new WebpackNotifierPlugin({title: 'bundleR.js', excludeWarnings: true, contentImage: path.join(__dirname, '../frontend/Images/ImagesSrc/favicon.png')}),
 
         new webpack.DefinePlugin({
             __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
@@ -94,7 +94,6 @@ module.exports = {
                 AutoIncreaseVersion: true
             }
         }),
-
     ],
     // ].concat(sourceMap),
 

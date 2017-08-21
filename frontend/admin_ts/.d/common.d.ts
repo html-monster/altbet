@@ -1,7 +1,6 @@
-declare let __DEV__;
-/** @var ABpp */
-declare let __LDEV__;
-declare let globalData;
+// declare let __DEV__;
+// declare let __LDEV__;
+// declare let globalData;
 
 
 interface JQuery
@@ -31,8 +30,9 @@ interface Object
 }
 
 interface Window {
-    ee: any
+    ee: any;
 }
+
 
 interface FormData {
     set(p1, p2)

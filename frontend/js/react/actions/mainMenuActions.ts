@@ -39,10 +39,10 @@ class Actions extends BaseActions
     {
         return (dispatch) =>
         {
-            if(show)
-                $('#DiMainMenu').addClass('opened');
-            else
-                $('#DiMainMenu').removeClass('opened');
+            // if(show)
+            //     $('#DiMainMenu').addClass('opened');
+            // else
+            //     $('#DiMainMenu').removeClass('opened');
 
             dispatch({
                 type: ON_SUBMENU_SHOW_OR_HIDE,

@@ -16,24 +16,27 @@ import CSSTransitionGroup from 'react-addons-css-transition-group';
 // import {Common} from './../../common/Common';
 
 
-export default class ExchangeItem extends React.Component {
-	constructor(props) {
+export default class ExchangeItem extends React.Component
+{
+	constructor(props)
+	{
 		super(props);
 		// __DEV__&&console.debug( 'ExchangeItem.props.data', this.props.data );
 
 		// эмуляция времени игроков
-		this.data = gLineupPageData;
+		// this.data = gLineupPageData;
 
 		this.state = {
-			activeTab: (this.data[props.data.Symbol.HomeName] && this.data[props.data.Symbol.AwayName] &&
+			activeTab: [" active", ""],/* (this.data[props.data.Symbol.HomeName] && this.data[props.data.Symbol.AwayName] &&
 			this.data[props.data.Symbol.HomeName].team && this.data[props.data.Symbol.AwayName].team) ?
-				[" active", ""] : ["", " active"],
+				[" active", ""] : ["", " active"],*/
 			chart    : null,
 			isLPOpen : false,
 		};
 	}
 
-	componentWillUpdate(nextProps, nextState) {
+	componentWillUpdate(nextProps, nextState)
+	{
 		// if(nextProps.data.currentExchange === nextProps.data.Symbol.Exchange && nextState.activeTab[1] && nextState.isLPOpen)
 		// {
 		// 	if(nextProps.chartData && !nextState.chart)
@@ -54,7 +57,8 @@ export default class ExchangeItem extends React.Component {
 		}
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate()
+	{
 		let currentProps = this.props;
 		let currentState = this.state;
 
@@ -82,11 +86,12 @@ export default class ExchangeItem extends React.Component {
 	}
 
 
-	render() {
+	render()
+	{
 		const {
-			actions, disqusActions, chartData, data, data: {activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder, orderPrice},
-			mainContext, setCurrentExchangeFn
-		} = this.props;
+			actions, disqusActions, yourOrderActions, chartData, data, data: {activeExchange, isBasicMode, isTraiderOn, Symbol, currentExchange, showOrder, orderPrice},
+			mainContext, setCurrentExchangeFn, lineupsData, SymbolLimitData} = this.props;
+
 		let {activeTab, chart, isLPOpen,} = this.state;
 		// console.log('this.props:', this.props);
 		// if(chart) console.log( 'chart', Symbol.Exchange, chart );
@@ -96,25 +101,34 @@ export default class ExchangeItem extends React.Component {
 		let noTeamsClass, $homeTotal, $awayTotal, spreadTitle, spreadValue;//noTeamsWrappClass = "",
 
 		// todo: check for no team hardcode
-		const $HomeTeamObj = this.data[Symbol.HomeName];
-		const $AwayTeamObj = this.data[Symbol.AwayName];
-		noTeamsClass = $HomeTeamObj && $AwayTeamObj && $HomeTeamObj.team && $AwayTeamObj.team ? "" : " hidden";
+		// const $HomeTeamObj = this.data[Symbol.HomeName];
+		// const $AwayTeamObj = this.data[Symbol.AwayName];
+		// noTeamsClass = $HomeTeamObj && $AwayTeamObj && $HomeTeamObj.team && $AwayTeamObj.team ? "" : " hidden";
 		if (noTeamsClass) {
 			// noTeamsWrappClass = "no_lineups";
 			activeTab = ['', " active"];
 		}
-		else {
-			$homeTotal = $HomeTeamObj.Totals.score;
-			$awayTotal = $AwayTeamObj.Totals.score;
+		else if(lineupsData) {
+			$homeTotal = lineupsData.HomeTotals.Score;
+			$awayTotal = lineupsData.AwayTotals.Score;
 			// 0||console.log( '$awayTotal', $awayTotal );
 		} // endif
 
-		if (Symbol.ResultExchange === 'OU') {
-			spreadTitle = 'Total Points';
-			spreadValue = 'O/U ' + Math.round10(+$HomeTeamObj.Totals.eppg + +$AwayTeamObj.Totals.eppg, -2);
+        //Game type
+		let handicap = null;
+
+		if(lineupsData && !Symbol.HomeHandicap)
+		{
+			handicap = Math.round10(lineupsData.HomeTotals.EPPG - lineupsData.AwayTotals.EPPG, -2);
+			handicap = handicap > 0 ? '-' + handicap : handicap
 		}
-		else if (Symbol.ResultExchange === 'ML') {
-			let coefficient = Math.abs(Symbol.HomeHandicap / $HomeTeamObj.Totals.eppg);
+
+		if (lineupsData && Symbol.OptionExchange === 2) {
+			spreadTitle = 'Total Points';
+			spreadValue = 'O/U ' + Math.round10(lineupsData.HomeTotals.EPPG + lineupsData.AwayTotals.EPPG, -2);
+		}
+		else if (lineupsData && Symbol.OptionExchange === 1) {
+			let coefficient = Math.abs((Symbol.HomeHandicap || handicap) / lineupsData.HomeTotals.EPPG);
 			spreadTitle = 'Moneyline';
 
 			if (coefficient <= 0.05) spreadValue = `$0.70`;
@@ -124,9 +138,9 @@ export default class ExchangeItem extends React.Component {
 			else if (coefficient <= 0.25) spreadValue = `$0.90`;
 			else spreadValue = `$0.95`;
 		}
-		else {
+		else if(Symbol.OptionExchange === 0) {
 			spreadTitle = 'Spread';
-			spreadValue = Symbol.HomeHandicap;
+			spreadValue = Symbol.HomeHandicap || handicap;
 		}
 
 
@@ -154,13 +168,13 @@ export default class ExchangeItem extends React.Component {
 				Currency      : data.Symbol.Currency,
 				Bid           : data.Symbol.LastBid === 0 ? null : data.Symbol.LastBid,
 				Ask           : data.Symbol.LastAsk === 1 ? null : data.Symbol.LastAsk,
-				ResultExchange: Symbol.ResultExchange,
+				OptionExchange: Symbol.OptionExchange,
 				StartDate     : Symbol.StartDate,
 				EndDate       : Symbol.EndDate,
 			}
 		};
 
-		const isEventClosed = Symbol.EndDate && +moment().format('x') > (new DateLocalization).fromSharp(Symbol.EndDate, 1, {TZOffset: false}),//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
+		const isEventClosed = Symbol.EndDate && moment().format('x') > (new DateLocalization).fromSharp(Symbol.EndDate, 1, {TZOffset: false}),//!!Symbol.EndDate && +moment().format('x') > (Symbol.EndDate).split('+')[0].slice(6);
 			isEventStarted = +moment().format('x') > (new DateLocalization).fromSharp(Symbol.StartDate, 1, {TZOffset: false});
 
 		//lineupContainer height
@@ -169,10 +183,10 @@ export default class ExchangeItem extends React.Component {
 			height = $(this.refs.lineupContainer.refs.container).height();
 			height = height > 495 ? height : 495;
 		}
-		// else
-		// {
-		//     height = 400;
-		// }
+		else
+		{
+		    height = 495;
+		}
 
 		// activate current exchange global
 		let $classActive = '', $classActiveNM = '', $classActiveM = '';
@@ -206,8 +220,25 @@ export default class ExchangeItem extends React.Component {
 		let ticks = [];
 		if (chartData && chartData.Ticks.length)
 		{
+			let TSDate = null, TSCurrentDate = null, newTicks = chartData.Ticks.slice().reverse(), increment = 0;
+
 			ticks = chartData.Ticks.slice().reverse();
+
+			ticks.forEach((item, index) => {
+
+				TSCurrentDate = (new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'DD MMM Y', TZOffset: 1});
+
+				if(TSCurrentDate !== TSDate)
+				{
+					newTicks.splice(index + increment, 0, {...item, virtual: true});
+					TSDate = TSCurrentDate;
+					increment += 1;
+				}
+			});
+
+			ticks = newTicks;
 		}
+
 
 		/*
 		 var exchangeSideClickFn = actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
@@ -219,17 +250,20 @@ export default class ExchangeItem extends React.Component {
 		// 0||console.log( 'exdata', this.data, Symbol.HomeName, thi7s.data[Symbol.HomeName] );
 
 		return (
-			<div
-				className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`,
+			<div className={classnames(`h-event categoryFilterJs animated fadeIn`, `${expModeClass}`, `${$classActive}`, `${$classActiveExch}`,
 					{not_started: !isEventStarted}, {finished: isEventClosed}, {clickable: !!isTraiderOn}, {active_nearby: currentExchange && !expModeClass},
 					{with_order: showOrder})} //+ (isBasicMode ? " basic_mode_js basic_mode" : "") ${noTeamsWrappClass}
-				onClick={() => {
-					// if(this.props.data.currentExchange !== this.props.data.Symbol.Exchange)
-					// {
+
+				 id={symbol} data-js-hevent=""
+
+				 onClick={() => {
 					setCurrentExchangeFn(Symbol.Exchange);
 
+					yourOrderActions.actionChangeActiveEvent(Symbol.Exchange);
+					yourOrderActions.collapseOrderGroup(Symbol.Exchange);
+
 					disqusActions.getEventData({ url: data.CategoryUrl, identifier: data.Symbol.Exchange });
-					//ABpp.config.tradeOn &&
+
 					actions.exchangeSideClick({
 						name     : Symbol.Exchange,
 						isMirror : false,
@@ -239,18 +273,20 @@ export default class ExchangeItem extends React.Component {
 						endDate  : Symbol.EndDate,
 					})
 
-					// }
 				}}
-				id={symbol} data-js-hevent="" style={$homeTotal ? {} : {display: 'none'}}
-			>
+			data-smbl={symbol}>
 				{/*<input name={Symbol.Status} type="hidden" value="inprogress" />*/}
 
 				<div className={"event-date " + data.CategoryIcon}>
-                    <span className="date" title={Symbol.Exchange}>
-                        {date.unixToLocalDate({format: 'DD MMM Y h:mm A'}) ? date.unixToLocalDate({format: 'DD MMM Y h:mm A'}) : ''}
+                    <span className="date" title={'Start time of the game'}>
+                        {date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) ? date.unixToLocalDate({format: 'MM/DD/YYYY hh:mm A'}) : ''}
 						{/*- {(date = $DateLocalization.fromSharp(Symbol.EndDate, 0, {TZOffset: false}).unixToLocalDate({format: 'H:mm'})) ? date : ''}*/}
                     </span>
-					{ !Symbol.EndDate && date.unixToLocalDate({format: 'x'}) < moment().format('x') && <i className="live">Live</i> }
+					{
+						(!Symbol.EndDate || !isEventClosed)
+						&& date.unixToLocalDate({format: 'x'}) < moment().format('x') &&
+						<i className="live">Live</i>
+					}
 					{/*{ Symbol.StatusEvent === 'inprogress' && <i className="live">Live</i> }*/}
 					{/*{ Symbol.StatusEvent === 'halftime' && <i className="halftime">Halftime</i> }*/}
 				</div>
@@ -263,23 +299,28 @@ export default class ExchangeItem extends React.Component {
 																							   style={{paddingRight: 5}}
 																							   title="Score">
 									<span className="title">Score</span>
-										<span
-											className={spreadTitle === 'Spread' && +$homeTotal + spreadValue < $awayTotal ? 'low' : ''}>{$homeTotal}</span> : {$awayTotal} </span>
-									{
-										$classActiveExch ?
-											<a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="event_title"
-											   title="See more">
-												<span
-													className="title">Market </span>{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}
-											</a>
-											:
+                                    {/*{$homeTotal && $awayTotal &&  }*/}
+                                    {$homeTotal !== undefined && $awayTotal !== undefined ?
+                                        [<span key={1} className={spreadTitle === 'Spread' && +$homeTotal + spreadValue < $awayTotal ? 'low' : ''}>{$homeTotal}</span>,<span key={2}> : {$awayTotal}</span>]
+                                        :
+									    <span title="Not available">- : -</span>
+                                    }
+                                    </span>
+									{/*{*/}
+										{/*$classActiveExch ?*/}
+											{/*<a href={ABpp.baseUrl + data.CategoryUrl + "0"} className="event_title"*/}
+											   {/*title="See more">*/}
+												{/*<span*/}
+													{/*className="title">Market </span>{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}*/}
+											{/*</a>*/}
+											{/*:*/}
 											<span className="event_title" title="Event title">
 												<span
-													className="title">Market </span>{`${Symbol.HomeName} (vs. ${Symbol.AwayName})`}
+													className="title">Market </span>{Symbol.FullName}
 											</span>
-									}
+									{/*}*/}
 									</span>
-								, (Symbol.HomeHandicap !== null) ?
+								, (spreadValue !== null || (lineupsData && spreadTitle === 'Total Points')) ?
 									<span key="1" className="handicap" style={{paddingRight: 5}} title={spreadTitle}>
 										<span className="title">{spreadTitle}</span> {spreadValue}</span> : ''
 								, data.Symbol.LastPrice && isEventStarted ?
@@ -296,7 +337,7 @@ export default class ExchangeItem extends React.Component {
 							<div className="inner animated dur4 mainButtonAnimate">
 								{
 									isEventClosed &&
-									<div className="btn_locker animated dur4 fadeIn">Game is over </div>
+									<div className="btn_locker animated dur4 fadeIn">Game is complete</div>
 								}
 								<ButtonContainer actions={actions} mainContext={mainContext} data={{
 									type    : 'sell',
@@ -338,46 +379,6 @@ export default class ExchangeItem extends React.Component {
 							</div>
 						</div>
 					</div>
-					{/*<div className="h-symbol">*/}
-					{/*<h3 className="l-title">{ do {*/}
-					{/*let html = [<span key="0" data-js-title><span className="score">{$awayTotal}&nbsp;&nbsp;</span> {Symbol.AwayName}</span>*/}
-					{/*, (Symbol.AwayHandicap !== null) ? <span key="1">&nbsp;&nbsp;{(Symbol.AwayHandicap > 0 ? " +" : " ") + Symbol.AwayHandicap}</span> : ''*/}
-					{/*, data.Symbol.LastPrice ? <span key="2" className={`last-price ${$lastPriceClass[1]}`}>&nbsp;&nbsp;<i>{}</i>${(1 - data.Symbol.LastPrice).toFixed(2)}</span> : ""];*/}
-					{/*$classActiveExch ? <a href={ABpp.baseUrl + data.CategoryUrl + "1"} className="seemore-lnk" title="see more">{html}</a>*/}
-					{/*: <span className="seemore-lnk">{html}</span>*/}
-					{/*}}*/}
-					{/*</h3>*/}
-
-					{/*<div className="l-buttons">*/}
-					{/*<div className="inner">*/}
-					{/*<ButtonContainer actions={actions} mainContext={mainContext} data={{*/}
-					{/*type: 'sell',*/}
-					{/*side: 1,*/}
-					{/*ismirror: true,*/}
-					{/*symbolName: symbol,*/}
-					{/*Orders: data.Orders,*/}
-					{/*...commProps*/}
-					{/*}}/>*/}
-
-					{/*<ButtonContainer actions={actions} mainContext={mainContext} data={{*/}
-					{/*type: 'buy',*/}
-					{/*side: 0,*/}
-					{/*ismirror: true,*/}
-					{/*symbolName: symbol,*/}
-					{/*Orders: data.Orders,*/}
-					{/*...commProps*/}
-					{/*}}/>*/}
-					{/*</div>*/}
-					{/*</div>*/}
-					{/*</div>*/}
-
-					{/*<div className={"event-content" + $classActiveNM} data-symbol={symbol} data-id={Symbol.Exchange} data-mirror="0"
-					 onClick={ABpp.config.tradeOn && actions.exchangeSideClick.bind(null, {name: Symbol.Exchange,
-					 isMirror: false,
-					 title: [Symbol.HomeName, Symbol.AwayName],
-					 symbol: symbol,
-					 })}
-					 ></div>*/}
 				</div>
 				{ Symbol.StatusEvent &&
 				<div className="event_info_bottom">
@@ -428,10 +429,10 @@ export default class ExchangeItem extends React.Component {
 					 </div>
 					 */}
 					<div className="h-lup__tab_content tab_content">
-						{ noTeamsClass ? <div className="h-lup__tab_item tab_item">{}</div>
+						{ !lineupsData ? <div className={"h-lup__tab_item h-lup__tab1_item tab_item empty" + activeTab[0]}><span>Lineups empty</span></div>
 							: <LineupPage className={"h-lup__tab_item h-lup__tab1_item tab_item" + activeTab[0]}
 										  exdata={exdata}
-										  data={this.data} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName}
+										  data={lineupsData} HomeName={Symbol.HomeName} AwayName={Symbol.AwayName}
 										  ref="lineupContainer"/>
 						}
 
@@ -447,19 +448,27 @@ export default class ExchangeItem extends React.Component {
 									chartTypeChange={::this.chartTypeChange}
 								/>
 								<div className="executed_orders">
-									<h4>Time & Sales</h4>
 									<table>
+										<thead>
+											<tr>
+												<th>Time</th>
+												<th>Price</th>
+												<th>Unit</th>
+											</tr>
+										</thead>
+									</table>
+									{/*<h4>Time & Sales</h4>*/}
+									<table className="body">
 										<tbody>
 										{
-											chartData &&
-											ticks.length ?
-												ticks.map((item) =>
+											chartData && ticks.length ?
+												ticks.map((item, index) =>
 												{
 													let side = item.Side ? 'sell' : 'buy';
 
 													return <CSSTransitionGroup
 														component="tr"
-														key={item.Time + item.Open + item.Volume}
+														key={item.Time + index}//+ item.Open + item.Volume}
 														transitionName={{
 															enter : 'fadeColorOut',
 															leave : 'fadeColorOut',
@@ -470,14 +479,22 @@ export default class ExchangeItem extends React.Component {
 														transitionAppearTimeout={600}
 														transitionEnterTimeout={600}
 														transitionLeaveTimeout={500}
-														>
-															<td><span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'DD MMM Y h:mm A'})}</span></td>
-															<td className={`price ${side} animated`}><span>${item.Open.toFixed(2)}</span></td>
-															<td className={`volume ${side} animated`}><span>{item.Volume}</span></td>
-														</CSSTransitionGroup>
+													>
+														<td>
+															{
+																item.virtual ?
+																	<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'MMM DD Y', TZOffset: 1})}</span>
+																	:
+																	<span>{(new DateLocalization()).unixToLocalDate({timestamp: item.Time, format: 'hh:mm:ss A', TZOffset: 1})}</span>
+															}
+														</td>
+														{!item.virtual && <td className={`price ${side} animated`}><span>${item.Open.toFixed(2)}</span></td>}
+														{!item.virtual && <td className={`volume ${side} animated`}><span>{item.Volume}</span></td>}
+
+													</CSSTransitionGroup>
 												})
-											:
-												<tr><td className="center"><span>You have no positions</span></td></tr>
+												:
+												<tr><td className="center"><span>There are no data in this game</span></td></tr>
 										}
 										</tbody>
 									</table>
@@ -493,15 +510,16 @@ export default class ExchangeItem extends React.Component {
 					$classActiveExch &&
 					<DefaultOrdersLocal
 						eventData={{
-							ID            : `${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`,
-							EventTitle    : Symbol.HomeName,
-							Positions     : data.Positions,
-							StartDate     : Symbol.StartDate,
-							EndDate       : Symbol.EndDate,
-							StartData     : Symbol.StartData,
-							ResultExchange: Symbol.ResultExchange,
-							minPrice      : spreadTitle === 'Moneyline' ? +(spreadValue.replace('$', '')) : 0.5,
-							Symbol        : {
+							ID             : `${Symbol.Exchange}_${Symbol.Name}_${Symbol.Currency}`,
+							EventTitle     : Symbol.HomeName,
+							Positions      : data.Positions,
+							StartDate      : Symbol.StartDate,
+							EndDate        : Symbol.EndDate,
+							StartData      : Symbol.StartData,
+							OptionExchange : Symbol.OptionExchange,
+							minPrice       : spreadTitle === 'Moneyline' ? +(spreadValue.replace('$', '')) : 0.5,
+							SymbolLimitData: SymbolLimitData,
+							Symbol         : {
 								Exchange: Symbol.Exchange,
 								Name    : Symbol.Name,
 								Currency: Symbol.Currency

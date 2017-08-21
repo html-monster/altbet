@@ -1,9 +1,14 @@
 
 .static-page{ padding-right: 20px; padding-left: 30px; padding-bottom: 50px;
-  h2 { display: inline-block; margin-bottom: 20px; font-size: 36px; text-transform: uppercase; color: #d9502a; }
+  h1, h2 { display: inline-block; margin-bottom: 20px; font-size: 36px; text-transform: uppercase; color: #d9502a; }
   h3{ margin-top: 0; font-size: 26px; color: #b0afb0; }
   h4{ margin-top: 0; font-size: 18px; color: #b0afb0; }
+
+  p { margin: 10px 0; }
+
+  a { color: $link-color;  @include text-decoration; }
 }
+
 
 .global_column {
   display: flex;
@@ -20,15 +25,12 @@
 .js-titleMain:hover h4{ color: #fff;  cursor: pointer; }
 .secondLi{ display: none; color: #939293; padding-left: 20px; }
 
-.example{
+.example {
   color: #fff;
 }
 
 //перенесено с _page.scss
-.page_wrapper{  padding: 0 5px;  }
-a { color: $link-color;  @include text-decoration; }
-p{  margin: 10px 0;  }
-
+.page_wrapper { padding: 0 5px; }
 
 
 // таблица на StaticP

@@ -25,7 +25,7 @@ export default class Chart extends React.PureComponent
         return <div className="chart_container">
                 {/*<h2>{this.props.data.pageEventData.IsMirrorName}</h2>*/}
                 <label className="chk-chart-type checkbox checkbox_horizontal green-brown label-left">
-                    <input ref="chartType" type="checkbox" defaultChecked={false} onChange={chartTypeChange} />
+                    <input ref="chartType" type="checkbox" defaultChecked={ABpp.config.chartView === 'area'} onChange={chartTypeChange} />
                     <span className="label"><b>Line</b>/<i>Area</i></span>
                     <span />
                 </label>

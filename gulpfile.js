@@ -1,5 +1,7 @@
 'use strict';
 
+var gCssChList;
+
 const OPTIONS = require('./gulpinc/pathes');
 const $pathDestServer = OPTIONS.path.destServer;
 // console.log($pathDestServer);
@@ -17,7 +19,7 @@ const debug = require('gulp-debug');
 const sourcemaps = require('gulp-sourcemaps');
 const sass = require("gulp-sass");
 const autoprefixer = require("gulp-autoprefixer");
-const browserSync = require('browser-sync').create();
+// const browserSync = require('browser-sync').create();
 const gulpIf = require('gulp-if');
 const cssnano = require('gulp-cssnano');
 // const rev = require('gulp-rev');
@@ -51,23 +53,24 @@ function lazyRequire(taskName, inTaskName, path, options)
 // BM: ================================================================================================ ADMIN STYLES ===
 lazyRequire('styles-admin', 'def', './gulpinc/styles-admin', {
     src: 'frontend/admin_styles/index-admin.scss',
-    dst: OPTIONS.path.dest_server_admin + '/Content/dist',
+    dst: OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Content/dist',
 });
 
 
 // BM: =========================================================================================== ADMIN JS REVISION ===
 lazyRequire('admin-js-rev', 'def', './gulpinc/js-rev', {
-    src: OPTIONS.path.dest_server_admin + '/Scripts/dist',
-    dst: OPTIONS.path.dest_server_admin + '/Scripts/js-assets',
-    manifestPath: OPTIONS.path.dest_server_admin + '/Scripts',
+    src: OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Scripts/dist',
+    dst: OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Scripts/js-assets',
+    manifestPath: OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Scripts',
 });
 
 
 // BM: ========================================================================================== ADMIN CSS REVISION ===
 lazyRequire('admin-css-rev', 'def', './gulpinc/css-rev', {
-    src: OPTIONS.path.dest_server_admin + '/Content/dist',
-    dst: OPTIONS.path.dest_server_admin + '/Content/css-assets',
-    manifestPath: OPTIONS.path.dest_server_admin + '/Content',
+    src: OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Content/dist',
+    dst: OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Content/css-assets',
+    manifestPath: OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Content',
+    chList: gCssChList,
 });
 
 
@@ -91,6 +94,12 @@ lazyRequire('front-css-rev', 'def', './gulpinc/css-rev', {
 lazyRequire('localization', 'def', './gulpinc/localization', {
     src: 'frontend/js/react/localization',
     dst: $pathDestServer + '/Scripts/dist/localization',
+});
+
+// BM: ================================================================================================ LOCALIZATION ===
+lazyRequire('imagescopy', 'def', './gulpinc/imagescopy', {
+    src: 'frontend/Images/dist',
+    dst: $pathDestServer + '/Images',
 });
 
 // TODO: is used anymore?
@@ -234,56 +243,90 @@ gulp.task('styles:assets', function() {
       .pipe(gulp.dest('public/Images'));
 });
 
+gulp.task('bolvan', function() {
+  return gulp.src('frontend/Images/**/*.{svg,png,jpg,gif,ico}', {since: gulp.lastRun('styles:assets')});
+});
+
 gulp.task('clean', function() {
   return del(['public', 'manifest']);
 });
 
 
-// BM: ============================================================================================== ONE TIME BUILD ===
-gulp.task('build', gulp.series(gulp.parallel('styles', 'js', 'vendor', 'styles-admin')/*, 'assets', 'fonts'*/));
+// BM: ========================================================================================= ONE TIME IMAGE COPY ===
+gulp.task('RUN-IMAGE-COPY', gulp.series('imagescopy'));
+
+
+// BM: ========================================================================================== ONE TIME BUILD ADM ===
+gulp.task('RUN-BUILD-ADM', gulp.series('styles-admin', 'admin-css-rev', 'admin-js-rev'));
 
 
 
 // BMS: --- WATCHES ----------------------------------------------------------------------------------------------------
 // BM: ========================================================================================== ADMIN DEV BUILDING ===
-gulp.task('watch-admin', function () {
-    gulp.watch('frontend/admin_styles/**/*.*', gulp.series('styles-admin'));
-    gulp.watch(OPTIONS.path.dest_server_admin + '/Content/dist/*.*', {delay: 700}, gulp.series('admin-css-rev'));
-    gulp.watch(OPTIONS.path.dest_server_admin + '/Scripts/dist/*.*', {delay: 700}, gulp.series('admin-js-rev'));
+gulp.task('WATCH-ADMIN', function () {
+    var watcher = gulp.watch('frontend/admin_styles/**/*.*', gulp.series('styles-admin'));
+/*
+    watcher.on('change', function (path, stats) {
+        gCssChList = baseName(path);
+        console.log('File ' + baseName(path) + ' was changed');bolvan
+        gulp.series('styles-admin')
+    });
+*/
+    gulp.watch(OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Content/dist/*.*', {delay: 700}, gulp.series('admin-css-rev'));
+    gulp.watch(OPTIONS.path.dest_server_admin + '/Assets-frontend/Assembly/Scripts/dist/*.*', {delay: 700}, gulp.series('admin-js-rev'));
+    return false;
 });
 
+
+
+// BM: ============================================================================================== ONE TIME BUILD ===
+gulp.task('RUN-BUILD', gulp.series('styles', 'js', 'vendor', 'localization', 'front-js-rev', 'front-css-rev'));
+
 // BM: ========================================================================================== FRONT DEV BUILDING ===
-gulp.task('watch-front-js-styles', function () {
+gulp.task('WATCH-FRONT-JS-STYLES', function () {
     gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
     gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));
     gulp.watch('frontend/js/react/localization/*.js', gulp.series('localization'));
     gulp.watch($pathDestServer + '/Scripts/dist/**/*.*', {delay: 700}, gulp.series('front-js-rev'));
     gulp.watch($pathDestServer + '/Content/dist/*.*', {delay: 700}, gulp.series('front-css-rev'));
+    gulp.watch('frontend/Images/dist/*.*', {delay: 700}, gulp.series('imagescopy'));
 });
 
 
 
+/*
 gulp.task('serve', function() {
   browserSync.init({
     server: 'public'
   });
 
-  browserSync.watch('public/**/*.*').on('change', browserSync.reload);
+  browserSync.watch('public/!**!/!*.*').on('change', browserSync.reload);
 });
+*/
 
 
+/*
 gulp.task('dev',
     gulp.series(
         'build',
         gulp.parallel(
             'serve',
             function() {
-              gulp.watch('frontend/styles/**/*.scss', gulp.series('styles'));
-              gulp.watch('frontend/js/nonReact/**/*.js', gulp.series('js'));
-              gulp.watch('frontend/assets/**/*.html', gulp.series('assets'));
-              gulp.watch('frontend/fonts/**/*.*', gulp.series('fonts'));
-              gulp.watch('frontend/Images/**/*.{svg,png,jpg,gif,ico}', gulp.series('styles:assets'));
+              gulp.watch('frontend/styles/!**!/!*.scss', gulp.series('styles'));
+              gulp.watch('frontend/js/nonReact/!**!/!*.js', gulp.series('js'));
+              gulp.watch('frontend/assets/!**!/!*.html', gulp.series('assets'));
+              gulp.watch('frontend/fonts/!**!/!*.*', gulp.series('fonts'));
+              gulp.watch('frontend/Images/!**!/!*.{svg,png,jpg,gif,ico}', gulp.series('styles:assets'));
             }
         )
     )
 );
+*/
+
+
+
+function baseName(str)
+{
+   var base = new String(str).substring(str.lastIndexOf('\\') + 1);
+   return base;
+}

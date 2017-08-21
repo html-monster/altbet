@@ -51,7 +51,7 @@ class tabsClass
 	{
 		context = context ? $(context) : $('body');
 
-		let tab = $('.tab', context);
+		let tab = $('.tab:not(.custom)', context);
 
 		// BM: change active tab
 		tab.click(function ()

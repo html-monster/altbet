@@ -8,53 +8,53 @@ class orderClass{
 		orderClass.showInfo();
 
 		// sidebar height and current order ============================================================================
-		self.orderSize = function () {
-			// numericalVerification($('.order_content input'));
-			let windowHeight = window.innerHeight,
-					windowWidth = window.innerWidth,
-					substructionHeight = $('.left_order .tabs').height() + 45 + $('header').height(),
-					orderSidebarHeight = windowHeight - substructionHeight,
-					orderContent = $('#order'),
-					currentOrders = $('#current-orders'),
-					tab_content = $('.tab_content'),
-					checkbox = $('.left_order .tab input[type=checkbox]');
+		// self.orderSize = function () {
+		// 	// numericalVerification($('.order_content input'));
+		// 	let windowHeight = window.innerHeight,
+		// 			windowWidth = window.innerWidth,
+		// 			substructionHeight = $('.left_order .tabs').height() + 45 + $('header').height(),
+		// 			orderSidebarHeight = windowHeight - substructionHeight,
+		// 			orderContent = $('#order'),
+		// 			currentOrders = $('#current-orders'),
+		// 			tab_content = $('.tab_content'),
+		// 			checkbox = $('.left_order .tab input[type=checkbox]');
+		//
+		//
+		// 	// BM: переключатель табов в EP
+		// 	$(".left_order .wrapper .tab").click(function ()
+		// 	{
+		// 		let flagCO = $(this).index() === 1;
+		// 		ABpp.Websocket.sendSubscribe(flagCO, window.SocketSubscribe.CURRENT_ORDERS);
+		//
+		//
+		// 		let tab = $(".left_order .wrapper .tab");
+		//
+		// 		if($(this).attr('data-disabled')) return false;
+		//
+		// 		if($(this).index() === 0){
+		// 			if($('#ChkLimit').prop('checked')) globalData.tradeOn = true;
+		// 			globalData.myOrdersOn = false;
+		// 		}
+		// 		else{
+		// 			globalData.tradeOn = false;
+		// 			globalData.myOrdersOn = true;
+		// 		}
+		// 		tab.removeClass("active").eq($(this).index()).addClass("active");
+		// 		$(".left_order .tab_item").hide().eq($(this).index()).show();
+		// 	});//.eq(0).addClass("active");
+		//
+		// 	$(window).resize(function () {
+		// 		windowWidth = window.innerWidth;
+		// 		windowHeight = window.innerHeight;
+		// 		if(windowWidth > 1200){
+		// 			windowHeight = window.innerHeight;
+		// 			orderSidebarHeight = windowHeight - substructionHeight;
+		// 			orderContent.css('height', orderSidebarHeight);
+		// 			currentOrders.css('height', orderSidebarHeight);
+		// 		}
+		// 	});
 
-
-			// BM: переключатель табов в EP
-			$(".left_order .wrapper .tab").click(function ()
-			{
-				let flagCO = $(this).index() === 1;
-				ABpp.Websocket.sendSubscribe(flagCO, window.SocketSubscribe.CURRENT_ORDERS);
-
-
-				let tab = $(".left_order .wrapper .tab");
-
-				if($(this).attr('data-disabled')) return false;
-
-				if($(this).index() === 0){
-					if($('#ChkLimit').prop('checked')) globalData.tradeOn = true;
-					globalData.myOrdersOn = false;
-				}
-				else{
-					globalData.tradeOn = false;
-					globalData.myOrdersOn = true;
-				}
-				tab.removeClass("active").eq($(this).index()).addClass("active");
-				$(".left_order .tab_item").hide().eq($(this).index()).show();
-			});//.eq(0).addClass("active");
-
-			$(window).resize(function () {
-				windowWidth = window.innerWidth;
-				windowHeight = window.innerHeight;
-				if(windowWidth > 1200){
-					windowHeight = window.innerHeight;
-					orderSidebarHeight = windowHeight - substructionHeight;
-					orderContent.css('height', orderSidebarHeight);
-					currentOrders.css('height', orderSidebarHeight);
-				}
-			});
-
-		}();
+		// }();
 
 		// order validation ============================================================================================
 		self.formValidation = function() {

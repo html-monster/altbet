@@ -114,7 +114,7 @@ export default class SelfExclusion extends React.Component
 		{
 			this.setState({
 				...this.state,
-				answerMessage: 'The connection to the server has been lost. Please check your internet connection or try again.',
+				answerMessage: 'The connection has been lost. Please check your internet connection or try again.',
 				answerClass: 'invalid_message',
 				loading: false
 			});
@@ -137,8 +137,8 @@ export default class SelfExclusion extends React.Component
 
 
         return <div className={"tab_item self_exclusion " + (active ? "active" : "")}>
-                {header}
-
+        <h2>Self Exclusion</h2>
+			{header}
 
 				{/*<form action={appData.pageAccountPreferencesUrl} className={loading ? 'loading' : ''} onSubmit={::this.sendData}>*/}
 					{/*{<section className="section">}*/}
@@ -178,34 +178,34 @@ export default class SelfExclusion extends React.Component
 						{/*<button type="submit"" className="save_button wave btn btn_yellow">ok</button>*/}
 					{/*</section>*/}
 				{/*</form>*/}
-			<section>
+			{/*<section>*/}
 
-				<form action={appData.pageAccountPreferencesUrl} className={'first_form'} onSubmit={::this.sendData}>
+				{/*<form action={appData.pageAccountPreferencesUrl} className={'first_form'} onSubmit={::this.sendData}>*/}
 
-                        <h4>Monthly Deposit Limit</h4>
-                        <h5>Set a monthly deposit limit. This limit cannot be changed for 90 days.</h5>
-						<span className="alert_block">Block me if my monthly deposits reaches/exceeds</span>
-                        <div className="time_container">
- 							<DropBox2 name='MonthlyDeposit'
- 							     items={[
-								  { value: '1000', label: '$ 1,000'},
-								  { value: '750', label: '$ 750'},
-								  { value: '500', label: '$ 500'},
-								  { value: '250', label: '$ 250'},
-								  { value: '100', label: '$ 100'}]}
-								 clearable={false}
-								 value="1000"
-								 placeholder="$ 1,000"
-								 searchable={true}
-								 afterChange={logChange} />
+                        {/*<h4>Monthly Deposit Limit</h4>*/}
+                        {/*<h5>Set a monthly deposit limit. This limit cannot be changed for 90 days.</h5>*/}
+						{/*<span className="alert_block">Block me if my monthly deposits reaches/exceeds</span>*/}
+                        {/*<div className="time_container">*/}
+ 							{/*<DropBox2 name='MonthlyDeposit'*/}
+ 							     {/*items={[*/}
+								  {/*{ value: '1000', label: '$ 1,000'},*/}
+								  {/*{ value: '750', label: '$ 750'},*/}
+								  {/*{ value: '500', label: '$ 500'},*/}
+								  {/*{ value: '250', label: '$ 250'},*/}
+								  {/*{ value: '100', label: '$ 100'}]}*/}
+								 {/*clearable={false}*/}
+								 {/*value="1000"*/}
+								 {/*placeholder="$ 1,000"*/}
+								 {/*searchable={true}*/}
+								 {/*afterChange={logChange} />*/}
 
-                            <button type="submit" className="save_button wave btn btn_yellow">Save</button>
+                            {/*<button type="submit" className="save_button wave btn btn_yellow">Save</button>*/}
 
-                        </div>
-				</form>
-			</section>
+                        {/*</div>*/}
+				{/*</form>*/}
+			{/*</section>*/}
 
-        <section>			<form action={appData.pageAccountPreferencesUrl} onSubmit={::this.sendData}>
+      {/*  <section>			<form action={appData.pageAccountPreferencesUrl} onSubmit={::this.sendData}>
 
                         <h4>Entries Limits</h4>
 						<h5>Set the max number of entries you want to enter each week.</h5>
@@ -254,10 +254,10 @@ export default class SelfExclusion extends React.Component
 
 				</form>
 
-		</section>
+		</section>*/}
 
 
-		<section>
+		{/*<section>
 		                <form action={appData.pageAccountPreferencesUrl} onSubmit={::this.sendData}>
                         <h4>Set Entry Fee Limit</h4>
 						<h5>If you would like to limit yourself from playing our higher priced contests, set an entry fee limit below.</h5>
@@ -302,7 +302,7 @@ export default class SelfExclusion extends React.Component
 
 				</form>
 
-		</section>
+		</section>*/}
 
     <section>
 

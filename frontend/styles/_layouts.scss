@@ -45,7 +45,7 @@ body {
       position: fixed;
       width: 50%;
       height: 100%;
-      background: url(../../Images/first_page/textura.jpg) repeat;
+      background: url("#{$pathImage}/first_page/textura.jpg") repeat;
       span {
         display: block;
         height: 100%;
@@ -55,7 +55,7 @@ body {
     .bg_cont_left {
       left: 0;
       span {
-        background: url(../../Images/first_page/more1920_l.png) no-repeat -2px -2px;
+        background: url("#{$pathImage}/first_page/more1920_l.png") no-repeat -2px -2px;
         background-size: 100%;
         margin-left: -240px;
       }
@@ -63,7 +63,7 @@ body {
     .bg_cont_riht {
       right: 0;
       span {
-        background: url(../../Images/first_page/more1920_r.png) no-repeat -2px -2px;
+        background: url("#{$pathImage}/first_page/more1920_r.png") no-repeat -2px -2px;
         background-size: 100%;
       }
     }
@@ -114,4 +114,10 @@ body {
       }
     }
   }
+}
+
+
+.breadcrumbs { float: left; margin: 10px 0 0 0; font-size: 12px;
+  a:not(.link) { color: $color-link1 }
+  span { display: inline-block; padding: 0 0 0 7px }
 }

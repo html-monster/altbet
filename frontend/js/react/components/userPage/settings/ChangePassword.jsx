@@ -6,6 +6,15 @@ import React from 'react';
 
 export default class ChangePassword extends React.PureComponent
 {
+	constructor()
+	{
+		super();
+
+		this.state = {
+			userName: ''
+		}
+	}
+
 	componentDidMount()
 	{
 		let currentPass = '.wrapper_user_page #user_curr_pass',
@@ -42,37 +51,41 @@ export default class ChangePassword extends React.PureComponent
 
 	render()
 	{
+        const { header } = this.props.data;
+		
+
 		return <div className={"tab_item " + (this.props.data.active ? "active" : "")}>
-			<form className="change_password" onSubmit={::this._onSubmit}>
-				<h3 className="section_user">Change Password</h3>
-				<hr/>
-				<span className="input_animate input--yoshiko pass_container">
-					<input className="input__field input__field--yoshiko" id="user_curr_pass" name="OldPassword" type="password"/>
-					<span className="show_password">{}</span>
-					<label className="input__label input__label--yoshiko" htmlFor="user_curr_pass">
+			<h2 className="section_user passw_change">Change Password</h2>
+			{header}
+			<form className="setting-form change_password" onSubmit={::this._onSubmit}>
+
+				<span className="input_group  pass_container">
+					<input  className="input" id="user_curr_pass" name="OldPassword" placeholder="Current Password" type="password"/>
+					<span className="show_password show-passw">{}</span>
+					<label  className="input__label input__label--yoshiko" htmlFor="user_curr_pass">
 						<span className="input__label-content input__label-content--yoshiko" data-content="Current Password">Current Password</span>
 					</label>
 					<span className="validation-summary-errors">{}</span>
 				</span>
 
-				<span className="input_animate input--yoshiko pass_container">
-					<input className="input__field input__field--yoshiko" id="user_pass" name="NewPassword" type="password"/>
-					<span className="show_password">{}</span>
+				<span className="input_group pass_container">
+					<input className="input" id="user_pass" name="NewPassword" type="password" placeholder="New Password"/>
+					<span className="show_password show-passw">{}</span>
 					<label className="input__label input__label--yoshiko" htmlFor="user_pass">
 						<span className="input__label-content input__label-content--yoshiko" data-content="New Password">New Password</span>
 					</label>
 					<span className="validation-summary-errors">{}</span>
 				</span>
 
-				<span className="input_animate input--yoshiko pass_container">
-					<input className="input__field input__field--yoshiko" id="user_confirm_pass" name="ConfirmPassword" type="password"/>
-					<span className="show_password">{}</span>
+				<span className="input_group  pass_container passw_opacity">
+					<input className="input" id="user_confirm_pass" name="ConfirmPassword" type="password" placeholder="Confirm Password"/>
+					<span className="show_password show-passw">{}</span>
 					<label className="input__label input__label--yoshiko" htmlFor="user_confirm_pass">
 						<span className="input__label-content input__label-content--yoshiko" data-content="Confirm Password">Confirm Password</span>
 					</label>
 					<span className="validation-summary-errors">{}</span>
 				</span>
-				<span className="input_animate input--yoshiko submit_container">
+				<span className="input_group  submit_container">
 					<input type="submit" value="Change Password" id="submit" className="btn wave submit"/>
 					<span className="answer_message">{}</span>
 				</span>
@@ -130,7 +143,7 @@ export default class ChangePassword extends React.PureComponent
 		{
 			console.log('XMLHTTPRequest object: ', x);
 			console.log('textStatus: ', y);
-			defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+			defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
 			$(event.currentTarget).find('[type=submit]').removeAttr('disabled')
 		}
 

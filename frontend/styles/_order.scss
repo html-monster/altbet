@@ -7,48 +7,11 @@
   &.buy .my_order{
     .order-title, .current-order-title{ background-color: #ebf7f9; }
   }
-  .order_container{ position: relative; border-bottom: 1px solid $order_sidebar_head_separator;
-    &:last-child{  border-bottom: none;  }
-    &:before{ content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 1px;
-      background: rgba(255, 255, 255, 0.1); }
-  }
-  .order_info { position: relative; padding: 0 5px 0 5px;
-    @include mdmax(1400){
-      padding: 0;
-      padding-left: 5px;
-    }
-    &.buy{
-      background: linear-gradient(to bottom, transparentize(#64C9EF, 0.7), transparentize(#3498DA, 0.7));
-      @include order_sidebar_current_order_title_buy;
-    }
-    &.sell{
-      background: linear-gradient(to bottom, transparentize(#F88447, 0.9), transparentize(#EF4D22, 0.9));
-      @include order_sidebar_current_order_title_sell;
-    }
-  }
-  .order-title{
-    padding: 5px 25px 5px 15px;
-    //@include scroll;
-    position: relative;
-    overflow: hidden;
-  }
-  .container{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    &.close_btn div:last-of-type label{ width: calc(100% - 18px); }
-  }
   h3{
     //max-width: calc(100% - 115px);
     font-size: 13px;
     vertical-align: middle;
     color: transparentize(#ffffff, 0.2);
-  }
-  .timestamp{
-    font-size: 10px;
-    &:before{  right: 9px;  }
-    .time{  color: $order_sidebar_current_order_title_color;  }
-    .help_message{ width: 160px; right: 4px; top: 25px; }
   }
   .info_string{
     color: #ffffff;
@@ -104,15 +67,15 @@
   //}
   strong { display: inline-block; font-size: 12px; line-height: 23px; letter-spacing: 0.2px;
     color: transparentize($order_sidebar_current_order_title_color, 0.5);
-    &.amount { width: 60px; text-align: center }
-    &.qty { width: calc(100% - 204px); text-align: center }
-    &.dt { width: 80px }
+    &.amount { width: 45px; text-align: center }
+    &.qty { width: calc(100% - 242px); text-align: center }
+    &.dt { width: 125px }
     &.current-order { padding: 0; color: transparentize(#ffffff, 0.2);
       //&.up span{  color: #3498da;  }
       //&.down span{  color: #ef4d22;  }
       &.pos span{ color: #bab500; }
     }
-    &.last-price { position: absolute; right: 70px; top: calc(50% - 11px);
+    &.last-price { min-width: 43px; padding-left: 5px;
       &:before{ content: ''; display: inline-block; width: 9px; height: 9px; vertical-align: middle;
         background: url("#{$pathImage}/sprite.svg") no-repeat; }
       &.up { color: #1196d4;
@@ -378,9 +341,9 @@
       &.buy{  background-color: #2dc7ca;  }
       //&.success{  background: url("#{$pathImage}/ico-success-w.png") no-repeat center #969696;  }
     }
-    i.submit{
+    &:not(.spread) i.submit{
       display: block;  flex-grow: 1;  border-radius: 0;
-      &:hover{  overflow: inherit !important;  }
+      &:hover{  overflow: visible !important;  }
       &:active{
         overflow: hidden !important;
         .help_message{  visibility: hidden; }
@@ -392,6 +355,7 @@
         //  border-left: 1px solid #fff;
         //}
       }
+      button.balloon:hover .help_message{  visibility: visible;  opacity: 1;  }
       //.help_message{
       //  t
       //}

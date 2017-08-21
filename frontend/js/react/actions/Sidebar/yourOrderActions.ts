@@ -6,31 +6,33 @@
 import {
 	ON_YOUR_ORDER_SOCKET_MESSAGE,
 	ON_YOUR_ORDER_DELETE,
-} from "../../constants/ActionTypesYourOrders.js";
+    ON_YOUR_ORDER_GROUP_SYMBOL,
+    ON_YOUR_CHANGE_ACTIVE_EVENT,
+} from "../../constants/ActionTypesYourOrders";
 import BaseActions from '../BaseActions';
-import { orderForm } from '../../components/formValidation/validation';
+// import { orderForm } from '../../components/formValidation/validation';
 
 class Actions extends BaseActions
 {
-	public actionOnSocketMessage()
+	public actionOnSocketMessage(actions)
 	{
 		return (dispatch, getState) =>
 		{
 			window.ee.addListener('yourOrders.update', (newData) =>
 			{
-				// let oldData = '[{"ID":"BUB-NEP-3312017_BUB-NEP_USD_mirror","Symbol":"New England Patriots","Positions":0,"LastSide":1,"LastPrice":0.9,"Orders":[{"ID":"935aef66-9f07-4f60-b4ca-af158cd87a91","Symbol":{"Name":"BUB-NEP","Exchange":"BUB-NEP-3312017","Currency":"USD","FullName":"Buffalo Bills_vs_New England Patriots","HomeName":"Buffalo Bills","HomeAlias":"BUB","AwayName":"New England Patriots","AwayAlias":"NEP","Status":"approved","StartDate":"/Date(1490918400000)/","EndDate":null,"CategoryId":"1518ed47-ee93-4979-93de-344d526c3e36","SymbolExchange":"BUB-NEP-3312017","UrlExchange":"buffalo-bills-vs-new-england-patriots-3312017-sf","ResultExchange":null,"ApprovedDate":"/Date(1482195600000)/","SettelmentDate":null,"LastPrice":0.1,"LastSide":0,"LastAsk":0.49,"LastBid":0,"HomePoints":73.9,"HomeHandicap":-3.7,"AwayPoints":77.6,"AwayHandicap":3.7,"OrderBy":2},"Time":"/Date(1482823051138)/","Price":0.51,"Volume":5,"Side":1,"Category":"Sport","isPosition":0,"isMirror":1}]}]'
-				// let newData = '[{"ID":"BUB-NEP-3312017_BUB-NEP_USD_mirror","LastPrice":0.9,"LastSide":1,"Orders":[{"Category":"Sport","ID":"935aef66-9f07-4f60-b4ca-af158cd87a91","Price":0.49,"Side":1,"Symbol":{"ApprovedDate":"/Date(1482195600000+0200)/","AwayAlias":"NEP","AwayHandicap":3.7,"AwayName":"New England Patriots","AwayPoints":77.6,"CategoryId":"1518ed47-ee93-4979-93de-344d526c3e36","Currency":"USD","EndDate":null,"Exchange":"BUB-NEP-3312017","FullName":"Buffalo Bills_vs_New England Patriots","HomeAlias":"BUB","HomeHandicap":-3.7,"HomeName":"Buffalo Bills","HomePoints":73.9,"LastAsk":0.49,"LastBid":0,"LastPrice":0.1,"LastSide":0,"Name":"BUB-NEP","ResultExchange":null,"SettelmentDate":null,"StartDate":"/Date(1490918400000+0300)/","Status":"approved","SymbolExchange":"BUB-NEP-3312017","UrlExchange":"buffalo-bills-vs-new-england-patriots-3312017-sf"},"Time":"/Date(1482823051138)/","Volume":5,"isMirror":1,"isPosition":0}],"Positions":0,"Symbol":"New England Patriots"}]'
+				const state = getState().yourOrders;
 				// console.log(JSON.stringify(getState().yourOrders.yourOrders));
 				// console.log('========');
 				// console.log(JSON.stringify(newData));
 				// console.log(JSON.stringify(getState().yourOrders.yourOrders) != JSON.stringify(newData));
 				// console.log(defaultMethods.deepCompare(newData, getState().yourOrders.yourOrders));
 				// if(defaultMethods.deepCompare(newData, getState().yourOrders.yourOrders)){
-				if(JSON.stringify(getState().yourOrders.yourOrders) != JSON.stringify(newData)){
+				if(JSON.stringify(state.yourOrdersData) != JSON.stringify(newData)){
 					dispatch({
 						type: ON_YOUR_ORDER_SOCKET_MESSAGE,
 						payload: newData
 					});
+                    // if(newData.length && state.openGroupSymbol !== newData[0].Orders[0].Symbol.Exchange) actions.collapseOrderGroup(newData[0].Orders[0].Symbol.Exchange);
 					__DEV__ && console.log('re-render');
 				}
 			});
@@ -42,7 +44,7 @@ class Actions extends BaseActions
 		return (dispatch, getState) =>
 		{
 			let orderId = order.ID;
-			let newData = getState().yourOrders.yourOrders;
+			let newData = getState().yourOrders.yourOrdersData;
 
 			newData[indexGr].Orders = newData[indexGr].Orders.filter((order) => order.ID !== orderId );
 			if(!newData[indexGr].Orders.length) newData.splice(indexGr, 1);
@@ -59,7 +61,7 @@ class Actions extends BaseActions
 		return () =>
 		{
 			event.preventDefault();
-			const form = $(context.refs.deleteForm);
+			const form = $(context.deleteForm);
 
 			function BeforeAjax()
 			{
@@ -91,7 +93,7 @@ class Actions extends BaseActions
 				form.removeClass('loading');
 				__DEV__ && console.log('XMLHTTPRequest object: ', x);
 				__DEV__ && console.log('textStatus: ',  y);
-				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+				defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
 			}
 
 			defaultMethods.sendAjaxRequest({
@@ -104,98 +106,170 @@ class Actions extends BaseActions
 		}
 	}
 
-	public actionOnAjaxSend(formUrl, event)
+	// public actionOnAjaxSend(formUrl, event)
+	// {
+	// 	return () =>
+	// 	{
+	// 		event.preventDefault();
+    //
+	// 		const form = event.currentTarget;
+    //
+	// 		// if(!orderForm(form)) return false;
+    //
+	// 		function OnBeginAjax()
+	// 		{
+	// 			$(form).find('[type=submit]').attr('disabled', 'true');
+	// 		}
+    //
+	// 		function onSuccessAjax()
+	// 		{
+	// 			console.log('Order sending finished: ' + $(form).find('[name=ID]').val());
+	// 		}
+    //
+	// 		function onErrorAjax()
+	// 		{
+	// 			$(form).find('[type=submit]').removeAttr('disabled');
+	// 			defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
+	// 		}
+    //
+	// 		defaultMethods.sendAjaxRequest({
+	// 			httpMethod: 'POST',
+	// 			url: formUrl,
+	// 			callback: onSuccessAjax,
+	// 			onError: onErrorAjax,
+	// 			beforeSend: OnBeginAjax,
+	// 			context: $(form)
+	// 		});
+	// 	}
+	// }
+
+	// public actionOpenEditForm(id)
+	// {
+	// 	return () =>
+	// 	{
+	// 		id = `#${id}__order`;
+	// 		const activeFirstTab = this._moveToElement(id, 'edit');
+	// 		const scrollPos = $(id)[0].offsetTop + 150;
+	// 		// console.log('1: ', scrollPos);
+    //
+	// 		if(this._checkOnLastElement(id)){
+	// 			$(id).find('.form-container').slideToggle(200, ()=>{
+	// 				if(activeFirstTab){
+	// 					setTimeout(() => {
+	// 						$('#current-orders').animate({scrollTop: scrollPos} , 200);
+	// 					}, 450);
+	// 				}
+	// 				else
+	// 					$('#current-orders').animate({scrollTop: scrollPos} , 200);
+	// 			});
+	// 		}
+	// 		else{
+	// 			setTimeout(() => {
+	// 				$(id).find('.form-container').slideToggle(200);
+	// 			}, 300);
+	// 		}
+	// 	}
+	// }
+
+    /**
+	 * open collapse group
+     * @param symbol : string
+     * @returns {(dispatch) => any}
+     */
+    public collapseOrderGroup(symbol)
+	{
+        return (dispatch) =>
+		{
+            dispatch({
+                type: ON_YOUR_ORDER_GROUP_SYMBOL,
+                payload: symbol
+            });
+        }
+    }
+
+    /**
+	 * activate one of groups
+     * @param symbol : string - set exchange symbol
+     * @returns {(dispatch) => any}
+     */
+    public actionChangeActiveEvent(symbol)
+	{
+        return (dispatch) =>
+        {
+            dispatch({
+                type: ON_YOUR_CHANGE_ACTIVE_EVENT,
+                payload: symbol
+            });
+        }
+	}
+
+    /**
+     * @param showPopup : boolean - show or hide popup
+     * @param startDate : number || null - timestamp date when event starts
+     * @param endDate : number || null - timestamp date when event starts
+     * @param popupElement : string || Dom element - popup element, it can be order Id
+     * @returns {() => any}
+     */
+	public actionDeleteFormToggle(showPopup, startDate, endDate, popupElement)
 	{
 		return () =>
 		{
-			event.preventDefault();
-
-			const form = event.currentTarget;
-
-			if(!orderForm(form)) return false;
-
-			function OnBeginAjax()
+			if(showPopup)
 			{
-				$(form).find('[type=submit]').attr('disabled', 'true');
+				const isEventStarted = moment().format('x') > startDate;
+				const isEventFinished = moment().format('x') > endDate;
+
+				if(!isEventStarted)
+				{
+					defaultMethods.showWarning('You can`t delete the order before the game starts');
+					return;
+				}
+
+				if(endDate && isEventFinished)
+				{
+                    defaultMethods.showWarning('You can`t delete the order, this game is completed');
+                    return;
+				}
 			}
 
-			function onSuccessAjax()
+            if(defaultMethods.getType(popupElement) === 'String' && showPopup) // отрабатывает на стр. my activity, когда нужно открыть форму удаления нативно
 			{
-				console.log('Order sending finished: ' + $(form).find('[name=ID]').val());
+				popupElement = `#${popupElement}__order`;
+				this._moveToElement(popupElement, 'delete');
+                setTimeout(() => {
+                    $(popupElement).find('.pop_up').fadeIn();
+                }, 300);
+			}
+			else
+			{
+				if(showPopup) $(popupElement).fadeIn();
+				else $(popupElement).fadeOut();
 			}
 
-			function onErrorAjax()
-			{
-				$(form).find('[type=submit]').removeAttr('disabled');
-				defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
-			}
-
-			defaultMethods.sendAjaxRequest({
-				httpMethod: 'POST',
-				url: formUrl,
-				callback: onSuccessAjax,
-				onError: onErrorAjax,
-				beforeSend: OnBeginAjax,
-				context: $(form)
-			});
 		}
 	}
 
-	public actionOpenEditForm(id)
-	{
-		return () =>
-		{
-			id = `#${id}__order`;
-			const activeFirstTab = this._prepeareToMove(id, 'edit');
-			const scrollPos = $(id)[0].offsetTop + 150;
-			// console.log('1: ', scrollPos);
 
-			if(this._checkOnLastElement(id)){
-				$(id).find('.form-container').slideToggle(200, ()=>{
-					if(activeFirstTab){
-						setTimeout(() => {
-							$('#current-orders').animate({scrollTop: scrollPos} , 200);
-						}, 450);
-					}
-					else
-						$('#current-orders').animate({scrollTop: scrollPos} , 200);
-				});
-			}
-			else{
-				setTimeout(() => {
-					$(id).find('.form-container').slideToggle(200);
-				}, 300);
-			}
-		}
-	}
-
-	public actionOpenDeleteForm(id)
-	{
-		return () =>
-		{
-			id = `#${id}__order`;
-			this._prepeareToMove(id, 'delete');
-			setTimeout(function () {
-				$(id).find('.pop_up').fadeIn();
-			}, 300);
-		}
-	}
-
-	private _prepeareToMove(id, handle) {
+    /**
+     * @param id : string - order id
+     * @param handle : string - it can be 'edit' ro 'delete' (now isn`t using)
+     * @private
+     */
+	private _moveToElement(id, handle) {
 		const currentOrders = $('#current-orders');
 		const tab = $('.left_order .tab');
-		const activeTadFirst = tab.eq(0).hasClass('active');
+		// const activeTadFirst = tab.eq(0).hasClass('active');
 		const scrollPos = $(id)[0].offsetTop - 150;
 
 		// console.log('2: ', scrollPos);
-		currentOrders.find('.form-container').slideUp(200);
+		// currentOrders.find('.form-container').slideUp(200);
 		currentOrders.find('.pop_up').fadeOut();
 
-		if(activeTadFirst){
-			$('#order').hide();
-			tab.removeClass('active');
-			tab.eq(1).addClass('active');
-			currentOrders.fadeIn();
+		// if(activeTadFirst){
+		// 	$('#order').hide();
+		// 	tab.removeClass('active');
+			// tab.eq(1).addClass('active');
+			// currentOrders.fadeIn();
 			// if(handle == 'edit' && !this._checkOnLastElement(id)){
 			// 	setTimeout(()=>{
 			// 		currentOrders.animate({scrollTop: scrollPos} , 200);
@@ -206,25 +280,26 @@ class Actions extends BaseActions
 			// 		currentOrders.animate({scrollTop: scrollPos} , 200);
 			// 	}, 450);
 			// }
-		}
+		// }
 		// else{
 			// if(handle == 'edit' && !this._checkOnLastElement(id)) currentOrders.animate({scrollTop: scrollPos} , 200);
 			// else currentOrders.animate({scrollTop: scrollPos} , 200);
 		// }
 		currentOrders.animate({scrollTop: scrollPos} , 200);
 
-		return activeTadFirst;
+		// return activeTadFirst;
 	}
 
-	private _checkOnLastElement(id)
-	{
-		const lastOrders = $('#current-orders').find('.order_content:last-of-type .order_container');
-		const ids = [];
-		for(let ii = -4; ii <= -1; ii++){
-			ids.push('#' + lastOrders.eq(ii).attr('id'));
-		}
-		 return ids.some((item)=> item == id)
-	}
+
+	// private _checkOnLastElement(id)
+	// {
+	// 	const lastOrders = $('#current-orders').find('.order_content:last-of-type .order_container');
+	// 	const ids = [];
+	// 	for(let ii = -4; ii <= -1; ii++){
+	// 		ids.push('#' + lastOrders.eq(ii).attr('id'));
+	// 	}
+	// 	 return ids.some((item)=> item == id)
+	// }
 }
 
 

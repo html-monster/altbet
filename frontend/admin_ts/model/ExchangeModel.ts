@@ -8,6 +8,10 @@ import { MainConfig, DS } from "../inc/MainConfig";
 import {AjaxSend} from "../component/AjaxSend";
 import {DateLocalization} from "../component/DateLocalization";
 
+interface JQueryStatic {
+    ajax(p1?, p2?, p3?): any;
+}
+declare var $: JQueryStatic;
 
 var __LDEV__ = true;
 interface JQueryStatic {
@@ -126,13 +130,13 @@ export default class ExchangeModel
                 type: 'POST',
                 success: function(data)
                 {
-                    __LDEV__&&console.debug( 'data AJAX', data );
+                    __DEV__ && console.log( 'data AJAX', data );
 
                     // correct
                     if( data.Error == 200 )
                     {
-                        data.Param1 = data.ParamObj.Exchange.Symbols["0"];
-                        data.Param1.Exchange = data.ParamObj.Exchange.Name;
+                        data.Param1 = data.Param1.Exchange.Symbols["0"];
+                        data.Param1.Exchange = data.Param1.Name;
                         // data.Param1.StartDate = data.Param1.StartDate && (new DateLocalization).fromSharp(data.Param1.StartDate, 0).unixToLocalDate({format: "M/D/Y h:mm:ss A"});
                         data.Param1.StartDate = data.Param1.StartDateStr && (new DateLocalization).fromSharp2(data.Param1.StartDateStr, 0).toUtcDate({format: "M/D/Y h:mm:ss A"});
                         data.Param1.EndDate = data.Param1.EndDateStr && (new DateLocalization).fromSharp2(data.Param1.EndDateStr, 0).toUtcDate({format: "M/D/Y h:mm:ss A"});
@@ -296,8 +300,8 @@ export default class ExchangeModel
                             case -102 : message = "Url is not unique"; break;
                             case -103 : message = "Invalid start date. Start time must be less then end time."; break;
                             case -104 : message = "Exchange event time may not be earlier than the current time"; break;
-                            case -100: ; // some backend not controlled error
-                            case -1000 : ; break;
+                            case -100:  // some backend not controlled error
+                            case -1000 :  break;
                             default: error = -1001;
                         }
                     }

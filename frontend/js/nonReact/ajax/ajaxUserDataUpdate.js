@@ -18,6 +18,6 @@
 // 	static OnFailureJs(x, y){
 // 		console.log('XMLHTTPRequest object: ', x);
 // 		console.log('textStatus: ',  y);
-// 		defaultMethods.showError('The connection to the server has been lost. Please check your internet connection or try again.');
+// 		defaultMethods.showError('The connectionhas been lost. Please check your internet connection or try again.');
 // 	}
 // }

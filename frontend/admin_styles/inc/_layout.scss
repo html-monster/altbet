@@ -9,16 +9,25 @@
 	img { width: 100%; }
 }
 
+.skin-yellow-light {
+  .main-header {
+    .navbar { background-color: $color3Brown !important; }
+    li.user-header { background-color: $color3Brown; }
+  }
+}
+
 .main-header {
 	a.link-logo { @include box(b,0); float: left; width: 230px; height: 50px; padding: 5px 0; background-color: $color3Brown; @include calign;
 	  img { height: 100%; }
 	}
-	.navbar { background-color: $color3Brown;
-      a { color: #fff;  }
-      .user-menu a { transition: background-color .5s }
-      .btn { @include box(i,r); margin: -9px 0 -5px 5px; width: auto; }
-	}
+    // удалить когда будет сделан Header
+    //.navbar { background-color: $color3Brown !important;
+    //  a { color: #fff;  }
+    //  .user-menu a { transition: background-color .5s }
+    //  .btn { @include box(i,r); margin: -9px 0 -5px 5px; width: auto; }
+    //}
 }
+
 
 .navbar-nav>.user-menu .user-image { font-size: 24px; }
 

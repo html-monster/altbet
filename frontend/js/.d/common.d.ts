@@ -40,8 +40,10 @@ interface JQuery
 
 interface Window
 {
-    ADpp : any
-    SocketSubscribe : any
+    ADpp : any;
+    SocketSubscribe : any;
+    HomeEvents : any;
+    gidxServiceStatus: any;
 }
 
 
@@ -55,10 +57,6 @@ interface Window
 interface Object
 {
     assign(t1, t2?, t3?)
-}
-
-interface Window {
-    ee: any
 }
 
 interface FormData {

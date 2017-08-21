@@ -6,6 +6,7 @@
         "devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 9090 --host localhost",
         "webpack": "webpack",
         "webpackDEV": "webpack --watch --watch-aggregate-timeout 300 --env.patch --COMMENT=\"DEBUG=true(set in environment)\"",
+        "webpackDEVAdm": "webpack --config webpackinc/webpack.config.admin.js --watch --watch-aggregate-timeout 300 --env.patch --COMMENT=\"DEBUG=true(set in environment)\"",
         "webpackBuild": "webpack --config webpackinc/webpack.config.build.js --COMMENT=\"NODE_ENV=production(set in environment)\""
     },
     "author": "Aleksey",
@@ -44,9 +45,12 @@
         "postcss-nested": "^1.0.0",
         "postcss-reporter": "^1.3.0",
         "postcss-url": "^5.0.2",
+        "prop-types": "^15.5.10",
         "react": "*",
         "react-addons-css-transition-group": "^15.4.1",
+        "react-collapse": "^4.0.3",
         "react-dom": "*",
+        "react-motion": "^0.5.0",
         "react-numeric-input": "^2.0.7",
         "react-pager": "^1.3.2",
         "react-redux": "^4.0.6",
@@ -76,6 +80,7 @@
         "gulp": "github:gulpjs/gulp#4.0",
         "gulp-autoprefixer": "^3.1.0",
         "gulp-babel": "^6.1.1",
+        "gulp-newer": "^1.3.0",
         "gulp-rev-all": "^0.9.7",
         "gulp-rev-del-redundant": "^1.1.5",
         "gulp-sass": "^2.3.1",
@@ -103,7 +108,7 @@
         "webpack-uglify-js-plugin": "^1.1.9"
     },
     "name": "Altbet",
-    "version": "3.3.10",
+    "version": "3.4.30",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/html-monster/altbet.git"

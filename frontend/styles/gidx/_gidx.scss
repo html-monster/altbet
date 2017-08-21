@@ -2,8 +2,11 @@
 @import "variables";
 @import "bootswatch";
 @import "../vars";
+@import "../mixin";
 @import "../clr_scheme_dark";
 
 @import "correction";
 @import "common";
 @import "page-deposit";
+@import "page-verify";
+@import "_page-history";

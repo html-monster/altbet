@@ -21,7 +21,7 @@ export default class NewOrder extends React.PureComponent
 			url: ABpp.baseUrl + '/Order/Create',
 			action: 'create'
 		};
-		
+
 		return <div className={classnames(`order_content new animated`, { local_view: localView })}>
 			<div className="order-title">
 				{
@@ -59,16 +59,16 @@ export default class NewOrder extends React.PureComponent
 							ask={data.Ask === 1 ? null : data.Ask}
 							bid={data.Bid === 0 ? null : data.Bid}
 							price={item.Price}
-							priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.StartDate, 1, {TZOffset: false})}
-							maxEntries={100}
 							minPrice={data.minPrice ? data.minPrice : 0.5}
-							remainingBal={95}
+							priceDisabled={+moment().format('x') < (new DateLocalization).fromSharp(data.StartDate, 1, {TZOffset: false})}
 							quantity={item.Volume}
+							maxEntries={data.SymbolLimitData ? data.SymbolLimitData.EntryLimit : null}
+							remainingBal={data.SymbolLimitData ? data.SymbolLimitData.EntryLimit - data.SymbolLimitData.CurrentEntryBalance : null}
 							isMirror={item.isMirror}
 							symbol={symbol}
 							startDate={(new DateLocalization).fromSharp(data.StartDate, 1, {TZOffset: false})}
 							endDate={data.EndDate ? (new DateLocalization).fromSharp(data.EndDate, 1, {TZOffset: false}) : data.EndDate}
-							ResultExchange={data.ResultExchange}
+							OptionExchange={data.OptionExchange}
 							newOrder={true}
 							showDeleteButton={true}
 							onSubmit={actions.actionOnAjaxSend.bind(null, {...item, formUrl: formData.url}, {defaultOrdersActions: actions, mainPageActions})}

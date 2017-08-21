@@ -9,9 +9,11 @@ import mainPageActions from '../actions/MainPageActions.ts';
 import defaultOrderLocalActions from '../actions/OrderActions/defaultOrdersLocalActions';
 import traderActions from '../actions/Sidebar/tradeSlip/traderActions';
 import sidebarActions from '../actions/sidebarActions.ts';
+import yourOrderActions from '../actions/Sidebar/yourOrderActions';
 import disqusActions from '../actions/disqusActions';
 import { Framework } from '../common/Framework';
 // import chartActions from '../actions/MainPage/chartActions';
+import classNames from 'classnames';
 
 // class MainPage extends React.Component
 class MainPage extends BaseController
@@ -91,11 +93,12 @@ class MainPage extends BaseController
     {
         // let isBasicMode = ABpp.config.basicMode;
         const data = this.props.data;
-        const { actions, data:{ activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn, orderDetails: { orderPrice, showOrder } } } = this.props;
+        const { actions, data:{ activeExchange, charts, chartSubscribing, isBasicMode, isTraiderOn, orderDetails: { orderPrice, showOrder }, lineupsData, SymbolLimitData } } = this.props;
         const { currentExchange } = this.state;
         let $Pagination;
         if( appData.pageHomeData ) $Pagination = appData.pageHomeData.Pagination;
         let urlBase = appData.baseUrl.MainPage;
+        let Breadcrumbs = this.props.data.Breadcrumbs ? this.props.data.Breadcrumbs : [];
         // let nb = "&nbsp;";
 
         // sort tabs data
@@ -112,7 +115,10 @@ class MainPage extends BaseController
                     {/*<li>Manchester United vs. Chelsea</li>*/}
                 {/*</ul>*/}
                 <div className="wrapper" id="exchange">
-                    <div className="stattabs">
+                    <div className="sort-btns">
+                        <div className="breadcrumbs">
+                            {this._prepareBreadcrumbs(Breadcrumbs.slice())}
+                        </div>
                         {
                             Object.keys($tabs).map((val, key) =>
                                 <a href={"?sort=" + val} key={val} className={"stab" + (val == currSort || !currSort && !key ? " active" : '')}><span data-content={$tabs[val]}>{}</span></a>)
@@ -122,6 +128,7 @@ class MainPage extends BaseController
                         <span className="stab"><span data-content="Trending"></span></span>
                         <span className="stab"><a href="?sort=new"><span data-content="New">{}</span></a></span>
                         <span className="stab"><a href="?sort=movers"><span data-content="Movers">{}</span></a></span>*/}
+{/*
                         <div className="mode_wrapper">
                             <label className="mode_switch">
                                 <input defaultChecked={!isBasicMode} id="Mode" name="Mode" type="checkbox"
@@ -129,6 +136,7 @@ class MainPage extends BaseController
                                 { isBasicMode ? <span>Basic View</span> : <span>Detailed View</span> }
                             </label>
                         </div>
+*/}
                     </div>
                     <div className="tab_content">
                         <div className="tab_item active">
@@ -142,6 +150,9 @@ class MainPage extends BaseController
                                         setCurrentExchangeFn={::this._setCurrentExchange}
                                         actions={actions}
                                         disqusActions={this.props.disqusActions}
+                                        yourOrderActions={this.props.yourOrderActions}
+                                        lineupsData={lineupsData}
+                                        SymbolLimitData={SymbolLimitData}
                                     />
                                 )}
                             </div>
@@ -209,6 +220,26 @@ class MainPage extends BaseController
         this.setState({...this.state, currentExchange: item});
     }
 
+
+    _prepareBreadcrumbs(Breadcrumbs)
+    {
+        if( Breadcrumbs.length )
+        {
+            Breadcrumbs.unshift({CatName: 'All'});
+            return Breadcrumbs.reduce((prev, val, key, arr) => {
+                if( prev.length )
+                {
+                    prev.push(<span key={key + 'a'}>&#12297;</span>);
+                    prev.push(<a href={ABpp.baseUrl + val.CatUrlChain} key={key} class={classNames({"link": key === arr.length-1})}>{val.CatName}</a>);
+                }
+                else prev.push(<a href={globalData.Urls.Home} key={key} class={classNames({"link": key === arr.length-1})}>{val.CatName}</a>);
+                return prev;
+            }, [])
+        }
+        else return [];
+    }
+
+/*
 	_modeSwitch(event)
     {
         const checked = event.target.checked;
@@ -222,7 +253,8 @@ class MainPage extends BaseController
 			// ABpp.config.tradeOn = false;
 			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
 
-			if(globalData.tradeOn) sidebarActions.actionOnTraderOnChange(checked);
+			if(globalData.tradeOn) sidebarActions.tabSwitch(sidebarActions, 'ActiveTrader');
+			else sidebarActions.tabSwitch(sidebarActions, 'YourOrders');
 		}
 		else
 		{
@@ -232,9 +264,10 @@ class MainPage extends BaseController
 			// ABpp.config.tradeOn = true;
 			ABpp.SysEvents.notify(ABpp.SysEvents.EVENT_TURN_BASIC_MODE);
 
-			sidebarActions.actionOnTraderOnChange(checked);
+            sidebarActions.tabSwitch(sidebarActions, 'YourOrders');
 		}
     }
+*/
 }
 
 // __DEV__&&console.debug( 'connect', connect );
@@ -243,12 +276,12 @@ export default connect(
     state => {
 		return ({
 			data: state.mainPage,
-			// test: state.Ttest,
 		})
     },
     dispatch => ({
 		sidebarActions: bindActionCreators(sidebarActions, dispatch),
 		traderActions: bindActionCreators(traderActions, dispatch),
+		yourOrderActions: bindActionCreators(yourOrderActions, dispatch),
 		// defaultOrderActions: bindActionCreators(defaultOrderSidebarActions, dispatch),
 		defaultOrderActions: bindActionCreators(defaultOrderLocalActions, dispatch),
 		// chartActions: bindActionCreators(Framework.initAction(chartActions), dispatch),

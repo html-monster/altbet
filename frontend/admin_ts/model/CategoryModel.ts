@@ -6,6 +6,12 @@
 
 import { MainConfig, DS } from "../inc/MainConfig";
 
+interface JQueryStatic {
+    ajax(p1?, p2?, p3?): any;
+}
+declare var $: JQueryStatic;
+
+
 var __LDEV__ = true;
 interface JQueryStatic {
     ajax(p1?, p2?, p3?): any;
