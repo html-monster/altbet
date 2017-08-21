@@ -21,11 +21,11 @@
 	  img { height: 100%; }
 	}
     // удалить когда будет сделан Header
-	.navbar { background-color: $color3Brown !important;
-      a { color: #fff;  }
-      .user-menu a { transition: background-color .5s }
-      .btn { @include box(i,r); margin: -9px 0 -5px 5px; width: auto; }
-	}
+    //.navbar { background-color: $color3Brown !important;
+    //  a { color: #fff;  }
+    //  .user-menu a { transition: background-color .5s }
+    //  .btn { @include box(i,r); margin: -9px 0 -5px 5px; width: auto; }
+    //}
 }
 
 

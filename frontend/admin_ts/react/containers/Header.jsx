@@ -1,12 +1,10 @@
 import React from 'react' ;
-import { bindActionCreators } from 'redux'
 
 import BaseController from './BaseController';
-// import Actions from '../actions/UsersActions';
+import Actions from '../actions/HeaderActions.ts';
 import classnames from 'classnames';
 import {Common} from "common/Common.ts";
 import {MainConfig} from '../../inc/MainConfig';
-import {Framework} from 'common/Framework.ts';
 
 
 export class Header extends BaseController
@@ -16,9 +14,10 @@ export class Header extends BaseController
             data: state.HeaderData,
             // test: state.Ttest,
         }),
-        actions: dispatch => ({
-            actions: bindActionCreators(Framework.initAction(Actions), dispatch),
-        })
+        actions: {
+            // actions: bindActionCreators(Framework.initAction(Actions), dispatch),
+            actions: Actions,
+        }
     };
 
 
@@ -29,32 +28,20 @@ export class Header extends BaseController
         __DEV__&&console.log( 'Header props', props );
     }
 
-/*
     componentDidUpdate()
     {
-        __DEV__&&console.debug( 'this.props', this.props );
+        (new RadioBtns({
+            activeClass: "btn-success",
+            target: this.refs.testMode,
+            callbacks: [() => {}, () => {}],
+        })).apply();
     }
-*/
 
 
     render()
     {
         let { actions, data: {logoUrl, logoutUrl, userName, isAdmin} } = this.props;
 
-__DEV__&&console.log( 'Users', 0 );
-
-        // prepare sport filter
-        // AllSport && AllSport.unshift('All') || (AllSport = ['All']);
-        // if (sportsItems) sportsItems = sportsItems.concat(AllSport.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
-        // currSport = sportsItems.slice().filter((val) => val.value == Sport || !Sport && !val.value )[0];
-        //
-        // // prepare lig filter
-        // AllLeague && AllLeague.unshift('All') || (AllLeague = ['All']);
-        // if (AllLeague) ligItems = ligItems.concat(AllLeague.map((val) => { return { value: val === 'All' ? '' : val, label: val} }));
-        // currLig = ligItems.slice().filter((val) => val.value == League || !League && !val.value )[0];
-
-
-        // sort title (см. как на HomeEvents)
 
         return <header className="main-header">
             {/*<!-- Logo -->*/}
@@ -94,14 +81,12 @@ __DEV__&&console.log( 'Users', 0 );
                                 { isAdmin &&
                                     <li className="user-body">
                                         <div className="row">
-                                            <div className="col-xs-4 text-center">
-                                                <a href="#">Followers</a>
-                                            </div>
-                                            <div className="col-xs-4 text-center">
-                                                <a href="#">Sales</a>
-                                            </div>
-                                            <div className="col-xs-4 text-center">
-                                                <a href="#">Friends</a>
+                                            <div className="col-xs-12 ">{/*text-center*/}
+                                                <div ref="testMode" class="btn-group">
+                                                    <button type="button" class="btn btn-default" data-rval="1">On</button>
+                                                    <input data-js="valueStor" type="hidden" value="1" name="TypeEvent" />
+                                                    <button type="button" class="btn btn-default" data-rval="2">Off</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </li>

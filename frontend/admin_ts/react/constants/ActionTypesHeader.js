@@ -1,0 +1,1 @@
+export const ON_TEST_MODE = 'ADMH_ON_TEST_MODE';
