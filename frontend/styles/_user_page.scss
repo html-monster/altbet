@@ -70,7 +70,7 @@
     }
   }
   .inactive{  opacity: 0.3;  }
-  .submit_container{  margin: 35px 0; width: 200px;  right: 205px; }
+  .submit_container{  margin: 0px 0; width: 200px;  right: 205px; }
   input[type=submit]{
     width: 100%;
     padding: 7px 6px;
@@ -156,7 +156,7 @@
       h4{  margin: 15px 0 5px; font-weight: normal;  }
     }
 
-    .input_animate{display: block;}
+    .input_animate{display: block; margin-top: 0;}
 
     hr {
       width: 880px;
