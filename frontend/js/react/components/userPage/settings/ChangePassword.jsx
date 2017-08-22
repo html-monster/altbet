@@ -52,7 +52,7 @@ export default class ChangePassword extends React.PureComponent
 	render()
 	{
         const { header } = this.props.data;
-		
+
 
 		return <div className={"tab_item " + (this.props.data.active ? "active" : "")}>
 			<h2 className="section_user passw_change">Change Password</h2>
@@ -65,7 +65,7 @@ export default class ChangePassword extends React.PureComponent
 					<label  className="input__label input__label--yoshiko" htmlFor="user_curr_pass">
 						<span className="input__label-content input__label-content--yoshiko" data-content="Current Password">Current Password</span>
 					</label>
-					<span className="validation-summary-errors">{}</span>
+					<span className="error">{}</span>
 				</span>
 
 				<span className="input_group pass_container">
@@ -74,7 +74,7 @@ export default class ChangePassword extends React.PureComponent
 					<label className="input__label input__label--yoshiko" htmlFor="user_pass">
 						<span className="input__label-content input__label-content--yoshiko" data-content="New Password">New Password</span>
 					</label>
-					<span className="validation-summary-errors">{}</span>
+					<span className="error">{}</span>
 				</span>
 
 				<span className="input_group  pass_container passw_opacity">
@@ -83,7 +83,7 @@ export default class ChangePassword extends React.PureComponent
 					<label className="input__label input__label--yoshiko" htmlFor="user_confirm_pass">
 						<span className="input__label-content input__label-content--yoshiko" data-content="Confirm Password">Confirm Password</span>
 					</label>
-					<span className="validation-summary-errors">{}</span>
+					<span className="error">{}</span>
 				</span>
 				<span className="input_group  submit_container">
 					<input type="submit" value="Change Password" id="submit" className="btn wave submit"/>
@@ -116,24 +116,24 @@ export default class ChangePassword extends React.PureComponent
 		{
 			let message = $('.wrapper_user_page .change_password .answer_message');
 			if (answer.Error) {
-				message.removeClass('validJs').addClass('validation-summary-errors').text(answer.Error);
+				message.removeClass('validJs').addClass('error').text(answer.Error);
 				$('.wrapper_user_page #user_curr_pass').removeClass('validJs').addClass('invalidJs')
 			}
 			else if (answer.ErrorUpdate)
-				message.removeClass('validJs').addClass('validation-summary-errors').text(answer.ErrorUpdate);
+				message.removeClass('validJs').addClass('error').text(answer.ErrorUpdate);
 			else {
-				message.removeClass('validation-summary-errors').addClass('validJs')
+				message.removeClass('error').addClass('validJs')
 					   .text('Your password was successfully changed');
 
 				setTimeout(() => {
 					$('.wrapper_user_page .pass_container').removeClass('input--filled');
-					$('.wrapper_user_page .change_password [type=password]').removeClass('validation-summary-errors validJs valid').val('');
-					$('.wrapper_user_page .change_password .validation-summary-errors').text('');
+					$('.wrapper_user_page .change_password [type=password]').removeClass('error validJs valid').val('');
+					$('.wrapper_user_page .change_password .error').text('');
 				}, 100);
 			}
 
 			setTimeout(() => {
-				message.removeClass('valid validation-summary-errors').text('');
+				message.removeClass('valid error').text('');
 			}, 5000);
 
 			$(event.currentTarget).find('[type=submit]').removeAttr('disabled')
@@ -241,7 +241,7 @@ export default class ChangePassword extends React.PureComponent
 
 	_showMessage(errorText, ...context) {
 		$(context).each(function () {
-			$(this).parent().find('.validation-summary-errors').text(errorText);
+			$(this).parent().find('.error').text(errorText);
 		});
 	}
 

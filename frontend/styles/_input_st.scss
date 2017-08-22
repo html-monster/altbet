@@ -2,7 +2,7 @@
 // адская садомия сюда больше ничего не добавлять
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.sign_up_form, .sign_in_form, .change_password, .self_exclusion { //.setting_form
+.sign_up_form, .sign_in_form {
 
   input[type=email] {
     &:-webkit-autofill {
@@ -205,56 +205,56 @@
     animation-fill-mode: both;
   }
 
-  .input__label-content {
-    position: relative;
-    display: block;
-    //padding: 1.6em 0;
-    width: 100%;
-  }
+  //.input__label-content {
+  //  position: relative;
+  //  display: block;
+  //  //padding: 1.6em 0;
+  //  width: 100%;
+  //}
 
-  .invalid_message, .validation-summary-errors {
-    position: absolute;
-    right: 0;
-    bottom: -34px;
-    display: block;
-    height: 36px;
-    padding: 2px 0;
-    color: #ff4810;
-    font-size: 12px;
-  }
+  //.invalid_message, .validation-summary-errors {
+  //  position: absolute;
+  //  right: 0;
+  //  bottom: -34px;
+  //  display: block;
+  //  height: 36px;
+  //  padding: 2px 0;
+  //  color: #ff4810;
+  //  font-size: 12px;
+  //}
   .register_form_message { bottom: 25px; }
 
 
 
-  .time_container {
-    display: block;
-    width: 300px;
-    height: 40px;
-    border: 1px solid #fff;
-    .react-numeric-input {
-      width: 100%;
-      .form-control {
-        display: block;
-        width: 214px;
-        padding-top: 5px;
-        font-size: 18px;
-        padding-left: 8.4ex !important;
-        padding-right: 0 !important;
-      }
-      b {
-        top: 0 !important;
-        right: 0 !important;
-        height: 40px !important;
-        width: 40px !important;
-        background: #fff !important;
-        cursor: pointer !important;
-        &:last-child {
-          left: 0 !important;
-        }
-      }
-    }
-  }
-}
+//  .time_container {
+//    display: block;
+//    width: 300px;
+//    height: 40px;
+//    border: 1px solid #fff;
+//    .react-numeric-input {
+//      width: 100%;
+//      .form-control {
+//        display: block;
+//        width: 214px;
+//        padding-top: 5px;
+//        font-size: 18px;
+//        padding-left: 8.4ex !important;
+//        padding-right: 0 !important;
+//      }
+//      b {
+//        top: 0 !important;
+//        right: 0 !important;
+//        height: 40px !important;
+//        width: 40px !important;
+//        background: #fff !important;
+//        cursor: pointer !important;
+//        &:last-child {
+//          left: 0 !important;
+//        }
+//      }
+//    }
+//  }
+//}
 
 .sign_up_form {
   .input_animate {
@@ -303,80 +303,81 @@
 }
 
 
-.setting_form {
-  .input_animate {
-    height: 55px;
-    margin: 0 0 1em;
-    &:nth-child(5):before { display: none; }
-    .input__field {
-      padding-left: 5px;
-      color: #afabc8;
-    }
-    .input__label {
-      left: 0;
-    }
-  }
-}
+//.setting_form {
+//  .input_animate {
+//    height: 55px;
+//    margin: 0 0 1em;
+//    &:nth-child(5):before { display: none; }
+//    .input__field {
+//      padding-left: 5px;
+//      color: #afabc8;
+//    }
+//    .input__label {
+//      left: 0;
+//    }
+//  }
+//}
 
 .sign_in_form{
   .show_password{position: absolute; right: 5px; top: 13px; z-index: 999;}
   .input__label{left: 35px;}
 }
-.change_password{
-  .input__label{left: 5px;}
-   .input__field{padding-left: 10px;}
 }
+//.change_password{
+//  .input__label{left: 5px;}
+//   .input__field{padding-left: 10px;}
+//}
 
-.self_exclusion {
-  section {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
-    &:last-child {
-      border: none;
-    }
-    form {
-      margin: 40px 0;
-      &.first_form {
-        margin-top: 0;
-      }
-      h4 {
-        font-size: 18px;
-        font-weight: bold !important;
-      }
-      .alert_block {
-        display: flex;
-        align-items: center;
-        height: 20px;
-        border-left: 2px solid;
-        border-color: #f8b747;
-        padding-left: 15px;
-        margin: 15px 0 10px 0;
-        &.for_cont_pass {
-          margin-bottom: 30px;
-        }
-      }
-      .pass_container {
-        margin-top: 15px;
-        max-width: 448px;
-        margin-right: 50px;
-      }
-      .time_container {
-        display: flex;
-        width: 100%;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        margin-bottom: 20px;
-        border: none;
-        .h-dropdown2 {
-          width: 450px;
-          margin-right: 50px;
-        }
-        .save_button {
-          height: 36px;
-          width: 100px;
-        }
-      }
-    }
-  }
-}
+//.self_exclusion {
+//  section {
+//    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+//    &:last-child {
+//      border: none;
+//    }
+//    form {
+//      margin: 40px 0;
+//      &.first_form {
+//        margin-top: 0;
+//      }
+//      h4 {
+//        font-size: 18px;
+//        font-weight: bold !important;
+//      }
+//      .alert_block {
+//        display: flex;
+//        align-items: center;
+//        height: 20px;
+//        border-left: 2px solid;
+//        border-color: #f8b747;
+//        padding-left: 15px;
+//        margin: 15px 0 10px 0;
+//        &.for_cont_pass {
+//          margin-bottom: 30px;
+//        }
+//      }
+//      .pass_container {
+//        margin-top: 15px;
+//        max-width: 448px;
+//        margin-right: 50px;
+//      }
+//      .time_container {
+//        display: flex;
+//        width: 100%;
+//        flex-direction: row;
+//        align-items: center;
+//        justify-content: flex-start;
+//        margin-bottom: 20px;
+//        border: none;
+//        .h-dropdown2 {
+//          width: 450px;
+//          margin-right: 50px;
+//        }
+//        .save_button {
+//          height: 36px;
+//          width: 100px;
+//        }
+//      }
+//    }
+//  }
+//}
 
