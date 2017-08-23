@@ -26,7 +26,7 @@
 - Momentjs Format (https://momentjs.com/docs/#/displaying/format/)
 - Bootstrap dark theme (https://bootswatch.com/cyborg/)
 - Блокирующий рендеринг (https://webformyself.com/obrabatyvaem-blokiruyushhij-rendering-css-dlya-uskoreniya-renderinga-sajta/) 
-
+- Уведомления (https://lobianijs.com/site/lobibox#notifications) 
 
 ## Plugins
 - React pluging (https://react.parts/web)

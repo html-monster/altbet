@@ -15,6 +15,7 @@ import {
 import { ON_ACTIVE_SYMBOL_CHANGED } from '../../../constants/ActionTypesSidebar.js';
 import BaseActions from '../../BaseActions';
 import {RebuildServerData} from './activeTrader/rebuildServerData';
+import Notification from '../../../common/Notification';
 // import { orderForm } from '../../../components/formValidation/validation';
 // import {OddsConverterObj} from '../../models/oddsConverter/oddsConverter.js';
 /// <reference path="../../../../.d/common.d.ts" />
@@ -526,7 +527,7 @@ class Actions extends BaseActions
 
 			function onErrorAjax()
 			{
-				defaultMethods.showError('The connectionhas been lost. Please check your internet connection or try again.');
+				(new Notification).showError({msg: 'The connection has been lost. Please check your internet connection or try again.'});
 			}
 		}
 	}
@@ -581,7 +582,7 @@ class Actions extends BaseActions
 
 			function onErrorAjax()
 			{
-				defaultMethods.showError('The connectionhas been lost. Please check your internet connection or try again.');
+				(new Notification).showError({msg: 'The connection has been lost. Please check your internet connection or try again.'});
 			}
 		}
 	}
@@ -609,7 +610,7 @@ class Actions extends BaseActions
 			function onErrorAjax()
 			{
 				$(event.target).find('[type=submit]').removeAttr('disabled');
-				defaultMethods.showError('The connectionhas been lost. Please check your internet connection or try again.');
+				(new Notification).showError({msg: 'The connection has been lost. Please check your internet connection or try again.'});
 			}
 
 			defaultMethods.sendAjaxRequest({
@@ -714,7 +715,7 @@ class Actions extends BaseActions
     //
 	// 		function onErrorAjax()
 	// 		{
-	// 			defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
+	// 			(new Notification).showError({msg: 'The connection has been lost. Please check your internet connection or try again.'});
 	// 		}
     //
 	// 		function onSuccessAjax(answer)
@@ -783,13 +784,13 @@ class Actions extends BaseActions
 
 			function onErrorAjax()
 			{
-				defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
+				(new Notification).showError({msg: 'The connection has been lost. Please check your internet connection or try again.'});
 			}
 
 			function onSuccessAjax(answer)
 			{
 				if(answer !== 'success')
-					defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
+					(new Notification).showError({msg: 'The connection has been lost. Please check your internet connection or try again.'});
 			}
 
 			if(popUpShow){
@@ -880,7 +881,7 @@ class Actions extends BaseActions
 			{
 				__DEV__ && console.log('XMLHTTPRequest object: ', x);
 				__DEV__ && console.log('textStatus: ',  y);
-				defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
+				(new Notification).showError({msg: 'The connection has been lost. Please check your internet connection or try again.'});
 			}
 		}
 	}

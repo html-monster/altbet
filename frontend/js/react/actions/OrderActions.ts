@@ -3,7 +3,7 @@
  */
 import BaseActions from './BaseActions';
 // import { orderForm } from '../components/formValidation/validation';
-
+import Notification from '../common/Notification';
 /// <reference path="../../.d/common.d.ts" />
 declare let __DEV__;
 declare function $(object: any);
@@ -37,7 +37,7 @@ abstract class OrderActions extends BaseActions
             {
                 form.removeClass('loading');
                 form.find('[type=submit]').removeAttr('disabled');
-                defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
+                (new Notification).showError({msg:'The connection has been lost. Please check your internet connection or try again.'});
             }
 
             defaultMethods.sendAjaxRequest({

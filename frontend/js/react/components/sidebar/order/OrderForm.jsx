@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 // import * as orderFormActions from '../../../actions/order/orderFormActions.ts';
 import InputNumber from '../../InputNumber';
 import OddsConverter from '../../../models/oddsConverter';
+import Notification from '../../../common/Notification';
+
 
 /**
  * props:{
@@ -648,7 +650,10 @@ export default class OrderForm extends React.Component
 		}
 
 		if(endDate && moment().format('x') > endDate)
-			defaultMethods.showError('This game is completed, please try another game');
+		{
+			(new Notification).showWarning({msg: 'This game is completed, please try another game'});
+			return false;
+		}
 
 
 		// if(remainingBal !== null && side === 'sell' && remainingBal < Math.round10((1 - price) * quantity, -2))

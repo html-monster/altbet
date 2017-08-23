@@ -10,6 +10,7 @@ import {
     ON_YOUR_CHANGE_ACTIVE_EVENT,
 } from "../../constants/ActionTypesYourOrders";
 import BaseActions from '../BaseActions';
+import Notification from '../../common/Notification';
 // import { orderForm } from '../../components/formValidation/validation';
 
 class Actions extends BaseActions
@@ -83,7 +84,7 @@ class Actions extends BaseActions
 					console.log($(id).parents('.order_content').find('h3').text() + ' order isn\'t deleted');
 					form.find('[type=submit]').removeAttr('disabled');
 					form.removeClass('loading');
-					defaultMethods.showError('Server error, try again later');
+					(new Notification).showError({msg: 'Oops, something went wrong. Please try again'});
 				}
 			}
 
@@ -93,7 +94,7 @@ class Actions extends BaseActions
 				form.removeClass('loading');
 				__DEV__ && console.log('XMLHTTPRequest object: ', x);
 				__DEV__ && console.log('textStatus: ',  y);
-				defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
+				(new Notification).showError({msg: 'The connection has been lost. Please check your internet connection or try again.'});
 			}
 
 			defaultMethods.sendAjaxRequest({
@@ -221,13 +222,13 @@ class Actions extends BaseActions
 
 				if(!isEventStarted)
 				{
-					defaultMethods.showWarning('You can`t delete the order before the game starts');
+					(new Notification).showWarning({msg: 'You can`t delete the order before the game starts'});
 					return;
 				}
 
 				if(endDate && isEventFinished)
 				{
-                    defaultMethods.showWarning('You can`t delete the order, this game is completed');
+                    (new Notification).showWarning({msg: 'You can`t delete the order, this game is completed'});
                     return;
 				}
 			}
