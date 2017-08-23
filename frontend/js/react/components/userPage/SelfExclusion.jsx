@@ -310,34 +310,34 @@ export default class SelfExclusion extends React.Component
 						<h4>Responsible Gaming Time out</h4>
 						<h5> Self Exclusion </h5>
 						<span className="alert_block for_cont_pass"> This will block you from using the site for 6 months this actions cannot be reversed under any circumstances</span>
-                       <div className="time_container">
-                           <span className="input_animate input--yoshiko pass_container Password">
-					            <input className="input__field input__field--yoshiko" id="resp_time_pass"
-									   name="Password" type="password"/>
-					             <span className="show_password">{}</span>
+                       <div className="setting-form">
+                           <span className="input_group Password pass_container">
+					            <input className="input" id="resp_time_pass"
+									   name="Password" type="password" placeholder="Password"/>
+					             <span className="show_password show-passw Password">{}</span>
 					                <label className="input__label input__label--yoshiko" htmlFor="resp_time_pass">
 						        <span className="input__label-content input__label-content--yoshiko" data-content="Current Password">Password</span>
 					            </label>
-					             <span className="validation-summary-errors">{}</span>
+					             <span className="error">{}</span>
                             </span>
-						<button type="submit" className="save_button wave btn btn_yellow">Save</button>
+						<button type="submit" className="save_button wave btn btn_yellow new-items-btn">Save</button>
                        </div>
 					</form>
 
     </section>
     <section>
 
-				<form action={appData.pageAccountPreferencesUrl} onSubmit={::this.sendData}>
+				<form  action={appData.pageAccountPreferencesUrl} onSubmit={::this.sendData}>
                         <h4>Time Out</h4>
 
-                        <div className="pass_container">
-                            <span className="input_animate input--yoshiko pass_container Password">
-                            	<input className="input__field input__field--yoshiko" id="time_pass" name="Password" type="password"/>
-					          		<span className="show_password">{}</span>
+                        <div className="setting-form">
+                            <span className="input_group Password pass_container">
+                            	<input className="input" id="time_pass" name="Password" type="password" placeholder="Password"/>
+					          		<span className="show_password show-passw Password">{}</span>
 					          		<label className="input__label input__label--yoshiko" htmlFor="time_pass">
 						        		<span className="input__label-content input__label-content--yoshiko" data-content="Current password">Password</span>
 					            	</label>
-					             	<span className="validation-summary-errors">{}</span>
+					             	<span className="error">{}</span>
 							</span>
 						</div>
 
@@ -362,7 +362,7 @@ export default class SelfExclusion extends React.Component
 								 searchable={true}
 								 afterChange={logChange} />
 
-						<button type="submit" className="save_button wave btn btn_yellow">Save</button>
+						<button type="submit" className="save_button wave btn btn_yellow ">Save</button>
                         </div>
 				</form>
     </section>
