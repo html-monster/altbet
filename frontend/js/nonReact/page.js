@@ -95,7 +95,7 @@ $(document).ready(function () {
     popUpClass.globalPopUpClose('.wrapper_user_page .payment_message', 'fadeOut', '.wrapper_user_page .payment_message .pop_up_content');//payment message
 
     // defaultMethods.maxHeight('.sign_up_form  .tab_content ', 105 + window.innerHeight * 0.1);
-    defaultMethods.activated('.content_bet .add_favorite');
+    // defaultMethods.activated('.content_bet .add_favorite');
 
     // messageClass.showHelpMessage('.active_trader .help', '.tab_item');
 

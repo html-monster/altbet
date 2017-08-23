@@ -5,14 +5,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 
+import classnames from 'classnames';
+
 import headerActions from '../actions/headerActions.ts';
 import sidebarActions from '../actions/sidebarActions.ts';
 import AnimateOnUpdate from '../components/Animation';
 import {CheckBox} from '../components/common/CheckBox';
 import OddsConverterComp from '../components/OddsConverter';
-import classnames from 'classnames';
+import Notification from '../common/Notification';
 // import {DropBox2} from '../components/common/DropBox2';
-
 
 class Header extends React.Component
 {
@@ -76,6 +77,16 @@ class Header extends React.Component
 			{/*</div>*/}
 			<div className="header_left">
 				<div className="logo-container">
+					<div style={{height: 0, width: 0, overflow: 'hidden'}}>
+						<i className="fa fa-check-circle"/>
+						<i className="fa fa-info-circle"/>
+						<i className="fa fa-exclamation-circle"/>
+						<i className="fa fa-times-circle"/>
+						<audio src="/sounds/notification_error.ogg" preload="auto"/>
+						<audio src="/sounds/notification_info.ogg" preload="auto"/>
+						<audio src="/sounds/notification_success.ogg" preload="auto"/>
+						<audio src="/sounds/notification_warning.ogg" preload="auto"/>
+					</div>
 					<a className="logo" href={globalData.Urls.Home}> </a>
 				</div>
 				<div className="fast_menu">
@@ -83,6 +94,11 @@ class Header extends React.Component
 					<a href={globalData.Urls.Home + "?filter=live"}  className={"f_button f_but_before f_but_bor" + ($filter === 'live' ? ' active' : '')} onClick={::this.loginClick}><span>My Games</span></a>
 					<a href={globalData.Urls.MyActivity + "#/history"} className={classnames("f_button f_but_before f_but_bor", {"active": ABpp.config.currentPage === ABpp.CONSTS.PAGE_MYPOS})} onClick={::this.loginClick}><span className="history_event">My History</span></a>
 					<a href={globalData.Urls.TradingRules} className="f_button f_but_before"><span>Rules</span> </a>
+					{/*<button className="btn" onClick={()=> (new Notification).showMessage({msg: 'The connection has been lost. Please check your internet connection or try again.'}, 'success')}>m</button>*/}
+					{/*<button className="btn" onClick={()=> (new Notification).showError({msg: 'The connection has been lost. Please check your internet connection or try again.'})}>e</button>*/}
+					{/*<button className="btn" onClick={()=> (new Notification).showWarning({msg: 'The connection has been lost. Please check your internet connection or try again.'})}>w</button>*/}
+					{/*<button className="btn" onClick={()=> (new Notification).showInfo({msg: 'The connection has been lost. Please check your internet connection or try again.'})}>i</button>*/}
+					{/*<button className="btn" onClick={()=> (new Notification).showSuccess({msg: 'The connection has been lost. Please check your internet connection or try again.'})}>s</button>*/}
 				</div>
 			</div>
 			<div className="header_right">

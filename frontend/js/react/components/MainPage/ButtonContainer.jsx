@@ -1,9 +1,10 @@
 import React from 'react';
+import classnames from 'classnames';
 
 import {DateLocalization} from './../../models/DateLocalization';
 import {Common} from './../../common/Common';
 import AnimateOnUpdate from '../Animation';
-import classnames from 'classnames';
+import Notification from '../../common/Notification';
 
 export default class ButtonContainer extends React.PureComponent
 {
@@ -176,7 +177,7 @@ export default class ButtonContainer extends React.PureComponent
             isEventClosed = this.props.data.exdata.EndDate && +moment().format('x') > (new DateLocalization).fromSharp(this.props.data.exdata.EndDate);
 
 		if(!inGame && isEventStarted || isEventClosed)
-            defaultMethods.showWarning('This game is completed, please try another game');
+			(new Notification).showWarning({msg: 'This game is completed, please try another game'});
         else
             this.props.actions.actionOnPosPriceClick(mainContext, props);
     }

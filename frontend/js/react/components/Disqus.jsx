@@ -31,7 +31,7 @@ class Disqus extends React.PureComponent
 		// console.log('this.props:', this.props);
 
 		if (url && identifier && url !== prevProps.url && identifier !== prevProps.identifier) {
-			DISQUS.reset({
+			DISQUS && DISQUS.reset({
 				reload: true,
 				config: function () {
 					this.page.identifier = identifier;

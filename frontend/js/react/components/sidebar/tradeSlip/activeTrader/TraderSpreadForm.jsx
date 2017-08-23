@@ -3,6 +3,8 @@
  */
 import React from 'react';
 
+import Notification from '../../../../common/Notification';
+
 export default class TraderSpreadForm extends React.Component {
 	constructor()
 	{
@@ -135,7 +137,7 @@ export default class TraderSpreadForm extends React.Component {
 
 		if(endDate && moment().format('x') > endDate)
 		{
-			defaultMethods.showError('This game is completed, please try another game');
+			(new Notification).showWarning({msg: 'This game is completed, please try another game'});
 			return false;
 		}
 

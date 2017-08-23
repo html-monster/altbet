@@ -5,7 +5,7 @@ class orderClass{
 		let self = this;
 		// const takerFees = 0.0086;
 
-		orderClass.showInfo();
+		// orderClass.showInfo();
 
 		// sidebar height and current order ============================================================================
 		// self.orderSize = function () {

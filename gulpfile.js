@@ -207,6 +207,7 @@ gulp.task('vendor',function(){
         'vendor/visibilityjs/lib/visibility.core.js',
         'vendor/visibilityjs/lib/visibility.timers.js',
         'vendor/visibilityjs/lib/visibility.fallback.js',
+        'vendor/lobibox-master/js/notifications.js',
         ]),
     $.concat('vendors.js'),
     gulpIf(!isDevelopment, $.uglify()),

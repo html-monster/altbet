@@ -27,6 +27,40 @@
   &.passw_opacity{ opacity: 9; }
   &.valid { color: #4dac2e; border-color: #4dac2e; border-bottom: 1px solid #4dac2e; }
 }
+.self_exclusion {
+  .setting-form{ margin: 0; }
+  .input-group{ margin: 0; }
+
+  section { margin: 0px 0px 50px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    &:last-child { border: none; }
+    form {
+      &.first_form { margin-top: 0;
+      }
+      h4 { font-size: 18px; font-weight: bold !important;
+      }
+      .alert_block { display: flex; align-items: center; height: 20px; border-left: 2px solid; border-color: #f8b747; padding-left: 15px; margin: 15px 0 10px 0;
+      }
+      .time_container { display: flex; width: 100%; flex-direction: row; align-items: center; justify-content: flex-start; margin-bottom: 20px; border: none;
+         .h-dropdown2 { width: 450px; margin-right: 50px;
+        }
+         .save_button { height: 36px; width: 100px; right: 50px; top: 50px;}
+      }
+    }
+  }
+
+  //новые параметры для кнопки в self-excl
+  .new-items-btn{ height: 36px; width: 100px; left: 443px; bottom: 83px; }
+
+    //меняю размер бокса с временем в self-excl
+    .Select-control{ width: 89%; top: 50px; }
+
+  .Select-menu-outer { position: absolute; margin-top: -1px; top: 88px; width: 89%; max-height: 200px;
+                       border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background: $active_selection_bg; border: 1px solid $user_page_tr_separate;
+                       border-top-color: $user_page_tr_separate; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06); box-sizing: border-box; z-index: 100; -webkit-overflow-scrolling: touch; }
+
+}
+
 
 .pass_container{
 
