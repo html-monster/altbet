@@ -150,9 +150,20 @@ class HomeEvents extends BaseController
                                         <td data-js="TD-HomeHandicap">{val.Symbol.HomeHandicap}</td>
                                         <td data-js="TD-AwayName">{val.Symbol.AwayName}</td>
                                         <td data-js="TD-AwayHandicap">{val.Symbol.AwayHandicap}</td>
-                                        <td data-js="TD-StartDate">{$DateLocalization.fromSharp2(val.Symbol.StartDate, 0).toLocalDate({format: "MM/DD/Y h:mm A"})}</td>
+                                        <td data-js="TD-StartDate">{$DateLocalization.fromUtcDate({dateTime: val.Symbol.StartDate, format: "MM/DD/Y h:mm A", TZOffset: true})}</td>
+                                        {/*<td data-js="TD-StartDate">{val.Symbol.StartDate}</td>*/}
                                         <td data-js="TD-EndDate">{val.Symbol.EndDate && $DateLocalization.fromSharp2(val.Symbol.EndDate, 0).toLocalDate({format: "MM/DD/Y h:mm A"})}</td>
-                                        <td data-js="">{val.Symbol.ResultExchange}</td>
+                                        <td data-js="">
+                                            {do{ let ret;
+                                                switch( val.Symbol.OptionExchange )
+                                                {
+                                                    case 0 : ret = 'HC'; break;
+                                                    case 1 : ret = 'ML'; break;
+                                                    case 2 : ret = 'TP'; break;
+                                                }
+                                                ret;
+                                            }}
+                                        </td>
                                         <td data-js="">{TypeEventStr[val.Symbol.TypeEvent]}</td>
                                         <td data-js="TD-UrlExchange">{val.Symbol.UrlExchange}</td>
                                         {Status == StatusEvent.Settlement &&

@@ -1,4 +1,4 @@
-// declare let __DEV__;
+declare let __DEV__;
 // declare let __LDEV__;
 // declare let globalData;
 

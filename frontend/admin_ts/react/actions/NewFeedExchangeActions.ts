@@ -38,6 +38,8 @@ declare let orderClass;
 export default class Actions extends BaseActions
 {
     private T1 = 0;
+    private TestMode = false;
+    private PreSeasonMode = true; // для тестирование sport radar-a
 
     /**
      * Change current event in dropbox
@@ -211,8 +213,12 @@ export default class Actions extends BaseActions
         return (dispatch, getState) =>
         {
             let data = getState().newFeedExchange;
+            const {TestMode} = getState().AppData;
             let IsEditFeedExchange = data.IsEditFeedExchange;
             let ret;
+
+            this.TestMode = TestMode;
+
 
             // check for correct team fillness
             if( ret = this.checkTeam(data.PlayersTeam1, data.Positions, 1, data.UPlayerData, data.TeamSize) )
@@ -221,14 +227,14 @@ export default class Actions extends BaseActions
             } else if (ret = this.checkTeam(data.PlayersTeam2, data.Positions, 2, data.UPlayerData, data.TeamSize))
             {
             // check for reserve
-            } else if (ret = this.checkReserveTeam(data.PlayersTeam1Reserve, 1))
+            } else if (!this.TestMode && (ret = this.checkReserveTeam(data.PlayersTeam1Reserve, 1)) )
             {
-            } else if (ret = this.checkReserveTeam(data.PlayersTeam2Reserve, 2))
+            } else if (!this.TestMode && (ret = this.checkReserveTeam(data.PlayersTeam2Reserve, 2)))
             {
             // check for variable
-            } else if (ret = this.checkVariableTeam(data.PlayersTeam1Variable, 1))
+            } else if (!this.TestMode && (ret = this.checkVariableTeam(data.PlayersTeam1Variable, 1)))
             {
-            } else if (ret = this.checkVariableTeam(data.PlayersTeam2Variable, 2))
+            } else if (!this.TestMode && (ret = this.checkVariableTeam(data.PlayersTeam2Variable, 2)))
             {
             // check for empty form fields
             } else if (ret = this.checkFormData(data.FormData))
@@ -236,8 +242,8 @@ export default class Actions extends BaseActions
             } // endif
 
 
-            // DEBUG:
-            ret = false;
+            // DEBUG
+            // ret = false;
 
             // some errors
             if (ret)
@@ -620,16 +626,16 @@ __DEV__ && console.log( 'data', data );
      */
     private checkFormData(data)
     {
-        const { category, fullName, teamName1, teamName2, url, Team1Defense, Team2Defense } = data;
+        const { category, fullName, teamName1, teamName2, url, Team1Defense, Team2Defense, OptionExchanges } = data;
         let message, error;
 
 
-        /*if( category === '' )
+        if( !Object.keys(OptionExchanges).filter(itm => OptionExchanges[itm].checked).length )
         {
-            message = 'Please set the events category';
-            error = -301;
+            message = 'Please set Event type(s)';
+            error = -311;
         }
-        else*/ if( teamName1 === '' )
+        else if( teamName1 === '' )
         {
             message = 'Please fill team 1 name';
             error = -302;
@@ -660,6 +666,7 @@ __DEV__ && console.log( 'data', data );
             error = -303;
         } // endif
 
+
         if (message) return {message, error};
         else false;
     }
@@ -676,14 +683,14 @@ __DEV__ && console.log( 'data', data );
 
         try {
             // check for size
-            if (players.length > TeamSize)
+            if (!this.PreSeasonMode && players.length > TeamSize)
             {
                 message = `Command ${inTeam} is greater than the specified command size in options`;
                 error = -310;
                 throw new Error(message);
             }
             // check for size
-            if (players.length < TeamSize)
+            if (!this.PreSeasonMode && players.length < TeamSize)
             {
                 message = `Command ${inTeam} is lower than the specified command size in options`;
                 error = -310;
@@ -726,7 +733,7 @@ __DEV__ && console.log( 'data', data );
 
 
             // check for team count
-            if( Object.keys(teams).length < 2 )
+            if( !this.TestMode && Object.keys(teams).length < 2 )
             {
                 message = `Team ${inTeam} players have to consists from minimum 2 events`;
                 error = -307;
@@ -759,7 +766,7 @@ __DEV__ && console.log( 'data', data );
 
 
             // check fppg and eppg fillness
-            for( let val of players  )
+/*            for( let val of players  )
             {
                 if( !Common.isNumeric(val.Fppg) )
                 {
@@ -771,7 +778,7 @@ __DEV__ && console.log( 'data', data );
                     error = -308;
                     throw new Error(message = `Please fill the EPPG for player "${val.Name}" in team ${inTeam}`);
                 } // endif
-            } // endfor
+            }*/ // endfor
 
         } catch (e) {
             return {message, error};
@@ -798,7 +805,7 @@ __DEV__ && console.log( 'data', data );
 
 
             // check fppg and eppg fillness
-            for( let val of players  )
+/*            for( let val of players  )
             {
                 if( !Common.isNumeric(val.Fppg) )
                 {
@@ -810,7 +817,7 @@ __DEV__ && console.log( 'data', data );
                     error = -308;
                     throw new Error(message = `Please fill the EPPG for player "${val.Name}" in team ${inTeam}`);
                 } // endif
-            } // endfor
+            }*/ // endfor
         } catch (e) {
             return {message, error};
         }

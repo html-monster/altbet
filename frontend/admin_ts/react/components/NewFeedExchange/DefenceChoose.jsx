@@ -33,8 +33,8 @@ export class DefenceChoose extends React.Component
         const { CurrentEventObj, FormData, actions } = this.props.data;
         let res;
 
-        const addT1Disabled = FormData.Team1Defense.TeamId;
-        const addT2Disabled = FormData.Team2Defense.TeamId;
+        const addT1Disabled = !!FormData.Team1Defense.TeamId;
+        const addT2Disabled = !!FormData.Team2Defense.TeamId;
 
 
         return <table className="table">
@@ -44,7 +44,7 @@ export class DefenceChoose extends React.Component
                     {(res = this._checkDefenceTeam(CurrentEventObj, FormData, 1)) ?
                         <td>
                             <button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamDefence.bind(null, {team: res.team})} title={`Remove team ${res.team} defense`}><i className="fa fa-remove -red"/> remove</button>&nbsp;&nbsp;
-                            <span> Team {res.team} </span>
+                            <abbr title={CurrentEventObj.HomeTeam}>Team {res.team}</abbr>
                         </td>
                         :
                         <td>
@@ -60,7 +60,7 @@ export class DefenceChoose extends React.Component
                     {(res = this._checkDefenceTeam(CurrentEventObj, FormData, 2)) ?
                         <td>
                             <button className="btn btn-default -btn-default btn-xs" onClick={actions.actionDelTeamDefence.bind(null, {team: res.team})} title={`Remove team ${res.team} defense`}><i className="fa fa-remove -red"/> remove</button>&nbsp;&nbsp;
-                            <span> Team {res.team} </span>
+                            <abbr title={CurrentEventObj.AwayTeam}>Team {res.team}</abbr>
                         </td>
                         :
                         <td>

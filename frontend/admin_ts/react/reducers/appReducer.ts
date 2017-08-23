@@ -3,21 +3,20 @@
 declare let globalData;
 
 import {
-    ON_BALVAN,
-} from '../constants/ActionTypesHeader.js';
+	ON_CH_TEST_MODE,
+} from '../constants/ActionTypesApp.js';
 /// TS_IGNORE
-import {Common} from "../common/Common";
+// import {Common} from "../common/Common";
 
 
 
 export default class Reducer
 {
-    // public static USING_TEAM = 1;
-
-
     private initialState = {
-        // Players: [],
-        // ...globalData.UserData,
+        TestMode: false,    // radio in user menu
+        admDevUsers: globalData.admDevUsers, // admin dev users
+        isAdmin: false,     // is admin user
+        UserData: globalData.UserData,
     };
 
 
@@ -25,6 +24,10 @@ export default class Reducer
     init()
     {
         let loadedData = {};
+        const { UserData: {userName}, admDevUsers } = this.initialState;
+
+        // set is admin flag
+        this.initialState.isAdmin = admDevUsers.indexOf(userName) != -1;
         this.initialState = {...this.initialState, ...loadedData};
     }
 
@@ -35,9 +38,8 @@ export default class Reducer
 
         switch (action.type)
         {
-            case ON_BALVAN:
-                state = action.payload(state);
-                return {...state};
+            case ON_CH_TEST_MODE:
+                return {...state, TestMode: action.payload};
 
             default:
                 this.init();
@@ -57,7 +59,3 @@ export default class Reducer
     }
 */
 }
-
-//
-// const $Reducer = new Reducer();
-// export default $Reducer.actionsHandler.bind($Reducer);

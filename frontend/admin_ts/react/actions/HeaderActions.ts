@@ -2,21 +2,24 @@
  * Created by Htmlbook on 28.02.2017.
  */
 import {
-	ON_TEST_MODE,
+	ON_BALVAN,
 } from '../constants/ActionTypesHeader.js';
+import {
+	ON_CH_TEST_MODE,
+} from '../constants/ActionTypesApp.js';
 import BaseActions from './BaseActions';
 
 export default class Actions extends BaseActions
 {
 	/**
-	 * subscribe for socket
+	 * switch test mode false/true
 	 */
-    public actionSwitchBasicMode(inMode)
+    public actionChTestMode(inMode)
     {
         return (dispatch, getState) =>
         {
             dispatch({
-                type: ON_TEST_MODE,
+                type: ON_CH_TEST_MODE,
                 payload: inMode
             });
         };

@@ -4,7 +4,9 @@ import BaseController from './BaseController';
 import Actions from '../actions/HeaderActions.ts';
 import classnames from 'classnames';
 import {Common} from "common/Common.ts";
-import {MainConfig} from '../../inc/MainConfig';
+// import {MainConfig} from '../../inc/MainConfig';
+import {RadioBtns} from 'admin/component/RadioBtns.ts';
+import {InfoMessages} from "common/InfoMessages.ts";
 
 
 export class Header extends BaseController
@@ -12,7 +14,7 @@ export class Header extends BaseController
     static connect = {
         state: state => ({
             data: state.HeaderData,
-            // test: state.Ttest,
+            AppData: state.AppData,
         }),
         actions: {
             // actions: bindActionCreators(Framework.initAction(Actions), dispatch),
@@ -28,19 +30,35 @@ export class Header extends BaseController
         __DEV__&&console.log( 'Header props', props );
     }
 
-    componentDidUpdate()
+
+    componentDidMount()
     {
         (new RadioBtns({
             activeClass: "btn-success",
             target: this.refs.testMode,
-            callbacks: [() => {}, () => {}],
+            defaultIndex: 1,
+            callbacks: [() => {
+                this.props.actions.actionChTestMode(true);
+                (new InfoMessages).show({
+                    title: '',
+                    message: 'Test mode on',
+                    color: InfoMessages.INFO,
+                });
+            }, () => {
+                this.props.actions.actionChTestMode(false);
+                (new InfoMessages).show({
+                    title: '',
+                    message: 'Test mode off',
+                    color: InfoMessages.INFO,
+                });
+            }],
         })).apply();
     }
 
 
     render()
     {
-        let { actions, data: {logoUrl, logoutUrl, userName, isAdmin} } = this.props;
+        let { actions, data: {}, AppData: {TestMode, isAdmin, UserData: {logoUrl, logoutUrl, userName, }} } = this.props;
 
 
         return <header className="main-header">
@@ -73,8 +91,8 @@ export class Header extends BaseController
                                     {/*<img src="../../dist/img/user2-160x160.jpg" className="img-circle" alt="User Image"/>*/}
 
                                     <p>
-                                        Alexander Pierce - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        User: {userName}
+                                        {/*<small>Member since Nov. 2012</small>*/}
                                     </p>
                                 </li>
                                 {/*<!-- Menu Body -->*/}
@@ -84,7 +102,7 @@ export class Header extends BaseController
                                             <div className="col-xs-12 ">{/*text-center*/}
                                                 <div ref="testMode" class="btn-group">
                                                     <button type="button" class="btn btn-default" data-rval="1">On</button>
-                                                    <input data-js="valueStor" type="hidden" value="1" name="TypeEvent" />
+                                                    <input data-js="valueStor" type="hidden" value={TestMode ? 1 : 2} name="TypeEvent" />
                                                     <button type="button" class="btn btn-default" data-rval="2">Off</button>
                                                 </div>
                                             </div>

@@ -35,7 +35,7 @@ export class DateLocalization
      * @param {number} inReturn
      * @returns {DateLocalization}
      */
-    public fromSharp2(inDate, inReturn = 1, props = {})
+    public fromSharp2(inDate, inReturn = 1, props = {TZOffset: false})
     {
         let retval ;
         try {
@@ -68,11 +68,15 @@ export class DateLocalization
      * @param dateTime
      * @return {string}
      */
-    public toLocalDate(inProps = {dateTime: '', format: 'MM/DD/Y'})
+    public toLocalDate(inProps = {dateTime: '', format: 'MM/DD/Y', TZOffset: false})
     {
         let dt : any = inProps.dateTime;
         if (!dt) dt = this.dateTime;
-        return dt != null ? moment(dt).format(inProps.format) : undefined;
+
+        if( inProps.TZOffset ) dt = moment.utc(dt).zone((new Date()).getTimezoneOffset()).format(inProps.format);
+        else dt = moment(dt).format(inProps.format);
+        // __DEV__&&console.log( '{offset: (new Date()).getTimezoneOffset()}', {offset: (new Date()).getTimezoneOffset(), format: inProps.format, dt} );
+        return dt != null ? dt : undefined;
     }
 
 
@@ -82,10 +86,9 @@ export class DateLocalization
      * @param inTimeStamp
      * @return {string}
      */
-    public toUtcDate(inProps = {dateTime: '', format: 'MM/DD/Y'})
+    public fromUtcDate(props = {dateTime: '', format: "MM/DD/Y h:mm A", TZOffset: false})
     {
-        let dt : any = inProps.dateTime;
-        if (!dt) dt = this.dateTime;
-        return dt != null ? moment.utc(dt).format(inProps.format) : undefined;
+        if( props.TZOffset ) return moment.utc(props.dateTime).zone((new Date()).getTimezoneOffset()).format(props.format);
+        else return moment(props.dateTime).format(props.format);
     }
 }

@@ -1,1 +1,1 @@
-export const ON_TEST_MODE = 'ADMH_ON_TEST_MODE';
+export const ON_BALVAN = 'ADMH_ON_BALVAN';

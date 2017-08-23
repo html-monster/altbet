@@ -66,6 +66,7 @@ module.exports = {
             'components': path.resolve(__dirname, '../frontend/admin_ts/react/components'),
             'containers': path.resolve(__dirname, '../frontend/admin_ts/react/containers'),
             'reducers': path.resolve(__dirname, '../frontend/admin_ts/react/reducers'),
+            'admin': path.resolve(__dirname, '../frontend/admin_ts'),
         },
         extensions: [
             '',

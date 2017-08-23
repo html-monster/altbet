@@ -18,7 +18,7 @@ export class RadioBtns
     {
         if( props )
         {
-            Object.assign(this.options, props, this.options);
+            this.options = {...this.options, ...props}
         } // endif
     }
 
@@ -26,8 +26,8 @@ export class RadioBtns
     public apply()
     {
         var self = this;
-
         var $target = this.options.target || "[data-js=radio-btn]";
+
 
         $($target).filter(":not(.js-rb-applied)").each(function()
         {

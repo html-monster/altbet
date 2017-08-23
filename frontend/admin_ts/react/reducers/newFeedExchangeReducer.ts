@@ -312,7 +312,7 @@ export default class Reducer
      */
     private loadServerData()
     {
-        const { HomeName, AwayName, HomeAlias, AwayAlias, StartDateStr, FullName, EventId, UrlExchange, HomeTeamId, AwayTeamId, Exchange, } = this.initialState.Exchanges[0].Symbol;
+        const { HomeName, AwayName, HomeAlias, AwayAlias, StartDateStr, FullName, EventId, UrlExchange, HomeTeamId, AwayTeamId, Exchange, OptionExchange } = this.initialState.Exchanges[0].Symbol;
         const { HomePlayers, AwayPlayers } = this.initialState.Exchanges[0];
         let { Categories, Players, FormData } = this.initialState;
         let catId;
@@ -341,6 +341,11 @@ export default class Reducer
             HomeTeamId,
             AwayTeamId,
             Exchange,
+            OptionExchanges: {
+                Spread: {checked: OptionExchange === 0, index: 0},
+                MoneyLine: {checked: OptionExchange === 1, index: 1},
+                TotalPoints: {checked: OptionExchange === 2, index: 2},
+            },
         }};
 
         // Aliases

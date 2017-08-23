@@ -66,7 +66,6 @@ class NewFeedExchange extends BaseController
         const { currTeamKey, okBtnDisabled, CbEventsItems } = this.state;
         var items = [], currentCat, catItems, ParentId, ParentName;
 
-        __DEV__&&console.log( 'AppData', AppData );
 
         // prepare command creation interface data
         const playersComponents = [
@@ -442,6 +441,7 @@ class NewFeedExchange extends BaseController
         }
         else
         {
+            __DEV__&&console.warn( `E${errorCode}: ${message}` );
             (new InfoMessages).show({
                 title: title,
                 message: message,
