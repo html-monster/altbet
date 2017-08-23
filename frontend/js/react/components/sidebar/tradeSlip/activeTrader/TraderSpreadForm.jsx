@@ -3,6 +3,8 @@
  */
 import React from 'react';
 
+import Notification from '../../../../common/Notification';
+
 export default class TraderSpreadForm extends React.Component {
 	constructor()
 	{
@@ -130,20 +132,20 @@ export default class TraderSpreadForm extends React.Component {
 	_onSubmit(data, event)
 	{
 		event.preventDefault();
-		const sum = ((1 - data.spreadPricePos) * data.quantity) + (data.spreadPriceNeg * data.quantity);
+		// const sum = ((1 - data.spreadPricePos) * data.quantity) + (data.spreadPriceNeg * data.quantity);
 		const endDate = this.props.cmpData.activeExchange.endDate;
 
 		if(endDate && moment().format('x') > endDate)
 		{
-			defaultMethods.showError('This game is completed, please try another game');
+			(new Notification).showWarning({msg: 'This game is completed, please try another game'});
 			return false;
 		}
 
-		if(sum > data.remainingBal)
-		{
-			defaultMethods.showWarning(`You are trying to create the order on $${Math.round10(sum, -2).toFixed(2)}, your remaining entry balance of this game is $${data.remainingBal.toFixed(2)}, it's not enough to create the order`);
-			return false;
-		}
+		// if(sum > data.remainingBal)
+		// {
+		// 	defaultMethods.showWarning(`You are trying to create the order on $${Math.round10(sum, -2).toFixed(2)}, your remaining entry balance of this game is $${data.remainingBal.toFixed(2)}, it's not enough to create the order`);
+		// 	return false;
+		// }
 
 		data.traderActions.actionOnAjaxSend(this, event);
 	}

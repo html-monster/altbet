@@ -7,6 +7,7 @@
 /// <reference path="../../.d/common.d.ts" />
 
 import { SocketSubscribe } from "./SocketSubscribe";
+import Notification from '../common/Notification';
 // import {globalData} from "../../ts/index";
 
 
@@ -29,6 +30,14 @@ export class WebsocketModel
     private lastErrorSendObj = null;    // save send object if socket not connected
     private lastSendObj = null;         // save send last object
     private testTime = null;
+
+    static MESSAGE_TYPES = {
+        Default: 'default',
+        Success: 'success',
+        Info: 'info',
+        Warning: 'warning',
+        Error: 'error',
+    };
 
 
     constructor()
@@ -179,8 +188,11 @@ export class WebsocketModel
             // code - тип сообщения (closedmarket|logout|etc)
             // message - текст
             // type - вид сообщения - success|info|warning|error
-            defaultMethods.showMessage(data.Message, defaultMethods.MESSAGE_TYPES[data.Type]);
-            // if(data.Code === 'LogIn' && data.Message.slice(-20) === 'has been logged out.' && Visibility.state() === 'hidden') location.reload();// костыль чтобы перезагружались все страницы при разлогировании
+            if(data.Code === 'LogIn' && data.Message.slice(-20) === 'has been logged out.')
+            {
+                if(Visibility.state() === 'hidden') location.reload();// костыль чтобы перезагружались все страницы при разлогировании
+            }
+            else (new Notification).showMessage({msg: data.Message}, WebsocketModel.MESSAGE_TYPES[data.Type]);
             __DEV__&& console.log( data );
         }
 
@@ -237,10 +249,10 @@ export class WebsocketModel
             self.callbacks[WebsocketModel.CALLBACK_EVENTPAGE_ORDERS](ret.ActiveOrders, ret.Bars)
         }
 
-        if(data.Result != null && globalData.eventPageOn)
-        {
-            defaultMethods.showError(data.Result);
-        }
+        // if(data.Result != null && globalData.eventPageOn)
+        // {
+        //     defaultMethods.showError(data.Result);
+        // }
         //alert("message: " + evt.data);
         //appendMessage("# " + evt.data + "<br />");
     }

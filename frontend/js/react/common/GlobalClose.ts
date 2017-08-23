@@ -92,42 +92,45 @@ export default class GlobalCloseClass
 
     private checkPropsType()
     {
-        const elementType = defaultMethods.getType(this.props.element);
-        const methodType = defaultMethods.getType(this.props.method);
-        const customCloseFunctionType = defaultMethods.getType(this.props.customCloseFunction);
-        const defaultCloseType = defaultMethods.getType(this.props.defaultClose);
-        const actionDelayType = defaultMethods.getType(this.props.actionDelay);
-        const excludeElementsType = defaultMethods.getType(this.props.excludeElements);
-
-        if(elementType === 'Null')
-            throw new TypeError(`you must transfer "element" to bindGlobalClick method`);
-        else if(elementType.slice(0, 4) !== 'HTML' && elementType !== 'String')
-            throw new TypeError(`"element" type is ${elementType}, but it must be String or DOM element`);
-
-        if(methodType !== 'String')
-            throw new TypeError(`"method" type is ${methodType}, but it must be String`);
-
-        if(customCloseFunctionType !== 'Null' && customCloseFunctionType !== 'Function')
-            throw new TypeError(`"customCloseFunction" type is ${customCloseFunctionType}, but it must be Function`);
-
-        if(defaultCloseType !== 'Boolean')
-            throw new TypeError(`"defaultClose" type is ${defaultCloseType}, but it must be Boolean`);
-
-        if(actionDelayType !== 'Number')
-            throw new TypeError(`"actionDelay" type is ${actionDelayType}, but it must be Number`);
-
-        // if(defaultMethods.getType(this.props.closeButton ) !== 'Null' && defaultMethods.getType(this.props.closeButton).slice(0, 4) !== 'HTML' &&
-        //     defaultMethods.getType(this.props.closeButton) !== 'String')
-        //     throw new TypeError(`"closeButton" type is ${defaultMethods.getType(this.props.closeButton)}, but it must be String or DOM element`);
-
-        if(excludeElementsType !== 'Array')
+        if(__DEV__)
         {
-            throw new TypeError(`"excludeElements" type is ${excludeElementsType}, but it must be Array`);
-        }
-        else if(this.props.excludeElements.some((item) => defaultMethods.getType(item).slice(0, 4) !== 'HTML' &&
-            defaultMethods.getType(item) !== 'String'))
-        {
-            throw new TypeError('"excludeElements" must consist of Strings or DOM elements');
+            const elementType = defaultMethods.getType(this.props.element);
+            const methodType = defaultMethods.getType(this.props.method);
+            const customCloseFunctionType = defaultMethods.getType(this.props.customCloseFunction);
+            const defaultCloseType = defaultMethods.getType(this.props.defaultClose);
+            const actionDelayType = defaultMethods.getType(this.props.actionDelay);
+            const excludeElementsType = defaultMethods.getType(this.props.excludeElements);
+
+            if(elementType === 'Null')
+                throw new TypeError(`you must transfer "element" to bindGlobalClick method`);
+            else if(elementType.slice(0, 4) !== 'HTML' && elementType !== 'String')
+                throw new TypeError(`"element" type is ${elementType}, but it must be String or DOM element`);
+
+            if(methodType !== 'String')
+                throw new TypeError(`"method" type is ${methodType}, but it must be String`);
+
+            if(customCloseFunctionType !== 'Null' && customCloseFunctionType !== 'Function')
+                throw new TypeError(`"customCloseFunction" type is ${customCloseFunctionType}, but it must be Function`);
+
+            if(defaultCloseType !== 'Boolean')
+                throw new TypeError(`"defaultClose" type is ${defaultCloseType}, but it must be Boolean`);
+
+            if(actionDelayType !== 'Number')
+                throw new TypeError(`"actionDelay" type is ${actionDelayType}, but it must be Number`);
+
+            // if(defaultMethods.getType(this.props.closeButton ) !== 'Null' && defaultMethods.getType(this.props.closeButton).slice(0, 4) !== 'HTML' &&
+            //     defaultMethods.getType(this.props.closeButton) !== 'String')
+            //     throw new TypeError(`"closeButton" type is ${defaultMethods.getType(this.props.closeButton)}, but it must be String or DOM element`);
+
+            if(excludeElementsType !== 'Array')
+            {
+                throw new TypeError(`"excludeElements" type is ${excludeElementsType}, but it must be Array`);
+            }
+            else if(this.props.excludeElements.some((item) => defaultMethods.getType(item).slice(0, 4) !== 'HTML' &&
+                defaultMethods.getType(item) !== 'String'))
+            {
+                throw new TypeError('"excludeElements" must consist of Strings or DOM elements');
+            }
         }
     }
 

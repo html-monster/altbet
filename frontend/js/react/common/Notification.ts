@@ -13,18 +13,48 @@ export default class Notification
     static typeSuccess = 'success';
     private InitialState = null;
 
-    constructor(params)
+    constructor(params = {})
     {
         this.InitialState = {
+            size: 'mini',
+            // delay: false,
             soundPath: '../../sounds/',
             title: false,
             pauseDelayOnHover: true,
             continueDelayOnInactiveTab: false,
+            messageHeight: 'auto',
             ...params
         };
 
-        Lobibox.notify.DEFAULTS = $.extend({}, Lobibox.notify.DEFAULTS, {
-            iconSource: 'fontAwesome'
+        Lobibox.notify.DEFAULTS = $.extend({}, Lobibox.notify.DEFAULTS,
+        {
+            iconSource: 'fontAwesome',
+        });
+        Lobibox.notify.OPTIONS = $.extend({}, Lobibox.notify.OPTIONS, {
+            success: {
+                'title': 'Success',
+                'class': 'lobibox-notify-success',
+                sound: 'notification_success',
+                continueDelayOnInactiveTab: false
+            },
+            error: {
+                'title': 'Error',
+                'class': 'lobibox-notify-error',
+                sound: 'notification_error',
+                continueDelayOnInactiveTab: false
+            },
+            warning: {
+                'title': 'Warning',
+                'class': 'lobibox-notify-warning',
+                sound: 'notification_warning',
+                continueDelayOnInactiveTab: false
+            },
+            info: {
+                'title': 'Information',
+                'class': 'lobibox-notify-info',
+                sound: 'notification_info',
+                continueDelayOnInactiveTab: false
+            }
         });
     }
 
@@ -84,24 +114,27 @@ export default class Notification
 
     private checkPropsType(params, messageType = null)
     {
-        const paramsType = defaultMethods.getType(params);
-
-        try {
-            if(params && paramsType !== 'Object') throw new TypeError(`First parameter is ${paramsType}, but it must be Object`);
-
-            if(messageType)
-            {
-                const typeOfMessageType = defaultMethods.getType(messageType);
-                const messageTypes = [Notification.typeDefault, Notification.typeError, Notification.typeInfo, Notification.typeWarning, Notification.typeSuccess];
-
-                if(typeOfMessageType !== 'String') throw new TypeError(`Second parameter is ${typeOfMessageType}, but it must be String`);
-                if(!(messageTypes.some((item) => item === messageType)))
-                    throw new TypeError(`Second parameter is '${messageType}', but expected one of ['${Notification.typeDefault}', '${Notification.typeError}', '${Notification.typeInfo}', '${Notification.typeWarning}', '${Notification.typeSuccess}']`);
-            }
-        } catch (error)
+        if(__DEV__)
         {
-            console.error(error);
-            return true;
+            const paramsType = defaultMethods.getType(params);
+
+            try {
+                if(params && paramsType !== 'Object') throw new TypeError(`First parameter is ${paramsType}, but it must be Object`);
+
+                if(messageType)
+                {
+                    const typeOfMessageType = defaultMethods.getType(messageType);
+                    const messageTypes = [Notification.typeDefault, Notification.typeError, Notification.typeInfo, Notification.typeWarning, Notification.typeSuccess];
+
+                    if(typeOfMessageType !== 'String') throw new TypeError(`Second parameter is ${typeOfMessageType}, but it must be String`);
+                    if(!(messageTypes.some((item) => item === messageType)))
+                        throw new TypeError(`Second parameter is '${messageType}', but expected one of ['${Notification.typeDefault}', '${Notification.typeError}', '${Notification.typeInfo}', '${Notification.typeWarning}', '${Notification.typeSuccess}']`);
+                }
+            } catch (error)
+            {
+                console.error(error);
+                return true;
+            }
         }
     }
 

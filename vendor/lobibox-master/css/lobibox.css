@@ -277,12 +277,12 @@
   bottom: 0px;
 }
 .lobibox-notify-wrapper.left {
-  left: 0px;
-  margin-right: 0px;
+  left: 10px;
+  margin-right: 10px;
 }
 .lobibox-notify-wrapper.right {
-  right: 0px;
-  margin-left: 0px;
+  right: 10px;
+  margin-left: 10px;
 }
 .lobibox-notify-wrapper.right .lobibox-notify {
   margin-left: auto;
@@ -301,7 +301,7 @@
   bottom: 0px;
 }
 .lobibox-notify-wrapper-large.left {
-  left: 0px;
+  left: 10px;
 }
 .lobibox-notify-wrapper-large.left .lb-notify-tabs > li {
   float: left;
@@ -309,7 +309,7 @@
   margin-right: 2px;
 }
 .lobibox-notify-wrapper-large.right {
-  right: 0px;
+  right: 10px;
 }
 .lobibox-notify-wrapper-large .lb-notify-tabs {
   list-style: none;

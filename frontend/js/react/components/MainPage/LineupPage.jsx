@@ -50,48 +50,52 @@ export class LineupPage extends React.Component
 
                             <div className="l-team">
                                 <div className="l-team__title">{AwayTeam.Name}, ({AwayTeam.Points})</div>
-                                <table className="l-team__team">
-                                    <tbody>
-                                    <tr>
-                                        <th>{}</th>
-                                        <th className="pl">Name</th>
-                                        <th>Status</th>
-                                        <th>FPPG</th>
-                                        <th>EPPG</th>
-                                        <th>Score</th>
-                                        <th title="Estimated Time Remaining">ETR</th>
-                                    </tr>
-                                    {
-										AwayTeam.Items.map((itm, key) => {
-											// itm.Description = ['asdasd asdasd', 'asdada', 'asdasdasdasdadas asd ad asd as da', 'asdasd', 'asda as dasd a', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as']
-											return 	<tr key={key}>
-                                                <td>{key + 1}</td>
-                                                <td className="pl">
-                                                    <strong>{itm.Name}</strong>
-                                                    <div className="b-pl-info">
-                                                        <div className="b-pl-info__main-inf">{AwayTeam.Alias} vs {HomeTeam.Alias}</div>
-														{
-															itm.Description && itm.Description.map((item, index) => <div className="b-pl-info__statistic" key={index}>{item}</div>)
-														}
-                                                    </div>
-                                                </td>
-                                                <td>{itm.Status}</td>
-                                                <td>{itm.FPPG}</td>
-                                                <td>{itm.EPPG}</td>
-                                                <td><strong>{itm.Score || "-"}</strong></td>
-                                                <td title="Estimated Time Remaining">{itm.ETR}</td>
+                                <div className="l-team__team-wrapper">
+                                    <table className="l-team__team">
+                                        <thead>
+                                            <tr>
+                                                <th>{}</th>
+                                                <th className="pl">Name</th>
+                                                <th>Status</th>
+                                                <th>FPPG</th>
+                                                <th>EPPG</th>
+                                                <th>Score</th>
+                                                <th title="Estimated Time Remaining">ETR</th>
                                             </tr>
-										})
-                                    }
-					                <tr className="totals">
-                                        <td colSpan={3}>Totals</td>
-                                        <td>{AwayTotals.FPPG}</td>
-                                        <td>{AwayTotals.EPPG}</td>
-                                        <td>{AwayTotals.Score}</td>
-                                        <td>{AwayTotals.ETR}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        {
+                                            AwayTeam.Items.map((itm, key) => {
+                                                // itm.Description = ['asdasd asdasd', 'asdada', 'asdasdasdasdadas asd ad asd as da', 'asdasd', 'asda as dasd a', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as', 'asdasd asd as']
+                                                return 	<tr key={key}>
+                                                    <td>{key + 1}</td>
+                                                    <td className="pl">
+                                                        <strong>{itm.Name}</strong>
+                                                        <div className="b-pl-info">
+                                                            <div className="b-pl-info__main-inf">{AwayTeam.Alias} vs {HomeTeam.Alias}</div>
+                                                            {
+                                                                itm.Description && itm.Description.map((item, index) => <div className="b-pl-info__statistic" key={index}>{item}</div>)
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                    <td>{itm.Status}</td>
+                                                    <td>{itm.FPPG}</td>
+                                                    <td>{itm.EPPG}</td>
+                                                    <td><strong>{itm.Score || "-"}</strong></td>
+                                                    <td title="Estimated Time Remaining">{itm.ETR}</td>
+                                                </tr>
+                                            })
+                                        }
+                                        <tr className="totals">
+                                            <td colSpan={3}>Totals</td>
+                                            <td>{AwayTotals.FPPG}</td>
+                                            <td>{AwayTotals.EPPG}</td>
+                                            <td>{AwayTotals.Score}</td>
+                                            <td>{AwayTotals.ETR}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div className="l-team2 team_table" key="tab2content">
@@ -99,46 +103,50 @@ export class LineupPage extends React.Component
 
                             <div className="l-team">
                                 <div className="l-team__title">{HomeTeam.Name}, ({HomeTeam.Points})</div>
-                                <table className="l-team__team">
-                                    <tbody>
-                                    <tr>
-                                        <th>{}</th>
-                                        <th className="pl">Name</th>
-                                        <th>Status</th>
-                                        <th>FPPG</th>
-                                        <th>EPPG</th>
-                                        <th>Score</th>
-                                        <th title="Estimated Time Remaining">ETR</th>
-                                    </tr>
-                                    {
-										HomeTeam.Items.map((itm, key) => <tr key={key}>
-                                            <td>{key + 1}</td>
-                                            <td className="pl">
-                                                <strong>{itm.Name}</strong>
-                                                <div className="b-pl-info">
-                                                    <div className="b-pl-info__main-inf">{AwayTeam.Alias} vs {HomeTeam.Alias}</div>
-													{
-														itm.Description && itm.Description.map((item, index) => <div className="b-pl-info__statistic" key={index}>{item}</div>)
-													}
-                                                </div>
+                                <div className="l-team__team-wrapper">
+                                    <table className="l-team__team">
+                                        <thead>
+                                            <tr>
+                                                <th>{}</th>
+                                                <th className="pl">Name</th>
+                                                <th>Status</th>
+                                                <th>FPPG</th>
+                                                <th>EPPG</th>
+                                                <th>Score</th>
+                                                <th title="Estimated Time Remaining">ETR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {
+                                            HomeTeam.Items.map((itm, key) => <tr key={key}>
+                                                <td>{key + 1}</td>
+                                                <td className="pl">
+                                                    <strong>{itm.Name}</strong>
+                                                    <div className="b-pl-info">
+                                                        <div className="b-pl-info__main-inf">{AwayTeam.Alias} vs {HomeTeam.Alias}</div>
+                                                        {
+                                                            itm.Description && itm.Description.map((item, index) => <div className="b-pl-info__statistic" key={index}>{item}</div>)
+                                                        }
+                                                    </div>
 
-                                            </td>
-                                            <td>{itm.Status}</td>
-                                            <td>{itm.FPPG}</td>
-                                            <td>{itm.EPPG}</td>
-                                            <td><strong>{itm.Score || "-"}</strong></td>
-                                            <td title="Estimated Time Remaining">{itm.ETR}</td>
-                                        </tr>)
-                                    }
-                                    <tr className="totals">
-                                        <td colSpan={3}>Totals</td>
-                                        <td>{HomeTotals.FPPG}</td>
-                                        <td>{HomeTotals.EPPG}</td>
-                                        <td>{HomeTotals.Score}</td>
-                                        <td>{HomeTotals.ETR}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                                </td>
+                                                <td>{itm.Status}</td>
+                                                <td>{itm.FPPG}</td>
+                                                <td>{itm.EPPG}</td>
+                                                <td><strong>{itm.Score || "-"}</strong></td>
+                                                <td title="Estimated Time Remaining">{itm.ETR}</td>
+                                            </tr>)
+                                        }
+                                        <tr className="totals">
+                                            <td colSpan={3}>Totals</td>
+                                            <td>{HomeTotals.FPPG}</td>
+                                            <td>{HomeTotals.EPPG}</td>
+                                            <td>{HomeTotals.Score}</td>
+                                            <td>{HomeTotals.ETR}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

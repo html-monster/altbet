@@ -3,7 +3,6 @@
  */
 import React from 'react';
 
-
 export default class ChangePassword extends React.PureComponent
 {
 	componentDidMount()
@@ -131,9 +130,10 @@ export default class ChangePassword extends React.PureComponent
 
 		function onErrorAjax(x, y)
 		{
-			console.log('XMLHTTPRequest object: ', x);
-			console.log('textStatus: ', y);
-			defaultMethods.showError('The connection has been lost. Please check your internet connection or try again.');
+			let message = $('.wrapper_user_page .change_password .answer_message');
+			__DEV__ && console.log('XMLHTTPRequest object: ', x);
+			__DEV__ && console.log('textStatus: ', y);
+			message.removeClass('validJs').addClass('validation-summary-errors').text('The connection has been lost. Please check your internet connection or try again.');
 			$(event.currentTarget).find('[type=submit]').removeAttr('disabled')
 		}
 
